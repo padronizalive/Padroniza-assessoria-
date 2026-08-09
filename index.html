@@ -10,17 +10,124 @@
 </style>
 </head>
 <body>
-<div class="app"><aside class="sidebar"><div class="brand"><div class="logo">P</div><div><b>PADRONIZA</b><small>ASSESSORIA DE STREAMERS</small></div></div><div class="nav-label">Meu portal</div><div class="nav"><button class="active" data-tab="inicio"><span>⌂</span>Visão geral</button><button data-tab="batalhas"><span>⚔</span>Batalhas do mês</button><button data-tab="criacao"><span>♫</span>Criação exclusiva</button><button data-tab="artes"><span>▣</span>Artes para live</button><button data-tab="suporte"><span>?</span>Suporte e regras</button></div><div class="nav-label">Acesso rápido</div><div class="nav"><button onclick="openLink('https://www.tiktok.com/coin?rc=7TGXGN69&rie=')"><span>◈</span>Comprar moedas TikTok</button><button onclick="openLink('https://www.tiktok.com/t/ZSHu6CFAM/')"><span>↗</span>Quero ser agenciado</button></div><div class="side-card"><small class="muted">SEU STATUS</small><p>Você está no caminho certo. Mantenha a constância e avance para o próximo nível.</p><div class="progress"><i style="width:68%"></i></div><small class="muted">68% da meta mensal</small></div></aside>
+<div class="app"><aside class="sidebar"><div class="brand"><div class="logo">P</div><div><b>PADRONIZA</b><small>ASSESSORIA DE STREAMERS</small></div></div><div class="nav-label">Meu portal</div><div class="nav"><button class="active" data-tab="inicio"><span>⌂</span>Visão geral</button><button data-tab="batalhas"><span>⚔</span>Batalhas do mês</button><button data-tab="criacao"><span>♫</span>Criação exclusiva</button><button data-tab="artes"><span>▣</span>Artes para live</button><button data-tab="suporte"><span>?</span>Suporte e regras</button><button data-tab="solicitacoes"><span>✉</span>Enviar solicitação</button><button data-tab="admin"><span>⚙</span>Administrador</button></div><div class="nav-label">Acesso rápido</div><div class="nav"><button onclick="openLink('https://www.tiktok.com/coin?rc=7TGXGN69&rie=')"><span>◈</span>Comprar moedas TikTok</button><button onclick="openLink('https://www.tiktok.com/t/ZSHu6CFAM/')"><span>↗</span>Quero ser agenciado</button></div><div class="side-card"><small class="muted">SEU STATUS</small><p>Você está no caminho certo. Mantenha a constância e avance para o próximo nível.</p><div class="progress"><i style="width:68%"></i></div><small class="muted">68% da meta mensal</small></div></aside>
 <main class="main"><div class="topbar"><div class="crumb">Portal / <b id="crumb">Visão geral</b></div><div class="profile"><span class="muted">Olá, streamer!</span><div class="avatar">S</div></div></div>
 <section id="inicio" class="tab active"><div class="hero"><div><span class="tag">● Central do streamer</span><h1>Transforme sua live em uma experiência inesquecível.</h1><p>Organize batalhas, solicite músicas exclusivas e receba artes profissionais para crescer no TikTok e no Kaku Live.</p></div><div class="hero-actions"><button class="btn primary" onclick="showTab('criacao')">Solicitar criação ♫</button><button class="btn cyan" onclick="showTab('batalhas')">Agendar batalha ⚔</button></div></div><div class="grid"><div class="stat"><span class="icon">⚔</span><small>Batalhas agendadas</small><strong>04</strong><span class="trend">↑ 2 este mês</span></div><div class="stat"><span class="icon">♫</span><small>Criações entregues</small><strong>12</strong><span class="trend">+3 em andamento</span></div><div class="stat"><span class="icon">▣</span><small>Artes disponíveis</small><strong>08</strong><span class="trend">Prontas para usar</span></div><div class="stat"><span class="icon">★</span><small>Nível da agência</small><strong>Prata</strong><span class="trend">68% para Ouro</span></div></div><div class="columns"><div><div class="section-title"><h2>Progresso de graduação</h2><a onclick="showTab('suporte')">Ver critérios →</a></div><div class="card"><h3>Meta atual: Prata → Ouro</h3><div class="goal"><div class="goal-head"><span>Horas ao vivo</span><b>34 / 50h</b></div><div class="progress"><i style="width:68%"></i></div></div><div class="goal"><div class="goal-head"><span>Batalhas realizadas</span><b>7 / 10</b></div><div class="progress"><i style="width:70%"></i></div></div><div class="goal"><div class="goal-head"><span>Constância semanal</span><b>3 / 4 semanas</b></div><div class="progress"><i style="width:75%"></i></div></div></div><div class="section-title"><h2>Próximas batalhas</h2><a onclick="showTab('batalhas')">Ver agenda →</a></div><div class="card" id="upcoming"></div></div><div><div class="section-title"><h2>Ações rápidas</h2></div><div class="card quick"><button class="btn" onclick="showTab('criacao')"><span>🎵</span> Criar música exclusiva</button><button class="btn" onclick="showTab('artes')"><span>🎨</span> Pedir arte de batalha</button><button class="btn" onclick="showTab('batalhas')"><span>📅</span> Montar agenda do mês</button></div><div class="section-title"><h2>Comunicado</h2></div><div class="card notice"><strong>Semana de evolução Padroniza</strong><p>Registre suas batalhas e mantenha o horário fixo das lives. A consistência é um dos principais critérios para sua graduação.</p><button class="btn cyan" onclick="showToast('Comunicado marcado como lido!')">Entendi</button></div></div></div></section>
 <section id="batalhas" class="tab"><div class="section-title"><h2>Agenda de batalhas oficiais</h2><button class="btn primary" onclick="document.getElementById('battleForm').scrollIntoView()">+ Nova batalha</button></div><div class="card"><p class="muted">Organize seus compromissos do mês atual com antecedência. Solicitações passam pela validação da equipe Padroniza.</p><div id="calendar"></div></div><div class="section-title"><h2>Solicitar agendamento</h2></div><div class="card" id="battleForm"><div class="form-grid"><div class="field"><label>Data</label><input id="bdate" type="date"></div><div class="field"><label>Horário</label><input id="btime" type="time" value="20:00"></div><div class="field"><label>Plataforma</label><select id="bplatform"><option>TikTok</option><option>Kaku Live</option></select></div><div class="field"><label>Streamer convidado / ID</label><input id="bguest" placeholder="@usuario"></div><div class="field full"><label>Observações</label><textarea id="bnote" placeholder="Tema, formato ou informações importantes..."></textarea></div></div><br><button class="btn primary" onclick="addBattle()">Enviar solicitação</button></div></section>
 <section id="criacao" class="tab"><div class="section-title"><h2>Criação de música exclusiva</h2><span class="pill">Prazo médio: 5 a 7 dias</span></div><div class="card"><p class="muted">Conte sua identidade. Nossa equipe transforma sua história em uma música única para entrada, vitória, batalha ou encerramento de live.</p><div class="form-grid"><div class="field"><label>Nome artístico</label><input placeholder="Como você é conhecido(a) nas lives"></div><div class="field"><label>Uso principal</label><select><option>Entrada na live</option><option>Vitória / batalha</option><option>Assinatura do streamer</option><option>Encerramento</option></select></div><div class="field"><label>Clima da música</label><select><option>Energia e hype</option><option>Emocionante</option><option>Divertido</option><option>Misterioso</option></select></div><div class="field"><label>Plataforma principal</label><select><option>TikTok</option><option>Kaku Live</option><option>As duas plataformas</option></select></div><div class="field full"><label>Referências e briefing</label><textarea placeholder="Cores, bordões, história, instrumentos, referências e palavras que devem aparecer..."></textarea></div></div><br><button class="btn primary" onclick="showToast('Briefing de música enviado para a equipe!')">Solicitar música exclusiva ♫</button></div></section>
 <section id="artes" class="tab"><div class="section-title"><h2>Artes para batalhas e eventos</h2><span class="pill">Entrega em alta resolução</span></div><div class="card"><p class="muted">Peças prontas para divulgar, anunciar confrontos e destacar seus melhores momentos nas duas plataformas.</p><div class="form-grid"><div class="field"><label>Tipo de arte</label><select><option>Card de batalha</option><option>Banner de evento</option><option>Placar / resultado</option><option>Story de divulgação</option></select></div><div class="field"><label>Formato</label><select><option>Vertical 1080 × 1920</option><option>Quadrado 1080 × 1080</option><option>Horizontal 1920 × 1080</option></select></div><div class="field"><label>Data do evento</label><input type="date"></div><div class="field"><label>Plataforma</label><select><option>TikTok</option><option>Kaku Live</option><option>As duas plataformas</option></select></div><div class="field full"><label>Informações que devem aparecer</label><textarea placeholder="Seu nome, adversário, horário, tema, @perfil e chamada para ação..."></textarea></div></div><br><button class="btn primary" onclick="showToast('Pedido de arte enviado para produção!')">Solicitar arte visual 🎨</button></div></section>
 <section id="suporte" class="tab"><div class="section-title"><h2>Suporte, regras e metas</h2></div><div class="platforms"><div class="platform tiktok"><h3>♪ TikTok</h3><p class="muted">Foco: descoberta, retenção e interação durante a live.</p><div class="rule"><b>Boas práticas</b>Use título claro, mantenha a câmera e o áudio preparados e incentive interações sem spam.</div><div class="rule"><b>Batalhas</b>Respeite o horário combinado, as regras da plataforma e a comunidade do adversário.</div><a class="btn" href="https://www.tiktok.com/coin?rc=7TGXGN69&rie=" target="_blank">Comprar moedas ↗</a></div><div class="platform kaku"><h3>◉ Kaku Live</h3><p class="muted">Foco: comunidade, frequência e relacionamento com a audiência.</p><div class="rule"><b>Boas práticas</b>Crie rotina de transmissões, acolha novos espectadores e divulgue sua agenda.</div><div class="rule"><b>Suporte</b>Em caso de instabilidade ou denúncia, registre horário, evidências e informe a assessoria.</div><button class="btn" onclick="showToast('Chamado aberto! A equipe responderá em breve.')">Falar com suporte</button></div></div><div class="section-title"><h2>Metas de graduação da agência</h2></div><div class="card"><div class="rule"><b>Bronze — Começo consistente</b>Perfil organizado, rotina inicial e participação nas orientações.</div><div class="rule"><b>Prata — Evolução</b>Regularidade, participação em batalhas e cumprimento dos combinados da agência.</div><div class="rule"><b>Ouro — Alta performance</b>Constância comprovada, evolução de audiência, profissionalismo e colaboração em eventos.</div><p class="muted">As metas podem ser acompanhadas pelo painel e revisadas pela equipe conforme o desempenho e as regras vigentes de cada plataforma.</p><a class="btn primary" href="https://www.tiktok.com/t/ZSHu6CFAM/" target="_blank">Quero ser agenciado ↗</a></div></section>
+<section id="solicitacoes" class="tab"><div class="section-title"><h2>Enviar solicitação</h2><span class="pill">Atendimento Padroniza</span></div><div class="card"><p class="muted">Preencha os dados abaixo. Ao enviar, o pedido será registrado neste navegador e seu aplicativo de e-mail será aberto com todas as informações para <b>padronizaassessoria@gmail.com</b>.</p><form id="requestForm" class="form-grid"><div class="field"><label>Nome do streamer</label><input id="rname" required placeholder="Nome artístico ou nome completo"></div><div class="field"><label>Plataforma</label><select id="rplatform" required><option value="TikTok">TikTok</option><option value="Kaku Live">Kaku Live</option><option value="TikTok e Kaku Live">TikTok e Kaku Live</option></select></div><div class="field"><label>Contato</label><input id="rcontact" required placeholder="WhatsApp, e-mail ou @perfil"></div><div class="field"><label>Tipo de solicitação</label><select id="rtype" required><option>Música personalizada</option><option>Arte visual</option><option>Agendamento de batalha</option><option>Inscrição para ser agenciado</option></select></div><div class="field full"><label>Detalhes do pedido</label><textarea id="rdetails" required placeholder="Explique o que você precisa, prazo, data da batalha, referências ou informações adicionais..."></textarea></div><div class="field full"><button class="btn primary" type="submit">Enviar para a Padroniza ✉</button></div></form></div></section>
+<section id="admin" class="tab"><div class="section-title"><h2>Área exclusiva do administrador</h2><span class="pill">Acesso protegido</span></div><div id="adminLogin" class="card"><p class="muted">Área restrita à administração da Padroniza Assessoria.</p><div class="form-grid"><div class="field"><label>Usuário</label><input id="adminUser" autocomplete="username"></div><div class="field"><label>Senha</label><input id="adminPass" type="password" autocomplete="current-password"></div><div class="field full"><button class="btn primary" onclick="adminLogin()">Entrar no painel</button></div></div><div id="adminPanel" class="card" style="display:none"><div style="display:flex;justify-content:space-between;gap:10px;align-items:center"><h3>Solicitações recebidas</h3><button class="btn" onclick="adminLogout()">Sair</button></div><p class="muted">Os dados ficam salvos localmente neste navegador. Para receber e-mails automaticamente em produção, conecte este formulário a um serviço como Formspree, EmailJS ou a um backend seguro.</p><div id="requestList"></div><hr style="border-color:var(--line);border-width:1px 0 0;margin:20px 0"><h3>Conteúdo editável</h3><div class="field"><label>Comunicado exibido no portal</label><textarea id="adminNotice"></textarea></div><br><button class="btn primary" onclick="savePortalContent()">Salvar conteúdo</button></div></section>
 </main></div><div id="toast" class="toast"></div>
 <script>
-const names={inicio:'Visão geral',batalhas:'Batalhas do mês',criacao:'Criação exclusiva',artes:'Artes para live',suporte:'Suporte e regras'};let battles=[{day:12,time:'20:00',guest:'@lunahype',platform:'TikTok',status:'Confirmada'},{day:18,time:'21:30',guest:'@pedroplay',platform:'Kaku Live',status:'Pendente'},{day:25,time:'19:00',guest:'@natyvibes',platform:'TikTok',status:'Confirmada'}];
-function showTab(id){document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));document.getElementById(id).classList.add('active');document.querySelectorAll('.nav button[data-tab]').forEach(x=>x.classList.toggle('active',x.dataset.tab===id));document.getElementById('crumb').textContent=names[id];if(id==='batalhas')renderBattles()}
-document.querySelectorAll('.nav button[data-tab]').forEach(b=>b.onclick=()=>showTab(b.dataset.tab));function openLink(u){window.open(u,'_blank','noopener')};function showToast(t){let x=document.getElementById('toast');x.textContent=t;x.style.display='block';setTimeout(()=>x.style.display='none',3000)}
-function battleHTML(b){return `<div class="battle"><div class="date"><small>${new Date().toLocaleString('pt-BR',{month:'short'}).replace('.','').toUpperCase()}</small><b>${String(b.day).padStart(2,'0')}</b></div><div class="battle-info"><strong>${b.guest}</strong><small>${b.time} · ${b.platform}</small></div><span class="pill">${b.status}</span></div>`}function renderBattles(){document.getElementById('calendar').innerHTML=battles.map(battleHTML).join('')||'<div class="empty">Nenhuma batalha agendada neste mês.</div>'}function addBattle(){let d=document.getElementById('bdate').value;if(!d){showToast('Escolha uma data para a batalha.');return}let day=Number(d.split('-')[2]);battles.push({day,time:document.getElementById('btime').value,guest:document.getElementById('bguest').value||'Convidado a definir',platform:document.getElementById('bplatform').value,status:'Pendente'});renderBattles();document.getElementById('upcoming').innerHTML=battles.slice(0,3).map(battleHTML).join('');showToast('Solicitação adicionada à agenda!')}document.getElementById('upcoming').innerHTML=battles.slice(0,3).map(battleHTML).join('');renderBattles();
-</script></body></html>
+const names={inicio:'Visão geral',batalhas:'Batalhas do mês',criacao:'Criação exclusiva',artes:'Artes para live',suporte:'Suporte e regras'};
+let battles=[{day:12,time:'20:00',guest:'@lunahype',platform:'TikTok',status:'Confirmada'},{day:18,time:'21:30',guest:'@pedroplay',platform:'Kaku Live',status:'Pendente'},{day:25,time:'19:00',guest:'@natyvibes',platform:'TikTok',status:'Confirmada'}];
+let requests=[];
+let currentNotice='Semana de evolução Padroniza: Registre suas batalhas e mantenha o horário fixo das lives. A consistência é um dos principais critérios para sua graduação.';
+
+// Senha criptografada - use agency2026. para entrar
+const encryptedPassword = 'YWdlbmN5MjAyNi4=';
+
+function showTab(id){
+  document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  document.querySelectorAll('.nav button[data-tab]').forEach(x=>x.classList.remove('active'));
+  document.querySelector(`.nav button[data-tab="${id}"]`).classList.add('active');
+  document.getElementById('crumb').innerText=names[id]||id.charAt(0).toUpperCase()+id.slice(1);
+  if(id==='admin'){
+    document.getElementById('adminPanel').style.display='none';
+    document.getElementById('adminLogin').style.display='block';
+  }
+}
+
+function openLink(url){window.open(url,'_blank')}
+function showToast(msg){const t=document.getElementById('toast');t.innerText=msg;t.style.display='block';setTimeout(()=>t.style.display='none',3500)}
+
+function adminLogin(){
+  const user=document.getElementById('adminUser').value.trim();
+  const pass=document.getElementById('adminPass').value;
+  if(btoa(pass)===encryptedPassword){
+    document.getElementById('adminLogin').style.display='none';
+    document.getElementById('adminPanel').style.display='block';
+    document.getElementById('adminNotice').value=currentNotice;
+    renderRequests();
+    showToast('Acesso autorizado! Bem-vindo, administrador.');
+  }else{
+    showToast('Senha incorreta. Tente novamente.');
+  }
+}
+
+function adminLogout(){
+  document.getElementById('adminPanel').style.display='none';
+  document.getElementById('adminLogin').style.display='block';
+  document.getElementById('adminUser').value='';
+  document.getElementById('adminPass').value='';
+}
+
+function savePortalContent(){
+  currentNotice=document.getElementById('adminNotice').value;
+  showToast('Conteúdo do portal salvo com sucesso!');
+}
+
+function renderRequests(){
+  const list=document.getElementById('requestList');
+  if(requests.length===0){
+    list.innerHTML='<div class="empty">Nenhuma solicitação recebida ainda.</div>';
+    return;
+  }
+  list.innerHTML=requests.map((r,i)=>`
+    <div class="rule">
+      <b>${r.type} — ${r.name}</b>
+      <p class="muted">Plataforma: ${r.platform} | Contato: ${r.contact}</p>
+      <p>${r.details}</p>
+    </div>
+  `).join('');
+}
+
+function addBattle(){
+  const d=document.getElementById('bdate').value;
+  const t=document.getElementById('btime').value;
+  const p=document.getElementById('bplatform').value;
+  const g=document.getElementById('bguest').value;
+  const n=document.getElementById('bnote').value;
+  if(!d||!t||!g){showToast('Preencha os dados obrigatórios!');return}
+  battles.push({day:new Date(d).getDate(),time:t,guest:g,platform:p,status:'Pendente'});
+  showToast('Solicitação de batalha enviada!');
+  document.getElementById('battleForm').reset();
+}
+
+document.getElementById('requestForm').addEventListener('submit',function(e){
+  e.preventDefault();
+  const name=document.getElementById('rname').value;
+  const platform=document.getElementById('rplatform').value;
+  const contact=document.getElementById('rcontact').value;
+  const type=document.getElementById('rtype').value;
+  const details=document.getElementById('rdetails').value;
+  
+  requests.push({name,platform,contact,type,details});
+  
+  const subject=encodeURIComponent(`Solicitação: ${type} - ${name}`);
+  const body=encodeURIComponent(`
+Nome: ${name}
+Plataforma: ${platform}
+Contato: ${contact}
+Tipo de solicitação: ${type}
+
+Detalhes:
+${details}
+  `);
+  window.location.href=`mailto:padronizaassessoria@gmail.com?subject=${subject}&body=${body}`;
+  
+  showToast('Solicitação enviada com sucesso!');
+  this.reset();
+});
+
+document.querySelectorAll('.nav button[data-tab]').forEach(btn=>{
+  btn.addEventListener('click',()=>showTab(btn.dataset.tab));
+});
+
+showTab('inicio');
+</script>
+</body>
+</html>
