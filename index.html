@@ -5,11 +5,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Padroniza + Live Assessoria</title>
 <style>
-:root{--bg:#0b1020;--panel:#11182c;--panel2:#17213a;--line:#293653;--text:#f7f9ff;--muted:#a9b4cb;--pink:#ff3d81;--violet:#7457ff;--cyan:#27d8c2;--gold:#ffc857;--green:#34d399}
+:root{--bg:#0b1020;--panel:#11182c;--panel2:#17213a;--line:#293653;--text:#f7f9ff;--muted:#a9b4cb;--pink:#ff3d81;--violet:#7457ff;--cyan:#27d8c2;--gold:#ffc857;--green:#34d399;--red:#ff4757}
 *{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
 body{background:var(--bg);color:var(--text);min-height:100vh}
 
-/* Tela de Login */
 .login-box{max-width:420px;margin:40px auto;background:var(--panel);border:1px solid var(--line);border-radius:20px;padding:30px}
 .logo-area{text-align:center;margin-bottom:20px}
 .logo-area img{width:60px;height:60px;border-radius:10px}
@@ -22,10 +21,8 @@ body{background:var(--bg);color:var(--text);min-height:100vh}
 .btn.primary{background:linear-gradient(135deg,var(--pink),var(--violet));color:#fff;margin-top:5px}
 .link{text-align:center;margin-top:10px;font-size:14px;color:var(--cyan);cursor:pointer}
 
-/* Layout Principal */
 #mainPage{display:none}
 .header{background:var(--panel);padding:15px 20px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--line)}
-.menu-btn{background:none;border:none;color:#fff;font-size:24px;cursor:pointer}
 .nav{display:flex;gap:10px;flex-wrap:wrap;padding:15px;background:#0d1426;border-bottom:1px solid var(--line)}
 .nav button{background:var(--panel2);color:var(--text);border:1px solid var(--line);padding:10px 12px;border-radius:8px;cursor:pointer;font-size:14px;transition:.2s}
 .nav button.active{background:var(--pink);border-color:var(--pink)}
@@ -38,11 +35,21 @@ body{background:var(--bg);color:var(--text);min-height:100vh}
 .grid{display:grid;grid-template-columns:1fr 1fr;gap:15px;margin:15px 0}
 @media(max-width:700px){.grid{grid-template-columns:1fr}}
 .whatsapp-fixed{position:fixed;bottom:20px;right:20px;background:#25d366;color:#fff;padding:12px 20px;border-radius:50px;font-weight:bold;text-decoration:none;z-index:999}
+
+/* ESTILOS NOVOS - CAPA E LIVE DO STREAMER */
+.live-section{margin:20px 0}
+.live-badge{display:inline-block;background:var(--red);color:#fff;padding:4px 12px;border-radius:4px;font-weight:bold;font-size:14px;margin-bottom:10px;animation: pulse 1.5s infinite}
+@keyframes pulse{0%{opacity:1}50%{opacity:0.7}100%{opacity:1}}
+.capa-live{width:100%;max-width:800px;border-radius:10px;border:2px solid var(--pink);background:#1a2440;display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:16px;margin-bottom:15px;overflow:hidden}
+.capa-live img{width:100%;height:auto;display:block}
+.player-live{width:100%;max-width:800px;border-radius:10px;border:2px solid var(--violet);background:#000;min-height:400px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:18px;margin-bottom:15px}
+.dados-streamer{display:flex;gap:15px;align-items:center;margin-top:10px}
+.dados-streamer img{width:60px;height:60px;border-radius:50%;border:2px solid var(--gold)}
+.info-streamer h3{color:var(--gold);margin-bottom:5px}
 </style>
 </head>
 <body>
 
-<!-- Tela de Login -->
 <div id="loginPage">
   <div class="login-box">
     <div class="logo-area">
@@ -82,7 +89,6 @@ body{background:var(--bg);color:var(--text);min-height:100vh}
   </div>
 </div>
 
-<!-- Página Principal -->
 <div id="mainPage">
   <div class="header">
     <div style="display:flex;align-items:center;gap:10px">
@@ -91,7 +97,6 @@ body{background:var(--bg);color:var(--text);min-height:100vh}
     <button class="btn" style="width:auto;padding:8px 12px" onclick="sair()">Sair</button>
   </div>
 
-  <!-- Navegação - BOTÕES PRINCIPAIS -->
   <div class="nav">
     <button class="active" onclick="abrirAba('inicio')">🏠 Início</button>
     <button onclick="abrirAba('batalhas')">⚔ Agendar Batalha</button>
@@ -103,16 +108,45 @@ body{background:var(--bg);color:var(--text);min-height:100vh}
   </div>
 
   <div class="content">
-    <!-- Página Início -->
     <div id="inicio" class="tab-content active">
       <div class="card">
         <h2>Bem-vindo(a) ao Portal Padroniza!</h2>
         <p>Aqui você organiza suas batalhas, solicita músicas exclusivas, artes e acompanha seu crescimento no TikTok e Kaku Live.</p>
         <p>Mantenha sua rotina de lives e cumpra as metas para avançar de nível e receber premiações da agência!</p>
       </div>
+
+      <!-- ÁREA DA LIVE DO STREAMER - COMO VOCÊ PEDIU -->
+      <div class="card live-section">
+        <h2>Transmissão do Streamer</h2>
+        
+        <!-- Indicador de Ao Vivo -->
+        <div class="live-badge">🔴 AO VIVO AGORA</div>
+
+        <!-- Capa da Live -->
+        <h3 style="margin-bottom:8px;color:var(--cyan)">Capa da Live:</h3>
+        <div class="capa-live">
+          <!-- Basta trocar o link abaixo pela capa que quiser -->
+          <img src="capa-streamer.jpg" alt="Capa da Live do Streamer" onerror="this.style.display='flex';this.innerText='Coloque aqui a capa da live'">
+        </div>
+
+        <!-- Transmissão / Player da Live -->
+        <h3 style="margin-bottom:8px;color:var(--cyan)">Transmissão:</h3>
+        <div class="player-live">
+          <!-- Aqui você coloca o código de incorporação do TikTok/Kaku quando o streamer estiver ao vivo -->
+          <p>Quando o streamer estiver ao vivo, a transmissão aparecerá aqui!</p>
+        </div>
+
+        <!-- Dados do Streamer -->
+        <div class="dados-streamer">
+          <img src="foto-streamer.jpg" alt="Foto do Streamer" onerror="this.src='https://via.placeholder.com/60?text=Perfil'">
+          <div class="info-streamer">
+            <h3>Nome do Streamer</h3>
+            <p>Plataforma: TikTok / Kaku Live</p>
+          </div>
+        </div>
+      </div>
     </div>
 
-    <!-- Página Batalhas -->
     <div id="batalhas" class="tab-content">
       <div class="card">
         <h2>Agendar Batalha Oficial</h2>
@@ -126,7 +160,6 @@ body{background:var(--bg);color:var(--text);min-height:100vh}
       </div>
     </div>
 
-    <!-- Página Músicas -->
     <div id="musicas" class="tab-content">
       <div class="card">
         <h2>Solicitar Música Exclusiva</h2>
@@ -135,7 +168,6 @@ body{background:var(--bg);color:var(--text);min-height:100vh}
       </div>
     </div>
 
-    <!-- Página Artes -->
     <div id="artes" class="tab-content">
       <div class="card">
         <h2>Artes Visuais</h2>
@@ -144,18 +176,21 @@ body{background:var(--bg);color:var(--text);min-height:100vh}
       </div>
     </div>
 
-    <!-- Página Quero Ser Agenciado -->
     <div id="entrar" class="tab-content">
       <div class="card">
         <h2>Quero fazer parte da Padroniza!</h2>
-        <p>📱 Para entrar no Kaku Live:</p>
-        <p><strong>ID DA AGÊNCIA: 177766</strong></p>
+        
+        <p style="margin-bottom:15px"><strong>📱 Para entrar no Kaku Live:</strong></p>
+        <p style="font-size:18px; font-weight:bold; color:var(--gold); margin:10px 0">ID DA AGÊNCIA: 177766</p>
         <p>1. Abra o Kaku Live → Central de Host → Agência<br>2. Digite o ID 177766 → Solicitar<br>3. Aguarde a nossa confirmação!</p>
-        <button class="btn primary" onclick="window.open('https://www.tiktok.com/t/ZSHu6CFAM/','_blank')">🔗 Link para se inscrever</button>
+        
+        <hr style="border:0; border-top:1px solid var(--line); margin:20px 0">
+        
+        <p style="margin-bottom:15px"><strong>🔗 Para se inscrever na Agência do TikTok:</strong></p>
+        <button class="btn primary" onclick="window.open('https://www.tiktok.com/t/ZSHu6CFAM/','_blank')">Link para se inscrever no TikTok</button>
       </div>
     </div>
 
-    <!-- Página Suporte -->
     <div id="suporte" class="tab-content">
       <div class="card">
         <h2>Suporte e Regras</h2>
@@ -164,7 +199,6 @@ body{background:var(--bg);color:var(--text);min-height:100vh}
       </div>
     </div>
 
-    <!-- Página Admin -->
     <div id="admin" class="tab-content">
       <div class="card">
         <h2>Área do Administrador</h2>
@@ -178,11 +212,9 @@ body{background:var(--bg);color:var(--text);min-height:100vh}
 <a href="https://wa.me/556981478873?text=Olá!%20Preciso%20de%20ajuda" class="whatsapp-fixed" target="_blank">💬 WhatsApp</a>
 
 <script>
-// Dados de acesso
 const adminEmail = 'padronizaassessoria@gmail.com';
 const adminSenha = 'agency2026.';
 
-// Funções de navegação - TESTADAS E GARANTIDAS
 function abrirAba(id){
   document.querySelectorAll('.tab-content').forEach(a => a.classList.remove('active'));
   document.querySelectorAll('.nav button').forEach(b => b.classList.remove('active'));
