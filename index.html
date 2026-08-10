@@ -33,17 +33,22 @@ input[type="file"]{background:transparent;border:none;padding:5px;color:var(--cy
 .btn.whatsapp{background:#25d366;color:#fff;padding:12px 15px;font-size:15px;font-weight:bold;margin-top:10px;border-radius:8px;text-decoration:none;display:inline-block;text-align:center;width:100%}
 .btn.aprovado{background:var(--green);color:#000}
 .btn.remover{background:var(--red);color:#fff}
+.btn.bloqueado{background:#4b5563;color:#fff;cursor:not-allowed;opacity:0.8}
 .link{text-align:center;margin-top:10px;font-size:14px;color:var(--cyan);cursor:pointer}
 .aviso{padding:12px;border-radius:8px;margin:15px 0;font-size:14px}
 .aviso.agenciado{background:rgba(52,211,153,0.1);border:1px solid var(--green);color:var(--green)}
 .aviso.visitante{background:rgba(59,130,246,0.1);border:1px solid var(--blue);color:var(--blue)}
 .aviso.pix{background:rgba(255,200,87,0.1);border:1px solid var(--gold);color:var(--gold);text-align:center;padding:15px;border-radius:10px}
+.aviso-bloqueio{background:rgba(255,71,87,0.1);border:1px solid var(--red);color:var(--red);padding:15px;border-radius:10px;margin:15px 0;text-align:center}
 .plano-card{background:rgba(59,130,246,0.08);border:2px solid var(--blue);border-radius:12px;padding:20px;margin:15px 0;text-align:center}
 .plano-card h3{color:var(--blue);margin-bottom:10px}
 .valor-plano{font-size:22px;font-weight:bold;color:var(--gold);margin:10px 0}
 .texto-mensal{font-size:15px;font-weight:bold;color:var(--text);margin-bottom:10px}
 .bloco-agenciamento{background:rgba(52,211,153,0.08);border:2px solid var(--green);border-radius:12px;padding:20px;margin:20px 0;text-align:center}
 .bloco-agenciamento h3{color:var(--green);margin-bottom:10px}
+.lista-servicos{margin:15px 0;padding:15px;background:rgba(255,200,87,0.05);border:1px solid var(--gold);border-radius:10px}
+.servico-item{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid var(--line)}
+.servico-item:last-child{border-bottom:none}
 .codigo-pix{background:#0c1325;padding:12px;border-radius:8px;font-size:11px;word-break:break-all;margin-top:10px;text-align:left;border:1px solid var(--line)}
 .live-card{background:var(--panel2);border-radius:12px;overflow:hidden;margin-bottom:15px;border:1px solid var(--line)}
 .live-capa{width:100%;height:180px;object-fit:cover;background:#222}
@@ -116,24 +121,48 @@ input[type="file"]{background:transparent;border:none;padding:5px;color:var(--cy
     </div>
 
     <div id="form-visitante" style="display:none">
-      <div class="aviso visitante">ℹ️ Escolha a melhor opção para você:</div>
+      <div class="aviso visitante">ℹ️ Conheça nossos serviços e valores:</div>
       
       <div class="plano-card">
-        <h3>Acesse todos os serviços sem precisar ser agenciado</h3>
-        <div class="valor-plano">R$ 9,99</div>
-        <div class="texto-mensal">✅ VALOR FIXO DA MENSALIDADE</div>
-        <p>Tudo incluso: músicas, artes, agendamento de batalhas e muito mais!</p>
-
-        <div class="aviso pix">
-          <strong>Recebedor:</strong> Padroniza Assessoria | MEI Marcos Gomes da Silva<br>
-          <strong>Valor:</strong> R$ 9,99
-        </div>
-
-        <div class="codigo-pix" id="codigoPix">
-00020101021126810014br.gov.bcb.pix01367c0dfbc3-68e7-4b85-a0eb-eb037b738d9f0219AAssessoria completa52040000530398654049.995802BR591965 8 0 M G DA SILVA6007VILHENA62070503***6304FF51
-        </div>
-        <button class="btn copiar" onclick="copiarPix()">📋 Copiar Código PIX</button>
+        <h3>✅ PACOTE COMPLETO</h3>
+        <div class="valor-plano">R$ 39,99 / mês</div>
+        <div class="texto-mensal">Acesso a TODOS os serviços ilimitadamente!</div>
       </div>
+
+      <div class="lista-servicos">
+        <h3 style="color:var(--gold);margin-bottom:10px">💲 Valores Individuais</h3>
+        <div class="servico-item">
+          <span>🎵 Música personalizada (unidade)</span>
+          <strong>R$ 20,00</strong>
+        </div>
+        <div class="servico-item">
+          <span>🎵 Pacote com 6 músicas</span>
+          <strong>R$ 100,00</strong>
+        </div>
+        <div class="servico-item">
+          <span>🎨 Arte visual (batalha/evento - unidade)</span>
+          <strong>R$ 10,00</strong>
+        </div>
+        <div class="servico-item">
+          <span>🎨 Pacote com 10 artes</span>
+          <strong>R$ 80,00</strong>
+        </div>
+        <div class="servico-item">
+          <span>⚔ Agendamento de batalha oficial</span>
+          <strong>R$ 10,00</strong>
+        </div>
+      </div>
+
+      <div class="aviso pix">
+        <strong>Recebedor:</strong> Padroniza Assessoria | MEI Marcos Gomes da Silva<br>
+        <strong>Confirme o valor desejado antes de pagar!</strong>
+      </div>
+
+      <div class="codigo-pix" id="codigoPix">
+00020101021126810014br.gov.bcb.pix01367c0dfbc3-68e7-4b85-a0eb-eb037b738d9f0219AAssessoria completa520400005303986540439.995802BR591965 8 0 M G DA SILVA6007VILHENA62070503***6304FF51
+      </div>
+      <button class="btn copiar" onclick="copiarPix()">📋 Copiar Código PIX</button>
+      <p style="font-size:13px;color:var(--muted);margin:8px 0;text-align:center">Após o pagamento, envie o comprovante pelo WhatsApp para liberarmos o acesso!</p>
 
       <div class="bloco-agenciamento">
         <h3>🌟 QUERO SER AGENCIADO!</h3>
@@ -149,7 +178,7 @@ input[type="file"]{background:transparent;border:none;padding:5px;color:var(--cy
         <label>Seu nome/usuário *</label>
         <input id="nome-vis" placeholder="Como você quer ser chamado?">
       </div>
-      <button class="btn orange" onclick="entrar('visitante')">Continuar</button>
+      <button class="btn orange" onclick="entrar('visitante')">Continuar para ver mais</button>
     </div>
 
     <p class="link" onclick="mostrarAdmin()">⚙️ Acesso Administrativo</p>
@@ -186,6 +215,9 @@ input[type="file"]{background:transparent;border:none;padding:5px;color:var(--cy
       <div class="card">
         <h2>Bem-vindo(a)!</h2>
         <p id="mensagem-inicio"></p>
+        <div id="aviso-assinante" style="display:none;margin-top:15px" class="aviso visitante">
+          💡 Para solicitar serviços, envie o comprovante de pagamento pelo WhatsApp que liberamos o acesso completo!
+        </div>
       </div>
     </div>
 
@@ -201,53 +233,95 @@ input[type="file"]{background:transparent;border:none;padding:5px;color:var(--cy
     <div id="meulive" class="tab-content">
       <div class="card">
         <h2 style="color:var(--pink);text-align:center;">⚙️ Configurar Minha Live</h2>
-        <p style="text-align:center;color:var(--muted);margin-bottom:10px;">Dados salvos automaticamente na planilha — funciona em qualquer aparelho!</p>
+        <p style="text-align:center;color:var(--muted);margin-bottom:10px;">Acesso liberado apenas para agenciados aprovados ou assinantes confirmados!</p>
 
-        <div class="plataforma-bloco">
-          <h3 style="color:#25f4ee;">🎵 TikTok</h3>
-          <div class="field">
-            <label>Link do seu perfil *</label>
-            <input id="tiktok-perfil" placeholder="Ex: https://tiktok.com/@seuperfil">
-          </div>
-          <div class="field">
-            <label>Link da live</label>
-            <input id="tiktok-live" placeholder="Cole aqui o link da transmissão">
-          </div>
+        <div id="aviso-bloqueio-perfil" class="aviso-bloqueio" style="display:none">
+          ❌ Essa funcionalidade é exclusiva para agenciados ou assinantes. Realize o pagamento e envie o comprovante para liberarmos o acesso!
         </div>
 
-        <div class="plataforma-bloco">
-          <h3 style="color:#ff9f43;">🔴 Kako Live</h3>
-          <div class="field">
-            <label>ID ou nome do perfil *</label>
-            <input id="kako-perfil" placeholder="Ex: 177766 ou @seuperfil">
+        <div id="conteudo-perfil" style="display:none">
+          <div class="plataforma-bloco">
+            <h3 style="color:#25f4ee;">🎵 TikTok</h3>
+            <div class="field">
+              <label>Link do seu perfil *</label>
+              <input id="tiktok-perfil" placeholder="Ex: https://tiktok.com/@seuperfil">
+            </div>
+            <div class="field">
+              <label>Link da live</label>
+              <input id="tiktok-live" placeholder="Cole aqui o link da transmissão">
+            </div>
           </div>
-          <div class="field">
-            <label>Link da live</label>
-            <input id="kako-live" placeholder="Link ou código da transmissão">
+
+          <div class="plataforma-bloco">
+            <h3 style="color:#ff9f43;">🔴 Kako Live</h3>
+            <div class="field">
+              <label>ID ou nome do perfil *</label>
+              <input id="kako-perfil" placeholder="Ex: 177766 ou @seuperfil">
+            </div>
+            <div class="field">
+              <label>Link da live</label>
+              <input id="kako-live" placeholder="Link ou código da transmissão">
+            </div>
           </div>
-        </div>
 
-        <div class="field">
-          <label>📷 Capa da transmissão:</label>
-          <input type="file" id="capa-arquivo" accept="image/*" onchange="carregarCapa(this)">
-          <img id="preview-capa" class="preview-capa" alt="Pré-visualização">
-          <p style="font-size:13px;color:var(--muted);margin:8px 0;">Ou cole o link abaixo:</p>
-          <input id="link-capa" placeholder="Link da imagem (opcional)">
-        </div>
+          <div class="field">
+            <label>📷 Capa da transmissão:</label>
+            <input type="file" id="capa-arquivo" accept="image/*" onchange="carregarCapa(this)">
+            <img id="preview-capa" class="preview-capa" alt="Pré-visualização">
+            <p style="font-size:13px;color:var(--muted);margin:8px 0;">Ou cole o link abaixo:</p>
+            <input id="link-capa" placeholder="Link da imagem (opcional)">
+          </div>
 
-        <div style="display:flex;align-items:center;gap:8px;margin:15px 0;">
-          <input type="checkbox" id="estou-ao-vivo" style="width:auto;">
-          <label for="estou-ao-vivo" style="color:var(--green);font-weight:bold;">✅ Estou AO VIVO AGORA!</label>
-        </div>
-        <p class="aviso-lembrete">💡 Marque só quando começar, desmarque quando terminar — dados ficam salvos na nuvem!</p>
+          <div style="display:flex;align-items:center;gap:8px;margin:15px 0;">
+            <input type="checkbox" id="estou-ao-vivo" style="width:auto;">
+            <label for="estou-ao-vivo" style="color:var(--green);font-weight:bold;">✅ Estou AO VIVO AGORA!</label>
+          </div>
+          <p class="aviso-lembrete">💡 Marque só quando começar, desmarque quando terminar — dados ficam salvos na nuvem!</p>
 
-        <button class="btn primary" onclick="salvarLive()">💾 Salvar Dados</button>
+          <button class="btn primary" onclick="salvarLive()">💾 Salvar Dados</button>
+        </div>
       </div>
     </div>
 
-    <div id="batalhas" class="tab-content"><div class="card"><h2>⚔ Batalhas Oficiais</h2><p>Em breve: agendamento e regras!</p></div></div>
-    <div id="musicas" class="tab-content"><div class="card"><h2>♫ Músicas Personalizadas</h2><p>Solicite pelo WhatsApp!</p></div></div>
-    <div id="artes" class="tab-content"><div class="card"><h2>🎨 Artes Visuais</h2><p>Artes prontas para lives e eventos!</p></div></div>
+    <div id="batalhas" class="tab-content">
+      <div class="card">
+        <h2>⚔ Batalhas Oficiais</h2>
+        <div id="aviso-bloqueio-batalhas" class="aviso-bloqueio" style="display:none">
+          ❌ Serviço pago: R$ 10,00 por batalha ou incluso no Pacote Completo de R$ 39,99/mês. Envie o pagamento e solicite o agendamento pelo WhatsApp!
+        </div>
+        <div id="conteudo-batalhas" style="display:none">
+          <p>Em breve: sistema de agendamento automático!</p>
+          <a href="https://wa.me/5569981478873" target="_blank" class="btn primary">💬 Solicitar Agendamento Agora</a>
+        </div>
+      </div>
+    </div>
+
+    <div id="musicas" class="tab-content">
+      <div class="card">
+        <h2>♫ Músicas Personalizadas</h2>
+        <div id="aviso-bloqueio-musicas" class="aviso-bloqueio" style="display:none">
+          ❌ Serviço pago: R$ 20,00 unidade / R$ 100,00 pacote com 6 ou incluso no Pacote Completo de R$ 39,99/mês. Envie o pagamento e solicite pelo WhatsApp!
+        </div>
+        <div id="conteudo-musicas" style="display:none">
+          <p>Criamos músicas exclusivas com a sua identidade!</p>
+          <a href="https://wa.me/5569981478873" target="_blank" class="btn primary">💬 Solicitar Música Agora</a>
+        </div>
+      </div>
+    </div>
+
+    <div id="artes" class="tab-content">
+      <div class="card">
+        <h2>🎨 Artes Visuais</h2>
+        <div id="aviso-bloqueio-artes" class="aviso-bloqueio" style="display:none">
+          ❌ Serviço pago: R$ 10,00 unidade / R$ 80,00 pacote com 10 ou incluso no Pacote Completo de R$ 39,99/mês. Envie o pagamento e solicite pelo WhatsApp!
+        </div>
+        <div id="conteudo-artes" style="display:none">
+          <p>Artes prontas para lives, batalhas e eventos!</p>
+          <a href="https://wa.me/5569981478873" target="_blank" class="btn primary">💬 Solicitar Arte Agora</a>
+        </div>
+      </div>
+    </div>
+
     <div id="ser-agenciado" class="tab-content">
       <div class="card">
         <h2>Quero ser Agenciado</h2>
@@ -306,14 +380,39 @@ async function carregarDadosPlanilha(){
       kako_perfil: linha.c[5]?.v || '',
       kako_live: linha.c[6]?.v || '',
       capa: linha.c[7]?.v || '',
-      esta_ao_vivo: String(linha.c[8]?.v || 'false').toLowerCase() === 'true'
+      esta_ao_vivo: String(linha.c[8]?.v || 'false').toLowerCase() === 'true',
+      assinante: String(linha.c[9]?.v || 'false').toLowerCase() === 'true'
     })).filter(item => item.usuario);
     
     atualizarListaLives();
     if(perfil === 'admin') atualizarListaPlanilha();
+    atualizarAcessoServicos();
   }catch(e){
     console.log('❌ Erro:', e);
   }
+}
+
+function atualizarAcessoServicos(){
+  const ehAgenciado = perfil === 'agenciado';
+  const ehAssinante = perfil === 'visitante' && dadosPlanilha.some(i => i.usuario === dados.nome.toLowerCase() && i.assinante === true);
+  const temAcessoCompleto = ehAgenciado || ehAssinante;
+
+  // Configurações do Meu Perfil
+  document.getElementById('aviso-bloqueio-perfil').style.display = temAcessoCompleto ? 'none' : 'block';
+  document.getElementById('conteudo-perfil').style.display = temAcessoCompleto ? 'block' : 'none';
+
+  // Configurações dos serviços
+  document.getElementById('aviso-bloqueio-batalhas').style.display = temAcessoCompleto ? 'none' : 'block';
+  document.getElementById('conteudo-batalhas').style.display = temAcessoCompleto ? 'block' : 'none';
+
+  document.getElementById('aviso-bloqueio-musicas').style.display = temAcessoCompleto ? 'none' : 'block';
+  document.getElementById('conteudo-musicas').style.display = temAcessoCompleto ? 'block' : 'none';
+
+  document.getElementById('aviso-bloqueio-artes').style.display = temAcessoCompleto ? 'none' : 'block';
+  document.getElementById('conteudo-artes').style.display = temAcessoCompleto ? 'block' : 'none';
+
+  // Aviso na página inicial
+  document.getElementById('aviso-assinante').style.display = (perfil === 'visitante' && !ehAssinante) ? 'block' : 'none';
 }
 
 function carregarDadosSalvos(){
@@ -344,18 +443,24 @@ function atualizarListaPlanilha(){
   container.innerHTML = '';
   dadosPlanilha.forEach(item => {
     const corStatus = item.status === 'Aprovado' ? 'color:var(--green)' : item.status === 'Negado' ? 'color:var(--red)' : 'color:var(--gold)';
+    const corAssinante = item.assinante ? 'color:var(--gold);font-weight:bold' : 'color:var(--muted)';
     container.innerHTML += `
     <div class="item-aprovado">
       <div>
         <strong>${item.usuario}</strong><br>
-        <small style="${corStatus};font-weight:bold">Status: ${item.status}</small><br>
+        <small style="${corStatus};font-weight:bold">Status: ${item.status}</small>
+        <small style="${corAssinante}"> | Assinante: ${item.assinante ? 'SIM' : 'NÃO'}</small><br>
         <small style="color:var(--muted)">${item.data}</small>
       </div>
-      ${item.status === 'Pendente' ? `
       <div style="display:flex;gap:5px">
+        ${item.status === 'Pendente' ? `
         <button class="btn aprovado small" onclick="definirStatus('${item.usuario}', 'Aprovado')">✅</button>
         <button class="btn remover small" onclick="definirStatus('${item.usuario}', 'Negado')">❌</button>
-      </div>` : ''}
+        ` : ''}
+        <button class="btn small" style="background:var(--gold);color:#000" onclick="definirAssinante('${item.usuario}', ${!item.assinante})">
+          ${item.assinante ? 'Cancelar Assinatura' : 'Marcar como Assinante'}
+        </button>
+      </div>
     </div>`;
   });
 }
@@ -371,6 +476,15 @@ function definirStatus(usuario, status){
   }
 }
 
+function definirAssinante(usuario, valor){
+  const idx = dadosPlanilha.findIndex(i => i.usuario === usuario);
+  if(idx !== -1){
+    dadosPlanilha[idx].assinante = valor;
+    atualizarListaPlanilha();
+    alert(valor ? '✅ Acesso de assinante liberado!' : '⚠️ Acesso de assinante removido!');
+  }
+}
+
 function liberarAcesso(){
   const usuario = document.getElementById('novo-aprovado').value.trim().toLowerCase().replace(/^@/, '').replace(/\s+/g, '');
   if(!usuario) return alert('⚠️ Digite o usuário!');
@@ -380,7 +494,7 @@ function liberarAcesso(){
     usuario: usuario,
     status: 'Aprovado',
     data: new Date().toLocaleString('pt-BR'),
-    tiktok_perfil:'', tiktok_live:'', kako_perfil:'', kako_live:'', capa:'', esta_ao_vivo:false
+    tiktok_perfil:'', tiktok_live:'', kako_perfil:'', kako_live:'', capa:'', esta_ao_vivo:false, assinante:false
   });
   atualizarListaPlanilha();
   const msg = encodeURIComponent(`✅ Olá ${usuario}! Seu acesso foi APROVADO! Agora você pode entrar normalmente no portal. Bem-vindo(a)!`);
@@ -441,7 +555,7 @@ function enviarSolicitacao(){
     usuario: usuario,
     status: 'Pendente',
     data: new Date().toLocaleString('pt-BR'),
-    tiktok_perfil:'', tiktok_live:'', kako_perfil:'', kako_live:'', capa:'', esta_ao_vivo:false
+    tiktok_perfil:'', tiktok_live:'', kako_perfil:'', kako_live:'', capa:'', esta_ao_vivo:false, assinante:false
   });
   
   const mensagem = encodeURIComponent(`🔔 NOVA SOLICITAÇÃO!\nUsuário: ${usuario}\nData: ${new Date().toLocaleString('pt-BR')}\nPor favor, analisar no Painel Admin.`);
@@ -476,6 +590,7 @@ function entrar(tipo){
   document.getElementById('loginPage').style.display='none';
   document.getElementById('mainPage').style.display='block';
   atualizarTela();
+  atualizarAcessoServicos();
 }
 
 function atualizarTela(){
@@ -485,10 +600,14 @@ function atualizarTela(){
 
   if(perfil === 'agenciado'){
     tag.innerText = '🟢 AGENCIADO'; tag.className = 'perfil-tag tag-agenciado';
-    msg.innerHTML = `Olá <strong>${dados.usuario}</strong>! Seus dados ficam salvos na planilha e aparecem em qualquer aparelho!`;
+    msg.innerHTML = `Olá <strong>${dados.usuario}</strong>! Você tem acesso GRATUITO a todos os serviços!`;
   } else if(perfil === 'visitante'){
-    tag.innerText = '🔵 VISITANTE'; tag.className = 'perfil-tag tag-visitante';
-    msg.innerHTML = `Olá <strong>${dados.nome}</strong>! Escolha uma opção para acesso completo.`;
+    const ehAssinante = dadosPlanilha.some(i => i.usuario === dados.nome.toLowerCase() && i.assinante === true);
+    tag.innerText = ehAssinante ? '⭐ ASSINANTE' : '🔵 VISITANTE'; 
+    tag.className = ehAssinante ? 'perfil-tag tag-assinante' : 'perfil-tag tag-visitante';
+    msg.innerHTML = ehAssinante ? 
+      `Olá <strong>${dados.nome}</strong>! Seja bem-vindo(a) de volta, você tem acesso completo aos nossos serviços!` : 
+      `Olá <strong>${dados.nome}</strong>! Conheça nossos valores e contrate o que precisar!`;
   } else {
     tag.innerText = '⚙ ADMIN'; tag.className = 'perfil-tag tag-admin';
     msg.innerHTML = `Bem-vindo de volta! Controle total da agência.`; botaoAdm.style.display = 'inline-block';
@@ -496,9 +615,13 @@ function atualizarTela(){
 }
 
 async function salvarLive(){
-  if(perfil !== 'agenciado') return alert('❌ Essa função é só para agenciados aprovados!');
+  const ehAgenciado = perfil === 'agenciado';
+  const ehAssinante = perfil === 'visitante' && dadosPlanilha.some(i => i.usuario === dados.nome.toLowerCase() && i.assinante === true);
+  const temAcessoCompleto = ehAgenciado || ehAssinante;
   
-  const nome = dados.usuario;
+  if(!temAcessoCompleto) return alert('❌ Essa função é exclusiva para agenciados ou assinantes!');
+  
+  const nome = dados.usuario || dados.nome.toLowerCase();
   const tiktokPerfil = document.getElementById('tiktok-perfil').value.trim();
   const tiktokLive = document.getElementById('tiktok-live').value.trim();
   const kakoPerfil = document.getElementById('kako-perfil').value.trim();
@@ -521,7 +644,7 @@ async function salvarLive(){
     dadosPlanilha.push({
       usuario:nome, status:'Aprovado', data:new Date().toLocaleString('pt-BR'),
       tiktok_perfil:tiktokPerfil, tiktok_live:tiktokLive, kako_perfil:kakoPerfil, kako_live:kakoLive,
-      capa:capaFinal, esta_ao_vivo:aoVivo
+      capa:capaFinal, esta_ao_vivo:aoVivo, assinante:ehAssinante
     });
   }
 
