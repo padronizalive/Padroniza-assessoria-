@@ -3,254 +3,268 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Padroniza Assessoria | Portal Oficial</title>
+<title>Padroniza Assessoria</title>
 <style>
-:root{--bg:#0b1020;--panel:#11182c;--panel2:#17213a;--line:#293653;--text:#f7f9ff;--muted:#a9b4cb;--pink:#ff3d81;--violet:#7457ff;--cyan:#27d8c2;--gold:#ffc857;--green:#34d399;--blue:#3b82f6;--orange:#ff9f43;--red:#ff4757}
+:root{--fundo:#0b1020;--painel:#11182c;--destaque:#ff3d81;--azul:#3b82f6;--verde:#34d399;--amarelo:#ffc857;--cinza:#a9b4cb;--texto:#f7f9ff;--violeta:#7457ff}
 *{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
-body{background:var(--bg);color:var(--text);min-height:100vh;padding:15px}
+body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:10px}
+.container{max-width:480px;margin:0 auto}
 
-.container{max-width:450px;margin:0 auto}
-.logo-area{text-align:center;margin-bottom:20px}
-.logo-area h1{font-size:26px;color:var(--pink);font-weight:bold}
-.logo-area p{color:var(--gold);font-size:15px;margin-top:5px}
+/* Cabeçalho igual ao visual que você aprovou */
+.cabecalho{background:var(--painel);border-radius:12px;padding:12px 15px;margin-bottom:15px;display:flex;justify-content:space-between;align-items:center}
+.cabecalho h1{font-size:22px;color:var(--destaque);font-weight:bold}
+.acoes-topo{display:flex;gap:8px}
+.btn-topo{padding:6px 12px;border-radius:6px;border:none;font-weight:bold;font-size:13px;cursor:pointer}
+.btn-visitante{background:var(--azul);color:#fff}
+.btn-sair{background:var(--destaque);color:#fff}
 
-.destaque-live{background:rgba(39,216,194,0.08);border:2px solid var(--cyan);border-radius:12px;padding:15px;margin-bottom:20px;text-align:center}
-.destaque-live p{margin:8px 0 12px 0;font-size:14px;color:var(--muted)}
-.btn-cadastrar-live{background:var(--cyan);color:#000;border:none;padding:12px 20px;border-radius:8px;font-weight:bold;font-size:16px;cursor:pointer;width:100%}
+/* Aviso de prazo de liberação */
+.aviso-prazo{background:rgba(255,200,87,0.1);border:1px solid var(--amarelo);color:var(--amarelo);padding:12px;border-radius:8px;text-align:center;font-weight:bold;margin-bottom:15px}
+.aviso-bloqueado{background:rgba(255,61,129,0.1);border:1px solid var(--destaque);color:var(--destaque);padding:12px;border-radius:8px;text-align:center;margin:15px 0}
+.aviso-gratis{background:rgba(52,211,153,0.1);border:1px solid var(--verde);color:var(--verde);padding:12px;border-radius:8px;text-align:center;margin:15px 0}
 
-.form-live{display:none;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:18px;margin-bottom:20px}
-.form-live.visivel{display:block}
-.form-live h3{color:var(--cyan);margin-bottom:15px;text-align:center}
-.grupo-campo{margin-bottom:12px}
-.grupo-campo label{display:block;margin-bottom:5px;color:var(--muted);font-size:14px}
-.grupo-campo input{width:100%;padding:10px;border-radius:8px;border:1px solid var(--line);background:var(--panel2);color:var(--text);font-size:15px}
-.btn-enviar{background:var(--green);color:#000;border:none;padding:12px;border-radius:8px;font-weight:bold;width:100%;margin-top:5px;cursor:pointer}
-.btn-voltar-form{background:transparent;color:var(--cyan);border:none;padding:8px;width:100%;margin-top:8px;cursor:pointer;text-decoration:underline}
+/* Escolha de perfil */
+.escolha-perfil{display:grid;grid-template-columns:1fr;gap:12px;margin-bottom:15px}
+.btn-perfil{padding:14px;border-radius:10px;border:2px solid #293653;background:var(--painel);color:#fff;font-weight:bold;cursor:pointer;font-size:15px;text-align:left;padding-left:18px}
+.btn-perfil span{font-size:18px;margin-right:10px}
 
-.galeria-lives{margin-top:25px}
-.galeria-lives h3{color:var(--gold);margin-bottom:15px;text-align:center}
-.card-live{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:15px;margin-bottom:12px}
-.card-live h4{color:var(--pink);margin-bottom:8px}
-.card-live p{font-size:14px;margin-bottom:5px;color:var(--muted)}
-.card-live a{color:var(--cyan);text-decoration:none;display:inline-block;margin-right:15px;margin-top:5px}
+/* Formulários */
+.form-acesso{background:var(--painel);border-radius:12px;padding:18px;margin-bottom:20px;display:none}
+.form-acesso.visivel{display:block}
+.grupo{margin-bottom:12px}
+.grupo label{display:block;margin-bottom:5px;color:var(--cinza);font-size:14px}
+.grupo input{width:100%;padding:10px;border-radius:6px;border:1px solid #293653;background:#17213a;color:var(--texto)}
+.btn{width:100%;padding:12px;border-radius:8px;border:none;font-weight:bold;cursor:pointer;margin-top:8px;text-decoration:none;display:inline-block;text-align:center}
+.btn.verde{background:var(--verde);color:#000}
+.btn.rosa{background:var(--destaque);color:#fff}
+.btn.cinza{background:#293653;color:#fff}
 
-.escolha-tipo{display:grid;grid-template-columns:1fr;gap:12px;margin-top:25px}
-.btn-tipo{padding:14px;border-radius:10px;border:2px solid var(--line);background:var(--panel2);color:#fff;font-weight:bold;cursor:pointer;transition:.2s;font-size:15px;text-align:left;padding-left:18px}
-.btn-tipo span{font-size:18px;margin-right:10px}
+/* Botões de serviços LADO A LADO */
+.area-servicos{background:var(--painel);border-radius:12px;padding:15px;display:none}
+.area-servicos.visivel{display:block}
+.titulo-secao{text-align:center;margin-bottom:15px;color:var(--amarelo)}
+.botoes-servicos{display:grid;grid-template-columns:repeat(2, 1fr);gap:10px;margin-bottom:15px}
+.btn-servico{padding:14px;border-radius:8px;border:1px solid #293653;text-decoration:none;color:var(--texto);font-weight:bold;display:block;text-align:center}
+.valor{color:var(--amarelo);font-weight:bold;display:block;margin-top:5px}
+.gratis{color:var(--verde);font-weight:bold;display:block;margin-top:5px}
+.codigo-pix{background:#17213a;padding:10px;border-radius:6px;font-size:11px;word-break:break-all;margin:10px 0;border-radius:6px}
+.btn-copiar{background:var(--cyan);color:#000}
 
-.conteudo{display:none;margin-top:15px}
-.conteudo.visivel{display:block}
-
-.aviso{padding:12px;border-radius:8px;margin:15px 0;font-size:14px}
-.aviso.verde{background:rgba(52,211,153,0.1);border:1px solid var(--green);color:var(--green)}
-.aviso.azul{background:rgba(59,130,246,0.1);border:1px solid var(--blue);color:var(--blue)}
-.aviso.laranja{background:rgba(255,159,67,0.1);border:1px solid var(--orange);color:var(--orange)}
-
-.plano{background:rgba(59,130,246,0.08);border:2px solid var(--blue);border-radius:12px;padding:18px;margin:15px 0;text-align:left}
-.plano h3{color:var(--blue);margin-bottom:10px;font-size:19px;text-align:center}
-.valor-novo{font-size:24px;font-weight:bold;color:var(--gold);margin:5px 0;text-align:center}
-.valor-antigo{text-decoration:line-through;color:var(--muted);font-size:15px}
-.lista-beneficios{text-align:left;max-width:320px;margin:10px auto;padding-left:15px}
-.lista-beneficios li{margin:6px 0}
-.codigo-pix{background:#0c1325;padding:12px;border-radius:8px;font-size:11px;word-break:break-all;margin-top:10px;text-align:left;border:1px solid var(--line)}
-
-.btn{width:100%;padding:12px;border-radius:8px;font-weight:bold;border:0;cursor:pointer;font-size:16px;text-decoration:none;display:inline-block;text-align:center}
-.btn.green{background:var(--green);color:#000}
-.btn.primary{background:linear-gradient(135deg,var(--pink),var(--violet));color:#fff}
-.btn.whatsapp{background:#25d366;color:#fff;margin-top:8px}
-.btn.copiar{background:var(--cyan);color:#000;margin-top:10px}
-.btn.copiar-dourado{background:var(--gold);color:#000;margin-top:10px}
-.btn.copiar-rosa{background:var(--pink);color:#fff;margin-top:10px}
-.btn.copiar-laranja{background:var(--orange);color:#fff;margin-top:10px}
-
-.link-voltar{display:block;text-align:center;margin-top:20px;color:var(--cyan);cursor:pointer;font-weight:bold}
+/* Área de Lives — lida direto da planilha */
+.lives-ao-vivo{background:var(--painel);border-radius:12px;padding:15px;margin-top:20px}
+.lista-lives{display:flex;flex-direction:column;gap:12px}
+.card-live{background:#17213a;border-radius:10px;padding:12px;border-left:4px solid var(--verde)}
+.titulo-live{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+.ao-vivo{background:var(--verde);color:#000;padding:4px 8px;border-radius:4px;font-size:12px;font-weight:bold}
+.nome-streamer{font-weight:bold;font-size:15px;color:var(--texto)}
+.botoes-plataforma{display:flex;gap:10px;margin-top:8px}
+.btn-plataforma{flex:1;padding:8px;border-radius:6px;border:none;font-weight:bold;font-size:13px;cursor:pointer;text-align:center;text-decoration:none;display:inline-block}
+.btn-tiktok{background:#25f4ee;color:#000}
+.btn-kako{background:#ff3d81;color:#fff}
 </style>
 </head>
 <body>
 <div class="container">
-  <div class="logo-area">
-    <h1>PADRONIZA ASSESSORIA</h1>
-    <p>Seu espaço para crescer</p>
-  </div>
 
-  <div class="destaque-live">
-    <h3>🎥 Perfil de Live</h3>
-    <p>Cortesia da Padroniza para todos! Cadastre sua live e seja visto por todo mundo.</p>
-    <button class="btn-cadastrar-live" onclick="abrirFormLive()">Cadastrar Minha Live</button>
+<!-- Cabeçalho -->
+<div class="cabecalho">
+  <h1>PADRONIZA ASSESSORIA</h1>
+  <div class="acoes-topo">
+    <button class="btn-topo btn-visitante">VISITANTE</button>
+    <button class="btn-topo btn-sair" onclick="voltarInicio()">Sair</button>
   </div>
+</div>
 
-  <div class="form-live" id="formLive">
-    <h3>Cadastrar Minha Live</h3>
-    <div class="grupo-campo">
-      <label>Nome ou Nome Artístico:</label>
-      <input type="text" id="nomeStreamer" placeholder="Seu nome ou nome de tela">
+<!-- Aviso de prazo -->
+<div class="aviso-prazo">⏱️ Liberação de acesso em até 48 horas após confirmação!</div>
+
+<!-- Tela inicial -->
+<div id="telaInicial">
+  <div class="escolha-perfil">
+    <div class="btn-perfil" onclick="abrirForm('streamer')">
+      <span>👤</span> Sou Streamer
     </div>
-    <div class="grupo-campo">
-      <label>Link do Perfil TikTok:</label>
-      <input type="url" id="linkTikTok" placeholder="https://www.tiktok.com/@seuperfil">
+    <div class="btn-perfil" onclick="abrirForm('agencia')">
+      <span>🏢</span> Sou Outra Agência
     </div>
-    <div class="grupo-campo">
-      <label>Link da Live TikTok:</label>
-      <input type="url" id="liveTikTok" placeholder="Link direto da sua live">
-    </div>
-    <div class="grupo-campo">
-      <label>Link do Perfil Kako Live:</label>
-      <input type="url" id="linkKako" placeholder="Link do seu perfil no Kako">
-    </div>
-    <div class="grupo-campo">
-      <label>Link da Live Kako Live:</label>
-      <input type="url" id="liveKako" placeholder="Link direto da live no Kako">
-    </div>
-    <div class="grupo-campo">
-      <label>Link da Capa/Imagem da Live (opcional):</label>
-      <input type="url" id="capaLive" placeholder="Link da imagem da capa">
-    </div>
-    <button class="btn-enviar" onclick="enviarCadastro()">Enviar Cadastro</button>
-    <button class="btn-voltar-form" onclick="fecharFormLive()">Voltar</button>
   </div>
+</div>
 
-  <div class="galeria-lives" id="listaLives">
-    <h3>🔴 Lives Ativas da Padroniza</h3>
-    <div class="card-live">
-      <h4>Serena Tempestade</h4>
-      <p>🎥 Ao vivo agora!</p>
-      <a href="#" target="_blank">🔗 Ver no TikTok</a>
-      <a href="#" target="_blank">🔗 Ver no Kako Live</a>
+<!-- Formulários -->
+<div class="form-acesso" id="formAcesso">
+  <h3 style="text-align:center;margin-bottom:15px">Informe seus dados</h3>
+  
+  <!-- Campos para Streamer -->
+  <div id="camposStreamer">
+    <div class="grupo">
+      <label>Nome na plataforma:</label>
+      <input type="text" id="nomeUsuario" placeholder="Seu nome de usuário">
+    </div>
+    <div class="grupo">
+      <label>Seu WhatsApp:</label>
+      <input type="tel" id="contato" placeholder="(69) 9XXXX-XXXX">
     </div>
   </div>
 
-  <div class="escolha-tipo">
-    <div class="btn-tipo" onclick="mostrar('agenciado')">
-      <span>👤</span> Sou Streamer Agenciado(a)
+  <!-- Campos para Agência -->
+  <div id="camposAgencia" style="display:none">
+    <div class="grupo">
+      <label>Nome da Agência:</label>
+      <input type="text" id="nomeAgencia" placeholder="Nome oficial da agência">
     </div>
-    <div class="btn-tipo" onclick="mostrar('nao-agenciado')">
-      <span>👤</span> Sou Streamer Não Agenciado(a)
+    <div class="grupo">
+      <label>Link oficial da Agência:</label>
+      <input type="url" id="linkAgencia" placeholder="Link do TikTok ou Kako Live">
     </div>
-    <div class="btn-tipo" onclick="mostrar('agencia')">
-      <span>🏢</span> Sou Outra Agência / Contrato Serviços
+    <div class="grupo">
+      <label>Contato responsável:</label>
+      <input type="tel" id="contatoAgencia" placeholder="(69) 9XXXX-XXXX">
     </div>
   </div>
 
-  <div id="agenciado" class="conteudo">
-    <div class="aviso verde">✅ Todos os benefícios inclusos gratuitamente!</div>
-    <div class="plano">
-      <h3>🎁 Seus Benefícios Exclusivos</h3>
-      <ul class="lista-beneficios">
-        <li>✅ Perfil de Live (já liberado)</li>
-        <li>✅ Artes visuais ilimitadas</li>
-        <li>✅ 1 música personalizada por dia</li>
-        <li>✅ Suporte exclusivo</li>
-        <li>✅ <strong>Agendamento de Batalhas Oficiais GRATUITO</strong></li>
-      </ul>
-      <a href="https://wa.me/5569981478873?text=Olá! Sou agenciado(a) e quero agendar uma batalha oficial." target="_blank" class="btn green" style="margin-top:15px">⚔ Agendar Batalha Agora</a>
-      <a href="https://wa.me/5569981478873?text=Olá! Sou agenciado(a) e quero solicitar uma música personalizada." target="_blank" class="btn primary" style="margin-top:8px">🎶 Solicitar Música</a>
-      <a href="https://wa.me/5569981478873?text=Olá! Sou agenciado(a) e quero solicitar uma arte visual." target="_blank" class="btn primary" style="margin-top:8px">🎨 Solicitar Arte</a>
-    </div>
-    <div class="link-voltar" onclick="voltar()">← Voltar</div>
+  <button class="btn verde" onclick="enviarSolicitacao()">Enviar para Aprovação</button>
+  <button class="btn cinza" onclick="voltarInicio()">Voltar</button>
+</div>
+
+<!-- Área de Serviços -->
+<div class="area-servicos" id="areaServicos">
+  <h2 class="titulo-secao">🎁 Nossos Serviços</h2>
+  <div id="avisoStatus"></div>
+
+  <!-- Botões lado a lado -->
+  <div class="botoes-servicos">
+    <div class="btn-servico">⚔️ Batalhas <div class="valor">R$69,90/mês</div></div>
+    <div class="btn-servico">🎵 Músicas <div class="valor">R$20,00 avulsa</div></div>
+    <div class="btn-servico">🎨 Artes <div class="valor">R$10,00 avulsa</div></div>
+    <div class="btn-servico">📚 Treinamento <div class="valor">R$15,00/mês</div></div>
+    <div class="btn-servico" style="grid-column:span 2">✅ Pacote Completo <div class="valor">R$39,90/mês</div></div>
   </div>
 
-  <div id="nao-agenciado" class="conteudo">
-    <div class="aviso azul">Serviços avulsos ou pacote completo para você</div>
-    <div class="plano">
-      <h3>✅ Pacote Completo</h3>
-      <div class="valor-antigo">De R$ 59,90</div>
-      <div class="valor-novo">R$ 39,99/mês</div>
-      <ul class="lista-beneficios">
-        <li>✅ Perfil de Live incluso</li>
-        <li>✅ Artes visuais ilimitadas</li>
-        <li>✅ 1 música por dia</li>
-        <li>✅ Suporte</li>
-        <li>⚠️ Agendamento de batalhas: contratação separada</li>
-      </ul>
-      <div class="codigo-pix">00020101021126770014br.gov.bcb.pix01367c0dfbc3-68e7-4b85-a0eb-eb037b738d9f0215Pacote completo520400005303986540539.995802BR591965 8 0 M G DA SILVA6007VILHENA62070503***6304C43A</div>
-      <button class="btn copiar" onclick="copiarTexto('00020101021126770014br.gov.bcb.pix01367c0dfbc3-68e7-4b85-a0eb-eb037b738d9f0215Pacote completo520400005303986540539.995802BR591965 8 0 M G DA SILVA6007VILHENA62070503***6304C43A')">📋 Copiar Chave PIX</button>
-      <a href="https://wa.me/5569981478873?text=Olá! Paguei o Pacote Completo, envio o comprovante." target="_blank" class="btn whatsapp">📤 Enviar Comprovante</a>
-    </div>
-    <div class="plano" style="border-color:var(--gold)">
-      <h3 style="color:var(--gold)">🎵 Música Personalizada Avulsa</h3>
-      <div class="valor-novo">R$ 20,00 cada</div>
-      <div class="codigo-pix">00020101021126820014br.gov.bcb.pix01367c0dfbc3-68e7-4b85-a0eb-eb037b738d9f0220musica personalizada520400005303986540520.005802BR591965 8 0 M G DA SILVA6007VILHENA62070503***6304E948</div>
-      <button class="btn copiar-dourado" onclick="copiarTexto('00020101021126820014br.gov.bcb.pix01367c0dfbc3-68e7-4b85-a0eb-eb037b738d9f0220musica personalizada520400005303986540520.005802BR591965 8 0 M G DA SILVA6007VILHENA62070503***6304E948')">📋 Copiar Chave PIX</button>
-      <a href="https://wa.me/5569981478873?text=Olá! Paguei R$20,00 pela música avulsa." target="_blank" class="btn whatsapp">📤 Enviar Comprovante</a>
-    </div>
-    <div class="plano" style="border-color:var(--pink)">
-      <h3 style="color:var(--pink)">🎨 Arte Visual Avulsa</h3>
-      <div class="valor-novo">R$ 10,00 cada</div>
-      <div class="codigo-pix">00020101021126750014br.gov.bcb.pix01367c0dfbc3-68e7-4b85-a0eb-eb037b738d9f0213Artes a vulsa520400005303986540510.005802BR591965 8 0 M G DA SILVA6007VILHENA62070503***630432B2</div>
-      <button class="btn copiar-rosa" onclick="copiarTexto('00020101021126750014br.gov.bcb.pix01367c0dfbc3-68e7-4b85-a0eb-eb037b738d9f0213Artes a vulsa520400005303986540510.005802BR591965 8 0 M G DA SILVA6007VILHENA62070503***630432B2')">📋 Copiar Chave PIX</button>
-      <a href="https://wa.me/5569981478873?text=Olá! Paguei R$10,00 pela arte avulsa." target="_blank" class="btn whatsapp">📤 Enviar Comprovante</a>
-    </div>
-    <div class="plano" style="border-color:var(--violet)">
-      <h3 style="color:var(--violet)">🎓 Treinamento VIP + Grupo</h3>
-      <div class="valor-novo">R$ 9,99 taxa única</div>
-      <div class="codigo-pix">00020101021126770014br.gov.bcb.pix01367c0dfbc3-68e7-4b85-a0eb-eb037b738d9f0215Treinamento vip52040000530398654049.995802BR591965 8 0 M G DA SILVA6007VILHENA62070503***63045E3B</div>
-      <button class="btn copiar" onclick="copiarTexto('00020101021126770014br.gov.bcb.pix01367c0dfbc3-68e7-4b85-a0eb-eb037b738d9f0215Treinamento vip52040000530398654049.995802BR591965 8 0 M G DA SILVA6007VILHENA62070503***63045E3B')">📋 Copiar Chave PIX</button>
-      <a href="https://wa.me/5569981478873?text=Olá! Paguei o Treinamento VIP." target="_blank" class="btn whatsapp">📤 Enviar Comprovante</a>
-    </div>
-    <div class="link-voltar" onclick="voltar()">← Voltar</div>
+  <div id="areaPagamento" style="display:none">
+    <div class="codigo-pix">Chave PIX: padronizaassessoria@gmail.com</div>
+    <a href="https://wa.me/5569981478873?text=Olá! Segue comprovante de pagamento" target="_blank" class="btn rosa">📤 Enviar Comprovante</a>
+  </div>
+  <div id="areaGratis" style="display:none">
+    <a href="https://wa.me/5569981478873?text=Olá! Sou agenciado e quero solicitar benefício" target="_blank" class="btn verde">📩 Solicitar Benefício</a>
   </div>
 
-  <div id="agencia" class="conteudo">
-    <div class="aviso laranja">Condições especiais para parceiros</div>
-    <div class="plano">
-      <h3>⚔ Serviço de Agendamento de Batalhas</h3>
-      <div class="valor-novo">R$ 69,90/mês</div>
-      <p style="text-align:center">Gerenciamento completo, agendamento oficial e suporte dedicado</p>
-      <div class="codigo-pix">00020101021126840014br.gov.bcb.pix01367c0dfbc3-68e7-4b85-a0eb-eb037b738d9f0222Agendamento de batalha520400005303986540569.995802BR591965 8 0 M G DA SILVA6007VILHENA62070503***6304606A</div>
-      <button class="btn copiar-laranja" onclick="copiarTexto('00020101021126840014br.gov.bcb.pix01367c0dfbc3-68e7-4b85-a0eb-eb037b738d9f0222Agendamento de batalha520400005303986540569.995802BR591965 8 0 M G DA SILVA6007VILHENA62070503***6304606A')">📋 Copiar Chave PIX</button>
-      <a href="https://wa.me/5569981478873?text=Olá! Sou de outra agência e quero contratar o serviço de batalhas." target="_blank" class="btn whatsapp">📤 Enviar Comprovante e Solicitar</a>
-    </div>
-    <div class="plano" style="border-color:var(--gold)">
-      <h3 style="color:var(--gold)">🎵 Músicas e Artes em Quantidade</h3>
-      <p style="text-align:center">Valores especiais para contratação em volume</p>
-      <a href="https://wa.me/5569981478873?text=Olá! Sou de outra agência e quero valores para pacotes de músicas e artes." target="_blank" class="btn primary">💬 Solicitar Orçamento</a>
-    </div>
-    <div class="link-voltar" onclick="voltar()">← Voltar</div>
+  <button class="btn cinza" style="margin-top:15px" onclick="voltarInicio()">Sair</button>
+</div>
+
+<!-- Área de Lives — carrega direto da sua planilha -->
+<div class="lives-ao-vivo">
+  <h2>🔴 Lives ao Vivo</h2>
+  <div class="lista-lives" id="listaLives">
+    <p style="text-align:center;color:var(--cinza)">Carregando lives...</p>
   </div>
+</div>
 
 </div>
 
 <script>
-function abrirFormLive(){
-  document.getElementById('formLive').classList.add('visivel');
-}
-function fecharFormLive(){
-  document.getElementById('formLive').classList.remove('visivel');
-}
-function enviarCadastro(){
-  const nome = document.getElementById('nomeStreamer').value;
-  const tiktokPerfil = document.getElementById('linkTikTok').value;
-  const tiktokLive = document.getElementById('liveTikTok').value;
-  const kakoPerfil = document.getElementById('linkKako').value;
-  const kakoLive = document.getElementById('liveKako').value;
-  const capa = document.getElementById('capaLive').value;
+// CONFIGURAÇÃO JÁ COM A SUA PLANILHA
+const ID_PLANILHA = "1R9eUsqF4kA0y22ryMUIsvGolBfk3-XwZ5R-RVpBiZA4";
+let tipoUsuario = '';
 
-  if(!nome){
-    alert('Por favor, digite seu nome ou nome artístico!');
-    return;
+// Funções de navegação
+function abrirForm(tipo){
+  tipoUsuario = tipo;
+  document.getElementById('telaInicial').style.display = 'none';
+  document.getElementById('formAcesso').classList.add('visivel');
+  if(tipo === 'streamer'){
+    document.getElementById('camposStreamer').style.display = 'block';
+    document.getElementById('camposAgencia').style.display = 'none';
+  } else {
+    document.getElementById('camposStreamer').style.display = 'none';
+    document.getElementById('camposAgencia').style.display = 'block';
   }
-
-  const mensagem = `Olá! Quero cadastrar minha live:\n\n👤 Nome: ${nome}\n🎥 Perfil TikTok: ${tiktokPerfil}\n🔴 Live TikTok: ${tiktokLive}\n🎥 Perfil Kako Live: ${kakoPerfil}\n🔴 Live Kako Live: ${kakoLive}\n🖼 Capa da Live: ${capa || 'Não informada'}`;
-  window.open(`https://wa.me/5569981478873?text=${encodeURIComponent(mensagem)}`, '_blank');
-  
-  alert('✅ Solicitação enviada! Em breve sua live aparecerá na lista para todos verem.');
-  fecharFormLive();
 }
 
-function mostrar(id){
-  document.querySelectorAll('.conteudo').forEach(el => el.classList.remove('visivel'));
-  document.getElementById(id).classList.add('visivel');
+function enviarSolicitacao(){
+  let mensagem = '';
+  if(tipoUsuario === 'streamer'){
+    const nome = document.getElementById('nomeUsuario').value;
+    const contato = document.getElementById('contato').value;
+    if(!nome || !contato) return alert('Preencha todos os campos!');
+    mensagem = `SOLICITAÇÃO DE ACESSO:\nTipo: Streamer\nNome: ${nome}\nWhatsApp: ${contato}`;
+  } else {
+    const nome = document.getElementById('nomeAgencia').value;
+    const link = document.getElementById('linkAgencia').value;
+    const contato = document.getElementById('contatoAgencia').value;
+    if(!nome || !link || !contato) return alert('Preencha todos os campos!');
+    mensagem = `SOLICITAÇÃO DE ACESSO:\nTipo: Agência\nNome: ${nome}\nLink Oficial: ${link}\nContato: ${contato}`;
+  }
+  window.open(`https://wa.me/5569981478873?text=${encodeURIComponent(mensagem)}`);
+  alert('✅ Solicitação enviada! Liberação em até 48h após confirmação.');
+  document.getElementById('formAcesso').classList.remove('visivel');
+  document.getElementById('areaServicos').classList.add('visivel');
+  verificarAcesso();
 }
-function voltar(){
-  document.querySelectorAll('.conteudo').forEach(el => el.classList.remove('visivel'));
+
+function verificarAcesso(){
+  // Aqui você controla tudo pela planilha — por enquanto mostramos as regras
+  const aviso = document.getElementById('avisoStatus');
+  if(tipoUsuario === 'streamer'){
+    aviso.innerHTML = `<div class="aviso-gratis">✅ Se for nosso agenciado, tudo é GRÁTIS! Basta confirmarmos seu cadastro na planilha.</div>`;
+    document.getElementById('areaGratis').style.display = 'block';
+  } else {
+    aviso.innerHTML = `<div class="aviso-bloqueado">⚠️ Acesso liberado somente após envio do comprovante de pagamento.</div>`;
+    document.getElementById('areaPagamento').style.display = 'block';
+  }
 }
-function copiarTexto(texto){
-  navigator.clipboard.writeText(texto).then(()=>{
-    alert('✅ Chave copiada! Agora é só pagar e enviar o comprovante.');
-  }).catch(err=>{
-    alert('⚠️ Copie manualmente o código que está na caixa.');
-  });
+
+function voltarInicio(){
+  document.querySelectorAll('.form-acesso, .area-servicos').forEach(el => el.classList.remove('visivel'));
+  document.getElementById('telaInicial').style.display = 'block';
+  document.getElementById('areaPagamento').style.display = 'none';
+  document.getElementById('areaGratis').style.display = 'none';
 }
+
+// Carrega lives da planilha automaticamente
+async function carregarLives(){
+  try {
+    const url = `https://docs.google.com/spreadsheets/d/${ID_PLANILHA}/gviz/tq?tqx=out:json`;
+    const resposta = await fetch(url);
+    const texto = await resposta.text();
+    const dados = JSON.parse(texto.substr(47).slice(0, -2));
+    const linhas = dados.table.rows;
+    const lista = document.getElementById('listaLives');
+    lista.innerHTML = '';
+
+    linhas.forEach(linha => {
+      if(!linha.c) return;
+      const usuario = linha.c[0]?.v || '';
+      const status = linha.c[1]?.v || '';
+      const tiktokLink = linha.c[4]?.v || '';
+      const kakoLink = linha.c[6]?.v || '';
+      const aoVivo = linha.c[8]?.v === true;
+
+      // SÓ MOSTRA SE STATUS FOR APROVADO
+      if(status.trim().toUpperCase() !== 'APROVADO') return;
+
+      const card = document.createElement('div');
+      card.className = 'card-live';
+      card.innerHTML = `
+        <div class="titulo-live">
+          ${aoVivo ? '<span class="ao-vivo">AO VIVO AGORA</span>' : '<span style="color:var(--cinza)">Próxima Live</span>'}
+          <span class="nome-streamer">${usuario}</span>
+        </div>
+        <div class="botoes-plataforma">
+          ${tiktokLink ? `<a href="${tiktokLink}" target="_blank" class="btn-plataforma btn-tiktok">🔗 TikTok</a>` : ''}
+          ${kakoLink ? `<a href="${kakoLink}" target="_blank" class="btn-plataforma btn-kako">🔗 Kako Live</a>` : ''}
+        </div>
+      `;
+      lista.appendChild(card);
+    });
+
+    if(lista.innerHTML === '') lista.innerHTML = '<p style="text-align:center;color:var(--cinza)">Nenhuma live aprovada no momento.</p>';
+  } catch(erro){
+    document.getElementById('listaLives').innerHTML = '<p style="text-align:center;color:var(--cinza)">Aguardando aprovação das lives.</p>';
+  }
+}
+
+// Inicia tudo quando abrir a página
+document.addEventListener('DOMContentLoaded', carregarLives);
 </script>
 
 </body>
