@@ -29,7 +29,7 @@ body{background:var(--bg);color:var(--text);min-height:100vh}
 .btn.primary{background:linear-gradient(135deg,var(--pink),var(--violet));color:#fff;margin-top:8px}
 .btn.small{width:auto;padding:10px 15px;font-size:14px;margin-top:10px}
 .btn.copiar{background:var(--cyan);color:#000;padding:12px;font-size:16px;font-weight:bold;margin-top:10px}
-.btn.whatsapp{background:#25d366;color:#fff;padding:10px 15px;font-size:14px;margin-top:8px}
+.btn.whatsapp{background:#25d366;color:#fff;padding:12px 15px;font-size:15px;font-weight:bold;margin-top:10px;border-radius:8px;text-decoration:none;display:inline-block;text-align:center}
 .link{text-align:center;margin-top:10px;font-size:14px;color:var(--cyan);cursor:pointer}
 .aviso{padding:12px;border-radius:8px;margin:15px 0;font-size:14px}
 .aviso.agenciado{background:rgba(52,211,153,0.1);border:1px solid var(--green);color:var(--green)}
@@ -115,11 +115,14 @@ body{background:var(--bg);color:var(--text);min-height:100vh}
           <p style="color:#000;text-align:center;margin-bottom:8px;font-weight:bold">⚠️ Se o QR Code não carregar, use o botão abaixo — funciona SEMPRE em todos os bancos!</p>
         </div>
 
-        <!-- Código Copia e Cola EXATO que você enviou -->
+        <!-- Código Copia e Cola EXATO -->
         <div class="codigo-pix" id="codigoPix">
 00020101021126810014br.gov.bcb.pix01367c0dfbc3-68e7-4b85-a0eb-eb037b738d9f0219Assessoria completa52040000530398654049.995802BR591965 8 0 M G DA SILVA6007VILHENA62070503***6304FF51
         </div>
         <button class="btn copiar" onclick="copiarPix()">📋 Copiar Código PIX (R$9,99)</button>
+
+        <!-- NOVO BOTÃO: ENVIAR COMPROVANTE PELO WHATSAPP -->
+        <a href="https://wa.me/556981478873?text=Olá! Acabei de efetuar o pagamento de R$9,99 da mensalidade. Segue em anexo o comprovante para liberação do acesso. Meu nome/usuário é: _______" target="_blank" class="btn whatsapp">📤 Enviar Comprovante pelo WhatsApp</a>
       </div>
 
       <!-- OPÇÃO 2: SOLICITAR AGENCIAMENTO - TUDO GRÁTIS -->
