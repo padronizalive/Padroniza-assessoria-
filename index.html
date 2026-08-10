@@ -223,7 +223,7 @@ function mostrarAdmin(){
 function entrar(tipo){
   perfil = tipo;
   if(tipo === 'admin'){
-    let e = document.getElementById('email-admin').value;
+    let e = document.getElementById('email-admin').value.trim();
     let s = document.getElementById('senha-admin').value;
     if(e !== adminEmail || s !== adminSenha) return alert('Dados de admin incorretos!');
   } else if(tipo === 'agenciado'){
