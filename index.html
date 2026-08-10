@@ -54,7 +54,7 @@ input[type="file"]{background:transparent;border:none;padding:5px;color:var(--cy
 .live-card{background:var(--panel2);border-radius:12px;overflow:hidden;margin-bottom:15px;border:1px solid var(--line)}
 .live-capa{width:100%;height:180px;object-fit:cover;background:#222}
 .live-info{padding:15px}
-.live-tag{display:inline-block;background:var(--red);color:#fff;padding:4px 8px;border-radius:4px;font-size:12px;font-weight:bold;margin-bottom:8px}
+.live-tag{display:inline-block;background:var(--red);color:#fff;padding:4px 8px;border-radius:4px;font-size:14px;font-weight:bold;margin-bottom:8px}
 .links-plataformas{margin-top:10px;display:flex;gap:8px;flex-wrap:wrap}
 .links-plataformas a{flex:1;min-width:120px;padding:8px 10px;border-radius:6px;text-decoration:none;text-align:center;font-size:13px;font-weight:bold}
 .link-tiktok{background:#000;color:#fff;border:1px solid #25f4ee}
@@ -581,15 +581,28 @@ function atualizarListaLives(){
   }
   container.innerHTML = '';
   dadosPlanilha.filter(i => i.esta_ao_vivo || i.tiktok_live || i.kako_live).forEach(item => {
+    let statusLive = '';
+    let temTikTok = !!item.tiktok_live;
+    let temKako = !!item.kako_live;
+
+    if(item.esta_ao_vivo){
+      if(temTikTok && temKako) statusLive = '🔴 AO VIVO AGORA NO TIKTOK E KAKO LIVE';
+      else if(temTikTok) statusLive = '🔴 AO VIVO AGORA NO TIKTOK';
+      else if(temKako) statusLive = '🔴 AO VIVO AGORA NO KAKO LIVE';
+    } else {
+      if(temTikTok && temKako) statusLive = '📺 Lives cadastradas';
+      else statusLive = '📺 Perfil cadastrado';
+    }
+
     container.innerHTML += `
     <div class="live-card">
       <div class="live-capa" style="background:${item.capa ? `url(${item.capa}) center/cover no-repeat` : 'var(--panel)'}"></div>
       <div class="live-info">
-        ${item.esta_ao_vivo ? '<span class="live-tag">🔴 AO VIVO AGORA</span>' : ''}
+        ${statusLive ? `<span class="live-tag">${statusLive}</span>` : ''}
         <h3>${item.usuario}</h3>
         <div class="links-plataformas">
-          ${item.tiktok_live ? `<a href="${item.tiktok_live}" target="_blank" class="link-tiktok">🎵 TikTok</a>` : ''}
-          ${item.kako_live ? `<a href="${item.kako_live}" target="_blank" class="link-kako">🔴 Kako Live</a>` : ''}
+          ${temTikTok ? `<a href="${item.tiktok_live}" target="_blank" class="link-tiktok">🎵 TikTok</a>` : ''}
+          ${temKako ? `<a href="${item.kako_live}" target="_blank" class="link-kako">🔴 Kako Live</a>` : ''}
         </div>
       </div>
     </div>`;
