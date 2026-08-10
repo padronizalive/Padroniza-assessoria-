@@ -203,7 +203,7 @@ input[type="file"]{background:transparent;border:none;padding:5px;color:var(--cy
     <div id="meulive" class="tab-content">
       <div class="card">
         <h2 style="color:var(--pink);text-align:center;">⚙️ Configurar Minha Live</h2>
-        <p style="text-align:center;color:var(--muted);margin-bottom:10px;">Cadastre uma vez só — seus dados ficam salvos para sempre!</p>
+        <p style="text-align:center;color:var(--muted);margin-bottom:10px;">Cadastre uma vez só — seus dados ficam salvos automaticamente!</p>
 
         <!-- PLATAFORMA TIKTOK -->
         <div class="plataforma-bloco">
@@ -289,13 +289,16 @@ const ADMIN_EMAIL = 'padronizaassessoria@gmail.com';
 const ADMIN_SENHA = 'agency2026.';
 let perfil = '';
 let dados = {};
-let listaLives = JSON.parse(localStorage.getItem('listaLivesSalvas') || '[]'); // Salva permanentemente
+let listaLives = [];
 let dadosPlanilha = [];
 
-document.addEventListener('DOMContentLoaded', () => {
-  carregarDadosPlanilha();
-  // Carrega dados salvos automaticamente quando entra na página
-  if(perfil === 'agenciado' && dados.usuario) carregarDadosSalvos();
+// Carrega tudo assim que abrir o site
+document.addEventListener('DOMContentLoaded', async () => {
+  await carregarDadosPlanilha();
+  // Recupera lista de lives salva
+  const salva = localStorage.getItem('listaLivesSalvas');
+  if(salva) listaLives = JSON.parse(salva);
+  atualizarListaLives();
 });
 
 async function carregarDadosPlanilha(){
@@ -311,28 +314,29 @@ async function carregarDadosPlanilha(){
       data: linha.c[2]?.v || new Date().toLocaleString('pt-BR')
     })).filter(item => item.usuario);
     
-    console.log('✅ Dados carregados:', dadosPlanilha);
     if(perfil === 'admin') atualizarListaPlanilha();
   }catch(e){
-    console.log('❌ Erro:', e);
-    document.getElementById('lista-planilha').innerHTML = '<p style="color:var(--red);text-align:center">Verifique permissões da planilha!</p>';
+    console.log('❌ Erro na planilha:', e);
   }
 }
 
+// Carrega automaticamente os dados do usuário logado
 function carregarDadosSalvos(){
-  const meuCadastro = listaLives.find(l => l.nome === dados.usuario);
-  if(meuCadastro){
-    document.getElementById('tiktok-perfil').value = meuCadastro.tiktokPerfil || '';
-    document.getElementById('tiktok-live').value = meuCadastro.tiktokLive || '';
-    document.getElementById('kaku-perfil').value = meuCadastro.kakuPerfil || '';
-    document.getElementById('kaku-live').value = meuCadastro.kakuLive || '';
-    document.getElementById('link-capa').value = meuCadastro.capa || '';
-    document.getElementById('estou-ao-vivo').checked = meuCadastro.aoVivo || false;
-    if(meuCadastro.capa && !meuCadastro.capa.startsWith('data:')){
-      const preview = document.getElementById('preview-capa');
-      preview.src = meuCadastro.capa;
-      preview.classList.add('preview-mostrar');
-    }
+  if(!dados.usuario) return;
+  const cadastro = listaLives.find(l => l.nome === dados.usuario);
+  if(!cadastro) return;
+
+  document.getElementById('tiktok-perfil').value = cadastro.tiktokPerfil || '';
+  document.getElementById('tiktok-live').value = cadastro.tiktokLive || '';
+  document.getElementById('kaku-perfil').value = cadastro.kakuPerfil || '';
+  document.getElementById('kaku-live').value = cadastro.kakuLive || '';
+  document.getElementById('link-capa').value = cadastro.capa || '';
+  document.getElementById('estou-ao-vivo').checked = cadastro.aoVivo || false;
+  
+  if(cadastro.capa && !cadastro.capa.startsWith('data:')){
+    const preview = document.getElementById('preview-capa');
+    preview.src = cadastro.capa;
+    preview.classList.add('preview-mostrar');
   }
 }
 
@@ -400,7 +404,6 @@ async function verificarAcesso(){
   const aprovado = dadosPlanilha.some(i => i.usuario === usuario && i.status === 'Aprovado');
   
   if(!aprovado){
-    console.log('❌ Buscado:', usuario, 'Lista:', dadosPlanilha.map(i=>i.usuario));
     return alert('⚠️ Seu acesso ainda não foi aprovado! Verifique o nome exato ou aguarde a confirmação.');
   }
   
@@ -409,8 +412,8 @@ async function verificarAcesso(){
   document.getElementById('loginPage').style.display='none';
   document.getElementById('mainPage').style.display='block';
   atualizarTela();
-  // Carrega dados salvos automaticamente ao entrar
-  setTimeout(carregarDadosSalvos, 300);
+  // Carrega os dados salvos logo após entrar
+  setTimeout(carregarDadosSalvos, 200);
 }
 
 function escolher(tipo){
@@ -487,7 +490,7 @@ function atualizarTela(){
 
   if(perfil === 'agenciado'){
     tag.innerText = '🟢 AGENCIADO'; tag.className = 'perfil-tag tag-agenciado';
-    msg.innerHTML = `Olá <strong>${dados.usuario}</strong>! Seus dados ficam salvos para sempre — só precisa marcar quando estiver ao vivo!`;
+    msg.innerHTML = `Olá <strong>${dados.usuario}</strong>! Seus dados ficam salvos — só marque quando estiver ao vivo!`;
   } else if(perfil === 'visitante'){
     tag.innerText = '🔵 VISITANTE'; tag.className = 'perfil-tag tag-visitante';
     msg.innerHTML = `Olá <strong>${dados.nome}</strong>! Escolha uma opção para acesso completo.`;
@@ -511,27 +514,31 @@ function salvarLive(){
 
   if(!tiktokPerfil && !kakuPerfil) return alert('⚠️ Preencha pelo menos um perfil!');
   
-  // Remove cadastro antigo e salva o novo
-  listaLives = listaLives.filter(l => l.nome !== nome);
-  listaLives.push({
-    nome, tiktokPerfil, tiktokLive, kakuPerfil, kakuLive, capa:capaFinal, aoVivo
-  });
+  // Atualiza ou adiciona o cadastro
+  const indice = listaLives.findIndex(l => l.nome === nome);
+  const novoCadastro = {nome, tiktokPerfil, tiktokLive, kakuPerfil, kakuLive, capa:capaFinal, aoVivo};
   
-  // Salva permanentemente no navegador
+  if(indice >= 0) listaLives[indice] = novoCadastro;
+  else listaLives.push(novoCadastro);
+  
+  // Salva de forma segura
   localStorage.setItem('listaLivesSalvas', JSON.stringify(listaLives));
   
-  alert('✅ Salvo! Seus dados ficarão guardados para sempre — só ajuste o status quando for transmitir!');
+  alert('✅ Salvo com sucesso! Agora sempre que voltar, seus dados já estarão aqui.');
   atualizarListaLives();
 }
 
 function atualizarListaLives(){
   const container = document.getElementById('lista-lives');
-  if(listaLives.filter(l=>l.aoVivo).length === 0){
+  const aoVivoAgora = listaLives.filter(l => l.aoVivo);
+  
+  if(aoVivoAgora.length === 0){
     container.innerHTML = '<p style="grid-column:1/-1;text-align:center;color:var(--muted)">Nenhuma live no momento.</p>';
     return;
   }
+  
   container.innerHTML = '';
-  listaLives.filter(l=>l.aoVivo).forEach(l => {
+  aoVivoAgora.forEach(l => {
     container.innerHTML += `
     <div class="live-card">
       <img src="${l.capa || 'https://via.placeholder.com/400x180/17213a/f7f9ff?text=Transmissão+Ao+Vivo'}" class="live-capa" alt="Capa da live">
@@ -550,8 +557,8 @@ function atualizarListaLives(){
 function abrir(id){
   document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
   document.getElementById(id).classList.add('active');
-  // Se abrir a página de configuração, carrega os dados salvos
-  if(id === 'meulive' && perfil === 'agenciado' && dados.usuario) carregarDadosSalvos();
+  // Carrega dados automaticamente quando abrir a página de configuração
+  if(id === 'meulive' && perfil === 'agenciado') carregarDadosSalvos();
 }
 
 function sair(){
