@@ -28,13 +28,12 @@ body{background:var(--bg);color:var(--text);min-height:100vh}
 .btn.orange{background:var(--orange);color:#fff}
 .btn.primary{background:linear-gradient(135deg,var(--pink),var(--violet));color:#fff;margin-top:8px}
 .btn.small{width:auto;padding:10px 15px;font-size:14px;margin-top:10px}
-.btn.copiar{background:var(--cyan);color:#000;padding:8px 12px;font-size:13px;margin-top:5px}
+.btn.copiar{background:var(--cyan);color:#000;padding:12px;font-size:16px;font-weight:bold;margin-top:10px}
 .btn.whatsapp{background:#25d366;color:#fff;padding:10px 15px;font-size:14px;margin-top:8px}
 .link{text-align:center;margin-top:10px;font-size:14px;color:var(--cyan);cursor:pointer}
 .aviso{padding:12px;border-radius:8px;margin:15px 0;font-size:14px}
 .aviso.agenciado{background:rgba(52,211,153,0.1);border:1px solid var(--green);color:var(--green)}
 .aviso.visitante{background:rgba(59,130,246,0.1);border:1px solid var(--blue);color:var(--blue)}
-.aviso.destaque{background:rgba(52,211,153,0.15);border:1px dashed var(--green);color:var(--green);font-weight:bold;text-align:center;padding:15px;border-radius:10px}
 .aviso.pix{background:rgba(255,200,87,0.1);border:1px solid var(--gold);color:var(--gold);text-align:center;padding:15px;border-radius:10px}
 .plano-card{background:rgba(59,130,246,0.08);border:2px solid var(--blue);border-radius:12px;padding:20px;margin:15px 0;text-align:center}
 .plano-card h3{color:var(--blue);margin-bottom:10px}
@@ -42,9 +41,7 @@ body{background:var(--bg);color:var(--text);min-height:100vh}
 .texto-mensal{font-size:15px;font-weight:bold;color:var(--text);margin-bottom:10px}
 .bloco-agenciamento{background:rgba(52,211,153,0.08);border:2px solid var(--green);border-radius:12px;padding:20px;margin:20px 0;text-align:center}
 .bloco-agenciamento h3{color:var(--green);margin-bottom:10px}
-.qr-area{margin:15px auto;background:#fff;padding:15px;border-radius:10px;max-width:220px;text-align:center}
-.qr-area img{width:100%;border-radius:4px}
-.codigo-pix{background:#0c1325;padding:10px;border-radius:6px;font-size:10px;word-break:break-all;margin-top:10px;text-align:left}
+.codigo-pix{background:#0c1325;padding:12px;border-radius:8px;font-size:11px;word-break:break-all;margin-top:10px;text-align:left;border:1px solid var(--line)}
 .live-card{background:var(--panel2);border-radius:12px;overflow:hidden;margin-bottom:15px;border:1px solid var(--line)}
 .live-capa{width:100%;height:180px;object-fit:cover;background:#222}
 .live-info{padding:15px}
@@ -102,7 +99,7 @@ body{background:var(--bg);color:var(--text);min-height:100vh}
     <div id="form-visitante" style="display:none">
       <div class="aviso visitante">ℹ️ Escolha a melhor opção para você:</div>
       
-      <!-- OPÇÃO 1: ASSINAR POR R$9,99 - CÓDIGO EXATO DO BANCO INTER -->
+      <!-- OPÇÃO 1: ASSINAR POR R$9,99 -->
       <div class="plano-card">
         <h3>Acesse todos os serviços sem precisar ser agenciado</h3>
         <div class="valor-plano">R$ 9,99</div>
@@ -110,18 +107,16 @@ body{background:var(--bg);color:var(--text);min-height:100vh}
         <p>Tudo incluso: músicas, artes, agendamento de batalhas e muito mais!</p>
 
         <div class="aviso pix">
-          <strong>Recebedor:</strong> Padroniza Assessoria<br>
-          <strong>Chave PIX:</strong> padronizaassessoria@gmail.com
+          <strong>Recebedor:</strong> Marcos G da Silva / Padroniza Assessoria<br>
+          <strong>Valor:</strong> R$ 9,99
         </div>
 
-        <!-- QR Code com código oficial do seu Banco Inter -->
-        <div class="qr-area">
-          <img src="https://chart.googleapis.com/chart?chs=220x220&cht=qr&chl=00020101021126970014br.gov.bcb.pix0136cb28ba3e-d5f2-4c9b-94c9-209726389efc0235Assinatura%20Mensal%20Padroniza%20Assesso52040000530398654049.995802BR5917MARCOS%20G%20DA%20SILVA6007VILHENA62070503***6304FD63" alt="QR Code PIX R$9,99">
-          <p style="color:#000;font-size:14px;margin-top:5px">Aponte a câmera — valor já preenchido</p>
-          <p style="color:#d32f2f;font-size:12px;margin-top:5px">⚠️ Se o QR Code não funcionar, use o botão abaixo para copiar</p>
+        <div style="background:#fff;padding:15px;border-radius:10px;margin:15px 0">
+          <p style="color:#000;text-align:center;margin-bottom:8px;font-weight:bold">⚠️ RECOMENDAÇÃO: Use o botão abaixo para copiar o código — funciona SEMPRE!</p>
+          <p style="color:#d32f2f;text-align:center;font-size:13px">Se o QR Code apresentar erro, o método de copiar e colar é garantido pelo Banco Central.</p>
         </div>
 
-        <!-- Código Copia e Cola exato do seu Banco Inter -->
+        <!-- Código Copia e Cola EXATO do seu Banco Inter -->
         <div class="codigo-pix" id="codigoPix">
 00020101021126970014br.gov.bcb.pix0136cb28ba3e-d5f2-4c9b-94c9-209726389efc0235Assinatura Mensal Padroniza Assesso52040000530398654049.995802BR5917MARCOS G DA SILVA6007VILHENA62070503***6304FD63
         </div>
@@ -276,7 +271,7 @@ function mostrarAdmin(){
 function copiarPix(){
   const codigo = document.getElementById('codigoPix').innerText.trim();
   navigator.clipboard.writeText(codigo).then(()=>{
-    alert('✅ Código PIX copiado! Valor R$9,99. Gerado diretamente pelo Banco Inter!');
+    alert('✅ Código PIX copiado! Valor R$9,99. Basta colar no app do seu banco!');
   }).catch(()=>{
     alert('Não foi possível copiar automaticamente. Selecione e copie o código manualmente.');
   });
