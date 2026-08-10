@@ -22,7 +22,7 @@ body{background:var(--bg);color:var(--text);min-height:100vh}
 .field{margin-bottom:15px}
 .field label{display:block;color:var(--muted);font-size:14px;margin-bottom:5px}
 .field input, .field textarea{width:100%;padding:12px;border-radius:8px;background:#0c1325;border:1px solid var(--line);color:#fff}
-input[type="file"]{background:transparent;border:none;padding:5px;color:var(--cyan)}
+input[type="file"]{background:transparent;border:none;padding:5px;color:var(--cyan);font-size:14px}
 .btn{width:100%;padding:12px;border-radius:8px;font-weight:bold;border:0;cursor:pointer}
 .btn.green{background:var(--green);color:#000}
 .btn.blue{background:var(--blue);color:#fff}
@@ -49,7 +49,7 @@ input[type="file"]{background:transparent;border:none;padding:5px;color:var(--cy
 .live-tag{display:inline-block;background:var(--red);color:#fff;padding:4px 8px;border-radius:4px;font-size:12px;font-weight:bold;margin-bottom:8px}
 .botao-oculto{display:none;margin-top:15px}
 .mostrar{display:block}
-.preview-capa{width:100%;height:140px;object-fit:cover;border-radius:8px;margin:8px 0;border:2px dashed var(--line);display:none}
+.preview-capa{width:100%;max-height:160px;object-fit:cover;border-radius:8px;margin:8px 0;border:2px dashed var(--line);display:none}
 .preview-mostrar{display:block}
 
 #mainPage{display:none}
@@ -90,7 +90,6 @@ input[type="file"]{background:transparent;border:none;padding:5px;color:var(--cy
       <button class="tipo-btn visitante" id="btn-visitante" onclick="escolher('visitante')">🔵 Não Sou Agenciado</button>
     </div>
 
-    <!-- SOU AGENCIADO - TUDO GRÁTIS -->
     <div id="form-agenciado" style="display:none">
       <div class="aviso agenciado">✅ Todos os serviços são 100% GRÁTIS para você!</div>
       <div class="field">
@@ -100,11 +99,9 @@ input[type="file"]{background:transparent;border:none;padding:5px;color:var(--cy
       <button class="btn green" onclick="entrar('agenciado')">Continuar</button>
     </div>
 
-    <!-- NÃO SOU AGENCIADO - OPÇÕES -->
     <div id="form-visitante" style="display:none">
       <div class="aviso visitante">ℹ️ Escolha a melhor opção para você:</div>
       
-      <!-- OPÇÃO 1: ASSINAR -->
       <div class="plano-card">
         <h3>Acesse todos os serviços sem precisar ser agenciado</h3>
         <div class="valor-plano">R$ 9,99</div>
@@ -126,7 +123,6 @@ input[type="file"]{background:transparent;border:none;padding:5px;color:var(--cy
         <button class="btn copiar" onclick="copiarPix()">📋 Copiar Código PIX</button>
       </div>
 
-      <!-- OPÇÃO 2: SER AGENCIADO -->
       <div class="bloco-agenciamento">
         <h3>🌟 QUERO SER AGENCIADO!</h3>
         <p style="margin-bottom:15px">Ao se agenciar, você ganha acesso a <strong>TODOS os serviços GRATUITAMENTE</strong>!</p>
@@ -290,7 +286,6 @@ function mostrarBotaoComprovante(){
   alert('✅ Perfeito! Agora envie o comprovante para liberarmos seu acesso rapidinho.');
 }
 
-// FUNÇÃO PARA CARREGAR FOTO DA GALERIA
 function carregarCapa(input){
   if (input.files && input.files[0]) {
     const leitor = new FileReader();
@@ -351,7 +346,6 @@ function salvarLive(){
   let linkCapa = document.getElementById('link-capa').value.trim();
   let aoVivo = document.getElementById('estou-ao-vivo').checked;
   
-  // Usa a foto carregada ou o link informado
   let capaFinal = dados.capaArquivo || linkCapa || '';
 
   if(!linkPerfil) return alert('⚠️ Coloque o link do seu perfil!');
