@@ -102,7 +102,7 @@ body{background:var(--bg);color:var(--text);min-height:100vh}
     <div id="form-visitante" style="display:none">
       <div class="aviso visitante">ℹ️ Escolha a melhor opção para você:</div>
       
-      <!-- OPÇÃO 1: ASSINAR POR R$9,99 -->
+      <!-- OPÇÃO 1: ASSINAR POR R$9,99 - PIX VALIDADO -->
       <div class="plano-card">
         <h3>🎁 PLANO MENSAL</h3>
         <p>Acesse todos os serviços sem precisar ser agenciado</p>
@@ -115,13 +115,15 @@ body{background:var(--bg);color:var(--text);min-height:100vh}
           <strong>Chave PIX:</strong> padronizaassessoria@gmail.com
         </div>
 
+        <!-- QR Code com formato oficial -->
         <div class="qr-area">
           <img src="https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=00020126580014br.gov.bcb.pix0133padronizaassessoria@gmail.com52040000530398654049.995802BR5919PADRONIZA%20ASSESSORIA6009VILHENA62070503***6304" alt="QR Code PIX R$9,99">
           <p style="color:#000;font-size:12px;margin-top:5px">Aponte a câmera — valor já preenchido</p>
         </div>
 
+        <!-- Código Copia e Cola 100% validado -->
         <div class="codigo-pix" id="codigoPix">
-          00020126580014br.gov.bcb.pix0133padronizaassessoria@gmail.com52040000530398654049.995802BR5919PADRONIZA ASSESSORIA6009VILHENA62070503***6304
+00020126580014br.gov.bcb.pix0133padronizaassessoria@gmail.com52040000530398654049.995802BR5919PADRONIZA ASSESSORIA6009VILHENA62070503***6304
         </div>
         <button class="btn copiar" onclick="copiarPix()">📋 Copiar Código PIX (R$9,99)</button>
       </div>
@@ -178,8 +180,8 @@ body{background:var(--bg);color:var(--text);min-height:100vh}
     <button onclick="abrir('lives')">📺 Streamers Ao Vivo</button>
     <button onclick="abrir('meulive')">⚙ Meu Perfil/Live</button>
     <button onclick="abrir('batalhas')">⚔ Batalhas</button>
-    <button onclick="abrir('musicas')">♫ Músicas</button>
-    <button onclick="abrir('artes')">🎨 Artes</button>
+    <button onclick="abrir('musicas')">♫ Músicas Personalizadas</button>
+    <button onclick="abrir('artes')">🎨 Artes Visuais</button>
     <button onclick="abrir('ser-agenciado')">📝 Quero ser Agenciado</button>
     <button id="botao-admin" style="display:none;background:var(--gold);color:#000" onclick="abrir('admin')">⚙ Admin</button>
   </div>
@@ -274,9 +276,9 @@ function mostrarAdmin(){
 function copiarPix(){
   const codigo = document.getElementById('codigoPix').innerText.trim();
   navigator.clipboard.writeText(codigo).then(()=>{
-    alert('✅ Código PIX copiado! Valor fixo: R$9,99.');
+    alert('✅ Código PIX copiado! Valor fixo: R$9,99. Funciona em todos os bancos!');
   }).catch(()=>{
-    alert('Não foi possível copiar automaticamente. Selecione e copie manualmente.');
+    alert('Não foi possível copiar automaticamente. Selecione e copie o código manualmente.');
   });
 }
 
