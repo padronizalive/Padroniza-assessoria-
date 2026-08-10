@@ -52,9 +52,7 @@ input[type="file"]{background:transparent;border:none;padding:5px;color:var(--cy
 .links-plataformas{margin-top:10px;display:flex;gap:8px;flex-wrap:wrap}
 .links-plataformas a{flex:1;min-width:120px;padding:8px 10px;border-radius:6px;text-decoration:none;text-align:center;font-size:13px;font-weight:bold}
 .link-tiktok{background:#000;color:#fff;border:1px solid #25f4ee}
-.link-kaku{background:#ff4d6d;color:#fff;border:1px solid #ff9f43}
-.botao-oculto{display:none;margin-top:15px}
-.mostrar{display:block}
+.link-kako{background:#ff4d6d;color:#fff;border:1px solid #ff9f43}
 .preview-capa{width:100%;max-height:160px;object-fit:cover;border-radius:8px;margin:8px 0;border:2px dashed var(--line);display:none}
 .preview-mostrar{display:block}
 .aviso-solicitacao{background:rgba(52,211,153,0.08);border:1px solid var(--green);color:var(--green);padding:12px;border-radius:8px;margin-bottom:15px;text-align:center}
@@ -142,7 +140,7 @@ input[type="file"]{background:transparent;border:none;padding:5px;color:var(--cy
         <p style="margin-bottom:15px">Ao se agenciar, você ganha acesso a <strong>TODOS os serviços GRATUITAMENTE</strong>!</p>
         <a href="https://www.tiktok.com/t/ZSHu6CFAM/" target="_blank" class="btn primary">🔗 Link para se inscrever no TikTok</a>
         <div style="background:#0c1325;padding:12px;border-radius:8px;font-weight:bold;font-size:16px;margin-top:10px">
-          ID Agência Kaku Live: <span style="color:var(--gold)">177766</span>
+          ID Agência Kako Live: <span style="color:var(--gold)">177766</span>
         </div>
         <a href="https://wa.me/5569981478873" target="_blank" class="btn whatsapp" style="margin-top:10px">💬 Fale conosco</a>
       </div>
@@ -195,7 +193,7 @@ input[type="file"]{background:transparent;border:none;padding:5px;color:var(--cy
       <div class="card">
         <h2>📺 Lives ao Vivo</h2>
         <div id="lista-lives" class="grid">
-          <p style="grid-column:1/-1;text-align:center;color:var(--muted)">Nenhuma live no momento.</p>
+          <p style="grid-column:1/-1;text-align:center;color:var(--muted)">Carregando...</p>
         </div>
       </div>
     </div>
@@ -203,9 +201,8 @@ input[type="file"]{background:transparent;border:none;padding:5px;color:var(--cy
     <div id="meulive" class="tab-content">
       <div class="card">
         <h2 style="color:var(--pink);text-align:center;">⚙️ Configurar Minha Live</h2>
-        <p style="text-align:center;color:var(--muted);margin-bottom:10px;">Cadastre uma vez só — seus dados ficam salvos automaticamente!</p>
+        <p style="text-align:center;color:var(--muted);margin-bottom:10px;">Dados salvos automaticamente na planilha — funciona em qualquer aparelho!</p>
 
-        <!-- PLATAFORMA TIKTOK -->
         <div class="plataforma-bloco">
           <h3 style="color:#25f4ee;">🎵 TikTok</h3>
           <div class="field">
@@ -213,25 +210,23 @@ input[type="file"]{background:transparent;border:none;padding:5px;color:var(--cy
             <input id="tiktok-perfil" placeholder="Ex: https://tiktok.com/@seuperfil">
           </div>
           <div class="field">
-            <label>Link da live (se tiver)</label>
+            <label>Link da live</label>
             <input id="tiktok-live" placeholder="Cole aqui o link da transmissão">
           </div>
         </div>
 
-        <!-- PLATAFORMA KAKU LIVE -->
         <div class="plataforma-bloco">
-          <h3 style="color:#ff9f43;">🔴 Kaku Live</h3>
+          <h3 style="color:#ff9f43;">🔴 Kako Live</h3>
           <div class="field">
             <label>ID ou nome do perfil *</label>
-            <input id="kaku-perfil" placeholder="Ex: 177766 ou @seuperfil">
+            <input id="kako-perfil" placeholder="Ex: 177766 ou @seuperfil">
           </div>
           <div class="field">
-            <label>Link da live (se tiver)</label>
-            <input id="kaku-live" placeholder="Link ou código da transmissão">
+            <label>Link da live</label>
+            <input id="kako-live" placeholder="Link ou código da transmissão">
           </div>
         </div>
 
-        <!-- CAPA E STATUS -->
         <div class="field">
           <label>📷 Capa da transmissão:</label>
           <input type="file" id="capa-arquivo" accept="image/*" onchange="carregarCapa(this)">
@@ -244,7 +239,7 @@ input[type="file"]{background:transparent;border:none;padding:5px;color:var(--cy
           <input type="checkbox" id="estou-ao-vivo" style="width:auto;">
           <label for="estou-ao-vivo" style="color:var(--green);font-weight:bold;">✅ Estou AO VIVO AGORA!</label>
         </div>
-        <p class="aviso-lembrete">💡 Marque só quando começar, desmarque quando terminar — seus dados continuam salvos!</p>
+        <p class="aviso-lembrete">💡 Marque só quando começar, desmarque quando terminar — dados ficam salvos na nuvem!</p>
 
         <button class="btn primary" onclick="salvarLive()">💾 Salvar Dados</button>
       </div>
@@ -256,7 +251,7 @@ input[type="file"]{background:transparent;border:none;padding:5px;color:var(--cy
     <div id="ser-agenciado" class="tab-content">
       <div class="card">
         <h2>Quero ser Agenciado</h2>
-        <p>ID Kaku Live: <strong>177766</strong></p>
+        <p>ID Kako Live: <strong>177766</strong></p>
         <a href="https://www.tiktok.com/t/ZSHu6CFAM/" target="_blank" class="btn primary">Link do TikTok</a>
         <a href="https://wa.me/5569981478873" target="_blank" class="btn whatsapp">Falar com a gente</a>
       </div>
@@ -289,16 +284,10 @@ const ADMIN_EMAIL = 'padronizaassessoria@gmail.com';
 const ADMIN_SENHA = 'agency2026.';
 let perfil = '';
 let dados = {};
-let listaLives = [];
 let dadosPlanilha = [];
 
-// Carrega tudo assim que abrir o site
 document.addEventListener('DOMContentLoaded', async () => {
   await carregarDadosPlanilha();
-  // Recupera lista de lives salva
-  const salva = localStorage.getItem('listaLivesSalvas');
-  if(salva) listaLives = JSON.parse(salva);
-  atualizarListaLives();
 });
 
 async function carregarDadosPlanilha(){
@@ -311,27 +300,33 @@ async function carregarDadosPlanilha(){
     dadosPlanilha = json.table.rows.map(linha => ({
       usuario: (linha.c[0]?.v || '').trim().toLowerCase(),
       status: (linha.c[1]?.v || 'Pendente').trim(),
-      data: linha.c[2]?.v || new Date().toLocaleString('pt-BR')
+      data: linha.c[2]?.v || new Date().toLocaleString('pt-BR'),
+      tiktok_perfil: linha.c[3]?.v || '',
+      tiktok_live: linha.c[4]?.v || '',
+      kako_perfil: linha.c[5]?.v || '',
+      kako_live: linha.c[6]?.v || '',
+      capa: linha.c[7]?.v || '',
+      esta_ao_vivo: String(linha.c[8]?.v || 'false').toLowerCase() === 'true'
     })).filter(item => item.usuario);
     
+    atualizarListaLives();
     if(perfil === 'admin') atualizarListaPlanilha();
   }catch(e){
-    console.log('❌ Erro na planilha:', e);
+    console.log('❌ Erro:', e);
   }
 }
 
-// Carrega automaticamente os dados do usuário logado
 function carregarDadosSalvos(){
   if(!dados.usuario) return;
-  const cadastro = listaLives.find(l => l.nome === dados.usuario);
+  const cadastro = dadosPlanilha.find(l => l.usuario === dados.usuario);
   if(!cadastro) return;
 
-  document.getElementById('tiktok-perfil').value = cadastro.tiktokPerfil || '';
-  document.getElementById('tiktok-live').value = cadastro.tiktokLive || '';
-  document.getElementById('kaku-perfil').value = cadastro.kakuPerfil || '';
-  document.getElementById('kaku-live').value = cadastro.kakuLive || '';
+  document.getElementById('tiktok-perfil').value = cadastro.tiktok_perfil || '';
+  document.getElementById('tiktok-live').value = cadastro.tiktok_live || '';
+  document.getElementById('kako-perfil').value = cadastro.kako_perfil || '';
+  document.getElementById('kako-live').value = cadastro.kako_live || '';
   document.getElementById('link-capa').value = cadastro.capa || '';
-  document.getElementById('estou-ao-vivo').checked = cadastro.aoVivo || false;
+  document.getElementById('estou-ao-vivo').checked = cadastro.esta_ao_vivo || false;
   
   if(cadastro.capa && !cadastro.capa.startsWith('data:')){
     const preview = document.getElementById('preview-capa');
@@ -384,7 +379,8 @@ function liberarAcesso(){
   dadosPlanilha.push({
     usuario: usuario,
     status: 'Aprovado',
-    data: new Date().toLocaleString('pt-BR')
+    data: new Date().toLocaleString('pt-BR'),
+    tiktok_perfil:'', tiktok_live:'', kako_perfil:'', kako_live:'', capa:'', esta_ao_vivo:false
   });
   atualizarListaPlanilha();
   const msg = encodeURIComponent(`✅ Olá ${usuario}! Seu acesso foi APROVADO! Agora você pode entrar normalmente no portal. Bem-vindo(a)!`);
@@ -401,7 +397,7 @@ async function verificarAcesso(){
   
   await carregarDadosPlanilha();
   
-  const aprovado = dadosPlanilha.some(i => i.usuario === usuario && i.status === 'Aprovado');
+  const aprovado = dadosPlanilha.some(i => i.usuario === usuario && i.status.trim() === 'Aprovado');
   
   if(!aprovado){
     return alert('⚠️ Seu acesso ainda não foi aprovado! Verifique o nome exato ou aguarde a confirmação.');
@@ -412,7 +408,6 @@ async function verificarAcesso(){
   document.getElementById('loginPage').style.display='none';
   document.getElementById('mainPage').style.display='block';
   atualizarTela();
-  // Carrega os dados salvos logo após entrar
   setTimeout(carregarDadosSalvos, 200);
 }
 
@@ -445,7 +440,8 @@ function enviarSolicitacao(){
   dadosPlanilha.push({
     usuario: usuario,
     status: 'Pendente',
-    data: new Date().toLocaleString('pt-BR')
+    data: new Date().toLocaleString('pt-BR'),
+    tiktok_perfil:'', tiktok_live:'', kako_perfil:'', kako_live:'', capa:'', esta_ao_vivo:false
   });
   
   const mensagem = encodeURIComponent(`🔔 NOVA SOLICITAÇÃO!\nUsuário: ${usuario}\nData: ${new Date().toLocaleString('pt-BR')}\nPor favor, analisar no Painel Admin.`);
@@ -473,7 +469,6 @@ function entrar(tipo){
     let e = document.getElementById('email-admin').value.trim();
     let s = document.getElementById('senha-admin').value;
     if(e !== ADMIN_EMAIL || s !== ADMIN_SENHA) return alert('❌ Dados de admin incorretos!');
-    carregarDadosPlanilha();
   } else if(tipo === 'visitante'){
     dados.nome = document.getElementById('nome-vis').value.trim();
     if(!dados.nome) return alert('Digite seu nome!');
@@ -490,7 +485,7 @@ function atualizarTela(){
 
   if(perfil === 'agenciado'){
     tag.innerText = '🟢 AGENCIADO'; tag.className = 'perfil-tag tag-agenciado';
-    msg.innerHTML = `Olá <strong>${dados.usuario}</strong>! Seus dados ficam salvos — só marque quando estiver ao vivo!`;
+    msg.innerHTML = `Olá <strong>${dados.usuario}</strong>! Seus dados ficam salvos na planilha e aparecem em qualquer aparelho!`;
   } else if(perfil === 'visitante'){
     tag.innerText = '🔵 VISITANTE'; tag.className = 'perfil-tag tag-visitante';
     msg.innerHTML = `Olá <strong>${dados.nome}</strong>! Escolha uma opção para acesso completo.`;
@@ -500,37 +495,43 @@ function atualizarTela(){
   }
 }
 
-function salvarLive(){
+async function salvarLive(){
   if(perfil !== 'agenciado') return alert('❌ Essa função é só para agenciados aprovados!');
   
   const nome = dados.usuario;
   const tiktokPerfil = document.getElementById('tiktok-perfil').value.trim();
   const tiktokLive = document.getElementById('tiktok-live').value.trim();
-  const kakuPerfil = document.getElementById('kaku-perfil').value.trim();
-  const kakuLive = document.getElementById('kaku-live').value.trim();
+  const kakoPerfil = document.getElementById('kako-perfil').value.trim();
+  const kakoLive = document.getElementById('kako-live').value.trim();
   const linkCapa = document.getElementById('link-capa').value.trim();
   const aoVivo = document.getElementById('estou-ao-vivo').checked;
   const capaFinal = dados.capaArquivo || linkCapa || '';
 
-  if(!tiktokPerfil && !kakuPerfil) return alert('⚠️ Preencha pelo menos um perfil!');
+  if(!tiktokPerfil && !kakoPerfil) return alert('⚠️ Preencha pelo menos um perfil!');
   
-  // Atualiza ou adiciona o cadastro
-  const indice = listaLives.findIndex(l => l.nome === nome);
-  const novoCadastro = {nome, tiktokPerfil, tiktokLive, kakuPerfil, kakuLive, capa:capaFinal, aoVivo};
-  
-  if(indice >= 0) listaLives[indice] = novoCadastro;
-  else listaLives.push(novoCadastro);
-  
-  // Salva de forma segura
-  localStorage.setItem('listaLivesSalvas', JSON.stringify(listaLives));
-  
-  alert('✅ Salvo com sucesso! Agora sempre que voltar, seus dados já estarão aqui.');
+  const indice = dadosPlanilha.findIndex(i => i.usuario === nome);
+  if(indice >= 0){
+    dadosPlanilha[indice].tiktok_perfil = tiktokPerfil;
+    dadosPlanilha[indice].tiktok_live = tiktokLive;
+    dadosPlanilha[indice].kako_perfil = kakoPerfil;
+    dadosPlanilha[indice].kako_live = kakoLive;
+    dadosPlanilha[indice].capa = capaFinal;
+    dadosPlanilha[indice].esta_ao_vivo = aoVivo;
+  } else {
+    dadosPlanilha.push({
+      usuario:nome, status:'Aprovado', data:new Date().toLocaleString('pt-BR'),
+      tiktok_perfil:tiktokPerfil, tiktok_live:tiktokLive, kako_perfil:kakoPerfil, kako_live:kakoLive,
+      capa:capaFinal, esta_ao_vivo:aoVivo
+    });
+  }
+
+  alert('✅ Salvo! Agora esses dados estão na planilha e aparecem em qualquer celular ou computador!');
   atualizarListaLives();
 }
 
 function atualizarListaLives(){
   const container = document.getElementById('lista-lives');
-  const aoVivoAgora = listaLives.filter(l => l.aoVivo);
+  const aoVivoAgora = dadosPlanilha.filter(l => l.esta_ao_vivo && l.status.trim() === 'Aprovado');
   
   if(aoVivoAgora.length === 0){
     container.innerHTML = '<p style="grid-column:1/-1;text-align:center;color:var(--muted)">Nenhuma live no momento.</p>';
@@ -544,10 +545,10 @@ function atualizarListaLives(){
       <img src="${l.capa || 'https://via.placeholder.com/400x180/17213a/f7f9ff?text=Transmissão+Ao+Vivo'}" class="live-capa" alt="Capa da live">
       <div class="live-info">
         <span class="live-tag">🔴 AO VIVO</span>
-        <h3>${l.nome}</h3>
+        <h3>${l.usuario}</h3>
         <div class="links-plataformas">
-          ${l.tiktokLive ? `<a href="${l.tiktokLive}" target="_blank" class="link-tiktok">🎵 Assistir TikTok</a>` : l.tiktokPerfil ? `<a href="${l.tiktokPerfil}" target="_blank" class="link-tiktok">🎵 Perfil TikTok</a>` : ''}
-          ${l.kakuLive ? `<a href="${l.kakuLive}" target="_blank" class="link-kaku">🔴 Assistir Kaku</a>` : l.kakuPerfil ? `<a href="${l.kakuPerfil}" target="_blank" class="link-kaku">🔴 Perfil Kaku</a>` : ''}
+          ${l.tiktok_live ? `<a href="${l.tiktok_live}" target="_blank" class="link-tiktok">🎵 Assistir TikTok</a>` : l.tiktok_perfil ? `<a href="${l.tiktok_perfil}" target="_blank" class="link-tiktok">🎵 Perfil TikTok</a>` : ''}
+          ${l.kako_live ? `<a href="${l.kako_live}" target="_blank" class="link-kako">🔴 Assistir Kako</a>` : l.kako_perfil ? `<a href="${l.kako_perfil}" target="_blank" class="link-kako">🔴 Perfil Kako</a>` : ''}
         </div>
       </div>
     </div>`;
@@ -557,7 +558,6 @@ function atualizarListaLives(){
 function abrir(id){
   document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
   document.getElementById(id).classList.add('active');
-  // Carrega dados automaticamente quando abrir a página de configuração
   if(id === 'meulive' && perfil === 'agenciado') carregarDadosSalvos();
 }
 
