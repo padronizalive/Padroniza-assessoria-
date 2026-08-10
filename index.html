@@ -98,13 +98,16 @@ input[type="file"]{background:transparent;border:none;padding:5px;color:var(--cy
 
     <div id="form-agenciado" style="display:none">
       <div class="aviso-solicitacao">
-        ℹ️ Informe seu usuário exatamente como cadastrado. Assim que aprovado, você acessa direto sempre!
+        ℹ️ Se já foi aprovado, basta digitar seu usuário. Se for novo, envie a solicitação que analisamos rapidamente!
       </div>
       <div class="field">
         <label>Nome de usuário / ID da plataforma *</label>
         <input id="usuario-agen" placeholder="Ex: @serenatempesta ou ID Kaku Live">
       </div>
-      <button class="btn green" onclick="enviarSolicitacao()">📤 Enviar Solicitação de Acesso</button>
+      <div style="display:flex;gap:8px;margin-top:10px">
+        <button class="btn green" style="flex:1" onclick="verificarAcesso()">✅ Já fui aprovado</button>
+        <button class="btn primary" style="flex:1" onclick="enviarSolicitacao()">📤 Nova Solicitação</button>
+      </div>
     </div>
 
     <div id="form-visitante" style="display:none">
@@ -229,21 +232,18 @@ input[type="file"]{background:transparent;border:none;padding:5px;color:var(--cy
       </div>
     </div>
 
-    <!-- 🎯 PAINEL ADMIN COM APROVAÇÃO MANUAL -->
     <div id="admin" class="tab-content">
       <div class="card">
         <h2>⚙ Painel Administrativo</h2>
-        
         <div class="field" style="margin-top:20px">
-          <h3 style="margin-bottom:10px;color:var(--green)">✅ Liberar Acesso Manualmente</h3>
-          <input id="novo-aprovado" placeholder="Digite o usuário exato, ex: @serenatempesta">
-          <button class="btn aprovado" onclick="adicionarAprovado()">🔓 Liberar Acesso</button>
+          <h3 style="margin-bottom:10px;color:var(--green)">✅ Liberar Acesso</h3>
+          <input id="novo-aprovado" placeholder="Digite o usuário exato">
+          <button class="btn aprovado" onclick="liberarAcesso()">🔓 Liberar</button>
         </div>
-
         <div class="lista-aprovados">
-          <h3 style="margin-bottom:10px;color:var(--gold)">📋 Lista de Aprovados</h3>
-          <div id="lista-aprovados-corpo">
-            <p style="color:var(--muted);text-align:center">Nenhum usuário aprovado ainda.</p>
+          <h3 style="margin-bottom:10px;color:var(--gold)">📋 Solicitações e Aprovados</h3>
+          <div id="lista-planilha">
+            <p style="color:var(--muted);text-align:center">Carregando dados...</p>
           </div>
         </div>
       </div>
@@ -254,17 +254,93 @@ input[type="file"]{background:transparent;border:none;padding:5px;color:var(--cy
 <a href="https://wa.me/5569981478873" class="whatsapp-fixed" target="_blank">💬</a>
 
 <script>
+const ID_PLANILHA = '1R9eUsqF4kA0y22ryMUIsvGolBfk3-XwZ5R-RVpBiZA4';
+const ADMIN_EMAIL = 'padronizaassessoria@gmail.com';
+const ADMIN_SENHA = 'agency2026.';
 let perfil = '';
 let dados = {};
-const adminEmail = 'padronizaassessoria@gmail.com';
-const adminSenha = 'agency2026.';
 let listaLives = [];
+let dadosPlanilha = [];
 
-// Carrega lista de aprovados salva no navegador
-let aprovados = JSON.parse(localStorage.getItem('aprovadosPadroniza')) || [];
+async function carregarDadosPlanilha(){
+  try{
+    const res = await fetch(`https://docs.google.com/spreadsheets/d/${ID_PLANILHA}/gviz/tq?tqx=out:json`);
+    const texto = await res.text();
+    const json = JSON.parse(texto.substr(47).slice(0,-2));
+    dadosPlanilha = json.table.rows.map(linha => ({
+      usuario: linha.c[0]?.v || '',
+      status: linha.c[1]?.v || 'Pendente',
+      data: linha.c[2]?.v || new Date().toLocaleString('pt-BR')
+    })).filter(item => item.usuario);
+    atualizarListaPlanilha();
+  }catch(e){
+    console.log('Erro ao carregar planilha:', e);
+    document.getElementById('lista-planilha').innerHTML = '<p style="color:var(--red);text-align:center">Erro ao carregar. Verifique as permissões da planilha.</p>';
+  }
+}
 
-function salvarAprovados(){
-  localStorage.setItem('aprovadosPadroniza', JSON.stringify(aprovados));
+function atualizarListaPlanilha(){
+  const container = document.getElementById('lista-planilha');
+  if(dadosPlanilha.length === 0){
+    container.innerHTML = '<p style="color:var(--muted);text-align:center">Nenhum registro encontrado.</p>';
+    return;
+  }
+  container.innerHTML = '';
+  dadosPlanilha.forEach(item => {
+    const corStatus = item.status === 'Aprovado' ? 'color:var(--green)' : item.status === 'Negado' ? 'color:var(--red)' : 'color:var(--gold)';
+    container.innerHTML += `
+    <div class="item-aprovado">
+      <div>
+        <strong>${item.usuario}</strong><br>
+        <small style="${corStatus};font-weight:bold">Status: ${item.status}</small><br>
+        <small style="color:var(--muted)">${item.data}</small>
+      </div>
+      ${item.status === 'Pendente' ? `
+      <div style="display:flex;gap:5px">
+        <button class="btn aprovado small" onclick="definirStatus('${item.usuario}', 'Aprovado')">✅</button>
+        <button class="btn remover small" onclick="definirStatus('${item.usuario}', 'Negado')">❌</button>
+      </div>` : ''}
+    </div>`;
+  });
+}
+
+function definirStatus(usuario, status){
+  const idx = dadosPlanilha.findIndex(i => i.usuario === usuario);
+  if(idx !== -1){
+    dadosPlanilha[idx].status = status;
+    atualizarListaPlanilha();
+    const msg = encodeURIComponent(`✅ Olá ${usuario}! Seu acesso foi ${status.toUpperCase()}! Agora você pode entrar normalmente no portal.`);
+    alert(`✅ Acesso ${status}! Mensagem pronta para enviar.`);
+    window.open(`https://wa.me/5569981478873?text=${msg}`, '_blank');
+  }
+}
+
+function liberarAcesso(){
+  const usuario = document.getElementById('novo-aprovado').value.trim();
+  if(!usuario) return alert('⚠️ Digite o usuário!');
+  if(dadosPlanilha.some(i => i.usuario === usuario)) return alert('⚠️ Esse usuário já está cadastrado!');
+  dadosPlanilha.push({
+    usuario: usuario,
+    status: 'Aprovado',
+    data: new Date().toLocaleString('pt-BR')
+  });
+  atualizarListaPlanilha();
+  const msg = encodeURIComponent(`✅ Olá ${usuario}! Seu acesso foi APROVADO! Agora você pode entrar normalmente no portal. Bem-vindo(a)!`);
+  alert('✅ Acesso liberado! Mensagem pronta para enviar.');
+  window.open(`https://wa.me/5569981478873?text=${msg}`, '_blank');
+  document.getElementById('novo-aprovado').value = '';
+}
+
+function verificarAcesso(){
+  const usuario = document.getElementById('usuario-agen').value.trim();
+  if(!usuario) return alert('⚠️ Digite seu usuário!');
+  const aprovado = dadosPlanilha.some(i => i.usuario === usuario && i.status === 'Aprovado');
+  if(!aprovado) return alert('⚠️ Seu acesso ainda não foi aprovado! Envie a solicitação ou aguarde a confirmação pelo WhatsApp.');
+  dados.usuario = usuario;
+  perfil = 'agenciado';
+  document.getElementById('loginPage').style.display='none';
+  document.getElementById('mainPage').style.display='block';
+  atualizarTela();
 }
 
 function escolher(tipo){
@@ -287,50 +363,18 @@ function copiarPix(){
 }
 
 function enviarSolicitacao(){
-  let usuario = document.getElementById('usuario-agen').value.trim();
+  const usuario = document.getElementById('usuario-agen').value.trim();
   if(!usuario) return alert('⚠️ Digite seu usuário!');
-  
-  const mensagem = encodeURIComponent(`🔔 NOVA SOLICITAÇÃO DE ACESSO!\nUsuário: ${usuario}\nData: ${new Date().toLocaleString('pt-BR')}\nPor favor, libere o acesso no Painel Admin!`);
-  alert('✅ Solicitação enviada! Aguarde a liberação pelo administrador.');
-  window.open(`https://wa.me/5569981478873?text=${mensagem}`, '_blank');
-}
-
-function adicionarAprovado(){
-  let usuario = document.getElementById('novo-aprovado').value.trim();
-  if(!usuario) return alert('⚠️ Digite o nome do usuário!');
-  if(aprovados.includes(usuario)) return alert('✅ Esse usuário já está aprovado!');
-  
-  aprovados.push(usuario);
-  salvarAprovados();
-  atualizarListaAprovados();
-  
-  const aviso = encodeURIComponent(`✅ Olá ${usuario}! Seu acesso foi APROVADO! Agora você pode entrar normalmente no portal. Bem-vindo(a)!`);
-  alert('✅ Acesso liberado! Mensagem pronta para enviar ao streamer.');
-  window.open(`https://wa.me/5569981478873?text=${aviso}`, '_blank');
-  document.getElementById('novo-aprovado').value = '';
-}
-
-function removerAprovado(usuario){
-  if(!confirm(`Tem certeza que deseja remover o acesso de ${usuario}?`)) return;
-  aprovados = aprovados.filter(u => u !== usuario);
-  salvarAprovados();
-  atualizarListaAprovados();
-}
-
-function atualizarListaAprovados(){
-  const container = document.getElementById('lista-aprovados-corpo');
-  if(aprovados.length === 0){
-    container.innerHTML = '<p style="color:var(--muted);text-align:center">Nenhum usuário aprovado ainda.</p>';
-    return;
-  }
-  container.innerHTML = '';
-  aprovados.forEach(u => {
-    container.innerHTML += `
-    <div class="item-aprovado">
-      <span>✅ ${u}</span>
-      <button class="btn remover small" onclick="removerAprovado('${u}')">❌ Remover</button>
-    </div>`;
+  if(dadosPlanilha.some(i => i.usuario === usuario)) return alert('⚠️ Já existe uma solicitação para esse usuário!');
+  dadosPlanilha.push({
+    usuario: usuario,
+    status: 'Pendente',
+    data: new Date().toLocaleString('pt-BR')
   });
+  const mensagem = encodeURIComponent(`🔔 NOVA SOLICITAÇÃO!\nUsuário: ${usuario}\nData: ${new Date().toLocaleString('pt-BR')}\nPor favor, analisar no Painel Admin.`);
+  alert('✅ Solicitação enviada! Aguarde a análise.');
+  window.open(`https://wa.me/5569981478873?text=${mensagem}`, '_blank');
+  atualizarListaPlanilha();
 }
 
 function carregarCapa(input){
@@ -351,19 +395,15 @@ function entrar(tipo){
   if(tipo === 'admin'){
     let e = document.getElementById('email-admin').value.trim();
     let s = document.getElementById('senha-admin').value;
-    if(e !== adminEmail || s !== adminSenha) return alert('❌ Dados de admin incorretos!');
-  } else if(tipo === 'agenciado'){
-    let usuario = document.getElementById('usuario-agen').value.trim();
-    if(!aprovados.includes(usuario)) return alert('⚠️ Seu acesso ainda não foi liberado! Aguarde a confirmação pelo WhatsApp.');
-    dados.usuario = usuario;
-  } else {
+    if(e !== ADMIN_EMAIL || s !== ADMIN_SENHA) return alert('❌ Dados de admin incorretos!');
+    carregarDadosPlanilha();
+  } else if(tipo === 'visitante'){
     dados.nome = document.getElementById('nome-vis').value.trim();
     if(!dados.nome) return alert('Digite seu nome!');
   }
   document.getElementById('loginPage').style.display='none';
   document.getElementById('mainPage').style.display='block';
   atualizarTela();
-  if(tipo === 'admin') atualizarListaAprovados();
 }
 
 function atualizarTela(){
