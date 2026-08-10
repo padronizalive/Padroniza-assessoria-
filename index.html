@@ -32,7 +32,7 @@ input[type="file"]{background:transparent;border:none;padding:5px;color:var(--cy
 .btn.copiar{background:var(--cyan);color:#000;padding:12px;font-size:16px;font-weight:bold;margin-top:10px}
 .btn.whatsapp{background:#25d366;color:#fff;padding:12px 15px;font-size:15px;font-weight:bold;margin-top:10px;border-radius:8px;text-decoration:none;display:inline-block;text-align:center;width:100%}
 .btn.aprovado{background:var(--green);color:#000}
-.btn.negado{background:var(--red);color:#fff}
+.btn.remover{background:var(--red);color:#fff}
 .link{text-align:center;margin-top:10px;font-size:14px;color:var(--cyan);cursor:pointer}
 .aviso{padding:12px;border-radius:8px;margin:15px 0;font-size:14px}
 .aviso.agenciado{background:rgba(52,211,153,0.1);border:1px solid var(--green);color:var(--green)}
@@ -54,10 +54,9 @@ input[type="file"]{background:transparent;border:none;padding:5px;color:var(--cy
 .preview-capa{width:100%;max-height:160px;object-fit:cover;border-radius:8px;margin:8px 0;border:2px dashed var(--line);display:none}
 .preview-mostrar{display:block}
 .aviso-solicitacao{background:rgba(52,211,153,0.08);border:1px solid var(--green);color:var(--green);padding:12px;border-radius:8px;margin-bottom:15px;text-align:center}
-.solicitacao-card{background:var(--panel2);border:1px solid var(--line);border-radius:10px;padding:15px;margin-bottom:12px}
-.status-pendente{color:var(--gold);font-weight:bold}
-.status-aprovado{color:var(--green);font-weight:bold}
-.status-negado{color:var(--red);font-weight:bold}
+.lista-aprovados{background:var(--panel2);border:1px solid var(--line);border-radius:10px;padding:15px;margin-top:15px}
+.item-aprovado{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid var(--line)}
+.item-aprovado:last-child{border-bottom:none}
 
 #mainPage{display:none}
 .header{background:var(--panel);padding:15px 20px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--line)}
@@ -99,13 +98,13 @@ input[type="file"]{background:transparent;border:none;padding:5px;color:var(--cy
 
     <div id="form-agenciado" style="display:none">
       <div class="aviso-solicitacao">
-        ℹ️ Informe seu usuário exatamente como cadastrado. Sua solicitação será analisada antes da liberação.
+        ℹ️ Informe seu usuário exatamente como cadastrado. Assim que aprovado, você acessa direto sempre!
       </div>
       <div class="field">
         <label>Nome de usuário / ID da plataforma *</label>
         <input id="usuario-agen" placeholder="Ex: @serenatempesta ou ID Kaku Live">
       </div>
-      <button class="btn green" onclick="enviarSolicitacao()">📤 Enviar Solicitação</button>
+      <button class="btn green" onclick="enviarSolicitacao()">📤 Enviar Solicitação de Acesso</button>
     </div>
 
     <div id="form-visitante" style="display:none">
@@ -120,10 +119,6 @@ input[type="file"]{background:transparent;border:none;padding:5px;color:var(--cy
         <div class="aviso pix">
           <strong>Recebedor:</strong> Padroniza Assessoria | MEI Marcos Gomes da Silva<br>
           <strong>Valor:</strong> R$ 9,99
-        </div>
-
-        <div style="background:#fff;padding:15px;border-radius:10px;margin:15px 0">
-          <p style="color:#000;text-align:center;margin-bottom:8px;font-weight:bold">⚠️ Se o QR Code não funcionar, use o botão abaixo!</p>
         </div>
 
         <div class="codigo-pix" id="codigoPix">
@@ -234,13 +229,22 @@ input[type="file"]{background:transparent;border:none;padding:5px;color:var(--cy
       </div>
     </div>
 
-    <!-- 🎯 PAINEL DE APROVAÇÃO EXCLUSIVO PARA VOCÊ -->
+    <!-- 🎯 PAINEL ADMIN COM APROVAÇÃO MANUAL -->
     <div id="admin" class="tab-content">
       <div class="card">
         <h2>⚙ Painel Administrativo</h2>
-        <h3 style="margin:15px 0 10px;color:var(--gold)">📋 Solicitações de Acesso</h3>
-        <div id="lista-solicitacoes">
-          <p style="text-align:center;color:var(--muted)">Nenhuma solicitação no momento.</p>
+        
+        <div class="field" style="margin-top:20px">
+          <h3 style="margin-bottom:10px;color:var(--green)">✅ Liberar Acesso Manualmente</h3>
+          <input id="novo-aprovado" placeholder="Digite o usuário exato, ex: @serenatempesta">
+          <button class="btn aprovado" onclick="adicionarAprovado()">🔓 Liberar Acesso</button>
+        </div>
+
+        <div class="lista-aprovados">
+          <h3 style="margin-bottom:10px;color:var(--gold)">📋 Lista de Aprovados</h3>
+          <div id="lista-aprovados-corpo">
+            <p style="color:var(--muted);text-align:center">Nenhum usuário aprovado ainda.</p>
+          </div>
         </div>
       </div>
     </div>
@@ -255,7 +259,13 @@ let dados = {};
 const adminEmail = 'padronizaassessoria@gmail.com';
 const adminSenha = 'agency2026.';
 let listaLives = [];
-let solicitacoes = [];
+
+// Carrega lista de aprovados salva no navegador
+let aprovados = JSON.parse(localStorage.getItem('aprovadosPadroniza')) || [];
+
+function salvarAprovados(){
+  localStorage.setItem('aprovadosPadroniza', JSON.stringify(aprovados));
+}
 
 function escolher(tipo){
   document.querySelectorAll('.tipo-btn').forEach(b => b.classList.remove('active'));
@@ -280,15 +290,47 @@ function enviarSolicitacao(){
   let usuario = document.getElementById('usuario-agen').value.trim();
   if(!usuario) return alert('⚠️ Digite seu usuário!');
   
-  solicitacoes.push({
-    usuario: usuario,
-    data: new Date().toLocaleString('pt-BR'),
-    status: 'Pendente'
-  });
-  
-  const mensagem = encodeURIComponent(`🔔 NOVA SOLICITAÇÃO DE ACESSO!\nUsuário: ${usuario}\nData: ${new Date().toLocaleString('pt-BR')}\nPor favor, analisar e liberar no painel administrativo.`);
-  alert('✅ Solicitação enviada! Aguarde a análise pelo WhatsApp.');
+  const mensagem = encodeURIComponent(`🔔 NOVA SOLICITAÇÃO DE ACESSO!\nUsuário: ${usuario}\nData: ${new Date().toLocaleString('pt-BR')}\nPor favor, libere o acesso no Painel Admin!`);
+  alert('✅ Solicitação enviada! Aguarde a liberação pelo administrador.');
   window.open(`https://wa.me/5569981478873?text=${mensagem}`, '_blank');
+}
+
+function adicionarAprovado(){
+  let usuario = document.getElementById('novo-aprovado').value.trim();
+  if(!usuario) return alert('⚠️ Digite o nome do usuário!');
+  if(aprovados.includes(usuario)) return alert('✅ Esse usuário já está aprovado!');
+  
+  aprovados.push(usuario);
+  salvarAprovados();
+  atualizarListaAprovados();
+  
+  const aviso = encodeURIComponent(`✅ Olá ${usuario}! Seu acesso foi APROVADO! Agora você pode entrar normalmente no portal. Bem-vindo(a)!`);
+  alert('✅ Acesso liberado! Mensagem pronta para enviar ao streamer.');
+  window.open(`https://wa.me/5569981478873?text=${aviso}`, '_blank');
+  document.getElementById('novo-aprovado').value = '';
+}
+
+function removerAprovado(usuario){
+  if(!confirm(`Tem certeza que deseja remover o acesso de ${usuario}?`)) return;
+  aprovados = aprovados.filter(u => u !== usuario);
+  salvarAprovados();
+  atualizarListaAprovados();
+}
+
+function atualizarListaAprovados(){
+  const container = document.getElementById('lista-aprovados-corpo');
+  if(aprovados.length === 0){
+    container.innerHTML = '<p style="color:var(--muted);text-align:center">Nenhum usuário aprovado ainda.</p>';
+    return;
+  }
+  container.innerHTML = '';
+  aprovados.forEach(u => {
+    container.innerHTML += `
+    <div class="item-aprovado">
+      <span>✅ ${u}</span>
+      <button class="btn remover small" onclick="removerAprovado('${u}')">❌ Remover</button>
+    </div>`;
+  });
 }
 
 function carregarCapa(input){
@@ -304,47 +346,6 @@ function carregarCapa(input){
   }
 }
 
-function aprovarAcesso(usuario){
-  const sol = solicitacoes.find(s => s.usuario === usuario);
-  if(sol) sol.status = 'Aprovado';
-  atualizarPainelAdmin();
-  const msg = encodeURIComponent(`✅ Olá ${usuario}! Seu acesso foi APROVADO! Agora você pode entrar normalmente no portal e usar todos os serviços. Bem-vindo(a)!`);
-  alert('✅ Aprovado! Mensagem pronta para enviar ao streamer.');
-  window.open(`https://wa.me/5569981478873?text=${msg}`, '_blank');
-}
-
-function negarAcesso(usuario){
-  const sol = solicitacoes.find(s => s.usuario === usuario);
-  if(sol) sol.status = 'Negado';
-  atualizarPainelAdmin();
-  const msg = encodeURIComponent(`⚠️ Olá ${usuario}! Analisamos sua solicitação e não foi possível liberar o acesso no momento. Entre em contato conosco para mais informações.`);
-  alert('❌ Negado! Mensagem pronta para enviar.');
-  window.open(`https://wa.me/5569981478873?text=${msg}`, '_blank');
-}
-
-function atualizarPainelAdmin(){
-  const container = document.getElementById('lista-solicitacoes');
-  if(solicitacoes.length === 0){
-    container.innerHTML = '<p style="text-align:center;color:var(--muted)">Nenhuma solicitação no momento.</p>';
-    return;
-  }
-  container.innerHTML = '';
-  solicitacoes.forEach(s => {
-    let classeStatus = s.status === 'Pendente' ? 'status-pendente' : s.status === 'Aprovado' ? 'status-aprovado' : 'status-negado';
-    container.innerHTML += `
-    <div class="solicitacao-card">
-      <p><strong>Usuário:</strong> ${s.usuario}</p>
-      <p><strong>Data:</strong> ${s.data}</p>
-      <p class="${classeStatus}">Status: ${s.status}</p>
-      ${s.status === 'Pendente' ? `
-      <div style="display:flex;gap:10px;margin-top:10px">
-        <button class="btn aprovado small" onclick="aprovarAcesso('${s.usuario}')">✅ Aprovar</button>
-        <button class="btn negado small" onclick="negarAcesso('${s.usuario}')">❌ Negar</button>
-      </div>` : ''}
-    </div>`;
-  });
-}
-
 function entrar(tipo){
   perfil = tipo;
   if(tipo === 'admin'){
@@ -353,8 +354,7 @@ function entrar(tipo){
     if(e !== adminEmail || s !== adminSenha) return alert('❌ Dados de admin incorretos!');
   } else if(tipo === 'agenciado'){
     let usuario = document.getElementById('usuario-agen').value.trim();
-    const aprovado = solicitacoes.some(s => s.usuario === usuario && s.status === 'Aprovado');
-    if(!aprovado) return alert('⚠️ Seu acesso ainda não foi aprovado. Aguarde a confirmação pelo WhatsApp!');
+    if(!aprovados.includes(usuario)) return alert('⚠️ Seu acesso ainda não foi liberado! Aguarde a confirmação pelo WhatsApp.');
     dados.usuario = usuario;
   } else {
     dados.nome = document.getElementById('nome-vis').value.trim();
@@ -363,7 +363,7 @@ function entrar(tipo){
   document.getElementById('loginPage').style.display='none';
   document.getElementById('mainPage').style.display='block';
   atualizarTela();
-  if(tipo === 'admin') atualizarPainelAdmin();
+  if(tipo === 'admin') atualizarListaAprovados();
 }
 
 function atualizarTela(){
