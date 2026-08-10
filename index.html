@@ -99,7 +99,7 @@ body{background:var(--bg);color:var(--text);min-height:100vh}
     <div id="form-visitante" style="display:none">
       <div class="aviso visitante">ℹ️ Escolha a melhor opção para você:</div>
       
-      <!-- OPÇÃO 1: ASSINAR POR R$9,99 -->
+      <!-- OPÇÃO 1: ASSINAR POR R$9,99 - CHAVE DA EMPRESA -->
       <div class="plano-card">
         <h3>Acesse todos os serviços sem precisar ser agenciado</h3>
         <div class="valor-plano">R$ 9,99</div>
@@ -107,18 +107,17 @@ body{background:var(--bg);color:var(--text);min-height:100vh}
         <p>Tudo incluso: músicas, artes, agendamento de batalhas e muito mais!</p>
 
         <div class="aviso pix">
-          <strong>Recebedor:</strong> Marcos G da Silva / Padroniza Assessoria<br>
+          <strong>Recebedor:</strong> Padroniza Assessoria<br>
           <strong>Valor:</strong> R$ 9,99
         </div>
 
         <div style="background:#fff;padding:15px;border-radius:10px;margin:15px 0">
-          <p style="color:#000;text-align:center;margin-bottom:8px;font-weight:bold">⚠️ RECOMENDAÇÃO: Use o botão abaixo para copiar o código — funciona SEMPRE!</p>
-          <p style="color:#d32f2f;text-align:center;font-size:13px">Se o QR Code apresentar erro, o método de copiar e colar é garantido pelo Banco Central.</p>
+          <p style="color:#000;text-align:center;margin-bottom:8px;font-weight:bold">⚠️ Use o botão abaixo para copiar o código — funciona SEMPRE em todos os bancos!</p>
         </div>
 
-        <!-- Código Copia e Cola EXATO do seu Banco Inter -->
+        <!-- Código Copia e Cola EXATO da conta da empresa -->
         <div class="codigo-pix" id="codigoPix">
-00020101021126970014br.gov.bcb.pix0136cb28ba3e-d5f2-4c9b-94c9-209726389efc0235Assinatura Mensal Padroniza Assesso52040000530398654049.995802BR5917MARCOS G DA SILVA6007VILHENA62070503***6304FD63
+00020101021126810014br.gov.bcb.pix01367c0dfbc3-68e7-4b85-a0eb-eb037b738d9f0219Assessoria completa52040000530398654049.995802BR591965 8 0 M G DA SILVA6007VILHENA62070503***6304FF51
         </div>
         <button class="btn copiar" onclick="copiarPix()">📋 Copiar Código PIX (R$9,99)</button>
       </div>
@@ -271,7 +270,7 @@ function mostrarAdmin(){
 function copiarPix(){
   const codigo = document.getElementById('codigoPix').innerText.trim();
   navigator.clipboard.writeText(codigo).then(()=>{
-    alert('✅ Código PIX copiado! Valor R$9,99. Basta colar no app do seu banco!');
+    alert('✅ Código PIX da empresa copiado! Valor R$9,99. Basta colar no app do seu banco!');
   }).catch(()=>{
     alert('Não foi possível copiar automaticamente. Selecione e copie o código manualmente.');
   });
