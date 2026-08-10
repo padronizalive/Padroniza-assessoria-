@@ -28,9 +28,11 @@ input[type="file"]{background:transparent;border:none;padding:5px;color:var(--cy
 .btn.blue{background:var(--blue);color:#fff}
 .btn.orange{background:var(--orange);color:#fff}
 .btn.primary{background:linear-gradient(135deg,var(--pink),var(--violet));color:#fff;margin-top:8px}
-.btn.small{width:auto;padding:10px 15px;font-size:14px;margin-top:10px}
+.btn.small{width:auto;padding:8px 12px;font-size:14px;margin-top:5px}
 .btn.copiar{background:var(--cyan);color:#000;padding:12px;font-size:16px;font-weight:bold;margin-top:10px}
 .btn.whatsapp{background:#25d366;color:#fff;padding:12px 15px;font-size:15px;font-weight:bold;margin-top:10px;border-radius:8px;text-decoration:none;display:inline-block;text-align:center;width:100%}
+.btn.aprovado{background:var(--green);color:#000}
+.btn.negado{background:var(--red);color:#fff}
 .link{text-align:center;margin-top:10px;font-size:14px;color:var(--cyan);cursor:pointer}
 .aviso{padding:12px;border-radius:8px;margin:15px 0;font-size:14px}
 .aviso.agenciado{background:rgba(52,211,153,0.1);border:1px solid var(--green);color:var(--green)}
@@ -51,6 +53,11 @@ input[type="file"]{background:transparent;border:none;padding:5px;color:var(--cy
 .mostrar{display:block}
 .preview-capa{width:100%;max-height:160px;object-fit:cover;border-radius:8px;margin:8px 0;border:2px dashed var(--line);display:none}
 .preview-mostrar{display:block}
+.aviso-solicitacao{background:rgba(52,211,153,0.08);border:1px solid var(--green);color:var(--green);padding:12px;border-radius:8px;margin-bottom:15px;text-align:center}
+.solicitacao-card{background:var(--panel2);border:1px solid var(--line);border-radius:10px;padding:15px;margin-bottom:12px}
+.status-pendente{color:var(--gold);font-weight:bold}
+.status-aprovado{color:var(--green);font-weight:bold}
+.status-negado{color:var(--red);font-weight:bold}
 
 #mainPage{display:none}
 .header{background:var(--panel);padding:15px 20px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--line)}
@@ -91,12 +98,14 @@ input[type="file"]{background:transparent;border:none;padding:5px;color:var(--cy
     </div>
 
     <div id="form-agenciado" style="display:none">
-      <div class="aviso agenciado">✅ Todos os serviços são 100% GRÁTIS para você!</div>
+      <div class="aviso-solicitacao">
+        ℹ️ Informe seu usuário exatamente como cadastrado. Sua solicitação será analisada antes da liberação.
+      </div>
       <div class="field">
         <label>Nome de usuário / ID da plataforma *</label>
-        <input id="usuario-agen" placeholder="Ex: @nomeTikTok ou ID Kaku Live">
+        <input id="usuario-agen" placeholder="Ex: @serenatempesta ou ID Kaku Live">
       </div>
-      <button class="btn green" onclick="entrar('agenciado')">Continuar</button>
+      <button class="btn green" onclick="enviarSolicitacao()">📤 Enviar Solicitação</button>
     </div>
 
     <div id="form-visitante" style="display:none">
@@ -126,34 +135,18 @@ input[type="file"]{background:transparent;border:none;padding:5px;color:var(--cy
       <div class="bloco-agenciamento">
         <h3>🌟 QUERO SER AGENCIADO!</h3>
         <p style="margin-bottom:15px">Ao se agenciar, você ganha acesso a <strong>TODOS os serviços GRATUITAMENTE</strong>!</p>
-
-        <p style="font-weight:bold;margin-bottom:8px;">📱 Para Streamers do TikTok:</p>
-        <a href="https://www.tiktok.com/t/ZSHu6CFAM/" target="_blank" class="btn primary">🔗 Link para se inscrever</a>
-
-        <p style="font-weight:bold;margin:15px 0 8px;">🎮 Para Streamers do Kaku Live:</p>
-        <div style="background:#0c1325;padding:12px;border-radius:8px;font-weight:bold;font-size:16px;">
-          ID da Agência: <span style="color:var(--gold)">177766</span>
+        <a href="https://www.tiktok.com/t/ZSHu6CFAM/" target="_blank" class="btn primary">🔗 Link para se inscrever no TikTok</a>
+        <div style="background:#0c1325;padding:12px;border-radius:8px;font-weight:bold;font-size:16px;margin-top:10px">
+          ID Agência Kaku Live: <span style="color:var(--gold)">177766</span>
         </div>
-
-        <p style="margin:15px 0 8px;">📞 Fale conosco antes de solicitar:</p>
-        <a href="https://wa.me/5569981478873?text=Olá! Quero saber mais sobre o agenciamento." target="_blank" class="btn whatsapp">💬 WhatsApp: (69) 98147-8873</a>
+        <a href="https://wa.me/5569981478873" target="_blank" class="btn whatsapp" style="margin-top:10px">💬 Fale conosco</a>
       </div>
 
       <div class="field">
-        <label>Seu nome ou usuário da plataforma *</label>
+        <label>Seu nome/usuário *</label>
         <input id="nome-vis" placeholder="Como você quer ser chamado?">
       </div>
-      <div class="field">
-        <label>Código ou comprovante do PIX (se assinar)</label>
-        <input id="pagamento-vis" placeholder="Apenas se escolher o plano mensal">
-      </div>
-
-      <button class="btn orange" id="btn-ja-paguei" onclick="mostrarBotaoComprovante()">💳 Já paguei a mensalidade de R$9,99</button>
-      
-      <div id="area-comprovante" class="botao-oculto">
-        <p style="text-align:center;margin:10px 0;color:var(--muted)">Envie o comprovante para liberarmos seu acesso imediatamente:</p>
-        <a href="https://wa.me/5569981478873?text=Olá! Acabei de efetuar o pagamento de R$9,99. Meu nome/usuário é: _______. Segue comprovante em anexo." target="_blank" class="btn whatsapp">📤 Enviar Comprovante pelo WhatsApp</a>
-      </div>
+      <button class="btn orange" onclick="entrar('visitante')">Continuar</button>
     </div>
 
     <p class="link" onclick="mostrarAdmin()">⚙️ Acesso Administrativo</p>
@@ -182,7 +175,7 @@ input[type="file"]{background:transparent;border:none;padding:5px;color:var(--cy
     <button onclick="abrir('musicas')">♫ Músicas</button>
     <button onclick="abrir('artes')">🎨 Artes</button>
     <button onclick="abrir('ser-agenciado')">📝 Seja Agenciado</button>
-    <button id="botao-admin" style="display:none;background:var(--gold);color:#000" onclick="abrir('admin')">⚙ Admin</button>
+    <button id="botao-admin" style="display:none;background:var(--gold);color:#000" onclick="abrir('admin')">⚙ Painel Admin</button>
   </div>
 
   <div class="content">
@@ -197,7 +190,7 @@ input[type="file"]{background:transparent;border:none;padding:5px;color:var(--cy
       <div class="card">
         <h2>📺 Lives ao Vivo</h2>
         <div id="lista-lives" class="grid">
-          <p style="grid-column:1/-1;text-align:center;color:var(--muted)">Nenhuma live no momento. Volte mais tarde!</p>
+          <p style="grid-column:1/-1;text-align:center;color:var(--muted)">Nenhuma live no momento.</p>
         </div>
       </div>
     </div>
@@ -205,37 +198,32 @@ input[type="file"]{background:transparent;border:none;padding:5px;color:var(--cy
     <div id="meulive" class="tab-content">
       <div class="card">
         <h2>⚙ Configurar Minha Live</h2>
-        <p>Cadastre os dados para aparecer na lista de lives:</p>
-        
+        <p>Cadastre os dados para aparecer na lista:</p>
         <div class="field">
-          <label>Link do seu perfil na plataforma *</label>
+          <label>Link do seu perfil *</label>
           <input id="link-perfil" placeholder="Ex: https://tiktok.com/@seuperfil">
         </div>
-
         <div class="field">
-          <label>Link da transmissão (depois de começar a live)</label>
+          <label>Link da transmissão</label>
           <input id="link-live" placeholder="Link direto da live">
         </div>
-
         <div class="field">
-          <label>📷 Escolha a capa da live (direto da galeria):</label>
+          <label>📷 Escolher capa da galeria:</label>
           <input type="file" id="capa-arquivo" accept="image/*" onchange="carregarCapa(this)">
-          <img id="preview-capa" class="preview-capa" alt="Pré-visualização da capa">
-          <p style="font-size:12px;color:var(--muted);margin-top:5px;">Ou se preferir, cole o link abaixo:</p>
+          <img id="preview-capa" class="preview-capa" alt="Pré-visualização">
+          <p style="font-size:12px;color:var(--muted);margin-top:5px;">Ou cole o link abaixo:</p>
           <input id="link-capa" placeholder="Link da imagem (opcional)">
         </div>
-
         <div class="field">
           <label>✅ Estou AO VIVO AGORA?</label>
           <input type="checkbox" id="estou-ao-vivo" style="width:auto;margin-left:5px;">
         </div>
-
         <button class="btn primary" onclick="salvarLive()">💾 Salvar Dados</button>
       </div>
     </div>
 
-    <div id="batalhas" class="tab-content"><div class="card"><h2>⚔ Batalhas Oficiais</h2><p>Em breve: agendamento e regras de batalhas!</p></div></div>
-    <div id="musicas" class="tab-content"><div class="card"><h2>♫ Músicas Personalizadas</h2><p>Solicite sua música exclusiva pelo WhatsApp!</p></div></div>
+    <div id="batalhas" class="tab-content"><div class="card"><h2>⚔ Batalhas Oficiais</h2><p>Em breve: agendamento e regras!</p></div></div>
+    <div id="musicas" class="tab-content"><div class="card"><h2>♫ Músicas Personalizadas</h2><p>Solicite pelo WhatsApp!</p></div></div>
     <div id="artes" class="tab-content"><div class="card"><h2>🎨 Artes Visuais</h2><p>Artes prontas para lives e eventos!</p></div></div>
     <div id="ser-agenciado" class="tab-content">
       <div class="card">
@@ -245,7 +233,17 @@ input[type="file"]{background:transparent;border:none;padding:5px;color:var(--cy
         <a href="https://wa.me/5569981478873" target="_blank" class="btn whatsapp">Falar com a gente</a>
       </div>
     </div>
-    <div id="admin" class="tab-content"><div class="card"><h2>Painel Administrativo</h2><p>Controle total da agência e acessos!</p></div></div>
+
+    <!-- 🎯 PAINEL DE APROVAÇÃO EXCLUSIVO PARA VOCÊ -->
+    <div id="admin" class="tab-content">
+      <div class="card">
+        <h2>⚙ Painel Administrativo</h2>
+        <h3 style="margin:15px 0 10px;color:var(--gold)">📋 Solicitações de Acesso</h3>
+        <div id="lista-solicitacoes">
+          <p style="text-align:center;color:var(--muted)">Nenhuma solicitação no momento.</p>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
 
@@ -257,6 +255,7 @@ let dados = {};
 const adminEmail = 'padronizaassessoria@gmail.com';
 const adminSenha = 'agency2026.';
 let listaLives = [];
+let solicitacoes = [];
 
 function escolher(tipo){
   document.querySelectorAll('.tipo-btn').forEach(b => b.classList.remove('active'));
@@ -274,22 +273,28 @@ function mostrarAdmin(){
 
 function copiarPix(){
   const codigo = document.getElementById('codigoPix').innerText.trim();
-  navigator.clipboard.writeText(codigo).then(()=>{
-    alert('✅ Código copiado! Basta colar no app do banco.');
-  }).catch(()=>{
-    alert('Copie manualmente o código abaixo.');
-  });
+  navigator.clipboard.writeText(codigo).then(()=>alert('✅ Código copiado!'));
 }
 
-function mostrarBotaoComprovante(){
-  document.getElementById('area-comprovante').classList.add('mostrar');
-  alert('✅ Perfeito! Agora envie o comprovante para liberarmos seu acesso rapidinho.');
+function enviarSolicitacao(){
+  let usuario = document.getElementById('usuario-agen').value.trim();
+  if(!usuario) return alert('⚠️ Digite seu usuário!');
+  
+  solicitacoes.push({
+    usuario: usuario,
+    data: new Date().toLocaleString('pt-BR'),
+    status: 'Pendente'
+  });
+  
+  const mensagem = encodeURIComponent(`🔔 NOVA SOLICITAÇÃO DE ACESSO!\nUsuário: ${usuario}\nData: ${new Date().toLocaleString('pt-BR')}\nPor favor, analisar e liberar no painel administrativo.`);
+  alert('✅ Solicitação enviada! Aguarde a análise pelo WhatsApp.');
+  window.open(`https://wa.me/5569981478873?text=${mensagem}`, '_blank');
 }
 
 function carregarCapa(input){
   if (input.files && input.files[0]) {
     const leitor = new FileReader();
-    leitor.onload = function(e) {
+    leitor.onload = e => {
       const preview = document.getElementById('preview-capa');
       preview.src = e.target.result;
       preview.classList.add('preview-mostrar');
@@ -299,6 +304,47 @@ function carregarCapa(input){
   }
 }
 
+function aprovarAcesso(usuario){
+  const sol = solicitacoes.find(s => s.usuario === usuario);
+  if(sol) sol.status = 'Aprovado';
+  atualizarPainelAdmin();
+  const msg = encodeURIComponent(`✅ Olá ${usuario}! Seu acesso foi APROVADO! Agora você pode entrar normalmente no portal e usar todos os serviços. Bem-vindo(a)!`);
+  alert('✅ Aprovado! Mensagem pronta para enviar ao streamer.');
+  window.open(`https://wa.me/5569981478873?text=${msg}`, '_blank');
+}
+
+function negarAcesso(usuario){
+  const sol = solicitacoes.find(s => s.usuario === usuario);
+  if(sol) sol.status = 'Negado';
+  atualizarPainelAdmin();
+  const msg = encodeURIComponent(`⚠️ Olá ${usuario}! Analisamos sua solicitação e não foi possível liberar o acesso no momento. Entre em contato conosco para mais informações.`);
+  alert('❌ Negado! Mensagem pronta para enviar.');
+  window.open(`https://wa.me/5569981478873?text=${msg}`, '_blank');
+}
+
+function atualizarPainelAdmin(){
+  const container = document.getElementById('lista-solicitacoes');
+  if(solicitacoes.length === 0){
+    container.innerHTML = '<p style="text-align:center;color:var(--muted)">Nenhuma solicitação no momento.</p>';
+    return;
+  }
+  container.innerHTML = '';
+  solicitacoes.forEach(s => {
+    let classeStatus = s.status === 'Pendente' ? 'status-pendente' : s.status === 'Aprovado' ? 'status-aprovado' : 'status-negado';
+    container.innerHTML += `
+    <div class="solicitacao-card">
+      <p><strong>Usuário:</strong> ${s.usuario}</p>
+      <p><strong>Data:</strong> ${s.data}</p>
+      <p class="${classeStatus}">Status: ${s.status}</p>
+      ${s.status === 'Pendente' ? `
+      <div style="display:flex;gap:10px;margin-top:10px">
+        <button class="btn aprovado small" onclick="aprovarAcesso('${s.usuario}')">✅ Aprovar</button>
+        <button class="btn negado small" onclick="negarAcesso('${s.usuario}')">❌ Negar</button>
+      </div>` : ''}
+    </div>`;
+  });
+}
+
 function entrar(tipo){
   perfil = tipo;
   if(tipo === 'admin'){
@@ -306,8 +352,10 @@ function entrar(tipo){
     let s = document.getElementById('senha-admin').value;
     if(e !== adminEmail || s !== adminSenha) return alert('❌ Dados de admin incorretos!');
   } else if(tipo === 'agenciado'){
-    dados.usuario = document.getElementById('usuario-agen').value.trim();
-    if(!dados.usuario) return alert('Digite seu usuário/ID!');
+    let usuario = document.getElementById('usuario-agen').value.trim();
+    const aprovado = solicitacoes.some(s => s.usuario === usuario && s.status === 'Aprovado');
+    if(!aprovado) return alert('⚠️ Seu acesso ainda não foi aprovado. Aguarde a confirmação pelo WhatsApp!');
+    dados.usuario = usuario;
   } else {
     dados.nome = document.getElementById('nome-vis').value.trim();
     if(!dados.nome) return alert('Digite seu nome!');
@@ -315,6 +363,7 @@ function entrar(tipo){
   document.getElementById('loginPage').style.display='none';
   document.getElementById('mainPage').style.display='block';
   atualizarTela();
+  if(tipo === 'admin') atualizarPainelAdmin();
 }
 
 function atualizarTela(){
@@ -325,9 +374,6 @@ function atualizarTela(){
   if(perfil === 'agenciado'){
     tag.innerText = '🟢 AGENCIADO'; tag.className = 'perfil-tag tag-agenciado';
     msg.innerHTML = `Olá <strong>${dados.usuario}</strong>! Tudo liberado para você!`;
-  } else if(perfil === 'assinante'){
-    tag.innerText = '🟡 ASSINANTE'; tag.className = 'perfil-tag tag-assinante';
-    msg.innerHTML = `Olá <strong>${dados.nome}</strong>! Aguardamos a confirmação do pagamento.`;
   } else if(perfil === 'visitante'){
     tag.innerText = '🔵 VISITANTE'; tag.className = 'perfil-tag tag-visitante';
     msg.innerHTML = `Olá <strong>${dados.nome}</strong>! Escolha uma opção para acesso completo.`;
@@ -338,24 +384,21 @@ function atualizarTela(){
 }
 
 function salvarLive(){
-  if(perfil !== 'agenciado' && perfil !== 'assinante') return alert('❌ Essa função é só para agenciados ou assinantes!');
-  
-  let nome = dados.usuario || dados.nome;
+  if(perfil !== 'agenciado') return alert('❌ Essa função é só para agenciados aprovados!');
+  let nome = dados.usuario;
   let linkPerfil = document.getElementById('link-perfil').value.trim();
   let linkLive = document.getElementById('link-live').value.trim();
   let linkCapa = document.getElementById('link-capa').value.trim();
   let aoVivo = document.getElementById('estou-ao-vivo').checked;
-  
   let capaFinal = dados.capaArquivo || linkCapa || '';
 
   if(!linkPerfil) return alert('⚠️ Coloque o link do seu perfil!');
-
   listaLives = listaLives.filter(l => l.nome !== nome);
   if(aoVivo){
     listaLives.push({nome, linkPerfil, linkLive, capa:capaFinal});
-    alert('✅ Dados salvos! Sua live já aparece na lista.');
+    alert('✅ Salvo! Sua live já aparece na lista.');
   } else {
-    alert('✅ Dados salvos! Marque "Estou ao vivo" quando começar a transmissão.');
+    alert('✅ Salvo! Marque "Ao vivo" quando começar.');
   }
   atualizarListaLives();
 }
@@ -389,7 +432,6 @@ function sair(){
   document.getElementById('mainPage').style.display='none';
   document.getElementById('loginPage').style.display='block';
   perfil='';dados={};
-  document.getElementById('area-comprovante').classList.remove('mostrar');
   document.getElementById('preview-capa').classList.remove('preview-mostrar');
   document.getElementById('preview-capa').src='';
 }
