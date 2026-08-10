@@ -1,15 +1,308 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <title>Teste Padroniza</title>
-  <style>
-    body { background: #0b1020; color: white; text-align: center; padding-top: 50px; font-family: Arial; }
-    h1 { color: #ff3d81; }
-  </style>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Padroniza Assessoria | Portal Oficial</title>
+<style>
+:root{--bg:#0b1020;--panel:#11182c;--panel2:#17213a;--line:#293653;--text:#f7f9ff;--muted:#a9b4cb;--pink:#ff3d81;--violet:#7457ff;--cyan:#27d8c2;--gold:#ffc857;--green:#34d399;--blue:#3b82f6;--orange:#ff9f43;--red:#ff4757}
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
+body{background:var(--bg);color:var(--text);min-height:100vh}
+
+.login-box{max-width:420px;margin:40px auto;background:var(--panel);border:1px solid var(--line);border-radius:20px;padding:30px}
+.logo-area{text-align:center;margin-bottom:20px}
+.logo-area h1{font-size:24px;color:var(--pink)}
+.logo-area p{color:var(--gold);font-size:14px;margin-top:5px}
+.aviso-seguranca{background:rgba(255,71,87,0.08);border:1px solid var(--red);color:var(--red);padding:10px;border-radius:8px;font-size:13px;margin-bottom:15px}
+.tipo-acesso{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px}
+.tipo-btn{padding:15px;border-radius:10px;border:2px solid var(--line);background:var(--panel2);color:#fff;font-weight:bold;cursor:pointer;transition:.2s}
+.tipo-btn.agenciado{border-color:var(--green)}
+.tipo-btn.visitante{border-color:var(--blue)}
+.tipo-btn.active{transform:scale(1.03);box-shadow:0 0 15px rgba(255,61,129,0.3)}
+.field{margin-bottom:15px}
+.field label{display:block;color:var(--muted);font-size:14px;margin-bottom:5px}
+.field input{width:100%;padding:12px;border-radius:8px;background:#0c1325;border:1px solid var(--line);color:#fff}
+.btn{width:100%;padding:12px;border-radius:8px;font-weight:bold;border:0;cursor:pointer}
+.btn.green{background:var(--green);color:#000}
+.btn.blue{background:var(--blue);color:#fff}
+.btn.orange{background:var(--orange);color:#fff}
+.btn.primary{background:linear-gradient(135deg,var(--pink),var(--violet));color:#fff;margin-top:8px}
+.link{text-align:center;margin-top:10px;font-size:14px;color:var(--cyan);cursor:pointer}
+.aviso{padding:12px;border-radius:8px;margin:15px 0;font-size:14px}
+.aviso.agenciado{background:rgba(52,211,153,0.1);border:1px solid var(--green);color:var(--green)}
+.aviso.visitante{background:rgba(59,130,246,0.1);border:1px solid var(--blue);color:var(--blue)}
+
+#mainPage{display:none}
+.header{background:var(--panel);padding:15px 20px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--line)}
+.perfil-tag{padding:4px 10px;border-radius:20px;font-size:12px;font-weight:bold}
+.tag-agenciado{background:var(--green);color:#000}
+.tag-visitante{background:var(--blue);color:#fff}
+.tag-admin{background:var(--gold);color:#000}
+.nav{display:flex;gap:10px;flex-wrap:wrap;padding:15px;background:#0d1426;border-bottom:1px solid var(--line)}
+.nav button{background:var(--panel2);color:var(--text);border:1px solid var(--line);padding:10px 12px;border-radius:8px;cursor:pointer;font-size:14px;transition:.2s}
+.nav button.active{background:var(--pink);border-color:var(--pink)}
+.content{padding:20px;max-width:1200px;margin:0 auto}
+.tab-content{display:none}
+.tab-content.active{display:block}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:20px;margin-bottom:15px}
+.card h2{margin-bottom:15px;color:var(--pink)}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:15px;margin:15px 0}
+@media(max-width:700px){.grid{grid-template-columns:1fr}}
+.whatsapp-fixed{position:fixed;bottom:20px;right:20px;background:#25d366;color:#fff;padding:12px 20px;border-radius:50px;font-weight:bold;text-decoration:none;z-index:999}
+</style>
 </head>
 <body>
-  <h1>✅ Deu certo! Padroniza Assessoria</h1>
-  <p>Se apareceu, o problema era no código anterior ou no nome do arquivo.</p>
+
+<!-- TELA DE ENTRADA -->
+<div id="loginPage">
+  <div class="login-box">
+    <div class="logo-area">
+      <h1>PADRONIZA ASSESSORIA</h1>
+      <p>Escolha seu acesso:</p>
+    </div>
+
+    <div class="aviso-seguranca">
+      ⚠️ Benefícios válidos somente após confirmação da nossa equipe. Dados falsos impedem o uso dos serviços.
+    </div>
+
+    <div class="tipo-acesso">
+      <button class="tipo-btn agenciado" id="btn-agenciado" onclick="escolher('agenciado')">🟢 Sou Agenciado</button>
+      <button class="tipo-btn visitante" id="btn-visitante" onclick="escolher('visitante')">🔵 Sou Visitante</button>
+    </div>
+
+    <!-- FORMULÁRIO AGENCIADO -->
+    <div id="form-agenciado" style="display:none">
+      <div class="aviso agenciado">✅ Serviços 100% grátis após confirmação!</div>
+      <div class="field">
+        <label>E-mail cadastrado na agência</label>
+        <input id="email-agen" placeholder="Digite o e-mail que passou para nós">
+      </div>
+      <div class="field">
+        <label>Nome de usuário / ID cadastrado</label>
+        <input id="usuario-agen" placeholder="Seu nome de usuário ou ID da agência">
+      </div>
+      <button class="btn green" onclick="entrar('agenciado')">Continuar</button>
+    </div>
+
+    <!-- FORMULÁRIO VISITANTE -->
+    <div id="form-visitante" style="display:none">
+      <div class="aviso visitante">ℹ️ Conheça nossos serviços ou seja nosso parceiro!</div>
+      <div class="field">
+        <label>Seu e-mail para contato</label>
+        <input id="email-vis" placeholder="seuemail@email.com">
+      </div>
+      <button class="btn blue" onclick="entrar('visitante')">Continuar</button>
+    </div>
+
+    <p class="link" onclick="mostrarAdmin()">⚙️ Acesso Administrativo</p>
+    <div id="form-admin" style="display:none;margin-top:10px;padding-top:10px;border-top:1px solid var(--line)">
+      <div class="field"><label>E-mail Admin</label><input id="email-admin" value="padronizaassessoria@gmail.com"></div>
+      <div class="field"><label>Senha Admin</label><input id="senha-admin" type="password" value="agency2026."></div>
+      <button class="btn orange" onclick="entrar('admin')">Acessar Painel</button>
+    </div>
+  </div>
+</div>
+
+<!-- PÁGINA PRINCIPAL -->
+<div id="mainPage">
+  <div class="header">
+    <div style="display:flex;align-items:center;gap:10px">
+      <h3 style="color:var(--pink)">PADRONIZA ASSESSORIA</h3>
+      <span id="tag-perfil" class="perfil-tag"></span>
+    </div>
+    <button class="btn" style="width:auto;padding:8px 12px" onclick="sair()">Sair</button>
+  </div>
+
+  <div class="nav">
+    <button class="active" onclick="abrir('inicio')">🏠 Início</button>
+    <button onclick="abrir('batalhas')">⚔ Agendar Batalha</button>
+    <button onclick="abrir('musicas')">♫ Músicas</button>
+    <button onclick="abrir('artes')">🎨 Artes</button>
+    <button onclick="abrir('servicos')">🎁 Serviços</button>
+    <button onclick="abrir('ser-agenciado')">📝 Quero ser Agenciado</button>
+    <button onclick="abrir('suporte')">❓ Suporte</button>
+    <button id="botao-admin" style="display:none;background:var(--gold);color:#000" onclick="abrir('admin')">⚙ Admin</button>
+  </div>
+
+  <div class="content">
+    <div id="inicio" class="tab-content active">
+      <div class="card">
+        <h2>Bem-vindo(a)!</h2>
+        <p id="mensagem-inicio"></p>
+      </div>
+    </div>
+
+    <div id="batalhas" class="tab-content">
+      <div class="card">
+        <h2>Agendar Batalha Oficial</h2>
+        <div class="grid">
+          <div class="field"><label>Data</label><input type="date" id="bData"></div>
+          <div class="field"><label>Horário</label><input type="time" id="bHora" value="20:00"></div>
+          <div class="field"><label>Plataforma</label><select id="bPlataforma"><option>TikTok</option><option>Kaku Live</option></select></div>
+          <div class="field"><label>Oponente / ID</label><input id="bOponente" placeholder="@usuario"></div>
+        </div>
+        <button class="btn primary" onclick="pedir('agendamento de batalha')">Enviar Solicitação</button>
+      </div>
+    </div>
+
+    <div id="musicas" class="tab-content">
+      <div class="card">
+        <h2>Músicas Personalizadas</h2>
+        <p>Músicas exclusivas para entrada, vitória e encerramento das suas lives.</p>
+        <div id="valor-musica"></div>
+        <button class="btn primary" onclick="pedir('música personalizada')">Solicitar</button>
+      </div>
+    </div>
+
+    <div id="artes" class="tab-content">
+      <div class="card">
+        <h2>Artes Visuais</h2>
+        <p>Capas, molduras, cartazes de batalhas e materiais de divulgação.</p>
+        <div id="valor-arte"></div>
+        <button class="btn primary" onclick="pedir('arte visual')">Solicitar</button>
+      </div>
+    </div>
+
+    <div id="servicos" class="tab-content">
+      <div class="card">
+        <h2>Nossos Serviços</h2>
+        <div class="grid">
+          <div class="card"><h3>🎵 Músicas</h3><div id="v-musica"></div></div>
+          <div class="card"><h3>🎨 Artes</h3><div id="v-arte"></div></div>
+          <div class="card"><h3>⚔ Batalhas</h3><div id="v-batalha"></div></div>
+          <div class="card"><h3>📈 Acompanhamento</h3><div id="v-dica"></div></div>
+        </div>
+      </div>
+    </div>
+
+    <div id="ser-agenciado" class="tab-content">
+      <div class="card">
+        <h2>Quero fazer parte da Padroniza!</h2>
+        <p style="margin-bottom:15px"><strong>📱 Para entrar no Kaku Live:</strong></p>
+        <p style="font-size:18px; font-weight:bold; color:var(--gold); margin:10px 0">ID DA AGÊNCIA: 177766</p>
+        <p>1. Abra o Kaku Live → Central de Host → Agência<br>2. Digite o ID 177766 → Solicitar<br>3. Aguarde a nossa confirmação!</p>
+        <hr style="border:0; border-top:1px solid var(--line); margin:20px 0">
+        <p style="margin-bottom:15px"><strong>🔗 Para se inscrever na Agência do TikTok:</strong></p>
+        <button class="btn primary" onclick="window.open('https://www.tiktok.com/t/ZSHu6CFAM/','_blank')">Link para se inscrever no TikTok</button>
+      </div>
+    </div>
+
+    <div id="suporte" class="tab-content">
+      <div class="card">
+        <h2>Suporte e Regras</h2>
+        <p>✅ Mantenha constância nas transmissões<br>✅ Respeite as regras das plataformas<br>✅ Cumprir metas garante premiações e benefícios</p>
+        <button class="btn primary" onclick="pedir('ajuda ou suporte')">Falar com a Equipe</button>
+      </div>
+    </div>
+
+    <div id="admin" class="tab-content">
+      <div class="card">
+        <h2>Área do Administrador</h2>
+        <p>Acesso exclusivo para gerenciar tudo da Padroniza Assessoria.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<a href="https://wa.me/556981478873?text=Olá! Preciso de ajuda" class="whatsapp-fixed" target="_blank">💬 WhatsApp</a>
+
+<script>
+let perfil = '';
+let dados = {};
+const adminEmail = 'padronizaassessoria@gmail.com';
+const adminSenha = 'agency2026.';
+
+function escolher(tipo){
+  document.querySelectorAll('.tipo-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById(`btn-${tipo}`).classList.add('active');
+  document.getElementById('form-agenciado').style.display = tipo === 'agenciado' ? 'block' : 'none';
+  document.getElementById('form-visitante').style.display = tipo === 'visitante' ? 'block' : 'none';
+  document.getElementById('form-admin').style.display = 'none';
+}
+
+function mostrarAdmin(){
+  document.getElementById('form-agenciado').style.display='none';
+  document.getElementById('form-visitante').style.display='none';
+  document.getElementById('form-admin').style.display='block';
+}
+
+function entrar(tipo){
+  perfil = tipo;
+  if(tipo === 'admin'){
+    let e = document.getElementById('email-admin').value;
+    let s = document.getElementById('senha-admin').value;
+    if(e !== adminEmail || s !== adminSenha) return alert('Dados de admin incorretos!');
+  } else if(tipo === 'agenciado'){
+    dados.email = document.getElementById('email-agen').value;
+    dados.usuario = document.getElementById('usuario-agen').value;
+    if(!dados.email || !dados.usuario) return alert('Preencha todos os dados!');
+  } else {
+    dados.email = document.getElementById('email-vis').value;
+    if(!dados.email) return alert('Preencha seu e-mail!');
+  }
+  document.getElementById('loginPage').style.display='none';
+  document.getElementById('mainPage').style.display='block';
+  atualizarTela();
+}
+
+function atualizarTela(){
+  const tag = document.getElementById('tag-perfil');
+  const msg = document.getElementById('mensagem-inicio');
+  const botaoAdm = document.getElementById('botao-admin');
+
+  if(perfil === 'agenciado'){
+    tag.innerText = '🟢 AGENCIADO';
+    tag.className = 'perfil-tag tag-agenciado';
+    msg.innerHTML = `Olá! Seus dados serão confirmados em breve. Todos os serviços são gratuitos para você após validação.`;
+    document.getElementById('valor-musica').innerHTML = '<strong style="color:var(--green)">✅ GRÁTIS (após confirmação)</strong>';
+    document.getElementById('valor-arte').innerHTML = '<strong style="color:var(--green)">✅ GRÁTIS (após confirmação)</strong>';
+    document.getElementById('v-musica').innerHTML = '<strong style="color:var(--green)">✅ GRÁTIS</strong>';
+    document.getElementById('v-arte').innerHTML = '<strong style="color:var(--green)">✅ GRÁTIS</strong>';
+    document.getElementById('v-batalha').innerHTML = '<strong style="color:var(--green)">✅ GRÁTIS</strong>';
+    document.getElementById('v-dica').innerHTML = '<strong style="color:var(--green)">✅ GRÁTIS</strong>';
+  } else if(perfil === 'visitante'){
+    tag.innerText = '🔵 VISITANTE';
+    tag.className = 'perfil-tag tag-visitante';
+    msg.innerHTML = `Bem-vindo! Conheça nossos serviços e contrate o que precisar, ou seja nosso parceiro para ter tudo grátis.`;
+    document.getElementById('valor-musica').innerHTML = '<strong style="color:var(--orange)">💳 R$ 50,00</strong>';
+    document.getElementById('valor-arte').innerHTML = '<strong style="color:var(--orange)">💳 A partir de R$30,00</strong>';
+    document.getElementById('v-musica').innerHTML = '<strong style="color:var(--orange)">💳 R$ 50,00</strong>';
+    document.getElementById('v-arte').innerHTML = '<strong style="color:var(--orange)">💳 A partir de R$30,00</strong>';
+    document.getElementById('v-batalha').innerHTML = '<strong style="color:var(--orange)">💳 R$ 40,00</strong>';
+    document.getElementById('v-dica').innerHTML = '<strong style="color:var(--orange)">💳 R$ 25,00</strong>';
+  } else {
+    tag.innerText = '⚙ ADMIN';
+    tag.className = 'perfil-tag tag-admin';
+    msg.innerHTML = `Bem-vindo, administrador! Gerencie tudo por aqui.`;
+    botaoAdm.style.display = 'inline-block';
+  }
+}
+
+function pedir(servico){
+  let texto = '';
+  if(perfil === 'agenciado'){
+    texto = `Olá! Sou agenciado(a) — Usuário/ID: ${dados.usuario} | E-mail: ${dados.email}. Quero solicitar: ${servico}. Por favor confirme meu cadastro.`;
+  } else if(perfil === 'visitante'){
+    texto = `Olá! Sou visitante — E-mail: ${dados.email}. Quero saber sobre: ${servico}. Quais valores e formas de pagamento?`;
+  } else {
+    texto = `Olá! Sou o administrador e preciso de: ${servico}.`;
+  }
+  window.open(`https://wa.me/556981478873?text=${encodeURIComponent(texto)}`,'_blank');
+}
+
+function abrir(id){
+  document.querySelectorAll('.tab-content').forEach(a => a.classList.remove('active'));
+  document.querySelectorAll('.nav button').forEach(b => b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  event.target.classList.add('active');
+}
+
+function sair(){
+  document.getElementById('mainPage').style.display='none';
+  document.getElementById('loginPage').style.display='block';
+  perfil='';dados={};
+}
+</script>
+
 </body>
 </html>
