@@ -61,6 +61,7 @@ input[type="file"]{background:transparent;border:none;padding:5px;color:var(--cy
 .lista-aprovados{background:var(--panel2);border:1px solid var(--line);border-radius:10px;padding:15px;margin-top:15px}
 .item-aprovado{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid var(--line)}
 .item-aprovado:last-child{border-bottom:none}
+.aviso-lembrete{font-size:13px;color:var(--muted);margin-top:5px;padding-left:22px}
 
 #mainPage{display:none}
 .header{background:var(--panel);padding:15px 20px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--line)}
@@ -202,7 +203,7 @@ input[type="file"]{background:transparent;border:none;padding:5px;color:var(--cy
     <div id="meulive" class="tab-content">
       <div class="card">
         <h2 style="color:var(--pink);text-align:center;">⚙️ Configurar Minha Live</h2>
-        <p style="text-align:center;color:var(--muted);margin-bottom:20px;">Cadastre os dados das suas transmissões nas duas plataformas:</p>
+        <p style="text-align:center;color:var(--muted);margin-bottom:10px;">Cadastre uma vez só — seus dados ficam salvos para sempre!</p>
 
         <!-- PLATAFORMA TIKTOK -->
         <div class="plataforma-bloco">
@@ -212,7 +213,7 @@ input[type="file"]{background:transparent;border:none;padding:5px;color:var(--cy
             <input id="tiktok-perfil" placeholder="Ex: https://tiktok.com/@seuperfil">
           </div>
           <div class="field">
-            <label>Link direto da live</label>
+            <label>Link da live (se tiver)</label>
             <input id="tiktok-live" placeholder="Cole aqui o link da transmissão">
           </div>
         </div>
@@ -225,14 +226,14 @@ input[type="file"]{background:transparent;border:none;padding:5px;color:var(--cy
             <input id="kaku-perfil" placeholder="Ex: 177766 ou @seuperfil">
           </div>
           <div class="field">
-            <label>Link ou código da live</label>
+            <label>Link da live (se tiver)</label>
             <input id="kaku-live" placeholder="Link ou código da transmissão">
           </div>
         </div>
 
         <!-- CAPA E STATUS -->
         <div class="field">
-          <label>📷 Escolher capa da galeria:</label>
+          <label>📷 Capa da transmissão:</label>
           <input type="file" id="capa-arquivo" accept="image/*" onchange="carregarCapa(this)">
           <img id="preview-capa" class="preview-capa" alt="Pré-visualização">
           <p style="font-size:13px;color:var(--muted);margin:8px 0;">Ou cole o link abaixo:</p>
@@ -243,6 +244,7 @@ input[type="file"]{background:transparent;border:none;padding:5px;color:var(--cy
           <input type="checkbox" id="estou-ao-vivo" style="width:auto;">
           <label for="estou-ao-vivo" style="color:var(--green);font-weight:bold;">✅ Estou AO VIVO AGORA!</label>
         </div>
+        <p class="aviso-lembrete">💡 Marque só quando começar, desmarque quando terminar — seus dados continuam salvos!</p>
 
         <button class="btn primary" onclick="salvarLive()">💾 Salvar Dados</button>
       </div>
@@ -287,10 +289,14 @@ const ADMIN_EMAIL = 'padronizaassessoria@gmail.com';
 const ADMIN_SENHA = 'agency2026.';
 let perfil = '';
 let dados = {};
-let listaLives = [];
+let listaLives = JSON.parse(localStorage.getItem('listaLivesSalvas') || '[]'); // Salva permanentemente
 let dadosPlanilha = [];
 
-document.addEventListener('DOMContentLoaded', carregarDadosPlanilha);
+document.addEventListener('DOMContentLoaded', () => {
+  carregarDadosPlanilha();
+  // Carrega dados salvos automaticamente quando entra na página
+  if(perfil === 'agenciado' && dados.usuario) carregarDadosSalvos();
+});
 
 async function carregarDadosPlanilha(){
   try{
@@ -310,6 +316,23 @@ async function carregarDadosPlanilha(){
   }catch(e){
     console.log('❌ Erro:', e);
     document.getElementById('lista-planilha').innerHTML = '<p style="color:var(--red);text-align:center">Verifique permissões da planilha!</p>';
+  }
+}
+
+function carregarDadosSalvos(){
+  const meuCadastro = listaLives.find(l => l.nome === dados.usuario);
+  if(meuCadastro){
+    document.getElementById('tiktok-perfil').value = meuCadastro.tiktokPerfil || '';
+    document.getElementById('tiktok-live').value = meuCadastro.tiktokLive || '';
+    document.getElementById('kaku-perfil').value = meuCadastro.kakuPerfil || '';
+    document.getElementById('kaku-live').value = meuCadastro.kakuLive || '';
+    document.getElementById('link-capa').value = meuCadastro.capa || '';
+    document.getElementById('estou-ao-vivo').checked = meuCadastro.aoVivo || false;
+    if(meuCadastro.capa && !meuCadastro.capa.startsWith('data:')){
+      const preview = document.getElementById('preview-capa');
+      preview.src = meuCadastro.capa;
+      preview.classList.add('preview-mostrar');
+    }
   }
 }
 
@@ -386,6 +409,8 @@ async function verificarAcesso(){
   document.getElementById('loginPage').style.display='none';
   document.getElementById('mainPage').style.display='block';
   atualizarTela();
+  // Carrega dados salvos automaticamente ao entrar
+  setTimeout(carregarDadosSalvos, 300);
 }
 
 function escolher(tipo){
@@ -462,7 +487,7 @@ function atualizarTela(){
 
   if(perfil === 'agenciado'){
     tag.innerText = '🟢 AGENCIADO'; tag.className = 'perfil-tag tag-agenciado';
-    msg.innerHTML = `Olá <strong>${dados.usuario}</strong>! Tudo liberado para você!`;
+    msg.innerHTML = `Olá <strong>${dados.usuario}</strong>! Seus dados ficam salvos para sempre — só precisa marcar quando estiver ao vivo!`;
   } else if(perfil === 'visitante'){
     tag.innerText = '🔵 VISITANTE'; tag.className = 'perfil-tag tag-visitante';
     msg.innerHTML = `Olá <strong>${dados.nome}</strong>! Escolha uma opção para acesso completo.`;
@@ -486,24 +511,27 @@ function salvarLive(){
 
   if(!tiktokPerfil && !kakuPerfil) return alert('⚠️ Preencha pelo menos um perfil!');
   
+  // Remove cadastro antigo e salva o novo
   listaLives = listaLives.filter(l => l.nome !== nome);
-  if(aoVivo){
-    listaLives.push({nome, tiktokPerfil, tiktokLive, kakuPerfil, kakuLive, capa:capaFinal});
-    alert('✅ Salvo! Sua live já aparece na lista com as duas plataformas.');
-  } else {
-    alert('✅ Salvo! Marque "Ao vivo" quando começar a transmissão.');
-  }
+  listaLives.push({
+    nome, tiktokPerfil, tiktokLive, kakuPerfil, kakuLive, capa:capaFinal, aoVivo
+  });
+  
+  // Salva permanentemente no navegador
+  localStorage.setItem('listaLivesSalvas', JSON.stringify(listaLives));
+  
+  alert('✅ Salvo! Seus dados ficarão guardados para sempre — só ajuste o status quando for transmitir!');
   atualizarListaLives();
 }
 
 function atualizarListaLives(){
   const container = document.getElementById('lista-lives');
-  if(listaLives.length === 0){
+  if(listaLives.filter(l=>l.aoVivo).length === 0){
     container.innerHTML = '<p style="grid-column:1/-1;text-align:center;color:var(--muted)">Nenhuma live no momento.</p>';
     return;
   }
   container.innerHTML = '';
-  listaLives.forEach(l => {
+  listaLives.filter(l=>l.aoVivo).forEach(l => {
     container.innerHTML += `
     <div class="live-card">
       <img src="${l.capa || 'https://via.placeholder.com/400x180/17213a/f7f9ff?text=Transmissão+Ao+Vivo'}" class="live-capa" alt="Capa da live">
@@ -511,8 +539,8 @@ function atualizarListaLives(){
         <span class="live-tag">🔴 AO VIVO</span>
         <h3>${l.nome}</h3>
         <div class="links-plataformas">
-          ${l.tiktokLive ? `<a href="${l.tiktokLive}" target="_blank" class="link-tiktok">🎵 TikTok</a>` : l.tiktokPerfil ? `<a href="${l.tiktokPerfil}" target="_blank" class="link-tiktok">🎵 Perfil TikTok</a>` : ''}
-          ${l.kakuLive ? `<a href="${l.kakuLive}" target="_blank" class="link-kaku">🔴 Kaku Live</a>` : l.kakuPerfil ? `<a href="${l.kakuPerfil}" target="_blank" class="link-kaku">🔴 Perfil Kaku</a>` : ''}
+          ${l.tiktokLive ? `<a href="${l.tiktokLive}" target="_blank" class="link-tiktok">🎵 Assistir TikTok</a>` : l.tiktokPerfil ? `<a href="${l.tiktokPerfil}" target="_blank" class="link-tiktok">🎵 Perfil TikTok</a>` : ''}
+          ${l.kakuLive ? `<a href="${l.kakuLive}" target="_blank" class="link-kaku">🔴 Assistir Kaku</a>` : l.kakuPerfil ? `<a href="${l.kakuPerfil}" target="_blank" class="link-kaku">🔴 Perfil Kaku</a>` : ''}
         </div>
       </div>
     </div>`;
@@ -522,6 +550,8 @@ function atualizarListaLives(){
 function abrir(id){
   document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
   document.getElementById(id).classList.add('active');
+  // Se abrir a página de configuração, carrega os dados salvos
+  if(id === 'meulive' && perfil === 'agenciado' && dados.usuario) carregarDadosSalvos();
 }
 
 function sair(){
