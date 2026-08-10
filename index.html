@@ -466,14 +466,12 @@ function enviarSolicitacao(){
   if(dadosPlanilha.some(i => i.usuario === usuario)) return alert('⚠️ Já existe uma solicitação para esse usuário!');
   
   dadosPlanilha.push({
-    usuario: usuario,
-    status: 'Pendente',
-    data: new Date().toLocaleString('pt-BR'),
+    usuario: usuario, status: 'Pendente', data: new Date().toLocaleString('pt-BR'),
     tiktok_perfil:'', tiktok_live:'', kako_perfil:'', kako_live:'', capa:'', esta_ao_vivo:false, assinante:false, tem_treinamento:false
   });
   
-  const mensagem = encodeURIComponent(`🔔 NOVA SOLICITAÇÃO!\nUsuário: ${usuario}\nData: ${new Date().toLocaleString('pt-BR')}\nPor favor, analisar no Painel Admin.`);
-  alert('✅ Solicitação enviada! Aguarde a análise.');
+  const mensagem = encodeURIComponent(`🔔 NOVA SOLICITAÇÃO DE AGENCIAMENTO!\nUsuário: ${usuario}\nData: ${new Date().toLocaleString('pt-BR')}`);
+  alert('✅ Solicitação enviada! Entraremos em contato em breve.');
   window.open(`https://wa.me/5569981478873?text=${mensagem}`, '_blank');
 }
 
@@ -486,7 +484,7 @@ function verificarAcesso(){
   const aprovado = dadosPlanilha.some(i => i.usuario === usuario && i.status.trim() === 'Aprovado');
   
   if(!aprovado){
-    return alert('⚠️ Seu acesso ainda não foi aprovado! Verifique o nome exato ou aguarde a confirmação.');
+    return alert('⚠️ Seu acesso ainda não foi aprovado! Verifique o nome ou aguarde a confirmação.');
   }
   
   dados.usuario = usuario;
@@ -526,6 +524,7 @@ function atualizarTela(){
     tag.innerText = '⚙ ADMIN'; tag.className = 'perfil-tag tag-admin';
     msg.innerHTML = `Bem-vindo de volta! Controle total da agência.`; botaoAdm.style.display = 'inline-block';
   }
+  atualizarAcessoServicos();
 }
 
 function abrir(aba){
@@ -547,8 +546,8 @@ function sair(){
 
 function atualizarAcessoServicos(){
   const ehAgenciado = perfil === 'agenciado';
-  const ehAssinante = perfil === 'visitante' && dadosPlanilha.some(i => i.usuario === dados.nome.toLowerCase() && i.assinante === true);
-  const temTreinamento = ehAgenciado || (perfil === 'visitante' && dadosPlanilha.some(i => i.usuario === dados.nome.toLowerCase() && i.tem_treinamento === true));
+  const ehAssinante = perfil === 'visitante' && dadosPlanilha.some(i => i.usuario === dados.nome?.toLowerCase() && i.assinante === true);
+  const temTreinamento = ehAgenciado || (perfil === 'visitante' && dadosPlanilha.some(i => i.usuario === dados.nome?.toLowerCase() && i.tem_treinamento === true));
   const temAcessoCompleto = ehAgenciado || ehAssinante;
 
   document.getElementById('aviso-bloqueio-perfil').style.display = temAcessoCompleto ? 'none' : 'block';
@@ -587,17 +586,51 @@ function atualizarListaLives(){
   });
 }
 
-function liberarAcesso(){
-  const usuario = document.getElementById('novo-aprovado').value.trim().toLowerCase().replace(/^@/, '').replace(/\s+/g, '');
-  if(!usuario) return alert('⚠️ Digite o usuário!');
-  if(dadosPlanilha.some(i => i.usuario === usuario)) return alert('⚠️ Esse usuário já está cadastrado!');
-  
-  dadosPlanilha.push({
-    usuario: usuario, status: 'Aprovado', data: new Date().toLocaleString('pt-BR'),
-    tiktok_perfil:'', tiktok_live:'', kako_perfil:'', kako_live:'', capa:'', esta_ao_vivo:false, assinante:false, tem_treinamento:false
+function atualizarListaPlanilha(){
+  const container = document.getElementById('lista-planilha');
+  if(dadosPlanilha.length === 0){
+    container.innerHTML = '<p style="color:var(--muted);text-align:center">Nenhuma solicitação ainda.</p>';
+    return;
+  }
+  container.innerHTML = '';
+  dadosPlanilha.forEach(item => {
+    container.innerHTML += `
+    <div class="item-aprovado">
+      <div>
+        <strong>${item.usuario}</strong><br>
+        <span style="font-size:13px;color:var(--muted)">${item.data} | Status: ${item.status}</span>
+      </div>
+      <div>
+        ${item.status !== 'Aprovado' ? `<button class="btn aprovado btn small" onclick="liberarAcesso('${item.usuario}')">Aprovar</button>` : ''}
+        <button class="btn remover btn small" onclick="removerUsuario('${item.usuario}')">Remover</button>
+      </div>
+    </div>`;
   });
-  alert('✅ Acesso liberado!');
+}
+
+function liberarAcesso(usuario){
+  if(!usuario) usuario = document.getElementById('novo-aprovado').value.trim().toLowerCase().replace(/^@/, '').replace(/\s+/g, '');
+  if(!usuario) return alert('⚠️ Digite o usuário!');
+  let encontrado = dadosPlanilha.find(i => i.usuario === usuario);
+  if(encontrado){
+    encontrado.status = 'Aprovado';
+    alert(`✅ ${usuario} foi aprovado com sucesso!`);
+  } else {
+    dadosPlanilha.push({
+      usuario: usuario, status: 'Aprovado', data: new Date().toLocaleString('pt-BR'),
+      tiktok_perfil:'', tiktok_live:'', kako_perfil:'', kako_live:'', capa:'', esta_ao_vivo:false, assinante:true, tem_treinamento:true
+    });
+    alert(`✅ ${usuario} foi cadastrado e aprovado!`);
+  }
   document.getElementById('novo-aprovado').value = '';
+  atualizarListaPlanilha();
+}
+
+function removerUsuario(usuario){
+  if(confirm(`Tem certeza que deseja remover ${usuario}?`)){
+    dadosPlanilha = dadosPlanilha.filter(i => i.usuario !== usuario);
+    atualizarListaPlanilha();
+  }
 }
 
 function carregarCapa(input){
