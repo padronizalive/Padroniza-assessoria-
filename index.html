@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Padroniza Assessoria | Portal de Streamers</title>
+<title>Padroniza + Live Assessoria | Portal Oficial</title>
 <style>
 :root{--bg:#0b1020;--panel:#11182c;--panel2:#17213a;--line:#293653;--text:#f7f9ff;--muted:#a9b4cb;--pink:#ff3d81;--violet:#7457ff;--cyan:#27d8c2;--gold:#ffc857;--green:#34d399;--yellow:#fbbf24;--red:#ef4444;--shadow:0 18px 50px #0005}*{box-sizing:border-box;margin:0;padding:0}
 body{margin:0;background:radial-gradient(circle at 90% 0,#30205c 0,transparent 35%),var(--bg);color:var(--text);font:15px Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,sans-serif;min-height:100vh}
@@ -15,8 +15,8 @@ a{color:inherit;text-decoration:none}
 .sidebar{width:265px;background:#0d1426;border-right:1px solid var(--line);padding:25px 16px;position:fixed;inset:0 auto 0 0;transition:transform .3s ease}
 .sidebar.open{transform:translateX(0)}
 .brand{display:flex;align-items:center;gap:11px;padding:0 12px 28px}
-.logo{width:40px;height:40px;border-radius:13px;background:linear-gradient(135deg,var(--pink),var(--violet));display:grid;place-items:center;font-weight:900;font-size:18px;box-shadow:0 8px 22px #ff3d8140}
-.brand b{font-size:17px}.brand small{display:block;color:var(--muted);font-size:11px;margin-top:2px}
+.logo{width:50px;height:50px;object-fit:contain;box-shadow:0 8px 22px #00000040}
+.brand b{font-size:17px}.brand small{display:block;color:#ffc857;font-size:11px;margin-top:2px}
 .nav-label{text-transform:uppercase;color:#6f7d9d;font-size:10px;font-weight:800;letter-spacing:1px;padding:15px 12px 8px}
 .nav button{width:100%;text-align:left;padding:12px;border-radius:10px;background:none;color:var(--muted);margin:2px 0;transition:.2s}
 .nav button:hover,.nav button.active{background:linear-gradient(90deg,#ff3d8115,#7457ff25);color:#fff}
@@ -37,7 +37,7 @@ a{color:inherit;text-decoration:none}
 .avatar{width:35px;height:35px;border-radius:50%;background:linear-gradient(135deg,var(--cyan),var(--violet));display:grid;place-items:center;font-weight:800;overflow:hidden}
 .avatar img{width:100%;height:100%;object-fit:cover}
 
-/* Componentes ORIGINAIS mantidos */
+/* Componentes mantidos */
 .hero{padding:29px;border:1px solid #383b69;border-radius:20px;background:linear-gradient(110deg,#1d2245dd,#171d39bb),radial-gradient(circle at 80% 40%,#ff3d8140,transparent 25%);box-shadow:var(--shadow);display:flex;justify-content:space-between;gap:25px;align-items:center;flex-wrap:wrap}
 .hero h1{font-size:30px;margin:8px 0 9px;letter-spacing:-.7px}.hero p{color:#c6cee1;margin:0;max-width:600px}
 .tag{display:inline-flex;align-items:center;gap:6px;border:1px solid #ffffff25;border-radius:30px;padding:6px 10px;color:#ffd8e6;background:#ff3d8119;font-size:12px;font-weight:700}
@@ -46,7 +46,6 @@ a{color:inherit;text-decoration:none}
 .btn.primary{background:linear-gradient(135deg,var(--pink),#c52dff);border:0}
 .btn.cyan{background:#27d8c21a;color:var(--cyan);border-color:#27d8c260}
 .btn.green{background:var(--green);color:#000;border:0}
-.btn.yellow{background:var(--yellow);color:#000;border:0}
 .grid{display:grid;grid-template-columns:repeat(4,1fr);gap:15px;margin:20px 0}
 .stat,.card{background:var(--panel);border:1px solid var(--line);border-radius:15px}
 .stat{padding:18px}.stat .icon{float:right;font-size:21px}.stat small{color:var(--muted)}.stat strong{display:block;font-size:25px;margin:8px 0 4px}.trend{font-size:12px;color:var(--cyan)}
@@ -61,7 +60,6 @@ a{color:inherit;text-decoration:none}
 .date{width:49px;height:49px;border-radius:11px;background:#ff3d8118;color:#ff83ad;text-align:center;padding-top:7px;font-weight:800}
 .date b{display:block;font-size:19px;color:#fff;line-height:18px}.battle-info{flex:1}.battle-info strong{font-size:14px}.battle-info small{display:block;color:var(--muted);margin-top:4px}
 .pill{padding:5px 8px;border-radius:20px;font-size:11px;background:#27d8c21a;color:var(--cyan)}
-.quick{display:grid;gap:10px}.quick .btn{text-align:left;padding:14px}.quick .btn span{margin-right:9px}
 .notice{background:linear-gradient(135deg,#2a2150,#17213a);border:1px solid #6b4cbd80}.notice strong{color:#e0d4ff}.notice p{color:#c5bddb;line-height:1.5;font-size:13px}
 .rule{padding:15px;border-left:3px solid var(--pink);background:#ffffff07;margin:10px 0;border-radius:0 9px 9px 0;line-height:1.5}.rule b{display:block;margin-bottom:4px}
 .platforms{display:grid;grid-template-columns:1fr 1fr;gap:15px}
@@ -81,7 +79,6 @@ a{color:inherit;text-decoration:none}
 .passo-a-passo{background:#ffffff07;border-left:3px solid var(--cyan);padding:15px;border-radius:0 10px 10px 0;margin:10px 0}
 .toast{position:fixed;right:25px;bottom:25px;background:#1d2b4b;color:#fff;border:1px solid var(--cyan);padding:13px 16px;border-radius:10px;display:none;box-shadow:var(--shadow)}
 
-/* Responsivo mantido */
 @media(max-width:950px){.menu-toggle{display:block}.sidebar{transform:translateX(-105%);z-index:999}.main{margin-left:0;width:100%;padding:20px}.grid{grid-template-columns:repeat(2,1fr)}.columns{grid-template-columns:1fr}.hero{display:block}.hero-actions{justify-content:flex-start;margin-top:20px}}
 @media(max-width:650px){.sidebar{position:static;width:100%;height:auto;padding:13px}.app{display:block}.nav,.nav-label,.side-card{display:none}.brand{padding:0}.main{margin:0;width:100%;padding:17px}.topbar{margin-bottom:16px}.grid,.platforms,.form-grid{grid-template-columns:1fr}.hero h1{font-size:24px}}
 </style>
@@ -93,22 +90,23 @@ a{color:inherit;text-decoration:none}
   <div class="auth-box">
     <div style="text-align:center;margin-bottom:25px">
       <div style="display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:10px">
-        <div class="logo">P</div>
-        <div><b>PADRONIZA ASSESSORIA</b><br><small style="color:var(--muted)">Portal Oficial</small></div>
+        <img src="logo.png" alt="Padroniza + Live Assessoria" class="logo" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <div style="display:none" class="logo" style="background:linear-gradient(135deg,#34C7F7,#9D4EDD,#FF6B6B,#FFD166);align-items:center;justify-content:center;color:#fff;font-weight:900;font-size:22px">P</div>
+        <div><b>Padroniza</b><br><small style="color:#ffc857">+ Live Assessoria</small></div>
       </div>
     </div>
     <div id="loginForm">
       <h3 style="margin-bottom:15px">Acessar Conta</h3>
-      <div class="field full"><label>Usuário</label><input id="loginUser" placeholder="Seu nome de usuário"></div>
+      <div class="field full"><label>E-mail / Usuário</label><input id="loginUser" placeholder="Seu e-mail ou nome de usuário"></div>
       <div class="field full"><label>Senha</label><input id="loginPass" type="password" placeholder="Sua senha"></div>
       <button class="btn primary" style="width:100%;margin:15px 0" onclick="fazerLogin()">Entrar</button>
       <p style="text-align:center;color:var(--muted);font-size:13px">Não tem conta? <a href="#" style="color:var(--cyan)" onclick="mostrarCadastro()">Cadastre-se aqui</a></p>
-      <p style="text-align:center;color:var(--muted);font-size:13px;margin-top:10px">Acesso Administrador: <a href="#" style="color:var(--pink)" onclick="document.getElementById('loginUser').value='admin';document.getElementById('loginPass').focus()">Clique aqui</a></p>
+      <p style="text-align:center;color:var(--muted);font-size:13px;margin-top:10px">Acesso Administrador: <a href="#" style="color:var(--pink)" onclick="document.getElementById('loginUser').value='padronizaassessoria@gmail.com';document.getElementById('loginPass').focus()">Clique aqui</a></p>
     </div>
     <div id="cadastroForm" style="display:none">
       <h3 style="margin-bottom:15px">Cadastrar Conta de Streamer</h3>
       <div class="field full"><label>Nome artístico</label><input id="cadNome" placeholder="Como é conhecido nas lives"></div>
-      <div class="field full"><label>Criar Usuário</label><input id="cadUser" placeholder="Ex: joao_live"></div>
+      <div class="field full"><label>Criar Usuário ou E-mail</label><input id="cadUser" placeholder="Ex: seu_nome ou seu@email.com"></div>
       <div class="field full"><label>Criar Senha</label><input id="cadPass" type="password" placeholder="Mínimo 6 caracteres"></div>
       <button class="btn primary" style="width:100%;margin:15px 0" onclick="fazerCadastro()">Criar Conta</button>
       <p style="text-align:center;color:var(--muted);font-size:13px">Já tem conta? <a href="#" style="color:var(--cyan)" onclick="mostrarLogin()">Fazer login</a></p>
@@ -116,10 +114,14 @@ a{color:inherit;text-decoration:none}
   </div>
 </div>
 
-<!-- Portal Principal - MANTEVE TODO O CONTEÚDO ORIGINAL -->
+<!-- Portal Principal -->
 <div id="mainScreen" class="tab">
 <aside class="sidebar" id="sidebar">
-<div class="brand"><div class="logo">P</div><div><b>PADRONIZA</b><small>ASSESSORIA DE STREAMERS</small></div></div>
+<div class="brand">
+<img src="logo.png" alt="Padroniza + Live Assessoria" class="logo" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+<div style="display:none" class="logo" style="background:linear-gradient(135deg,#34C7F7,#9D4EDD,#FF6B6B,#FFD166);align-items:center;justify-content:center;color:#fff;font-weight:900;font-size:22px">P</div>
+<div><b>Padroniza</b><small>+ Live Assessoria</small></div>
+</div>
 <div class="nav-label">Meu portal</div>
 <div class="nav">
 <button class="active" data-tab="inicio"><span>⌂</span>Visão geral</button>
@@ -158,7 +160,7 @@ a{color:inherit;text-decoration:none}
 </div>
 </div>
 
-<!-- PÁGINAS ORIGINAIS MANTIDAS EXATAMENTE -->
+<!-- Páginas mantidas -->
 <section id="inicio" class="tab active">
 <div class="hero"><div><span class="tag">● Central do streamer</span><h1>Transforme sua live em uma experiência inesquecível.</h1><p>Organize batalhas, solicite músicas exclusivas e receba artes profissionais para crescer no TikTok e no Kaku Live.</p></div><div class="hero-actions"><button class="btn primary" onclick="showTab('criacao')">Solicitar criação ♫</button><button class="btn cyan" onclick="showTab('batalhas')">Agendar batalha ⚔</button></div></div>
 <div class="grid"><div class="stat"><span class="icon">⚔</span><small>Batalhas agendadas</small><strong>04</strong><span class="trend">↑ 2 este mês</span></div><div class="stat"><span class="icon">♫</span><small>Criações entregues</small><strong>12</strong><span class="trend">+3 em andamento</span></div><div class="stat"><span class="icon">▣</span><small>Artes disponíveis</small><strong>08</strong><span class="trend">Prontas para usar</span></div><div class="stat"><span class="icon">★</span><small>Nível da agência</small><strong>Prata</strong><span class="trend">68% para Ouro</span></div></div>
@@ -212,4 +214,263 @@ a{color:inherit;text-decoration:none}
 </section>
 
 <section id="suporte" class="tab">
-<div class="sectio
+<div class="section-title"><h2>Suporte, regras e metas</h2></div>
+<div class="platforms">
+<div class="platform tiktok"><h3>♪ TikTok</h3><p class="muted">Foco: descoberta, retenção e interação durante a live.</p>
+<div class="rule"><b>Boas práticas</b>Use título claro, mantenha a câmera e o áudio preparados e incentive interações sem spam.</div>
+<div class="rule"><b>Batalhas</b>Respeite o horário combinado, as regras da plataforma e a comunidade do adversário.</div>
+<a class="btn" href="https://www.tiktok.com/coin?rc=7TGXGN69&rie=" target="_blank">Comprar moedas ↗</a>
+</div>
+<div class="platform kaku"><h3>◉ Kaku Live</h3><p class="muted">Foco: comunidade, frequência e relacionamento com a audiência.</p>
+<div class="rule"><b>Boas práticas</b>Crie rotina de transmissões, acolha novos espectadores e divulgue sua agenda.</div>
+<div class="rule"><b>Suporte</b>Em caso de instabilidade ou denúncia, registre horário, evidências e informe a assessoria.</div>
+<button class="btn" onclick="showToast('Chamado aberto! A equipe responderá em breve.')">Falar com suporte</button>
+</div>
+</div>
+<div class="section-title"><h2>Metas de graduação da agência</h2></div>
+<div class="card">
+<div class="rule"><b>Bronze — Começo consistente</b>Perfil organizado, rotina inicial e participação nas orientações.</div>
+<div class="rule"><b>Prata — Evolução</b>Regularidade, participação em batalhas e cumprimento dos combinados da agência.</div>
+<div class="rule"><b>Ouro — Alta performance</b>Constância comprovada, evolução de audiência, profissionalismo e colaboração em eventos.</div>
+<p class="muted">As metas podem ser acompanhadas pelo painel e revisadas pela equipe conforme o desempenho e as regras vigentes de cada plataforma.</p>
+<a class="btn primary" href="https://www.tiktok.com/t/ZSHu6CFAM/" target="_blank">Quero ser agenciado ↗</a>
+</div>
+</section>
+
+<section id="solicitacoes" class="tab">
+<div class="section-title"><h2>Enviar solicitação</h2><span class="pill">Atendimento Padroniza</span></div>
+<div class="card"><p class="muted">Preencha os dados abaixo. Ao enviar, o pedido será registrado e seu e-mail será aberto para <b>padronizaassessoria@gmail.com</b>.</p>
+<form id="requestForm" class="form-grid">
+<div class="field"><label>Nome do streamer</label><input id="rname" required placeholder="Nome artístico ou nome completo"></div>
+<div class="field"><label>Plataforma</label><select id="rplatform" required><option value="TikTok">TikTok</option><option value="Kaku Live">Kaku Live</option><option value="TikTok e Kaku Live">TikTok e Kaku Live</option></select></div>
+<div class="field"><label>Contato</label><input id="rcontact" required placeholder="WhatsApp, e-mail ou @perfil"></div>
+<div class="field"><label>Tipo de solicitação</label><select id="rtype" required><option>Música personalizada</option><option>Arte visual</option><option>Agendamento de batalha</option><option>Inscrição para ser agenciado</option></select></div>
+<div class="field full"><label>Detalhes do pedido</label><textarea id="rdetails" required placeholder="Explique o que você precisa..."></textarea></div>
+<div class="field full"><button class="btn primary" type="submit">Enviar para a Padroniza ✉</button></div>
+</form>
+</div>
+</section>
+
+<section id="entrar" class="tab">
+<h2>Quero fazer parte da Padroniza!</h2>
+<div class="card">
+<h3>📱 Para entrar pelo Kaku Live:</h3>
+<div class="id-box">ID DA AGÊNCIA: 177766</div>
+<div class="passo-a-passo">
+<strong>✅ Passo a passo para solicitar:</strong><br><br>
+1. Baixe o aplicativo oficial do Kaku Live<br>
+2. Confirme e complete seu perfil<br>
+3. Clique em <strong>Central de Host</strong><br>
+4. Escolha a opção <strong>Agência</strong><br>
+5. Digite o ID: <strong>177766</strong><br>
+6. Clique em <strong>Solicitar</strong><br>
+7. Agora é só aguardar que a nossa equipe irá aceitar seu pedido!
+</div><br>
+<a href="https://wa.me/556981478873?text=Olá!%20Quero%20ser%20agenciado%20pela%20Padroniza%20Assessoria" target="_blank" class="btn primary" style="width:100%">💬 Falar com a equipe pelo WhatsApp</a>
+</div>
+</section>
+
+<section id="perfil" class="tab">
+<h2>Meu Perfil</h2>
+<div class="card">
+<div style="display:flex;gap:20px;align-items:flex-start;flex-wrap:wrap">
+<div>
+<div class="avatar" style="width:100px;height:100px;font-size:35px" id="fotoPerfil">👤</div>
+<input type="file" id="novaFoto" accept="image/*" style="display:none" onchange="alterarFoto(this)">
+<button class="btn" style="margin-top:10px" onclick="document.getElementById('novaFoto').click()">Alterar Foto</button>
+</div>
+<div class="form-grid" style="flex:1;min-width:300px">
+<div class="field full"><label>Nome Artístico</label><input id="pNome" placeholder="Seu nome"></div>
+<div class="field"><label>Link TikTok</label><input id="pTikTok" placeholder="https://tiktok.com/@seuperfil"></div>
+<div class="field"><label>Link Kaku Live</label><input id="pKaku" placeholder="Link do seu perfil"></div>
+<div class="field full"><label>Horários de Live</label><input id="pHorarios" placeholder="Ex: Seg/Qua/Sex às 20h"></div>
+<button class="btn primary" style="grid-column:1/-1" onclick="salvarPerfil()">Salvar Alterações</button>
+</div>
+</div>
+</div>
+</section>
+
+<section id="admin" class="tab">
+<div class="section-title"><h2>Área exclusiva do administrador</h2><span class="pill">Acesso protegido</span></div>
+<div class="card">
+<p class="muted">Acesso apenas para: <b>padronizaassessoria@gmail.com</b></p>
+<div class="form-grid">
+<div class="field"><label>ID Solicitação</label><input id="confId"></div>
+<div class="field"><label>@ do Oponente</label><input id="confOponente"></div>
+<button class="btn green" style="grid-column:1/-1" onclick="confirmarBatalha()">✅ Confirmar Batalha</button>
+<div class="field"><label>Usuário do Streamer</label><input id="musUser"></div>
+<div class="field full"><label>Link da Música MP3</label><input id="musLink"></div>
+<button class="btn primary" style="grid-column:1/-1" onclick="entregarMusica()">📤 Enviar Música</button>
+</div>
+</div>
+</section>
+
+</main></div>
+<div id="toast" class="toast"></div>
+
+<script>
+const adminUser = 'padronizaassessoria@gmail.com';
+const adminPassHash = 'YWdlbmN5MjAyNi4='; // agency2026. criptografada
+
+let usuarios = JSON.parse(localStorage.getItem('padroniza_usuarios') || '[{"user":"padronizaassessoria@gmail.com","pass":"YWdlbmN5MjAyNi4=","nome":"Administrador Padroniza","tipo":"admin","musicas":[]}]');
+let battles = JSON.parse(localStorage.getItem('padroniza_batalhas') || '[]');
+let usuarioLogado = null;
+
+function openLink(url){window.open(url,'_blank')}
+function showToast(msg){const t=document.getElementById('toast');t.innerText=msg;t.style.display='block';setTimeout(()=>t.style.display='none',3500)}
+function showTab(id){
+  document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  document.querySelectorAll('.nav button').forEach(x=>x.classList.remove('active'));
+  document.querySelector(`.nav button[data-tab="${id}"]`)?.classList.add('active');
+  document.getElementById('crumb').innerText=id.charAt(0).toUpperCase()+id.slice(1);
+  document.getElementById('sidebar').classList.remove('open');
+}
+
+function mostrarCadastro(){document.getElementById('loginForm').style.display='none';document.getElementById('cadastroForm').style.display='block'}
+function mostrarLogin(){document.getElementById('cadastroForm').style.display='none';document.getElementById('loginForm').style.display='block'}
+
+function fazerCadastro(){
+  const u = document.getElementById('cadUser').value.trim();
+  const p = document.getElementById('cadPass').value;
+  const n = document.getElementById('cadNome').value.trim();
+  if(!u || !p || !n) return showToast('Preencha todos os dados!');
+  if(usuarios.find(x=>x.user===u)) return showToast('Esse usuário já existe!');
+  usuarios.push({user:u,pass:btoa(p),nome:n,tipo:'streamer',foto:'',tiktok:'',kaku:'',horarios:'',musicas:[]});
+  salvarDados();
+  showToast('Conta criada com sucesso! Faça login.');
+  mostrarLogin();
+}
+
+function fazerLogin(){
+  const u = document.getElementById('loginUser').value.trim();
+  const p = document.getElementById('loginPass').value;
+  const hashSenha = btoa(p);
+  const userEncontrado = usuarios.find(x=>x.user===u && x.pass===hashSenha);
+  if(!userEncontrado) return showToast('Usuário ou senha incorretos!');
+  usuarioLogado = userEncontrado;
+  abrirPortal();
+}
+
+function sairConta(){
+  usuarioLogado = null;
+  document.getElementById('mainScreen').classList.remove('active');
+  document.getElementById('authScreen').classList.add('active');
+  mostrarLogin();
+}
+
+function abrirPortal(){
+  document.getElementById('authScreen').classList.remove('active');
+  document.getElementById('mainScreen').classList.add('active');
+  document.getElementById('nomeUsuario').innerText = usuarioLogado.nome;
+  if(usuarioLogado.tipo==='admin') document.getElementById('adminBtn').style.display='block';
+  atualizarTela();
+}
+
+function solicitarBatalha(){
+  if(!usuarioLogado) return;
+  const d = document.getElementById('bdate').value;
+  const h = document.getElementById('btime').value;
+  const p = document.getElementById('bplatform').value;
+  const g = document.getElementById('bguest').value;
+  const o = document.getElementById('bnote').value;
+  if(!d || !h) return showToast('Escolha data e horário!');
+  battles.push({id:Date.now(),usuario:usuarioLogado.user,data:d,hora:h,plataforma:p,guest:g,obs:o,status:'pendente',oponente:''});
+  salvarDados();
+  showToast('Solicitação enviada! Avisaremos quando confirmada.');
+  atualizarTela();
+}
+
+function confirmarBatalha(){
+  if(usuarioLogado?.tipo!=='admin') return showToast('Acesso restrito ao administrador!');
+  const id = parseInt(document.getElementById('confId').value);
+  const op = document.getElementById('confOponente').value.trim();
+  const bat = battles.find(x=>x.id===id);
+  if(!bat || !op) return showToast('Preencha o ID e o nome do oponente!');
+  bat.status='confirmada';
+  bat.oponente=op;
+  salvarDados();
+  showToast('Batalha confirmada com sucesso!');
+  atualizarTela();
+}
+
+function entregarMusica(){
+  if(usuarioLogado?.tipo!=='admin') return showToast('Acesso restrito ao administrador!');
+  const u = document.getElementById('musUser').value.trim();
+  const l = document.getElementById('musLink').value.trim();
+  const user = usuarios.find(x=>x.user===u);
+  if(!user || !l) return showToast('Informe o usuário e o link da música!');
+  if(!user.musicas) user.musicas = [];
+  user.musicas.push({link:l,data:new Date().toLocaleDateString('pt-BR')});
+  salvarDados();
+  showToast('Música entregue ao streamer!');
+  atualizarTela();
+}
+
+function salvarPerfil(){
+  const u = usuarios.find(x=>x.user===usuarioLogado.user);
+  u.nome = document.getElementById('pNome').value || u.nome;
+  u.tiktok = document.getElementById('pTikTok').value;
+  u.kaku = document.getElementById('pKaku').value;
+  u.horarios = document.getElementById('pHorarios').value;
+  usuarioLogado = u;
+  salvarDados();
+  showToast('Perfil atualizado!');
+  atualizarTela();
+}
+
+function alterarFoto(input){
+  if(input.files?.[0]){
+    const r = new FileReader();
+    r.onload = e => {
+      const u = usuarios.find(x=>x.user===usuarioLogado.user);
+      u.foto = e.target.result;
+      usuarioLogado = u;
+      salvarDados();
+      atualizarTela();
+    };
+    r.readAsDataURL(input.files[0]);
+  }
+}
+
+function salvarDados(){
+  localStorage.setItem('padroniza_usuarios',JSON.stringify(usuarios));
+  localStorage.setItem('padroniza_batalhas',JSON.stringify(battles));
+}
+
+function atualizarTela(){
+  if(!usuarioLogado) return;
+  document.getElementById('pNome').value = usuarioLogado.nome;
+  document.getElementById('pTikTok').value = usuarioLogado.tiktok||'';
+  document.getElementById('pKaku').value = usuarioLogado.kaku||'';
+  document.getElementById('pHorarios').value = usuarioLogado.horarios||'';
+  document.getElementById('fotoPerfil').innerHTML = usuarioLogado.foto ? `<img src="${usuarioLogado.foto}" style="width:100%;height:100%;object-fit:cover;border-radius:50%">` : '👤';
+  document.getElementById('avatarTopo').innerHTML = usuarioLogado.foto ? `<img src="${usuarioLogado.foto}" style="width:100%;height:100%;object-fit:cover">` : '👤';
+
+  const minhasB = battles.filter(x=>x.usuario===usuarioLogado.user);
+  document.getElementById('minhasBatalhas').innerHTML = minhasB.length ? minhasB.map(b=>`
+    <div class="card" style="padding:12px">
+      <strong>${b.data} às ${b.hora} — ${b.plataforma}</strong>
+      <span class="badge ${b.status}">${b.status==='pendente' ? '🔔 Aguardando oponente' : '✅ Confirmada: '+b.oponente}</span>
+    </div>
+  `).join('') : '<p class="muted">Nenhuma solicitação de batalha ainda.</p>';
+
+  const minhasM = usuarios.find(x=>x.user===usuarioLogado.user)?.musicas || [];
+  document.getElementById('minhasMusicas').innerHTML = minhasM.length ? minhasM.map(m=>`
+    <div class="card" style="padding:12px">
+      <strong>🎵 Música pronta!</strong>
+      <p class="muted">Entregue em: ${m.data}</p>
+      <audio controls class="audio-player" src="${m.link}">
+      <a href="${m.link}" target="_blank" class="btn primary" style="margin-top:8px">⬇ Baixar MP3</a>
+    </div>
+  `).join('') : '<p class="muted">Nenhuma música entregue ainda.</p>';
+}
+
+document.querySelectorAll('.nav button[data-tab]').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    showTab(btn.dataset.tab);
+  });
+});
+</script>
+</body>
+</html>
