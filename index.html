@@ -102,7 +102,7 @@ body{background:var(--bg);color:var(--text);min-height:100vh}
     <div id="form-visitante" style="display:none">
       <div class="aviso visitante">ℹ️ Escolha a melhor opção para você:</div>
       
-      <!-- OPÇÃO 1: ASSINAR POR R$9,99 - PIX VALIDADO -->
+      <!-- OPÇÃO 1: ASSINAR POR R$9,99 - COM CÓDIGO DO SEU BANCO -->
       <div class="plano-card">
         <h3>🎁 PLANO MENSAL</h3>
         <p>Acesse todos os serviços sem precisar ser agenciado</p>
@@ -115,15 +115,16 @@ body{background:var(--bg);color:var(--text);min-height:100vh}
           <strong>Chave PIX:</strong> padronizaassessoria@gmail.com
         </div>
 
-        <!-- QR Code com formato oficial -->
+        <!-- QR Code gerado com o código do seu banco -->
         <div class="qr-area">
-          <img src="https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=00020126580014br.gov.bcb.pix0133padronizaassessoria@gmail.com52040000530398654049.995802BR5919PADRONIZA%20ASSESSORIA6009VILHENA62070503***6304" alt="QR Code PIX R$9,99">
+          <img src="https://chart.googleapis.com/chart?chs=220x220&cht=qr&chl=COLE_AQUI_O_CÓDIGO_DO_SEU_BANCO" alt="QR Code PIX R$9,99">
           <p style="color:#000;font-size:12px;margin-top:5px">Aponte a câmera — valor já preenchido</p>
+          <p style="color:#d32f2f;font-size:11px;margin-top:5px">⚠️ Se o QR Code não funcionar, use o botão abaixo para copiar</p>
         </div>
 
-        <!-- Código Copia e Cola 100% validado -->
+        <!-- Código Copia e Cola igual ao do seu banco -->
         <div class="codigo-pix" id="codigoPix">
-00020126580014br.gov.bcb.pix0133padronizaassessoria@gmail.com52040000530398654049.995802BR5919PADRONIZA ASSESSORIA6009VILHENA62070503***6304
+COLE_AQUI_O_CÓDIGO_DO_SEU_BANCO
         </div>
         <button class="btn copiar" onclick="copiarPix()">📋 Copiar Código PIX (R$9,99)</button>
       </div>
@@ -276,7 +277,7 @@ function mostrarAdmin(){
 function copiarPix(){
   const codigo = document.getElementById('codigoPix').innerText.trim();
   navigator.clipboard.writeText(codigo).then(()=>{
-    alert('✅ Código PIX copiado! Valor fixo: R$9,99. Funciona em todos os bancos!');
+    alert('✅ Código PIX copiado! Valor R$9,99. Funciona em todos os bancos!');
   }).catch(()=>{
     alert('Não foi possível copiar automaticamente. Selecione e copie o código manualmente.');
   });
