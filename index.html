@@ -43,6 +43,7 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
 .btn-voltar{background:#293653;color:#fff;margin-top:15px}
 .btn-salvar{background:var(--amarelo);color:#000;margin-top:15px}
 .btn-servico{background:linear-gradient(135deg,var(--rosa),var(--roxo));margin:8px 0;font-size:15px}
+.btn-foto{background:linear-gradient(135deg,#ec4899,var(--rosa));margin:8px 0;font-size:15px}
 
 .destaque-gratis{background:rgba(52,211,153,0.15);border:2px solid var(--verde);padding:14px;border-radius:10px;text-align:center;font-weight:bold;margin-bottom:18px}
 .link-plataforma{background:var(--painel2);padding:12px;border-radius:8px;margin:10px 0;word-break:break-all}
@@ -55,6 +56,8 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
 .qr-pequeno{width:100px;height:100px;background:#fff;border-radius:8px;padding:5px;margin:10px auto;display:block;color:#000;text-align:center;font-size:12px;line-height:1.4}
 .aviso-copiado{position:fixed;top:20px;left:50%;transform:translateX(-50%);background:var(--verde);color:#fff;padding:12px 20px;border-radius:8px;font-weight:bold;z-index:999;display:none}
 .aviso-salvo{position:fixed;top:20px;left:50%;transform:translateX(-50%);background:var(--amarelo);color:#000;padding:12px 20px;border-radius:8px;font-weight:bold;z-index:999;display:none}
+.preview-foto{width:100%;height:180px;border-radius:8px;background:#17213a;border:2px dashed var(--rosa);display:flex;align-items:center;justify-content:center;color:var(--cinza);margin:8px 0;overflow:hidden}
+.preview-foto img{width:100%;height:100%;object-fit:cover}
 
 .painel-lives{margin-top:15px}
 .live-card{background:var(--painel2);border-radius:10px;padding:12px;margin-bottom:12px;border-left:4px solid var(--rosa)}
@@ -67,6 +70,7 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
 .area-cadastrar-live{background:rgba(116,87,255,0.1);border:1px solid var(--roxo);padding:15px;border-radius:10px;margin-top:20px}
 .dica-admin{font-size:13px;color:var(--cinza);margin:5px 0 15px;text-align:center}
 .checkbox-live{display:flex;align-items:center;gap:8px;margin:10px 0;color:var(--texto);font-size:15px}
+.texto-opcional{font-size:13px;color:var(--cinza);text-align:right;margin-bottom:5px}
 </style>
 </head>
 <body>
@@ -103,7 +107,7 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
   </div>
 </div>
 
-<!-- ✅ ÁREA COMPLETA PARA AGENCIADOS -->
+<!-- ✅ ÁREA ATUALIZADA PARA AGENCIADOS -->
 <div class="conteudo" id="conteudoAgenciado">
   <h2 class="titulo-secao">🎉 Bem-vindo(a) parceiro(a)!</h2>
   <div class="destaque-gratis">✅ TODOS os serviços são totalmente GRÁTIS para você! 🚀</div>
@@ -118,7 +122,7 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
   <button class="btn-acao btn-servico" onclick="solicitarServico('Divulgação e suporte')">📢 Solicitar Divulgação ou Suporte</button>
 
   <hr style="border-color:#293653;margin:20px 0">
-  <!-- 📢 ÁREA PARA CADASTRAR LIVE -->
+  <!-- 📢 ÁREA PARA CADASTRAR LIVE COM BOTÃO DE GALERIA -->
   <div class="area-cadastrar-live">
     <h3 style="color:var(--amarelo);text-align:center;margin-bottom:15px">📢 Cadastrar minha Live</h3>
     <p style="text-align:center;color:var(--cinza);margin-bottom:10px">Preencha os dados abaixo para aparecer no painel</p>
@@ -134,7 +138,15 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
     <input type="url" class="campo-form" id="linkPerfilKako" placeholder="🔗 Link do perfil no Kako Live">
     <input type="url" class="campo-form" id="linkPerfilTiktok" placeholder="🔗 Link do perfil no TikTok">
     <input type="url" class="campo-form" id="linkLive" placeholder="🔗 Link da live atual">
-    <input type="url" class="campo-form" id="linkCapa" placeholder="🔗 Link da capa da live">
+
+    <!-- ✅ BOTÃO PARA ESCOLHER FOTO DA GALERIA -->
+    <p style="color:var(--amarelo);font-weight:bold;margin-top:15px">🖼️ Capa da Live:</p>
+    <div class="preview-foto" id="previewCapa">Clique abaixo para escolher a foto</div>
+    <input type="file" id="escolherCapa" accept="image/*" style="display:none" onchange="carregarPreview(this)">
+    <button class="btn-acao btn-foto" onclick="document.getElementById('escolherCapa').click()">📷 ESCOLHER FOTO DA GALERIA</button>
+    
+    <p class="texto-opcional">Ou se preferir, cole o link abaixo (opcional):</p>
+    <input type="url" class="campo-form" id="linkCapa" placeholder="🔗 Link da capa da live (opcional)">
 
     <div class="checkbox-live">
       <input type="checkbox" id="estouAoVivo">
@@ -142,7 +154,7 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
     </div>
 
     <button class="btn-acao btn-verde" onclick="salvarDadosLive()">💾 SALVAR DADOS DA LIVE</button>
-    <p style="font-size:13px;color:var(--cinza);text-align:center;margin-top:10px">Seus dados ficarão salvos, basta marcar "ao vivo" quando iniciar a transmissão!</p>
+    <p style="font-size:13px;color:var(--cinza);text-align:center;margin-top:10px">Seus dados ficarão salvos permanentemente!</p>
   </div>
 
   <a href="https://wa.me/556981478873" target="_blank" class="btn-acao btn-verde" style="margin-top:20px">💬 Falar com a equipe</a>
@@ -276,6 +288,8 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
 </div>
 
 <script>
+let capaBase64 = '';
+
 window.onload = function(){
   const dadosSalvos = localStorage.getItem('configFotosAgencia');
   if(dadosSalvos) aplicarFotos(JSON.parse(dadosSalvos));
@@ -288,9 +302,24 @@ window.onload = function(){
     document.getElementById('linkPerfilTiktok').value = d.linkTiktok || '';
     document.getElementById('linkLive').value = d.linkLive || '';
     document.getElementById('linkCapa').value = d.linkCapa || '';
+    if(d.capaImagem){
+      capaBase64 = d.capaImagem;
+      document.getElementById('previewCapa').innerHTML = `<img src="${capaBase64}" alt="Capa escolhida">`;
+    }
     document.getElementById('estouAoVivo').checked = d.aoVivo === true;
   }
 };
+
+function carregarPreview(input){
+  if(input.files && input.files[0]){
+    const leitor = new FileReader();
+    leitor.onload = function(e){
+      capaBase64 = e.target.result;
+      document.getElementById('previewCapa').innerHTML = `<img src="${capaBase64}" alt="Capa escolhida">`;
+    };
+    leitor.readAsDataURL(input.files[0]);
+  }
+}
 
 function abrir(tipo){
   document.getElementById('telaInicial').style.display = 'none';
@@ -318,6 +347,7 @@ function salvarDadosLive(){
     linkTiktok: document.getElementById('linkPerfilTiktok').value.trim(),
     linkLive: document.getElementById('linkLive').value.trim(),
     linkCapa: document.getElementById('linkCapa').value.trim(),
+    capaImagem: capaBase64,
     aoVivo: document.getElementById('estouAoVivo').checked
   };
   localStorage.setItem('dadosLiveAgenciado', JSON.stringify(dados));
