@@ -57,6 +57,11 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
 .valor{font-weight:bold;color:var(--verde);font-size:17px}
 .valor-riscado{text-decoration:line-through;color:var(--cinza);margin-right:8px}
 .destaque{color:var(--rosa);font-weight:bold}
+.dados-perfil{background:var(--painel2);border-radius:10px;padding:15px;margin:15px 0}
+.dados-perfil h4{color:var(--amarelo);margin-bottom:10px}
+.dados-perfil p{margin:6px 0;color:var(--texto)}
+.dados-perfil a{color:var(--verde);text-decoration:none;font-weight:bold}
+.capa-minha-live{width:100%;height:180px;object-fit:cover;border-radius:8px;margin:10px 0;background:#1a2440;border:1px solid #293653}
 </style>
 </head>
 <body>
@@ -122,6 +127,18 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
   <input type="text" class="campo-form" id="usuarioAcesso" placeholder="Digite seu nome de usuário / ID">
   <button class="btn-acao btn-verde" onclick="verificarAcesso()">🔍 Acessar Meu Espaço</button>
   <p id="mensagemAcesso" style="text-align:center;margin:10px 0"></p>
+  
+  <!-- AQUI FICAM OS DADOS DA PLANILHA -->
+  <div id="dadosPerfilStreamer" class="dados-perfil" style="display:none">
+    <h4>📝 Meus Dados e Lives</h4>
+    <img id="minhaCapaLive" class="capa-minha-live" src="" alt="Capa da sua Live" onerror="this.src='https://i.imgur.com/8ZkLg4Y.png'">
+    <p><strong>👤 Meu Usuário:</strong> <span id="meuNomeUsuario"></span></p>
+    <p><strong>🎵 Perfil / Live TikTok:</strong> <a id="meuLinkTikTok" href="#" target="_blank">Clique para acessar</a></p>
+    <p><strong>📱 Perfil / Live Kako Live:</strong> <a id="meuLinkKako" href="#" target="_blank">Clique para acessar</a></p>
+    <p><strong>🔴 Status:</strong> <span id="meuStatusLive"></span></p>
+    <p style="font-size:14px;color:var(--cinza);margin-top:8px">*Esses dados são atualizados diretamente pela planilha da agência. Se precisar alterar, contate-nos.</p>
+  </div>
+
   <div id="painelStreamer" style="display:none;margin-top:20px">
     <p style="text-align:center;color:var(--amarelo);font-weight:bold;margin:15px 0">Solicitar Serviços:</p>
     <button class="btn-acao btn-servico" onclick="solicitar('Músicas personalizadas')">🎵 Músicas</button>
@@ -232,6 +249,7 @@ function voltar(){
   document.getElementById('telaInicial').style.display = 'block';
   document.getElementById('mensagemAcesso').innerHTML = '';
   document.getElementById('painelStreamer').style.display = 'none';
+  document.getElementById('dadosPerfilStreamer').style.display = 'none';
   usuarioAtual = null;
   document.getElementById('previaNovoLogo').style.display = 'none';
 }
@@ -286,7 +304,7 @@ function salvarNovoLogo(){
   }, 3000);
 }
 
-// VERIFICAÇÃO DE ACESSO AGENCIADO
+// VERIFICAÇÃO DE ACESSO AGENCIADO E CARREGA DADOS
 function verificarAcesso(){
   const user = document.getElementById('usuarioAcesso').value.trim();
   const msg = document.getElementById('mensagemAcesso');
@@ -304,11 +322,24 @@ function verificarAcesso(){
     }
     usuarioAtual = encontrado;
     msg.innerHTML = '✅ Acesso liberado! Todos os serviços são gratuitos para você.';
+    
+    // PREENCHE OS DADOS DA PLANILHA AUTOMATICAMENTE
+    document.getElementById('meuNomeUsuario').innerText = encontrado.c[0]?.v || user;
+    document.getElementById('meuLinkTikTok').href = encontrado.c[4]?.v || '#';
+    document.getElementById('meuLinkTikTok').innerText = encontrado.c[4]?.v ? 'Acessar minha live/perfil' : 'Não cadastrado';
+    document.getElementById('meuLinkKako').href = encontrado.c[6]?.v || '#';
+    document.getElementById('meuLinkKako').innerText = encontrado.c[6]?.v ? 'Acessar minha live/perfil' : 'Não cadastrado';
+    document.getElementById('minhaCapaLive').src = encontrado.c[7]?.v?.trim() || CAPA_PADRAO_AGENCIA;
+    
+    const aoVivo = encontrado.c[8]?.v === true || encontrado.c[8]?.v?.toString().toUpperCase() === 'TRUE';
+    document.getElementById('meuStatusLive').innerHTML = aoVivo ? '<span style="color:var(--vermelho);font-weight:bold">🔴 AO VIVO AGORA!</span>' : '<span style="color:var(--cinza)">⏳ Offline no momento</span>';
+    
+    document.getElementById('dadosPerfilStreamer').style.display = 'block';
     document.getElementById('painelStreamer').style.display = 'block';
   }, 800);
 }
 
-// CARREGAR LIVES
+// CARREGAR LIVES NA TELA INICIAL
 function carregarLivesAoVivo(){
   const lista = document.getElementById('listaLives');
   lista.innerHTML = `<h3>🔴 LIVES AO VIVO AGORA!</h3>`;
