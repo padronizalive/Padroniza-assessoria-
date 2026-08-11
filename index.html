@@ -64,7 +64,6 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
   </div>
 </div>
 
-<!-- ÁREA AGENCIADO -->
 <div class="conteudo" id="conteudoAgenciado">
   <h2 class="titulo-secao">🔍 Verifique seu acesso</h2>
   <p style="margin-bottom:8px;color:var(--cinza)">Digite seu usuário da planilha:</p>
@@ -91,7 +90,6 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
   <button class="btn-acao btn-voltar" onclick="voltarInicio()">Voltar</button>
 </div>
 
-<!-- ÁREA ADMINISTRATIVA -->
 <div class="conteudo" id="conteudoAdmin">
   <div id="loginAdmin">
     <h2 class="titulo-secao">🔐 Acesso Administrativo</h2>
@@ -137,7 +135,7 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
 <script>
 const ID_PLANILHA = "1R9eUsqF4kA0y22ryMUIsvGolBfk3-XwZ5R-RVpBiZA4";
 const ADMIN_EMAIL = "padronizaassessoria@gmail.com";
-const ADMIN_SENHA_HASH = btoa("agency2026");
+const SENHA_CORRETA = "agency2026";
 
 function abrirConteudo(tipo){
   document.getElementById('telaInicial').style.display = 'none';
@@ -162,8 +160,8 @@ function voltarInicio(){
 
 function verificarAdmin(){
   const email = document.getElementById('adminEmail').value.trim().toLowerCase();
-  const senha = btoa(document.getElementById('adminSenha').value);
-  if(email === ADMIN_EMAIL && senha === ADMIN_SENHA_HASH){
+  const senha = document.getElementById('adminSenha').value.trim();
+  if(email === ADMIN_EMAIL && senha === SENHA_CORRETA){
     document.getElementById('loginAdmin').style.display = 'none';
     document.getElementById('painelAdmin').style.display = 'block';
     carregarTodosRegistros();
