@@ -40,6 +40,7 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
 .aviso-separa{text-align:center;margin:15px 0;color:var(--cinza);font-weight:bold}
 .servico-check{display:flex;align-items:center;gap:8px;margin:8px 0;padding:8px;background:#17213a;border-radius:6px;cursor:pointer}
 .servico-check input{width:18px;height:18px}
+.aviso-opcional{color:var(--cinza);font-size:13px;margin-top:-5px;margin-bottom:8px}
 
 .lives-ao-vivo{background:var(--painel);border-radius:12px;padding:15px;margin-top:20px}
 .lista-lives{display:flex;flex-direction:column;gap:12px;margin-top:15px}
@@ -71,7 +72,7 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
   </div>
 </div>
 
-<!-- ÁREA DO VISITANTE -->
+<!-- ÁREA DO VISITANTE — TUDO IGUAL -->
 <div class="conteudo" id="conteudoVisitante">
   <div class="aviso-gratis">🌟 QUER SER NOSSO AGENCIADO? É TOTALMENTE GRÁTIS!</div>
   
@@ -126,7 +127,7 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
   <button class="btn-acao btn-voltar" onclick="voltarInicio()">Voltar</button>
 </div>
 
-<!-- ÁREA AGENCIADO -->
+<!-- ÁREA AGENCIADO — AJUSTADO EXATAMENTE COMO PEDIU -->
 <div class="conteudo" id="conteudoAgenciado">
   <div class="aviso-destaque-gratis">✅ TODO O CONTEÚDO E SERVIÇOS DESTE SITE SÃO TOTALMENTE GRÁTIS PARA VOCÊ!</div>
   <h2 class="titulo-secao">🎁 Benefícios Exclusivos</h2>
@@ -153,14 +154,37 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
   </div>
 
   <div style="background:rgba(52,211,153,0.1);border:1px solid var(--verde);color:var(--verde);padding:10px;border-radius:6px;text-align:center;margin:15px 0">
-    ✅ Acesso liberado após confirmação na nossa planilha! Nenhum valor será cobrado de você.
+    ✅ Preencha seus dados abaixo para liberarmos seus benefícios!
   </div>
 
-  <a href="https://wa.me/5569981478873?text=Olá! Sou agenciado Padroniza e quero solicitar os benefícios" target="_blank" class="btn-acao btn-whatsapp">📩 Solicitar Benefícios</a>
+  <!-- CAMPO PRINCIPAL -->
+  <p style="margin-bottom:8px;color:var(--cinza)">📌 Plataforma principal:</p>
+  <select id="plataforma1" class="campo-form">
+    <option value="">Selecione...</option>
+    <option value="TikTok">TikTok (informe nome de usuário)</option>
+    <option value="Kaku Live">Kaku Live (informe ID)</option>
+  </select>
+
+  <p style="margin-bottom:8px;color:var(--cinza)">📌 Nome de usuário ou ID:</p>
+  <input type="text" id="usuario1" class="campo-form" placeholder="Ex: serenatempestade ou 12345678">
+
+  <!-- CAMPO OPCIONAL PARA SEGUNDA PLATAFORMA -->
+  <p style="margin-top:15px;margin-bottom:8px;color:var(--cinza)">📌 Segunda plataforma (se for agenciado nas duas):</p>
+  <p class="aviso-opcional">*Deixe em branco se tiver só uma plataforma*</p>
+  <select id="plataforma2" class="campo-form">
+    <option value="">Selecione...</option>
+    <option value="TikTok">TikTok (informe nome de usuário)</option>
+    <option value="Kaku Live">Kaku Live (informe ID)</option>
+  </select>
+
+  <p style="margin-bottom:8px;color:var(--cinza)">📌 Nome de usuário ou ID da segunda plataforma:</p>
+  <input type="text" id="usuario2" class="campo-form" placeholder="Apenas se for o caso">
+
+  <button class="btn-acao btn-whatsapp" onclick="solicitarBeneficios()">📩 Solicitar Benefícios</button>
   <button class="btn-acao btn-voltar" onclick="voltarInicio()">Voltar</button>
 </div>
 
-<!-- ÁREA OUTRA AGÊNCIA -->
+<!-- ÁREA OUTRA AGÊNCIA — TUDO IGUAL -->
 <div class="conteudo" id="conteudoAgencia">
   <h2 class="titulo-secao">🤝 Serviços para Parcerias</h2>
   <div class="servico">
@@ -245,6 +269,31 @@ function enviarPedido(){
   const msg = `PEDIDO DE SERVIÇOS:\nUsuário TikTok: ${user}\nServiços:\n- ${itens.join('\n- ')}\nTotal: R$ ${total}\nEnviarei o comprovante de pagamento em seguida.`;
   window.open(`https://wa.me/5569981478873?text=${encodeURIComponent(msg)}`);
   alert('✅ Pedido enviado! Agora envie o comprovante para confirmar.');
+}
+
+// Função nova para solicitar benefícios do agenciado
+function solicitarBeneficios(){
+  const plat1 = document.getElementById('plataforma1').value.trim();
+  const user1 = document.getElementById('usuario1').value.trim();
+  const plat2 = document.getElementById('plataforma2').value.trim();
+  const user2 = document.getElementById('usuario2').value.trim();
+
+  if(!plat1 || !user1) return alert('Preencha a plataforma principal e seu usuário/ID!');
+
+  let msg = `SOLICITAÇÃO DE BENEFÍCIOS — AGENCIADO PADRONIZA:\n\n📌 Plataforma 1: ${plat1}\nUsuário/ID: ${user1}`;
+  
+  if(plat2 && user2){
+    msg += `\n\n📌 Plataforma 2: ${plat2}\nUsuário/ID: ${user2}`;
+  }
+
+  window.open(`https://wa.me/5569981478873?text=${encodeURIComponent(msg)}`);
+  alert('✅ Solicitação enviada! Em breve vamos liberar seus benefícios.');
+  
+  // Limpa os campos
+  document.getElementById('plataforma1').value = '';
+  document.getElementById('usuario1').value = '';
+  document.getElementById('plataforma2').value = '';
+  document.getElementById('usuario2').value = '';
 }
 
 async function carregarLives(){
