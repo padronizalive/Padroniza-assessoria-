@@ -43,6 +43,9 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
 .area-aprovado{display:none;margin-top:15px}
 .aviso-destaque-gratis{background:rgba(52,211,153,0.15);border:2px solid var(--verde);color:var(--verde);padding:14px;border-radius:8px;text-align:center;font-weight:bold;font-size:16px;margin-bottom:15px}
 .aviso-pendente{background:rgba(255,200,87,0.15);border:2px solid var(--amarelo);color:var(--amarelo);padding:14px;border-radius:8px;text-align:center;font-weight:bold;font-size:16px;margin-bottom:15px}
+.dados-streamer{background:#17213a;border-radius:10px;padding:15px;margin:15px 0}
+.dados-streamer h4{color:var(--amarelo);margin-bottom:10px}
+}
 </style>
 </head>
 <body>
@@ -51,7 +54,7 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
 <div class="cabecalho">
   <h1>PADRONIZA ASSESSORIA</h1>
 </div>
-<div class="aviso-prazo">⏱️ Sistema integrado com sua planilha!</div>
+<div class="aviso-prazo">⏱️ Atualizações diretas da planilha!</div>
 
 <div id="telaInicial">
   <div class="botoes-principais">
@@ -64,15 +67,17 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
   </div>
 </div>
 
+<!-- ÁREA DO STREAMER / AGENCIADO -->
 <div class="conteudo" id="conteudoAgenciado">
   <h2 class="titulo-secao">🔍 Verifique seu acesso</h2>
-  <p style="margin-bottom:8px;color:var(--cinza)">Digite seu usuário da planilha:</p>
+  <p style="margin-bottom:8px;color:var(--cinza)">Digite seu nome ou usuário cadastrado:</p>
   <input type="text" id="verificaUsuario" class="campo-form" placeholder="Ex: Serena Tempestade">
   <button class="btn-acao" style="background:var(--azul)" onclick="verificarStatus()">🔎 Verificar</button>
   <div id="resultadoVerificacao" style="margin-top:15px"></div>
+
   <div id="formularioSolicitacao" style="margin-top:20px">
     <hr style="border-color:#293653;margin:20px 0">
-    <h3 style="text-align:center;color:var(--amarelo);margin-bottom:15px">📋 Solicitar análise</h3>
+    <h3 style="text-align:center;color:var(--amarelo);margin-bottom:15px">📋 Solicitar cadastro</h3>
     <input type="text" id="nomeCompleto" class="campo-form" placeholder="Seu nome completo">
     <select id="plataforma1" class="campo-form">
       <option value="">Selecione plataforma principal</option>
@@ -82,14 +87,17 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
     <input type="text" id="usuario1" class="campo-form" placeholder="Usuário ou ID">
     <button class="btn-acao btn-whatsapp" onclick="solicitarBeneficios()">📩 Enviar</button>
   </div>
+
   <div id="areaBeneficiosAprovado" class="area-aprovado">
-    <div class="aviso-destaque-gratis">✅ PARABÉNS! VOCÊ ESTÁ APROVADO!</div>
-    <p style="text-align:center;margin-bottom:15px">Todos os benefícios já estão liberados para você.</p>
+    <div class="aviso-destaque-gratis">✅ SEU ACESSO ESTÁ LIBERADO!</div>
+    <div id="dadosAgenciado" class="dados-streamer"></div>
     <a href="https://wa.me/5569981478873" target="_blank" class="btn-acao btn-whatsapp">📩 Falar com a equipe</a>
   </div>
+
   <button class="btn-acao btn-voltar" onclick="voltarInicio()">Voltar</button>
 </div>
 
+<!-- ÁREA ADMINISTRATIVA -->
 <div class="conteudo" id="conteudoAdmin">
   <div id="loginAdmin">
     <h2 class="titulo-secao">🔐 Acesso Administrativo</h2>
@@ -198,11 +206,12 @@ async function carregarTodosRegistros(){
       const kkPerfil   = linha.c[5]?.v || '—';
       const kkLive     = linha.c[6]?.v || '—';
       const capa       = linha.c[7]?.v || '—';
-      const aoVivo     = (linha.c[8]?.v || 'NÃO').toUpperCase();
+      const aoVivoVal  = (linha.c[8]?.v || 'NAO').toString().toUpperCase();
+      const aoVivo     = (aoVivoVal === 'SIM' || aoVivoVal === 'TRUE' || aoVivoVal === 'VERDADEIRO') ? 'SIM' : 'NÃO';
       const tipoAcesso = linha.c[9]?.v || '—';
       const servico    = linha.c[10]?.v || '—';
-      const pgtoOk     = (linha.c[11]?.v || 'NÃO').toUpperCase();
-      const liberado   = (linha.c[12]?.v || 'NÃO').toUpperCase();
+      const pgtoOk     = (linha.c[11]?.v || 'NAO').toUpperCase();
+      const liberado   = (linha.c[12]?.v || 'NAO').toUpperCase();
       const validade   = linha.c[13]?.v || '—';
 
       let classeStatus = 'status-pendente';
@@ -245,27 +254,49 @@ async function verificarStatus(){
     const res = await fetch(url);
     const dados = JSON.parse((await res.text()).substr(47, -2));
     
-    let achei = false;
-    let aprovado = false;
+    let encontrado = null;
     
     dados.table.rows.forEach(linha => {
       if(!linha.c) return;
       const userPlanilha = (linha.c[0]?.v || '').toString().toLowerCase();
-      const statusPlanilha = (linha.c[1]?.v || '').toString().toUpperCase();
       if(userPlanilha.includes(busca) || busca.includes(userPlanilha)){
-        achei = true;
-        if(statusPlanilha === 'APROVADO') aprovado = true;
+        encontrado = linha;
       }
     });
     
-    if(!achei){
+    if(!encontrado){
       document.getElementById('resultadoVerificacao').innerHTML = `<div class="aviso-pendente">❌ Não encontramos seu cadastro. Preencha os dados abaixo para solicitar!</div>`;
-    } else if(achei && !aprovado){
-      document.getElementById('resultadoVerificacao').innerHTML = `<div class="aviso-pendente">⏳ Sua solicitação está em análise! Em breve você receberá a confirmação.</div>`;
-    } else if(aprovado){
-      document.getElementById('resultadoVerificacao').innerHTML = '';
-      document.getElementById('formularioSolicitacao').style.display = 'none';
-      document.getElementById('areaBeneficiosAprovado').style.display = 'block';
+    } else {
+      const status     = (encontrado.c[1]?.v || 'PENDENTE').toUpperCase();
+      const liberado   = (encontrado.c[12]?.v || 'NAO').toUpperCase();
+      const validade   = encontrado.c[13]?.v || '—';
+      const aoVivoVal  = (encontrado.c[8]?.v || 'NAO').toString().toUpperCase();
+      const aoVivo     = (aoVivoVal === 'SIM' || aoVivoVal === 'TRUE' || aoVivoVal === 'VERDADEIRO') ? 'SIM' : 'NÃO';
+      const tipoAcesso = encontrado.c[9]?.v || '—';
+      const servico    = encontrado.c[10]?.v || '—';
+      const ttPerfil   = encontrado.c[3]?.v || '—';
+      const kkPerfil   = encontrado.c[5]?.v || '—';
+
+      if(status === 'APROVADO' && liberado === 'SIM'){
+        document.getElementById('resultadoVerificacao').innerHTML = '';
+        document.getElementById('formularioSolicitacao').style.display = 'none';
+        document.getElementById('areaBeneficiosAprovado').style.display = 'block';
+        
+        document.getElementById('dadosAgenciado').innerHTML = `
+          <h4>👤 Seus dados cadastrados:</h4>
+          <p><strong>Status:</strong> <span class="sim">APROVADO E LIBERADO</span></p>
+          <p><strong>Perfil TikTok:</strong> ${ttPerfil}</p>
+          <p><strong>Perfil Kaku:</strong> ${kkPerfil}</p>
+          <p><strong>Está ao vivo:</strong> ${aoVivo === 'SIM' ? '<span class="sim">SIM ✅</span>' : 'NÃO'}</p>
+          <p><strong>Tipo de acesso:</strong> ${tipoAcesso}</p>
+          <p><strong>Serviço contratado:</strong> ${servico}</p>
+          <p><strong>Válido até:</strong> ${validade}</p>
+        `;
+      } else if(status === 'APROVADO' && liberado !== 'SIM'){
+        document.getElementById('resultadoVerificacao').innerHTML = `<div class="aviso-pendente">⏳ Você foi aprovado, mas o acesso ainda está sendo liberado. Aguarde nossa confirmação!</div>`;
+      } else {
+        document.getElementById('resultadoVerificacao').innerHTML = `<div class="aviso-pendente">⏳ Sua solicitação está em análise! Em breve você receberá a confirmação.</div>`;
+      }
     }
     
   } catch {
