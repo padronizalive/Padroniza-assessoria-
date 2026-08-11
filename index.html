@@ -10,14 +10,13 @@
 body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
 .container{max-width:600px;margin:0 auto}
 
-.logo-topo{width:180px;height:180px;margin:0 auto 15px;display:flex;align-items:center;justify-content:center;background:var(--painel);border-radius:50%;border:3px solid var(--rosa);overflow:hidden}
-.logo-topo span{font-size:16px;font-weight:bold;color:var(--amarelo);text-align:center;padding:10px}
+.logo-topo{width:220px;height:220px;margin:0 auto 15px;display:flex;align-items:center;justify-content:center;background:transparent;border-radius:0;overflow:hidden}
+.logo-topo img{width:100%;height:auto;object-fit:contain;display:block}
 
 .cabecalho{text-align:center;margin-bottom:15px}
 .cabecalho h1{font-size:26px;color:var(--amarelo)}
 .cabecalho p{color:var(--cinza)}
 
-/* BOTÕES NO TOPO, FIXOS E VISÍVEIS SEMPRE */
 .botoes-principais{display:flex;flex-direction:column;gap:12px;margin-bottom:20px;position:sticky;top:10px;z-index:999;background:var(--fundo);padding:10px 0}
 .btn-principal{padding:16px;border-radius:12px;border:none;font-weight:bold;font-size:17px;cursor:pointer;text-align:center;color:#fff;transition:0.2s;pointer-events:auto !important}
 .btn-principal:hover{transform:translateY(-2px)}
@@ -46,13 +45,6 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
 .btn-servico{background:linear-gradient(135deg,var(--rosa),var(--roxo));margin:8px 0;font-size:15px;padding:14px}
 .btn-whatsapp{background:linear-gradient(135deg,#25d366,#128c7e);margin-top:15px}
 .destaque-gratis{background:rgba(52,211,153,0.15);border:2px solid var(--verde);padding:16px;border-radius:10px;text-align:center;font-weight:bold;margin-bottom:18px}
-.destaque-pix{background:rgba(255,61,129,0.1);border:1px solid var(--rosa);padding:12px;border-radius:8px;margin:10px 0;font-size:14px;word-break:break-all}
-.grid-servicos{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:20px}
-.servico-card{background:var(--painel2);border-radius:8px;padding:12px;text-align:center}
-.servico-card h4{color:var(--amarelo);margin-bottom:5px;font-size:15px}
-.servico-card .preco{font-weight:bold;color:var(--rosa);font-size:16px}
-.servico-card .gratis{color:var(--verde);font-weight:bold}
-.aviso-importante{background:rgba(255,200,87,0.1);border:1px solid var(--amarelo);padding:12px;border-radius:8px;margin:10px 0;font-size:14px;text-align:center}
 .botao-foto{background:var(--roxo);color:#fff;padding:10px;border-radius:6px;text-align:center;cursor:pointer;margin:8px 0;display:block;font-weight:bold}
 .previa-capa{max-width:100%;max-height:180px;border-radius:8px;margin-top:8px;display:none;object-fit:cover;border:2px dashed var(--amarelo)}
 .aviso-capa{background:rgba(255,200,87,0.1);border:1px solid var(--amarelo);padding:10px;border-radius:8px;margin:12px 0;font-size:14px;text-align:center;color:var(--amarelo);font-weight:bold}
@@ -61,10 +53,9 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
 <body>
 <div class="container">
 
-<!-- TELA INICIAL -->
 <div id="telaInicial">
   <div class="logo-topo">
-    <span>PADRONIZA<br>+LIVE ASSESSORIA</span>
+    <img src="https://i.imgur.com/9XzQkLb.png" alt="Padroniza + Live Assessoria">
   </div>
 
   <div class="cabecalho">
@@ -72,7 +63,6 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
     <p>Seu sucesso nas lives começa aqui!</p>
   </div>
 
-  <!-- BOTÕES BEM NO TOPO, FIXOS E VISÍVEIS SEMPRE -->
   <div class="botoes-principais">
     <button class="btn-principal btn-agenciado" onclick="abrir('agenciado')">✅ SOU AGENCIADO PADRONIZA</button>
     <button class="btn-principal btn-visitante" onclick="abrir('visitante')">👤 SOU VISITANTE / VER LIVES</button>
@@ -81,14 +71,12 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
     <a href="https://www.tiktok.com/coin?rc=7TGXGN69&rie=" target="_blank" class="btn-principal btn-moedas">💰 COMPRAR MOEDAS TIKTOK</a>
   </div>
 
-  <!-- LISTA DE LIVES COM CAPAS EM DESTAQUE -->
   <div class="lives-ao-vivo" id="listaLives">
     <h3>🔴 LIVES AO VIVO AGORA!</h3>
     <div id="carregandoLives" style="text-align:center;color:var(--cinza);padding:20px">Carregando transmissões...</div>
   </div>
 </div>
 
-<!-- ÁREA AGENCIADO -->
 <div class="conteudo" id="conteudoAgenciado">
   <h2 class="titulo-secao">🎉 Bem-vindo(a) parceiro(a)!</h2>
   <div class="destaque-gratis">✅ TODOS os serviços são GRÁTIS para você!</div>
@@ -127,16 +115,16 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
       </div>
 
       <div class="aviso-capa">
-        ℹ️ <strong>CAPA OFICIAL:</strong> A capa que aparece para todos é a cadastrada pela Padroniza Assessoria.<br>
-        📷 Se quiser alterar, envie a foto para a equipe cadastrar — assim já fica visível para todo mundo!
+        ℹ️ <strong>CAPA OFICIAL:</strong> Se não tiver capa própria cadastrada, aparece automaticamente a arte da Padroniza Assessoria.<br>
+        📷 Se quiser capa exclusiva, envie a foto para a equipe cadastrar!
       </div>
 
       <div style="margin-bottom:15px">
-        <label style="display:block;margin-bottom:8px;color:var(--texto);font-weight:bold">🖼️ Capa da Live (pré-visualização):</label>
+        <label style="display:block;margin-bottom:8px;color:var(--texto);font-weight:bold">🖼️ Capa da Live:</label>
         <input type="file" id="escolherCapa" accept="image/*" style="display:none" onchange="carregarPreviaCapa(this)">
         <button class="botao-foto" onclick="document.getElementById('escolherCapa').click()">📷 Escolher da Galeria</button>
         <img id="previaCapa" class="previa-capa" alt="Pré-visualização da capa">
-        <input type="text" class="campo-form" id="linkCapa" placeholder="Link da capa oficial cadastrada" oninput="atualizarPreviaLink()">
+        <input type="text" class="campo-form" id="linkCapa" placeholder="Link da capa exclusiva (se tiver)" oninput="atualizarPreviaLink()">
       </div>
 
       <button class="btn-acao btn-verde" onclick="salvarStatus()">💾 Salvar Alterações</button>
@@ -154,20 +142,18 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
   <button class="btn-acao btn-voltar" onclick="voltar()">Voltar ao Início</button>
 </div>
 
-<!-- ÁREA VISITANTE -->
 <div class="conteudo" id="conteudoVisitante">
   <h2 class="titulo-secao">👤 Bem-vindo!</h2>
   <div class="destaque-gratis">
     🎁 QUER TUDO GRÁTIS? SEJA AGENCIADO!<br>
     📱 Kako Live ID: <strong>177766</strong><br>
-    🔗 <a href="https://www.tiktok.com/@gw.agency.oficial?_r=1" target="_blank" style="color:var(--amarelo)">Perfil Oficial TikTok</a><br>
+    🔗 <a href="https://www.tiktok.com/t/ZSHu6CFAM/" target="_blank" style="color:var(--amarelo);font-weight:bold">Solicitar agenciamento TikTok</a><br>
     📥 Baixe o app Kako Live → Central de Host → Agência → Digite o ID 177766
   </div>
   <a href="https://wa.me/556981478873" target="_blank" class="btn-acao btn-verde">💬 Quero ser Agenciado</a>
   <button class="btn-acao btn-voltar" onclick="voltar()">Voltar</button>
 </div>
 
-<!-- ÁREA OUTRA AGÊNCIA -->
 <div class="conteudo" id="conteudoOutraAgencia">
   <h2 class="titulo-secao">🤝 Parcerias</h2>
   <p style="text-align:center;color:var(--cinza);margin-bottom:15px">Vamos crescer juntos!</p>
@@ -175,7 +161,6 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
   <button class="btn-acao btn-voltar" onclick="voltar()">Voltar</button>
 </div>
 
-<!-- ÁREA ADMIN -->
 <div class="conteudo" id="conteudoAdmin">
   <h2 class="titulo-secao">🔐 Área Administrativa</h2>
   <input type="email" class="campo-form" id="emailAdmin" placeholder="E-mail: padronizaassessoria@gmail.com">
@@ -188,9 +173,10 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
 
 <script>
 const LINK_PLANILHA = "https://docs.google.com/spreadsheets/d/1R9eUsqF4kA0y22ryMUIsvGolBfk3-XwZ5R-RVpBiZA4/gviz/tq?tqx=out:json";
+// ✅ CAPA PADRÃO DA AGÊNCIA
+const CAPA_PADRAO_AGENCIA = "https://i.imgur.com/9XzQkLb.png";
 let dadosPlanilha = [];
 let usuarioAtual = null;
-let capaTemp = null;
 
 window.onload = async function(){
   await carregarDadosPlanilha();
@@ -219,7 +205,6 @@ function voltar(){
   document.getElementById('mensagemAcesso').innerHTML = '';
   document.getElementById('painelStreamer').style.display = 'none';
   usuarioAtual = null;
-  capaTemp = null;
   document.getElementById('previaCapa').style.display = 'none';
 }
 
@@ -264,8 +249,7 @@ function carregarPreviaCapa(input){
   if(input.files && input.files[0]){
     const leitor = new FileReader();
     leitor.onload = e => {
-      capaTemp = e.target.result;
-      document.getElementById('previaCapa').src = capaTemp;
+      document.getElementById('previaCapa').src = e.target.result;
       document.getElementById('previaCapa').style.display = 'block';
       document.getElementById('linkCapa').value = '';
     }
@@ -278,7 +262,6 @@ function atualizarPreviaLink(){
   if(link){
     document.getElementById('previaCapa').src = link;
     document.getElementById('previaCapa').style.display = 'block';
-    capaTemp = null;
   }else{
     document.getElementById('previaCapa').style.display = 'none';
   }
@@ -286,10 +269,8 @@ function atualizarPreviaLink(){
 
 function salvarStatus(){
   document.getElementById('avisoSalvo').style.display = 'none';
-  const aviso = document.getElementById('avisoSalvo');
-  
   setTimeout(()=>{
-    aviso.style.display = 'block';
+    document.getElementById('avisoSalvo').style.display = 'block';
     carregarLivesAoVivo();
   }, 600);
 }
@@ -307,13 +288,12 @@ function carregarLivesAoVivo(){
     if(aprovado && aoVivo){
       temLive = true;
       const nome = cel[0]?.v || 'Streamer';
-      const capa = cel[7]?.v || '';
+      const capa = cel[7]?.v?.trim() || CAPA_PADRAO_AGENCIA;
       
-      // Kako Live
       if(cel[6]?.v){
         lista.innerHTML += `
           <div class="cartao-live">
-            <img src="${capa}" alt="Capa da Live" class="capa-live" onerror="this.src='https://i.imgur.com/6ZbQkLb.png'">
+            <img src="${capa}" alt="Capa da Live" class="capa-live" onerror="this.src='${CAPA_PADRAO_AGENCIA}'">
             <span class="selo-ao-vivo">🔴 AO VIVO</span>
             <p class="plataforma">📱 Kako Live</p>
             <p class="nome-streamer">${nome}</p>
@@ -321,11 +301,10 @@ function carregarLivesAoVivo(){
           </div>
         `;
       }
-      // TikTok
       if(cel[4]?.v){
         lista.innerHTML += `
           <div class="cartao-live">
-            <img src="${capa}" alt="Capa da Live" class="capa-live" onerror="this.src='https://i.imgur.com/6ZbQkLb.png'">
+            <img src="${capa}" alt="Capa da Live" class="capa-live" onerror="this.src='${CAPA_PADRAO_AGENCIA}'">
             <span class="selo-ao-vivo">🔴 AO VIVO</span>
             <p class="plataforma">🎵 TikTok</p>
             <p class="nome-streamer">${nome}</p>
@@ -350,7 +329,7 @@ function verificarAdmin(){
   const email = document.getElementById('emailAdmin').value.trim();
   const senha = document.getElementById('senhaAdmin').value.trim();
   if(email === 'padronizaassessoria@gmail.com' && senha === 'agency2026.'){
-    alert('✅ Acesso Administrativo Liberado! Use a planilha para gerenciar todos os acessos e dados.');
+    alert('✅ Acesso Administrativo Liberado!');
   }else{
     alert('❌ E-mail ou senha incorretos!');
   }
