@@ -42,6 +42,7 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
 .btn-copiar{background:#047857;font-size:15px;padding:10px;margin-top:8px}
 .btn-voltar{background:#293653;color:#fff;margin-top:15px}
 .btn-salvar{background:var(--amarelo);color:#000;margin-top:15px}
+.btn-servico{background:linear-gradient(135deg,var(--rosa),var(--roxo));margin:8px 0;font-size:15px}
 
 .destaque-gratis{background:rgba(52,211,153,0.15);border:2px solid var(--verde);padding:14px;border-radius:10px;text-align:center;font-weight:bold;margin-bottom:18px}
 .link-plataforma{background:var(--painel2);padding:12px;border-radius:8px;margin:10px 0;word-break:break-all}
@@ -65,6 +66,7 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
 .btn-live{background:var(--rosa);padding:10px;border-radius:8px;color:#fff;text-decoration:none;display:block;text-align:center;font-weight:bold;margin-top:8px}
 .area-cadastrar-live{background:rgba(116,87,255,0.1);border:1px solid var(--roxo);padding:15px;border-radius:10px;margin-top:20px}
 .dica-admin{font-size:13px;color:var(--cinza);margin:5px 0 15px;text-align:center}
+.checkbox-live{display:flex;align-items:center;gap:8px;margin:10px 0;color:var(--texto);font-size:15px}
 </style>
 </head>
 <body>
@@ -72,7 +74,6 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
 <div class="aviso-salvo" id="avisoSalvo">✅ Configurações salvas com sucesso!</div>
 <div class="container">
 
-<!-- ÁREA DE IMAGENS - ATUALIZA AUTOMATICAMENTE -->
 <div class="logo-topo" id="areaLogo">LOGO DA<br>AGÊNCIA</div>
 <div class="cabecalho">
   <h1>PADRONIZA ASSESSORIA</h1>
@@ -102,19 +103,49 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
   </div>
 </div>
 
-<!-- SOU AGENCIADO PADRONIZA -->
+<!-- ✅ ÁREA COMPLETA PARA AGENCIADOS -->
 <div class="conteudo" id="conteudoAgenciado">
   <h2 class="titulo-secao">🎉 Bem-vindo(a) parceiro(a)!</h2>
   <div class="destaque-gratis">✅ TODOS os serviços são totalmente GRÁTIS para você! 🚀</div>
-  <ul style="padding-left:20px;line-height:1.8;margin-bottom:15px">
-    <li>🎵 Músicas personalizadas</li>
-    <li>🎨 Artes visuais para batalhas e eventos</li>
-    <li>⚔️ Agendamento de batalhas oficiais</li>
-    <li>🎓 Acesso ao grupo VIP de treinamento</li>
-    <li>📢 Divulgação e suporte completo</li>
-  </ul>
-  <p style="text-align:center;color:var(--cinza);margin-bottom:15px">Cadastre suas lives e veja quem está ao vivo na área de Visitante!</p>
-  <a href="https://wa.me/556981478873" target="_blank" class="btn-acao btn-verde">💬 Falar com a equipe</a>
+
+  <input type="text" class="campo-form" id="usuarioAgenciado" placeholder="Digite aqui seu nome de usuário da plataforma">
+  <p style="color:var(--cinza);font-size:14px;text-align:center;margin-bottom:15px">Escolha o serviço que deseja solicitar:</p>
+
+  <button class="btn-acao btn-servico" onclick="solicitarServico('Músicas personalizadas')">🎵 Solicitar Músicas Personalizadas</button>
+  <button class="btn-acao btn-servico" onclick="solicitarServico('Artes visuais para batalhas e eventos')">🎨 Solicitar Artes Visuais</button>
+  <button class="btn-acao btn-servico" onclick="solicitarServico('Agendamento de batalha oficial')">⚔️ Solicitar Agendamento de Batalha</button>
+  <button class="btn-acao btn-servico" onclick="solicitarServico('Acesso ao grupo VIP de treinamento')">🎓 Solicitar Acesso ao Treinamento VIP</button>
+  <button class="btn-acao btn-servico" onclick="solicitarServico('Divulgação e suporte')">📢 Solicitar Divulgação ou Suporte</button>
+
+  <hr style="border-color:#293653;margin:20px 0">
+  <!-- 📢 ÁREA PARA CADASTRAR LIVE -->
+  <div class="area-cadastrar-live">
+    <h3 style="color:var(--amarelo);text-align:center;margin-bottom:15px">📢 Cadastrar minha Live</h3>
+    <p style="text-align:center;color:var(--cinza);margin-bottom:10px">Preencha os dados abaixo para aparecer no painel</p>
+
+    <select class="campo-form" id="plataformaLive">
+      <option value="">Selecione a plataforma</option>
+      <option value="kako">Kako Live</option>
+      <option value="tiktok">TikTok</option>
+      <option value="ambas">Ambas as plataformas</option>
+    </select>
+
+    <input type="text" class="campo-form" id="nomePerfil" placeholder="Nome do seu perfil/usuário">
+    <input type="url" class="campo-form" id="linkPerfilKako" placeholder="🔗 Link do perfil no Kako Live">
+    <input type="url" class="campo-form" id="linkPerfilTiktok" placeholder="🔗 Link do perfil no TikTok">
+    <input type="url" class="campo-form" id="linkLive" placeholder="🔗 Link da live atual">
+    <input type="url" class="campo-form" id="linkCapa" placeholder="🔗 Link da capa da live">
+
+    <div class="checkbox-live">
+      <input type="checkbox" id="estouAoVivo">
+      <label for="estouAoVivo">🔴 Estou ao vivo agora</label>
+    </div>
+
+    <button class="btn-acao btn-verde" onclick="salvarDadosLive()">💾 SALVAR DADOS DA LIVE</button>
+    <p style="font-size:13px;color:var(--cinza);text-align:center;margin-top:10px">Seus dados ficarão salvos, basta marcar "ao vivo" quando iniciar a transmissão!</p>
+  </div>
+
+  <a href="https://wa.me/556981478873" target="_blank" class="btn-acao btn-verde" style="margin-top:20px">💬 Falar com a equipe</a>
   <button class="btn-acao btn-voltar" onclick="voltar()">Voltar</button>
 </div>
 
@@ -212,7 +243,6 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
   <button class="btn-acao btn-voltar" onclick="voltar()">Voltar</button>
 </div>
 
-<!-- OUTRAS AGÊNCIAS -->
 <div class="conteudo" id="conteudoOutraAgencia">
   <h2 class="titulo-secao">🤝 Parcerias para Agências</h2>
   <p style="text-align:center;color:var(--cinza);margin-bottom:15px">Condições especiais para parceiros!</p>
@@ -220,7 +250,6 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
   <button class="btn-acao btn-voltar" onclick="voltar()">Voltar</button>
 </div>
 
-<!-- ÁREA ADMINISTRATIVA -->
 <div class="conteudo" id="conteudoAdmin">
   <h2 class="titulo-secao">🔐 Área da Administração</h2>
   <input type="email" class="campo-form" id="emailAdmin" placeholder="E-mail: padronizaassessoria@gmail.com">
@@ -228,7 +257,6 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
   <button class="btn-acao btn-verde" onclick="verificarAdmin()">🔑 Entrar</button>
   <button class="btn-acao btn-voltar" onclick="voltar()">Voltar</button>
 
-  <!-- PAINEL DE GERENCIAMENTO DE FOTOS -->
   <div id="painelAdminFotos" style="display:none;margin-top:25px">
     <hr style="border-color:#293653;margin-bottom:20px">
     <h3 style="color:var(--amarelo);text-align:center;margin-bottom:15px">🖼️ Gerenciar Fotos da Agência</h3>
@@ -248,10 +276,20 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
 </div>
 
 <script>
-// Carrega configurações salvas ao abrir a página
 window.onload = function(){
   const dadosSalvos = localStorage.getItem('configFotosAgencia');
   if(dadosSalvos) aplicarFotos(JSON.parse(dadosSalvos));
+  const dadosLive = localStorage.getItem('dadosLiveAgenciado');
+  if(dadosLive){
+    const d = JSON.parse(dadosLive);
+    document.getElementById('plataformaLive').value = d.plataforma || '';
+    document.getElementById('nomePerfil').value = d.nome || '';
+    document.getElementById('linkPerfilKako').value = d.linkKako || '';
+    document.getElementById('linkPerfilTiktok').value = d.linkTiktok || '';
+    document.getElementById('linkLive').value = d.linkLive || '';
+    document.getElementById('linkCapa').value = d.linkCapa || '';
+    document.getElementById('estouAoVivo').checked = d.aoVivo === true;
+  }
 };
 
 function abrir(tipo){
@@ -264,6 +302,26 @@ function voltar(){
   document.querySelectorAll('.conteudo').forEach(el => el.classList.remove('visivel'));
   document.getElementById('telaInicial').style.display = 'block';
   document.getElementById('painelAdminFotos').style.display = 'none';
+}
+
+function solicitarServico(nomeServico){
+  const usuario = document.getElementById('usuarioAgenciado').value.trim() || 'Não informado';
+  const mensagem = encodeURIComponent(`Olá! Sou o usuário ${usuario} da Padroniza Assessoria e quero solicitar: ${nomeServico}.`);
+  window.open(`https://wa.me/556981478873?text=${mensagem}`);
+}
+
+function salvarDadosLive(){
+  const dados = {
+    plataforma: document.getElementById('plataformaLive').value,
+    nome: document.getElementById('nomePerfil').value.trim(),
+    linkKako: document.getElementById('linkPerfilKako').value.trim(),
+    linkTiktok: document.getElementById('linkPerfilTiktok').value.trim(),
+    linkLive: document.getElementById('linkLive').value.trim(),
+    linkCapa: document.getElementById('linkCapa').value.trim(),
+    aoVivo: document.getElementById('estouAoVivo').checked
+  };
+  localStorage.setItem('dadosLiveAgenciado', JSON.stringify(dados));
+  alert('✅ Dados salvos! Sempre que iniciar a live, é só marcar "Estou ao vivo agora" e salvar novamente!');
 }
 
 function enviarContato(){
