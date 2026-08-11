@@ -50,7 +50,7 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
 .destaque-gratis{background:rgba(52,211,153,0.15);border:2px solid var(--verde);padding:16px;border-radius:10px;text-align:center;font-weight:bold;margin-bottom:18px}
 .botao-foto{background:var(--roxo);color:#fff;padding:10px;border-radius:6px;text-align:center;cursor:pointer;margin:8px 0;display:block;font-weight:bold}
 .previa-capa{max-width:100%;max-height:180px;border-radius:8px;margin-top:8px;display:none;object-fit:cover;border:2px dashed var(--amarelo)}
-.aviso-capa{background:rgba(255,200,87,0.1);border:1px solid var(--amarelo);padding:10px;border-radius:8px;margin:12px 0;font-size:14px;text-align:center;color:var(--amarelo);font-weight:bold}
+.aviso-capa{background:rgba(52,211,153,0.08);border:1px solid var(--verde);padding:12px;border-radius:10px;margin:12px 0;text-align:center}
 .area-admin{background:rgba(116,87,255,0.1);border:1px solid var(--roxo);border-radius:10px;padding:15px;margin:15px 0}
 .lista-servicos{margin-top:15px}
 .servico-item{background:var(--painel2);border-radius:10px;padding:14px;margin-bottom:12px;border-left:4px solid var(--azul)}
@@ -65,12 +65,11 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
 .dados-perfil a{color:var(--verde);text-decoration:none;font-weight:bold}
 .capa-minha-live{width:100%;height:180px;object-fit:cover;border-radius:8px;margin:10px 0;background:#1a2440;border:1px solid #293653}
 .pix-chave{background:rgba(255,200,87,0.08);border:1px solid var(--amarelo);padding:10px;border-radius:8px;margin:10px 0;font-size:12px;word-break:break-all;color:var(--amarelo)}
-.btn-copiar-pix{background:var(--amarelo);color:#000;border:none;padding:8px 12px;border-radius:6px;font-weight:bold;cursor:pointer;width:100%;margin-top:8px}
+.btn-copiar{background:var(--amarelo);color:#000;border:none;padding:10px 12px;border-radius:6px;font-weight:bold;cursor:pointer;width:100%;margin-top:8px;font-size:15px}
 .aviso-copiado{text-align:center;color:var(--verde);font-weight:bold;margin:8px 0;display:none}
-.form-capa-streamer{background:rgba(52,211,153,0.08);border:1px solid var(--verde);border-radius:10px;padding:12px;margin:15px 0}
-.btn-salvar-capa{background:var(--verde);color:#fff;border:none;padding:10px;border-radius:6px;width:100%;font-weight:bold;cursor:pointer;margin-top:8px}
-.link-capa-exibicao{background:#000;padding:8px;border-radius:6px;margin:8px 0;font-size:11px;word-break:break-all;color:var(--amarelo)}
-.btn-copiar-link-capa{background:var(--verde);color:#fff;border:none;padding:8px 12px;border-radius:6px;font-weight:bold;cursor:pointer;width:100%}
+.form-capa-streamer{background:rgba(52,211,153,0.08);border:1px solid var(--verde);border-radius:10px;padding:15px;margin:15px 0}
+.btn-salvar-capa{background:var(--verde);color:#fff;border:none;padding:12px;border-radius:6px;width:100%;font-weight:bold;cursor:pointer;margin-top:10px;font-size:16px}
+.link-capa-escondido{display:none}
 </style>
 </head>
 <body>
@@ -155,13 +154,14 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
       <button class="botao-foto" onclick="document.getElementById('escolherCapaStreamer').click()">📷 Escolher foto da galeria</button>
       <img id="previaCapaNova" class="previa-capa" alt="Pré-visualização da capa nova">
       <button class="btn-salvar-capa" onclick="salvarCapaStreamer()">💾 Salvar Capa</button>
-      <p id="avisoCapaSalva" style="text-align:center;margin-top:8px;display:none">
-        <span style="color:var(--verde);font-weight:bold">✅ CAPA SALVA!</span><br>
+      
+      <div id="avisoCapaSalva" class="aviso-capa" style="display:none">
+        <span style="font-weight:bold">✅ CAPA SALVA!</span><br>
         Copie o link abaixo e cole na <strong>coluna H</strong> da sua linha na planilha:
-      </p>
-      <div id="linkCapaGerado" class="link-capa-exibicao" style="display:none"></div>
-      <button id="btnCopiarLinkCapa" class="btn-copiar-link-capa" style="display:none" onclick="copiarLinkCapa()">📋 COPIAR LINK DA CAPA</button>
-      <p id="avisoCopiadoCapa" style="text-align:center;color:var(--verde);font-weight:bold;margin-top:8px;display:none">✅ LINK COPIADO COM SUCESSO!</p>
+        <div id="linkCapaEscondido" class="link-capa-escondido"></div>
+        <button class="btn-copiar" onclick="copiarLinkCapa()">📋 COPIAR LINK DA CAPA</button>
+        <p id="avisoCopiadoCapa" class="aviso-copiado">✅ LINK COPIADO COM SUCESSO!</p>
+      </div>
       <p style="font-size:13px;color:var(--cinza);text-align:center;margin-top:10px">✅ Depois de salvar na planilha, em até 2 minutos já aparece para todos!</p>
     </div>
 
@@ -203,7 +203,7 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
       <p>Todos os serviços + treinamento + suporte</p>
       <p class="valor"><span class="valor-riscado">R$ 59,90</span> <span class="destaque">APENAS R$ 39,99/mês</span></p>
       <div class="pix-chave" id="pixPacote">00020101021126770014br.gov.bcb.pix01367c0dfbc3-68e7-4b85-a0eb-eb037b738d9f0215Pacote completo520400005303986540539.995802BR591965 8 0 M G DA SILVA6007VILHENA62070503***6304C43A</div>
-      <button class="btn-copiar-pix" onclick="copiarPix('pixPacote', this)">📋 COPIAR CHAVE PIX</button>
+      <button class="btn-copiar" onclick="copiarPix('pixPacote', this)">📋 COPIAR CHAVE PIX</button>
       <p class="aviso-copiado">✅ CHAVE COPIADA COM SUCESSO!</p>
     </div>
 
@@ -213,7 +213,7 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
       <p>Avulso: <strong>R$ 20,00 cada</strong></p>
       <p>Pacote 6 unidades: <strong>R$ 100,00</strong></p>
       <div class="pix-chave" id="pixMusica">00020101021126820014br.gov.bcb.pix01367c0dfbc3-68e7-4b85-a0eb-eb037b738d9f0220musica personalizada520400005303986540520.005802BR591965 8 0 M G DA SILVA6007VILHENA62070503***6304E948</div>
-      <button class="btn-copiar-pix" onclick="copiarPix('pixMusica', this)">📋 COPIAR CHAVE PIX</button>
+      <button class="btn-copiar" onclick="copiarPix('pixMusica', this)">📋 COPIAR CHAVE PIX</button>
       <p class="aviso-copiado">✅ CHAVE COPIADA COM SUCESSO!</p>
     </div>
 
@@ -223,7 +223,7 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
       <p>Avulso: <strong>R$ 10,00 cada</strong></p>
       <p>Pacote 10 unidades: <strong>R$ 80,00</strong></p>
       <div class="pix-chave" id="pixArte">00020101021126730014br.gov.bcb.pix01367c0dfbc3-68e7-4b85-a0eb-eb037b738d9f0211arte visual520400005303986540510.005802BR591965 8 0 M G DA SILVA6007VILHENA62070503***6304D45F</div>
-      <button class="btn-copiar-pix" onclick="copiarPix('pixArte', this)">📋 COPIAR CHAVE PIX</button>
+      <button class="btn-copiar" onclick="copiarPix('pixArte', this)">📋 COPIAR CHAVE PIX</button>
       <p class="aviso-copiado">✅ CHAVE COPIADA COM SUCESSO!</p>
     </div>
 
@@ -232,7 +232,7 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
       <h4>🎓 Treinamento e Grupo VIP</h4>
       <p>Acesso exclusivo: <strong>R$ 9,99/mês</strong></p>
       <div class="pix-chave" id="pixTreinamento">00020101021126770014br.gov.bcb.pix01367c0dfbc3-68e7-4b85-a0eb-eb037b738d9f0215Treinamento vip52040000530398654049.995802BR591965 8 0 M G DA SILVA6007VILHENA62070503***63045E3B</div>
-      <button class="btn-copiar-pix" onclick="copiarPix('pixTreinamento', this)">📋 COPIAR CHAVE PIX</button>
+      <button class="btn-copiar" onclick="copiarPix('pixTreinamento', this)">📋 COPIAR CHAVE PIX</button>
       <p class="aviso-copiado">✅ CHAVE COPIADA COM SUCESSO!</p>
     </div>
   </div>
@@ -252,7 +252,7 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
       <p>Serviço exclusivo para agências parceiras</p>
       <p class="valor"><span class="destaque">R$ 69,90/mês</span></p>
       <div class="pix-chave" id="pixBatalha">00020101021126840014br.gov.bcb.pix01367c0dfbc3-68e7-4b85-a0eb-eb037b738d9f0222Agendamento de batalha520400005303986540569.995802BR591965 8 0 M G DA SILVA6007VILHENA62070503***6304606A</div>
-      <button class="btn-copiar-pix" onclick="copiarPix('pixBatalha', this)">📋 COPIAR CHAVE PIX</button>
+      <button class="btn-copiar" onclick="copiarPix('pixBatalha', this)">📋 COPIAR CHAVE PIX</button>
       <p class="aviso-copiado">✅ CHAVE COPIADA COM SUCESSO!</p>
     </div>
     <div class="servico-item">
@@ -282,42 +282,29 @@ window.onload = async function(){
   if(logoSalvo) document.getElementById('logoPrincipal').src = logoSalvo;
 };
 
-// Função para mostrar/ocultar senha
 function mostrarSenha(idCampo, botao){
   const campo = document.getElementById(idCampo);
-  if(campo.type === 'password'){
-    campo.type = 'text';
-    botao.innerText = '🙈';
-  }else{
-    campo.type = 'password';
-    botao.innerText = '👁️';
-  }
+  campo.type = campo.type === 'password' ? 'text' : 'password';
+  botao.innerText = campo.type === 'password' ? '👁️' : '🙈';
 }
 
-// Função para copiar chave Pix com um clique
 function copiarPix(idDiv, botao){
   const chave = document.getElementById(idDiv).innerText;
   navigator.clipboard.writeText(chave).then(() => {
     const aviso = botao.nextElementSibling;
     aviso.style.display = 'block';
-    setTimeout(() => { aviso.style.display = 'none'; }, 3000);
-  }).catch(err => {
-    alert('Não foi possível copiar automaticamente. Selecione o texto e copie manualmente.');
-  });
+    setTimeout(() => aviso.style.display = 'none', 3000);
+  }).catch(err => alert('Selecione o texto e copie manualmente.'));
 }
 
-// Copiar link da capa com um clique
 function copiarLinkCapa(){
   if(!linkCapaNova) return;
   navigator.clipboard.writeText(linkCapaNova).then(() => {
     document.getElementById('avisoCopiadoCapa').style.display = 'block';
-    setTimeout(() => { document.getElementById('avisoCopiadoCapa').style.display = 'none'; }, 3000);
-  }).catch(err => {
-    alert('Não foi possível copiar automaticamente. Selecione o link manualmente.');
-  });
+    setTimeout(() => document.getElementById('avisoCopiadoCapa').style.display = 'none', 3000);
+  }).catch(err => alert('Selecione o link manualmente.'));
 }
 
-// Pré-visualização da capa do streamer
 function carregarPreviaCapaStreamer(input){
   if(input.files && input.files[0]){
     const leitor = new FileReader();
@@ -325,31 +312,18 @@ function carregarPreviaCapaStreamer(input){
       linkCapaNova = e.target.result;
       document.getElementById('previaCapaNova').src = linkCapaNova;
       document.getElementById('previaCapaNova').style.display = 'block';
-      // Esconde avisos anteriores
       document.getElementById('avisoCapaSalva').style.display = 'none';
-      document.getElementById('linkCapaGerado').style.display = 'none';
-      document.getElementById('btnCopiarLinkCapa').style.display = 'none';
-      document.getElementById('avisoCopiadoCapa').style.display = 'none';
     }
     leitor.readAsDataURL(input.files[0]);
   }
 }
 
-// Salvar capa e mostrar botão de copiar
 function salvarCapaStreamer(){
-  if(!linkCapaNova){
-    alert('Primeiro escolha uma foto da galeria!');
-    return;
-  }
-  if(!usuarioAtual){
-    alert('Acesse seu perfil primeiro!');
-    return;
-  }
-  // Mostra tudo
+  if(!linkCapaNova) return alert('Primeiro escolha uma foto da galeria!');
+  if(!usuarioAtual) return alert('Acesse seu perfil primeiro!');
+  
+  document.getElementById('linkCapaEscondido').innerText = linkCapaNova;
   document.getElementById('avisoCapaSalva').style.display = 'block';
-  document.getElementById('linkCapaGerado').innerText = linkCapaNova;
-  document.getElementById('linkCapaGerado').style.display = 'block';
-  document.getElementById('btnCopiarLinkCapa').style.display = 'block';
   document.getElementById('minhaCapaLive').src = linkCapaNova;
 }
 
@@ -358,9 +332,7 @@ async function carregarDadosPlanilha(){
     const res = await fetch(LINK_PLANILHA);
     const texto = await res.text();
     dadosPlanilha = JSON.parse(texto.substr(47).slice(0,-2)).table.rows;
-  }catch(e){
-    console.log("Erro ao carregar planilha:", e);
-  }
+  }catch(e){console.log("Erro planilha:", e);}
 }
 
 function abrir(id){
@@ -372,70 +344,23 @@ function abrir(id){
 function voltar(){
   document.querySelectorAll('.conteudo').forEach(c=>c.classList.remove('visivel'));
   document.getElementById('telaInicial').style.display = 'block';
-  document.getElementById('mensagemAcesso').innerHTML = '';
-  document.getElementById('painelStreamer').style.display = 'none';
   document.getElementById('dadosPerfilStreamer').style.display = 'none';
   document.getElementById('previaCapaNova').style.display = 'none';
   document.getElementById('avisoCapaSalva').style.display = 'none';
-  document.getElementById('linkCapaGerado').style.display = 'none';
-  document.getElementById('btnCopiarLinkCapa').style.display = 'none';
-  document.getElementById('avisoCopiadoCapa').style.display = 'none';
   linkCapaNova = "";
   usuarioAtual = null;
-  document.getElementById('previaNovoLogo').style.display = 'none';
 }
 
-// PAINEL ADMINISTRATIVO
 function verificarAdmin(){
   const email = document.getElementById('emailAdmin').value.trim();
   const senha = document.getElementById('senhaAdmin').value.trim();
   if(email === 'padronizaassessoria@gmail.com' && senha === 'agency2026.'){
     document.getElementById('painelAdmin').style.display = 'block';
-    document.getElementById('emailAdmin').value = '';
-    document.getElementById('senhaAdmin').value = '';
   }else{
     alert('❌ E-mail ou senha incorretos!');
   }
 }
 
-function carregarPreviaLogo(input){
-  if(input.files && input.files[0]){
-    const leitor = new FileReader();
-    leitor.onload = e => {
-      document.getElementById('previaNovoLogo').src = e.target.result;
-      document.getElementById('previaNovoLogo').style.display = 'block';
-      document.getElementById('novoLinkLogo').value = '';
-    }
-    leitor.readAsDataURL(input.files[0]);
-  }
-}
-
-function salvarNovoLogo(){
-  const link = document.getElementById('novoLinkLogo').value.trim();
-  const previa = document.getElementById('previaNovoLogo').src;
-  const aviso = document.getElementById('avisoLogo');
-  
-  if(!link && !previa){
-    aviso.innerHTML = '<span style="color:var(--vermelho)">❌ Escolha uma imagem ou cole o link!</span>';
-    aviso.style.display = 'block';
-    return;
-  }
-
-  const novoLink = link || previa;
-  document.getElementById('logoPrincipal').src = novoLink;
-  localStorage.setItem('logoPadroniza', novoLink);
-  
-  aviso.innerHTML = '<span style="color:var(--verde)">✅ LOGO SALVO PERMANENTEMENTE!</span>';
-  aviso.style.display = 'block';
-  
-  setTimeout(()=>{
-    aviso.style.display = 'none';
-    document.getElementById('previaNovoLogo').style.display = 'none';
-    document.getElementById('novoLinkLogo').value = '';
-  }, 3000);
-}
-
-// VERIFICAÇÃO DE ACESSO E LEITURA EXATA DAS COLUNAS
 function verificarAcesso(){
   const user = document.getElementById('usuarioAcesso').value.trim();
   const msg = document.getElementById('mensagemAcesso');
@@ -443,35 +368,28 @@ function verificarAcesso(){
 
   setTimeout(()=>{
     const encontrado = dadosPlanilha.find(linha => linha.c[0]?.v?.toString().trim().toLowerCase() === user.toLowerCase());
-    if(!encontrado){
-      msg.innerHTML = '❌ Usuário não encontrado. Digite exatamente como cadastrado.';
-      return;
-    }
-    if(encontrado.c[1]?.v !== 'APROVADO'){
-      msg.innerHTML = '⏳ Aguardando aprovação. Prazo de até 48 horas.';
-      return;
-    }
-    usuarioAtual = encontrado;
-    msg.innerHTML = '✅ Acesso liberado! Todos os serviços são gratuitos para você.';
+    if(!encontrado) return msg.innerHTML = '❌ Usuário não encontrado.';
+    if(encontrado.c[1]?.v !== 'APROVADO') return msg.innerHTML = '⏳ Aguardando aprovação (até 48h).';
     
+    usuarioAtual = encontrado;
+    msg.innerHTML = '✅ Acesso liberado!';
     document.getElementById('meuNomeUsuario').innerText = encontrado.c[0]?.v || user;
     const linkTiktok = encontrado.c[4]?.v || '';
     document.getElementById('meuLinkTikTok').href = linkTiktok || '#';
-    document.getElementById('meuLinkTikTok').innerText = linkTiktok ? 'Acessar meu perfil/live TikTok' : 'Não cadastrado';
+    document.getElementById('meuLinkTikTok').innerText = linkTiktok ? 'Acessar Live TikTok' : 'Não cadastrado';
     const linkKako = encontrado.c[6]?.v || '';
     document.getElementById('meuLinkKako').href = linkKako || '#';
-    document.getElementById('meuLinkKako').innerText = linkKako ? 'Acessar meu perfil/live Kako Live' : 'Não cadastrado';
+    document.getElementById('meuLinkKako').innerText = linkKako ? 'Acessar Live Kako' : 'Não cadastrado';
     const capa = encontrado.c[7]?.v?.trim() || CAPA_PADRAO_AGENCIA;
     document.getElementById('minhaCapaLive').src = capa;
     const aoVivo = encontrado.c[8]?.v === true || String(encontrado.c[8]?.v || '').toUpperCase() === 'TRUE';
-    document.getElementById('meuStatusLive').innerHTML = aoVivo ? '<span style="color:var(--vermelho);font-weight:bold">🔴 AO VIVO AGORA!</span>' : '<span style="color:var(--cinza)">⏳ Offline no momento</span>';
+    document.getElementById('meuStatusLive').innerHTML = aoVivo ? '<span style="color:var(--vermelho);font-weight:bold">🔴 AO VIVO AGORA!</span>' : '<span style="color:var(--cinza)">⏳ Offline</span>';
     
     document.getElementById('dadosPerfilStreamer').style.display = 'block';
     document.getElementById('painelStreamer').style.display = 'block';
   }, 800);
 }
 
-// CARREGAR LIVES NA TELA INICIAL
 function carregarLivesAoVivo(){
   const lista = document.getElementById('listaLives');
   lista.innerHTML = `<h3>🔴 LIVES AO VIVO AGORA!</h3>`;
@@ -485,16 +403,14 @@ function carregarLivesAoVivo(){
       const nome = cel[0]?.v || 'Streamer';
       const capa = cel[7]?.v?.trim() || CAPA_PADRAO_AGENCIA;
       if(cel[6]?.v){
-        lista.innerHTML += `<div class="cartao-live"><img src="${capa}" alt="Capa da Live" class="capa-live" onerror="this.src='${CAPA_PADRAO_AGENCIA}'"><span class="selo-ao-vivo">🔴 AO VIVO</span><p class="plataforma">📱 Kako Live</p><p class="nome-streamer">${nome}</p><a href="${cel[6].v}" target="_blank" class="link-assistir">▶️ Assistir Transmissão</a></div>`;
+        lista.innerHTML += `<div class="cartao-live"><img src="${capa}" class="capa-live" onerror="this.src='${CAPA_PADRAO_AGENCIA}'"><span class="selo-ao-vivo">🔴 AO VIVO</span><p class="plataforma">📱 Kako Live</p><p class="nome-streamer">${nome}</p><a href="${cel[6].v}" target="_blank" class="link-assistir">▶️ Assistir</a></div>`;
       }
       if(cel[4]?.v){
-        lista.innerHTML += `<div class="cartao-live"><img src="${capa}" alt="Capa da Live" class="capa-live" onerror="this.src='${CAPA_PADRAO_AGENCIA}'"><span class="selo-ao-vivo">🔴 AO VIVO</span><p class="plataforma">🎵 TikTok</p><p class="nome-streamer">${nome}</p><a href="${cel[4].v}" target="_blank" class="link-assistir">▶️ Assistir Transmissão</a></div>`;
+        lista.innerHTML += `<div class="cartao-live"><img src="${capa}" class="capa-live" onerror="this.src='${CAPA_PADRAO_AGENCIA}'"><span class="selo-ao-vivo">🔴 AO VIVO</span><p class="plataforma">🎵 TikTok</p><p class="nome-streamer">${nome}</p><a href="${cel[4].v}" target="_blank" class="link-assistir">▶️ Assistir</a></div>`;
       }
     }
   });
-  if(!temLive){
-    lista.innerHTML += `<div style="text-align:center;color:var(--cinza);padding:20px">Nenhuma transmissão ao vivo no momento.</div>`;
-  }
+  if(!temLive) lista.innerHTML += `<div style="text-align:center;color:var(--cinza);padding:20px">Nenhuma transmissão no momento.</div>`;
 }
 
 function solicitar(servico){
