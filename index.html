@@ -13,25 +13,27 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
 .logo-topo{width:180px;height:180px;margin:0 auto 15px;display:flex;align-items:center;justify-content:center;background:var(--painel);border-radius:50%;border:3px solid var(--rosa);overflow:hidden}
 .logo-topo span{font-size:16px;font-weight:bold;color:var(--amarelo);text-align:center;padding:10px}
 
-.cabecalho{text-align:center;margin-bottom:20px}
+.cabecalho{text-align:center;margin-bottom:15px}
 .cabecalho h1{font-size:26px;color:var(--amarelo)}
 .cabecalho p{color:var(--cinza)}
 
-.lives-ao-vivo{background:rgba(52,211,153,0.08);border:1px solid var(--verde);border-radius:12px;padding:15px;margin-bottom:20px}
-.lives-ao-vivo h3{color:var(--verde);text-align:center;margin-bottom:12px}
-.cartao-live{background:var(--painel2);border-radius:10px;padding:12px;margin-bottom:10px}
-.cartao-live img{width:100%;height:140px;object-fit:cover;border-radius:8px;margin-bottom:8px;background:#222}
-.selo-ao-vivo{background:var(--vermelho);color:#fff;padding:4px 8px;border-radius:4px;font-size:13px;font-weight:bold;display:inline-block;margin-bottom:6px}
-.plataforma{color:var(--amarelo);font-weight:bold}
-.link-assistir{display:block;background:var(--verde);color:#fff;text-align:center;padding:10px;border-radius:6px;text-decoration:none;margin-top:8px;font-weight:bold}
-
-.botoes-principais{display:flex;flex-direction:column;gap:12px;margin-bottom:25px}
+/* BOTÕES NO TOPO, FIXOS E VISÍVEIS SEMPRE */
+.botoes-principais{display:flex;flex-direction:column;gap:12px;margin-bottom:20px;position:sticky;top:10px;z-index:999;background:var(--fundo);padding:10px 0}
 .btn-principal{padding:16px;border-radius:12px;border:none;font-weight:bold;font-size:17px;cursor:pointer;text-align:center;color:#fff;transition:0.2s;pointer-events:auto !important}
 .btn-principal:hover{transform:translateY(-2px)}
 .btn-agenciado{background:linear-gradient(135deg,var(--verde),#16a34a)}
 .btn-visitante{background:linear-gradient(135deg,#3b82f6,#2563eb)}
 .btn-outra-agencia{background:linear-gradient(135deg,var(--amarelo),#f59e0b);color:#000}
 .btn-admin{background:linear-gradient(135deg,var(--roxo),#4f46e5)}
+.btn-moedas{background:linear-gradient(135deg,#ff6b9d,var(--rosa));font-size:15px;padding:14px;margin-top:10px}
+
+.lives-ao-vivo{background:rgba(52,211,153,0.08);border:1px solid var(--verde);border-radius:12px;padding:15px}
+.lives-ao-vivo h3{color:var(--verde);text-align:center;margin-bottom:12px}
+.cartao-live{background:var(--painel2);border-radius:10px;padding:12px;margin-bottom:10px}
+.cartao-live img{width:100%;height:140px;object-fit:cover;border-radius:8px;margin-bottom:8px;background:#222}
+.selo-ao-vivo{background:var(--vermelho);color:#fff;padding:4px 8px;border-radius:4px;font-size:13px;font-weight:bold;display:inline-block;margin-bottom:6px}
+.plataforma{color:var(--amarelo);font-weight:bold}
+.link-assistir{display:block;background:var(--verde);color:#fff;text-align:center;padding:10px;border-radius:6px;text-decoration:none;margin-top:8px;font-weight:bold}
 
 .conteudo{display:none;background:var(--painel);border-radius:12px;padding:20px;margin-bottom:20px}
 .conteudo.visivel{display:block}
@@ -69,16 +71,19 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
     <p>Seu sucesso nas lives começa aqui!</p>
   </div>
 
-  <div class="lives-ao-vivo" id="listaLives">
-    <h3>🔴 LIVES AO VIVO AGORA!</h3>
-    <div id="carregandoLives" style="text-align:center;color:var(--cinza);padding:10px">Carregando...</div>
-  </div>
-
+  <!-- BOTÕES BEM NO TOPO, FIXOS E VISÍVEIS SEMPRE -->
   <div class="botoes-principais">
     <button class="btn-principal btn-agenciado" onclick="abrir('agenciado')">✅ SOU AGENCIADO PADRONIZA</button>
     <button class="btn-principal btn-visitante" onclick="abrir('visitante')">👤 SOU VISITANTE / VER LIVES</button>
     <button class="btn-principal btn-outra-agencia" onclick="abrir('outraAgencia')">🤝 SOU OUTRA AGÊNCIA</button>
     <button class="btn-principal btn-admin" onclick="abrir('admin')">🔐 ÁREA DA ADMINISTRAÇÃO</button>
+    <a href="https://www.tiktok.com/coin?rc=7TGXGN69&rie=" target="_blank" class="btn-principal btn-moedas">💰 COMPRAR MOEDAS TIKTOK</a>
+  </div>
+
+  <!-- LISTA DE LIVES ABAIXO DOS BOTÕES -->
+  <div class="lives-ao-vivo" id="listaLives">
+    <h3>🔴 LIVES AO VIVO AGORA!</h3>
+    <div id="carregandoLives" style="text-align:center;color:var(--cinza);padding:10px">Carregando...</div>
   </div>
 </div>
 
@@ -181,7 +186,7 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
 </div>
 
 <script>
-// LINK DA SUA PLANILHA JÁ INSERIDO
+// LINK DA SUA PLANILHA E DO BOTÃO DE MOEDAS JÁ INSERIDOS
 const LINK_PLANILHA = "https://docs.google.com/spreadsheets/d/1R9eUsqF4kA0y22ryMUIsvGolBfk3-XwZ5R-RVpBiZA4/gviz/tq?tqx=out:json";
 let dadosPlanilha = [];
 let usuarioAtual = null;
@@ -305,14 +310,14 @@ function carregarLivesAoVivo(){
     if(aprovado && aoVivo){
       temLive = true;
       const nome = cel[0]?.v || 'Streamer';
-      const capa = cel[7]?.v || 'https://i.imgur.com/8ZbQkLb.png';
+      const capa = cel[7]?.v || '';
       
       // Kako
       if(cel[6]?.v){
         lista.innerHTML += `
           <div class="cartao-live">
             <span class="selo-ao-vivo">🔴 AO VIVO</span>
-            <img src="${capa}" alt="Capa Live" onerror="this.src='https://i.imgur.com/8ZbQkLb.png'">
+            <img src="${capa}" alt="Capa Live" onerror="this.style.display='none'">
             <p style="font-weight:bold">${nome}</p>
             <p class="plataforma">📱 Kako Live</p>
             <a href="${cel[6].v}" target="_blank" class="link-assistir">▶️ Assistir</a>
@@ -324,7 +329,7 @@ function carregarLivesAoVivo(){
         lista.innerHTML += `
           <div class="cartao-live">
             <span class="selo-ao-vivo">🔴 AO VIVO</span>
-            <img src="${capa}" alt="Capa Live" onerror="this.src='https://i.imgur.com/8ZbQkLb.png'">
+            <img src="${capa}" alt="Capa Live" onerror="this.style.display='none'">
             <p style="font-weight:bold">${nome}</p>
             <p class="plataforma">🎵 TikTok</p>
             <a href="${cel[4].v}" target="_blank" class="link-assistir">▶️ Assistir</a>
