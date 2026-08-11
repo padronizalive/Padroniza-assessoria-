@@ -70,6 +70,15 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
 .valor{font-weight:bold;color:var(--verde);font-size:17px}
 .valor-riscado{text-decoration:line-through;color:var(--cinza);margin-right:8px}
 .destaque{color:var(--rosa);font-weight:bold}
+
+/* ESTILOS NOVOS PARA BATALHAS */
+.agenda-batalhas{background:rgba(116,87,255,0.08);border:1px solid var(--roxo);border-radius:12px;padding:15px;margin-top:15px}
+.status-disponivel{color:var(--verde);font-weight:bold}
+.status-campanha{color:var(--amarelo);font-weight:bold}
+.status-bloqueado{color:var(--vermelho);font-weight:bold}
+.status-confirmado{color:var(--texto);font-weight:bold}
+.botao-grupo-arte{background:linear-gradient(135deg,#25d366,#128c7e);color:#fff;padding:12px;border-radius:8px;text-align:center;display:block;text-decoration:none;font-weight:bold;margin-top:10px}
+.aviso-prazo-arte{background:rgba(52,211,153,0.1);border:1px solid var(--verde);padding:10px;border-radius:8px;margin:10px 0;text-align:center;color:var(--verde);font-weight:bold}
 </style>
 </head>
 <body>
@@ -180,9 +189,25 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
     <p style="text-align:center;color:var(--amarelo);font-weight:bold;margin:15px 0">Solicitar Serviços:</p>
     <button class="btn-acao btn-servico" onclick="solicitar('Músicas personalizadas')">🎵 Músicas</button>
     <button class="btn-acao btn-servico" onclick="solicitar('Artes visuais')">🎨 Artes</button>
-    <button class="btn-acao btn-servico" onclick="solicitar('Agendamento de batalha')">⚔️ Batalhas</button>
+    <button class="btn-acao btn-servico" onclick="abrirBatalhas()">⚔️ Batalhas</button>
     <button class="btn-acao btn-servico" onclick="solicitar('Treinamento VIP')">🎓 Treinamento</button>
   </div>
+
+  <!-- NOVA ÁREA DE BATALHAS -->
+  <div id="areaBatalhas" class="agenda-batalhas" style="display:none">
+    <h3 style="color:var(--roxo);text-align:center;margin-bottom:15px">⚔️ AGENDA DE BATALHAS</h3>
+    <div id="carregandoBatalhas" style="text-align:center;color:var(--cinza);padding:15px">Carregando agenda...</div>
+    <div id="listaBatalhas"></div>
+    
+    <div style="margin-top:20px">
+      <h4 style="color:var(--amarelo);margin-bottom:10px">📝 Solicitar Nova Batalha</h4>
+      <p style="font-size:14px;color:var(--cinza);margin-bottom:10px">✅ Horários permitidos: 17h às 22h<br>✅ Intervalo mínimo de 1 hora entre batalhas<br>✅ Agende até o dia 30 do mês seguinte<br>⚠️ Para horários especiais, contate o WhatsApp</p>
+      <button class="btn-acao btn-verde" onclick="solicitarBatalha()">📤 Enviar Solicitação</button>
+    </div>
+
+    <button class="btn-acao btn-voltar" onclick="fecharBatalhas()">Voltar</button>
+  </div>
+
   <a href="https://wa.me/556981478873" target="_blank" class="btn-acao btn-whatsapp">💬 Falar com a Equipe</a>
   <button class="btn-acao btn-voltar" onclick="voltar()">Voltar ao Início</button>
 </div>
@@ -267,13 +292,17 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
 
 <script>
 const LINK_PLANILHA = "https://docs.google.com/spreadsheets/d/1R9eUsqF4kA0y22ryMUIsvGolBfk3-XwZ5R-RVpBiZA4/gviz/tq?tqx=out:json";
+const LINK_PLANILHA_BATALHAS = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRtyHq643--RBIrq3drMcHGIoUtpY-IN5v2T0wNWnCNvUf2rE6UHOK55nI4uUK89x7U_S66Gl1XXDN4/pubhtml";
+const LINK_GRUPO_ARTES = "https://chat.whatsapp.com/I3edwkusrSC123QjrJBHHi";
 const CAPA_PADRAO_AGENCIA = "https://web.whatsapp.com/cb282683-5011-4b51-9438-2de49ef73302";
 let dadosPlanilha = [];
+let dadosBatalhas = [];
 let usuarioAtual = null;
 let linkCapaNova = "";
 
 window.onload = async function(){
   await carregarDadosPlanilha();
+  await carregarDadosBatalhas();
   carregarLivesAoVivo();
   const logoSalvo = localStorage.getItem('logoPadroniza');
   if(logoSalvo) document.getElementById('logoPrincipal').src = logoSalvo;
@@ -337,6 +366,19 @@ async function carregarDadosPlanilha(){
   }
 }
 
+async function carregarDadosBatalhas(){
+  try{
+    const res = await fetch(LINK_PLANILHA_BATALHAS);
+    const texto = await res.text();
+    dadosBatalhas = texto;
+    document.getElementById('carregandoBatalhas').style.display = 'none';
+    document.getElementById('listaBatalhas').innerHTML = `<p style="text-align:center;color:var(--cinza)">Agenda carregada com sucesso! Atualizações diretas pela planilha da agência.</p>`;
+  }catch(e){
+    document.getElementById('carregandoBatalhas').innerHTML = "⚠️ Agenda temporariamente indisponível";
+    console.log("Erro ao carregar batalhas:", e);
+  }
+}
+
 function abrir(id){
   document.querySelectorAll('.conteudo').forEach(c=>c.classList.remove('visivel'));
   document.getElementById('telaInicial').style.display = 'none';
@@ -349,10 +391,26 @@ function voltar(){
   document.getElementById('mensagemAcesso').innerHTML = '';
   document.getElementById('painelStreamer').style.display = 'none';
   document.getElementById('dadosPerfilStreamer').style.display = 'none';
+  document.getElementById('areaBatalhas').style.display = 'none';
   document.getElementById('previaCapaNova').style.display = 'none';
   document.getElementById('avisoCapaSalva').style.display = 'none';
   linkCapaNova = "";
   usuarioAtual = null;
+}
+
+function abrirBatalhas(){
+  document.getElementById('painelStreamer').style.display = 'none';
+  document.getElementById('areaBatalhas').style.display = 'block';
+}
+
+function fecharBatalhas(){
+  document.getElementById('areaBatalhas').style.display = 'none';
+  document.getElementById('painelStreamer').style.display = 'block';
+}
+
+function solicitarBatalha(){
+  const texto = encodeURIComponent(`Olá! Sou agenciado Padroniza e gostaria de solicitar agendamento de batalha.\nUsuário: ${usuarioAtual?.c[0]?.v || ''}`);
+  window.open(`https://wa.me/556981478873?text=${texto}`);
 }
 
 function verificarAdmin(){
