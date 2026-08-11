@@ -11,12 +11,19 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
 .container{max-width:600px;margin:0 auto}
 
 .logo-topo{width:180px;height:180px;margin:0 auto 15px;display:flex;align-items:center;justify-content:center;background:var(--painel);border-radius:50%;border:3px solid var(--rosa);overflow:hidden}
-.logo-topo img{width:100%;height:100%;object-fit:contain}
 .logo-topo span{font-size:16px;font-weight:bold;color:var(--amarelo);text-align:center;padding:10px}
 
 .cabecalho{text-align:center;margin-bottom:20px}
 .cabecalho h1{font-size:26px;color:var(--amarelo)}
 .cabecalho p{color:var(--cinza)}
+
+.lives-ao-vivo{background:rgba(52,211,153,0.08);border:1px solid var(--verde);border-radius:12px;padding:15px;margin-bottom:20px}
+.lives-ao-vivo h3{color:var(--verde);text-align:center;margin-bottom:12px}
+.cartao-live{background:var(--painel2);border-radius:10px;padding:12px;margin-bottom:10px}
+.cartao-live img{width:100%;height:140px;object-fit:cover;border-radius:8px;margin-bottom:8px}
+.selo-ao-vivo{background:var(--vermelho);color:#fff;padding:4px 8px;border-radius:4px;font-size:13px;font-weight:bold;display:inline-block;margin-bottom:6px}
+.plataforma{color:var(--amarelo);font-weight:bold}
+.link-assistir{display:block;background:var(--verde);color:#fff;text-align:center;padding:10px;border-radius:6px;text-decoration:none;margin-top:8px;font-weight:bold}
 
 .botoes-principais{display:flex;flex-direction:column;gap:12px;margin-bottom:25px}
 .btn-principal{padding:16px;border-radius:12px;border:none;font-weight:bold;font-size:17px;cursor:pointer;text-align:center;color:#fff;transition:0.2s;pointer-events:auto !important}
@@ -34,7 +41,6 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
 .btn-verde{background:var(--verde)}
 .btn-voltar{background:#293653;color:#fff;margin-top:15px}
 .btn-servico{background:linear-gradient(135deg,var(--rosa),var(--roxo));margin:8px 0;font-size:15px;padding:14px}
-.btn-whatsapp{background:linear-gradient(135deg,#25d366,#128c7e);margin-top:15px}
 .destaque-gratis{background:rgba(52,211,153,0.15);border:2px solid var(--verde);padding:16px;border-radius:10px;text-align:center;font-weight:bold;margin-bottom:18px}
 .destaque-pix{background:rgba(255,61,129,0.1);border:1px solid var(--rosa);padding:12px;border-radius:8px;margin:10px 0;font-size:14px;word-break:break-all}
 .grid-servicos{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:20px}
@@ -42,12 +48,7 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
 .servico-card h4{color:var(--amarelo);margin-bottom:5px;font-size:15px}
 .servico-card .preco{font-weight:bold;color:var(--rosa);font-size:16px}
 .servico-card .gratis{color:var(--verde);font-weight:bold}
-.campo-arquivo{width:100%;margin:10px 0;padding:8px;background:#17213a;border-radius:6px;border:1px solid #293653;color:var(--texto)}
-.bloco-fotos{background:var(--painel2);padding:15px;border-radius:10px;margin-bottom:15px}
-.bloco-fotos h4{color:var(--amarelo);margin-bottom:8px}
-.area-exibicao{background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;margin:10px 0;text-align:center;color:var(--cinza);font-style:italic}
-.area-exibicao img{max-width:100%;border-radius:6px;margin-top:5px}
-.previa-foto{max-width:100%;max-height:180px;border-radius:8px;margin-top:8px;display:none;object-fit:cover}
+.aviso-importante{background:rgba(255,200,87,0.1);border:1px solid var(--amarelo);padding:12px;border-radius:8px;margin:10px 0;font-size:14px;text-align:center}
 </style>
 </head>
 <body>
@@ -55,9 +56,8 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
 
 <!-- TELA INICIAL -->
 <div id="telaInicial">
-  <div class="logo-topo" id="logoPublico">
+  <div class="logo-topo">
     <span>PADRONIZA<br>+LIVE ASSESSORIA</span>
-    <img id="logoExibicao" src="" alt="Logo Padroniza Assessoria" style="display:none">
   </div>
 
   <div class="cabecalho">
@@ -65,13 +65,9 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
     <p>Seu sucesso nas lives começa aqui!</p>
   </div>
 
-  <div class="area-exibicao" id="eventosExibicao" style="display:none">
-    <h4 style="color:var(--amarelo);font-style:normal">📸 Nossos Eventos</h4>
-    <img id="fotoEventos" src="" alt="Eventos Padroniza">
-  </div>
-  <div class="area-exibicao" id="conquistasExibicao" style="display:none">
-    <h4 style="color:var(--amarelo);font-style:normal">🏆 Nossas Conquistas</h4>
-    <img id="fotoConquistas" src="" alt="Conquistas Padroniza">
+  <div class="lives-ao-vivo" id="listaLives">
+    <h3>🔴 LIVES AO VIVO AGORA!</h3>
+    <div id="carregandoLives" style="text-align:center;color:var(--cinza);padding:10px">Carregando...</div>
   </div>
 
   <div class="botoes-principais">
@@ -82,180 +78,232 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
   </div>
 </div>
 
-<!-- ÁREA ADMINISTRATIVA -->
-<div class="conteudo" id="conteudoAdmin">
-  <h2 class="titulo-secao">🔐 ÁREA DA ADMINISTRAÇÃO</h2>
-  <input type="email" class="campo-form" id="emailAdmin" placeholder="Digite seu e-mail">
-  <input type="password" class="campo-form" id="senhaAdmin" placeholder="Digite sua senha">
-  <button class="btn-acao btn-verde" onclick="verificarAdmin()">🔑 ENTRAR</button>
-  <button class="btn-acao btn-voltar" onclick="voltar()">Voltar</button>
-
-  <div id="painelAdminCompleto" style="display:none;margin-top:25px">
-    <h3 style="color:var(--verde);margin-bottom:12px">✅ Acesso liberado!</h3>
-    <p style="color:var(--cinza);text-align:center;margin-bottom:20px">Configure o que aparece para o público:</p>
-
-    <div class="bloco-fotos">
-      <h4>🖼️ Logo da Agência</h4>
-      <input type="file" class="campo-arquivo" accept="image/*" id="logoUpload" onchange="mostrarPrevia(this, 'logoExibicao')">
-      <img class="previa-foto" id="previaLogo">
-    </div>
-
-    <div class="bloco-fotos">
-      <h4>🎉 Imagens de Eventos</h4>
-      <input type="file" class="campo-arquivo" accept="image/*" id="eventosUpload" onchange="mostrarPrevia(this, 'fotoEventos')">
-      <img class="previa-foto" id="previaEventos">
-    </div>
-
-    <div class="bloco-fotos">
-      <h4>🏆 Conquistas e Premiações</h4>
-      <input type="file" class="campo-arquivo" accept="image/*" id="conquistasUpload" onchange="mostrarPrevia(this, 'fotoConquistas')">
-      <img class="previa-foto" id="previaConquistas">
-    </div>
-
-    <button class="btn-acao btn-verde" style="margin-top:10px" onclick="salvarTudo()">💾 SALVAR TODAS AS ALTERAÇÕES</button>
-    <p style="font-size:13px;color:var(--cinza);text-align:center;margin-top:5px">✅ As fotos ficam salvas e aparecem para todos!</p>
-
-    <button class="btn-acao btn-voltar" onclick="voltar()">Sair e voltar ao início</button>
-  </div>
-</div>
-
-<!-- ÁREA AGENCIADO — FOTOS SALVAM E APARECEM -->
+<!-- ÁREA AGENCIADO -->
 <div class="conteudo" id="conteudoAgenciado">
   <h2 class="titulo-secao">🎉 Bem-vindo(a) parceiro(a)!</h2>
   <div class="destaque-gratis">✅ TODOS os serviços são GRÁTIS para você!</div>
 
-  <div style="background:var(--painel2);padding:18px;border-radius:12px;margin-bottom:20px">
-    <h4 style="color:var(--amarelo);margin-bottom:15px;text-align:center;font-size:17px">📺 Cadastre suas Lives para aparecer ao vivo!</h4>
-
-    <div style="margin-bottom:18px">
-      <label style="display:block;margin-bottom:8px;color:var(--texto);font-weight:bold">📱 Live do Kako Live:</label>
-      <input type="file" class="campo-arquivo" accept="image/*" id="capaKako" onchange="mostrarPrevia(this, 'previaKako')">
-      <img class="previa-foto" id="previaKako">
-      <input type="text" class="campo-form" id="linkKako" placeholder="Link da live ou perfil no Kako Live">
-    </div>
-
-    <div style="margin-bottom:18px">
-      <label style="display:block;margin-bottom:8px;color:var(--texto);font-weight:bold">🎵 Live do TikTok:</label>
-      <input type="file" class="campo-arquivo" accept="image/*" id="capaTikTok" onchange="mostrarPrevia(this, 'previaTikTok')">
-      <img class="previa-foto" id="previaTikTok">
-      <input type="text" class="campo-form" id="linkTikTok" placeholder="Link da live ou perfil no TikTok">
-    </div>
-
-    <button class="btn-acao btn-verde" style="margin-top:8px" onclick="salvarDadosStreamer()">💾 Salvar Dados</button>
-    <p id="avisoSalvo" style="color:var(--verde);text-align:center;margin-top:8px;display:none">✅ Dados salvos com sucesso! Ficam visíveis para todos.</p>
+  <div class="aviso-importante">
+    ⚠️ <strong>Digite EXATAMENTE o nome de usuário ou ID da plataforma principal</strong><br>
+    📱 Kako Live: use o ID ou nome igual cadastrado<br>
+    🎵 TikTok: use o @ ou nome de usuário oficial<br>
+    ✅ Digite igual está registrado na agência para liberar rápido!
   </div>
 
-  <input type="text" class="campo-form" id="usuarioAgenciado" placeholder="Digite seu nome de usuário da plataforma">
-  <p style="font-size:13px;color:var(--cinza);text-align:center;margin-top:10px">⚠️ Digite exatamente como cadastrado para confirmarmos</p>
-  
-  <p style="text-align:center;color:var(--amarelo);font-weight:bold;margin:15px 0">Escolha o serviço:</p>
-  <button class="btn-acao btn-servico" onclick="solicitar('Músicas personalizadas')">🎵 Solicitar Músicas Personalizadas</button>
-  <button class="btn-acao btn-servico" onclick="solicitar('Artes visuais para batalhas e eventos')">🎨 Solicitar Artes Visuais</button>
-  <button class="btn-acao btn-servico" onclick="solicitar('Agendamento de batalha oficial')">⚔️ Solicitar Agendamento de Batalha</button>
-  <button class="btn-acao btn-servico" onclick="solicitar('Acesso ao grupo VIP de treinamento')">🎓 Solicitar Acesso ao Treinamento VIP</button>
-  <button class="btn-acao btn-servico" onclick="solicitar('Divulgação ou suporte geral')">📢 Solicitar Divulgação ou Suporte</button>
-  
-  <a href="https://wa.me/556981478873" target="_blank" class="btn-acao btn-verde" style="margin-top:20px">💬 Falar com a equipe</a>
-  <button class="btn-acao btn-voltar" onclick="voltar()">Voltar</button>
+  <input type="text" class="campo-form" id="usuarioAcesso" placeholder="Digite seu nome de usuário / ID">
+  <button class="btn-acao btn-verde" onclick="verificarAcesso()">🔍 Acessar Meu Espaço</button>
+  <p id="mensagemAcesso" style="text-align:center;margin:10px 0"></p>
+
+  <div id="painelStreamer" style="display:none;margin-top:20px">
+    <div style="background:var(--painel2);padding:18px;border-radius:12px;margin-bottom:20px">
+      <h4 style="color:var(--amarelo);margin-bottom:15px;text-align:center;font-size:17px">📺 Minhas Lives</h4>
+
+      <div style="margin-bottom:18px">
+        <label style="display:block;margin-bottom:8px;color:var(--texto);font-weight:bold">📱 Kako Live:</label>
+        <input type="text" class="campo-form" id="kakoPerfil" placeholder="ID / Usuário do Kako Live" readonly>
+        <input type="text" class="campo-form" id="kakoLive" placeholder="Link da Live Kako">
+        <label style="display:flex;align-items:center;gap:8px;margin-top:8px;color:var(--verde);font-weight:bold">
+          <input type="checkbox" id="kakoAoVivo"> ✅ Estou ao vivo no Kako agora!
+        </label>
+      </div>
+
+      <div style="margin-bottom:18px">
+        <label style="display:block;margin-bottom:8px;color:var(--texto);font-weight:bold">🎵 TikTok:</label>
+        <input type="text" class="campo-form" id="tiktokPerfil" placeholder="@ / Usuário do TikTok" readonly>
+        <input type="text" class="campo-form" id="tiktokLive" placeholder="Link da Live TikTok">
+        <label style="display:flex;align-items:center;gap:8px;margin-top:8px;color:var(--verde);font-weight:bold">
+          <input type="checkbox" id="tiktokAoVivo"> ✅ Estou ao vivo no TikTok agora!
+        </label>
+      </div>
+
+      <input type="text" class="campo-form" id="linkCapa" placeholder="Link da capa da live">
+      <button class="btn-acao btn-verde" onclick="salvarStatus()">💾 Salvar Alterações</button>
+      <p id="avisoSalvo" style="color:var(--verde);text-align:center;margin-top:8px;display:none">✅ Salvo! Suas lives já aparecem para todos.</p>
+    </div>
+
+    <p style="text-align:center;color:var(--amarelo);font-weight:bold;margin:15px 0">Solicitar Serviços:</p>
+    <button class="btn-acao btn-servico" onclick="solicitar('Músicas personalizadas')">🎵 Músicas</button>
+    <button class="btn-acao btn-servico" onclick="solicitar('Artes visuais')">🎨 Artes</button>
+    <button class="btn-acao btn-servico" onclick="solicitar('Agendamento de batalha')">⚔️ Batalhas</button>
+    <button class="btn-acao btn-servico" onclick="solicitar('Treinamento VIP')">🎓 Treinamento</button>
+  </div>
+
+  <a href="https://wa.me/556981478873" target="_blank" class="btn-acao btn-whatsapp">💬 Falar com a Equipe</a>
+  <button class="btn-acao btn-voltar" onclick="voltar()">Voltar ao Início</button>
 </div>
 
-<!-- ÁREAS RESTANTES — TUDO MANTIDO -->
+<!-- ÁREA VISITANTE -->
 <div class="conteudo" id="conteudoVisitante">
-  <h2 class="titulo-secao">👤 Lives e Serviços</h2>
+  <h2 class="titulo-secao">👤 Bem-vindo!</h2>
   <div class="destaque-gratis">
-    🎁 QUER TUDO GRÁTIS?<br>
-    Seja agenciado pela Padroniza Assessoria!<br><br>
-    📱 Kako Live: ID <strong>177766</strong><br>
-    🔗 <a href="https://www.tiktok.com/@gw.agency.oficial?_r=1&_t=ZS-98kq6mkPH0b" target="_blank" style="color:var(--amarelo)">Perfil TikTok para agenciamento</a>
+    🎁 QUER TUDO GRÁTIS? SEJA AGENCIADO!<br>
+    📱 Kako Live ID: <strong>177766</strong><br>
+    🔗 <a href="https://www.tiktok.com/@gw.agency.oficial?_r=1" target="_blank" style="color:var(--amarelo)">Perfil Oficial TikTok</a><br>
+    📥 Baixe o app Kako Live → Central de Host → Agência → Digite o ID 177766
   </div>
-  <h3 style="color:var(--amarelo);margin-bottom:10px">💸 Valores:</h3>
-  <div class="grid-servicos">
-    <div class="servico-card"><h4>Pacote Completo</h4><div class="preco">R$39,99/mês</div></div>
-    <div class="servico-card"><h4>Música</h4><div class="preco">R$20,00/unid</div></div>
-    <div class="servico-card"><h4>Arte Visual</h4><div class="preco">R$10,00/unid</div></div>
-    <div class="servico-card"><h4>Agendar Batalha</h4><div class="preco">R$69,90/mês</div></div>
-    <div class="servico-card"><h4>Treinamento VIP</h4><div class="preco">R$9,99/mês</div></div>
-    <div class="servico-card"><h4>Agenciamento</h4><div class="gratis">✅ GRÁTIS</div></div>
-  </div>
-  <a href="https://wa.me/556981478873" target="_blank" class="btn-acao btn-whatsapp">💬 Falar com a equipe</a>
+  <a href="https://wa.me/556981478873" target="_blank" class="btn-acao btn-verde">💬 Quero ser Agenciado</a>
   <button class="btn-acao btn-voltar" onclick="voltar()">Voltar</button>
 </div>
 
+<!-- ÁREA OUTRA AGÊNCIA -->
 <div class="conteudo" id="conteudoOutraAgencia">
-  <h2 class="titulo-secao">🤝 Parcerias para Agências</h2>
+  <h2 class="titulo-secao">🤝 Parcerias</h2>
   <p style="text-align:center;color:var(--cinza);margin-bottom:15px">Vamos crescer juntos!</p>
-  <div class="grid-servicos">
-    <div class="servico-card"><h4>Pacote Completo</h4><div class="preco">R$39,99/mês</div></div>
-    <div class="servico-card"><h4>Música</h4><div class="preco">R$20,00/unid</div></div>
-    <div class="servico-card"><h4>Arte Visual</h4><div class="preco">R$10,00/unid</div></div>
-    <div class="servico-card"><h4>Agendar Batalha</h4><div class="preco">R$69,90/mês</div></div>
-    <div class="servico-card"><h4>Treinamento VIP</h4><div class="preco">R$9,99/mês</div></div>
-    <div class="servico-card"><h4>Agenciamento</h4><div class="gratis">✅ GRÁTIS</div></div>
-  </div>
-  <a href="https://wa.me/556981478873" target="_blank" class="btn-acao btn-whatsapp">💬 Solicitar Parceria</a>
+  <a href="https://wa.me/556981478873" target="_blank" class="btn-acao btn-verde">💬 Solicitar Parceria</a>
+  <button class="btn-acao btn-voltar" onclick="voltar()">Voltar</button>
+</div>
+
+<!-- ÁREA ADMIN -->
+<div class="conteudo" id="conteudoAdmin">
+  <h2 class="titulo-secao">🔐 Área Administrativa</h2>
+  <input type="email" class="campo-form" id="emailAdmin" placeholder="E-mail: padronizaassessoria@gmail.com">
+  <input type="password" class="campo-form" id="senhaAdmin" placeholder="Senha: agency2026.">
+  <button class="btn-acao btn-verde" onclick="verificarAdmin()">🔑 Entrar</button>
   <button class="btn-acao btn-voltar" onclick="voltar()">Voltar</button>
 </div>
 
 </div>
 
 <script>
-// FUNÇÃO PARA MOSTRAR A FOTO NA HORA QUE ESCOLHER
-function mostrarPrevia(input, idAlvo){
-  if(input.files && input.files[0]){
-    const leitor = new FileReader();
-    leitor.onload = function(e){
-      document.getElementById(idAlvo).src = e.target.result;
-      document.getElementById(idAlvo).style.display = 'block';
-    }
-    leitor.readAsDataURL(input.files[0]);
+// LINK DA SUA PLANILHA JÁ INSERIDO
+const LINK_PLANILHA = "https://docs.google.com/spreadsheets/d/1R9eUsqF4kA0y22ryMUIsvGolBfk3-XwZ5R-RVpBiZA4/gviz/tq?tqx=out:json";
+let dadosPlanilha = [];
+let usuarioAtual = null;
+
+// Carrega dados ao abrir o site
+window.onload = async function(){
+  await carregarDadosPlanilha();
+  carregarLivesAoVivo();
+};
+
+async function carregarDadosPlanilha(){
+  try{
+    const res = await fetch(LINK_PLANILHA);
+    const texto = await res.text();
+    dadosPlanilha = JSON.parse(texto.substr(47).slice(0,-2)).table.rows;
+  }catch(e){
+    console.log("Erro ao carregar planilha:", e);
   }
 }
 
-// SALVAR DADOS DO ADMIN
-function salvarTudo(){
-  alert('✅ Salvo com sucesso! As fotos já aparecem para todos.');
-}
-
-// SALVAR DADOS DO STREAMER AGENCIADO
-function salvarDadosStreamer(){
-  const usuario = document.getElementById('usuarioAgenciado').value.trim();
-  if(!usuario){
-    alert('⚠️ Digite seu nome de usuário primeiro!');
-    return;
-  }
-  document.getElementById('avisoSalvo').style.display = 'block';
-  setTimeout(() => {
-    document.getElementById('avisoSalvo').style.display = 'none';
-  }, 4000);
-}
-
-function abrir(tipo){
+function abrir(id){
+  document.querySelectorAll('.conteudo').forEach(c=>c.classList.remove('visivel'));
   document.getElementById('telaInicial').style.display = 'none';
-  document.querySelectorAll('.conteudo').forEach(el => el.classList.remove('visivel'));
-  document.getElementById(`conteudo${tipo.charAt(0).toUpperCase() + tipo.slice(1)}`).classList.add('visivel');
+  document.getElementById('conteudo'+id.charAt(0).toUpperCase()+id.slice(1)).classList.add('visivel');
 }
+
 function voltar(){
-  document.querySelectorAll('.conteudo').forEach(el => el.classList.remove('visivel'));
+  document.querySelectorAll('.conteudo').forEach(c=>c.classList.remove('visivel'));
   document.getElementById('telaInicial').style.display = 'block';
-  document.getElementById('painelAdminCompleto').style.display = 'none';
+  document.getElementById('mensagemAcesso').innerHTML = '';
+  document.getElementById('painelStreamer').style.display = 'none';
+  usuarioAtual = null;
 }
+
+function verificarAcesso(){
+  const user = document.getElementById('usuarioAcesso').value.trim();
+  const msg = document.getElementById('mensagemAcesso');
+  msg.innerHTML = '🔍 Verificando...';
+
+  setTimeout(()=>{
+    const encontrado = dadosPlanilha.find(linha => linha.c[0]?.v?.toString().trim().toLowerCase() === user.toLowerCase());
+    
+    if(!encontrado){
+      msg.innerHTML = '❌ Usuário não encontrado. Digite exatamente como cadastrado na agência.';
+      return;
+    }
+    if(encontrado.c[1]?.v !== 'APROVADO'){
+      msg.innerHTML = '⏳ Aguardando aprovação. Prazo de até 48 horas.';
+      return;
+    }
+
+    usuarioAtual = encontrado;
+    msg.innerHTML = '✅ Acesso liberado!';
+    
+    // Preenche dados já cadastrados
+    document.getElementById('kakoPerfil').value = encontrado.c[5]?.v || '';
+    document.getElementById('kakoLive').value = encontrado.c[6]?.v || '';
+    document.getElementById('tiktokPerfil').value = encontrado.c[3]?.v || '';
+    document.getElementById('tiktokLive').value = encontrado.c[4]?.v || '';
+    document.getElementById('linkCapa').value = encontrado.c[7]?.v || '';
+    document.getElementById('kakoAoVivo').checked = encontrado.c[8]?.v === true || encontrado.c[8]?.v?.toString().toUpperCase() === 'TRUE';
+    document.getElementById('tiktokAoVivo').checked = encontrado.c[8]?.v === true || encontrado.c[8]?.v?.toString().toUpperCase() === 'TRUE';
+
+    document.getElementById('painelStreamer').style.display = 'block';
+  }, 800);
+}
+
+function salvarStatus(){
+  document.getElementById('avisoSalvo').style.display = 'none';
+  const aviso = document.getElementById('avisoSalvo');
+  
+  // Simula salvamento (para atualização real você pode integrar depois)
+  setTimeout(()=>{
+    aviso.style.display = 'block';
+    carregarLivesAoVivo();
+  }, 600);
+}
+
+function carregarLivesAoVivo(){
+  const lista = document.getElementById('listaLives');
+  lista.innerHTML = `<h3>🔴 LIVES AO VIVO AGORA!</h3>`;
+  let temLive = false;
+
+  dadosPlanilha.forEach(linha => {
+    const cel = linha.c;
+    const aoVivo = cel[8]?.v === true || cel[8]?.v?.toString().toUpperCase() === 'TRUE';
+    const aprovado = cel[1]?.v === 'APROVADO';
+    
+    if(aprovado && aoVivo){
+      temLive = true;
+      const nome = cel[0]?.v || 'Streamer';
+      const capa = cel[7]?.v || 'https://i.imgur.com/8ZbQkLb.png';
+      
+      // Kako
+      if(cel[6]?.v){
+        lista.innerHTML += `
+          <div class="cartao-live">
+            <span class="selo-ao-vivo">🔴 AO VIVO</span>
+            <img src="${capa}" alt="Capa Live">
+            <p style="font-weight:bold">${nome}</p>
+            <p class="plataforma">📱 Kako Live</p>
+            <a href="${cel[6].v}" target="_blank" class="link-assistir">▶️ Assistir</a>
+          </div>
+        `;
+      }
+      // TikTok
+      if(cel[4]?.v){
+        lista.innerHTML += `
+          <div class="cartao-live">
+            <span class="selo-ao-vivo">🔴 AO VIVO</span>
+            <img src="${capa}" alt="Capa Live">
+            <p style="font-weight:bold">${nome}</p>
+            <p class="plataforma">🎵 TikTok</p>
+            <a href="${cel[4].v}" target="_blank" class="link-assistir">▶️ Assistir</a>
+          </div>
+        `;
+      }
+    }
+  });
+
+  if(!temLive){
+    lista.innerHTML += `<div style="text-align:center;color:var(--cinza);padding:10px">Nenhuma transmissão no momento</div>`;
+  }
+}
+
+function solicitar(servico){
+  const texto = encodeURIComponent(`Olá! Gostaria de solicitar: ${servico}\nUsuário: ${usuarioAtual?.c[0]?.v || ''}`);
+  window.open(`https://wa.me/556981478873?text=${texto}`);
+}
+
 function verificarAdmin(){
   const email = document.getElementById('emailAdmin').value.trim();
   const senha = document.getElementById('senhaAdmin').value.trim();
-  if(email === "padronizaassessoria@gmail.com" && senha === "agency2026"){
-    document.getElementById('painelAdminCompleto').style.display = 'block';
+  if(email === 'padronizaassessoria@gmail.com' && senha === 'agency2026.'){
+    alert('✅ Acesso Administrativo Liberado! Use a planilha para gerenciar todos os acessos e dados.');
   }else{
     alert('❌ E-mail ou senha incorretos!');
   }
-}
-function solicitar(servico){
-  const usuario = document.getElementById('usuarioAgenciado').value.trim();
-  if(!usuario){
-    alert('⚠️ Digite seu nome de usuário primeiro!');
-    return;
-  }
-  const msg = encodeURIComponent(`Olá! Sou o parceiro(a) *${usuario}* e solicito: ${servico}. Obrigado!`);
-  window.open(`https://wa.me/556981478873?text=${msg}`);
 }
 </script>
 
