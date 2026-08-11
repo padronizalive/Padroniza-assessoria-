@@ -5,66 +5,55 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Padroniza Assessoria | Portal Oficial</title>
 <style>
-:root{--fundo:#0b1020;--painel:#11182c;--painel2:#17213a;--verde:#34d399;--rosa:#ff3d81;--roxo:#7457ff;--amarelo:#ffc857;--texto:#f7f9ff;--cinza:#a9b4cb;--vermelho:#ef4444}
-*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
-body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
+:root{--bg:#0b1020;--panel:#11182c;--panel2:#17213a;--line:#293653;--text:#f7f9ff;--muted:#a9b4cb;--pink:#ff3d81;--violet:#7457ff;--cyan:#27d8c2;--gold:#ffc857;--shadow:0 18px 50px #0005}
+*{box-sizing:border-box;margin:0;padding:0;font-family:Arial,sans-serif}
+body{background:var(--bg);color:var(--text);min-height:100vh;padding:15px}
 .container{max-width:600px;margin:0 auto}
 
-.logo-topo{width:220px;height:220px;margin:0 auto 15px;display:flex;align-items:center;justify-content:center;background:transparent;border-radius:0;overflow:hidden;border:2px solid var(--amarelo)}
-.logo-topo img{width:100%;height:auto;object-fit:contain;display:block;background:transparent}
+.logo-topo{width:200px;height:200px;margin:0 auto 15px;display:flex;align-items:center;justify-content:center;background:transparent;border-radius:50%;overflow:hidden;border:3px solid var(--gold)}
+.logo-topo img{width:100%;height:100%;object-fit:contain;display:block;background:transparent}
 
-.cabecalho{text-align:center;margin-bottom:15px}
-.cabecalho h1{font-size:26px;color:var(--amarelo)}
-.cabecalho p{color:var(--cinza)}
+.cabecalho{text-align:center;margin-bottom:20px}
+.cabecalho h1{font-size:24px;color:var(--gold);margin-bottom:8px}
+.cabecalho p{color:var(--muted);font-size:15px}
 
-.botoes-principais{display:flex;flex-direction:column;gap:12px;margin-bottom:20px;position:sticky;top:10px;z-index:999;background:var(--fundo);padding:10px 0}
-.btn-principal{padding:16px;border-radius:12px;border:none;font-weight:bold;font-size:17px;cursor:pointer;text-align:center;color:#fff;transition:0.2s;pointer-events:auto !important}
+.botoes-principais{display:flex;flex-direction:column;gap:12px;margin-bottom:25px}
+.btn-principal{padding:15px;border-radius:12px;border:none;font-weight:bold;font-size:16px;cursor:pointer;text-align:center;color:#fff;transition:0.2s}
 .btn-principal:hover{transform:translateY(-2px)}
-.btn-agenciado{background:linear-gradient(135deg,var(--verde),#16a34a)}
-.btn-visitante{background:linear-gradient(135deg,#3b82f6,#2563eb)}
-.btn-outra-agencia{background:linear-gradient(135deg,var(--amarelo),#f59e0b);color:#000}
-.btn-admin{background:linear-gradient(135deg,var(--roxo),#4f46e5)}
-.btn-moedas{background:linear-gradient(135deg,#ff6b9d,var(--rosa));font-size:15px;padding:14px;margin-top:10px}
+.btn-agenciado{background:linear-gradient(135deg,var(--cyan),var(--violet))}
+.btn-visitante{background:linear-gradient(135deg,var(--pink),var(--violet))}
+.btn-outra-agencia{background:linear-gradient(135deg,var(--gold),#e6b040);color:#000}
+.btn-admin{background:linear-gradient(135deg,#3b82f6,#2563eb)}
 
-.lives-ao-vivo{background:rgba(52,211,153,0.08);border:1px solid var(--verde);border-radius:12px;padding:15px}
-.lives-ao-vivo h3{color:var(--verde);text-align:center;margin-bottom:12px}
-.cartao-live{background:var(--painel2);border-radius:10px;padding:12px;margin-bottom:12px;overflow:hidden}
-.capa-live{width:100%;height:160px;object-fit:cover;border-radius:8px;margin-bottom:10px;background:#1a2440;border:1px solid #293653}
-.selo-ao-vivo{background:var(--vermelho);color:#fff;padding:4px 8px;border-radius:4px;font-size:13px;font-weight:bold;display:inline-block;margin-bottom:6px}
-.plataforma{color:var(--amarelo);font-weight:bold}
-.nome-streamer{font-size:18px;font-weight:bold;margin:8px 0 4px}
-.link-assistir{display:block;background:var(--verde);color:#fff;text-align:center;padding:12px;border-radius:6px;text-decoration:none;margin-top:10px;font-size:16px}
-
-.conteudo{display:none;background:var(--painel);border-radius:12px;padding:20px;margin-bottom:20px}
+.conteudo{display:none;background:var(--panel);border-radius:16px;padding:20px;margin-bottom:20px;border:1px solid var(--line)}
 .conteudo.visivel{display:block}
-.titulo-secao{text-align:center;margin-bottom:18px;color:var(--amarelo);font-size:20px}
-.grupo-campo{position:relative;margin:8px 0}
-.campo-form{width:100%;padding:12px 15px;border-radius:8px;border:1px solid #293653;background:#17213a;color:var(--texto);font-size:15px}
-.btn-acao{width:100%;padding:12px;border-radius:8px;border:none;font-weight:bold;cursor:pointer;margin-top:10px;text-decoration:none;display:inline-block;text-align:center;color:#fff;font-size:16px;pointer-events:auto !important}
-.btn-verde{background:var(--verde)}
-.btn-voltar{background:#293653;color:#fff;margin-top:15px}
-.btn-servico{background:linear-gradient(135deg,var(--rosa),var(--roxo));margin:8px 0;font-size:15px;padding:14px}
-.btn-whatsapp{background:linear-gradient(135deg,#25d366,#128c7e);margin-top:15px}
-.botao-foto{background:var(--roxo);color:#fff;padding:10px;border-radius:6px;text-align:center;cursor:pointer;margin:8px 0;display:block;font-weight:bold}
-.previa-capa{max-width:100%;max-height:180px;border-radius:8px;margin-top:8px;display:none;object-fit:cover;border:2px dashed var(--amarelo)}
-.aviso-capa{background:rgba(52,211,153,0.08);border:1px solid var(--verde);padding:15px;border-radius:10px;margin:12px 0}
-.btn-copiar-tudo{background:var(--amarelo);color:#000;border:none;padding:14px;border-radius:8px;font-weight:bold;cursor:pointer;width:100%;margin-top:10px;font-size:16px}
-.caixa-link-grande{background:#0a0f1a;border:1px solid var(--amarelo);padding:12px;border-radius:8px;margin:10px 0;word-break:break-all;font-size:10px;color:var(--amarelo);max-height:150px;overflow-y:auto}
-.form-capa-streamer{background:rgba(52,211,153,0.08);border:1px solid var(--verde);border-radius:10px;padding:15px;margin:15px 0}
-.btn-salvar-capa{background:var(--verde);color:#fff;border:none;padding:12px;border-radius:6px;width:100%;font-weight:bold;cursor:pointer;margin-top:10px;font-size:16px}
-.dica-simples{background:rgba(255,200,87,0.1);border:1px dashed var(--amarelo);padding:10px;border-radius:8px;margin-top:10px;font-size:13px;color:var(--amarelo)}
+.titulo-secao{text-align:center;margin-bottom:18px;color:var(--gold);font-size:20px}
+.destaque-gratis{background:rgba(39,216,194,0.1);border:2px solid var(--cyan);padding:14px;border-radius:10px;text-align:center;font-weight:bold;color:var(--cyan);margin-bottom:20px}
+.grupo-campo{margin-bottom:15px}
+.campo-form{width:100%;padding:14px;border-radius:10px;border:1px solid var(--line);background:var(--panel2);color:var(--text);font-size:16px}
+.btn-acao{width:100%;padding:14px;border-radius:10px;border:none;font-weight:bold;cursor:pointer;margin-top:10px;color:#fff;font-size:16px;transition:0.2s}
+.btn-acao:hover{transform:translateY(-2px)}
+.btn-verde{background:linear-gradient(135deg,var(--cyan),#20b5a2)}
+.btn-voltar{background:var(--line);color:var(--text);margin-top:20px}
+.aviso-capa{background:rgba(255,200,87,0.08);border:1px solid var(--gold);padding:14px;border-radius:10px;margin:12px 0}
+.caixa-link-grande{background:#070a14;border:1px solid var(--gold);padding:12px;border-radius:8px;margin:10px 0;word-break:break-all;font-size:11px;color:var(--gold);max-height:150px;overflow-y:auto}
+.botao-foto{background:var(--violet);color:#fff;padding:12px;border-radius:8px;text-align:center;cursor:pointer;margin:8px 0;display:block;font-weight:bold;border:none;width:100%}
+.previa-capa{max-width:100%;max-height:180px;border-radius:8px;margin:10px auto;display:block;object-fit:cover;border:2px dashed var(--gold)}
+.btn-salvar-capa{background:var(--cyan);color:#fff;border:none;padding:12px;border-radius:8px;width:100%;font-weight:bold;cursor:pointer;margin-top:10px;font-size:16px}
+.btn-copiar-tudo{background:var(--gold);color:#000;border:none;padding:14px;border-radius:8px;font-weight:bold;cursor:pointer;width:100%;margin-top:10px;font-size:16px}
+.dica-simples{background:rgba(39,216,194,0.08);border:1px dashed var(--cyan);padding:12px;border-radius:8px;margin-top:12px;font-size:13px;color:var(--cyan)}
 </style>
 </head>
 <body>
 <div class="container">
 
+<!-- LOGO E CABEÇALHO DE VOLTA -->
 <div id="telaInicial">
   <div class="logo-topo">
-    <img id="logoPrincipal" src="https://i.imgur.com/8ZkLg4Y.png" alt="Padroniza + Live Assessoria" onerror="this.src='https://i.imgur.com/8ZkLg4Y.png'">
+    <img src="https://i.imgur.com/8ZkLg4Y.png" alt="Padroniza Assessoria" onerror="this.src='https://i.imgur.com/8ZkLg4Y.png'">
   </div>
-
   <div class="cabecalho">
-    <h1>PADRONIZA ASSESSORIA</h1>
+    <h1>Padroniza Assessoria</h1>
     <p>Seu sucesso nas lives começa aqui!</p>
   </div>
 
@@ -76,7 +65,7 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
   </div>
 </div>
 
-<!-- ÁREA AGENCIADO -->
+<!-- ÁREA AGENCIADO COM LINK DA PLANILHA CERTO -->
 <div class="conteudo" id="conteudoAgenciado">
   <h2 class="titulo-secao">🎉 Bem-vindo(a), parceiro(a)!</h2>
   <div class="destaque-gratis">✅ TODOS os serviços são GRÁTIS para você!</div>
@@ -85,30 +74,32 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
     <input type="text" class="campo-form" id="usuarioAcesso" placeholder="Digite seu nome de usuário da plataforma">
   </div>
   <button class="btn-acao btn-verde" onclick="verificarAcesso()">🔍 Acessar Meu Espaço</button>
-  <p id="mensagemAcesso" style="text-align:center;margin:10px 0"></p>
+  <p id="mensagemAcesso" style="text-align:center;margin:10px 0;color:var(--muted)"></p>
   
   <div id="dadosPerfilStreamer" style="display:none">
-    <h3 style="color:var(--amarelo);margin:15px 0 10px">📝 Meus Dados e Lives</h3>
+    <h3 style="color:var(--gold);margin:20px 0 10px">📝 Meus Dados e Lives</h3>
 
-    <div class="form-capa-streamer">
+    <div class="aviso-capa">
       <p style="font-weight:bold;margin-bottom:8px">🖼️ Atualizar Capa da Live:</p>
+      <p style="margin-bottom:10px">💡 <strong>Dica mais fácil:</strong> Coloque o link da capa diretamente na <strong>coluna H</strong> da planilha — já sincroniza automaticamente!</p>
+      
+      <button class="botao-foto" onclick="document.getElementById('escolherCapaStreamer').click()">📷 Ou escolher foto da galeria</button>
       <input type="file" id="escolherCapaStreamer" accept="image/*" style="display:none" onchange="carregarPreviaCapaStreamer(this)">
-      <button class="botao-foto" onclick="document.getElementById('escolherCapaStreamer').click()">📷 Escolher foto da galeria</button>
       
       <img id="previaCapaNova" class="previa-capa" alt="Pré-visualização da capa">
       <button class="btn-salvar-capa" onclick="salvarCapaStreamer()">💾 Salvar Capa</button>
       
-      <div id="avisoCapaSalva" class="aviso-capa" style="display:none">
-        <p style="font-weight:bold;color:var(--verde)">✅ CAPA SALVA COM SUCESSO!</p>
-        <p style="margin:8px 0">Clique no botão abaixo para COPIAR TUDO de uma vez e cole na <strong>coluna H</strong> da sua linha na planilha:</p>
+      <div id="avisoCapaSalva" style="display:none;margin-top:15px">
+        <p style="font-weight:bold;color:var(--cyan)">✅ CAPA SALVA!</p>
+        <p style="margin:8px 0">Copie o link abaixo e cole na <strong>coluna H</strong> da sua linha na planilha:</p>
         
         <div id="linkCapaMostrar" class="caixa-link-grande"></div>
         
         <button class="btn-copiar-tudo" onclick="copiarLinkCapa()">📋 COPIAR LINK COMPLETO AGORA</button>
-        <p id="avisoCopiadoCapa" style="text-align:center;color:var(--verde);font-weight:bold;margin:8px 0;display:none">✅ LINK COPIADO! Agora é só colar na planilha</p>
+        <p id="avisoCopiadoCapa" style="text-align:center;color:var(--cyan);font-weight:bold;margin:8px 0;display:none">✅ LINK COPIADO! Agora é só colar na planilha</p>
         
         <div class="dica-simples">
-          💡 <strong>Dica super fácil:</strong> Se der dificuldade, envie essa foto para o seu WhatsApp, clique nos 3 pontos da foto → "Copiar link" — esse link fica bem menor e funciona igual!
+          💡 <strong>Melhor jeito:</strong> Envie a foto para o WhatsApp → aperte os 3 pontos → "Copiar link de imagem" — esse link é pequeno e funciona sempre!
         </div>
       </div>
     </div>
@@ -117,33 +108,34 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
   <button class="btn-acao btn-voltar" onclick="voltar()">⬅ Voltar para o início</button>
 </div>
 
-<!-- DEMAIS ÁREAS (visitante, admin, etc) mantidas como antes -->
+<!-- OUTRAS ÁREAS -->
 <div class="conteudo" id="conteudoVisitante">
   <h2 class="titulo-secao">👤 Bem-vindo(a)!</h2>
   <div class="destaque-gratis">
     🎁 QUER TODOS OS SERVIÇOS DE GRAÇA? SEJA AGENCIADO!<br>
     📱 ID Kako Live: <strong>177766</strong><br>
-    🔗 TikTok: <a href="https://www.tiktok.com/@gw.agency.oficial?_r=1&_t=ZS-98kq6mkPH0b" target="_blank" style="color:var(--amarelo)">Clique aqui para solicitar</a><br>
-    💬 WhatsApp: <a href="https://wa.me/556981478873" target="_blank" style="color:var(--amarelo)">Falar com a equipe</a>
+    🔗 TikTok: <a href="https://www.tiktok.com/@gw.agency.oficial?_r=1&_t=ZS-98kq6mkPH0b" target="_blank" style="color:var(--gold)">Clique aqui para solicitar</a><br>
+    💬 WhatsApp: <a href="https://wa.me/556981478873" target="_blank" style="color:var(--gold)">Falar com a equipe</a>
   </div>
   <button class="btn-acao btn-voltar" onclick="voltar()">⬅ Voltar</button>
 </div>
 
 <div class="conteudo" id="conteudoAdmin">
   <h2 class="titulo-secao">🔐 Área da Administração</h2>
-  <p style="text-align:center;color:var(--cinza);margin-bottom:15px">Acesso exclusivo para a equipe Padroniza Assessoria</p>
+  <p style="text-align:center;color:var(--muted);margin-bottom:15px">Acesso exclusivo para Padroniza Assessoria</p>
   <button class="btn-acao btn-voltar" onclick="voltar()">⬅ Voltar</button>
 </div>
 
 <div class="conteudo" id="conteudoOutraAgencia">
   <h2 class="titulo-secao">🏢 Para Outras Agências</h2>
-  <p style="text-align:center;color:var(--cinza);margin-bottom:15px">Solicite nossos serviços personalizados</p>
+  <p style="text-align:center;color:var(--muted);margin-bottom:15px">Solicite nossos serviços personalizados</p>
   <button class="btn-acao btn-voltar" onclick="voltar()">⬅ Voltar</button>
 </div>
 
 </div>
 
 <script>
+// LINK DA PLANILHA CONFIRMADO E CERTO
 const LINK_PLANILHA = "https://docs.google.com/spreadsheets/d/1R9eUsqF4kA0y22ryMUIsvGolBfk3-XwZ5R-RVpBiZA4/gviz/tq?tqx=out:json";
 let linkCapaNova = "";
 let usuarioAtual = null;
@@ -156,7 +148,6 @@ function carregarPreviaCapaStreamer(input){
       document.getElementById('previaCapaNova').src = linkCapaNova;
       document.getElementById('previaCapaNova').style.display = 'block';
       document.getElementById('avisoCapaSalva').style.display = 'none';
-      document.getElementById('avisoCopiadoCapa').style.display = 'none';
     }
     leitor.readAsDataURL(input.files[0]);
   }
@@ -176,7 +167,7 @@ function copiarLinkCapa(){
       setTimeout(() => document.getElementById('avisoCopiadoCapa').style.display = 'none', 4000);
     })
     .catch(err => {
-      alert('💡 Não se preocupe! Aperte e segure o texto dentro da caixa cinza → escolha "Copiar" — funciona sempre!');
+      alert('💡 Não se preocupe! Aperte e segure o texto dentro da caixa → escolha "Copiar"');
     });
 }
 
