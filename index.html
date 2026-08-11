@@ -40,6 +40,7 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
 .titulo-secao{text-align:center;margin-bottom:18px;color:var(--amarelo);font-size:20px}
 .grupo-campo{position:relative;margin:8px 0}
 .campo-form{width:100%;padding:12px 45px 12px 15px;border-radius:8px;border:1px solid #293653;background:#17213a;color:var(--texto);font-size:15px}
+.campo-form::placeholder{color:var(--cinza)}
 .btn-olho{position:absolute;right:12px;top:50%;transform:translateY(-50%);background:transparent;border:none;color:var(--cinza);font-size:20px;cursor:pointer;padding:0;line-height:1}
 .btn-acao{width:100%;padding:12px;border-radius:8px;border:none;font-weight:bold;cursor:pointer;margin-top:10px;text-decoration:none;display:inline-block;text-align:center;color:#fff;font-size:16px;pointer-events:auto !important}
 .btn-verde{background:var(--verde)}
@@ -104,7 +105,7 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
     <input type="email" class="campo-form" id="emailAdmin" placeholder="E-mail: padronizaassessoria@gmail.com">
   </div>
   <div class="grupo-campo">
-    <input type="password" class="campo-form" id="senhaAdmin" placeholder="Senha: agency2026.">
+    <input type="password" class="campo-form" id="senhaAdmin" placeholder="Digite sua senha">
     <button type="button" class="btn-olho" onclick="mostrarSenha('senhaAdmin', this)">👁️</button>
   </div>
   <button class="btn-acao btn-verde" onclick="verificarAdmin()">🔑 ENTRAR NO PAINEL</button>
@@ -412,7 +413,6 @@ function verificarAcesso(){
     msg.innerHTML = '✅ Acesso liberado!';
     document.getElementById('meuNomeUsuario').innerText = encontrado.c[0]?.v || user;
 
-    // ✅ Usa capa da coluna H se existir, senão usa a padrão da agência
     const capa = encontrado.c[7]?.v?.trim() || CAPA_PADRAO_AGENCIA;
     document.getElementById('minhaCapaLive').src = capa;
 
@@ -441,7 +441,6 @@ function carregarLivesAoVivo(){
     if(aprovado && aoVivo){
       temLive = true;
       const nome = cel[0]?.v || 'Streamer';
-      // ✅ Usa capa da coluna H se existir, senão usa a padrão da agência
       const capa = cel[7]?.v?.trim() || CAPA_PADRAO_AGENCIA;
       if(cel[6]?.v){
         lista.innerHTML += `<div class="cartao-live"><img src="${capa}" class="capa-live" onerror="this.src='${CAPA_PADRAO_AGENCIA}'"><span class="selo-ao-vivo">🔴 AO VIVO</span><p class="plataforma">📱 Kako Live</p><p class="nome-streamer">${nome}</p><a href="${cel[6].v}" target="_blank" class="link-assistir">▶️ Assistir</a></div>`;
