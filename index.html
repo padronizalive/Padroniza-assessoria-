@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Padroniza Assessoria | Portal Oficial</title>
+<title>Padroniza Assessoria | Serviços Oficiais</title>
 <style>
 :root{--fundo:#0b1020;--painel:#11182c;--painel2:#17213a;--azul:#3b82f6;--verde:#34d399;--amarelo:#ffc857;--vermelho:#ef4444;--cinza:#a9b4cb;--texto:#f7f9ff;--rosa:#ff3d81;--roxo:#7457ff}
 *{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
@@ -26,22 +26,26 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
 .conteudo.visivel{display:block}
 .titulo-secao{text-align:center;margin-bottom:15px;color:var(--amarelo);font-size:21px}
 .campo-form{width:100%;padding:13px;border-radius:8px;border:1px solid #293653;background:#17213a;color:var(--texto);margin:8px 0;font-size:16px}
-.btn-acao{width:100%;padding:14px;border-radius:8px;border:none;font-weight:bold;cursor:pointer;margin-top:10px;text-decoration:none;display:inline-block;text-align:center;color:#fff;font-size:16px}
+.btn-acao{width:100%;padding:13px;border-radius:8px;border:none;font-weight:bold;cursor:pointer;margin-top:10px;text-decoration:none;display:inline-block;text-align:center;color:#fff;font-size:16px}
 .btn-verde{background:var(--verde)}
 .btn-azul{background:var(--azul)}
+.btn-copiar{background:#047857;font-size:15px;padding:10px;margin-top:8px}
 .btn-voltar{background:#293653;color:#fff;margin-top:15px}
 
 .destaque-gratis{background:rgba(52,211,153,0.15);border:2px solid var(--verde);padding:14px;border-radius:10px;text-align:center;font-weight:bold;margin-bottom:18px}
 .link-plataforma{background:var(--painel2);padding:12px;border-radius:8px;margin:10px 0;word-break:break-all}
 .link-plataforma strong{color:var(--amarelo)}
-.servico-card{background:var(--painel2);border-radius:10px;padding:15px;margin-bottom:12px;border-left:4px solid var(--azul)}
+.servico-card{background:var(--painel2);border-radius:10px;padding:15px;margin-bottom:15px;border-left:4px solid var(--azul)}
 .servico-card h4{color:var(--amarelo);margin-bottom:5px;font-size:17px}
 .valor{font-weight:bold;font-size:18px;margin:8px 0}
 .valor-riscado{text-decoration:line-through;color:var(--cinza);margin-right:8px}
-.codigo-pix{background:#052e16;border:1px solid var(--verde);padding:12px;border-radius:8px;margin:10px 0;word-break:break-all;font-size:13px;color:var(--verde)}
+.chave-pix{background:#052e16;border:1px solid var(--verde);padding:12px;border-radius:8px;margin:10px 0;word-break:break-all;font-size:12px;color:var(--verde);position:relative}
+.qr-pequeno{width:100px;height:100px;background:#fff;border-radius:8px;padding:5px;margin:10px auto;display:block;color:#000;text-align:center;font-size:12px;line-height:1.4}
+.aviso-copiado{position:fixed;top:20px;left:50%;transform:translateX(-50%);background:var(--verde);color:#fff;padding:12px 20px;border-radius:8px;font-weight:bold;z-index:999;display:none}
 </style>
 </head>
 <body>
+<div class="aviso-copiado" id="avisoCopiar">✅ Chave copiada com sucesso!</div>
 <div class="container">
 
 <div class="cabecalho">
@@ -113,35 +117,45 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
     <h4>📦 PACOTE COMPLETO</h4>
     <p>Todos os serviços + treinamento + suporte</p>
     <p class="valor"><span class="valor-riscado">De R$ 59,90</span> Por apenas <span style="color:var(--rosa)">R$ 39,99/mês</span></p>
-    <div class="codigo-pix">00020101021126770014br.gov.bcb.pix01367c0dfbc3-68e7-4b85-a0eb-eb037b738d9f0215Pacote completo520400005303986540539.995802BR591965 8 0 M G DA SILVA6007VILHENA62070503***6304C43A</div>
+    <div class="qr-pequeno">📷 Escaneie<br>ou copie a chave</div>
+    <div class="chave-pix" id="chavePacote">00020101021126770014br.gov.bcb.pix01367c0dfbc3-68e7-4b85-a0eb-eb037b738d9f0215Pacote completo520400005303986540539.995802BR591965 8 0 M G DA SILVA6007VILHENA62070503***6304C43A</div>
+    <button class="btn-acao btn-copiar" onclick="copiarChave('chavePacote')">📋 COPIAR CHAVE PIX</button>
     <a href="https://wa.me/556981478873?text=Quero%20o%20Pacote%20Completo%20R%2439,99" target="_blank" class="btn-acao btn-verde">✅ Paguei! Enviar comprovante</a>
   </div>
 
   <div class="servico-card">
     <h4>🎵 Músicas Personalizadas</h4>
     <p>Avulso: R$ 20,00 cada | Pacote 6: R$ 100,00</p>
-    <div class="codigo-pix">00020101021126820014br.gov.bcb.pix01367c0dfbc3-68e7-4b85-a0eb-eb037b738d9f0220musica personalizada520400005303986540520.005802BR591965 8 0 M G DA SILVA6007VILHENA62070503***6304E948</div>
+    <div class="qr-pequeno">📷 Escaneie<br>ou copie a chave</div>
+    <div class="chave-pix" id="chaveMusica">00020101021126820014br.gov.bcb.pix01367c0dfbc3-68e7-4b85-a0eb-eb037b738d9f0220musica personalizada520400005303986540520.005802BR591965 8 0 M G DA SILVA6007VILHENA62070503***6304E948</div>
+    <button class="btn-acao btn-copiar" onclick="copiarChave('chaveMusica')">📋 COPIAR CHAVE PIX</button>
     <a href="https://wa.me/556981478873?text=Quero%20m%C3%BAsica%20personalizada" target="_blank" class="btn-acao btn-verde">✅ Solicitar música</a>
   </div>
 
   <div class="servico-card">
     <h4>🎨 Artes Visuais</h4>
     <p>Avulso: R$ 10,00 cada | Pacote 10: R$ 80,00</p>
-    <div class="codigo-pix">00020101021126730014br.gov.bcb.pix01367c0dfbc3-68e7-4b85-a0eb-eb037b738d9f0211arte visual520400005303986540510.005802BR591965 8 0 M G DA SILVA6007VILHENA62070503***6304D45F</div>
+    <div class="qr-pequeno">📷 Escaneie<br>ou copie a chave</div>
+    <div class="chave-pix" id="chaveArte">00020101021126730014br.gov.bcb.pix01367c0dfbc3-68e7-4b85-a0eb-eb037b738d9f0211arte visual520400005303986540510.005802BR591965 8 0 M G DA SILVA6007VILHENA62070503***6304D45F</div>
+    <button class="btn-acao btn-copiar" onclick="copiarChave('chaveArte')">📋 COPIAR CHAVE PIX</button>
     <a href="https://wa.me/556981478873?text=Quero%20arte%20visual" target="_blank" class="btn-acao btn-verde">✅ Solicitar arte</a>
   </div>
 
   <div class="servico-card">
     <h4>⚔️ Agendamento de Batalha</h4>
     <p>Avulso: R$ 10,00 | Mensalidade: R$ 69,90</p>
-    <div class="codigo-pix">00020101021126840014br.gov.bcb.pix01367c0dfbc3-68e7-4b85-a0eb-eb037b738d9f0222Agendamento de batalha520400005303986540569.995802BR591965 8 0 M G DA SILVA6007VILHENA62070503***6304606A</div>
+    <div class="qr-pequeno">📷 Escaneie<br>ou copie a chave</div>
+    <div class="chave-pix" id="chaveBatalha">00020101021126840014br.gov.bcb.pix01367c0dfbc3-68e7-4b85-a0eb-eb037b738d9f0222Agendamento de batalha520400005303986540569.995802BR591965 8 0 M G DA SILVA6007VILHENA62070503***6304606A</div>
+    <button class="btn-acao btn-copiar" onclick="copiarChave('chaveBatalha')">📋 COPIAR CHAVE PIX</button>
     <a href="https://wa.me/556981478873?text=Quero%20agendar%20batalha" target="_blank" class="btn-acao btn-verde">✅ Agendar batalha</a>
   </div>
 
   <div class="servico-card">
     <h4>🎓 Treinamento VIP</h4>
     <p>Acesso exclusivo: R$ 9,99/mês</p>
-    <div class="codigo-pix">00020101021126770014br.gov.bcb.pix01367c0dfbc3-68e7-4b85-a0eb-eb037b738d9f0213Treinamento vip52040000530398654049.995802BR591965 8 0 M G DA SILVA6007VILHENA62070503***63045E3B</div>
+    <div class="qr-pequeno">📷 Escaneie<br>ou copie a chave</div>
+    <div class="chave-pix" id="chaveTreinamento">00020101021126770014br.gov.bcb.pix01367c0dfbc3-68e7-4b85-a0eb-eb037b738d9f0213Treinamento vip52040000530398654049.995802BR591965 8 0 M G DA SILVA6007VILHENA62070503***63045E3B</div>
+    <button class="btn-acao btn-copiar" onclick="copiarChave('chaveTreinamento')">📋 COPIAR CHAVE PIX</button>
     <a href="https://wa.me/556981478873?text=Quero%20o%20Treinamento%20VIP" target="_blank" class="btn-acao btn-verde">✅ Contratar treinamento</a>
   </div>
 
@@ -194,6 +208,17 @@ function enviarContato(){
   const msg = `NOVO INTERESSADO:\nContato: ${tel}`;
   window.open(`https://wa.me/556981478873?text=${encodeURIComponent(msg)}`);
   alert('✅ Obrigado! Entraremos em contato em breve!');
+}
+
+function copiarChave(id){
+  const texto = document.getElementById(id).innerText;
+  navigator.clipboard.writeText(texto).then(() => {
+    const aviso = document.getElementById('avisoCopiar');
+    aviso.style.display = 'block';
+    setTimeout(() => aviso.style.display = 'none', 2500);
+  }).catch(err => {
+    alert('Selecione manualmente e copie a chave: ' + texto);
+  });
 }
 </script>
 
