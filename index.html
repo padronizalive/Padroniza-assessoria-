@@ -67,6 +67,8 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
 .pix-chave{background:rgba(255,200,87,0.08);border:1px solid var(--amarelo);padding:10px;border-radius:8px;margin:10px 0;font-size:12px;word-break:break-all;color:var(--amarelo)}
 .btn-copiar-pix{background:var(--amarelo);color:#000;border:none;padding:8px 12px;border-radius:6px;font-weight:bold;cursor:pointer;width:100%;margin-top:8px}
 .aviso-copiado{text-align:center;color:var(--verde);font-weight:bold;margin:8px 0;display:none}
+.form-capa-streamer{background:rgba(52,211,153,0.08);border:1px solid var(--verde);border-radius:10px;padding:12px;margin:15px 0}
+.btn-salvar-capa{background:var(--verde);color:#fff;border:none;padding:10px;border-radius:6px;width:100%;font-weight:bold;cursor:pointer;margin-top:8px}
 </style>
 </head>
 <body>
@@ -143,6 +145,18 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
   
   <div id="dadosPerfilStreamer" class="dados-perfil" style="display:none">
     <h4>📝 Meus Dados e Lives</h4>
+
+    <!-- ÁREA PARA ESCOLHER CAPA DA GALERIA -->
+    <div class="form-capa-streamer">
+      <p style="font-weight:bold;margin-bottom:8px">🖼️ Atualizar Capa da Live:</p>
+      <input type="file" id="escolherCapaStreamer" accept="image/*" style="display:none" onchange="carregarPreviaCapaStreamer(this)">
+      <button class="botao-foto" onclick="document.getElementById('escolherCapaStreamer').click()">📷 Escolher foto da galeria</button>
+      <img id="previaCapaNova" class="previa-capa" alt="Pré-visualização da capa nova">
+      <button class="btn-salvar-capa" onclick="salvarCapaStreamer()">💾 Salvar Capa</button>
+      <p id="avisoCapaSalva" style="text-align:center;margin-top:8px;display:none"></p>
+      <p style="font-size:13px;color:var(--cinza);text-align:center;margin-top:5px">✅ Assim que salvar, já aparece para todos na lista de lives!</p>
+    </div>
+
     <img id="minhaCapaLive" class="capa-minha-live" src="" alt="Capa da sua Live" onerror="this.src='https://i.imgur.com/8ZkLg4Y.png'">
     <p><strong>👤 Meu Usuário:</strong> <span id="meuNomeUsuario"></span></p>
     <p><strong>🎵 Perfil / Live TikTok:</strong> <a id="meuLinkTikTok" href="#" target="_blank">Clique para acessar</a></p>
@@ -251,6 +265,7 @@ const LINK_PLANILHA = "https://docs.google.com/spreadsheets/d/1R9eUsqF4kA0y22ryM
 const CAPA_PADRAO_AGENCIA = "https://i.imgur.com/8ZkLg4Y.png";
 let dadosPlanilha = [];
 let usuarioAtual = null;
+let linkCapaNova = "";
 
 window.onload = async function(){
   await carregarDadosPlanilha();
@@ -283,6 +298,36 @@ function copiarPix(idDiv, botao){
   });
 }
 
+// Pré-visualização da capa do streamer
+function carregarPreviaCapaStreamer(input){
+  if(input.files && input.files[0]){
+    const leitor = new FileReader();
+    leitor.onload = e => {
+      linkCapaNova = e.target.result;
+      document.getElementById('previaCapaNova').src = linkCapaNova;
+      document.getElementById('previaCapaNova').style.display = 'block';
+    }
+    leitor.readAsDataURL(input.files[0]);
+  }
+}
+
+// Salvar capa e avisar para atualizar na planilha
+function salvarCapaStreamer(){
+  if(!linkCapaNova){
+    alert('Primeiro escolha uma foto da galeria!');
+    return;
+  }
+  if(!usuarioAtual){
+    alert('Acesse seu perfil primeiro!');
+    return;
+  }
+  const aviso = document.getElementById('avisoCapaSalva');
+  aviso.innerHTML = '<span style="color:var(--verde)">✅ CAPA SALVA! Copie o link abaixo e cole na coluna H da sua linha na planilha:</span><br><br><code style="background:#000;padding:6px;border-radius:4px;font-size:11px;word-break:break-all">'+linkCapaNova+'</code><br><br><span style="color:var(--amarelo)">Depois de salvar na planilha, em até 2 minutos já aparece para todos!</span>';
+  aviso.style.display = 'block';
+  document.getElementById('minhaCapaLive').src = linkCapaNova;
+  setTimeout(() => { aviso.style.display = 'none'; }, 15000);
+}
+
 async function carregarDadosPlanilha(){
   try{
     const res = await fetch(LINK_PLANILHA);
@@ -305,6 +350,9 @@ function voltar(){
   document.getElementById('mensagemAcesso').innerHTML = '';
   document.getElementById('painelStreamer').style.display = 'none';
   document.getElementById('dadosPerfilStreamer').style.display = 'none';
+  document.getElementById('previaCapaNova').style.display = 'none';
+  document.getElementById('avisoCapaSalva').style.display = 'none';
+  linkCapaNova = "";
   usuarioAtual = null;
   document.getElementById('previaNovoLogo').style.display = 'none';
 }
