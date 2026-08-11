@@ -52,7 +52,7 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
 <body>
 <div class="container">
 
-<!-- TELA INICIAL COM FOTOS VISÍVEIS PARA TODOS -->
+<!-- TELA INICIAL -->
 <div id="telaInicial">
   <div class="logo-topo" id="logoPublico">
     <span>PADRONIZA<br>+LIVE ASSESSORIA</span>
@@ -81,19 +81,17 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
   </div>
 </div>
 
-<!-- ÁREA ADMINISTRATIVA — SÓ VOCÊ EDITA -->
+<!-- ÁREA ADMINISTRATIVA -->
 <div class="conteudo" id="conteudoAdmin">
   <h2 class="titulo-secao">🔐 ÁREA DA ADMINISTRAÇÃO</h2>
-  
   <input type="email" class="campo-form" id="emailAdmin" placeholder="Digite seu e-mail">
   <input type="password" class="campo-form" id="senhaAdmin" placeholder="Digite sua senha">
-  
   <button class="btn-acao btn-verde" onclick="verificarAdmin()">🔑 ENTRAR</button>
   <button class="btn-acao btn-voltar" onclick="voltar()">Voltar</button>
 
   <div id="painelAdminCompleto" style="display:none;margin-top:25px">
-    <h3 style="color:var(--verde);margin-bottom:12px">✅ Acesso liberado! Painel de Administração</h3>
-    <p style="color:var(--cinza);text-align:center;margin-bottom:20px">Abaixo configure o que aparece para o público:</p>
+    <h3 style="color:var(--verde);margin-bottom:12px">✅ Acesso liberado!</h3>
+    <p style="color:var(--cinza);text-align:center;margin-bottom:20px">Configure o que aparece para o público:</p>
 
     <div class="bloco-fotos">
       <h4>🖼️ Logo da Agência</h4>
@@ -118,197 +116,111 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
       <label style="display:block;margin:8px 0">📱 Live do Kako Live:</label>
       <input type="file" class="campo-arquivo" accept="image/*">
       <input type="text" class="campo-form" placeholder="Link da live ou perfil no Kako">
-      
       <label style="display:block;margin:8px 0">🎵 Live do TikTok:</label>
       <input type="file" class="campo-arquivo" accept="image/*">
       <input type="text" class="campo-form" placeholder="Link da live ou perfil no TikTok">
     </div>
 
     <button class="btn-acao btn-verde" style="margin-top:10px" onclick="salvarTudo()">💾 SALVAR TODAS AS ALTERAÇÕES</button>
-    <p style="font-size:13px;color:var(--cinza);text-align:center;margin-top:5px">✅ As fotos ficam visíveis para todos, mas só você pode alterar!</p>
+    <p style="font-size:13px;color:var(--cinza);text-align:center;margin-top:5px">✅ Apenas você pode alterar!</p>
 
     <h3 style="color:var(--amarelo);margin:25px 0 10px">💸 Valores dos Serviços:</h3>
     <div class="grid-servicos">
-      <div class="servico-card">
-        <h4>Pacote Completo <small style="color:var(--cinza)">(mensalidade)</small></h4>
-        <div class="preco">R$ 39,99/mês</div>
-        <div class="gratis">✅ GRÁTIS se for agenciado</div>
-      </div>
-      <div class="servico-card">
-        <h4>Música Personalizada</h4>
-        <div class="preco">R$ 20,00 unid.</div>
-        <div class="gratis">✅ GRÁTIS se for agenciado</div>
-      </div>
-      <div class="servico-card">
-        <h4>Arte Visual</h4>
-        <div class="preco">R$ 10,00 unid.</div>
-        <div class="gratis">✅ GRÁTIS se for agenciado</div>
-      </div>
-      <div class="servico-card">
-        <h4>Agendar Batalha <small style="color:var(--cinza)">(mensalidade)</small></h4>
-        <div class="preco">R$ 69,90/mês</div>
-        <div class="gratis">✅ GRÁTIS se for agenciado</div>
-      </div>
-      <div class="servico-card">
-        <h4>Treinamento VIP</h4>
-        <div class="preco">R$ 9,99/mês</div>
-        <div class="gratis">✅ GRÁTIS se for agenciado</div>
-      </div>
-      <div class="servico-card">
-        <h4>Agenciamento</h4>
-        <div class="gratis">✅ TOTALMENTE GRÁTIS</div>
-      </div>
+      <div class="servico-card"><h4>Pacote Completo</h4><div class="preco">R$39,99/mês</div><div class="gratis">✅ Grátis para agenciados</div></div>
+      <div class="servico-card"><h4>Música</h4><div class="preco">R$20,00/unid</div><div class="gratis">✅ Grátis para agenciados</div></div>
+      <div class="servico-card"><h4>Arte Visual</h4><div class="preco">R$10,00/unid</div><div class="gratis">✅ Grátis para agenciados</div></div>
+      <div class="servico-card"><h4>Agendar Batalha</h4><div class="preco">R$69,90/mês</div><div class="gratis">✅ Grátis para agenciados</div></div>
+      <div class="servico-card"><h4>Treinamento VIP</h4><div class="preco">R$9,99/mês</div><div class="gratis">✅ Grátis para agenciados</div></div>
+      <div class="servico-card"><h4>Agenciamento</h4><div class="gratis">✅ TOTALMENTE GRÁTIS</div></div>
     </div>
-
     <button class="btn-acao btn-voltar" onclick="voltar()">Sair e voltar ao início</button>
   </div>
 </div>
 
-<!-- ÁREA VISITANTE — TUDO MANTIDO -->
+<!-- ÁREA VISITANTE -->
 <div class="conteudo" id="conteudoVisitante">
   <h2 class="titulo-secao">👤 Lives e Serviços</h2>
   <div class="destaque-gratis">
-    🎁 QUER TODOS OS SERVIÇOS TOTALMENTE GRÁTIS?<br>
-    Torne-se parceiro Padroniza agora mesmo!<br><br>
-    <a href="https://www.tiktok.com/t/ZSHu6CFAM/" target="_blank" style="color:var(--amarelo);display:block;margin:8px 0">🔗 Clique aqui para se inscrever no TikTok</a>
-    📱 Para o Kako Live: use o ID da Agência <strong>177766</strong><br>
-    <small>Passo a passo: Centro de Host → Minha Agência → digite 177766 → Solicitar</small>
+    🎁 QUER TUDO GRÁTIS?<br>
+    Seja agenciado pela Padroniza Assessoria!<br><br>
+    📱 Kako Live: ID <strong>177766</strong><br>
+    🔗 <a href="https://www.tiktok.com/@gw.agency.oficial?_r=1&_t=ZS-98kq6mkPH0b" target="_blank" style="color:var(--amarelo)">Perfil TikTok para agenciamento</a>
   </div>
-  <h3 style="color:var(--amarelo);margin-bottom:10px">💸 Nossos Serviços e Valores:</h3>
+  <h3 style="color:var(--amarelo);margin-bottom:10px">💸 Valores:</h3>
   <div class="grid-servicos">
-    <div class="servico-card">
-      <h4>Pacote Completo <small style="color:var(--cinza)">(mensalidade)</small></h4>
-      <div class="preco">R$ 39,99/mês</div>
-      <div class="gratis">✅ GRÁTIS se for agenciado</div>
-    </div>
-    <div class="servico-card">
-      <h4>Música Personalizada</h4>
-      <div class="preco">R$ 20,00 unid.</div>
-      <div class="gratis">✅ GRÁTIS se for agenciado</div>
-    </div>
-    <div class="servico-card">
-      <h4>Arte Visual</h4>
-      <div class="preco">R$ 10,00 unid.</div>
-      <div class="gratis">✅ GRÁTIS se for agenciado</div>
-    </div>
-    <div class="servico-card">
-      <h4>Agendar Batalha <small style="color:var(--cinza)">(mensalidade)</small></h4>
-      <div class="preco">R$ 69,90/mês</div>
-      <div class="gratis">✅ GRÁTIS se for agenciado</div>
-    </div>
-    <div class="servico-card">
-      <h4>Treinamento VIP</h4>
-      <div class="preco">R$ 9,99/mês</div>
-      <div class="gratis">✅ GRÁTIS se for agenciado</div>
-    </div>
-    <div class="servico-card">
-      <h4>Agenciamento</h4>
-      <div class="gratis">✅ TOTALMENTE GRÁTIS</div>
-    </div>
+    <div class="servico-card"><h4>Pacote Completo</h4><div class="preco">R$39,99/mês</div></div>
+    <div class="servico-card"><h4>Música</h4><div class="preco">R$20,00/unid</div></div>
+    <div class="servico-card"><h4>Arte Visual</h4><div class="preco">R$10,00/unid</div></div>
+    <div class="servico-card"><h4>Agendar Batalha</h4><div class="preco">R$69,90/mês</div></div>
+    <div class="servico-card"><h4>Treinamento VIP</h4><div class="preco">R$9,99/mês</div></div>
+    <div class="servico-card"><h4>Agenciamento</h4><div class="gratis">✅ GRÁTIS</div></div>
   </div>
-  <h3 style="color:var(--amarelo);margin-bottom:10px">💳 Chaves Pix para Pagamento:</h3>
-  <div class="destaque-pix">
-    <strong>Pacote Completo - MENSALIDADE R$39,99:</strong><br>
-    00020101021126770014br.gov.bcb.pix01367c0dfbc3-68e7-4b85-a0eb-eb037b738d9f0215Pacote completo520400005303986540539.995802BR591965 8 0 M G DA SILVA6007VILHENA62070503***6304C43A
-  </div>
-  <div class="destaque-pix">
-    <strong>Treinamento VIP R$9,99:</strong><br>
-    00020101021126770014br.gov.bcb.pix01367c0dfbc3-68e7-4b85-a0eb-eb037b738d9f0215Treinamento vip52040000530398654049.995802BR591965 8 0 M G DA SILVA6007VILHENA62070503***63045E3B
-  </div>
-  <div class="destaque-pix">
-    <strong>Música Personalizada R$20,00:</strong><br>
-    00020101021126820014br.gov.bcb.pix01367c0dfbc3-68e7-4b85-a0eb-eb037b738d9f0220musica personalizada520400005303986540520.005802BR591965 8 0 M G DA SILVA6007VILHENA62070503***6304E948
-  </div>
-  <div class="destaque-pix">
-    <strong>Arte Visual R$10,00:</strong><br>
-    00020101021126730014br.gov.bcb.pix01367c0dfbc3-68e7-4b85-a0eb-eb037b738d9f0211arte visual520400005303986540510.005802BR591965 8 0 M G DA SILVA6007VILHENA62070503***6304D45F
-  </div>
-  <div class="destaque-pix">
-    <strong>Agendamento de Batalha - MENSALIDADE R$69,90:</strong><br>
-    00020101021126840014br.gov.bcb.pix01367c0dfbc3-68e7-4b85-a0eb-eb037b738d9f0222Agendamento de batalha520400005303986540569.905802BR591965 8 0 M G DA SILVA6007VILHENA62070503***6304606A
-  </div>
-  <a href="https://wa.me/556981478873" target="_blank" class="btn-acao btn-whatsapp">💬 Tirar Dúvidas pelo WhatsApp</a>
+  <h3 style="color:var(--amarelo);margin-bottom:10px">💳 Chaves Pix:</h3>
+  <div class="destaque-pix"><strong>Pacote Completo R$39,99:</strong><br>00020101021126770014br.gov.bcb.pix01367c0dfbc3-68e7-4b85-a0eb-eb037b738d9f0215Pacote completo520400005303986540539.995802BR591965 8 0 M G DA SILVA6007VILHENA62070503***6304C43A</div>
+  <div class="destaque-pix"><strong>Treinamento R$9,99:</strong><br>00020101021126770014br.gov.bcb.pix01367c0dfbc3-68e7-4b85-a0eb-eb037b738d9f0215Treinamento vip52040000530398654049.995802BR591965 8 0 M G DA SILVA6007VILHENA62070503***63045E3B</div>
+  <div class="destaque-pix"><strong>Música R$20,00:</strong><br>00020101021126820014br.gov.bcb.pix01367c0dfbc3-68e7-4b85-a0eb-eb037b738d9f0220musica personalizada520400005303986540520.005802BR591965 8 0 M G DA SILVA6007VILHENA62070503***6304E948</div>
+  <div class="destaque-pix"><strong>Arte R$10,00:</strong><br>00020101021126730014br.gov.bcb.pix01367c0dfbc3-68e7-4b85-a0eb-eb037b738d9f0211arte visual520400005303986540510.005802BR591965 8 0 M G DA SILVA6007VILHENA62070503***6304D45F</div>
+  <div class="destaque-pix"><strong>Batalha R$69,90:</strong><br>00020101021126840014br.gov.bcb.pix01367c0dfbc3-68e7-4b85-a0eb-eb037b738d9f0222Agendamento de batalha520400005303986540569.905802BR591965 8 0 M G DA SILVA6007VILHENA62070503***6304606A</div>
+  <a href="https://wa.me/556981478873" target="_blank" class="btn-acao btn-whatsapp">💬 Falar com a equipe</a>
   <button class="btn-acao btn-voltar" onclick="voltar()">Voltar</button>
 </div>
 
-<!-- ÁREA AGENCIADO — TUDO MANTIDO -->
+<!-- ÁREA AGENCIADO — BOTÃO CAPA ABRE DIRETO NA GALERIA -->
 <div class="conteudo" id="conteudoAgenciado">
   <h2 class="titulo-secao">🎉 Bem-vindo(a) parceiro(a)!</h2>
   <div class="destaque-gratis">✅ TODOS os serviços são GRÁTIS para você!</div>
-  <input type="text" class="campo-form" id="usuarioAgenciado" placeholder="Digite aqui seu nome de usuário da plataforma">
-  <p style="font-size:13px;color:var(--cinza);text-align:center;margin-top:10px">⚠️ Digite exatamente como está cadastrado para nós confirmarmos</p>
-  <p style="text-align:center;color:var(--amarelo);font-weight:bold;margin:15px 0">Escolha o serviço que deseja solicitar:</p>
+
+  <div style="background:var(--painel2);padding:18px;border-radius:12px;margin-bottom:20px">
+    <h4 style="color:var(--amarelo);margin-bottom:15px;text-align:center;font-size:17px">📺 Cadastre suas Lives para aparecer ao vivo!</h4>
+
+    <div style="margin-bottom:18px">
+      <label style="display:block;margin-bottom:8px;color:var(--texto);font-weight:bold">📱 Live do Kako Live:</label>
+      <input type="file" class="campo-arquivo" accept="image/*">
+      <input type="text" class="campo-form" placeholder="Link da live ou perfil no Kako Live">
+    </div>
+
+    <div style="margin-bottom:18px">
+      <label style="display:block;margin-bottom:8px;color:var(--texto);font-weight:bold">🎵 Live do TikTok:</label>
+      <input type="file" class="campo-arquivo" accept="image/*">
+      <input type="text" class="campo-form" placeholder="Link da live ou perfil no TikTok">
+    </div>
+
+    <button class="btn-acao btn-verde" style="margin-top:8px">💾 Salvar Dados</button>
+  </div>
+
+  <input type="text" class="campo-form" id="usuarioAgenciado" placeholder="Digite seu nome de usuário da plataforma">
+  <p style="font-size:13px;color:var(--cinza);text-align:center;margin-top:10px">⚠️ Digite exatamente como cadastrado para confirmarmos</p>
+  
+  <p style="text-align:center;color:var(--amarelo);font-weight:bold;margin:15px 0">Escolha o serviço:</p>
   <button class="btn-acao btn-servico" onclick="solicitar('Músicas personalizadas')">🎵 Solicitar Músicas Personalizadas</button>
   <button class="btn-acao btn-servico" onclick="solicitar('Artes visuais para batalhas e eventos')">🎨 Solicitar Artes Visuais</button>
   <button class="btn-acao btn-servico" onclick="solicitar('Agendamento de batalha oficial')">⚔️ Solicitar Agendamento de Batalha</button>
   <button class="btn-acao btn-servico" onclick="solicitar('Acesso ao grupo VIP de treinamento')">🎓 Solicitar Acesso ao Treinamento VIP</button>
-  <button class="btn-acao btn-servico" onclick="solicitar('Divulgação e suporte geral')">📢 Solicitar Divulgação ou Suporte</button>
-  <a href="https://wa.me/556981478873" target="_blank" class="btn-acao btn-verde" style="margin-top:20px">💬 Falar diretamente com a equipe</a>
+  <button class="btn-acao btn-servico" onclick="solicitar('Divulgação ou suporte geral')">📢 Solicitar Divulgação ou Suporte</button>
+  
+  <a href="https://wa.me/556981478873" target="_blank" class="btn-acao btn-verde" style="margin-top:20px">💬 Falar com a equipe</a>
   <button class="btn-acao btn-voltar" onclick="voltar()">Voltar</button>
 </div>
 
-<!-- 🤝 ÁREA DE OUTRAS AGÊNCIAS — AGORA COM TUDO O QUE VOCÊ PEDIU -->
+<!-- ÁREA OUTRAS AGÊNCIAS -->
 <div class="conteudo" id="conteudoOutraAgencia">
   <h2 class="titulo-secao">🤝 Parcerias para Agências</h2>
-  <p style="text-align:center;color:var(--cinza);margin-bottom:15px">Vamos crescer juntos! Conheça nossos serviços exclusivos para parceiros:</p>
-
-  <h3 style="color:var(--amarelo);margin-bottom:10px">💸 Serviços e Valores:</h3>
+  <p style="text-align:center;color:var(--cinza);margin-bottom:15px">Vamos crescer juntos!</p>
   <div class="grid-servicos">
-    <div class="servico-card">
-      <h4>Pacote Completo <small style="color:var(--cinza)">(mensalidade)</small></h4>
-      <div class="preco">R$ 39,99/mês</div>
-      <div style="font-size:13px;color:var(--cinza)">Todos os serviços inclusos</div>
-    </div>
-    <div class="servico-card">
-      <h4>Música Personalizada</h4>
-      <div class="preco">R$ 20,00 unid.</div>
-      <div style="font-size:13px;color:var(--cinza)">Ou pacote com 6 por R$100,00</div>
-    </div>
-    <div class="servico-card">
-      <h4>Arte Visual</h4>
-      <div class="preco">R$ 10,00 unid.</div>
-      <div style="font-size:13px;color:var(--cinza)">Ou pacote com 10 por R$80,00</div>
-    </div>
-    <div class="servico-card">
-      <h4>Agendar Batalha <small style="color:var(--cinza)">(mensalidade)</small></h4>
-      <div class="preco">R$ 69,90/mês</div>
-      <div style="font-size:13px;color:var(--cinza)">Suporte completo</div>
-    </div>
-    <div class="servico-card">
-      <h4>Treinamento VIP</h4>
-      <div class="preco">R$ 9,99/mês</div>
-      <div style="font-size:13px;color:var(--cinza)">Grupo exclusivo + materiais</div>
-    </div>
-    <div class="servico-card">
-      <h4>Agenciamento</h4>
-      <div class="preco">GRÁTIS</div>
-      <div style="font-size:13px;color:var(--cinza)">Sem custos para parceiros</div>
-    </div>
+    <div class="servico-card"><h4>Pacote Completo</h4><div class="preco">R$39,99/mês</div></div>
+    <div class="servico-card"><h4>Música</h4><div class="preco">R$20,00/unid</div></div>
+    <div class="servico-card"><h4>Arte Visual</h4><div class="preco">R$10,00/unid</div></div>
+    <div class="servico-card"><h4>Agendar Batalha</h4><div class="preco">R$69,90/mês</div></div>
+    <div class="servico-card"><h4>Treinamento VIP</h4><div class="preco">R$9,99/mês</div></div>
+    <div class="servico-card"><h4>Agenciamento</h4><div class="gratis">✅ GRÁTIS</div></div>
   </div>
-
-  <h3 style="color:var(--amarelo);margin-bottom:10px">💳 Chaves Pix para Pagamento:</h3>
-  <div class="destaque-pix">
-    <strong>Pacote Completo - R$39,99/mês:</strong><br>
-    00020101021126770014br.gov.bcb.pix01367c0dfbc3-68e7-4b85-a0eb-eb037b738d9f0215Pacote completo520400005303986540539.995802BR591965 8 0 M G DA SILVA6007VILHENA62070503***6304C43A
-  </div>
-  <div class="destaque-pix">
-    <strong>Treinamento VIP - R$9,99/mês:</strong><br>
-    00020101021126770014br.gov.bcb.pix01367c0dfbc3-68e7-4b85-a0eb-eb037b738d9f0215Treinamento vip52040000530398654049.995802BR591965 8 0 M G DA SILVA6007VILHENA62070503***63045E3B
-  </div>
-  <div class="destaque-pix">
-    <strong>Música Personalizada - R$20,00:</strong><br>
-    00020101021126820014br.gov.bcb.pix01367c0dfbc3-68e7-4b85-a0eb-eb037b738d9f0220musica personalizada520400005303986540520.005802BR591965 8 0 M G DA SILVA6007VILHENA62070503***6304E948
-  </div>
-  <div class="destaque-pix">
-    <strong>Arte Visual - R$10,00:</strong><br>
-    00020101021126730014br.gov.bcb.pix01367c0dfbc3-68e7-4b85-a0eb-eb037b738d9f0211arte visual520400005303986540510.005802BR591965 8 0 M G DA SILVA6007VILHENA62070503***6304D45F
-  </div>
-  <div class="destaque-pix">
-    <strong>Agendamento de Batalha - R$69,90/mês:</strong><br>
-    00020101021126840014br.gov.bcb.pix01367c0dfbc3-68e7-4b85-a0eb-eb037b738d9f0222Agendamento de batalha520400005303986540569.905802BR591965 8 0 M G DA SILVA6007VILHENA62070503***6304606A
-  </div>
-
-  <a href="https://wa.me/556981478873" target="_blank" class="btn-acao btn-whatsapp">💬 Solicitar Parceria ou Dúvidas</a>
+  <h3 style="color:var(--amarelo);margin-bottom:10px">💳 Chaves Pix:</h3>
+  <div class="destaque-pix"><strong>Pacote Completo R$39,99:</strong><br>00020101021126770014br.gov.bcb.pix01367c0dfbc3-68e7-4b85-a0eb-eb037b738d9f0215Pacote completo520400005303986540539.995802BR591965 8 0 M G DA SILVA6007VILHENA62070503***6304C43A</div>
+  <div class="destaque-pix"><strong>Treinamento R$9,99:</strong><br>00020101021126770014br.gov.bcb.pix01367c0dfbc3-68e7-4b85-a0eb-eb037b738d9f0215Treinamento vip52040000530398654049.995802BR591965 8 0 M G DA SILVA6007VILHENA62070503***63045E3B</div>
+  <div class="destaque-pix"><strong>Música R$20,00:</strong><br>00020101021126820014br.gov.bcb.pix01367c0dfbc3-68e7-4b85-a0eb-eb037b738d9f0220musica personalizada520400005303986540520.005802BR591965 8 0 M G DA SILVA6007VILHENA62070503***6304E948</div>
+  <div class="destaque-pix"><strong>Arte R$10,00:</strong><br>00020101021126730014br.gov.bcb.pix01367c0dfbc3-68e7-4b85-a0eb-eb037b738d9f0211arte visual520400005303986540510.005802BR591965 8 0 M G DA SILVA6007VILHENA62070503***6304D45F</div>
+  <div class="destaque-pix"><strong>Batalha R$69,90:</strong><br>00020101021126840014br.gov.bcb.pix01367c0dfbc3-68e7-4b85-a0eb-eb037b738d9f0222Agendamento de batalha520400005303986540569.905802BR591965 8 0 M G DA SILVA6007VILHENA62070503***6304606A</div>
+  <a href="https://wa.me/556981478873" target="_blank" class="btn-acao btn-whatsapp">💬 Solicitar Parceria</a>
   <button class="btn-acao btn-voltar" onclick="voltar()">Voltar</button>
 </div>
 
@@ -326,62 +238,50 @@ function voltar(){
   document.getElementById('painelAdminCompleto').style.display = 'none';
 }
 function verificarAdmin(){
-  const emailCorreto = "padronizaassessoria@gmail.com";
-  const senhaCorreta = "agency2026";
-  
   const email = document.getElementById('emailAdmin').value.trim();
   const senha = document.getElementById('senhaAdmin').value.trim();
-  
-  if(email === emailCorreto && senha === senhaCorreta){
+  if(email === "padronizaassessoria@gmail.com" && senha === "agency2026"){
     document.getElementById('painelAdminCompleto').style.display = 'block';
   }else{
-    alert('❌ E-mail ou senha incorretos! Verifique se não há espaços ou letras erradas.');
+    alert('❌ E-mail ou senha incorretos!');
   }
 }
-
 function salvarTudo(){
-  const logoArquivo = document.getElementById('logoUpload').files[0];
-  if(logoArquivo){
+  if(document.getElementById('logoUpload').files[0]){
     const leitor = new FileReader();
-    leitor.onload = function(e){
+    leitor.onload = e => {
       document.getElementById('logoExibicao').src = e.target.result;
       document.getElementById('logoExibicao').style.display = 'block';
       document.querySelector('.logo-topo span').style.display = 'none';
     }
-    leitor.readAsDataURL(logoArquivo);
+    leitor.readAsDataURL(document.getElementById('logoUpload').files[0]);
   }
-
-  const eventosArquivo = document.getElementById('eventosUpload').files[0];
-  if(eventosArquivo){
+  if(document.getElementById('eventosUpload').files[0]){
     const leitor = new FileReader();
-    leitor.onload = function(e){
+    leitor.onload = e => {
       document.getElementById('fotoEventos').src = e.target.result;
       document.getElementById('eventosExibicao').style.display = 'block';
     }
-    leitor.readAsDataURL(eventosArquivo);
+    leitor.readAsDataURL(document.getElementById('eventosUpload').files[0]);
   }
-
-  const conquistasArquivo = document.getElementById('conquistasUpload').files[0];
-  if(conquistasArquivo){
+  if(document.getElementById('conquistasUpload').files[0]){
     const leitor = new FileReader();
-    leitor.onload = function(e){
+    leitor.onload = e => {
       document.getElementById('fotoConquistas').src = e.target.result;
       document.getElementById('conquistasExibicao').style.display = 'block';
     }
-    leitor.readAsDataURL(conquistasArquivo);
+    leitor.readAsDataURL(document.getElementById('conquistasUpload').files[0]);
   }
-
-  alert('✅ Todas as alterações foram salvas! Agora aparecem para todos os visitantes.');
+  alert('✅ Salvo com sucesso!');
 }
-
 function solicitar(servico){
   const usuario = document.getElementById('usuarioAgenciado').value.trim();
   if(!usuario){
-    alert('⚠️ Por favor, digite primeiro seu nome de usuário!');
+    alert('⚠️ Digite seu nome de usuário primeiro!');
     return;
   }
-  const mensagem = encodeURIComponent(`Olá Equipe Padroniza! Sou o parceiro(a) *${usuario}* e venho solicitar: ${servico}. Obrigado!`);
-  window.open(`https://wa.me/556981478873?text=${mensagem}`);
+  const msg = encodeURIComponent(`Olá! Sou o parceiro(a) *${usuario}* e solicito: ${servico}. Obrigado!`);
+  window.open(`https://wa.me/556981478873?text=${msg}`);
 }
 </script>
 
