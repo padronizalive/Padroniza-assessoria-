@@ -10,7 +10,6 @@
 body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
 .container{max-width:600px;margin:0 auto}
 
-/* TELA INICIAL EXATAMENTE COMO VOCÊ QUER */
 .logo-topo{width:260px;height:200px;margin:0 auto 15px;display:flex;align-items:center;justify-content:center;background:var(--painel);border:3px solid var(--amarelo);border-radius:16px;text-align:center}
 .logo-topo h1{font-size:32px;color:var(--amarelo);font-weight:bold}
 .cabecalho{text-align:center;margin-bottom:20px}
@@ -26,7 +25,6 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
 .btn-admin{background:linear-gradient(135deg,#8b5cf6,#6d28d9)}
 .btn-moedas{background:linear-gradient(135deg,#ec4899,#db2777)}
 
-/* LIVES NA TELA INICIAL */
 .lives-na-inicial{margin-top:30px}
 .titulo-lives-inicial{text-align:center;color:var(--amarelo);font-size:22px;margin-bottom:15px}
 .cartao-live{background:var(--painel2);border-radius:12px;padding:15px;margin-bottom:15px;border:1px solid #293653}
@@ -59,7 +57,6 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
 <body>
 <div class="container">
 
-<!-- TELA INICIAL COM BOTÕES NO TOPO E LIVES EMBAIXO -->
 <div id="telaInicial">
   <div class="logo-topo"><h1>PADRONIZA<br>ASSESSORIA</h1></div>
   <div class="cabecalho">
@@ -74,7 +71,6 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
     <a href="https://www.tiktok.com/coin?rc=7TGXGN69&rie=" target="_blank" class="btn-principal btn-moedas">💰 COMPRAR MOEDAS TIKTOK</a>
   </div>
 
-  <!-- LIVES APARECENDO LOGO ABAIXO DOS BOTÕES NA TELA INICIAL -->
   <div class="lives-na-inicial">
     <h3 class="titulo-lives-inicial">🔴 LIVES AO VIVO</h3>
     <div id="listaLivesInicial"></div>
@@ -120,15 +116,13 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
   <button class="btn-acao btn-voltar" onclick="voltar()">Voltar ao Início</button>
 </div>
 
-<!-- ÁREA DO VISITANTE: SEM LIVES, SÓ AGENCIAMENTO E SERVIÇOS -->
 <div class="conteudo" id="conteudoVisitante">
   <h2 class="titulo-secao">👤 BEM-VINDO(A)</h2>
 
-  <!-- CONVITE PARA SER AGENCIADO -->
   <div class="link-agenciamento">
     <h3 style="color:var(--verde);text-align:center;margin-bottom:10px">✅ QUER SER AGENCIADO? É TOTALMENTE GRÁTIS!</h3>
     <p style="text-align:center;margin-bottom:15px">Acesse nossos serviços de graça fazendo parte da nossa equipe!</p>
-    <a href="https://www.tiktok.com/@gw.agency.oficial" target="_blank" class="btn-acao btn-verde">🎵 SOLICITAR PELO TIKTOK</a>
+    <a href="https://www.tiktok.com/t/ZSHu6CFAM/" target="_blank" class="btn-acao btn-verde">🎵 SOLICITAR PELO TIKTOK</a>
     <div style="background:#00081a;padding:15px;border-radius:8px;margin:15px 0;text-align:center">
       <p style="color:var(--amarelo);font-weight:bold;margin-bottom:8px">📱 SOLICITAR PELO KAKO LIVE</p>
       <p style="font-size:16px">Baixe o aplicativo → Central de Host → Agência → Digite o ID: <strong style="color:var(--verde);font-size:20px">177766</strong> → Solicitar</p>
@@ -138,7 +132,6 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
 
   <hr style="border-color:#293653;margin:25px 0">
 
-  <!-- SERVIÇOS COM PAGAMENTO -->
   <h2 class="titulo-secao">💼 SERVIÇOS DISPONÍVEIS</h2>
   <p style="text-align:center;color:var(--cinza);margin-bottom:20px">Ou contrate nossos serviços avulsos ou pacotes:</p>
   
@@ -208,7 +201,6 @@ async function carregarDadosPlanilha(){
   }catch(e){console.log("Erro:",e);}
 }
 
-// CARREGA AS LIVES DIRETO NA TELA INICIAL
 function carregarLivesNaInicial(){
   const lista = document.getElementById('listaLivesInicial');
   if(!lista) return;
