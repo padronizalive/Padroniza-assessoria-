@@ -20,7 +20,7 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
 .lives-ao-vivo{background:rgba(52,211,153,0.08);border:1px solid var(--verde);border-radius:12px;padding:15px;margin-bottom:20px}
 .lives-ao-vivo h3{color:var(--verde);text-align:center;margin-bottom:12px}
 .cartao-live{background:var(--painel2);border-radius:10px;padding:12px;margin-bottom:10px}
-.cartao-live img{width:100%;height:140px;object-fit:cover;border-radius:8px;margin-bottom:8px}
+.cartao-live img{width:100%;height:140px;object-fit:cover;border-radius:8px;margin-bottom:8px;background:#222}
 .selo-ao-vivo{background:var(--vermelho);color:#fff;padding:4px 8px;border-radius:4px;font-size:13px;font-weight:bold;display:inline-block;margin-bottom:6px}
 .plataforma{color:var(--amarelo);font-weight:bold}
 .link-assistir{display:block;background:var(--verde);color:#fff;text-align:center;padding:10px;border-radius:6px;text-decoration:none;margin-top:8px;font-weight:bold}
@@ -41,6 +41,7 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
 .btn-verde{background:var(--verde)}
 .btn-voltar{background:#293653;color:#fff;margin-top:15px}
 .btn-servico{background:linear-gradient(135deg,var(--rosa),var(--roxo));margin:8px 0;font-size:15px;padding:14px}
+.btn-whatsapp{background:linear-gradient(135deg,#25d366,#128c7e);margin-top:15px}
 .destaque-gratis{background:rgba(52,211,153,0.15);border:2px solid var(--verde);padding:16px;border-radius:10px;text-align:center;font-weight:bold;margin-bottom:18px}
 .destaque-pix{background:rgba(255,61,129,0.1);border:1px solid var(--rosa);padding:12px;border-radius:8px;margin:10px 0;font-size:14px;word-break:break-all}
 .grid-servicos{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:20px}
@@ -49,6 +50,9 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
 .servico-card .preco{font-weight:bold;color:var(--rosa);font-size:16px}
 .servico-card .gratis{color:var(--verde);font-weight:bold}
 .aviso-importante{background:rgba(255,200,87,0.1);border:1px solid var(--amarelo);padding:12px;border-radius:8px;margin:10px 0;font-size:14px;text-align:center}
+.botao-foto{background:var(--roxo);color:#fff;padding:10px;border-radius:6px;text-align:center;cursor:pointer;margin:8px 0;display:block;font-weight:bold}
+.previa-capa{max-width:100%;max-height:180px;border-radius:8px;margin-top:8px;display:none;object-fit:cover;border:2px dashed var(--amarelo)}
+.aviso-capa{background:rgba(255,200,87,0.1);border:1px solid var(--amarelo);padding:10px;border-radius:8px;margin:12px 0;font-size:14px;text-align:center;color:var(--amarelo);font-weight:bold}
 </style>
 </head>
 <body>
@@ -116,7 +120,19 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
         </label>
       </div>
 
-      <input type="text" class="campo-form" id="linkCapa" placeholder="Link da capa da live">
+      <div class="aviso-capa">
+        ℹ️ <strong>CAPA OFICIAL:</strong> A capa que aparece para todos é a cadastrada pela Padroniza Assessoria.<br>
+        📷 Se quiser alterar, envie a foto para a equipe cadastrar — assim já fica visível para todo mundo!
+      </div>
+
+      <div style="margin-bottom:15px">
+        <label style="display:block;margin-bottom:8px;color:var(--texto);font-weight:bold">🖼️ Capa da Live (pré-visualização):</label>
+        <input type="file" id="escolherCapa" accept="image/*" style="display:none" onchange="carregarPreviaCapa(this)">
+        <button class="botao-foto" onclick="document.getElementById('escolherCapa').click()">📷 Escolher da Galeria</button>
+        <img id="previaCapa" class="previa-capa" alt="Pré-visualização da capa">
+        <input type="text" class="campo-form" id="linkCapa" placeholder="Link da capa oficial cadastrada" oninput="atualizarPreviaLink()">
+      </div>
+
       <button class="btn-acao btn-verde" onclick="salvarStatus()">💾 Salvar Alterações</button>
       <p id="avisoSalvo" style="color:var(--verde);text-align:center;margin-top:8px;display:none">✅ Salvo! Suas lives já aparecem para todos.</p>
     </div>
@@ -169,6 +185,7 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
 const LINK_PLANILHA = "https://docs.google.com/spreadsheets/d/1R9eUsqF4kA0y22ryMUIsvGolBfk3-XwZ5R-RVpBiZA4/gviz/tq?tqx=out:json";
 let dadosPlanilha = [];
 let usuarioAtual = null;
+let capaTemp = null;
 
 // Carrega dados ao abrir o site
 window.onload = async function(){
@@ -198,6 +215,8 @@ function voltar(){
   document.getElementById('mensagemAcesso').innerHTML = '';
   document.getElementById('painelStreamer').style.display = 'none';
   usuarioAtual = null;
+  capaTemp = null;
+  document.getElementById('previaCapa').style.display = 'none';
 }
 
 function verificarAcesso(){
@@ -220,7 +239,7 @@ function verificarAcesso(){
     usuarioAtual = encontrado;
     msg.innerHTML = '✅ Acesso liberado!';
     
-    // Preenche dados já cadastrados
+    // Preenche dados já cadastrados por VOCÊ na planilha
     document.getElementById('kakoPerfil').value = encontrado.c[5]?.v || '';
     document.getElementById('kakoLive').value = encontrado.c[6]?.v || '';
     document.getElementById('tiktokPerfil').value = encontrado.c[3]?.v || '';
@@ -229,15 +248,44 @@ function verificarAcesso(){
     document.getElementById('kakoAoVivo').checked = encontrado.c[8]?.v === true || encontrado.c[8]?.v?.toString().toUpperCase() === 'TRUE';
     document.getElementById('tiktokAoVivo').checked = encontrado.c[8]?.v === true || encontrado.c[8]?.v?.toString().toUpperCase() === 'TRUE';
 
+    // Mostra automaticamente a capa que VOCÊ cadastrou na planilha
+    if(encontrado.c[7]?.v){
+      document.getElementById('previaCapa').src = encontrado.c[7].v;
+      document.getElementById('previaCapa').style.display = 'block';
+    }
+
     document.getElementById('painelStreamer').style.display = 'block';
   }, 800);
+}
+
+function carregarPreviaCapa(input){
+  if(input.files && input.files[0]){
+    const leitor = new FileReader();
+    leitor.onload = e => {
+      capaTemp = e.target.result;
+      document.getElementById('previaCapa').src = capaTemp;
+      document.getElementById('previaCapa').style.display = 'block';
+      document.getElementById('linkCapa').value = '';
+    }
+    leitor.readAsDataURL(input.files[0]);
+  }
+}
+
+function atualizarPreviaLink(){
+  const link = document.getElementById('linkCapa').value.trim();
+  if(link){
+    document.getElementById('previaCapa').src = link;
+    document.getElementById('previaCapa').style.display = 'block';
+    capaTemp = null;
+  }else{
+    document.getElementById('previaCapa').style.display = 'none';
+  }
 }
 
 function salvarStatus(){
   document.getElementById('avisoSalvo').style.display = 'none';
   const aviso = document.getElementById('avisoSalvo');
   
-  // Simula salvamento (para atualização real você pode integrar depois)
   setTimeout(()=>{
     aviso.style.display = 'block';
     carregarLivesAoVivo();
@@ -264,7 +312,7 @@ function carregarLivesAoVivo(){
         lista.innerHTML += `
           <div class="cartao-live">
             <span class="selo-ao-vivo">🔴 AO VIVO</span>
-            <img src="${capa}" alt="Capa Live">
+            <img src="${capa}" alt="Capa Live" onerror="this.src='https://i.imgur.com/8ZbQkLb.png'">
             <p style="font-weight:bold">${nome}</p>
             <p class="plataforma">📱 Kako Live</p>
             <a href="${cel[6].v}" target="_blank" class="link-assistir">▶️ Assistir</a>
@@ -276,7 +324,7 @@ function carregarLivesAoVivo(){
         lista.innerHTML += `
           <div class="cartao-live">
             <span class="selo-ao-vivo">🔴 AO VIVO</span>
-            <img src="${capa}" alt="Capa Live">
+            <img src="${capa}" alt="Capa Live" onerror="this.src='https://i.imgur.com/8ZbQkLb.png'">
             <p style="font-weight:bold">${nome}</p>
             <p class="plataforma">🎵 TikTok</p>
             <a href="${cel[4].v}" target="_blank" class="link-assistir">▶️ Assistir</a>
