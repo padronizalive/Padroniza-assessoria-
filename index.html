@@ -98,7 +98,6 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
   </div>
 </div>
 
-<!-- ÁREA ADMINISTRATIVA - EXATAMENTE COMO ESTAVA -->
 <div class="conteudo" id="conteudoAdmin">
   <h2 class="titulo-secao">🔐 ÁREA DA ADMINISTRAÇÃO</h2>
   <div class="grupo-campo">
@@ -133,7 +132,6 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
   </div>
 </div>
 
-<!-- ÁREA AGENCIADO - ADICIONADO BOTÃO DE CAPA E CARREGAMENTO AUTOMÁTICO DA PLANILHA -->
 <div class="conteudo" id="conteudoAgenciado">
   <h2 class="titulo-secao">🎉 Bem-vindo(a) parceiro(a)!</h2>
   <div class="destaque-gratis">✅ TODOS os serviços são GRÁTIS para você!</div>
@@ -146,10 +144,9 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
   <div id="dadosPerfilStreamer" class="dados-perfil" style="display:none">
     <h4>📝 Meus Dados e Lives</h4>
 
-    <!-- 🆕 ÁREA PARA CADASTRAR CAPA - ADICIONADA SEM MEXER NO RESTO -->
     <div class="aviso-capa">
       <p style="font-weight:bold;margin-bottom:8px">🖼️ Atualizar Capa da Live:</p>
-      <p style="margin-bottom:10px">💡 <strong>Jeito mais fácil:</strong> Cole o link da capa diretamente na <strong>coluna H</strong> da sua linha na planilha — já aparece automaticamente aqui!</p>
+      <p style="margin-bottom:10px">💡 <strong>Jeito mais fácil:</strong> Cole o link da capa diretamente na <strong>coluna H</strong> da sua linha na planilha — se não preencher, aparece a capa padrão da agência!</p>
       
       <button class="botao-foto" onclick="document.getElementById('escolherCapaStreamer').click()">📷 Ou escolher foto da galeria</button>
       <input type="file" id="escolherCapaStreamer" accept="image/*" style="display:none" onchange="carregarPreviaCapaStreamer(this)">
@@ -170,8 +167,7 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
       </div>
     </div>
 
-    <!-- DADOS QUE JÁ CARREGAM AUTOMATICAMENTE DA PLANILHA -->
-    <img id="minhaCapaLive" class="capa-minha-live" src="" alt="Capa da sua Live" onerror="this.src='https://i.imgur.com/8ZkLg4Y.png'">
+    <img id="minhaCapaLive" class="capa-minha-live" src="" alt="Capa da sua Live">
     <p><strong>👤 Meu Usuário:</strong> <span id="meuNomeUsuario"></span></p>
     <p><strong>🎵 Perfil / Live TikTok:</strong> <a id="meuLinkTikTok" href="#" target="_blank">Clique para acessar</a></p>
     <p><strong>📱 Perfil / Live Kako Live:</strong> <a id="meuLinkKako" href="#" target="_blank">Clique para acessar</a></p>
@@ -190,7 +186,6 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
   <button class="btn-acao btn-voltar" onclick="voltar()">Voltar ao Início</button>
 </div>
 
-<!-- ÁREA VISITANTE - EXATAMENTE COMO ESTAVA -->
 <div class="conteudo" id="conteudoVisitante">
   <h2 class="titulo-secao">👤 Bem-vindo!</h2>
   <div class="destaque-gratis">
@@ -203,7 +198,6 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
   <div class="lista-servicos">
     <h3 style="color:var(--amarelo);text-align:center;margin-bottom:15px">💼 Serviços e Valores</h3>
     
-    <!-- PACOTE COMPLETO -->
     <div class="servico-item">
       <h4>📦 Pacote Completo</h4>
       <p>Todos os serviços + treinamento + suporte</p>
@@ -213,7 +207,6 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
       <p class="aviso-copiado">✅ CHAVE COPIADA COM SUCESSO!</p>
     </div>
 
-    <!-- MÚSICAS -->
     <div class="servico-item">
       <h4>🎵 Músicas Personalizadas</h4>
       <p>Avulso: <strong>R$ 20,00 cada</strong></p>
@@ -223,7 +216,6 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
       <p class="aviso-copiado">✅ CHAVE COPIADA COM SUCESSO!</p>
     </div>
 
-    <!-- ARTES -->
     <div class="servico-item">
       <h4>🎨 Artes Visuais (Batalhas/Eventos)</h4>
       <p>Avulso: <strong>R$ 10,00 cada</strong></p>
@@ -233,7 +225,6 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
       <p class="aviso-copiado">✅ CHAVE COPIADA COM SUCESSO!</p>
     </div>
 
-    <!-- TREINAMENTO -->
     <div class="servico-item">
       <h4>🎓 Treinamento e Grupo VIP</h4>
       <p>Acesso exclusivo: <strong>R$ 9,99/mês</strong></p>
@@ -247,7 +238,6 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
   <button class="btn-acao btn-voltar" onclick="voltar()">Voltar</button>
 </div>
 
-<!-- ÁREA OUTRAS AGÊNCIAS - EXATAMENTE COMO ESTAVA -->
 <div class="conteudo" id="conteudoOutraAgencia">
   <h2 class="titulo-secao">🤝 Parcerias e Serviços para Agências</h2>
   <p style="text-align:center;color:var(--cinza);margin-bottom:15px">Vamos crescer juntos!</p>
@@ -276,7 +266,7 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
 
 <script>
 const LINK_PLANILHA = "https://docs.google.com/spreadsheets/d/1R9eUsqF4kA0y22ryMUIsvGolBfk3-XwZ5R-RVpBiZA4/gviz/tq?tqx=out:json";
-const CAPA_PADRAO_AGENCIA = "https://i.imgur.com/8ZkLg4Y.png";
+const CAPA_PADRAO_AGENCIA = "https://web.whatsapp.com/cb282683-5011-4b51-9438-2de49ef73302";
 let dadosPlanilha = [];
 let usuarioAtual = null;
 let linkCapaNova = "";
@@ -288,14 +278,12 @@ window.onload = async function(){
   if(logoSalvo) document.getElementById('logoPrincipal').src = logoSalvo;
 };
 
-// Função para mostrar/ocultar senha
 function mostrarSenha(idCampo, botao){
   const campo = document.getElementById(idCampo);
   campo.type = campo.type === 'password' ? 'text' : 'password';
   botao.innerText = campo.type === 'password' ? '👁️' : '🙈';
 }
 
-// Função para copiar chave Pix
 function copiarPix(idDiv, botao){
   const chave = document.getElementById(idDiv).innerText;
   navigator.clipboard.writeText(chave).then(() => {
@@ -307,7 +295,6 @@ function copiarPix(idDiv, botao){
   });
 }
 
-// Funções da CAPA - NOVAS E ADICIONADAS SEM MEXER NO RESTO
 function carregarPreviaCapaStreamer(input){
   if(input.files && input.files[0]){
     const leitor = new FileReader();
@@ -367,7 +354,6 @@ function voltar(){
   usuarioAtual = null;
 }
 
-// PAINEL ADMINISTRATIVO
 function verificarAdmin(){
   const email = document.getElementById('emailAdmin').value.trim();
   const senha = document.getElementById('senhaAdmin').value.trim();
@@ -412,7 +398,6 @@ function salvarNovoLogo(){
   setTimeout(() => aviso.style.display = 'none', 4000);
 }
 
-// VERIFICAÇÃO DE ACESSO DO STREAMER - CARREGA TUDO DA PLANILHA
 function verificarAcesso(){
   const user = document.getElementById('usuarioAcesso').value.trim();
   const msg = document.getElementById('mensagemAcesso');
@@ -427,7 +412,7 @@ function verificarAcesso(){
     msg.innerHTML = '✅ Acesso liberado!';
     document.getElementById('meuNomeUsuario').innerText = encontrado.c[0]?.v || user;
 
-    // ✅ CARREGA A CAPA DIRETO DA COLUNA H DA PLANILHA AUTOMATICAMENTE
+    // ✅ Usa capa da coluna H se existir, senão usa a padrão da agência
     const capa = encontrado.c[7]?.v?.trim() || CAPA_PADRAO_AGENCIA;
     document.getElementById('minhaCapaLive').src = capa;
 
@@ -445,7 +430,6 @@ function verificarAcesso(){
   }, 800);
 }
 
-// CARREGAR LIVES NA TELA INICIAL
 function carregarLivesAoVivo(){
   const lista = document.getElementById('listaLives');
   lista.innerHTML = `<h3>🔴 LIVES AO VIVO AGORA!</h3>`;
@@ -457,6 +441,7 @@ function carregarLivesAoVivo(){
     if(aprovado && aoVivo){
       temLive = true;
       const nome = cel[0]?.v || 'Streamer';
+      // ✅ Usa capa da coluna H se existir, senão usa a padrão da agência
       const capa = cel[7]?.v?.trim() || CAPA_PADRAO_AGENCIA;
       if(cel[6]?.v){
         lista.innerHTML += `<div class="cartao-live"><img src="${capa}" class="capa-live" onerror="this.src='${CAPA_PADRAO_AGENCIA}'"><span class="selo-ao-vivo">🔴 AO VIVO</span><p class="plataforma">📱 Kako Live</p><p class="nome-streamer">${nome}</p><a href="${cel[6].v}" target="_blank" class="link-assistir">▶️ Assistir</a></div>`;
@@ -472,206 +457,6 @@ function carregarLivesAoVivo(){
 function solicitar(servico){
   const texto = encodeURIComponent(`Olá! Sou agenciado Padroniza e gostaria de solicitar: ${servico}\nUsuário: ${usuarioAtual?.c[0]?.v || ''}`);
   window.open(`https://wa.me/556981478873?text=${texto}`);
-}
-</script>
-
-</body>
-</html><!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Padroniza Assessoria | Portal Oficial</title>
-<style>
-:root{--bg:#0b1020;--panel:#11182c;--panel2:#17213a;--line:#293653;--text:#f7f9ff;--muted:#a9b4cb;--pink:#ff3d81;--violet:#7457ff;--cyan:#27d8c2;--gold:#ffc857;--shadow:0 18px 50px #0005}
-*{box-sizing:border-box;margin:0;padding:0;font-family:Arial,sans-serif}
-body{background:var(--bg);color:var(--text);min-height:100vh;padding:15px}
-.container{max-width:600px;margin:0 auto}
-
-.logo-topo{width:200px;height:200px;margin:0 auto 15px;display:flex;align-items:center;justify-content:center;background:transparent;border-radius:50%;overflow:hidden;border:3px solid var(--gold)}
-.logo-topo img{width:100%;height:100%;object-fit:contain;display:block;background:transparent}
-
-.cabecalho{text-align:center;margin-bottom:20px}
-.cabecalho h1{font-size:24px;color:var(--gold);margin-bottom:8px}
-.cabecalho p{color:var(--muted);font-size:15px}
-
-.botoes-principais{display:flex;flex-direction:column;gap:12px;margin-bottom:25px}
-.btn-principal{padding:15px;border-radius:12px;border:none;font-weight:bold;font-size:16px;cursor:pointer;text-align:center;color:#fff;transition:0.2s}
-.btn-principal:hover{transform:translateY(-2px)}
-.btn-agenciado{background:linear-gradient(135deg,var(--cyan),var(--violet))}
-.btn-visitante{background:linear-gradient(135deg,var(--pink),var(--violet))}
-.btn-outra-agencia{background:linear-gradient(135deg,var(--gold),#e6b040);color:#000}
-.btn-admin{background:linear-gradient(135deg,#3b82f6,#2563eb)}
-
-.conteudo{display:none;background:var(--panel);border-radius:16px;padding:20px;margin-bottom:20px;border:1px solid var(--line)}
-.conteudo.visivel{display:block}
-.titulo-secao{text-align:center;margin-bottom:18px;color:var(--gold);font-size:20px}
-.destaque-gratis{background:rgba(39,216,194,0.1);border:2px solid var(--cyan);padding:14px;border-radius:10px;text-align:center;font-weight:bold;color:var(--cyan);margin-bottom:20px}
-.grupo-campo{margin-bottom:15px}
-.campo-form{width:100%;padding:14px;border-radius:10px;border:1px solid var(--line);background:var(--panel2);color:var(--text);font-size:16px}
-.btn-acao{width:100%;padding:14px;border-radius:10px;border:none;font-weight:bold;cursor:pointer;margin-top:10px;color:#fff;font-size:16px;transition:0.2s}
-.btn-acao:hover{transform:translateY(-2px)}
-.btn-verde{background:linear-gradient(135deg,var(--cyan),#20b5a2)}
-.btn-voltar{background:var(--line);color:var(--text);margin-top:20px}
-.aviso-capa{background:rgba(255,200,87,0.08);border:1px solid var(--gold);padding:14px;border-radius:10px;margin:12px 0}
-.caixa-link-grande{background:#070a14;border:1px solid var(--gold);padding:12px;border-radius:8px;margin:10px 0;word-break:break-all;font-size:11px;color:var(--gold);max-height:150px;overflow-y:auto}
-.botao-foto{background:var(--violet);color:#fff;padding:12px;border-radius:8px;text-align:center;cursor:pointer;margin:8px 0;display:block;font-weight:bold;border:none;width:100%}
-.previa-capa{max-width:100%;max-height:180px;border-radius:8px;margin:10px auto;display:block;object-fit:cover;border:2px dashed var(--gold)}
-.btn-salvar-capa{background:var(--cyan);color:#fff;border:none;padding:12px;border-radius:8px;width:100%;font-weight:bold;cursor:pointer;margin-top:10px;font-size:16px}
-.btn-copiar-tudo{background:var(--gold);color:#000;border:none;padding:14px;border-radius:8px;font-weight:bold;cursor:pointer;width:100%;margin-top:10px;font-size:16px}
-.dica-simples{background:rgba(39,216,194,0.08);border:1px dashed var(--cyan);padding:12px;border-radius:8px;margin-top:12px;font-size:13px;color:var(--cyan)}
-</style>
-</head>
-<body>
-<div class="container">
-
-<!-- LOGO E CABEÇALHO DE VOLTA -->
-<div id="telaInicial">
-  <div class="logo-topo">
-    <img src="https://i.imgur.com/8ZkLg4Y.png" alt="Padroniza Assessoria" onerror="this.src='https://i.imgur.com/8ZkLg4Y.png'">
-  </div>
-  <div class="cabecalho">
-    <h1>Padroniza Assessoria</h1>
-    <p>Seu sucesso nas lives começa aqui!</p>
-  </div>
-
-  <div class="botoes-principais">
-    <button class="btn-principal btn-agenciado" onclick="abrir('agenciado')">✅ SOU AGENCIADO PADRONIZA</button>
-    <button class="btn-principal btn-visitante" onclick="abrir('visitante')">👤 SOU VISITANTE / NÃO AGENCIADO</button>
-    <button class="btn-principal btn-outra-agencia" onclick="abrir('outraAgencia')">🏢 SOU OUTRA AGÊNCIA</button>
-    <button class="btn-principal btn-admin" onclick="abrir('admin')">🔐 ÁREA DA ADMINISTRAÇÃO</button>
-  </div>
-</div>
-
-<!-- ÁREA AGENCIADO COM LINK DA PLANILHA CERTO -->
-<div class="conteudo" id="conteudoAgenciado">
-  <h2 class="titulo-secao">🎉 Bem-vindo(a), parceiro(a)!</h2>
-  <div class="destaque-gratis">✅ TODOS os serviços são GRÁTIS para você!</div>
-  
-  <div class="grupo-campo">
-    <input type="text" class="campo-form" id="usuarioAcesso" placeholder="Digite seu nome de usuário da plataforma">
-  </div>
-  <button class="btn-acao btn-verde" onclick="verificarAcesso()">🔍 Acessar Meu Espaço</button>
-  <p id="mensagemAcesso" style="text-align:center;margin:10px 0;color:var(--muted)"></p>
-  
-  <div id="dadosPerfilStreamer" style="display:none">
-    <h3 style="color:var(--gold);margin:20px 0 10px">📝 Meus Dados e Lives</h3>
-
-    <div class="aviso-capa">
-      <p style="font-weight:bold;margin-bottom:8px">🖼️ Atualizar Capa da Live:</p>
-      <p style="margin-bottom:10px">💡 <strong>Dica mais fácil:</strong> Coloque o link da capa diretamente na <strong>coluna H</strong> da planilha — já sincroniza automaticamente!</p>
-      
-      <button class="botao-foto" onclick="document.getElementById('escolherCapaStreamer').click()">📷 Ou escolher foto da galeria</button>
-      <input type="file" id="escolherCapaStreamer" accept="image/*" style="display:none" onchange="carregarPreviaCapaStreamer(this)">
-      
-      <img id="previaCapaNova" class="previa-capa" alt="Pré-visualização da capa">
-      <button class="btn-salvar-capa" onclick="salvarCapaStreamer()">💾 Salvar Capa</button>
-      
-      <div id="avisoCapaSalva" style="display:none;margin-top:15px">
-        <p style="font-weight:bold;color:var(--cyan)">✅ CAPA SALVA!</p>
-        <p style="margin:8px 0">Copie o link abaixo e cole na <strong>coluna H</strong> da sua linha na planilha:</p>
-        
-        <div id="linkCapaMostrar" class="caixa-link-grande"></div>
-        
-        <button class="btn-copiar-tudo" onclick="copiarLinkCapa()">📋 COPIAR LINK COMPLETO AGORA</button>
-        <p id="avisoCopiadoCapa" style="text-align:center;color:var(--cyan);font-weight:bold;margin:8px 0;display:none">✅ LINK COPIADO! Agora é só colar na planilha</p>
-        
-        <div class="dica-simples">
-          💡 <strong>Melhor jeito:</strong> Envie a foto para o WhatsApp → aperte os 3 pontos → "Copiar link de imagem" — esse link é pequeno e funciona sempre!
-        </div>
-      </div>
-    </div>
-  </div>
-  
-  <button class="btn-acao btn-voltar" onclick="voltar()">⬅ Voltar para o início</button>
-</div>
-
-<!-- OUTRAS ÁREAS -->
-<div class="conteudo" id="conteudoVisitante">
-  <h2 class="titulo-secao">👤 Bem-vindo(a)!</h2>
-  <div class="destaque-gratis">
-    🎁 QUER TODOS OS SERVIÇOS DE GRAÇA? SEJA AGENCIADO!<br>
-    📱 ID Kako Live: <strong>177766</strong><br>
-    🔗 TikTok: <a href="https://www.tiktok.com/@gw.agency.oficial?_r=1&_t=ZS-98kq6mkPH0b" target="_blank" style="color:var(--gold)">Clique aqui para solicitar</a><br>
-    💬 WhatsApp: <a href="https://wa.me/556981478873" target="_blank" style="color:var(--gold)">Falar com a equipe</a>
-  </div>
-  <button class="btn-acao btn-voltar" onclick="voltar()">⬅ Voltar</button>
-</div>
-
-<div class="conteudo" id="conteudoAdmin">
-  <h2 class="titulo-secao">🔐 Área da Administração</h2>
-  <p style="text-align:center;color:var(--muted);margin-bottom:15px">Acesso exclusivo para Padroniza Assessoria</p>
-  <button class="btn-acao btn-voltar" onclick="voltar()">⬅ Voltar</button>
-</div>
-
-<div class="conteudo" id="conteudoOutraAgencia">
-  <h2 class="titulo-secao">🏢 Para Outras Agências</h2>
-  <p style="text-align:center;color:var(--muted);margin-bottom:15px">Solicite nossos serviços personalizados</p>
-  <button class="btn-acao btn-voltar" onclick="voltar()">⬅ Voltar</button>
-</div>
-
-</div>
-
-<script>
-// LINK DA PLANILHA CONFIRMADO E CERTO
-const LINK_PLANILHA = "https://docs.google.com/spreadsheets/d/1R9eUsqF4kA0y22ryMUIsvGolBfk3-XwZ5R-RVpBiZA4/gviz/tq?tqx=out:json";
-let linkCapaNova = "";
-let usuarioAtual = null;
-
-function carregarPreviaCapaStreamer(input){
-  if(input.files && input.files[0]){
-    const leitor = new FileReader();
-    leitor.onload = e => {
-      linkCapaNova = e.target.result;
-      document.getElementById('previaCapaNova').src = linkCapaNova;
-      document.getElementById('previaCapaNova').style.display = 'block';
-      document.getElementById('avisoCapaSalva').style.display = 'none';
-    }
-    leitor.readAsDataURL(input.files[0]);
-  }
-}
-
-function salvarCapaStreamer(){
-  if(!linkCapaNova) return alert('Escolha uma foto primeiro!');
-  document.getElementById('linkCapaMostrar').innerText = linkCapaNova;
-  document.getElementById('avisoCapaSalva').style.display = 'block';
-}
-
-function copiarLinkCapa(){
-  if(!linkCapaNova) return alert('Salve a capa primeiro!');
-  navigator.clipboard.writeText(linkCapaNova)
-    .then(() => {
-      document.getElementById('avisoCopiadoCapa').style.display = 'block';
-      setTimeout(() => document.getElementById('avisoCopiadoCapa').style.display = 'none', 4000);
-    })
-    .catch(err => {
-      alert('💡 Não se preocupe! Aperte e segure o texto dentro da caixa → escolha "Copiar"');
-    });
-}
-
-function abrir(id){
-  document.querySelectorAll('.conteudo').forEach(c => c.style.display = 'none');
-  document.getElementById('telaInicial').style.display = 'none';
-  document.getElementById('conteudo'+id.charAt(0).toUpperCase()+id.slice(1)).style.display = 'block';
-}
-
-function voltar(){
-  document.querySelectorAll('.conteudo').forEach(c => c.style.display = 'none');
-  document.getElementById('telaInicial').style.display = 'block';
-  document.getElementById('previaCapaNova').style.display = 'none';
-  document.getElementById('avisoCapaSalva').style.display = 'none';
-  linkCapaNova = "";
-}
-
-function verificarAcesso(){
-  const user = document.getElementById('usuarioAcesso').value.trim();
-  if(!user) return alert('Digite seu nome de usuário!');
-  document.getElementById('mensagemAcesso').innerText = '🔍 Verificando...';
-  setTimeout(() => {
-    usuarioAtual = user;
-    document.getElementById('mensagemAcesso').innerHTML = '✅ Acesso liberado!';
-    document.getElementById('dadosPerfilStreamer').style.display = 'block';
-  }, 800);
 }
 </script>
 
