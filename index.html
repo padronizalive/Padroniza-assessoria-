@@ -3,15 +3,25 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Padroniza Assessoria | Serviços Oficiais</title>
+<title>Padroniza Assessoria | Portal Oficial</title>
 <style>
 :root{--fundo:#0b1020;--painel:#11182c;--painel2:#17213a;--azul:#3b82f6;--verde:#34d399;--amarelo:#ffc857;--vermelho:#ef4444;--cinza:#a9b4cb;--texto:#f7f9ff;--rosa:#ff3d81;--roxo:#7457ff}
 *{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
 body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
 .container{max-width:550px;margin:0 auto}
 
-.cabecalho{text-align:center;margin-bottom:20px}
+.logo-topo{width:140px;height:140px;border-radius:50%;border:3px solid var(--rosa);display:block;margin:0 auto 15px;background:#17213a;display:flex;align-items:center;justify-content:center;color:var(--rosa);font-weight:bold;font-size:16px;overflow:hidden}
+.logo-topo img{width:100%;height:100%;object-fit:cover}
+.banner-destaque{width:100%;height:180px;border-radius:12px;margin-bottom:20px;background:linear-gradient(45deg,var(--rosa),var(--roxo));display:flex;align-items:center;justify-content:center;color:#fff;font-weight:bold;font-size:18px;text-align:center;padding:15px;overflow:hidden}
+.banner-destaque img{width:100%;height:100%;object-fit:cover}
+.galeria-titulo{color:var(--amarelo);text-align:center;margin:25px 0 15px}
+.galeria-grade{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:20px}
+.foto-item{width:100%;aspect-ratio:1/1;border-radius:8px;background:#17213a;display:flex;align-items:center;justify-content:center;color:var(--cinza);font-size:13px;text-align:center;padding:8px;overflow:hidden}
+.foto-item img{width:100%;height:100%;object-fit:cover}
+
+.cabecalho{text-align:center;margin-bottom:10px}
 .cabecalho h1{font-size:28px;color:var(--rosa);font-weight:bold;margin-bottom:8px}
+.cabecalho p{color:var(--cinza)}
 .aviso-topo{background:rgba(52,211,153,0.15);border:1px solid var(--verde);color:var(--verde);padding:12px;border-radius:8px;text-align:center;font-weight:bold;margin-bottom:20px}
 
 .botoes-principais{display:flex;flex-direction:column;gap:12px;margin-bottom:25px}
@@ -25,12 +35,13 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
 .conteudo{display:none;background:var(--painel);border-radius:12px;padding:20px;margin-bottom:20px}
 .conteudo.visivel{display:block}
 .titulo-secao{text-align:center;margin-bottom:15px;color:var(--amarelo);font-size:21px}
-.campo-form{width:100%;padding:13px;border-radius:8px;border:1px solid #293653;background:#17213a;color:var(--texto);margin:8px 0;font-size:16px}
-.btn-acao{width:100%;padding:13px;border-radius:8px;border:none;font-weight:bold;cursor:pointer;margin-top:10px;text-decoration:none;display:inline-block;text-align:center;color:#fff;font-size:16px}
+.campo-form{width:100%;padding:12px;border-radius:8px;border:1px solid #293653;background:#17213a;color:var(--texto);margin:8px 0;font-size:15px}
+.btn-acao{width:100%;padding:12px;border-radius:8px;border:none;font-weight:bold;cursor:pointer;margin-top:10px;text-decoration:none;display:inline-block;text-align:center;color:#fff;font-size:16px}
 .btn-verde{background:var(--verde)}
 .btn-azul{background:var(--azul)}
 .btn-copiar{background:#047857;font-size:15px;padding:10px;margin-top:8px}
 .btn-voltar{background:#293653;color:#fff;margin-top:15px}
+.btn-salvar{background:var(--amarelo);color:#000;margin-top:15px}
 
 .destaque-gratis{background:rgba(52,211,153,0.15);border:2px solid var(--verde);padding:14px;border-radius:10px;text-align:center;font-weight:bold;margin-bottom:18px}
 .link-plataforma{background:var(--painel2);padding:12px;border-radius:8px;margin:10px 0;word-break:break-all}
@@ -42,22 +53,50 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
 .chave-pix{background:#052e16;border:1px solid var(--verde);padding:12px;border-radius:8px;margin:10px 0;word-break:break-all;font-size:12px;color:var(--verde);position:relative}
 .qr-pequeno{width:100px;height:100px;background:#fff;border-radius:8px;padding:5px;margin:10px auto;display:block;color:#000;text-align:center;font-size:12px;line-height:1.4}
 .aviso-copiado{position:fixed;top:20px;left:50%;transform:translateX(-50%);background:var(--verde);color:#fff;padding:12px 20px;border-radius:8px;font-weight:bold;z-index:999;display:none}
+.aviso-salvo{position:fixed;top:20px;left:50%;transform:translateX(-50%);background:var(--amarelo);color:#000;padding:12px 20px;border-radius:8px;font-weight:bold;z-index:999;display:none}
+
+.painel-lives{margin-top:15px}
+.live-card{background:var(--painel2);border-radius:10px;padding:12px;margin-bottom:12px;border-left:4px solid var(--rosa)}
+.live-card.online{border-left-color:var(--verde)}
+.live-capa{width:100%;height:160px;object-fit:cover;border-radius:8px;margin-bottom:8px;background:#293653;display:flex;align-items:center;justify-content:center;color:var(--cinza)}
+.status-live{display:inline-block;padding:4px 10px;border-radius:12px;font-size:13px;font-weight:bold;margin-bottom:8px}
+.status-live.online{background:rgba(52,211,153,0.2);color:var(--verde)}
+.status-live.offline{background:rgba(239,68,68,0.2);color:var(--vermelho)}
+.btn-live{background:var(--rosa);padding:10px;border-radius:8px;color:#fff;text-decoration:none;display:block;text-align:center;font-weight:bold;margin-top:8px}
+.area-cadastrar-live{background:rgba(116,87,255,0.1);border:1px solid var(--roxo);padding:15px;border-radius:10px;margin-top:20px}
+.dica-admin{font-size:13px;color:var(--cinza);margin:5px 0 15px;text-align:center}
 </style>
 </head>
 <body>
 <div class="aviso-copiado" id="avisoCopiar">✅ Chave copiada com sucesso!</div>
+<div class="aviso-salvo" id="avisoSalvo">✅ Configurações salvas com sucesso!</div>
 <div class="container">
 
+<!-- ÁREA DE IMAGENS - ATUALIZA AUTOMATICAMENTE -->
+<div class="logo-topo" id="areaLogo">LOGO DA<br>AGÊNCIA</div>
 <div class="cabecalho">
   <h1>PADRONIZA ASSESSORIA</h1>
-  <p>Portal Oficial de Serviços</p>
+  <p>Seu sucesso nas lives começa aqui!</p>
 </div>
+
+<div class="banner-destaque" id="areaBanner">
+  FOTOS DE LIVES,<br>TREINAMENTOS E EVENTOS
+</div>
+
+<div class="galeria-titulo">📸 Nossos Trabalhos e Momentos</div>
+<div class="galeria-grade" id="areaGaleria">
+  <div class="foto-item">Live dos nossos streamers</div>
+  <div class="foto-item">Treinamento da equipe</div>
+  <div class="foto-item">Batalhas Oficiais</div>
+  <div class="foto-item">Conquistas e premiações</div>
+</div>
+
 <div class="aviso-topo">🎯 Escolha a opção que melhor combina com você!</div>
 
 <div id="telaInicial">
   <div class="botoes-principais">
     <button class="btn-principal btn-agenciado" onclick="abrir('agenciado')">✅ SOU AGENCIADO PADRONIZA</button>
-    <button class="btn-principal btn-visitante" onclick="abrir('visitante')">👤 SOU VISITANTE</button>
+    <button class="btn-principal btn-visitante" onclick="abrir('visitante')">👤 SOU VISITANTE / VER LIVES</button>
     <button class="btn-principal btn-outra-agencia" onclick="abrir('outraAgencia')">🤝 SOU OUTRA AGÊNCIA</button>
     <button class="btn-principal btn-admin" onclick="abrir('admin')">🔐 ÁREA DA ADMINISTRAÇÃO</button>
   </div>
@@ -66,9 +105,7 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
 <!-- SOU AGENCIADO PADRONIZA -->
 <div class="conteudo" id="conteudoAgenciado">
   <h2 class="titulo-secao">🎉 Bem-vindo(a) parceiro(a)!</h2>
-  <div class="destaque-gratis">
-    ✅ TODOS os serviços são totalmente GRÁTIS para você! 🚀
-  </div>
+  <div class="destaque-gratis">✅ TODOS os serviços são totalmente GRÁTIS para você! 🚀</div>
   <ul style="padding-left:20px;line-height:1.8;margin-bottom:15px">
     <li>🎵 Músicas personalizadas</li>
     <li>🎨 Artes visuais para batalhas e eventos</li>
@@ -76,57 +113,73 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
     <li>🎓 Acesso ao grupo VIP de treinamento</li>
     <li>📢 Divulgação e suporte completo</li>
   </ul>
-  <p style="text-align:center;color:var(--cinza);margin-bottom:15px">É só chamar a equipe para solicitar o que precisar!</p>
+  <p style="text-align:center;color:var(--cinza);margin-bottom:15px">Cadastre suas lives e veja quem está ao vivo na área de Visitante!</p>
   <a href="https://wa.me/556981478873" target="_blank" class="btn-acao btn-verde">💬 Falar com a equipe</a>
   <button class="btn-acao btn-voltar" onclick="voltar()">Voltar</button>
 </div>
 
 <!-- SOU VISITANTE -->
 <div class="conteudo" id="conteudoVisitante">
-  <h2 class="titulo-secao">👤 Serviços e Valores</h2>
-  <div class="destaque-gratis">
-    💡 Quer ser agenciado? É TOTALMENTE GRATUITO! Veja abaixo como se inscrever:
+  <h2 class="titulo-secao">👤 Lives e Serviços</h2>
+  <div class="painel-lives">
+    <h3 style="color:var(--amarelo);margin-bottom:12px">🔴 Quem está ao vivo</h3>
+    <div class="live-card online">
+      <span class="status-live online">🔴 AO VIVO AGORA</span>
+      <div class="live-capa">Capa da Live</div>
+      <h4>Serena Tempestade</h4>
+      <p style="color:var(--cinza);font-size:14px">Plataforma: Kako Live</p>
+      <a href="#" class="btn-live" target="_blank">▶️ ASSISTIR AGORA</a>
+    </div>
+    <div class="live-card">
+      <span class="status-live offline">⚫ OFFLINE</span>
+      <div class="live-capa">Capa da Live</div>
+      <h4>Nome do Streamer</h4>
+      <p style="color:var(--cinza);font-size:14px">Plataforma: TikTok</p>
+      <a href="#" class="btn-live" target="_blank">🔗 Ver Perfil</a>
+    </div>
   </div>
 
-  <div class="link-plataforma">
-    <strong>📱 Para TikTok:</strong><br>
-    Acesse: <a href="https://www.tiktok.com/@gw.agency.oficial?_r=1&_t=ZS-98kq6mkPH0b" target="_blank" style="color:var(--verde)">https://www.tiktok.com/@gw.agency.oficial</a>
+  <div class="area-cadastrar-live">
+    <h3 style="color:var(--amarelo);text-align:center;margin-bottom:15px">📢 Cadastre sua Live</h3>
+    <p style="text-align:center;color:var(--cinza);margin-bottom:10px">É GRÁTIS! Apareça aqui para todos verem</p>
+    <select class="campo-form">
+      <option value="">Escolha a plataforma</option>
+      <option value="kako">Kako Live</option>
+      <option value="tiktok">TikTok</option>
+    </select>
+    <input type="text" class="campo-form" placeholder="Seu nome de usuário">
+    <input type="url" class="campo-form" placeholder="Link da sua live/perfil">
+    <input type="url" class="campo-form" placeholder="Link da capa da live">
+    <button class="btn-acao btn-verde" onclick="alert('✅ Solicitação enviada! Em breve sua live aparecerá aqui!')">📤 Cadastrar Live</button>
   </div>
 
-  <div class="link-plataforma">
-    <strong>🎮 Para Kako Live:</strong><br>
-    Baixe o app → Confirme perfil → Central de Host → Agência → Digite o ID: <strong style="color:var(--rosa)">177766</strong> → Solicite entrada!
-  </div>
-
-  <div class="link-plataforma">
-    <strong>💬 Dúvidas? Fale conosco:</strong><br>
-    <a href="https://wa.me/556981478873" target="_blank" style="color:var(--verde)">https://wa.me/556981478873</a>
-  </div>
+  <hr style="border:1px solid #293653;margin:20px 0">
+  <div class="destaque-gratis">💡 Quer ser agenciado? É TOTALMENTE GRATUITO!</div>
+  <div class="link-plataforma"><strong>📱 TikTok:</strong> <a href="https://www.tiktok.com/@gw.agency.oficial?_r=1&_t=ZS-98kq6mkPH0b" target="_blank" style="color:var(--verde)">@gw.agency.oficial</a></div>
+  <div class="link-plataforma"><strong>🎮 Kako Live:</strong> Baixe o app → Central de Host → Agência → ID: <strong style="color:var(--rosa)">177766</strong></div>
+  <div class="link-plataforma"><strong>💬 Dúvidas:</strong> <a href="https://wa.me/556981478873" target="_blank" style="color:var(--verde)">Clique aqui para falar conosco</a></div>
 
   <div style="margin-top:20px">
-    <p style="color:var(--cinza);margin-bottom:8px">Ou deixe seu contato que nós entramos em contato:</p>
+    <p style="color:var(--cinza);margin-bottom:8px">Deixe seu contato:</p>
     <input type="tel" id="contatoVisitante" class="campo-form" placeholder="Seu WhatsApp com DDD">
     <button class="btn-acao btn-verde" onclick="enviarContato()">📩 Enviar contato</button>
   </div>
 
-  <hr style="border:1px solid var(--line);margin:20px 0">
-
+  <hr style="border:1px solid #293653;margin:20px 0">
   <h3 style="color:var(--amarelo);text-align:center;margin-bottom:15px">💼 Serviços Pagos</h3>
   
   <div class="servico-card">
     <h4>📦 PACOTE COMPLETO</h4>
     <p>Todos os serviços + treinamento + suporte</p>
     <p class="valor"><span class="valor-riscado">De R$ 59,90</span> Por apenas <span style="color:var(--rosa)">R$ 39,99/mês</span></p>
-    <div class="qr-pequeno">📷 Escaneie<br>ou copie a chave</div>
     <div class="chave-pix" id="chavePacote">00020101021126770014br.gov.bcb.pix01367c0dfbc3-68e7-4b85-a0eb-eb037b738d9f0215Pacote completo520400005303986540539.995802BR591965 8 0 M G DA SILVA6007VILHENA62070503***6304C43A</div>
     <button class="btn-acao btn-copiar" onclick="copiarChave('chavePacote')">📋 COPIAR CHAVE PIX</button>
-    <a href="https://wa.me/556981478873?text=Quero%20o%20Pacote%20Completo%20R%2439,99" target="_blank" class="btn-acao btn-verde">✅ Paguei! Enviar comprovante</a>
+    <a href="https://wa.me/556981478873?text=Quero%20o%20Pacote%20Completo" target="_blank" class="btn-acao btn-verde">✅ Paguei! Enviar comprovante</a>
   </div>
 
   <div class="servico-card">
     <h4>🎵 Músicas Personalizadas</h4>
     <p>Avulso: R$ 20,00 cada | Pacote 6: R$ 100,00</p>
-    <div class="qr-pequeno">📷 Escaneie<br>ou copie a chave</div>
     <div class="chave-pix" id="chaveMusica">00020101021126820014br.gov.bcb.pix01367c0dfbc3-68e7-4b85-a0eb-eb037b738d9f0220musica personalizada520400005303986540520.005802BR591965 8 0 M G DA SILVA6007VILHENA62070503***6304E948</div>
     <button class="btn-acao btn-copiar" onclick="copiarChave('chaveMusica')">📋 COPIAR CHAVE PIX</button>
     <a href="https://wa.me/556981478873?text=Quero%20m%C3%BAsica%20personalizada" target="_blank" class="btn-acao btn-verde">✅ Solicitar música</a>
@@ -135,7 +188,6 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
   <div class="servico-card">
     <h4>🎨 Artes Visuais</h4>
     <p>Avulso: R$ 10,00 cada | Pacote 10: R$ 80,00</p>
-    <div class="qr-pequeno">📷 Escaneie<br>ou copie a chave</div>
     <div class="chave-pix" id="chaveArte">00020101021126730014br.gov.bcb.pix01367c0dfbc3-68e7-4b85-a0eb-eb037b738d9f0211arte visual520400005303986540510.005802BR591965 8 0 M G DA SILVA6007VILHENA62070503***6304D45F</div>
     <button class="btn-acao btn-copiar" onclick="copiarChave('chaveArte')">📋 COPIAR CHAVE PIX</button>
     <a href="https://wa.me/556981478873?text=Quero%20arte%20visual" target="_blank" class="btn-acao btn-verde">✅ Solicitar arte</a>
@@ -144,7 +196,6 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
   <div class="servico-card">
     <h4>⚔️ Agendamento de Batalha</h4>
     <p>Avulso: R$ 10,00 | Mensalidade: R$ 69,90</p>
-    <div class="qr-pequeno">📷 Escaneie<br>ou copie a chave</div>
     <div class="chave-pix" id="chaveBatalha">00020101021126840014br.gov.bcb.pix01367c0dfbc3-68e7-4b85-a0eb-eb037b738d9f0222Agendamento de batalha520400005303986540569.995802BR591965 8 0 M G DA SILVA6007VILHENA62070503***6304606A</div>
     <button class="btn-acao btn-copiar" onclick="copiarChave('chaveBatalha')">📋 COPIAR CHAVE PIX</button>
     <a href="https://wa.me/556981478873?text=Quero%20agendar%20batalha" target="_blank" class="btn-acao btn-verde">✅ Agendar batalha</a>
@@ -153,7 +204,6 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
   <div class="servico-card">
     <h4>🎓 Treinamento VIP</h4>
     <p>Acesso exclusivo: R$ 9,99/mês</p>
-    <div class="qr-pequeno">📷 Escaneie<br>ou copie a chave</div>
     <div class="chave-pix" id="chaveTreinamento">00020101021126770014br.gov.bcb.pix01367c0dfbc3-68e7-4b85-a0eb-eb037b738d9f0213Treinamento vip52040000530398654049.995802BR591965 8 0 M G DA SILVA6007VILHENA62070503***63045E3B</div>
     <button class="btn-acao btn-copiar" onclick="copiarChave('chaveTreinamento')">📋 COPIAR CHAVE PIX</button>
     <a href="https://wa.me/556981478873?text=Quero%20o%20Treinamento%20VIP" target="_blank" class="btn-acao btn-verde">✅ Contratar treinamento</a>
@@ -165,29 +215,45 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
 <!-- OUTRAS AGÊNCIAS -->
 <div class="conteudo" id="conteudoOutraAgencia">
   <h2 class="titulo-secao">🤝 Parcerias para Agências</h2>
-  <p style="text-align:center;color:var(--cinza);margin-bottom:15px">Temos condições especiais para parceiros!</p>
-  <ul style="padding-left:20px;line-height:1.8;margin-bottom:15px">
-    <li>Pacotes com desconto exclusivo</li>
-    <li>Agendamento de batalhas em conjunto</li>
-    <li>Treinamento para sua equipe</li>
-    <li>Suporte personalizado</li>
-  </ul>
-  <a href="https://wa.me/556981478873?text=Quero%20ser%20uma%20ag%C3%AAncia%20parceira" target="_blank" class="btn-acao btn-verde">💬 Solicitar proposta</a>
+  <p style="text-align:center;color:var(--cinza);margin-bottom:15px">Condições especiais para parceiros!</p>
+  <a href="https://wa.me/556981478873?text=Quero%20ser%20parceiro" target="_blank" class="btn-acao btn-verde">💬 Solicitar proposta</a>
   <button class="btn-acao btn-voltar" onclick="voltar()">Voltar</button>
 </div>
 
 <!-- ÁREA ADMINISTRATIVA -->
 <div class="conteudo" id="conteudoAdmin">
   <h2 class="titulo-secao">🔐 Área da Administração</h2>
-  <input type="email" class="campo-form" placeholder="E-mail: padronizaassessoria@gmail.com">
-  <input type="password" class="campo-form" placeholder="Senha: agency2026.">
-  <button class="btn-acao btn-verde">🔑 Entrar</button>
+  <input type="email" class="campo-form" id="emailAdmin" placeholder="E-mail: padronizaassessoria@gmail.com">
+  <input type="password" class="campo-form" id="senhaAdmin" placeholder="Senha: agency2026.">
+  <button class="btn-acao btn-verde" onclick="verificarAdmin()">🔑 Entrar</button>
   <button class="btn-acao btn-voltar" onclick="voltar()">Voltar</button>
+
+  <!-- PAINEL DE GERENCIAMENTO DE FOTOS -->
+  <div id="painelAdminFotos" style="display:none;margin-top:25px">
+    <hr style="border-color:#293653;margin-bottom:20px">
+    <h3 style="color:var(--amarelo);text-align:center;margin-bottom:15px">🖼️ Gerenciar Fotos da Agência</h3>
+    <p class="dica-admin">💡 Salve suas fotos no Google Fotos/Drive, pegue o link público e cole abaixo:</p>
+
+    <input type="url" class="campo-form" id="linkLogo" placeholder="🔗 Link do Logo da Agência">
+    <input type="url" class="campo-form" id="linkBanner" placeholder="🔗 Link do Banner Principal">
+    <input type="url" class="campo-form" id="linkFoto1" placeholder="🔗 Link da Foto 1 (Live/Evento)">
+    <input type="url" class="campo-form" id="linkFoto2" placeholder="🔗 Link da Foto 2 (Treinamento)">
+    <input type="url" class="campo-form" id="linkFoto3" placeholder="🔗 Link da Foto 3 (Batalha)">
+    <input type="url" class="campo-form" id="linkFoto4" placeholder="🔗 Link da Foto 4 (Conquistas)">
+
+    <button class="btn-acao btn-salvar" onclick="salvarFotos()">💾 SALVAR E ATUALIZAR</button>
+  </div>
 </div>
 
 </div>
 
 <script>
+// Carrega configurações salvas ao abrir a página
+window.onload = function(){
+  const dadosSalvos = localStorage.getItem('configFotosAgencia');
+  if(dadosSalvos) aplicarFotos(JSON.parse(dadosSalvos));
+};
+
 function abrir(tipo){
   document.getElementById('telaInicial').style.display = 'none';
   document.querySelectorAll('.conteudo').forEach(el => el.classList.remove('visivel'));
@@ -197,16 +263,13 @@ function abrir(tipo){
 function voltar(){
   document.querySelectorAll('.conteudo').forEach(el => el.classList.remove('visivel'));
   document.getElementById('telaInicial').style.display = 'block';
+  document.getElementById('painelAdminFotos').style.display = 'none';
 }
 
 function enviarContato(){
   const tel = document.getElementById('contatoVisitante').value.trim();
-  if(!tel || tel.length < 10){
-    alert('Digite o número completo com DDD!');
-    return;
-  }
-  const msg = `NOVO INTERESSADO:\nContato: ${tel}`;
-  window.open(`https://wa.me/556981478873?text=${encodeURIComponent(msg)}`);
+  if(!tel) return alert('Digite seu número com DDD!');
+  window.open(`https://wa.me/556981478873?text=NOVO%20INTERESSADO%20-%20Contato:${tel}`);
   alert('✅ Obrigado! Entraremos em contato em breve!');
 }
 
@@ -216,9 +279,54 @@ function copiarChave(id){
     const aviso = document.getElementById('avisoCopiar');
     aviso.style.display = 'block';
     setTimeout(() => aviso.style.display = 'none', 2500);
-  }).catch(err => {
-    alert('Selecione manualmente e copie a chave: ' + texto);
-  });
+  }).catch(err => alert('Copie manualmente: ' + texto));
+}
+
+function verificarAdmin(){
+  const email = document.getElementById('emailAdmin').value.trim();
+  const senha = document.getElementById('senhaAdmin').value.trim();
+  if(email === 'padronizaassessoria@gmail.com' && senha === 'agency2026.'){
+    document.getElementById('painelAdminFotos').style.display = 'block';
+    const salvos = localStorage.getItem('configFotosAgencia');
+    if(salvos){
+      const d = JSON.parse(salvos);
+      document.getElementById('linkLogo').value = d.logo || '';
+      document.getElementById('linkBanner').value = d.banner || '';
+      document.getElementById('linkFoto1').value = d.foto1 || '';
+      document.getElementById('linkFoto2').value = d.foto2 || '';
+      document.getElementById('linkFoto3').value = d.foto3 || '';
+      document.getElementById('linkFoto4').value = d.foto4 || '';
+    }
+  }else{
+    alert('❌ E-mail ou senha incorretos!');
+  }
+}
+
+function salvarFotos(){
+  const config = {
+    logo: document.getElementById('linkLogo').value.trim(),
+    banner: document.getElementById('linkBanner').value.trim(),
+    foto1: document.getElementById('linkFoto1').value.trim(),
+    foto2: document.getElementById('linkFoto2').value.trim(),
+    foto3: document.getElementById('linkFoto3').value.trim(),
+    foto4: document.getElementById('linkFoto4').value.trim()
+  };
+  localStorage.setItem('configFotosAgencia', JSON.stringify(config));
+  aplicarFotos(config);
+  const aviso = document.getElementById('avisoSalvo');
+  aviso.style.display = 'block';
+  setTimeout(() => aviso.style.display = 'none', 2500);
+}
+
+function aplicarFotos(d){
+  if(d.logo) document.getElementById('areaLogo').innerHTML = `<img src="${d.logo}" alt="Logo">`;
+  if(d.banner) document.getElementById('areaBanner').innerHTML = `<img src="${d.banner}" alt="Banner">`;
+  let htmlGaleria = '';
+  if(d.foto1) htmlGaleria += `<div class="foto-item"><img src="${d.foto1}" alt="Foto 1"></div>`;
+  if(d.foto2) htmlGaleria += `<div class="foto-item"><img src="${d.foto2}" alt="Foto 2"></div>`;
+  if(d.foto3) htmlGaleria += `<div class="foto-item"><img src="${d.foto3}" alt="Foto 3"></div>`;
+  if(d.foto4) htmlGaleria += `<div class="foto-item"><img src="${d.foto4}" alt="Foto 4"></div>`;
+  if(htmlGaleria) document.getElementById('areaGaleria').innerHTML = htmlGaleria;
 }
 </script>
 
