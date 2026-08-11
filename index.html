@@ -56,7 +56,6 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
 <div id="telaInicial">
   <div class="logo-topo" id="logoPublico">
     <span>PADRONIZA<br>+LIVE ASSESSORIA</span>
-    <!-- AQUI APARECE O LOGO QUE VOCÊ CADASTRAR COMO ADMIN -->
     <img id="logoExibicao" src="" alt="Logo Padroniza Assessoria" style="display:none">
   </div>
 
@@ -65,7 +64,6 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
     <p>Seu sucesso nas lives começa aqui!</p>
   </div>
 
-  <!-- FOTOS DE EVENTOS E CONQUISTAS VISÍVEIS PARA TODOS -->
   <div class="area-exibicao" id="eventosExibicao" style="display:none">
     <h4 style="color:var(--amarelo);font-style:normal">📸 Nossos Eventos</h4>
     <img id="fotoEventos" src="" alt="Eventos Padroniza">
@@ -97,7 +95,6 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
     <h3 style="color:var(--verde);margin-bottom:12px">✅ Acesso liberado! Painel de Administração</h3>
     <p style="color:var(--cinza);text-align:center;margin-bottom:20px">Abaixo configure o que aparece para o público:</p>
 
-    <!-- 📸 CONFIGURAÇÃO DE FOTOS — SÓ ADMIN ALTERA -->
     <div class="bloco-fotos">
       <h4>🖼️ Logo da Agência</h4>
       <input type="file" class="campo-arquivo" accept="image/*" id="logoUpload">
@@ -116,7 +113,6 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
       <p style="font-size:13px;color:var(--cinza)">Escolha direto da galeria do celular</p>
     </div>
 
-    <!-- 📺 CADASTRO DE LIVES — CONTINUA COMO VOCÊ QUERIA -->
     <div class="bloco-fotos">
       <h4>📺 Cadastrar Lives e Capas</h4>
       <label style="display:block;margin:8px 0">📱 Live do Kako Live:</label>
@@ -131,7 +127,6 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
     <button class="btn-acao btn-verde" style="margin-top:10px" onclick="salvarTudo()">💾 SALVAR TODAS AS ALTERAÇÕES</button>
     <p style="font-size:13px;color:var(--cinza);text-align:center;margin-top:5px">✅ As fotos ficam visíveis para todos, mas só você pode alterar!</p>
 
-    <!-- 💸 VALORES PARA CONSULTA -->
     <h3 style="color:var(--amarelo);margin:25px 0 10px">💸 Valores dos Serviços:</h3>
     <div class="grid-servicos">
       <div class="servico-card">
@@ -169,7 +164,7 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
   </div>
 </div>
 
-<!-- ÁREAS DEMAIS — TUDO MANTIDO EXATAMENTE COMO ESTAVA -->
+<!-- ÁREA VISITANTE — TUDO MANTIDO -->
 <div class="conteudo" id="conteudoVisitante">
   <h2 class="titulo-secao">👤 Lives e Serviços</h2>
   <div class="destaque-gratis">
@@ -236,6 +231,7 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
   <button class="btn-acao btn-voltar" onclick="voltar()">Voltar</button>
 </div>
 
+<!-- ÁREA AGENCIADO — TUDO MANTIDO -->
 <div class="conteudo" id="conteudoAgenciado">
   <h2 class="titulo-secao">🎉 Bem-vindo(a) parceiro(a)!</h2>
   <div class="destaque-gratis">✅ TODOS os serviços são GRÁTIS para você!</div>
@@ -251,9 +247,68 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
   <button class="btn-acao btn-voltar" onclick="voltar()">Voltar</button>
 </div>
 
+<!-- 🤝 ÁREA DE OUTRAS AGÊNCIAS — AGORA COM TUDO O QUE VOCÊ PEDIU -->
 <div class="conteudo" id="conteudoOutraAgencia">
-  <h2 class="titulo-secao">🤝 Parcerias</h2>
-  <p style="text-align:center;color:var(--cinza);margin-bottom:15px">Vamos crescer juntos!</p>
+  <h2 class="titulo-secao">🤝 Parcerias para Agências</h2>
+  <p style="text-align:center;color:var(--cinza);margin-bottom:15px">Vamos crescer juntos! Conheça nossos serviços exclusivos para parceiros:</p>
+
+  <h3 style="color:var(--amarelo);margin-bottom:10px">💸 Serviços e Valores:</h3>
+  <div class="grid-servicos">
+    <div class="servico-card">
+      <h4>Pacote Completo <small style="color:var(--cinza)">(mensalidade)</small></h4>
+      <div class="preco">R$ 39,99/mês</div>
+      <div style="font-size:13px;color:var(--cinza)">Todos os serviços inclusos</div>
+    </div>
+    <div class="servico-card">
+      <h4>Música Personalizada</h4>
+      <div class="preco">R$ 20,00 unid.</div>
+      <div style="font-size:13px;color:var(--cinza)">Ou pacote com 6 por R$100,00</div>
+    </div>
+    <div class="servico-card">
+      <h4>Arte Visual</h4>
+      <div class="preco">R$ 10,00 unid.</div>
+      <div style="font-size:13px;color:var(--cinza)">Ou pacote com 10 por R$80,00</div>
+    </div>
+    <div class="servico-card">
+      <h4>Agendar Batalha <small style="color:var(--cinza)">(mensalidade)</small></h4>
+      <div class="preco">R$ 69,90/mês</div>
+      <div style="font-size:13px;color:var(--cinza)">Suporte completo</div>
+    </div>
+    <div class="servico-card">
+      <h4>Treinamento VIP</h4>
+      <div class="preco">R$ 9,99/mês</div>
+      <div style="font-size:13px;color:var(--cinza)">Grupo exclusivo + materiais</div>
+    </div>
+    <div class="servico-card">
+      <h4>Agenciamento</h4>
+      <div class="preco">GRÁTIS</div>
+      <div style="font-size:13px;color:var(--cinza)">Sem custos para parceiros</div>
+    </div>
+  </div>
+
+  <h3 style="color:var(--amarelo);margin-bottom:10px">💳 Chaves Pix para Pagamento:</h3>
+  <div class="destaque-pix">
+    <strong>Pacote Completo - R$39,99/mês:</strong><br>
+    00020101021126770014br.gov.bcb.pix01367c0dfbc3-68e7-4b85-a0eb-eb037b738d9f0215Pacote completo520400005303986540539.995802BR591965 8 0 M G DA SILVA6007VILHENA62070503***6304C43A
+  </div>
+  <div class="destaque-pix">
+    <strong>Treinamento VIP - R$9,99/mês:</strong><br>
+    00020101021126770014br.gov.bcb.pix01367c0dfbc3-68e7-4b85-a0eb-eb037b738d9f0215Treinamento vip52040000530398654049.995802BR591965 8 0 M G DA SILVA6007VILHENA62070503***63045E3B
+  </div>
+  <div class="destaque-pix">
+    <strong>Música Personalizada - R$20,00:</strong><br>
+    00020101021126820014br.gov.bcb.pix01367c0dfbc3-68e7-4b85-a0eb-eb037b738d9f0220musica personalizada520400005303986540520.005802BR591965 8 0 M G DA SILVA6007VILHENA62070503***6304E948
+  </div>
+  <div class="destaque-pix">
+    <strong>Arte Visual - R$10,00:</strong><br>
+    00020101021126730014br.gov.bcb.pix01367c0dfbc3-68e7-4b85-a0eb-eb037b738d9f0211arte visual520400005303986540510.005802BR591965 8 0 M G DA SILVA6007VILHENA62070503***6304D45F
+  </div>
+  <div class="destaque-pix">
+    <strong>Agendamento de Batalha - R$69,90/mês:</strong><br>
+    00020101021126840014br.gov.bcb.pix01367c0dfbc3-68e7-4b85-a0eb-eb037b738d9f0222Agendamento de batalha520400005303986540569.905802BR591965 8 0 M G DA SILVA6007VILHENA62070503***6304606A
+  </div>
+
+  <a href="https://wa.me/556981478873" target="_blank" class="btn-acao btn-whatsapp">💬 Solicitar Parceria ou Dúvidas</a>
   <button class="btn-acao btn-voltar" onclick="voltar()">Voltar</button>
 </div>
 
@@ -284,9 +339,7 @@ function verificarAdmin(){
   }
 }
 
-// FUNÇÃO PARA CARREGAR FOTOS DA GALERIA E SALVAR
 function salvarTudo(){
-  // Logo
   const logoArquivo = document.getElementById('logoUpload').files[0];
   if(logoArquivo){
     const leitor = new FileReader();
@@ -298,7 +351,6 @@ function salvarTudo(){
     leitor.readAsDataURL(logoArquivo);
   }
 
-  // Eventos
   const eventosArquivo = document.getElementById('eventosUpload').files[0];
   if(eventosArquivo){
     const leitor = new FileReader();
@@ -309,7 +361,6 @@ function salvarTudo(){
     leitor.readAsDataURL(eventosArquivo);
   }
 
-  // Conquistas
   const conquistasArquivo = document.getElementById('conquistasUpload').files[0];
   if(conquistasArquivo){
     const leitor = new FileReader();
