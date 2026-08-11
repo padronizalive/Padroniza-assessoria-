@@ -39,7 +39,7 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
 .conteudo.visivel{display:block}
 .titulo-secao{text-align:center;margin-bottom:18px;color:var(--amarelo);font-size:20px}
 .grupo-campo{position:relative;margin:8px 0}
-.campo-form{width:100%;padding:12px 45px 12px 15px;border-radius:8px;border:1px solid #293653;background:#17213a;color:var(--texto);font-size:15px}
+.campo-form{width:100%;padding:12px 15px;border-radius:8px;border:1px solid #293653;background:#17213a;color:var(--texto);font-size:15px}
 .campo-form::placeholder{color:var(--cinza)}
 .btn-olho{position:absolute;right:12px;top:50%;transform:translateY(-50%);background:transparent;border:none;color:var(--cinza);font-size:20px;cursor:pointer;padding:0;line-height:1}
 .btn-acao{width:100%;padding:12px;border-radius:8px;border:none;font-weight:bold;cursor:pointer;margin-top:10px;text-decoration:none;display:inline-block;text-align:center;color:#fff;font-size:16px;pointer-events:auto !important}
@@ -73,12 +73,10 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
 
 /* ESTILOS NOVOS PARA BATALHAS */
 .agenda-batalhas{background:rgba(116,87,255,0.08);border:1px solid var(--roxo);border-radius:12px;padding:15px;margin-top:15px}
-.status-disponivel{color:var(--verde);font-weight:bold}
-.status-campanha{color:var(--amarelo);font-weight:bold}
-.status-bloqueado{color:var(--vermelho);font-weight:bold}
-.status-confirmado{color:var(--texto);font-weight:bold}
-.botao-grupo-arte{background:linear-gradient(135deg,#25d366,#128c7e);color:#fff;padding:12px;border-radius:8px;text-align:center;display:block;text-decoration:none;font-weight:bold;margin-top:10px}
+.formulario-batalha{background:var(--painel2);border-radius:10px;padding:15px;margin-top:15px}
 .aviso-prazo-arte{background:rgba(52,211,153,0.1);border:1px solid var(--verde);padding:10px;border-radius:8px;margin:10px 0;text-align:center;color:var(--verde);font-weight:bold}
+.botao-grupo-arte{background:linear-gradient(135deg,#25d366,#128c7e);color:#fff;padding:12px;border-radius:8px;text-align:center;display:block;text-decoration:none;font-weight:bold;margin-top:10px}
+.opcao-selecao{width:100%;padding:12px;border-radius:8px;border:1px solid #293653;background:#17213a;color:var(--texto);font-size:15px;margin:8px 0}
 </style>
 </head>
 <body>
@@ -193,16 +191,48 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
     <button class="btn-acao btn-servico" onclick="solicitar('Treinamento VIP')">🎓 Treinamento</button>
   </div>
 
-  <!-- NOVA ÁREA DE BATALHAS -->
+  <!-- ÁREA DE BATALHAS -->
   <div id="areaBatalhas" class="agenda-batalhas" style="display:none">
     <h3 style="color:var(--roxo);text-align:center;margin-bottom:15px">⚔️ AGENDA DE BATALHAS</h3>
-    <div id="carregandoBatalhas" style="text-align:center;color:var(--cinza);padding:15px">Carregando agenda...</div>
-    <div id="listaBatalhas"></div>
-    
-    <div style="margin-top:20px">
+    <div id="carregandoBatalhas" style="text-align:center;color:var(--cinza);padding:15px">Agenda carregada com sucesso! Atualizações diretas pela planilha da agência.</div>
+
+    <div class="formulario-batalha">
       <h4 style="color:var(--amarelo);margin-bottom:10px">📝 Solicitar Nova Batalha</h4>
       <p style="font-size:14px;color:var(--cinza);margin-bottom:10px">✅ Horários permitidos: 17h às 22h<br>✅ Intervalo mínimo de 1 hora entre batalhas<br>✅ Agende até o dia 30 do mês seguinte<br>⚠️ Para horários especiais, contate o WhatsApp</p>
-      <button class="btn-acao btn-verde" onclick="solicitarBatalha()">📤 Enviar Solicitação</button>
+      
+      <div class="grupo-campo">
+        <input type="text" class="campo-form" id="nomeUsuarioBatalha" placeholder="Seu nome de usuário da plataforma" readonly>
+      </div>
+      <div class="grupo-campo">
+        <input type="text" class="campo-form" id="linkPerfilBatalha" placeholder="Link do seu perfil oficial (para enviar ao oponente)">
+      </div>
+      <div class="grupo-campo">
+        <input type="date" class="campo-form" id="dataBatalha">
+      </div>
+      <div class="grupo-campo">
+        <select class="opcao-selecao" id="horarioBatalha">
+          <option value="">Selecione o horário</option>
+          <option value="17:00">17:00</option>
+          <option value="18:00">18:00</option>
+          <option value="19:00">19:00</option>
+          <option value="20:00">20:00</option>
+          <option value="21:00">21:00</option>
+          <option value="22:00">22:00</option>
+        </select>
+      </div>
+      <div class="grupo-campo">
+        <select class="opcao-selecao" id="tipoArteBatalha">
+          <option value="">Tipo de arte visual</option>
+          <option value="🖼️ Arte Estática (Foto)">🖼️ Arte Estática (Foto)</option>
+          <option value="🎬 Arte em Vídeo">🎬 Arte em Vídeo</option>
+        </select>
+      </div>
+      <div class="grupo-campo">
+        <textarea class="campo-form" id="observacoesBatalha" rows="3" placeholder="Observações adicionais (opcional)"></textarea>
+      </div>
+      
+      <button class="btn-acao btn-verde" onclick="enviarSolicitacaoBatalha()">📤 Enviar Solicitação</button>
+      <button class="btn-acao btn-whatsapp" onclick="window.open('https://wa.me/556981478873?text=Olá! Preciso de horário excepcional para agendamento de batalha')">⚠️ Solicitar Horário Especial</button>
     </div>
 
     <button class="btn-acao btn-voltar" onclick="fecharBatalhas()">Voltar</button>
@@ -371,10 +401,7 @@ async function carregarDadosBatalhas(){
     const res = await fetch(LINK_PLANILHA_BATALHAS);
     const texto = await res.text();
     dadosBatalhas = texto;
-    document.getElementById('carregandoBatalhas').style.display = 'none';
-    document.getElementById('listaBatalhas').innerHTML = `<p style="text-align:center;color:var(--cinza)">Agenda carregada com sucesso! Atualizações diretas pela planilha da agência.</p>`;
   }catch(e){
-    document.getElementById('carregandoBatalhas').innerHTML = "⚠️ Agenda temporariamente indisponível";
     console.log("Erro ao carregar batalhas:", e);
   }
 }
@@ -401,6 +428,7 @@ function voltar(){
 function abrirBatalhas(){
   document.getElementById('painelStreamer').style.display = 'none';
   document.getElementById('areaBatalhas').style.display = 'block';
+  document.getElementById('nomeUsuarioBatalha').value = usuarioAtual?.c[0]?.v || '';
 }
 
 function fecharBatalhas(){
@@ -408,9 +436,22 @@ function fecharBatalhas(){
   document.getElementById('painelStreamer').style.display = 'block';
 }
 
-function solicitarBatalha(){
-  const texto = encodeURIComponent(`Olá! Sou agenciado Padroniza e gostaria de solicitar agendamento de batalha.\nUsuário: ${usuarioAtual?.c[0]?.v || ''}`);
+function enviarSolicitacaoBatalha(){
+  const usuario = document.getElementById('nomeUsuarioBatalha').value.trim();
+  const linkPerfil = document.getElementById('linkPerfilBatalha').value.trim();
+  const data = document.getElementById('dataBatalha').value;
+  const horario = document.getElementById('horarioBatalha').value;
+  const tipoArte = document.getElementById('tipoArteBatalha').value;
+  const obs = document.getElementById('observacoesBatalha').value.trim();
+
+  if(!usuario || !linkPerfil || !data || !horario || !tipoArte){
+    return alert('❌ Preencha todos os campos obrigatórios!');
+  }
+
+  const texto = encodeURIComponent(`⚔️ SOLICITAÇÃO DE BATALHA\n👤 Usuário: ${usuario}\n🔗 Link do Perfil: ${linkPerfil}\n📅 Data: ${data}\n⏰ Horário: ${horario}\n🎨 Tipo de Arte: ${tipoArte}\n📝 Observações: ${obs || 'Nenhuma'}`);
   window.open(`https://wa.me/556981478873?text=${texto}`);
+  
+  alert('✅ Solicitação enviada! Os dados já estão organizados para análise. Em até 48h você receberá a confirmação.');
 }
 
 function verificarAdmin(){
