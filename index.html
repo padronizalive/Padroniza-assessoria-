@@ -10,6 +10,11 @@
 body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
 .container{max-width:600px;margin:0 auto}
 
+/* LOGO NO TOPO DA PÁGINA INICIAL */
+.logo-topo{width:180px;height:180px;margin:0 auto 15px;display:flex;align-items:center;justify-content:center;background:var(--painel);border-radius:50%;border:3px solid var(--rosa);overflow:hidden}
+.logo-topo img{width:100%;height:100%;object-fit:contain}
+.logo-topo span{font-size:16px;font-weight:bold;color:var(--amarelo);text-align:center;padding:10px}
+
 .cabecalho{text-align:center;margin-bottom:20px}
 .cabecalho h1{font-size:26px;color:var(--amarelo)}
 .cabecalho p{color:var(--cinza)}
@@ -52,6 +57,11 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
 <div class="container">
 
 <div id="telaInicial">
+  <!-- LOGO DA AGÊNCIA NO TOPO, VISÍVEL PARA TODOS -->
+  <div class="logo-topo" id="logoPublico">
+    <span>PADRONIZA<br>+LIVE ASSESSORIA</span>
+  </div>
+
   <div class="cabecalho">
     <h1>PADRONIZA ASSESSORIA</h1>
     <p>Seu sucesso nas lives começa aqui!</p>
@@ -65,7 +75,7 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
   </div>
 </div>
 
-<!-- ÁREA ADMINISTRATIVA COMPLETA -->
+<!-- ÁREA ADMINISTRATIVA -->
 <div class="conteudo" id="conteudoAdmin">
   <h2 class="titulo-secao">🔐 ÁREA DA ADMINISTRAÇÃO</h2>
   
@@ -120,21 +130,21 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
       </div>
       <div class="servico-card">
         <h4>Agenciamento</h4>
-        <div class="preco text-green">TOTALMENTE GRÁTIS</div>
+        <div class="preco" style="color:var(--verde)">TOTALMENTE GRÁTIS</div>
         <p style="font-size:12px;color:var(--cinza)">Sem custos nenhum</p>
       </div>
     </div>
 
-    <!-- 3. GERENCIAR FOTOS QUE APARECEM PARA O PÚBLICO -->
-    <h3 style="color:var(--amarelo);margin-bottom:12px">🖼️ GERENCIAR FOTOS DO SITE (PÚBLICO)</h3>
-    <p style="color:var(--cinza);font-size:13px;margin-bottom:15px">Escolha da galeria ou cole o link — elas aparecem automaticamente para todos!</p>
+    <!-- 3. GERENCIAR FOTOS PÚBLICAS -->
+    <h3 style="color:var(--amarelo);margin-bottom:12px">🖼️ GERENCIAR FOTOS QUE APARECEM NO SITE</h3>
+    <p style="color:var(--cinza);font-size:13px;margin-bottom:15px">Escolha da galeria ou cole o link — elas já aparecem automaticamente para todos!</p>
 
     <div class="grupo-foto">
-      <p style="color:var(--amarelo);font-weight:bold">Logo da Agência:</p>
-      <div class="preview-foto" id="prevLogo">Clique abaixo para escolher</div>
-      <input type="file" id="fileLogo" accept="image/*" style="display:none" onchange="carregarFoto(this, 'prevLogo')">
-      <button class="btn-acao btn-foto" onclick="document.getElementById('fileLogo').click()">📷 ESCOLHER DA GALERIA</button>
-      <input type="url" class="campo-form" id="linkLogo" placeholder="Ou cole o link aqui">
+      <p style="color:var(--amarelo);font-weight:bold">📌 LOGO PRINCIPAL (TOPO DA PÁGINA INICIAL):</p>
+      <div class="preview-foto" id="prevLogo">Clique abaixo para escolher o logo</div>
+      <input type="file" id="fileLogo" accept="image/*" style="display:none" onchange="carregarLogo(this)">
+      <button class="btn-acao btn-foto" onclick="document.getElementById('fileLogo').click()">📷 TROCAR LOGO DA AGÊNCIA</button>
+      <input type="url" class="campo-form" id="linkLogo" placeholder="Ou cole o link do logo aqui">
     </div>
 
     <div class="grupo-foto">
@@ -165,7 +175,7 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
   </div>
 </div>
 
-<!-- OUTRAS ÁREAS MANTIDAS COMO ERA -->
+<!-- OUTRAS ÁREAS -->
 <div class="conteudo" id="conteudoAgenciado">
   <h2 class="titulo-secao">🎉 Bem-vindo(a) parceiro(a)!</h2>
   <div style="background:rgba(52,211,153,0.15);border:2px solid var(--verde);padding:14px;border-radius:10px;text-align:center;font-weight:bold;margin-bottom:18px">✅ TODOS os serviços são GRÁTIS para você!</div>
@@ -206,6 +216,17 @@ function verificarAdmin(){
     alert('❌ E-mail ou senha incorretos!');
   }
 }
+// Função exclusiva para carregar o logo que aparece na página inicial
+function carregarLogo(input){
+  if(input.files && input.files[0]){
+    const leitor = new FileReader();
+    leitor.onload = function(e){
+      document.getElementById('logoPublico').innerHTML = `<img src="${e.target.result}" alt="Logo Padroniza Assessoria">`;
+      document.getElementById('prevLogo').innerHTML = `<img src="${e.target.result}" alt="Logo escolhido">`;
+    };
+    leitor.readAsDataURL(input.files[0]);
+  }
+}
 function carregarFoto(input, idPreview){
   if(input.files && input.files[0]){
     const leitor = new FileReader();
@@ -219,7 +240,7 @@ function salvarTudo(){
   document.getElementById('avisoSalvo').style.display = 'block';
   setTimeout(() => {
     document.getElementById('avisoSalvo').style.display = 'none';
-    alert('✅ Pronto! Tudo salvo e já aparece para o público!');
+    alert('✅ Pronto! Logo e fotos já aparecem para todos que acessarem o site!');
   }, 2000);
 }
 </script>
