@@ -67,9 +67,9 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
 .pix-chave{background:rgba(255,200,87,0.08);border:1px solid var(--amarelo);padding:10px;border-radius:8px;margin:10px 0;font-size:12px;word-break:break-all;color:var(--amarelo)}
 .btn-copiar{background:var(--amarelo);color:#000;border:none;padding:10px 12px;border-radius:6px;font-weight:bold;cursor:pointer;width:100%;margin-top:8px;font-size:15px}
 .aviso-copiado{text-align:center;color:var(--verde);font-weight:bold;margin:8px 0;display:none}
+.area-link-capa{background:#000;padding:10px;border-radius:6px;margin:8px 0;border:1px solid var(--amarelo);word-break:break-all;font-size:11px;color:var(--amarelo)}
 .form-capa-streamer{background:rgba(52,211,153,0.08);border:1px solid var(--verde);border-radius:10px;padding:15px;margin:15px 0}
 .btn-salvar-capa{background:var(--verde);color:#fff;border:none;padding:12px;border-radius:6px;width:100%;font-weight:bold;cursor:pointer;margin-top:10px;font-size:16px}
-.link-capa-escondido{display:none}
 </style>
 </head>
 <body>
@@ -156,11 +156,12 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
       <button class="btn-salvar-capa" onclick="salvarCapaStreamer()">💾 Salvar Capa</button>
       
       <div id="avisoCapaSalva" class="aviso-capa" style="display:none">
-        <span style="font-weight:bold">✅ CAPA SALVA!</span><br>
+        <span style="font-weight:bold;color:var(--verde)">✅ CAPA SALVA!</span><br>
         Copie o link abaixo e cole na <strong>coluna H</strong> da sua linha na planilha:
-        <div id="linkCapaEscondido" class="link-capa-escondido"></div>
+        <div id="linkCapaMostrar" class="area-link-capa"></div>
         <button class="btn-copiar" onclick="copiarLinkCapa()">📋 COPIAR LINK DA CAPA</button>
         <p id="avisoCopiadoCapa" class="aviso-copiado">✅ LINK COPIADO COM SUCESSO!</p>
+        <p style="font-size:12px;color:var(--cinza);margin-top:5px">💡 Se o botão não funcionar: aperte e segure o texto acima e escolha "Copiar"</p>
       </div>
       <p style="font-size:13px;color:var(--cinza);text-align:center;margin-top:10px">✅ Depois de salvar na planilha, em até 2 minutos já aparece para todos!</p>
     </div>
@@ -294,15 +295,19 @@ function copiarPix(idDiv, botao){
     const aviso = botao.nextElementSibling;
     aviso.style.display = 'block';
     setTimeout(() => aviso.style.display = 'none', 3000);
-  }).catch(err => alert('Selecione o texto e copie manualmente.'));
+  }).catch(err => {
+    alert('💡 Selecione o texto com o dedo e escolha "Copiar"');
+  });
 }
 
 function copiarLinkCapa(){
-  if(!linkCapaNova) return;
+  if(!linkCapaNova) return alert('Primeiro salve a capa!');
   navigator.clipboard.writeText(linkCapaNova).then(() => {
     document.getElementById('avisoCopiadoCapa').style.display = 'block';
     setTimeout(() => document.getElementById('avisoCopiadoCapa').style.display = 'none', 3000);
-  }).catch(err => alert('Selecione o link manualmente.'));
+  }).catch(err => {
+    alert('💡 Aperte e segure o texto do link acima → escolha "Copiar"');
+  });
 }
 
 function carregarPreviaCapaStreamer(input){
@@ -322,7 +327,7 @@ function salvarCapaStreamer(){
   if(!linkCapaNova) return alert('Primeiro escolha uma foto da galeria!');
   if(!usuarioAtual) return alert('Acesse seu perfil primeiro!');
   
-  document.getElementById('linkCapaEscondido').innerText = linkCapaNova;
+  document.getElementById('linkCapaMostrar').innerText = linkCapaNova;
   document.getElementById('avisoCapaSalva').style.display = 'block';
   document.getElementById('minhaCapaLive').src = linkCapaNova;
 }
