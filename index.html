@@ -29,11 +29,12 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
 
 .lives-ao-vivo{background:rgba(52,211,153,0.08);border:1px solid var(--verde);border-radius:12px;padding:15px}
 .lives-ao-vivo h3{color:var(--verde);text-align:center;margin-bottom:12px}
-.cartao-live{background:var(--painel2);border-radius:10px;padding:12px;margin-bottom:10px}
-.cartao-live img{width:100%;height:140px;object-fit:cover;border-radius:8px;margin-bottom:8px;background:#222}
+.cartao-live{background:var(--painel2);border-radius:10px;padding:12px;margin-bottom:12px;overflow:hidden}
+.capa-live{width:100%;height:160px;object-fit:cover;border-radius:8px;margin-bottom:10px;background:#1a2440;border:1px solid #293653}
 .selo-ao-vivo{background:var(--vermelho);color:#fff;padding:4px 8px;border-radius:4px;font-size:13px;font-weight:bold;display:inline-block;margin-bottom:6px}
 .plataforma{color:var(--amarelo);font-weight:bold}
-.link-assistir{display:block;background:var(--verde);color:#fff;text-align:center;padding:10px;border-radius:6px;text-decoration:none;margin-top:8px;font-weight:bold}
+.nome-streamer{font-size:18px;font-weight:bold;margin:8px 0 4px}
+.link-assistir{display:block;background:var(--verde);color:#fff;text-align:center;padding:12px;border-radius:6px;text-decoration:none;margin-top:10px;font-weight:bold;font-size:16px}
 
 .conteudo{display:none;background:var(--painel);border-radius:12px;padding:20px;margin-bottom:20px}
 .conteudo.visivel{display:block}
@@ -80,10 +81,10 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
     <a href="https://www.tiktok.com/coin?rc=7TGXGN69&rie=" target="_blank" class="btn-principal btn-moedas">💰 COMPRAR MOEDAS TIKTOK</a>
   </div>
 
-  <!-- LISTA DE LIVES ABAIXO DOS BOTÕES -->
+  <!-- LISTA DE LIVES COM CAPAS EM DESTAQUE -->
   <div class="lives-ao-vivo" id="listaLives">
     <h3>🔴 LIVES AO VIVO AGORA!</h3>
-    <div id="carregandoLives" style="text-align:center;color:var(--cinza);padding:10px">Carregando...</div>
+    <div id="carregandoLives" style="text-align:center;color:var(--cinza);padding:20px">Carregando transmissões...</div>
   </div>
 </div>
 
@@ -186,13 +187,11 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
 </div>
 
 <script>
-// LINK DA SUA PLANILHA E DO BOTÃO DE MOEDAS JÁ INSERIDOS
 const LINK_PLANILHA = "https://docs.google.com/spreadsheets/d/1R9eUsqF4kA0y22ryMUIsvGolBfk3-XwZ5R-RVpBiZA4/gviz/tq?tqx=out:json";
 let dadosPlanilha = [];
 let usuarioAtual = null;
 let capaTemp = null;
 
-// Carrega dados ao abrir o site
 window.onload = async function(){
   await carregarDadosPlanilha();
   carregarLivesAoVivo();
@@ -244,7 +243,6 @@ function verificarAcesso(){
     usuarioAtual = encontrado;
     msg.innerHTML = '✅ Acesso liberado!';
     
-    // Preenche dados já cadastrados por VOCÊ na planilha
     document.getElementById('kakoPerfil').value = encontrado.c[5]?.v || '';
     document.getElementById('kakoLive').value = encontrado.c[6]?.v || '';
     document.getElementById('tiktokPerfil').value = encontrado.c[3]?.v || '';
@@ -253,7 +251,6 @@ function verificarAcesso(){
     document.getElementById('kakoAoVivo').checked = encontrado.c[8]?.v === true || encontrado.c[8]?.v?.toString().toUpperCase() === 'TRUE';
     document.getElementById('tiktokAoVivo').checked = encontrado.c[8]?.v === true || encontrado.c[8]?.v?.toString().toUpperCase() === 'TRUE';
 
-    // Mostra automaticamente a capa que VOCÊ cadastrou na planilha
     if(encontrado.c[7]?.v){
       document.getElementById('previaCapa').src = encontrado.c[7].v;
       document.getElementById('previaCapa').style.display = 'block';
@@ -312,15 +309,15 @@ function carregarLivesAoVivo(){
       const nome = cel[0]?.v || 'Streamer';
       const capa = cel[7]?.v || '';
       
-      // Kako
+      // Kako Live
       if(cel[6]?.v){
         lista.innerHTML += `
           <div class="cartao-live">
+            <img src="${capa}" alt="Capa da Live" class="capa-live" onerror="this.src='https://i.imgur.com/6ZbQkLb.png'">
             <span class="selo-ao-vivo">🔴 AO VIVO</span>
-            <img src="${capa}" alt="Capa Live" onerror="this.style.display='none'">
-            <p style="font-weight:bold">${nome}</p>
             <p class="plataforma">📱 Kako Live</p>
-            <a href="${cel[6].v}" target="_blank" class="link-assistir">▶️ Assistir</a>
+            <p class="nome-streamer">${nome}</p>
+            <a href="${cel[6].v}" target="_blank" class="link-assistir">▶️ Assistir Transmissão</a>
           </div>
         `;
       }
@@ -328,11 +325,11 @@ function carregarLivesAoVivo(){
       if(cel[4]?.v){
         lista.innerHTML += `
           <div class="cartao-live">
+            <img src="${capa}" alt="Capa da Live" class="capa-live" onerror="this.src='https://i.imgur.com/6ZbQkLb.png'">
             <span class="selo-ao-vivo">🔴 AO VIVO</span>
-            <img src="${capa}" alt="Capa Live" onerror="this.style.display='none'">
-            <p style="font-weight:bold">${nome}</p>
             <p class="plataforma">🎵 TikTok</p>
-            <a href="${cel[4].v}" target="_blank" class="link-assistir">▶️ Assistir</a>
+            <p class="nome-streamer">${nome}</p>
+            <a href="${cel[4].v}" target="_blank" class="link-assistir">▶️ Assistir Transmissão</a>
           </div>
         `;
       }
@@ -340,7 +337,7 @@ function carregarLivesAoVivo(){
   });
 
   if(!temLive){
-    lista.innerHTML += `<div style="text-align:center;color:var(--cinza);padding:10px">Nenhuma transmissão no momento</div>`;
+    lista.innerHTML += `<div style="text-align:center;color:var(--cinza);padding:20px">Nenhuma transmissão ao vivo no momento. Volte mais tarde!</div>`;
   }
 }
 
