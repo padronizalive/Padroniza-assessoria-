@@ -68,28 +68,26 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
   </div>
 </div>
 
-<!-- ÁREA ADMINISTRATIVA COM SENHA OCULTA -->
+<!-- ÁREA ADMINISTRATIVA CORRIGIDA E TESTADA -->
 <div class="conteudo" id="conteudoAdmin">
   <h2 class="titulo-secao">🔐 ÁREA DA ADMINISTRAÇÃO</h2>
   
-  <input type="email" class="campo-form" id="emailAdmin" placeholder="E-mail: padronizaassessoria@gmail.com">
-  <!-- AQUI AGORA A SENHA FICA OCULTA COM PONTOS -->
+  <input type="email" class="campo-form" id="emailAdmin" placeholder="Digite seu e-mail">
   <input type="password" class="campo-form" id="senhaAdmin" placeholder="Digite sua senha">
   
   <button class="btn-acao btn-verde" onclick="verificarAdmin()">🔑 ENTRAR</button>
   <button class="btn-acao btn-voltar" onclick="voltar()">Voltar</button>
 
   <div id="painelAdminCompleto" style="display:none;margin-top:25px">
-    <h3 style="color:var(--amarelo);margin-bottom:12px">✅ Acesso liberado! Painel de Administração</h3>
-    <p style="color:var(--cinza);text-align:center;margin-bottom:20px">Todas as funções de gestão continuam aqui como você já conhece!</p>
+    <h3 style="color:var(--verde);margin-bottom:12px">✅ Acesso liberado! Painel de Administração</h3>
+    <p style="color:var(--cinza);text-align:center;margin-bottom:20px">Todas as funções de gestão estão aqui!</p>
     <button class="btn-acao btn-voltar" onclick="voltar()">Sair e voltar ao início</button>
   </div>
 </div>
 
-<!-- ÁREA DO VISITANTE - TUDO COMO ESTAVA -->
+<!-- DEMAIS ÁREAS MANTIDAS EXATAMENTE COMO ESTAVAM -->
 <div class="conteudo" id="conteudoVisitante">
   <h2 class="titulo-secao">👤 Lives e Serviços</h2>
-
   <div class="destaque-gratis">
     🎁 QUER TODOS OS SERVIÇOS TOTALMENTE GRÁTIS?<br>
     Torne-se parceiro Padroniza agora mesmo!<br><br>
@@ -97,7 +95,6 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
     📱 Para o Kako Live: use o ID da Agência <strong>177766</strong><br>
     <small>Passo a passo: Centro de Host → Minha Agência → digite 177766 → Solicitar</small>
   </div>
-
   <h3 style="color:var(--amarelo);margin-bottom:10px">💸 Nossos Serviços e Valores:</h3>
   <div class="grid-servicos">
     <div class="servico-card">
@@ -130,7 +127,6 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
       <div class="gratis">✅ TOTALMENTE GRÁTIS</div>
     </div>
   </div>
-
   <h3 style="color:var(--amarelo);margin-bottom:10px">💳 Chaves Pix para Pagamento:</h3>
   <div class="destaque-pix">
     <strong>Pacote Completo - MENSALIDADE R$39,99:</strong><br>
@@ -152,12 +148,10 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
     <strong>Agendamento de Batalha - MENSALIDADE R$69,90:</strong><br>
     00020101021126840014br.gov.bcb.pix01367c0dfbc3-68e7-4b85-a0eb-eb037b738d9f0222Agendamento de batalha520400005303986540569.905802BR591965 8 0 M G DA SILVA6007VILHENA62070503***6304606A
   </div>
-
   <a href="https://wa.me/556981478873" target="_blank" class="btn-acao btn-whatsapp">💬 Tirar Dúvidas pelo WhatsApp</a>
   <button class="btn-acao btn-voltar" onclick="voltar()">Voltar</button>
 </div>
 
-<!-- ÁREAS OUTRAS MANTIDAS EXATAMENTE COMO ESTAVAM -->
 <div class="conteudo" id="conteudoAgenciado">
   <h2 class="titulo-secao">🎉 Bem-vindo(a) parceiro(a)!</h2>
   <div class="destaque-gratis">✅ TODOS os serviços são GRÁTIS para você!</div>
@@ -193,12 +187,17 @@ function voltar(){
   document.getElementById('painelAdminCompleto').style.display = 'none';
 }
 function verificarAdmin(){
+  // Verificação EXATA sem espaços ou erros
+  const emailCorreto = "padronizaassessoria@gmail.com";
+  const senhaCorreta = "agency2026";
+  
   const email = document.getElementById('emailAdmin').value.trim();
   const senha = document.getElementById('senhaAdmin').value.trim();
-  if(email === 'padronizaassessoria@gmail.com' && senha === 'agency2026'){
+  
+  if(email === emailCorreto && senha === senhaCorreta){
     document.getElementById('painelAdminCompleto').style.display = 'block';
   }else{
-    alert('❌ E-mail ou senha incorretos!');
+    alert('❌ E-mail ou senha incorretos! Verifique se não há espaços ou letras erradas.');
   }
 }
 function solicitar(servico){
