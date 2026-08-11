@@ -12,7 +12,7 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
 
 .logo-topo{width:140px;height:140px;border-radius:50%;border:3px solid var(--rosa);display:block;margin:0 auto 15px;background:#17213a;display:flex;align-items:center;justify-content:center;color:var(--rosa);font-weight:bold;font-size:16px;overflow:hidden}
 .logo-topo img{width:100%;height:100%;object-fit:cover}
-.banner-destaque{width:100%;height:180px;border-radius:12px;margin-bottom:20px;background:linear-gradient(45deg,var(--rosa),var(--roxo));display:flex;align-items:center;justify-content:center;color:#fff;font-weight:bold;font-size:18px;text-align:center;padding:15px;overflow:hidden}
+.banner-destaque{width:100%;height:180px;border-radius:12px;margin-bottom:20px;background:linear-gradient(45deg,var(--rosa),var(--roxo));display:flex;align-items:center;justify-content:center;color:#fff;font-weight:bold;font-size:18px;padding:15px;overflow:hidden}
 .banner-destaque img{width:100%;height:100%;object-fit:cover}
 .galeria-titulo{color:var(--amarelo);text-align:center;margin:25px 0 15px}
 .galeria-grade{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:20px}
@@ -53,9 +53,6 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
 .valor{font-weight:bold;font-size:18px;margin:8px 0}
 .valor-riscado{text-decoration:line-through;color:var(--cinza);margin-right:8px}
 .chave-pix{background:#052e16;border:1px solid var(--verde);padding:12px;border-radius:8px;margin:10px 0;word-break:break-all;font-size:12px;color:var(--verde);position:relative}
-.qr-pequeno{width:100px;height:100px;background:#fff;border-radius:8px;padding:5px;margin:10px auto;display:block;color:#000;text-align:center;font-size:12px;line-height:1.4}
-.aviso-copiado{position:fixed;top:20px;left:50%;transform:translateX(-50%);background:var(--verde);color:#fff;padding:12px 20px;border-radius:8px;font-weight:bold;z-index:999;display:none}
-.aviso-salvo{position:fixed;top:20px;left:50%;transform:translateX(-50%);background:var(--amarelo);color:#000;padding:12px 20px;border-radius:8px;font-weight:bold;z-index:999;display:none}
 .preview-foto{width:100%;height:180px;border-radius:8px;background:#17213a;border:2px dashed var(--rosa);display:flex;align-items:center;justify-content:center;color:var(--cinza);margin:8px 0;overflow:hidden}
 .preview-foto img{width:100%;height:100%;object-fit:cover}
 
@@ -107,7 +104,7 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
   </div>
 </div>
 
-<!-- ✅ ÁREA ATUALIZADA PARA AGENCIADOS -->
+<!-- ÁREA AGENCIADOS -->
 <div class="conteudo" id="conteudoAgenciado">
   <h2 class="titulo-secao">🎉 Bem-vindo(a) parceiro(a)!</h2>
   <div class="destaque-gratis">✅ TODOS os serviços são totalmente GRÁTIS para você! 🚀</div>
@@ -122,7 +119,6 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
   <button class="btn-acao btn-servico" onclick="solicitarServico('Divulgação e suporte')">📢 Solicitar Divulgação ou Suporte</button>
 
   <hr style="border-color:#293653;margin:20px 0">
-  <!-- 📢 ÁREA PARA CADASTRAR LIVE COM BOTÃO DE GALERIA -->
   <div class="area-cadastrar-live">
     <h3 style="color:var(--amarelo);text-align:center;margin-bottom:15px">📢 Cadastrar minha Live</h3>
     <p style="text-align:center;color:var(--cinza);margin-bottom:10px">Preencha os dados abaixo para aparecer no painel</p>
@@ -139,7 +135,6 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
     <input type="url" class="campo-form" id="linkPerfilTiktok" placeholder="🔗 Link do perfil no TikTok">
     <input type="url" class="campo-form" id="linkLive" placeholder="🔗 Link da live atual">
 
-    <!-- ✅ BOTÃO PARA ESCOLHER FOTO DA GALERIA -->
     <p style="color:var(--amarelo);font-weight:bold;margin-top:15px">🖼️ Capa da Live:</p>
     <div class="preview-foto" id="previewCapa">Clique abaixo para escolher a foto</div>
     <input type="file" id="escolherCapa" accept="image/*" style="display:none" onchange="carregarPreview(this)">
@@ -161,7 +156,7 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
   <button class="btn-acao btn-voltar" onclick="voltar()">Voltar</button>
 </div>
 
-<!-- SOU VISITANTE -->
+<!-- ÁREA VISITANTES -->
 <div class="conteudo" id="conteudoVisitante">
   <h2 class="titulo-secao">👤 Lives e Serviços</h2>
   <div class="painel-lives">
@@ -265,7 +260,7 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
 <div class="conteudo" id="conteudoAdmin">
   <h2 class="titulo-secao">🔐 Área da Administração</h2>
   <input type="email" class="campo-form" id="emailAdmin" placeholder="E-mail: padronizaassessoria@gmail.com">
-  <input type="password" class="campo-form" id="senhaAdmin" placeholder="Senha: agency2026.">
+  <input type="password" class="campo-form" id="senhaAdmin" placeholder="Senha: agency2026">
   <button class="btn-acao btn-verde" onclick="verificarAdmin()">🔑 Entrar</button>
   <button class="btn-acao btn-voltar" onclick="voltar()">Voltar</button>
 
@@ -373,7 +368,7 @@ function copiarChave(id){
 function verificarAdmin(){
   const email = document.getElementById('emailAdmin').value.trim();
   const senha = document.getElementById('senhaAdmin').value.trim();
-  if(email === 'padronizaassessoria@gmail.com' && senha === 'agency2026.'){
+  if(email === 'padronizaassessoria@gmail.com' && senha === 'agency2026'){
     document.getElementById('painelAdminFotos').style.display = 'block';
     const salvos = localStorage.getItem('configFotosAgencia');
     if(salvos){
