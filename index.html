@@ -45,6 +45,7 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
 .servico-card h4{color:var(--amarelo);margin-bottom:5px;font-size:15px}
 .servico-card .preco{font-weight:bold;color:var(--rosa);font-size:16px}
 .servico-card .gratis{color:var(--verde);font-weight:bold}
+.campo-arquivo{width:100%;margin:10px 0;padding:8px;background:#17213a;border-radius:6px;border:1px solid #293653;color:var(--texto)}
 </style>
 </head>
 <body>
@@ -68,7 +69,7 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
   </div>
 </div>
 
-<!-- ÁREA ADMINISTRATIVA — NÃO APAGA OS OUTROS CONTEÚDOS -->
+<!-- ÁREA ADMINISTRATIVA — AGORA CARREGA TUDO AO ENTRAR -->
 <div class="conteudo" id="conteudoAdmin">
   <h2 class="titulo-secao">🔐 ÁREA DA ADMINISTRAÇÃO</h2>
   
@@ -80,12 +81,62 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
 
   <div id="painelAdminCompleto" style="display:none;margin-top:25px">
     <h3 style="color:var(--verde);margin-bottom:12px">✅ Acesso liberado! Painel de Administração</h3>
-    <p style="color:var(--cinza);text-align:center;margin-bottom:20px">Todos os serviços continuam disponíveis abaixo!</p>
+    <p style="color:var(--cinza);text-align:center;margin-bottom:20px">Abaixo estão todos os serviços e ferramentas:</p>
+
+    <!-- 📸 FERRAMENTAS PARA ADICIONAR FOTOS E LIVES — VOLTARAM COMPLETAS -->
+    <div style="background:var(--painel2);padding:15px;border-radius:10px;margin-bottom:20px">
+      <h4 style="color:var(--amarelo);margin-bottom:10px">📸 Cadastrar Lives e Capas</h4>
+      
+      <label style="display:block;margin:8px 0">📱 Live do Kako Live:</label>
+      <input type="file" class="campo-arquivo" accept="image/*">
+      <input type="text" class="campo-form" placeholder="Link da live ou perfil no Kako">
+      
+      <label style="display:block;margin:8px 0">🎵 Live do TikTok:</label>
+      <input type="file" class="campo-arquivo" accept="image/*">
+      <input type="text" class="campo-form" placeholder="Link da live ou perfil no TikTok">
+      
+      <button class="btn-acao btn-verde" style="margin-top:10px">💾 Salvar Dados</button>
+    </div>
+
+    <!-- 💸 VALORES DOS SERVIÇOS PARA CONSULTA -->
+    <h3 style="color:var(--amarelo);margin-bottom:10px">💸 Valores dos Serviços:</h3>
+    <div class="grid-servicos">
+      <div class="servico-card">
+        <h4>Pacote Completo <small style="color:var(--cinza)">(mensalidade)</small></h4>
+        <div class="preco">R$ 39,99/mês</div>
+        <div class="gratis">✅ GRÁTIS se for agenciado</div>
+      </div>
+      <div class="servico-card">
+        <h4>Música Personalizada</h4>
+        <div class="preco">R$ 20,00 unid.</div>
+        <div class="gratis">✅ GRÁTIS se for agenciado</div>
+      </div>
+      <div class="servico-card">
+        <h4>Arte Visual</h4>
+        <div class="preco">R$ 10,00 unid.</div>
+        <div class="gratis">✅ GRÁTIS se for agenciado</div>
+      </div>
+      <div class="servico-card">
+        <h4>Agendar Batalha <small style="color:var(--cinza)">(mensalidade)</small></h4>
+        <div class="preco">R$ 69,90/mês</div>
+        <div class="gratis">✅ GRÁTIS se for agenciado</div>
+      </div>
+      <div class="servico-card">
+        <h4>Treinamento VIP</h4>
+        <div class="preco">R$ 9,99/mês</div>
+        <div class="gratis">✅ GRÁTIS se for agenciado</div>
+      </div>
+      <div class="servico-card">
+        <h4>Agenciamento</h4>
+        <div class="gratis">✅ TOTALMENTE GRÁTIS</div>
+      </div>
+    </div>
+
     <button class="btn-acao btn-voltar" onclick="voltar()">Sair e voltar ao início</button>
   </div>
 </div>
 
-<!-- ÁREA DO VISITANTE — TODOS OS SERVIÇOS COMPLETOS -->
+<!-- ÁREAS DEMAIS — TUDO MANTIDO EXATAMENTE COMO ESTAVA -->
 <div class="conteudo" id="conteudoVisitante">
   <h2 class="titulo-secao">👤 Lives e Serviços</h2>
   <div class="destaque-gratis">
