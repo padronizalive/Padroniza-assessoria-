@@ -10,6 +10,7 @@
 body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
 .container{max-width:600px;margin:0 auto}
 
+/* TELA INICIAL EXATAMENTE COMO VOCÊ QUER */
 .logo-topo{width:260px;height:200px;margin:0 auto 15px;display:flex;align-items:center;justify-content:center;background:var(--painel);border:3px solid var(--amarelo);border-radius:16px;text-align:center}
 .logo-topo h1{font-size:32px;color:var(--amarelo);font-weight:bold}
 .cabecalho{text-align:center;margin-bottom:20px}
@@ -24,6 +25,18 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
 .btn-outra-agencia{background:linear-gradient(135deg,#fbbf24,#f59e0b);color:#000}
 .btn-admin{background:linear-gradient(135deg,#8b5cf6,#6d28d9)}
 .btn-moedas{background:linear-gradient(135deg,#ec4899,#db2777)}
+
+/* LIVES NA TELA INICIAL */
+.lives-na-inicial{margin-top:30px}
+.titulo-lives-inicial{text-align:center;color:var(--amarelo);font-size:22px;margin-bottom:15px}
+.cartao-live{background:var(--painel2);border-radius:12px;padding:15px;margin-bottom:15px;border:1px solid #293653}
+.nome-streamer{font-size:20px;font-weight:bold;color:var(--amarelo);margin-bottom:10px}
+.btn-assistir{background:var(--verde);color:#fff;border:none;padding:12px 20px;border-radius:8px;font-weight:bold;font-size:16px;width:100%;margin-bottom:10px;cursor:pointer}
+.capa-live{width:100%;height:180px;border-radius:8px;background:#121a30;margin-bottom:10px;display:flex;align-items:center;justify-content:center;color:var(--cinza);font-size:14px;overflow:hidden}
+.capa-live img{width:100%;height:100%;object-fit:cover}
+.status-ao-vivo{display:inline-block;background:var(--vermelho);color:#fff;padding:6px 12px;border-radius:6px;font-weight:bold;font-size:14px;margin-right:10px}
+.plataforma-live{color:var(--verde);font-weight:bold;font-size:15px}
+.sem-lives{text-align:center;padding:30px;color:var(--cinza);font-size:16px}
 
 .conteudo{display:none;background:var(--painel);border-radius:12px;padding:20px;margin-bottom:20px}
 .conteudo.visivel{display:block}
@@ -40,30 +53,13 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
 .destaque-gratis{background:rgba(52,211,153,0.15);border:2px solid var(--verde);padding:16px;border-radius:10px;text-align:center;font-weight:bold;margin-bottom:18px}
 .pix-codigo{background:#00081a;padding:12px;border-radius:8px;border:1px solid var(--verde);word-break:break-all;font-size:13px;margin:10px 0;color:var(--verde)}
 .aviso-pagamento{text-align:center;color:var(--amarelo);font-weight:bold;margin:10px 0}
-
-.lista-lives{margin-top:20px}
-.cartao-live{background:var(--painel2);border-radius:12px;padding:15px;margin-bottom:15px;border:1px solid #293653}
-.nome-streamer{font-size:20px;font-weight:bold;color:var(--amarelo);margin-bottom:10px}
-.btn-assistir{background:var(--verde);color:#fff;border:none;padding:12px 20px;border-radius:8px;font-weight:bold;font-size:16px;width:100%;margin-bottom:10px;cursor:pointer}
-.capa-live{width:100%;height:180px;border-radius:8px;background:#121a30;margin-bottom:10px;display:flex;align-items:center;justify-content:center;color:var(--cinza);font-size:14px;overflow:hidden}
-.capa-live img{width:100%;height:100%;object-fit:cover}
-.status-ao-vivo{display:inline-block;background:var(--vermelho);color:#fff;padding:6px 12px;border-radius:6px;font-weight:bold;font-size:14px;margin-right:10px}
-.plataforma-live{color:var(--verde);font-weight:bold;font-size:15px}
-.sem-lives{text-align:center;padding:30px;color:var(--cinza);font-size:16px}
-
-.agenda-batalhas{background:rgba(116,87,255,0.08);border:1px solid var(--roxo);border-radius:12px;padding:15px;margin-top:20px}
-.formulario-batalha{background:var(--painel2);border-radius:10px;padding:15px;margin-top:15px}
-.batalhas-confirmadas{background:rgba(52,211,153,0.1);border:1px solid var(--verde);border-radius:10px;padding:15px;margin-bottom:15px;margin-top:20px}
-.opcao-selecao{width:100%;padding:12px;border-radius:8px;border:1px solid #293653;background:#17213a;color:var(--texto);font-size:15px;margin:8px 0}
-.aviso-batalha-existente{background:rgba(255,61,129,0.1);border:1px solid var(--rosa);border-radius:10px;padding:12px;margin-bottom:15px;display:none}
-.cartao-batalha{background:rgba(0,0,0,0.25);padding:12px;border-radius:8px;margin-bottom:8px;border-left:3px solid var(--verde)}
-.cartao-batalha p{margin:5px 0}
-.aviso-info{background:rgba(255,200,87,0.1);border:1px solid var(--amarelo);border-radius:8px;padding:12px;margin-bottom:15px;text-align:center}
+.link-agenciamento{background:rgba(116,87,255,0.1);border:1px solid var(--roxo);padding:15px;border-radius:10px;margin-bottom:20px}
 </style>
 </head>
 <body>
 <div class="container">
 
+<!-- TELA INICIAL COM BOTÕES NO TOPO E LIVES EMBAIXO -->
 <div id="telaInicial">
   <div class="logo-topo"><h1>PADRONIZA<br>ASSESSORIA</h1></div>
   <div class="cabecalho">
@@ -76,6 +72,12 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
     <button class="btn-principal btn-outra-agencia" onclick="abrir('outraAgencia')">🤝 SOU OUTRA AGÊNCIA</button>
     <button class="btn-principal btn-admin" onclick="abrir('admin')">🔐 ÁREA DA ADMINISTRAÇÃO</button>
     <a href="https://www.tiktok.com/coin?rc=7TGXGN69&rie=" target="_blank" class="btn-principal btn-moedas">💰 COMPRAR MOEDAS TIKTOK</a>
+  </div>
+
+  <!-- LIVES APARECENDO LOGO ABAIXO DOS BOTÕES NA TELA INICIAL -->
+  <div class="lives-na-inicial">
+    <h3 class="titulo-lives-inicial">🔴 LIVES AO VIVO</h3>
+    <div id="listaLivesInicial"></div>
   </div>
 </div>
 
@@ -102,32 +104,15 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
     <button class="btn-acao btn-servico" onclick="solicitar('treinamento')">🎓 Treinamento VIP</button>
   </div>
 
-  <div id="areaBatalhas" class="agenda-batalhas" style="display:none">
+  <div id="areaBatalhas" style="display:none;margin-top:20px">
     <h3 style="color:var(--roxo);text-align:center;margin-bottom:15px">⚔️ MINHAS BATALHAS</h3>
-    <div id="avisoTodasBatalhas" class="batalhas-confirmadas" style="display:none">
-      <h4 style="color:var(--verde);margin-bottom:10px;text-align:center">✅ BATALHAS CONFIRMADAS</h4>
-      <div id="listaTodasBatalhas"></div>
-    </div>
-    <div class="formulario-batalha">
-      <h4 style="color:var(--amarelo);margin-bottom:10px">📝 SOLICITAR NOVA BATALHA</h4>
-      <div class="aviso-info">💡 Você escolhe data e horário. A Padroniza irá encontrar o oponente para você!</div>
-      <div class="grupo-campo"><input type="text" class="campo-form" id="nomeUsuarioBatalha" placeholder="Seu nome de usuário" disabled></div>
-      <div class="grupo-campo"><input type="text" class="campo-form" id="linkPerfilBatalha" placeholder="Link do seu perfil" disabled></div>
-      <div class="grupo-campo"><input type="date" class="campo-form" id="dataBatalha" onchange="verificarBatalhaNaData()"></div>
-      <div class="grupo-campo">
-        <select class="opcao-selecao" id="horarioBatalha">
-          <option value="">Selecione o horário</option>
-          <option value="17:00">17:00</option><option value="18:00">18:00</option><option value="19:00">19:00</option>
-          <option value="20:00">20:00</option><option value="21:00">21:00</option><option value="22:00">22:00</option>
-        </select>
-      </div>
-      <div class="grupo-campo"><input type="text" class="campo-form" id="nomeOponenteExibicao" value="👤 Nome do oponente: Aguardando confirmação" disabled></div>
-      <div class="grupo-campo"><input type="text" class="campo-form" id="linkOponenteExibicao" value="🔗 Link do oponente: Aguardando confirmação" disabled></div>
-      <div class="grupo-campo"><textarea class="campo-form" id="observacoesBatalha" rows="3" placeholder="Observações (opcional)"></textarea></div>
-      <button id="btnEnviarBatalha" class="btn-acao btn-verde" onclick="enviarSolicitacaoBatalha()">📤 ENVIAR SOLICITAÇÃO</button>
-      <button class="btn-acao btn-whatsapp" onclick="window.open('https://wa.me/556981478873')">💬 Falar com a equipe</button>
-    </div>
-    <div id="avisoBatalhaExistente" class="aviso-batalha-existente"><h4 style="color:var(--rosa);margin-bottom:5px">⚠️ ATENÇÃO!</h4><p id="textoAvisoBatalha"></p></div>
+    <div class="grupo-campo"><input type="text" class="campo-form" id="nomeUsuarioBatalha" placeholder="Seu nome de usuário" disabled></div>
+    <div class="grupo-campo"><input type="text" class="campo-form" id="linkPerfilBatalha" placeholder="Link do seu perfil" disabled></div>
+    <div class="grupo-campo"><input type="date" class="campo-form" id="dataBatalha"></div>
+    <div class="grupo-campo"><select class="campo-form" id="horarioBatalha"><option value="">Horário</option><option>17h</option><option>18h</option><option>19h</option><option>20h</option><option>21h</option><option>22h</option></select></div>
+    <div class="grupo-campo"><input type="text" class="campo-form" id="nomeOponenteExibicao" value="👤 Nome do oponente: Aguardando confirmação" disabled></div>
+    <div class="grupo-campo"><input type="text" class="campo-form" id="linkOponenteExibicao" value="🔗 Link do oponente: Aguardando confirmação" disabled></div>
+    <button class="btn-acao btn-verde" onclick="enviarSolicitacaoBatalha()">📤 ENVIAR SOLICITAÇÃO</button>
     <button class="btn-acao btn-voltar" onclick="fecharBatalhas()">Voltar</button>
   </div>
 
@@ -135,18 +120,32 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
   <button class="btn-acao btn-voltar" onclick="voltar()">Voltar ao Início</button>
 </div>
 
+<!-- ÁREA DO VISITANTE: SEM LIVES, SÓ AGENCIAMENTO E SERVIÇOS -->
 <div class="conteudo" id="conteudoVisitante">
-  <h2 class="titulo-secao">🔴 LIVES AO VIVO</h2>
-  <div id="listaLives" class="lista-lives"></div>
+  <h2 class="titulo-secao">👤 BEM-VINDO(A)</h2>
+
+  <!-- CONVITE PARA SER AGENCIADO -->
+  <div class="link-agenciamento">
+    <h3 style="color:var(--verde);text-align:center;margin-bottom:10px">✅ QUER SER AGENCIADO? É TOTALMENTE GRÁTIS!</h3>
+    <p style="text-align:center;margin-bottom:15px">Acesse nossos serviços de graça fazendo parte da nossa equipe!</p>
+    <a href="https://www.tiktok.com/@gw.agency.oficial" target="_blank" class="btn-acao btn-verde">🎵 SOLICITAR PELO TIKTOK</a>
+    <div style="background:#00081a;padding:15px;border-radius:8px;margin:15px 0;text-align:center">
+      <p style="color:var(--amarelo);font-weight:bold;margin-bottom:8px">📱 SOLICITAR PELO KAKO LIVE</p>
+      <p style="font-size:16px">Baixe o aplicativo → Central de Host → Agência → Digite o ID: <strong style="color:var(--verde);font-size:20px">177766</strong> → Solicitar</p>
+    </div>
+    <a href="https://wa.me/556981478873" target="_blank" class="btn-acao btn-whatsapp">💬 Falar com a equipe para tirar dúvidas</a>
+  </div>
+
   <hr style="border-color:#293653;margin:25px 0">
+
+  <!-- SERVIÇOS COM PAGAMENTO -->
   <h2 class="titulo-secao">💼 SERVIÇOS DISPONÍVEIS</h2>
-  <div class="destaque-gratis">💡 Seja agenciado pela Padroniza e tenha TODOS esses serviços GRÁTIS!</div>
+  <p style="text-align:center;color:var(--cinza);margin-bottom:20px">Ou contrate nossos serviços avulsos ou pacotes:</p>
   
   <div style="background:var(--painel2);padding:15px;border-radius:10px;margin-bottom:15px">
     <h3 style="color:var(--amarelo);text-align:center">✅ PACOTE COMPLETO</h3>
     <p style="text-align:center;font-size:20px;font-weight:bold;color:var(--verde);margin:10px 0">De R$ 59,90 → por R$ 39,99/mês</p>
     <p style="text-align:center">Acesso a todos os serviços + 1 música por dia</p>
-    <p class="aviso-pagamento">Copie o código Pix abaixo ou escaneie o QR Code:</p>
     <div class="pix-codigo">00020101021126770014br.gov.bcb.pix01367c0dfbc3-68e7-4b85-a0eb-eb037b738d9f0215Pacote completo520400005303986540539.995802BR591965 8 0 M G DA SILVA6007VILHENA62070503***6304C43A</div>
     <button class="btn-acao btn-whatsapp" onclick="copiarPix(this,'00020101021126770014br.gov.bcb.pix01367c0dfbc3-68e7-4b85-a0eb-eb037b738d9f0215Pacote completo520400005303986540539.995802BR591965 8 0 M G DA SILVA6007VILHENA62070503***6304C43A')">📋 COPIAR CÓDIGO PIX</button>
     <button class="btn-acao btn-verde" onclick="enviarComprovante('Pacote Completo R$39,99')">✅ JÁ PAGUEI — ENVIAR COMPROVANTE</button>
@@ -195,12 +194,10 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
 <script>
 const LINK_PLANILHA = "https://docs.google.com/spreadsheets/d/1R9eUsqF4kA0y22ryMUIsvGolBfk3-XwZ5R-RVpBiZA4/gviz/tq?tqx=out:json";
 let dadosPlanilha = [];
-let usuarioAtual = null;
-let batalhasDoUsuario = [];
 
 window.onload = async function(){
   await carregarDadosPlanilha();
-  carregarLivesAoVivo();
+  carregarLivesNaInicial();
 };
 
 async function carregarDadosPlanilha(){
@@ -211,23 +208,35 @@ async function carregarDadosPlanilha(){
   }catch(e){console.log("Erro:",e);}
 }
 
-function carregarLivesAoVivo(){
-  const lista = document.getElementById('listaLives');
+// CARREGA AS LIVES DIRETO NA TELA INICIAL
+function carregarLivesNaInicial(){
+  const lista = document.getElementById('listaLivesInicial');
   if(!lista) return;
   lista.innerHTML = '';
   const temLive = dadosPlanilha.some(linha => linha.c[8]?.v === true || linha.c[8]?.v === 'true' || linha.c[8]?.v === 'SIM');
   if(!temLive){lista.innerHTML = `<div class="sem-lives">🔍 Nenhuma live ao vivo no momento. Volte mais tarde!</div>`;return;}
+  
   dadosPlanilha.forEach(linha => {
     if(!linha.c) return;
     const aoVivo = linha.c[8]?.v === true || linha.c[8]?.v === 'true' || linha.c[8]?.v === 'SIM';
     if(!aoVivo) return;
+    
     const nome = linha.c[0]?.v || 'Streamer';
     const capa = linha.c[7]?.v || '';
     const linkTiktok = linha.c[4]?.v || '';
     const linkKako = linha.c[6]?.v || '';
     const plataforma = linkTiktok ? 'TikTok' : (linkKako ? 'Kako Live' : '');
     const linkAssistir = linkTiktok || linkKako || '#';
-    lista.innerHTML += `<div class="cartao-live"><div class="nome-streamer">${nome}</div><button class="btn-assistir" onclick="window.open('${linkAssistir}','_blank')">▶️ Assistir</button><div class="capa-live">${capa?`<img src="${capa}" alt="Capa">`:'Capa da Live'}</div><span class="status-ao-vivo">🔴 AO VIVO</span> <span class="plataforma-live">🎵 ${plataforma}</span></div>`;
+    
+    lista.innerHTML += `
+      <div class="cartao-live">
+        <div class="nome-streamer">${nome}</div>
+        <button class="btn-assistir" onclick="window.open('${linkAssistir}','_blank')">▶️ Assistir</button>
+        <div class="capa-live">${capa?`<img src="${capa}" alt="Capa da live">`:'Capa da Live'}</div>
+        <span class="status-ao-vivo">🔴 AO VIVO</span>
+        <span class="plataforma-live">🎵 ${plataforma}</span>
+      </div>
+    `;
   });
 }
 
@@ -235,15 +244,11 @@ function abrir(id){
   document.querySelectorAll('.conteudo').forEach(c=>c.classList.remove('visivel'));
   document.getElementById('telaInicial').style.display = 'none';
   document.getElementById('conteudo'+id.charAt(0).toUpperCase()+id.slice(1)).classList.add('visivel');
-  if(id==='visitante') carregarLivesAoVivo();
 }
 
 function voltar(){
   document.querySelectorAll('.conteudo').forEach(c=>c.classList.remove('visivel'));
   document.getElementById('telaInicial').style.display = 'block';
-  document.getElementById('mensagemAcesso').innerHTML = '';
-  document.getElementById('painelStreamer').style.display = 'none';
-  document.getElementById('areaBatalhas').style.display = 'none';
 }
 
 function verificarAdmin(){
@@ -261,32 +266,16 @@ function verificarAcesso(){
     const encontrado = dadosPlanilha.find(linha => linha.c[0]?.v?.toString().trim().toLowerCase() === user.toLowerCase());
     if(!encontrado) return msg.innerHTML = '❌ Usuário não encontrado.';
     if(encontrado.c[1]?.v !== 'APROVADO') return msg.innerHTML = '⏳ Aguardando aprovação (até 48h).';
-    usuarioAtual = encontrado;
     msg.innerHTML = '✅ Acesso liberado!';
     document.getElementById('painelStreamer').style.display = 'block';
-    carregarMinhasBatalhas(user);
   }, 800);
-}
-
-function abrirBatalhas(){
-  document.getElementById('painelStreamer').style.display = 'none';
-  document.getElementById('areaBatalhas').style.display = 'block';
-  const user = usuarioAtual?.c[0]?.v || '';
-  const linkPerfil = usuarioAtual?.c[4]?.v || usuarioAtual?.c[6]?.v || '';
-  document.getElementById('nomeUsuarioBatalha').value = user;
-  document.getElementById('linkPerfilBatalha').value = linkPerfil;
-}
-
-function fecharBatalhas(){
-  document.getElementById('areaBatalhas').style.display = 'none';
-  document.getElementById('painelStreamer').style.display = 'block';
 }
 
 function solicitar(tipo){
   let texto = '';
-  if(tipo==='musica') texto = `Olá! Sou ${usuarioAtual?.c[0]?.v}. Gostaria de solicitar uma música personalizada.`;
-  if(tipo==='arte') texto = `Olá! Sou ${usuarioAtual?.c[0]?.v}. Gostaria de solicitar artes visuais.`;
-  if(tipo==='treinamento') texto = `Olá! Sou ${usuarioAtual?.c[0]?.v}. Gostaria de acesso ao Treinamento VIP.`;
+  if(tipo==='musica') texto = `Olá! Sou ${document.getElementById('usuarioAcesso').value}. Gostaria de solicitar uma música personalizada.`;
+  if(tipo==='arte') texto = `Olá! Sou ${document.getElementById('usuarioAcesso').value}. Gostaria de solicitar artes visuais.`;
+  if(tipo==='treinamento') texto = `Olá! Sou ${document.getElementById('usuarioAcesso').value}. Gostaria de acesso ao Treinamento VIP.`;
   window.open(`https://wa.me/556981478873?text=${encodeURIComponent(texto)}`);
 }
 
@@ -298,71 +287,20 @@ function copiarPix(botao,codigo){
 }
 
 function enviarComprovante(servico){
-  const texto = encodeURIComponent(`Olá! Acabei de pagar o serviço: ${servico}. Segue em anexo o comprovante.`);
+  const texto = encodeURIComponent(`Olá! Acabei de pagar o serviço: ${servico}. Segue o comprovante.`);
   window.open(`https://wa.me/556981478873?text=${texto}`);
 }
 
-function carregarMinhasBatalhas(nomeUsuario){
-  batalhasDoUsuario = [];
-  const lista = document.getElementById('listaTodasBatalhas');
-  const aviso = document.getElementById('avisoTodasBatalhas');
-  if(!lista || !aviso) return;
-  lista.innerHTML = '';
-  dadosPlanilha.forEach(linha => {
-    if(!linha.c) return;
-    const op1 = (linha.c[4]?.v || '').toString().trim().toLowerCase();
-    const op2 = (linha.c[6]?.v || '').toString().trim().toLowerCase();
-    const sit = (linha.c[9]?.v || '').toString().toUpperCase();
-    const user = nomeUsuario.trim().toLowerCase();
-    if((op1===user || op2===user) && sit.includes('CONFIRMADO')){
-      const ehPrimeiro = op1 === user;
-      const nomeOponente = ehPrimeiro ? (linha.c[6]?.v || 'A definir') : (linha.c[4]?.v || 'A definir');
-      const linkOponente = ehPrimeiro ? (linha.c[12]?.v || '') : (linha.c[11]?.v || '');
-      batalhasDoUsuario.push({data:linha.c[2]?.v||'Não definida',hora:linha.c[3]?.v||'Não definida',oponente:nomeOponente,linkOponente:linkOponente});
-    }
-  });
-  if(batalhasDoUsuario.length > 0){
-    const ultima = batalhasDoUsuario[batalhasDoUsuario.length -1];
-    if(ultima.oponente && ultima.oponente !== 'A definir'){
-      document.getElementById('nomeOponenteExibicao').value = `👤 Nome do oponente: ${ultima.oponente}`;
-      document.getElementById('nomeOponenteExibicao').style.color = 'var(--amarelo)';
-    }
-    if(ultima.linkOponente){
-      document.getElementById('linkOponenteExibicao').value = `🔗 Link do perfil do oponente: ${ultima.linkOponente}`;
-      document.getElementById('linkOponenteExibicao').style.color = 'var(--verde)';
-    }
-    aviso.style.display = 'block';
-    batalhasDoUsuario.forEach(b=>{
-      lista.innerHTML += `<div class="cartao-batalha"><p><strong>📅 Data:</strong> ${b.data}</p><p><strong>⏰ Horário:</strong> ${b.hora}</p><p><strong>👤 Meu oponente:</strong> ${b.oponente}</p>${b.linkOponente?`<p><strong>🔗 Perfil:</strong> <a href="${b.linkOponente}" target="_blank" style="color:var(--amarelo)">Acessar</a></p>`:''}</div>`;
-    });
-  } else aviso.style.display = 'none';
-}
-
-function verificarBatalhaNaData(){
-  const dataEscolhida = document.getElementById('dataBatalha').value;
-  const aviso = document.getElementById('avisoBatalhaExistente');
-  const btn = document.getElementById('btnEnviarBatalha');
-  const temBatalha = batalhasDoUsuario.some(b => b.data === dataEscolhida);
-  if(temBatalha){
-    aviso.style.display = 'block';
-    document.getElementById('textoAvisoBatalha').innerText = `Você já tem batalha confirmada dia ${dataEscolhida}!`;
-    btn.disabled = true; btn.style.opacity = '0.5';
-  } else {
-    aviso.style.display = 'none';
-    btn.disabled = false; btn.style.opacity = '1';
-  }
-}
-
+function abrirBatalhas(){document.getElementById('painelStreamer').style.display='none';document.getElementById('areaBatalhas').style.display='block';}
+function fecharBatalhas(){document.getElementById('areaBatalhas').style.display='none';document.getElementById('painelStreamer').style.display='block';}
 function enviarSolicitacaoBatalha(){
   const usuario = document.getElementById('nomeUsuarioBatalha').value.trim();
-  const linkPerfil = document.getElementById('linkPerfilBatalha').value.trim();
   const data = document.getElementById('dataBatalha').value;
   const horario = document.getElementById('horarioBatalha').value;
-  const obs = document.getElementById('observacoesBatalha').value.trim();
   if(!usuario || !data || !horario) return alert('❌ Preencha Data e Horário!');
-  const mensagem = encodeURIComponent(`⚔️ SOLICITAÇÃO\n👤 Usuário: ${usuario}\n🔗 Perfil: ${linkPerfil}\n📅 Data: ${data}\n⏰ Horário: ${horario}\n📝 Obs: ${obs||'Nenhuma'}`);
+  const mensagem = encodeURIComponent(`⚔️ SOLICITAÇÃO\n👤 Usuário: ${usuario}\n📅 Data: ${data}\n⏰ Horário: ${horario}`);
   window.open(`https://wa.me/556981478873?text=${mensagem}`);
-  alert('✅ Solicitação enviada! Atualizarei os dados assim que confirmado!');
+  alert('✅ Solicitação enviada!');
 }
 </script>
 </body>
