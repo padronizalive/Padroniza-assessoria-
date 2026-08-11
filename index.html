@@ -64,6 +64,9 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
 .dados-perfil p{margin:6px 0;color:var(--texto)}
 .dados-perfil a{color:var(--verde);text-decoration:none;font-weight:bold}
 .capa-minha-live{width:100%;height:180px;object-fit:cover;border-radius:8px;margin:10px 0;background:#1a2440;border:1px solid #293653}
+.pix-chave{background:rgba(255,200,87,0.08);border:1px solid var(--amarelo);padding:10px;border-radius:8px;margin:10px 0;font-size:12px;word-break:break-all;color:var(--amarelo)}
+.btn-copiar-pix{background:var(--amarelo);color:#000;border:none;padding:8px 12px;border-radius:6px;font-weight:bold;cursor:pointer;width:100%;margin-top:8px}
+.aviso-copiado{text-align:center;color:var(--verde);font-weight:bold;margin:8px 0;display:none}
 </style>
 </head>
 <body>
@@ -172,31 +175,47 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
   <div class="lista-servicos">
     <h3 style="color:var(--amarelo);text-align:center;margin-bottom:15px">💼 Serviços e Valores</h3>
     
+    <!-- PACOTE COMPLETO -->
     <div class="servico-item">
       <h4>📦 Pacote Completo</h4>
       <p>Todos os serviços + treinamento + suporte</p>
       <p class="valor"><span class="valor-riscado">R$ 59,90</span> <span class="destaque">APENAS R$ 39,99/mês</span></p>
+      <div class="pix-chave" id="pixPacote">00020101021126770014br.gov.bcb.pix01367c0dfbc3-68e7-4b85-a0eb-eb037b738d9f0215Pacote completo520400005303986540539.995802BR591965 8 0 M G DA SILVA6007VILHENA62070503***6304C43A</div>
+      <button class="btn-copiar-pix" onclick="copiarPix('pixPacote', this)">📋 COPIAR CHAVE PIX</button>
+      <p class="aviso-copiado">✅ CHAVE COPIADA COM SUCESSO!</p>
     </div>
 
+    <!-- MÚSICAS -->
     <div class="servico-item">
       <h4>🎵 Músicas Personalizadas</h4>
       <p>Avulso: <strong>R$ 20,00 cada</strong></p>
       <p>Pacote 6 unidades: <strong>R$ 100,00</strong></p>
+      <div class="pix-chave" id="pixMusica">00020101021126820014br.gov.bcb.pix01367c0dfbc3-68e7-4b85-a0eb-eb037b738d9f0220musica personalizada520400005303986540520.005802BR591965 8 0 M G DA SILVA6007VILHENA62070503***6304E948</div>
+      <button class="btn-copiar-pix" onclick="copiarPix('pixMusica', this)">📋 COPIAR CHAVE PIX</button>
+      <p class="aviso-copiado">✅ CHAVE COPIADA COM SUCESSO!</p>
     </div>
 
+    <!-- ARTES -->
     <div class="servico-item">
       <h4>🎨 Artes Visuais (Batalhas/Eventos)</h4>
       <p>Avulso: <strong>R$ 10,00 cada</strong></p>
       <p>Pacote 10 unidades: <strong>R$ 80,00</strong></p>
+      <div class="pix-chave" id="pixArte">00020101021126730014br.gov.bcb.pix01367c0dfbc3-68e7-4b85-a0eb-eb037b738d9f0211arte visual520400005303986540510.005802BR591965 8 0 M G DA SILVA6007VILHENA62070503***6304D45F</div>
+      <button class="btn-copiar-pix" onclick="copiarPix('pixArte', this)">📋 COPIAR CHAVE PIX</button>
+      <p class="aviso-copiado">✅ CHAVE COPIADA COM SUCESSO!</p>
     </div>
 
+    <!-- TREINAMENTO -->
     <div class="servico-item">
       <h4>🎓 Treinamento e Grupo VIP</h4>
       <p>Acesso exclusivo: <strong>R$ 9,99/mês</strong></p>
+      <div class="pix-chave" id="pixTreinamento">00020101021126770014br.gov.bcb.pix01367c0dfbc3-68e7-4b85-a0eb-eb037b738d9f0215Treinamento vip52040000530398654049.995802BR591965 8 0 M G DA SILVA6007VILHENA62070503***63045E3B</div>
+      <button class="btn-copiar-pix" onclick="copiarPix('pixTreinamento', this)">📋 COPIAR CHAVE PIX</button>
+      <p class="aviso-copiado">✅ CHAVE COPIADA COM SUCESSO!</p>
     </div>
   </div>
 
-  <a href="https://wa.me/556981478873" target="_blank" class="btn-acao btn-verde" style="margin-top:20px">💬 Solicitar serviço ou contratar</a>
+  <a href="https://wa.me/556981478873" target="_blank" class="btn-acao btn-verde" style="margin-top:20px">💬 Enviar comprovante e solicitar serviço</a>
   <button class="btn-acao btn-voltar" onclick="voltar()">Voltar</button>
 </div>
 
@@ -210,6 +229,9 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
       <h4>⚔️ Agendamento de Batalhas Oficiais</h4>
       <p>Serviço exclusivo para agências parceiras</p>
       <p class="valor"><span class="destaque">R$ 69,90/mês</span></p>
+      <div class="pix-chave" id="pixBatalha">00020101021126840014br.gov.bcb.pix01367c0dfbc3-68e7-4b85-a0eb-eb037b738d9f0222Agendamento de batalha520400005303986540569.995802BR591965 8 0 M G DA SILVA6007VILHENA62070503***6304606A</div>
+      <button class="btn-copiar-pix" onclick="copiarPix('pixBatalha', this)">📋 COPIAR CHAVE PIX</button>
+      <p class="aviso-copiado">✅ CHAVE COPIADA COM SUCESSO!</p>
     </div>
     <div class="servico-item">
       <h4>🎨 Artes, Músicas e Treinamento</h4>
@@ -233,7 +255,6 @@ let usuarioAtual = null;
 window.onload = async function(){
   await carregarDadosPlanilha();
   carregarLivesAoVivo();
-  // Carrega logo salvo permanentemente
   const logoSalvo = localStorage.getItem('logoPadroniza');
   if(logoSalvo) document.getElementById('logoPrincipal').src = logoSalvo;
 };
@@ -248,6 +269,18 @@ function mostrarSenha(idCampo, botao){
     campo.type = 'password';
     botao.innerText = '👁️';
   }
+}
+
+// Função para copiar chave Pix com um clique
+function copiarPix(idDiv, botao){
+  const chave = document.getElementById(idDiv).innerText;
+  navigator.clipboard.writeText(chave).then(() => {
+    const aviso = botao.nextElementSibling;
+    aviso.style.display = 'block';
+    setTimeout(() => { aviso.style.display = 'none'; }, 3000);
+  }).catch(err => {
+    alert('Não foi possível copiar automaticamente. Selecione o texto e copie manualmente.');
+  });
 }
 
 async function carregarDadosPlanilha(){
@@ -314,7 +347,6 @@ function salvarNovoLogo(){
 
   const novoLink = link || previa;
   document.getElementById('logoPrincipal').src = novoLink;
-  // Salva permanentemente, mesmo trocando código ou atualizando página
   localStorage.setItem('logoPadroniza', novoLink);
   
   aviso.innerHTML = '<span style="color:var(--verde)">✅ LOGO SALVO PERMANENTEMENTE!</span>';
