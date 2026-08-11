@@ -53,7 +53,7 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
 .aviso-pagamento{text-align:center;color:var(--amarelo);font-weight:bold;margin:10px 0}
 .link-agenciamento{background:rgba(116,87,255,0.1);border:1px solid var(--roxo);padding:15px;border-radius:10px;margin-bottom:20px}
 
-/* ESTILOS DO PAINEL ADMIN */
+/* ESTILOS DO PAINEL ADMIN — MANTIDOS EXATAMENTE COMO ESTAVA */
 .painel-admin{margin-top:20px}
 .cards-admin{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px}
 .card-admin{background:var(--painel2);padding:15px;border-radius:10px;text-align:center;border:1px solid #293653}
@@ -70,6 +70,13 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
 .valor-servico:last-child{border-bottom:none}
 .valor-servico .nome{color:var(--texto);font-weight:bold}
 .valor-servico .preco{color:var(--amarelo);font-weight:bold}
+
+/* ESTILOS EXTRA PARA MINHAS BATALHAS DO STREAMER */
+.titulo-batalhas-streamer{text-align:center;color:var(--roxo);margin:20px 0 12px 0}
+.tipo-batalha-streamer{margin:15px 0 8px 0;font-weight:bold;padding:8px 12px;border-radius:6px}
+.confirmada-streamer{background:rgba(52,211,153,0.15);color:var(--verde);border-left:3px solid var(--verde)}
+.pendente-streamer{background:rgba(255,200,87,0.15);color:var(--amarelo);border-left:3px solid var(--amarelo)}
+.sem-batalhas{text-align:center;color:var(--cinza);padding:15px;font-size:15px}
 </style>
 </head>
 <body>
@@ -98,7 +105,6 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
 <div class="conteudo" id="conteudoAdmin">
   <h2 class="titulo-secao">🔐 ÁREA DA ADMINISTRAÇÃO</h2>
   
-  <!-- TELA DE LOGIN ADMIN -->
   <div id="loginAdmin">
     <div class="grupo-campo"><input type="email" class="campo-form" id="emailAdmin" placeholder="E-mail: padronizaassessoria@gmail.com"></div>
     <div class="grupo-campo"><input type="password" class="campo-form" id="senhaAdmin" placeholder="Digite sua senha"></div>
@@ -106,11 +112,9 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
     <button class="btn-acao btn-voltar" onclick="voltar()">Voltar ao Início</button>
   </div>
 
-  <!-- PAINEL ADMIN QUE APARECE DEPOIS DO LOGIN -->
   <div id="painelAdmin" class="painel-admin" style="display:none">
     <h2 class="titulo-secao">👑 PAINEL DE CONTROLE</h2>
 
-    <!-- CARDS RESUMO -->
     <div class="cards-admin">
       <div class="card-admin"><h4>Agenciados Ativos</h4><p id="qtdAgenciados">0</p></div>
       <div class="card-admin"><h4>Lives Ao Vivo</h4><p id="qtdLives">0</p></div>
@@ -118,7 +122,6 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
       <div class="card-admin"><h4>Solicitações Pendentes</h4><p id="qtdPendentes">0</p></div>
     </div>
 
-    <!-- VALORES DOS SERVIÇOS -->
     <div class="area-dados">
       <h3>💸 VALORES DOS SERVIÇOS</h3>
       <div class="valor-servico"><span class="nome">Pacote Completo</span><span class="preco">R$ 39,99/mês</span></div>
@@ -128,7 +131,6 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
       <div class="valor-servico"><span class="nome">Agendamento Batalhas</span><span class="preco">R$ 69,90/mês</span></div>
     </div>
 
-    <!-- SOLICITAÇÕES DE AGENCIAMENTO -->
     <div class="area-dados">
       <h3>📋 SOLICITAÇÕES DE AGENCIAMENTO</h3>
       <div id="listaSolicitacoes">
@@ -143,7 +145,6 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
       </div>
     </div>
 
-    <!-- BATALHAS -->
     <div class="area-dados">
       <h3>⚔️ BATALHAS</h3>
       <h4 style="color:var(--verde);margin-bottom:8px">✅ Confirmadas</h4>
@@ -173,15 +174,41 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
   <p id="mensagemAcesso" style="text-align:center;margin:10px 0"></p>
   
   <div id="painelStreamer" style="display:none;margin-top:20px">
+
+    <!-- ✅ ÁREA DAS MINHAS BATALHAS — ACRESCENTADA -->
+    <h3 class="titulo-batalhas-streamer">⚔️ MINHAS BATALHAS</h3>
+
+    <h4 class="tipo-batalha-streamer confirmada-streamer">✅ BATALHAS CONFIRMADAS</h4>
+    <div class="area-dados" style="margin-bottom:10px">
+      <div class="item-lista">
+        <strong>Data:</strong> 12/08/2026 às 20h<br>
+        <strong>Plataforma:</strong> Kako Live<br>
+        <strong>Oponente:</strong> A definir<br>
+        <strong>Status:</strong> Confirmado pela agência ✅
+      </div>
+      <p class="sem-batalhas">Nenhuma outra batalha confirmada no momento</p>
+    </div>
+
+    <h4 class="tipo-batalha-streamer pendente-streamer">⏳ SOLICITAÇÕES / PENDENTES</h4>
+    <div class="area-dados" style="margin-bottom:20px">
+      <div class="item-lista">
+        <strong>Data:</strong> Aguardando solicitação<br>
+        <strong>Plataforma:</strong> —<br>
+        <strong>Status:</strong> —
+      </div>
+      <p class="sem-batalhas">Nenhuma solicitação pendente</p>
+    </div>
+    <!-- ✅ FIM DA ÁREA DE BATALHAS -->
+
     <p style="text-align:center;color:var(--amarelo);font-weight:bold;margin:15px 0">Solicitar Serviços:</p>
+    <button class="btn-acao btn-servico" onclick="abrirBatalhas()">⚔️ AGENDAR NOVA BATALHA</button>
     <button class="btn-acao btn-servico" onclick="solicitar('musica')">🎵 Músicas Personalizadas</button>
     <button class="btn-acao btn-servico" onclick="solicitar('arte')">🎨 Artes Visuais</button>
-    <button class="btn-acao btn-servico" onclick="abrirBatalhas()">⚔️ Agendar Batalha</button>
     <button class="btn-acao btn-servico" onclick="solicitar('treinamento')">🎓 Treinamento VIP</button>
   </div>
 
   <div id="areaBatalhas" style="display:none;margin-top:20px">
-    <h3 style="color:var(--roxo);text-align:center;margin-bottom:15px">⚔️ MINHAS BATALHAS</h3>
+    <h3 style="color:var(--roxo);text-align:center;margin-bottom:15px">📝 SOLICITAR BATALHA</h3>
     <div class="grupo-campo"><input type="text" class="campo-form" id="nomeUsuarioBatalha" placeholder="Seu nome de usuário" disabled></div>
     <div class="grupo-campo"><input type="text" class="campo-form" id="linkPerfilBatalha" placeholder="Link do seu perfil" disabled></div>
     <div class="grupo-campo"><input type="date" class="campo-form" id="dataBatalha"></div>
@@ -377,14 +404,16 @@ function verificarAcesso(){
     if(encontrado.c[1]?.v !== 'APROVADO') return msg.innerHTML = '⏳ Aguardando aprovação (até 48h).';
     msg.innerHTML = '✅ Acesso liberado!';
     document.getElementById('painelStreamer').style.display = 'block';
+    document.getElementById('nomeUsuarioBatalha').value = user;
   }, 800);
 }
 
 function solicitar(tipo){
   let texto = '';
-  if(tipo==='musica') texto = `Olá! Sou ${document.getElementById('usuarioAcesso').value}. Gostaria de solicitar uma música personalizada.`;
-  if(tipo==='arte') texto = `Olá! Sou ${document.getElementById('usuarioAcesso').value}. Gostaria de solicitar artes visuais.`;
-  if(tipo==='treinamento') texto = `Olá! Sou ${document.getElementById('usuarioAcesso').value}. Gostaria de acesso ao Treinamento VIP.`;
+  const user = document.getElementById('usuarioAcesso').value;
+  if(tipo==='musica') texto = `Olá! Sou ${user}. Gostaria de solicitar uma música personalizada.`;
+  if(tipo==='arte') texto = `Olá! Sou ${user}. Gostaria de solicitar artes visuais.`;
+  if(tipo==='treinamento') texto = `Olá! Sou ${user}. Gostaria de acesso ao Treinamento VIP.`;
   window.open(`https://wa.me/556981478873?text=${encodeURIComponent(texto)}`);
 }
 
@@ -407,9 +436,10 @@ function enviarSolicitacaoBatalha(){
   const data = document.getElementById('dataBatalha').value;
   const horario = document.getElementById('horarioBatalha').value;
   if(!usuario || !data || !horario) return alert('❌ Preencha Data e Horário!');
-  const mensagem = encodeURIComponent(`⚔️ SOLICITAÇÃO\n👤 Usuário: ${usuario}\n📅 Data: ${data}\n⏰ Horário: ${horario}`);
+  const mensagem = encodeURIComponent(`⚔️ SOLICITAÇÃO DE BATALHA\n👤 Usuário: ${usuario}\n📅 Data: ${data}\n⏰ Horário: ${horario}`);
   window.open(`https://wa.me/556981478873?text=${mensagem}`);
-  alert('✅ Solicitação enviada!');
+  alert('✅ Solicitação enviada! Acompanhe aqui no seu espaço o status.');
+  fecharBatalhas();
 }
 </script>
 </body>
