@@ -44,6 +44,7 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
 .btn-salvar{background:var(--amarelo);color:#000;margin-top:15px}
 .btn-servico{background:linear-gradient(135deg,var(--rosa),var(--roxo));margin:8px 0;font-size:15px}
 .btn-foto{background:linear-gradient(135deg,#ec4899,var(--rosa));margin:8px 0;font-size:15px}
+.btn-foto-pequeno{padding:10px;font-size:14px;margin:5px 0}
 
 .destaque-gratis{background:rgba(52,211,153,0.15);border:2px solid var(--verde);padding:14px;border-radius:10px;text-align:center;font-weight:bold;margin-bottom:18px}
 .link-plataforma{background:var(--painel2);padding:12px;border-radius:8px;margin:10px 0;word-break:break-all}
@@ -55,6 +56,8 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
 .chave-pix{background:#052e16;border:1px solid var(--verde);padding:12px;border-radius:8px;margin:10px 0;word-break:break-all;font-size:12px;color:var(--verde);position:relative}
 .preview-foto{width:100%;height:180px;border-radius:8px;background:#17213a;border:2px dashed var(--rosa);display:flex;align-items:center;justify-content:center;color:var(--cinza);margin:8px 0;overflow:hidden}
 .preview-foto img{width:100%;height:100%;object-fit:cover}
+.preview-foto-mini{width:100%;height:120px;border-radius:8px;background:#17213a;border:2px dashed var(--rosa);display:flex;align-items:center;justify-content:center;color:var(--cinza);margin:5px 0;overflow:hidden}
+.preview-foto-mini img{width:100%;height:100%;object-fit:cover}
 
 .painel-lives{margin-top:15px}
 .live-card{background:var(--painel2);border-radius:10px;padding:12px;margin-bottom:12px;border-left:4px solid var(--rosa)}
@@ -68,6 +71,7 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
 .dica-admin{font-size:13px;color:var(--cinza);margin:5px 0 15px;text-align:center}
 .checkbox-live{display:flex;align-items:center;gap:8px;margin:10px 0;color:var(--texto);font-size:15px}
 .texto-opcional{font-size:13px;color:var(--cinza);text-align:right;margin-bottom:5px}
+.grupo-foto{margin-bottom:15px}
 </style>
 </head>
 <body>
@@ -267,14 +271,55 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
   <div id="painelAdminFotos" style="display:none;margin-top:25px">
     <hr style="border-color:#293653;margin-bottom:20px">
     <h3 style="color:var(--amarelo);text-align:center;margin-bottom:15px">🖼️ Gerenciar Fotos da Agência</h3>
-    <p class="dica-admin">💡 Salve suas fotos no Google Fotos/Drive, pegue o link público e cole abaixo:</p>
+    <p class="dica-admin">💡 Escolha as fotos direto da galeria do seu celular ou cole o link</p>
 
-    <input type="url" class="campo-form" id="linkLogo" placeholder="🔗 Link do Logo da Agência">
-    <input type="url" class="campo-form" id="linkBanner" placeholder="🔗 Link do Banner Principal">
-    <input type="url" class="campo-form" id="linkFoto1" placeholder="🔗 Link da Foto 1 (Live/Evento)">
-    <input type="url" class="campo-form" id="linkFoto2" placeholder="🔗 Link da Foto 2 (Treinamento)">
-    <input type="url" class="campo-form" id="linkFoto3" placeholder="🔗 Link da Foto 3 (Batalha)">
-    <input type="url" class="campo-form" id="linkFoto4" placeholder="🔗 Link da Foto 4 (Conquistas)">
+    <div class="grupo-foto">
+      <p style="color:var(--amarelo);font-weight:bold">Logo da Agência:</p>
+      <div class="preview-foto-mini" id="prevLogo">Clique abaixo</div>
+      <input type="file" id="fileLogo" accept="image/*" style="display:none" onchange="carregarFoto(this, 'prevLogo', 'logoBase64')">
+      <button class="btn-acao btn-foto btn-foto-pequeno" onclick="document.getElementById('fileLogo').click()">📷 Escolher da galeria</button>
+      <input type="url" class="campo-form" id="linkLogo" placeholder="Ou cole o link aqui">
+    </div>
+
+    <div class="grupo-foto">
+      <p style="color:var(--amarelo);font-weight:bold">Banner Principal:</p>
+      <div class="preview-foto-mini" id="prevBanner">Clique abaixo</div>
+      <input type="file" id="fileBanner" accept="image/*" style="display:none" onchange="carregarFoto(this, 'prevBanner', 'bannerBase64')">
+      <button class="btn-acao btn-foto btn-foto-pequeno" onclick="document.getElementById('fileBanner').click()">📷 Escolher da galeria</button>
+      <input type="url" class="campo-form" id="linkBanner" placeholder="Ou cole o link aqui">
+    </div>
+
+    <div class="grupo-foto">
+      <p style="color:var(--amarelo);font-weight:bold">Foto 1 (Live/Evento):</p>
+      <div class="preview-foto-mini" id="prevFoto1">Clique abaixo</div>
+      <input type="file" id="fileFoto1" accept="image/*" style="display:none" onchange="carregarFoto(this, 'prevFoto1', 'foto1Base64')">
+      <button class="btn-acao btn-foto btn-foto-pequeno" onclick="document.getElementById('fileFoto1').click()">📷 Escolher da galeria</button>
+      <input type="url" class="campo-form" id="linkFoto1" placeholder="Ou cole o link aqui">
+    </div>
+
+    <div class="grupo-foto">
+      <p style="color:var(--amarelo);font-weight:bold">Foto 2 (Treinamento):</p>
+      <div class="preview-foto-mini" id="prevFoto2">Clique abaixo</div>
+      <input type="file" id="fileFoto2" accept="image/*" style="display:none" onchange="carregarFoto(this, 'prevFoto2', 'foto2Base64')">
+      <button class="btn-acao btn-foto btn-foto-pequeno" onclick="document.getElementById('fileFoto2').click()">📷 Escolher da galeria</button>
+      <input type="url" class="campo-form" id="linkFoto2" placeholder="Ou cole o link aqui">
+    </div>
+
+    <div class="grupo-foto">
+      <p style="color:var(--amarelo);font-weight:bold">Foto 3 (Batalha):</p>
+      <div class="preview-foto-mini" id="prevFoto3">Clique abaixo</div>
+      <input type="file" id="fileFoto3" accept="image/*" style="display:none" onchange="carregarFoto(this, 'prevFoto3', 'foto3Base64')">
+      <button class="btn-acao btn-foto btn-foto-pequeno" onclick="document.getElementById('fileFoto3').click()">📷 Escolher da galeria</button>
+      <input type="url" class="campo-form" id="linkFoto3" placeholder="Ou cole o link aqui">
+    </div>
+
+    <div class="grupo-foto">
+      <p style="color:var(--amarelo);font-weight:bold">Foto 4 (Conquistas):</p>
+      <div class="preview-foto-mini" id="prevFoto4">Clique abaixo</div>
+      <input type="file" id="fileFoto4" accept="image/*" style="display:none" onchange="carregarFoto(this, 'prevFoto4', 'foto4Base64')">
+      <button class="btn-acao btn-foto btn-foto-pequeno" onclick="document.getElementById('fileFoto4').click()">📷 Escolher da galeria</button>
+      <input type="url" class="campo-form" id="linkFoto4" placeholder="Ou cole o link aqui">
+    </div>
 
     <button class="btn-acao btn-salvar" onclick="salvarFotos()">💾 SALVAR E ATUALIZAR</button>
   </div>
@@ -284,6 +329,7 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
 
 <script>
 let capaBase64 = '';
+let logoBase64 = '', bannerBase64 = '', foto1Base64 = '', foto2Base64 = '', foto3Base64 = '', foto4Base64 = '';
 
 window.onload = function(){
   const dadosSalvos = localStorage.getItem('configFotosAgencia');
@@ -311,6 +357,17 @@ function carregarPreview(input){
     leitor.onload = function(e){
       capaBase64 = e.target.result;
       document.getElementById('previewCapa').innerHTML = `<img src="${capaBase64}" alt="Capa escolhida">`;
+    };
+    leitor.readAsDataURL(input.files[0]);
+  }
+}
+
+function carregarFoto(input, idPreview, idVariavel){
+  if(input.files && input.files[0]){
+    const leitor = new FileReader();
+    leitor.onload = function(e){
+      window[idVariavel] = e.target.result;
+      document.getElementById(idPreview).innerHTML = `<img src="${window[idVariavel]}" alt="Foto escolhida">`;
     };
     leitor.readAsDataURL(input.files[0]);
   }
@@ -373,12 +430,18 @@ function verificarAdmin(){
     const salvos = localStorage.getItem('configFotosAgencia');
     if(salvos){
       const d = JSON.parse(salvos);
-      document.getElementById('linkLogo').value = d.logo || '';
-      document.getElementById('linkBanner').value = d.banner || '';
-      document.getElementById('linkFoto1').value = d.foto1 || '';
-      document.getElementById('linkFoto2').value = d.foto2 || '';
-      document.getElementById('linkFoto3').value = d.foto3 || '';
-      document.getElementById('linkFoto4').value = d.foto4 || '';
+      document.getElementById('linkLogo').value = d.linkLogo || '';
+      document.getElementById('linkBanner').value = d.linkBanner || '';
+      document.getElementById('linkFoto1').value = d.linkFoto1 || '';
+      document.getElementById('linkFoto2').value = d.linkFoto2 || '';
+      document.getElementById('linkFoto3').value = d.linkFoto3 || '';
+      document.getElementById('linkFoto4').value = d.linkFoto4 || '';
+      if(d.logoImg) { logoBase64 = d.logoImg; document.getElementById('prevLogo').innerHTML = `<img src="${logoBase64}" alt="Logo">`; }
+      if(d.bannerImg) { bannerBase64 = d.bannerImg; document.getElementById('prevBanner').innerHTML = `<img src="${bannerBase64}" alt="Banner">`; }
+      if(d.foto1Img) { foto1Base64 = d.foto1Img; document.getElementById('prevFoto1').innerHTML = `<img src="${foto1Base64}" alt="Foto 1">`; }
+      if(d.foto2Img) { foto2Base64 = d.foto2Img; document.getElementById('prevFoto2').innerHTML = `<img src="${foto2Base64}" alt="Foto 2">`; }
+      if(d.foto3Img) { foto3Base64 = d.foto3Img; document.getElementById('prevFoto3').innerHTML = `<img src="${foto3Base64}" alt="Foto 3">`; }
+      if(d.foto4Img) { foto4Base64 = d.foto4Img; document.getElementById('prevFoto4').innerHTML = `<img src="${foto4Base64}" alt="Foto 4">`; }
     }
   }else{
     alert('❌ E-mail ou senha incorretos!');
@@ -387,12 +450,18 @@ function verificarAdmin(){
 
 function salvarFotos(){
   const config = {
-    logo: document.getElementById('linkLogo').value.trim(),
-    banner: document.getElementById('linkBanner').value.trim(),
-    foto1: document.getElementById('linkFoto1').value.trim(),
-    foto2: document.getElementById('linkFoto2').value.trim(),
-    foto3: document.getElementById('linkFoto3').value.trim(),
-    foto4: document.getElementById('linkFoto4').value.trim()
+    linkLogo: document.getElementById('linkLogo').value.trim(),
+    linkBanner: document.getElementById('linkBanner').value.trim(),
+    linkFoto1: document.getElementById('linkFoto1').value.trim(),
+    linkFoto2: document.getElementById('linkFoto2').value.trim(),
+    linkFoto3: document.getElementById('linkFoto3').value.trim(),
+    linkFoto4: document.getElementById('linkFoto4').value.trim(),
+    logoImg: logoBase64,
+    bannerImg: bannerBase64,
+    foto1Img: foto1Base64,
+    foto2Img: foto2Base64,
+    foto3Img: foto3Base64,
+    foto4Img: foto4Base64
   };
   localStorage.setItem('configFotosAgencia', JSON.stringify(config));
   aplicarFotos(config);
@@ -402,13 +471,13 @@ function salvarFotos(){
 }
 
 function aplicarFotos(d){
-  if(d.logo) document.getElementById('areaLogo').innerHTML = `<img src="${d.logo}" alt="Logo">`;
-  if(d.banner) document.getElementById('areaBanner').innerHTML = `<img src="${d.banner}" alt="Banner">`;
+  if(d.logoImg || d.linkLogo) document.getElementById('areaLogo').innerHTML = `<img src="${d.logoImg || d.linkLogo}" alt="Logo">`;
+  if(d.bannerImg || d.linkBanner) document.getElementById('areaBanner').innerHTML = `<img src="${d.bannerImg || d.linkBanner}" alt="Banner">`;
   let htmlGaleria = '';
-  if(d.foto1) htmlGaleria += `<div class="foto-item"><img src="${d.foto1}" alt="Foto 1"></div>`;
-  if(d.foto2) htmlGaleria += `<div class="foto-item"><img src="${d.foto2}" alt="Foto 2"></div>`;
-  if(d.foto3) htmlGaleria += `<div class="foto-item"><img src="${d.foto3}" alt="Foto 3"></div>`;
-  if(d.foto4) htmlGaleria += `<div class="foto-item"><img src="${d.foto4}" alt="Foto 4"></div>`;
+  if(d.foto1Img || d.linkFoto1) htmlGaleria += `<div class="foto-item"><img src="${d.foto1Img || d.linkFoto1}" alt="Foto 1"></div>`;
+  if(d.foto2Img || d.linkFoto2) htmlGaleria += `<div class="foto-item"><img src="${d.foto2Img || d.linkFoto2}" alt="Foto 2"></div>`;
+  if(d.foto3Img || d.linkFoto3) htmlGaleria += `<div class="foto-item"><img src="${d.foto3Img || d.linkFoto3}" alt="Foto 3"></div>`;
+  if(d.foto4Img || d.linkFoto4) htmlGaleria += `<div class="foto-item"><img src="${d.foto4Img || d.linkFoto4}" alt="Foto 4"></div>`;
   if(htmlGaleria) document.getElementById('areaGaleria').innerHTML = htmlGaleria;
 }
 </script>
