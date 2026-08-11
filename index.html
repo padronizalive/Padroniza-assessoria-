@@ -50,14 +50,26 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
 .btn-whatsapp{background:linear-gradient(135deg,#25d366,#128c7e);margin-top:15px}
 .destaque-gratis{background:rgba(52,211,153,0.15);border:2px solid var(--verde);padding:16px;border-radius:10px;text-align:center;font-weight:bold;margin-bottom:18px}
 .pix-codigo{background:#00081a;padding:12px;border-radius:8px;border:1px solid var(--verde);word-break:break-all;font-size:13px;margin:10px 0;color:var(--verde)}
+.aviso-pagamento{text-align:center;color:var(--amarelo);font-weight:bold;margin:10px 0}
 .link-agenciamento{background:rgba(116,87,255,0.1);border:1px solid var(--roxo);padding:15px;border-radius:10px;margin-bottom:20px}
+
+/* ESTILOS DO PAINEL ADMIN */
+.painel-admin{margin-top:20px}
+.cards-admin{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px}
+.card-admin{background:var(--painel2);padding:15px;border-radius:10px;text-align:center;border:1px solid #293653}
+.card-admin h4{color:var(--amarelo);margin-bottom:5px}
+.card-admin p{font-size:22px;font-weight:bold;color:var(--verde)}
 .area-dados{background:var(--painel2);border-radius:10px;padding:15px;margin-bottom:15px}
+.area-dados h3{color:var(--roxo);margin-bottom:12px;text-align:center}
 .item-lista{padding:12px;border-bottom:1px solid #293653;margin-bottom:8px}
 .item-lista:last-child{border-bottom:none}
 .item-lista strong{color:var(--amarelo)}
-.tipo-batalha{margin:15px 0 8px 0;font-weight:bold}
-.tipo-batalha.confirmada{color:var(--verde)}
-.tipo-batalha.pendente{color:var(--amarelo)}
+.btn-aprovar{background:var(--verde);border:none;padding:8px 12px;border-radius:6px;color:#fff;font-weight:bold;margin:5px 5px 5px 0;cursor:pointer}
+.btn-rejeitar{background:var(--vermelho);border:none;padding:8px 12px;border-radius:6px;color:#fff;font-weight:bold;margin:5px 5px 5px 0;cursor:pointer}
+.valor-servico{display:flex;justify-content:space-between;padding:10px;border-bottom:1px solid #293653}
+.valor-servico:last-child{border-bottom:none}
+.valor-servico .nome{color:var(--texto);font-weight:bold}
+.valor-servico .preco{color:var(--amarelo);font-weight:bold}
 </style>
 </head>
 <body>
@@ -85,27 +97,70 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
 
 <div class="conteudo" id="conteudoAdmin">
   <h2 class="titulo-secao">🔐 ÁREA DA ADMINISTRAÇÃO</h2>
+  
+  <!-- TELA DE LOGIN ADMIN -->
   <div id="loginAdmin">
     <div class="grupo-campo"><input type="email" class="campo-form" id="emailAdmin" placeholder="E-mail: padronizaassessoria@gmail.com"></div>
     <div class="grupo-campo"><input type="password" class="campo-form" id="senhaAdmin" placeholder="Digite sua senha"></div>
     <button class="btn-acao btn-verde" onclick="verificarAdmin()">🔑 ENTRAR NO PAINEL</button>
     <button class="btn-acao btn-voltar" onclick="voltar()">Voltar ao Início</button>
   </div>
-  <div id="painelAdmin" style="display:none">
+
+  <!-- PAINEL ADMIN QUE APARECE DEPOIS DO LOGIN -->
+  <div id="painelAdmin" class="painel-admin" style="display:none">
     <h2 class="titulo-secao">👑 PAINEL DE CONTROLE</h2>
-    <div class="area-dados"><h3>💸 VALORES DOS SERVIÇOS</h3>
-      <div style="display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid #293653"><span>Pacote Completo</span><span style="color:var(--amarelo);font-weight:bold">R$ 39,99/mês</span></div>
-      <div style="display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid #293653"><span>Música Personalizada</span><span style="color:var(--amarelo);font-weight:bold">R$ 20,00/unid</span></div>
-      <div style="display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid #293653"><span>Arte Visual</span><span style="color:var(--amarelo);font-weight:bold">R$ 10,00/unid</span></div>
-      <div style="display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid #293653"><span>Treinamento VIP</span><span style="color:var(--amarelo);font-weight:bold">R$ 9,99 taxa única</span></div>
-      <div style="display:flex;justify-content:space-between;padding:10px 0"><span>Agendamento Batalhas</span><span style="color:var(--amarelo);font-weight:bold">R$ 69,90/mês</span></div>
+
+    <!-- CARDS RESUMO -->
+    <div class="cards-admin">
+      <div class="card-admin"><h4>Agenciados Ativos</h4><p id="qtdAgenciados">0</p></div>
+      <div class="card-admin"><h4>Lives Ao Vivo</h4><p id="qtdLives">0</p></div>
+      <div class="card-admin"><h4>Batalhas Confirmadas</h4><p id="qtdBatalhas">0</p></div>
+      <div class="card-admin"><h4>Solicitações Pendentes</h4><p id="qtdPendentes">0</p></div>
     </div>
-    <div class="area-dados"><h3>⚔️ GERENCIAMENTO DE BATALHAS</h3>
-      <h4 class="tipo-batalha confirmada">✅ Confirmadas</h4>
-      <div class="item-lista"><strong>Data:</strong> 12/08/2026 às 20h<br><strong>Desafiante:</strong> Serena Tempestade<br><strong>Oponente:</strong> A definir<br><strong>Plataforma:</strong> Kako Live</div>
-      <h4 class="tipo-batalha pendente">⏳ Solicitações Pendentes</h4>
-      <div class="item-lista"><strong>Data:</strong> 13/08/2026 às 19h<br><strong>Solicitante:</strong> Serena Tempestade<br><strong>Plataforma:</strong> TikTok<br><strong>Status:</strong> Aguardando confirmação</div>
+
+    <!-- VALORES DOS SERVIÇOS -->
+    <div class="area-dados">
+      <h3>💸 VALORES DOS SERVIÇOS</h3>
+      <div class="valor-servico"><span class="nome">Pacote Completo</span><span class="preco">R$ 39,99/mês</span></div>
+      <div class="valor-servico"><span class="nome">Música Personalizada</span><span class="preco">R$ 20,00/unid</span></div>
+      <div class="valor-servico"><span class="nome">Arte Visual</span><span class="preco">R$ 10,00/unid</span></div>
+      <div class="valor-servico"><span class="nome">Treinamento VIP</span><span class="preco">R$ 9,99 taxa única</span></div>
+      <div class="valor-servico"><span class="nome">Agendamento Batalhas</span><span class="preco">R$ 69,90/mês</span></div>
     </div>
+
+    <!-- SOLICITAÇÕES DE AGENCIAMENTO -->
+    <div class="area-dados">
+      <h3>📋 SOLICITAÇÕES DE AGENCIAMENTO</h3>
+      <div id="listaSolicitacoes">
+        <div class="item-lista">
+          <strong>Nome:</strong> Serena Tempestade<br>
+          <strong>Plataforma:</strong> TikTok<br>
+          <strong>Usuário:</strong> @serenatempestade<br>
+          <button class="btn-aprovar" onclick="aprovarUsuario('serenatempestade')">✅ APROVAR</button>
+          <button class="btn-rejeitar" onclick="rejeitarUsuario('serenatempestade')">❌ REJEITAR</button>
+        </div>
+        <p style="text-align:center;color:var(--cinza);margin-top:10px">Mais solicitações aparecem aqui conforme chegam</p>
+      </div>
+    </div>
+
+    <!-- BATALHAS -->
+    <div class="area-dados">
+      <h3>⚔️ BATALHAS</h3>
+      <h4 style="color:var(--verde);margin-bottom:8px">✅ Confirmadas</h4>
+      <div id="listaBatalhasConfirmadas">
+        <div class="item-lista">
+          <strong>Data:</strong> 12/08/2026 às 20h<br>
+          <strong>Desafiante:</strong> Serena Tempestade<br>
+          <strong>Oponente:</strong> A definir<br>
+          <strong>Plataforma:</strong> Kako Live
+        </div>
+      </div>
+      <h4 style="color:var(--amarelo);margin:15px 0 8px 0">⏳ Pendentes</h4>
+      <div id="listaBatalhasPendentes">
+        <p style="text-align:center;color:var(--cinza)">Nenhuma solicitação pendente no momento</p>
+      </div>
+    </div>
+
     <button class="btn-acao btn-voltar" onclick="sairAdmin()">🚪 Sair do Painel</button>
   </div>
 </div>
@@ -118,47 +173,23 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
   <p id="mensagemAcesso" style="text-align:center;margin:10px 0"></p>
   
   <div id="painelStreamer" style="display:none;margin-top:20px">
-    <!-- ÁREA EXCLUSIVA DE BATALHAS PARA O STREAMER -->
-    <div class="area-dados">
-      <h3 style="text-align:center;color:var(--roxo);margin-bottom:15px">⚔️ MINHAS BATALHAS</h3>
-      
-      <h4 class="tipo-batalha confirmada">✅ BATALHAS CONFIRMADAS</h4>
-      <div id="batalhasConfirmadas">
-        <div class="item-lista">
-          <strong>Data:</strong> 12/08/2026 às 20h<br>
-          <strong>Plataforma:</strong> Kako Live<br>
-          <strong>Oponente:</strong> A definir<br>
-          <strong>Status:</strong> Confirmado pela agência ✅
-        </div>
-        <p style="text-align:center;color:var(--cinza);font-size:14px;margin-top:5px">Nenhuma batalha confirmada no momento</p>
-      </div>
-
-      <h4 class="tipo-batalha pendente">⏳ SOLICITAÇÕES / PENDENTES</h4>
-      <div id="batalhasPendentes">
-        <div class="item-lista">
-          <strong>Data:</strong> 13/08/2026 às 19h<br>
-          <strong>Plataforma:</strong> TikTok<br>
-          <strong>Status:</strong> Aguardando confirmação da agência ⏳
-        </div>
-        <p style="text-align:center;color:var(--cinza);font-size:14px;margin-top:5px">Nenhuma solicitação pendente</p>
-      </div>
-    </div>
-
     <p style="text-align:center;color:var(--amarelo);font-weight:bold;margin:15px 0">Solicitar Serviços:</p>
-    <button class="btn-acao btn-servico" onclick="abrirFormBatalha()">⚔️ SOLICITAR NOVA BATALHA</button>
     <button class="btn-acao btn-servico" onclick="solicitar('musica')">🎵 Músicas Personalizadas</button>
     <button class="btn-acao btn-servico" onclick="solicitar('arte')">🎨 Artes Visuais</button>
+    <button class="btn-acao btn-servico" onclick="abrirBatalhas()">⚔️ Agendar Batalha</button>
     <button class="btn-acao btn-servico" onclick="solicitar('treinamento')">🎓 Treinamento VIP</button>
   </div>
 
-  <div id="formBatalha" style="display:none;margin-top:20px">
-    <h3 style="color:var(--roxo);text-align:center;margin-bottom:15px">📝 SOLICITAR BATALHA</h3>
+  <div id="areaBatalhas" style="display:none;margin-top:20px">
+    <h3 style="color:var(--roxo);text-align:center;margin-bottom:15px">⚔️ MINHAS BATALHAS</h3>
+    <div class="grupo-campo"><input type="text" class="campo-form" id="nomeUsuarioBatalha" placeholder="Seu nome de usuário" disabled></div>
+    <div class="grupo-campo"><input type="text" class="campo-form" id="linkPerfilBatalha" placeholder="Link do seu perfil" disabled></div>
     <div class="grupo-campo"><input type="date" class="campo-form" id="dataBatalha"></div>
-    <div class="grupo-campo"><select class="campo-form" id="horarioBatalha"><option value="">Escolha o horário</option><option>17h</option><option>18h</option><option>19h</option><option>20h</option><option>21h</option><option>22h</option></select></div>
-    <div class="grupo-campo"><select class="campo-form" id="plataformaBatalha"><option value="">Escolha a plataforma</option><option>Kako Live</option><option>TikTok</option></select></div>
-    <div class="grupo-campo"><input type="text" class="campo-form" id="nomeOponente" placeholder="Nome de usuário do oponente (opcional)"></div>
+    <div class="grupo-campo"><select class="campo-form" id="horarioBatalha"><option value="">Horário</option><option>17h</option><option>18h</option><option>19h</option><option>20h</option><option>21h</option><option>22h</option></select></div>
+    <div class="grupo-campo"><input type="text" class="campo-form" id="nomeOponenteExibicao" value="👤 Nome do oponente: Aguardando confirmação" disabled></div>
+    <div class="grupo-campo"><input type="text" class="campo-form" id="linkOponenteExibicao" value="🔗 Link do oponente: Aguardando confirmação" disabled></div>
     <button class="btn-acao btn-verde" onclick="enviarSolicitacaoBatalha()">📤 ENVIAR SOLICITAÇÃO</button>
-    <button class="btn-acao btn-voltar" onclick="fecharFormBatalha()">Voltar</button>
+    <button class="btn-acao btn-voltar" onclick="fecharBatalhas()">Voltar</button>
   </div>
 
   <a href="https://wa.me/556981478873" target="_blank" class="btn-acao btn-whatsapp">💬 Falar com a Equipe</a>
@@ -167,6 +198,7 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
 
 <div class="conteudo" id="conteudoVisitante">
   <h2 class="titulo-secao">👤 BEM-VINDO(A)</h2>
+
   <div class="link-agenciamento">
     <h3 style="color:var(--verde);text-align:center;margin-bottom:10px">✅ QUER SER AGENCIADO? É TOTALMENTE GRÁTIS!</h3>
     <p style="text-align:center;margin-bottom:15px">Acesse nossos serviços de graça fazendo parte da nossa equipe!</p>
@@ -177,9 +209,12 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
     </div>
     <a href="https://wa.me/556981478873" target="_blank" class="btn-acao btn-whatsapp">💬 Falar com a equipe para tirar dúvidas</a>
   </div>
+
   <hr style="border-color:#293653;margin:25px 0">
+
   <h2 class="titulo-secao">💼 SERVIÇOS DISPONÍVEIS</h2>
   <p style="text-align:center;color:var(--cinza);margin-bottom:20px">Ou contrate nossos serviços avulsos ou pacotes:</p>
+  
   <div style="background:var(--painel2);padding:15px;border-radius:10px;margin-bottom:15px">
     <h3 style="color:var(--amarelo);text-align:center">✅ PACOTE COMPLETO</h3>
     <p style="text-align:center;font-size:20px;font-weight:bold;color:var(--verde);margin:10px 0">De R$ 59,90 → por R$ 39,99/mês</p>
@@ -188,6 +223,7 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
     <button class="btn-acao btn-whatsapp" onclick="copiarPix(this,'00020101021126770014br.gov.bcb.pix01367c0dfbc3-68e7-4b85-a0eb-eb037b738d9f0215Pacote completo520400005303986540539.995802BR591965 8 0 M G DA SILVA6007VILHENA62070503***6304C43A')">📋 COPIAR CÓDIGO PIX</button>
     <button class="btn-acao btn-verde" onclick="enviarComprovante('Pacote Completo R$39,99')">✅ JÁ PAGUEI — ENVIAR COMPROVANTE</button>
   </div>
+
   <div style="background:var(--painel2);padding:15px;border-radius:10px;margin-bottom:15px">
     <h3 style="color:var(--rosa);text-align:center">🎵 MÚSICA PERSONALIZADA</h3>
     <p style="text-align:center;font-size:18px;font-weight:bold;color:var(--amarelo);margin:10px 0">R$ 20,00 por unidade</p>
@@ -195,6 +231,7 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
     <button class="btn-acao btn-whatsapp" onclick="copiarPix(this,'00020101021126820014br.gov.bcb.pix01367c0dfbc3-68e7-4b85-a0eb-eb037b738d9f0220musica personalizada520400005303986540520.005802BR591965 8 0 M G DA SILVA6007VILHENA62070503***6304E948')">📋 COPIAR CÓDIGO PIX</button>
     <button class="btn-acao btn-verde" onclick="enviarComprovante('Música Personalizada R$20,00')">✅ JÁ PAGUEI — ENVIAR COMPROVANTE</button>
   </div>
+
   <div style="background:var(--painel2);padding:15px;border-radius:10px;margin-bottom:15px">
     <h3 style="color:var(--roxo);text-align:center">🎨 ARTE VISUAL</h3>
     <p style="text-align:center;font-size:18px;font-weight:bold;color:var(--amarelo);margin:10px 0">R$ 10,00 por unidade</p>
@@ -202,6 +239,7 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
     <button class="btn-acao btn-whatsapp" onclick="copiarPix(this,'00020101021126730014br.gov.bcb.pix01367c0dfbc3-68e7-4b85-a0eb-eb037b738d9f0211arte visual520400005303986540510.005802BR591965 8 0 M G DA SILVA6007VILHENA62070503***6304D45F')">📋 COPIAR CÓDIGO PIX</button>
     <button class="btn-acao btn-verde" onclick="enviarComprovante('Arte Visual R$10,00')">✅ JÁ PAGUEI — ENVIAR COMPROVANTE</button>
   </div>
+
   <div style="background:var(--painel2);padding:15px;border-radius:10px;margin-bottom:15px">
     <h3 style="color:var(--verde);text-align:center">🎓 TREINAMENTO VIP / GRUPO</h3>
     <p style="text-align:center;font-size:18px;font-weight:bold;color:var(--amarelo);margin:10px 0">R$ 9,99 taxa única de acesso</p>
@@ -209,6 +247,7 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
     <button class="btn-acao btn-whatsapp" onclick="copiarPix(this,'00020101021126770014br.gov.bcb.pix01367c0dfbc3-68e7-4b85-a0eb-eb037b738d9f0215Treinamento vip52040000530398654049.995802BR591965 8 0 M G DA SILVA6007VILHENA62070503***63045E3B')">📋 COPIAR CÓDIGO PIX</button>
     <button class="btn-acao btn-verde" onclick="enviarComprovante('Treinamento VIP R$9,99')">✅ JÁ PAGUEI — ENVIAR COMPROVANTE</button>
   </div>
+
   <div style="background:var(--painel2);padding:15px;border-radius:10px;margin-bottom:15px">
     <h3 style="color:var(--vermelho);text-align:center">⚔️ AGENDAMENTO DE BATALHA</h3>
     <p style="text-align:center;font-size:18px;font-weight:bold;color:var(--amarelo);margin:10px 0">R$ 69,90/mês</p>
@@ -216,6 +255,7 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
     <button class="btn-acao btn-whatsapp" onclick="copiarPix(this,'00020101021126840014br.gov.bcb.pix01367c0dfbc3-68e7-4b85-a0eb-eb037b738d9f0222Agendamento de batalha520400005303986540569.995802BR591965 8 0 M G DA SILVA6007VILHENA62070503***6304606A')">📋 COPIAR CÓDIGO PIX</button>
     <button class="btn-acao btn-verde" onclick="enviarComprovante('Agendamento de Batalha R$69,90')">✅ JÁ PAGUEI — ENVIAR COMPROVANTE</button>
   </div>
+
   <p style="text-align:center;color:var(--cinza);font-size:14px;margin-top:20px">⏳ Após envio do comprovante, o acesso será liberado em até 48 horas úteis.</p>
   <button class="btn-acao btn-voltar" onclick="voltar()">Voltar ao Início</button>
 </div>
@@ -231,6 +271,7 @@ let dadosPlanilha = [];
 window.onload = async function(){
   await carregarDadosPlanilha();
   carregarLivesNaInicial();
+  atualizarDadosAdmin();
 };
 
 async function carregarDadosPlanilha(){
@@ -272,10 +313,26 @@ function carregarLivesNaInicial(){
   });
 }
 
+function atualizarDadosAdmin(){
+  const qtdAgenciados = dadosPlanilha.filter(l=>l.c[1]?.v==='APROVADO').length;
+  const qtdLives = dadosPlanilha.filter(l=>l.c[8]?.v===true||l.c[8]?.v==='true'||l.c[8]?.v==='SIM').length;
+  const qtdBatalhas = 1;
+  const qtdPendentes = 1;
+  
+  document.getElementById('qtdAgenciados').innerText = qtdAgenciados;
+  document.getElementById('qtdLives').innerText = qtdLives;
+  document.getElementById('qtdBatalhas').innerText = qtdBatalhas;
+  document.getElementById('qtdPendentes').innerText = qtdPendentes;
+}
+
 function abrir(id){
   document.querySelectorAll('.conteudo').forEach(c=>c.classList.remove('visivel'));
   document.getElementById('telaInicial').style.display = 'none';
   document.getElementById('conteudo'+id.charAt(0).toUpperCase()+id.slice(1)).classList.add('visivel');
+  if(id==='admin'){
+    document.getElementById('loginAdmin').style.display='block';
+    document.getElementById('painelAdmin').style.display='none';
+  }
 }
 
 function voltar(){
@@ -291,7 +348,7 @@ function verificarAdmin(){
     document.getElementById('loginAdmin').style.display='none';
     document.getElementById('painelAdmin').style.display='block';
   }else{
-    alert('❌ Dados incorretos!');
+    alert('❌ E-mail ou senha incorretos!');
   }
 }
 
@@ -301,6 +358,13 @@ function sairAdmin(){
   document.getElementById('painelAdmin').style.display='none';
   document.getElementById('loginAdmin').style.display='block';
   voltar();
+}
+
+function aprovarUsuario(nome){
+  alert(`✅ Usuário ${nome} aprovado! Já está liberado para acessar.`);
+}
+function rejeitarUsuario(nome){
+  alert(`❌ Solicitação de ${nome} rejeitada.`);
 }
 
 function verificarAcesso(){
@@ -316,34 +380,11 @@ function verificarAcesso(){
   }, 800);
 }
 
-function abrirFormBatalha(){
-  document.getElementById('painelStreamer').style.display='none';
-  document.getElementById('formBatalha').style.display='block';
-}
-function fecharFormBatalha(){
-  document.getElementById('formBatalha').style.display='none';
-  document.getElementById('painelStreamer').style.display='block';
-}
-
-function enviarSolicitacaoBatalha(){
-  const usuario = document.getElementById('usuarioAcesso').value.trim();
-  const data = document.getElementById('dataBatalha').value;
-  const horario = document.getElementById('horarioBatalha').value;
-  const plataforma = document.getElementById('plataformaBatalha').value;
-  const oponente = document.getElementById('nomeOponente').value.trim() || 'A definir';
-  if(!data || !horario || !plataforma) return alert('❌ Preencha Data, Horário e Plataforma!');
-  const mensagem = encodeURIComponent(`⚔️ SOLICITAÇÃO DE BATALHA\n👤 Solicitante: ${usuario}\n📅 Data: ${data}\n⏰ Horário: ${horario}\n📱 Plataforma: ${plataforma}\n👤 Oponente: ${oponente}`);
-  window.open(`https://wa.me/556981478873?text=${mensagem}`);
-  alert('✅ Solicitação enviada! Acompanhe aqui no seu espaço o status.');
-  fecharFormBatalha();
-}
-
 function solicitar(tipo){
   let texto = '';
-  const user = document.getElementById('usuarioAcesso').value;
-  if(tipo==='musica') texto = `Olá! Sou ${user}. Gostaria de solicitar uma música personalizada.`;
-  if(tipo==='arte') texto = `Olá! Sou ${user}. Gostaria de solicitar artes visuais.`;
-  if(tipo==='treinamento') texto = `Olá! Sou ${user}. Gostaria de acesso ao Treinamento VIP.`;
+  if(tipo==='musica') texto = `Olá! Sou ${document.getElementById('usuarioAcesso').value}. Gostaria de solicitar uma música personalizada.`;
+  if(tipo==='arte') texto = `Olá! Sou ${document.getElementById('usuarioAcesso').value}. Gostaria de solicitar artes visuais.`;
+  if(tipo==='treinamento') texto = `Olá! Sou ${document.getElementById('usuarioAcesso').value}. Gostaria de acesso ao Treinamento VIP.`;
   window.open(`https://wa.me/556981478873?text=${encodeURIComponent(texto)}`);
 }
 
@@ -357,6 +398,18 @@ function copiarPix(botao,codigo){
 function enviarComprovante(servico){
   const texto = encodeURIComponent(`Olá! Acabei de pagar o serviço: ${servico}. Segue o comprovante.`);
   window.open(`https://wa.me/556981478873?text=${texto}`);
+}
+
+function abrirBatalhas(){document.getElementById('painelStreamer').style.display='none';document.getElementById('areaBatalhas').style.display='block';}
+function fecharBatalhas(){document.getElementById('areaBatalhas').style.display='none';document.getElementById('painelStreamer').style.display='block';}
+function enviarSolicitacaoBatalha(){
+  const usuario = document.getElementById('nomeUsuarioBatalha').value.trim() || document.getElementById('usuarioAcesso').value.trim();
+  const data = document.getElementById('dataBatalha').value;
+  const horario = document.getElementById('horarioBatalha').value;
+  if(!usuario || !data || !horario) return alert('❌ Preencha Data e Horário!');
+  const mensagem = encodeURIComponent(`⚔️ SOLICITAÇÃO\n👤 Usuário: ${usuario}\n📅 Data: ${data}\n⏰ Horário: ${horario}`);
+  window.open(`https://wa.me/556981478873?text=${mensagem}`);
+  alert('✅ Solicitação enviada!');
 }
 </script>
 </body>
