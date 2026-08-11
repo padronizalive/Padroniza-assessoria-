@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Padroniza Assessoria</title>
+<title>Padroniza Assessoria | Portal</title>
 <style>
 :root{--fundo:#0b1020;--painel:#11182c;--destaque:#ff3d81;--azul:#3b82f6;--verde:#34d399;--amarelo:#ffc857;--cinza:#a9b4cb;--texto:#f7f9ff;--violeta:#7457ff;--rosa:#ff3d81}
 *{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
@@ -41,6 +41,12 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
 .servico-check{display:flex;align-items:center;gap:8px;margin:8px 0;padding:8px;background:#17213a;border-radius:6px;cursor:pointer}
 .servico-check input{width:18px;height:18px}
 .aviso-opcional{color:var(--cinza);font-size:13px;margin-top:-5px;margin-bottom:8px}
+.link-admin{text-align:right;font-size:12px;color:var(--cinza);margin-top:20px}
+.link-admin a{color:var(--cinza);text-decoration:underline}
+.painel-admin{background:var(--painel);border-radius:12px;padding:18px}
+.status-aprovado{color:var(--verde);font-weight:bold}
+.status-pendente{color:var(--amarelo);font-weight:bold}
+.card-solicitacao{background:#17213a;border-radius:8px;padding:12px;margin-bottom:10px}
 
 .lives-ao-vivo{background:var(--painel);border-radius:12px;padding:15px;margin-top:20px}
 .lista-lives{display:flex;flex-direction:column;gap:12px;margin-top:15px}
@@ -70,105 +76,64 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
     <button class="btn-principal btn-agenciado" onclick="abrirConteudo('agenciado')">✅ SOU AGENCIADO PADRONIZA</button>
     <button class="btn-principal btn-agencia" onclick="abrirConteudo('agencia')">🏢 SOU OUTRA AGÊNCIA</button>
   </div>
+  <div class="link-admin">
+    <a href="#" onclick="abrirConteudo('admin');return false;">🔐 Acesso Administrativo</a>
+  </div>
 </div>
 
-<!-- ÁREA DO VISITANTE — TUDO IGUAL -->
+<!-- ÁREA DO VISITANTE -->
 <div class="conteudo" id="conteudoVisitante">
   <div class="aviso-gratis">🌟 QUER SER NOSSO AGENCIADO? É TOTALMENTE GRÁTIS!</div>
-  
   <div style="background:#17213a;border-radius:10px;padding:15px;margin-bottom:15px">
     <p style="margin-bottom:10px;color:var(--cinza)">📌 Link oficial para se inscrever:</p>
     <a href="https://www.tiktok.com/t/ZSHu6CFAM/" target="_blank" style="color:var(--azul);font-weight:bold;display:block;margin-bottom:15px">👉 https://www.tiktok.com/t/ZSHu6CFAM/</a>
-    
     <p style="margin-bottom:10px;color:var(--cinza)">📌 ID da Agência: <strong style="color:var(--amarelo)">Agência do Caco — Nº 177766</strong></p>
-
     <p style="margin:15px 0 10px 0;color:var(--cinza)">📱 Deixe seu WhatsApp:<br><small>Apenas DDD + número</small></p>
     <input type="tel" id="whatsappInteressado" class="campo-form" placeholder="Ex: 69999998873" maxlength="11">
     <button class="btn-acao btn-whatsapp" onclick="enviarCadastro()">📩 Enviar interesse</button>
   </div>
-
   <div class="aviso-separa">— OU —</div>
-
   <h3 style="text-align:center;margin-bottom:15px">🛒 NÃO QUERO SER AGENCIADO, QUERO CONTRATAR SERVIÇOS</h3>
   <p style="margin-bottom:10px;color:var(--cinza)">Digite seu usuário do TikTok:</p>
   <input type="text" id="usuarioTikTok" class="campo-form" placeholder="Seu nome no TikTok">
   <button class="btn-acao" style="background:var(--azul)" onclick="mostrarServicos()">🔍 Acessar Serviços</button>
-
   <div id="areaServicosContratacao" style="display:none;margin-top:20px">
     <h4 style="text-align:center;color:var(--amarelo);margin-bottom:15px">Serviços Disponíveis</h4>
-    <label class="servico-check">
-      <input type="checkbox" value="39.90" data-nome="Pacote Completo">
-      <span>✅ Pacote Completo — R$39,90/mês</span>
-    </label>
-    <label class="servico-check">
-      <input type="checkbox" value="20.00" data-nome="Música Personalizada">
-      <span>🎵 Música Personalizada — R$20,00 avulsa</span>
-    </label>
-    <label class="servico-check">
-      <input type="checkbox" value="10.00" data-nome="Arte Visual">
-      <span>🎨 Arte Visual — R$10,00 avulsa</span>
-    </label>
-    <label class="servico-check">
-      <input type="checkbox" value="69.90" data-nome="Agendamento de Batalhas">
-      <span>⚔️ Agendamento de Batalhas — R$69,90/mês</span>
-    </label>
-    <label class="servico-check">
-      <input type="checkbox" value="15.00" data-nome="Treinamento VIP">
-      <span>📚 Treinamento VIP — R$15,00/mês</span>
-    </label>
-    <div style="margin-top:15px;font-size:18px">
-      <strong>Total: R$ <span id="valorTotal">0,00</span></strong>
-    </div>
+    <label class="servico-check"><input type="checkbox" value="39.90" data-nome="Pacote Completo"><span>✅ Pacote Completo — R$39,90/mês</span></label>
+    <label class="servico-check"><input type="checkbox" value="20.00" data-nome="Música Personalizada"><span>🎵 Música Personalizada — R$20,00 avulsa</span></label>
+    <label class="servico-check"><input type="checkbox" value="10.00" data-nome="Arte Visual"><span>🎨 Arte Visual — R$10,00 avulsa</span></label>
+    <label class="servico-check"><input type="checkbox" value="69.90" data-nome="Agendamento de Batalhas"><span>⚔️ Agendamento de Batalhas — R$69,90/mês</span></label>
+    <label class="servico-check"><input type="checkbox" value="15.00" data-nome="Treinamento VIP"><span>📚 Treinamento VIP — R$15,00/mês</span></label>
+    <div style="margin-top:15px;font-size:18px"><strong>Total: R$ <span id="valorTotal">0,00</span></strong></div>
     <div class="codigo-pix">💳 PIX: padronizaassessoria@gmail.com</div>
     <button class="btn-acao btn-whatsapp" onclick="enviarPedido()">📤 Enviar Pedido + Comprovante</button>
   </div>
-
   <a href="https://wa.me/5569981478873?text=Olá! Tenho dúvidas" target="_blank" class="btn-acao" style="background:var(--azul);margin-top:15px">❓ Tirar Dúvidas</a>
   <button class="btn-acao btn-voltar" onclick="voltarInicio()">Voltar</button>
 </div>
 
-<!-- ÁREA AGENCIADO — AJUSTADO EXATAMENTE COMO PEDIU -->
+<!-- ÁREA AGENCIADO -->
 <div class="conteudo" id="conteudoAgenciado">
-  <div class="aviso-destaque-gratis">✅ TODO O CONTEÚDO E SERVIÇOS DESTE SITE SÃO TOTALMENTE GRÁTIS PARA VOCÊ!</div>
-  <h2 class="titulo-secao">🎁 Benefícios Exclusivos</h2>
+  <div class="servico"><h4>🎵 Música Personalizada <span class="gratis">GRÁTIS</span></h4><p class="descricao">Sua música exclusiva feita com carinho</p></div>
+  <div class="servico"><h4>🎨 Arte Visual <span class="gratis">GRÁTIS</span></h4><p class="descricao">Todas as artes que precisar para suas lives</p></div>
+  <div class="servico"><h4>⚔️ Agendamento de Batalhas <span class="gratis">GRÁTIS</span></h4><p class="descricao">Inscrição e suporte completo em batalhas</p></div>
+  <div class="servico"><h4>📚 Treinamento VIP <span class="gratis">GRÁTIS</span></h4><p class="descricao">Todo suporte e orientação da nossa equipe</p></div>
   
-  <div class="servico">
-    <h4>✅ Pacote Completo <span class="gratis">GRÁTIS</span></h4>
-    <p class="descricao">Tudo incluso para você crescer sem custos</p>
-  </div>
-  <div class="servico">
-    <h4>🎵 Música Personalizada <span class="gratis">GRÁTIS</span></h4>
-    <p class="descricao">Sua música exclusiva feita com carinho</p>
-  </div>
-  <div class="servico">
-    <h4>🎨 Arte Visual <span class="gratis">GRÁTIS</span></h4>
-    <p class="descricao">Todas as artes que precisar para suas lives</p>
-  </div>
-  <div class="servico">
-    <h4>⚔️ Agendamento de Batalhas <span class="gratis">GRÁTIS</span></h4>
-    <p class="descricao">Inscrição e suporte completo em batalhas</p>
-  </div>
-  <div class="servico">
-    <h4>📚 Treinamento VIP <span class="gratis">GRÁTIS</span></h4>
-    <p class="descricao">Todo suporte e orientação da nossa equipe</p>
-  </div>
+  <div class="aviso-destaque-gratis">✅ Preencha seus dados para verificarmos e liberarmos seus benefícios!</div>
 
-  <div style="background:rgba(52,211,153,0.1);border:1px solid var(--verde);color:var(--verde);padding:10px;border-radius:6px;text-align:center;margin:15px 0">
-    ✅ Preencha seus dados abaixo para liberarmos seus benefícios!
-  </div>
+  <p style="margin-bottom:8px;color:var(--cinza)">📌 Nome completo do streamer:</p>
+  <input type="text" id="nomeCompleto" class="campo-form" placeholder="Seu nome completo">
 
-  <!-- CAMPO PRINCIPAL -->
-  <p style="margin-bottom:8px;color:var(--cinza)">📌 Plataforma principal:</p>
+  <p style="margin-bottom:8px;color:var(--cinza)">📌 Plataforma:</p>
   <select id="plataforma1" class="campo-form">
     <option value="">Selecione...</option>
     <option value="TikTok">TikTok (informe nome de usuário)</option>
     <option value="Kaku Live">Kaku Live (informe ID)</option>
   </select>
 
-  <p style="margin-bottom:8px;color:var(--cinza)">📌 Nome de usuário ou ID:</p>
+  <p style="margin-bottom:8px;color:var(--cinza)">📌 Nome de usuário ou ID da plataforma:</p>
   <input type="text" id="usuario1" class="campo-form" placeholder="Ex: serenatempestade ou 12345678">
 
-  <!-- CAMPO OPCIONAL PARA SEGUNDA PLATAFORMA -->
   <p style="margin-top:15px;margin-bottom:8px;color:var(--cinza)">📌 Segunda plataforma (se for agenciado nas duas):</p>
   <p class="aviso-opcional">*Deixe em branco se tiver só uma plataforma*</p>
   <select id="plataforma2" class="campo-form">
@@ -180,29 +145,51 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
   <p style="margin-bottom:8px;color:var(--cinza)">📌 Nome de usuário ou ID da segunda plataforma:</p>
   <input type="text" id="usuario2" class="campo-form" placeholder="Apenas se for o caso">
 
-  <button class="btn-acao btn-whatsapp" onclick="solicitarBeneficios()">📩 Solicitar Benefícios</button>
+  <button class="btn-acao btn-whatsapp" onclick="solicitarBeneficios()">📩 Enviar para Verificação</button>
   <button class="btn-acao btn-voltar" onclick="voltarInicio()">Voltar</button>
 </div>
 
-<!-- ÁREA OUTRA AGÊNCIA — TUDO IGUAL -->
+<!-- ÁREA DE ADMINISTRADOR -->
+<div class="conteudo" id="conteudoAdmin">
+  <div id="loginAdmin">
+    <h2 class="titulo-secao">🔐 Acesso Administrativo</h2>
+    <p style="margin-bottom:8px;color:var(--cinza)">E-mail:</p>
+    <input type="email" id="adminEmail" class="campo-form" placeholder="padronizaassessoria@gmail.com">
+    <p style="margin-bottom:8px;color:var(--cinza)">Senha:</p>
+    <input type="password" id="adminSenha" class="campo-form" placeholder="Sua senha">
+    <button class="btn-acao" style="background:var(--verde)" onclick="verificarAdmin()">🔑 Entrar</button>
+    <button class="btn-acao btn-voltar" onclick="voltarInicio()">Voltar</button>
+  </div>
+  <div id="painelAdmin" style="display:none">
+    <h2 class="titulo-secao">⚙️ Painel do Administrador</h2>
+    <div class="painel-admin">
+      <p style="margin-bottom:10px;color:var(--verde);font-weight:bold;">✅ Logado como: padronizaassessoria@gmail.com</p>
+      <hr style="border-color:#293653;margin:15px 0">
+      
+      <h4 style="color:var(--amarelo);margin-bottom:10px;">📋 Solicitações de Agenciados</h4>
+      <div id="listaSolicitacoes">
+        <p style="text-align:center;color:var(--cinza)">Carregando...</p>
+      </div>
+
+      <h4 style="color:var(--amarelo);margin:20px 0 10px 0;">🔴 Status das Lives</h4>
+      <div id="listaStatusLives">
+        <p style="text-align:center;color:var(--cinza)">Carregando...</p>
+      </div>
+
+      <a href="https://docs.google.com/spreadsheets/d/1R9eUsqF4kA0y22ryMUIsvGolBfk3-XwZ5R-RVpBiZA4/edit" target="_blank" class="btn-acao" style="background:var(--azul);margin-top:15px">📊 Abrir Planilha para Aprovar</a>
+      <button class="btn-acao" style="background:var(--rosa)" onclick="sairAdmin()">🚪 Sair</button>
+      <button class="btn-acao btn-voltar" onclick="voltarInicio()">Voltar ao Início</button>
+    </div>
+  </div>
+</div>
+
+<!-- ÁREA OUTRA AGÊNCIA -->
 <div class="conteudo" id="conteudoAgencia">
   <h2 class="titulo-secao">🤝 Serviços para Parcerias</h2>
-  <div class="servico">
-    <h4>🎨 Arte Visual Personalizada <span class="preco">R$25,00/unid.</span></h4>
-    <p class="descricao">Artes exclusivas com a identidade da sua agência</p>
-  </div>
-  <div class="servico">
-    <h4>🎵 Música Exclusiva <span class="preco">R$30,00/unid.</span></h4>
-    <p class="descricao">Música personalizada com a marca da sua agência</p>
-  </div>
-  <div class="servico">
-    <h4>⚔️ Agendamento de Batalhas <span class="preco">R$89,90/mês</span></h4>
-    <p class="descricao">Organização conjunta e suporte total nos eventos</p>
-  </div>
-  <div class="servico">
-    <h4>✅ Pacote Completo para Agências <span class="preco">R$120,00/mês</span></h4>
-    <p class="descricao">Todos os serviços com desconto especial para parceiros</p>
-  </div>
+  <div class="servico"><h4>🎨 Arte Visual Personalizada <span class="preco">R$25,00/unid.</span></h4><p class="descricao">Artes exclusivas com a identidade da sua agência</p></div>
+  <div class="servico"><h4>🎵 Música Exclusiva <span class="preco">R$30,00/unid.</span></h4><p class="descricao">Música personalizada com a marca da sua agência</p></div>
+  <div class="servico"><h4>⚔️ Agendamento de Batalhas <span class="preco">R$89,90/mês</span></h4><p class="descricao">Organização conjunta e suporte total nos eventos</p></div>
+  <div class="servico"><h4>✅ Pacote Completo para Agências <span class="preco">R$120,00/mês</span></h4><p class="descricao">Todos os serviços com desconto especial para parceiros</p></div>
   <div class="codigo-pix">💳 PIX: padronizaassessoria@gmail.com</div>
   <a href="https://wa.me/5569981478873?text=Olá! Sou de outra agência e quero contratar seus serviços" target="_blank" class="btn-acao btn-whatsapp">📤 Enviar Proposta + Comprovante</a>
   <button class="btn-acao btn-voltar" onclick="voltarInicio()">Voltar</button>
@@ -219,6 +206,8 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
 
 <script>
 const ID_PLANILHA = "1R9eUsqF4kA0y22ryMUIsvGolBfk3-XwZ5R-RVpBiZA4";
+const ADMIN_EMAIL = "padronizaassessoria@gmail.com";
+const ADMIN_SENHA_HASH = btoa("agency2026");
 
 function abrirConteudo(tipo){
   document.getElementById('telaInicial').style.display = 'none';
@@ -227,11 +216,80 @@ function abrirConteudo(tipo){
   if(tipo === 'visitante') document.getElementById('conteudoVisitante').classList.add('visivel');
   if(tipo === 'agenciado') document.getElementById('conteudoAgenciado').classList.add('visivel');
   if(tipo === 'agencia') document.getElementById('conteudoAgencia').classList.add('visivel');
+  if(tipo === 'admin') {
+    document.getElementById('conteudoAdmin').classList.add('visivel');
+    document.getElementById('loginAdmin').style.display = 'block';
+    document.getElementById('painelAdmin').style.display = 'none';
+  }
 }
 
 function voltarInicio(){
   document.querySelectorAll('.conteudo').forEach(el => el.classList.remove('visivel'));
   document.getElementById('telaInicial').style.display = 'block';
+}
+
+function verificarAdmin(){
+  const email = document.getElementById('adminEmail').value.trim().toLowerCase();
+  const senha = btoa(document.getElementById('adminSenha').value);
+  if(email === ADMIN_EMAIL && senha === ADMIN_SENHA_HASH){
+    document.getElementById('loginAdmin').style.display = 'none';
+    document.getElementById('painelAdmin').style.display = 'block';
+    carregarDadosAdmin();
+  }else{
+    alert('❌ E-mail ou senha incorretos!');
+  }
+}
+
+function sairAdmin(){
+  document.getElementById('adminEmail').value = '';
+  document.getElementById('adminSenha').value = '';
+  voltarInicio();
+}
+
+async function carregarDadosAdmin(){
+  try {
+    const url = `https://docs.google.com/spreadsheets/d/${ID_PLANILHA}/gviz/tq?tqx=out:json`;
+    const res = await fetch(url);
+    const dados = JSON.parse((await res.text()).substr(47, -2));
+    
+    const listaSol = document.getElementById('listaSolicitacoes');
+    listaSol.innerHTML = '';
+    const listaLivesStatus = document.getElementById('listaStatusLives');
+    listaLivesStatus.innerHTML = '';
+
+    dados.table.rows.forEach(linha => {
+      if(!linha.c) return;
+      const nome = linha.c[0]?.v || '—';
+      const plat = linha.c[1]?.v || '—';
+      const user = linha.c[2]?.v || '—';
+      const status = (linha.c[3]?.v || 'PENDENTE').toUpperCase();
+      const liveNome = linha.c[4]?.v || '';
+      const liveStatus = (linha.c[5]?.v || 'PENDENTE').toUpperCase();
+
+      listaSol.innerHTML += `
+        <div class="card-solicitacao">
+          <strong>${nome}</strong><br>
+          ${plat}: ${user}<br>
+          Status: <span class="${status === 'APROVADO' ? 'status-aprovado' : 'status-pendente'}">${status}</span>
+        </div>
+      `;
+
+      if(liveNome){
+        listaLivesStatus.innerHTML += `
+          <div class="card-solicitacao">
+            <strong>${liveNome}</strong><br>
+            Status: <span class="${liveStatus === 'APROVADO' ? 'status-aprovado' : 'status-pendente'}">${liveStatus}</span>
+          </div>
+        `;
+      }
+    });
+
+    if(!listaSol.innerHTML) listaSol.innerHTML = '<p style="color:var(--cinza)">Nenhuma solicitação no momento.</p>';
+    if(!listaLivesStatus.innerHTML) listaLivesStatus.innerHTML = '<p style="color:var(--cinza)">Nenhuma live cadastrada.</p>';
+
+  } catch {
+    document.getElementById('listaSolicitacoes').innerHTML = '<p style="color:var(--cinza)">Erro ao carregar dados. Atualize a página.</p>';
+  }
 }
 
 function enviarCadastro(){
@@ -268,28 +326,25 @@ function enviarPedido(){
   const total = document.getElementById('valorTotal').innerText;
   const msg = `PEDIDO DE SERVIÇOS:\nUsuário TikTok: ${user}\nServiços:\n- ${itens.join('\n- ')}\nTotal: R$ ${total}\nEnviarei o comprovante de pagamento em seguida.`;
   window.open(`https://wa.me/5569981478873?text=${encodeURIComponent(msg)}`);
-  alert('✅ Pedido enviado! Agora envie o comprovante para confirmar.');
+  alert('✅ Pedido enviado!');
 }
 
-// Função nova para solicitar benefícios do agenciado
 function solicitarBeneficios(){
+  const nome = document.getElementById('nomeCompleto').value.trim();
   const plat1 = document.getElementById('plataforma1').value.trim();
   const user1 = document.getElementById('usuario1').value.trim();
   const plat2 = document.getElementById('plataforma2').value.trim();
   const user2 = document.getElementById('usuario2').value.trim();
 
-  if(!plat1 || !user1) return alert('Preencha a plataforma principal e seu usuário/ID!');
+  if(!nome || !plat1 || !user1) return alert('Preencha nome completo, plataforma principal e usuário/ID!');
 
-  let msg = `SOLICITAÇÃO DE BENEFÍCIOS — AGENCIADO PADRONIZA:\n\n📌 Plataforma 1: ${plat1}\nUsuário/ID: ${user1}`;
-  
-  if(plat2 && user2){
-    msg += `\n\n📌 Plataforma 2: ${plat2}\nUsuário/ID: ${user2}`;
-  }
+  let msg = `SOLICITAÇÃO DE VERIFICAÇÃO — AGENCIADO:\n\n👤 Nome: ${nome}\n📌 ${plat1}: ${user1}`;
+  if(plat2 && user2) msg += `\n📌 ${plat2}: ${user2}`;
 
   window.open(`https://wa.me/5569981478873?text=${encodeURIComponent(msg)}`);
-  alert('✅ Solicitação enviada! Em breve vamos liberar seus benefícios.');
+  alert('✅ Solicitação enviada! Assim que aprovarmos na planilha você receberá seus benefícios.');
   
-  // Limpa os campos
+  document.getElementById('nomeCompleto').value = '';
   document.getElementById('plataforma1').value = '';
   document.getElementById('usuario1').value = '';
   document.getElementById('plataforma2').value = '';
@@ -306,7 +361,7 @@ async function carregarLives(){
     dados.table.rows.forEach(linha => {
       if(!linha.c) return;
       const user = linha.c[0]?.v || '';
-      const status = linha.c[1]?.v || '';
+      const status = linha.c[3]?.v || '';
       const tiktok = linha.c[4]?.v || '';
       const kako = linha.c[6]?.v || '';
       const aovivo = linha.c[8]?.v === true;
