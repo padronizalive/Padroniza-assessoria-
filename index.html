@@ -33,8 +33,21 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
 .campo-form::placeholder{color:var(--cinza)}
 .btn-acao{width:100%;padding:12px;border-radius:8px;border:none;font-weight:bold;cursor:pointer;margin-top:10px;text-decoration:none;display:inline-block;text-align:center;color:#fff;font-size:16px}
 .btn-verde{background:var(--verde)}
+.btn-azul{background:#3b82f6}
 .btn-voltar{background:#293653;color:#fff;margin-top:15px}
-.area-admin{background:rgba(116,87,255,0.1);border:1px solid var(--roxo);border-radius:10px;padding:15px;margin-top:20px;display:none}
+.btn-servico{background:linear-gradient(135deg,var(--rosa),var(--roxo));margin:8px 0;font-size:15px;padding:14px}
+.btn-whatsapp{background:linear-gradient(135deg,#25d366,#128c7e);margin-top:15px}
+.destaque-gratis{background:rgba(52,211,153,0.15);border:2px solid var(--verde);padding:16px;border-radius:10px;text-align:center;font-weight:bold;margin-bottom:18px}
+.dados-perfil{background:var(--painel2);border-radius:10px;padding:15px;margin:15px 0}
+.dados-perfil h4{color:var(--amarelo);margin-bottom:10px}
+.dados-perfil p{margin:6px 0;color:var(--texto)}
+.dados-perfil a{color:var(--verde);text-decoration:none;font-weight:bold}
+
+.agenda-batalhas{background:rgba(116,87,255,0.08);border:1px solid var(--roxo);border-radius:12px;padding:15px;margin-top:15px}
+.formulario-batalha{background:var(--painel2);border-radius:10px;padding:15px;margin-top:15px}
+.batalhas-confirmadas{background:rgba(52,211,153,0.1);border:1px solid var(--verde);border-radius:10px;padding:15px;margin-bottom:15px}
+.opcao-selecao{width:100%;padding:12px;border-radius:8px;border:1px solid #293653;background:#17213a;color:var(--texto);font-size:15px;margin:8px 0}
+.aviso-batalha-existente{background:rgba(255,61,129,0.1);border:1px solid var(--rosa);border-radius:10px;padding:12px;margin-bottom:15px;display:none}
 </style>
 </head>
 <body>
@@ -65,24 +78,120 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
   </div>
   <button class="btn-acao btn-verde" onclick="verificarAdmin()">🔑 ENTRAR NO PAINEL</button>
   <button class="btn-acao btn-voltar" onclick="voltar()">Voltar ao Início</button>
-
-  <div id="painelAdmin" class="area-admin">
+  <div id="painelAdmin" class="dados-perfil" style="display:none;margin-top:20px">
     <h3 style="color:var(--amarelo);text-align:center;margin-bottom:15px">⚙️ PAINEL DE CONTROLE</h3>
     <p style="text-align:center;color:var(--cinza);margin-bottom:10px">✅ Você está logado como Administrador</p>
-    <button class="btn-acao btn-verde" onclick="alert('Função em desenvolvimento!')">📋 Gerenciar Agenciados</button>
-    <button class="btn-acao btn-verde" onclick="alert('Função em desenvolvimento!')">⚔️ Gerenciar Batalhas</button>
-    <button class="btn-acao btn-verde" onclick="alert('Função em desenvolvimento!')">⚙️ Configurações do Site</button>
-    <a href="https://wa.me/556981478873" target="_blank" class="btn-acao btn-verde">💬 Falar com Suporte</a>
   </div>
 </div>
 
-<div class="conteudo" id="conteudoAgenciado"><h2 class="titulo-secao">🎉 Bem-vindo(a) parceiro(a)!</h2><button class="btn-acao btn-voltar" onclick="voltar()">Voltar</button></div>
+<div class="conteudo" id="conteudoAgenciado">
+  <h2 class="titulo-secao">🎉 Bem-vindo(a) parceiro(a)!</h2>
+  <div class="destaque-gratis">✅ TODOS os serviços são GRÁTIS para você!</div>
+  <div class="grupo-campo">
+    <input type="text" class="campo-form" id="usuarioAcesso" placeholder="Digite seu nome de usuário / ID">
+  </div>
+  <button class="btn-acao btn-verde" onclick="verificarAcesso()">🔍 Acessar Meu Espaço</button>
+  <p id="mensagemAcesso" style="text-align:center;margin:10px 0"></p>
+  
+  <div id="dadosPerfilStreamer" class="dados-perfil" style="display:none">
+    <h4>📝 Meus Dados e Lives</h4>
+    <p><strong>👤 Meu Usuário:</strong> <span id="meuNomeUsuario"></span></p>
+    <p><strong>🎵 Perfil / Live TikTok:</strong> <a id="meuLinkTikTok" href="#" target="_blank" style="color:var(--verde)">Clique para acessar</a></p>
+    <p><strong>📱 Perfil / Live Kako Live:</strong> <a id="meuLinkKako" href="#" target="_blank" style="color:var(--verde)">Clique para acessar</a></p>
+    <p><strong>🔴 Status:</strong> <span id="meuStatusLive"></span></p>
+  </div>
+
+  <div id="painelStreamer" style="display:none;margin-top:20px">
+    <p style="text-align:center;color:var(--amarelo);font-weight:bold;margin:15px 0">Solicitar Serviços:</p>
+    <button class="btn-acao btn-servico" onclick="solicitar('Músicas personalizadas')">🎵 Músicas</button>
+    <button class="btn-acao btn-servico" onclick="solicitar('Artes visuais')">🎨 Artes</button>
+    <button class="btn-acao btn-servico" onclick="abrirBatalhas()">⚔️ Batalhas</button>
+    <button class="btn-acao btn-servico" onclick="solicitar('Treinamento VIP')">🎓 Treinamento</button>
+  </div>
+
+  <!-- ÁREA DE BATALHAS COMPLETA -->
+  <div id="areaBatalhas" class="agenda-batalhas" style="display:none">
+    <h3 style="color:var(--roxo);text-align:center;margin-bottom:15px">⚔️ MINHAS BATALHAS</h3>
+    
+    <!-- ✅ FORMULÁRIO PARA SOLICITAR BATALHA -->
+    <div class="formulario-batalha">
+      <h4 style="color:var(--amarelo);margin-bottom:10px">📝 SOLICITAR NOVA BATALHA</h4>
+      <p style="font-size:14px;color:var(--cinza);margin-bottom:10px">✅ Preencha todos os dados abaixo</p>
+      
+      <div class="grupo-campo">
+        <input type="text" class="campo-form" id="nomeUsuarioBatalha" placeholder="Seu nome de usuário da plataforma" readonly>
+      </div>
+      <div class="grupo-campo">
+        <input type="text" class="campo-form" id="linkPerfilBatalha" placeholder="Link do seu perfil oficial">
+      </div>
+      <div class="grupo-campo">
+        <input type="date" class="campo-form" id="dataBatalha" onchange="verificarBatalhaNaData()">
+      </div>
+      <div class="grupo-campo">
+        <select class="opcao-selecao" id="horarioBatalha">
+          <option value="">Selecione o horário</option>
+          <option value="17:00">17:00</option>
+          <option value="18:00">18:00</option>
+          <option value="19:00">19:00</option>
+          <option value="20:00">20:00</option>
+          <option value="21:00">21:00</option>
+          <option value="22:00">22:00</option>
+        </select>
+      </div>
+      <div class="grupo-campo">
+        <input type="text" class="campo-form" id="nomeOponente" placeholder="Nome de usuário do oponente">
+      </div>
+      <div class="grupo-campo">
+        <textarea class="campo-form" id="observacoesBatalha" rows="3" placeholder="Observações adicionais (opcional)"></textarea>
+      </div>
+      
+      <button id="btnEnviarBatalha" class="btn-acao btn-verde" onclick="enviarSolicitacaoBatalha()">📤 ENVIAR SOLICITAÇÃO</button>
+      <button class="btn-acao btn-whatsapp" onclick="window.open('https://wa.me/556981478873?text=Olá! Preciso de ajuda com batalhas')">💬 Falar com a equipe</button>
+    </div>
+
+    <!-- ✅ BATALHAS JÁ CONFIRMADAS -->
+    <div id="batalhasConfirmadas" class="batalhas-confirmadas" style="margin-top:20px">
+      <h4 style="color:var(--verde);margin-bottom:10px;text-align:center">✅ SUAS BATALHAS CONFIRMADAS</h4>
+      <div id="listaMinhasBatalhas"></div>
+    </div>
+
+    <div id="avisoBatalhaExistente" class="aviso-batalha-existente">
+      <h4 style="color:var(--rosa);margin-bottom:5px">⚠️ ATENÇÃO!</h4>
+      <p id="textoAvisoBatalha" style="font-size:14px"></p>
+    </div>
+
+    <button class="btn-acao btn-voltar" onclick="fecharBatalhas()">Voltar</button>
+  </div>
+
+  <a href="https://wa.me/556981478873" target="_blank" class="btn-acao btn-whatsapp">💬 Falar com a Equipe</a>
+  <button class="btn-acao btn-voltar" onclick="voltar()">Voltar ao Início</button>
+</div>
+
 <div class="conteudo" id="conteudoVisitante"><h2 class="titulo-secao">👤 Bem-vindo!</h2><button class="btn-acao btn-voltar" onclick="voltar()">Voltar</button></div>
 <div class="conteudo" id="conteudoOutraAgencia"><h2 class="titulo-secao">🤝 Parcerias</h2><button class="btn-acao btn-voltar" onclick="voltar()">Voltar</button></div>
 
 </div>
 
 <script>
+const LINK_PLANILHA = "https://docs.google.com/spreadsheets/d/1R9eUsqF4kA0y22ryMUIsvGolBfk3-XwZ5R-RVpBiZA4/gviz/tq?tqx=out:json";
+let dadosPlanilha = [];
+let usuarioAtual = null;
+let batalhasDoUsuario = [];
+
+window.onload = async function(){
+  await carregarDadosPlanilha();
+};
+
+async function carregarDadosPlanilha(){
+  try{
+    const res = await fetch(LINK_PLANILHA);
+    const texto = await res.text();
+    dadosPlanilha = JSON.parse(texto.substr(47).slice(0,-2)).table.rows;
+  }catch(e){
+    console.log("Erro ao carregar planilha:", e);
+  }
+}
+
 function abrir(id){
   document.querySelectorAll('.conteudo').forEach(c=>c.classList.remove('visivel'));
   document.getElementById('telaInicial').style.display = 'none';
@@ -92,6 +201,10 @@ function abrir(id){
 function voltar(){
   document.querySelectorAll('.conteudo').forEach(c=>c.classList.remove('visivel'));
   document.getElementById('telaInicial').style.display = 'block';
+  document.getElementById('mensagemAcesso').innerHTML = '';
+  document.getElementById('painelStreamer').style.display = 'none';
+  document.getElementById('dadosPerfilStreamer').style.display = 'none';
+  document.getElementById('areaBatalhas').style.display = 'none';
 }
 
 function verificarAdmin(){
@@ -99,14 +212,117 @@ function verificarAdmin(){
   const senha = document.getElementById('senhaAdmin').value.trim();
   if(email === 'padronizaassessoria@gmail.com' && senha === 'agency2026.'){
     alert('✅ Acesso liberado!');
-    // Abre o painel após o aviso
     document.getElementById('painelAdmin').style.display = 'block';
-    // Limpa os campos de login
     document.getElementById('emailAdmin').value = '';
     document.getElementById('senhaAdmin').value = '';
   }else{
     alert('❌ E-mail ou senha incorretos!');
   }
+}
+
+function verificarAcesso(){
+  const user = document.getElementById('usuarioAcesso').value.trim();
+  const msg = document.getElementById('mensagemAcesso');
+  msg.innerHTML = '🔍 Verificando...';
+  setTimeout(()=>{
+    const encontrado = dadosPlanilha.find(linha => linha.c[0]?.v?.toString().trim().toLowerCase() === user.toLowerCase());
+    if(!encontrado) return msg.innerHTML = '❌ Usuário não encontrado.';
+    if(encontrado.c[1]?.v !== 'APROVADO') return msg.innerHTML = '⏳ Aguardando aprovação (até 48h).';
+    usuarioAtual = encontrado;
+    msg.innerHTML = '✅ Acesso liberado!';
+    document.getElementById('meuNomeUsuario').innerText = encontrado.c[0]?.v || user;
+    document.getElementById('meuLinkTikTok').href = encontrado.c[4]?.v || '#';
+    document.getElementById('meuLinkKako').href = encontrado.c[6]?.v || '#';
+    document.getElementById('dadosPerfilStreamer').style.display = 'block';
+    document.getElementById('painelStreamer').style.display = 'block';
+    carregarMinhasBatalhas(user);
+  }, 800);
+}
+
+function abrirBatalhas(){
+  document.getElementById('painelStreamer').style.display = 'none';
+  document.getElementById('areaBatalhas').style.display = 'block';
+  const user = usuarioAtual?.c[0]?.v || '';
+  document.getElementById('nomeUsuarioBatalha').value = user;
+}
+
+function fecharBatalhas(){
+  document.getElementById('areaBatalhas').style.display = 'none';
+  document.getElementById('painelStreamer').style.display = 'block';
+}
+
+function solicitar(servico){
+  const texto = encodeURIComponent(`Olá! Sou ${usuarioAtual?.c[0]?.v}. Gostaria de solicitar: ${servico}`);
+  window.open(`https://wa.me/556981478873?text=${texto}`);
+}
+
+// ✅ FUNÇÃO PARA CARREGAR BATALHAS CONFIRMADAS
+function carregarMinhasBatalhas(nomeUsuario){
+  batalhasDoUsuario = [];
+  const lista = document.getElementById('listaMinhasBatalhas');
+  const painel = document.getElementById('batalhasConfirmadas');
+  if(!lista || !painel) return;
+  lista.innerHTML = '';
+  
+  dadosPlanilha.forEach(linha => {
+    if(!linha.c) return;
+    const op1 = (linha.c[4]?.v || '').toString().trim().toLowerCase();
+    const op2 = (linha.c[6]?.v || '').toString().trim().toLowerCase();
+    const sit = (linha.c[9]?.v || '').toString().toUpperCase();
+    const user = nomeUsuario.trim().toLowerCase();
+    
+    if((op1===user || op2===user) && sit.includes('CONFIRMADO')){
+      const oponente = op1===user ? (linha.c[6]?.v||'A definir') : (linha.c[4]?.v||'A definir');
+      batalhasDoUsuario.push({
+        data: linha.c[2]?.v||'',
+        hora: linha.c[3]?.v||'',
+        oponente: oponente
+      });
+    }
+  });
+
+  painel.style.display = batalhasDoUsuario.length>0 ? 'block' : 'none';
+  batalhasDoUsuario.forEach(b=>{
+    lista.innerHTML += `<div style="background:rgba(0,0,0,0.25);padding:12px;border-radius:8px;margin-bottom:8px;border-left:3px solid var(--verde)">📅 <strong>Data:</strong> ${b.data}<br>⏰ <strong>Horário:</strong> ${b.hora}<br>👤 <strong>Oponente:</strong> ${b.oponente}</div>`;
+  });
+}
+
+function verificarBatalhaNaData(){
+  const dataEscolhida = document.getElementById('dataBatalha').value;
+  const aviso = document.getElementById('avisoBatalhaExistente');
+  const btn = document.getElementById('btnEnviarBatalha');
+  
+  const temBatalha = batalhasDoUsuario.some(b => b.data === dataEscolhida);
+  
+  if(temBatalha){
+    aviso.style.display = 'block';
+    document.getElementById('textoAvisoBatalha').innerText = 'Você já tem uma batalha confirmada para essa data!';
+    btn.disabled = true;
+    btn.style.opacity = '0.5';
+  } else {
+    aviso.style.display = 'none';
+    btn.disabled = false;
+    btn.style.opacity = '1';
+  }
+}
+
+// ✅ FUNÇÃO PARA ENVIAR SOLICITAÇÃO PARA O WHATSAPP (E VOCÊ ADICIONA NA PLANILHA)
+function enviarSolicitacaoBatalha(){
+  const usuario = document.getElementById('nomeUsuarioBatalha').value.trim();
+  const linkPerfil = document.getElementById('linkPerfilBatalha').value.trim();
+  const data = document.getElementById('dataBatalha').value;
+  const horario = document.getElementById('horarioBatalha').value;
+  const oponente = document.getElementById('nomeOponente').value.trim();
+  const obs = document.getElementById('observacoesBatalha').value.trim();
+
+  if(!usuario || !linkPerfil || !data || !horario || !oponente){
+    return alert('❌ Preencha todos os campos obrigatórios!');
+  }
+
+  const mensagem = encodeURIComponent(`⚔️ SOLICITAÇÃO DE BATALHA\n👤 Seu usuário: ${usuario}\n🔗 Seu perfil: ${linkPerfil}\n📅 Data: ${data}\n⏰ Horário: ${horario}\n👤 Oponente: ${oponente}\n📝 Observações: ${obs || 'Nenhuma'}`);
+  
+  window.open(`https://wa.me/556981478873?text=${mensagem}`);
+  alert('✅ Solicitação enviada! Assim que aprovada, aparecerá automaticamente aqui na sua página!');
 }
 </script>
 </body>
