@@ -128,7 +128,7 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
   <button class="btn-acao btn-verde" onclick="verificarAcesso()">🔍 Acessar Meu Espaço</button>
   <p id="mensagemAcesso" style="text-align:center;margin:10px 0"></p>
   
-  <!-- AQUI FICAM OS DADOS DA PLANILHA -->
+  <!-- DADOS DA PLANILHA EXATAMENTE COMO VOCÊ ORGANIZOU -->
   <div id="dadosPerfilStreamer" class="dados-perfil" style="display:none">
     <h4>📝 Meus Dados e Lives</h4>
     <img id="minhaCapaLive" class="capa-minha-live" src="" alt="Capa da sua Live" onerror="this.src='https://i.imgur.com/8ZkLg4Y.png'">
@@ -136,7 +136,7 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
     <p><strong>🎵 Perfil / Live TikTok:</strong> <a id="meuLinkTikTok" href="#" target="_blank">Clique para acessar</a></p>
     <p><strong>📱 Perfil / Live Kako Live:</strong> <a id="meuLinkKako" href="#" target="_blank">Clique para acessar</a></p>
     <p><strong>🔴 Status:</strong> <span id="meuStatusLive"></span></p>
-    <p style="font-size:14px;color:var(--cinza);margin-top:8px">*Esses dados são atualizados diretamente pela planilha da agência. Se precisar alterar, contate-nos.</p>
+    <p style="font-size:14px;color:var(--cinza);margin-top:8px">*Esses dados são atualizados diretamente pela planilha da agência.</p>
   </div>
 
   <div id="painelStreamer" style="display:none;margin-top:20px">
@@ -304,7 +304,7 @@ function salvarNovoLogo(){
   }, 3000);
 }
 
-// VERIFICAÇÃO DE ACESSO AGENCIADO E CARREGA DADOS
+// VERIFICAÇÃO DE ACESSO E LEITURA EXATA DAS COLUNAS
 function verificarAcesso(){
   const user = document.getElementById('usuarioAcesso').value.trim();
   const msg = document.getElementById('mensagemAcesso');
@@ -323,15 +323,25 @@ function verificarAcesso(){
     usuarioAtual = encontrado;
     msg.innerHTML = '✅ Acesso liberado! Todos os serviços são gratuitos para você.';
     
-    // PREENCHE OS DADOS DA PLANILHA AUTOMATICAMENTE
+    // PREENCHE TUDO EXATAMENTE COMO ESTÁ NA SUA PLANILHA
     document.getElementById('meuNomeUsuario').innerText = encontrado.c[0]?.v || user;
-    document.getElementById('meuLinkTikTok').href = encontrado.c[4]?.v || '#';
-    document.getElementById('meuLinkTikTok').innerText = encontrado.c[4]?.v ? 'Acessar minha live/perfil' : 'Não cadastrado';
-    document.getElementById('meuLinkKako').href = encontrado.c[6]?.v || '#';
-    document.getElementById('meuLinkKako').innerText = encontrado.c[6]?.v ? 'Acessar minha live/perfil' : 'Não cadastrado';
-    document.getElementById('minhaCapaLive').src = encontrado.c[7]?.v?.trim() || CAPA_PADRAO_AGENCIA;
     
-    const aoVivo = encontrado.c[8]?.v === true || encontrado.c[8]?.v?.toString().toUpperCase() === 'TRUE';
+    // Coluna E = tiktok_perfil
+    const linkTiktok = encontrado.c[4]?.v || '';
+    document.getElementById('meuLinkTikTok').href = linkTiktok || '#';
+    document.getElementById('meuLinkTikTok').innerText = linkTiktok ? 'Acessar meu perfil/live TikTok' : 'Não cadastrado';
+    
+    // Coluna G = kako_live
+    const linkKako = encontrado.c[6]?.v || '';
+    document.getElementById('meuLinkKako').href = linkKako || '#';
+    document.getElementById('meuLinkKako').innerText = linkKako ? 'Acessar meu perfil/live Kako Live' : 'Não cadastrado';
+    
+    // Coluna H = capa
+    const capa = encontrado.c[7]?.v?.trim() || CAPA_PADRAO_AGENCIA;
+    document.getElementById('minhaCapaLive').src = capa;
+    
+    // Coluna I = esta_ao_vivo
+    const aoVivo = encontrado.c[8]?.v === true || String(encontrado.c[8]?.v || '').toUpperCase() === 'TRUE';
     document.getElementById('meuStatusLive').innerHTML = aoVivo ? '<span style="color:var(--vermelho);font-weight:bold">🔴 AO VIVO AGORA!</span>' : '<span style="color:var(--cinza)">⏳ Offline no momento</span>';
     
     document.getElementById('dadosPerfilStreamer').style.display = 'block';
@@ -346,15 +356,18 @@ function carregarLivesAoVivo(){
   let temLive = false;
   dadosPlanilha.forEach(linha => {
     const cel = linha.c;
-    const aoVivo = cel[8]?.v === true || cel[8]?.v?.toString().toUpperCase() === 'TRUE';
     const aprovado = cel[1]?.v === 'APROVADO';
+    const aoVivo = cel[8]?.v === true || String(cel[8]?.v || '').toUpperCase() === 'TRUE';
     if(aprovado && aoVivo){
       temLive = true;
       const nome = cel[0]?.v || 'Streamer';
       const capa = cel[7]?.v?.trim() || CAPA_PADRAO_AGENCIA;
+      
+      // Link Kako da coluna G
       if(cel[6]?.v){
         lista.innerHTML += `<div class="cartao-live"><img src="${capa}" alt="Capa da Live" class="capa-live" onerror="this.src='${CAPA_PADRAO_AGENCIA}'"><span class="selo-ao-vivo">🔴 AO VIVO</span><p class="plataforma">📱 Kako Live</p><p class="nome-streamer">${nome}</p><a href="${cel[6].v}" target="_blank" class="link-assistir">▶️ Assistir Transmissão</a></div>`;
       }
+      // Link TikTok da coluna E
       if(cel[4]?.v){
         lista.innerHTML += `<div class="cartao-live"><img src="${capa}" alt="Capa da Live" class="capa-live" onerror="this.src='${CAPA_PADRAO_AGENCIA}'"><span class="selo-ao-vivo">🔴 AO VIVO</span><p class="plataforma">🎵 TikTok</p><p class="nome-streamer">${nome}</p><a href="${cel[4].v}" target="_blank" class="link-assistir">▶️ Assistir Transmissão</a></div>`;
       }
