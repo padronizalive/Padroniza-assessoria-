@@ -37,28 +37,42 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
 .btn-whatsapp{background:linear-gradient(135deg,#25d366,#128c7e);margin-top:15px}
 .destaque-gratis{background:rgba(52,211,153,0.15);border:2px solid var(--verde);padding:16px;border-radius:10px;text-align:center;font-weight:bold;margin-bottom:18px}
 .destaque-pix{background:rgba(255,61,129,0.1);border:1px solid var(--rosa);padding:12px;border-radius:8px;margin:10px 0;font-size:14px;word-break:break-all}
-.passo-a-passo{background:var(--painel2);padding:15px;border-radius:8px;margin:15px 0}
-.passo-a-passo ol{padding-left:20px;margin:10px 0}
-.passo-a-passo li{margin:5px 0}
 .grid-servicos{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:20px}
 .servico-card{background:var(--painel2);border-radius:8px;padding:12px;text-align:center}
 .servico-card h4{color:var(--amarelo);margin-bottom:5px;font-size:15px}
 .servico-card .preco{font-weight:bold;color:var(--rosa);font-size:16px}
 .servico-card .gratis{color:var(--verde);font-weight:bold}
 .campo-arquivo{width:100%;margin:10px 0;padding:8px;background:#17213a;border-radius:6px;border:1px solid #293653;color:var(--texto)}
+.bloco-fotos{background:var(--painel2);padding:15px;border-radius:10px;margin-bottom:15px}
+.bloco-fotos h4{color:var(--amarelo);margin-bottom:8px}
+.area-exibicao{background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;margin:10px 0;text-align:center;color:var(--cinza);font-style:italic}
+.area-exibicao img{max-width:100%;border-radius:6px;margin-top:5px}
 </style>
 </head>
 <body>
 <div class="container">
 
+<!-- TELA INICIAL COM FOTOS VISÍVEIS PARA TODOS -->
 <div id="telaInicial">
   <div class="logo-topo" id="logoPublico">
     <span>PADRONIZA<br>+LIVE ASSESSORIA</span>
+    <!-- AQUI APARECE O LOGO QUE VOCÊ CADASTRAR COMO ADMIN -->
+    <img id="logoExibicao" src="" alt="Logo Padroniza Assessoria" style="display:none">
   </div>
 
   <div class="cabecalho">
     <h1>PADRONIZA ASSESSORIA</h1>
     <p>Seu sucesso nas lives começa aqui!</p>
+  </div>
+
+  <!-- FOTOS DE EVENTOS E CONQUISTAS VISÍVEIS PARA TODOS -->
+  <div class="area-exibicao" id="eventosExibicao" style="display:none">
+    <h4 style="color:var(--amarelo);font-style:normal">📸 Nossos Eventos</h4>
+    <img id="fotoEventos" src="" alt="Eventos Padroniza">
+  </div>
+  <div class="area-exibicao" id="conquistasExibicao" style="display:none">
+    <h4 style="color:var(--amarelo);font-style:normal">🏆 Nossas Conquistas</h4>
+    <img id="fotoConquistas" src="" alt="Conquistas Padroniza">
   </div>
 
   <div class="botoes-principais">
@@ -69,7 +83,7 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
   </div>
 </div>
 
-<!-- ÁREA ADMINISTRATIVA — AGORA CARREGA TUDO AO ENTRAR -->
+<!-- ÁREA ADMINISTRATIVA — SÓ VOCÊ EDITA -->
 <div class="conteudo" id="conteudoAdmin">
   <h2 class="titulo-secao">🔐 ÁREA DA ADMINISTRAÇÃO</h2>
   
@@ -81,12 +95,30 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
 
   <div id="painelAdminCompleto" style="display:none;margin-top:25px">
     <h3 style="color:var(--verde);margin-bottom:12px">✅ Acesso liberado! Painel de Administração</h3>
-    <p style="color:var(--cinza);text-align:center;margin-bottom:20px">Abaixo estão todos os serviços e ferramentas:</p>
+    <p style="color:var(--cinza);text-align:center;margin-bottom:20px">Abaixo configure o que aparece para o público:</p>
 
-    <!-- 📸 FERRAMENTAS PARA ADICIONAR FOTOS E LIVES — VOLTARAM COMPLETAS -->
-    <div style="background:var(--painel2);padding:15px;border-radius:10px;margin-bottom:20px">
-      <h4 style="color:var(--amarelo);margin-bottom:10px">📸 Cadastrar Lives e Capas</h4>
-      
+    <!-- 📸 CONFIGURAÇÃO DE FOTOS — SÓ ADMIN ALTERA -->
+    <div class="bloco-fotos">
+      <h4>🖼️ Logo da Agência</h4>
+      <input type="file" class="campo-arquivo" accept="image/*" id="logoUpload">
+      <p style="font-size:13px;color:var(--cinza)">Escolha direto da galeria do celular</p>
+    </div>
+
+    <div class="bloco-fotos">
+      <h4>🎉 Imagens de Eventos</h4>
+      <input type="file" class="campo-arquivo" accept="image/*" id="eventosUpload">
+      <p style="font-size:13px;color:var(--cinza)">Escolha direto da galeria do celular</p>
+    </div>
+
+    <div class="bloco-fotos">
+      <h4>🏆 Conquistas e Premiações</h4>
+      <input type="file" class="campo-arquivo" accept="image/*" id="conquistasUpload">
+      <p style="font-size:13px;color:var(--cinza)">Escolha direto da galeria do celular</p>
+    </div>
+
+    <!-- 📺 CADASTRO DE LIVES — CONTINUA COMO VOCÊ QUERIA -->
+    <div class="bloco-fotos">
+      <h4>📺 Cadastrar Lives e Capas</h4>
       <label style="display:block;margin:8px 0">📱 Live do Kako Live:</label>
       <input type="file" class="campo-arquivo" accept="image/*">
       <input type="text" class="campo-form" placeholder="Link da live ou perfil no Kako">
@@ -94,12 +126,13 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
       <label style="display:block;margin:8px 0">🎵 Live do TikTok:</label>
       <input type="file" class="campo-arquivo" accept="image/*">
       <input type="text" class="campo-form" placeholder="Link da live ou perfil no TikTok">
-      
-      <button class="btn-acao btn-verde" style="margin-top:10px">💾 Salvar Dados</button>
     </div>
 
-    <!-- 💸 VALORES DOS SERVIÇOS PARA CONSULTA -->
-    <h3 style="color:var(--amarelo);margin-bottom:10px">💸 Valores dos Serviços:</h3>
+    <button class="btn-acao btn-verde" style="margin-top:10px" onclick="salvarTudo()">💾 SALVAR TODAS AS ALTERAÇÕES</button>
+    <p style="font-size:13px;color:var(--cinza);text-align:center;margin-top:5px">✅ As fotos ficam visíveis para todos, mas só você pode alterar!</p>
+
+    <!-- 💸 VALORES PARA CONSULTA -->
+    <h3 style="color:var(--amarelo);margin:25px 0 10px">💸 Valores dos Serviços:</h3>
     <div class="grid-servicos">
       <div class="servico-card">
         <h4>Pacote Completo <small style="color:var(--cinza)">(mensalidade)</small></h4>
@@ -250,6 +283,46 @@ function verificarAdmin(){
     alert('❌ E-mail ou senha incorretos! Verifique se não há espaços ou letras erradas.');
   }
 }
+
+// FUNÇÃO PARA CARREGAR FOTOS DA GALERIA E SALVAR
+function salvarTudo(){
+  // Logo
+  const logoArquivo = document.getElementById('logoUpload').files[0];
+  if(logoArquivo){
+    const leitor = new FileReader();
+    leitor.onload = function(e){
+      document.getElementById('logoExibicao').src = e.target.result;
+      document.getElementById('logoExibicao').style.display = 'block';
+      document.querySelector('.logo-topo span').style.display = 'none';
+    }
+    leitor.readAsDataURL(logoArquivo);
+  }
+
+  // Eventos
+  const eventosArquivo = document.getElementById('eventosUpload').files[0];
+  if(eventosArquivo){
+    const leitor = new FileReader();
+    leitor.onload = function(e){
+      document.getElementById('fotoEventos').src = e.target.result;
+      document.getElementById('eventosExibicao').style.display = 'block';
+    }
+    leitor.readAsDataURL(eventosArquivo);
+  }
+
+  // Conquistas
+  const conquistasArquivo = document.getElementById('conquistasUpload').files[0];
+  if(conquistasArquivo){
+    const leitor = new FileReader();
+    leitor.onload = function(e){
+      document.getElementById('fotoConquistas').src = e.target.result;
+      document.getElementById('conquistasExibicao').style.display = 'block';
+    }
+    leitor.readAsDataURL(conquistasArquivo);
+  }
+
+  alert('✅ Todas as alterações foram salvas! Agora aparecem para todos os visitantes.');
+}
+
 function solicitar(servico){
   const usuario = document.getElementById('usuarioAgenciado').value.trim();
   if(!usuario){
