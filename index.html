@@ -12,51 +12,40 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
 
 .cabecalho{text-align:center;margin-bottom:20px}
 .cabecalho h1{font-size:28px;color:var(--rosa);font-weight:bold;margin-bottom:5px}
-.aviso-topo{background:rgba(255,200,87,0.1);border:1px solid var(--amarelo);color:var(--amarelo);padding:12px;border-radius:8px;text-align:center;font-weight:bold;margin-bottom:20px}
+.aviso-topo{background:rgba(52,211,153,0.15);border:1px solid var(--verde);color:var(--verde);padding:12px;border-radius:8px;text-align:center;font-weight:bold;margin-bottom:20px}
 
 .botoes-principais{display:flex;flex-direction:column;gap:12px;margin-bottom:25px}
 .btn-principal{padding:16px;border-radius:12px;border:none;font-weight:bold;font-size:17px;cursor:pointer;text-align:center;color:#fff;box-shadow:0 4px 12px rgba(0,0,0,0.3);transition:0.2s}
 .btn-principal:hover{transform:translateY(-2px)}
-.btn-visitante{background:linear-gradient(135deg,var(--azul),#2563eb)}
-.btn-agenciado{background:linear-gradient(135deg,var(--verde),#16a34a)}
-.btn-agencia{background:linear-gradient(135deg,var(--roxo),#4f46e5)}
+.btn-aprovado{background:linear-gradient(135deg,var(--verde),#16a34a);font-size:18px;padding:18px}
+.btn-solicitar{background:linear-gradient(135deg,var(--azul),#2563eb)}
+.btn-admin{background:linear-gradient(135deg,var(--roxo),#4f46e5)}
 
 .conteudo{display:none;background:var(--painel);border-radius:12px;padding:18px;margin-bottom:20px}
 .conteudo.visivel{display:block}
 .titulo-secao{text-align:center;margin-bottom:15px;color:var(--amarelo);font-size:20px}
 .campo-form{width:100%;padding:12px;border-radius:8px;border:1px solid #293653;background:#17213a;color:var(--texto);margin:8px 0;font-size:16px}
 .btn-acao{width:100%;padding:14px;border-radius:8px;border:none;font-weight:bold;cursor:pointer;margin-top:10px;text-decoration:none;display:inline-block;text-align:center;color:#fff;font-size:16px}
-.btn-whatsapp{background:#25d366}
+.btn-confirmar{background:var(--verde)}
 .btn-voltar{background:#293653;color:#fff;margin-top:15px}
-.link-admin{text-align:right;font-size:13px;color:var(--cinza);margin-top:20px}
-.link-admin a{color:var(--cinza);text-decoration:underline}
 
-/* PAINEL ADMIN COMPLETO */
-.painel-admin{background:var(--painel);border-radius:12px;padding:20px}
-.status-admin{color:var(--verde);font-weight:bold;text-align:center;margin-bottom:15px}
-.grupo-botoes-admin{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:20px}
-.btn-admin{padding:12px;border-radius:8px;border:none;font-weight:bold;color:#fff;cursor:pointer;font-size:14px}
-.btn-planilha{background:var(--azul)}
-.btn-novo{background:var(--verde)}
-.btn-liberar{background:var(--amarelo);color:#000}
-.btn-sair{background:var(--rosa);grid-column:1 / -1}
-
-.lista-registros{margin-top:20px}
-.card-registro{background:var(--painel2);border-radius:10px;padding:15px;margin-bottom:12px;border-left:4px solid var(--azul)}
-.card-registro.aprovado{border-left-color:var(--verde)}
-.card-registro.pendente{border-left-color:var(--amarelo)}
-.card-registro.bloqueado{border-left-color:var(--vermelho)}
-.card-registro p{margin:5px 0;font-size:15px}
-.rotulo{color:var(--cinza);font-weight:bold}
-.sim{color:var(--verde);font-weight:bold}
-.nao{color:var(--vermelho);font-weight:bold}
-.ao-vivo-badge{display:inline-block;background:var(--verde);color:#000;padding:2px 8px;border-radius:4px;font-weight:bold;font-size:12px;margin-left:6px}
-
-/* ÁREA DO STREAMER */
 .aviso-sucesso{background:rgba(52,211,153,0.15);border:2px solid var(--verde);color:var(--verde);padding:16px;border-radius:10px;text-align:center;font-weight:bold;font-size:17px;margin-bottom:15px}
 .aviso-aguarde{background:rgba(255,200,87,0.15);border:2px solid var(--amarelo);color:var(--amarelo);padding:16px;border-radius:10px;text-align:center;font-weight:bold;font-size:17px;margin-bottom:15px}
 .dados-streamer{background:var(--painel2);border-radius:10px;padding:15px;margin:15px 0}
 .dados-streamer h4{color:var(--amarelo);margin-bottom:10px;font-size:16px}
+
+/* Painel Admin */
+.painel-admin{background:var(--painel);border-radius:12px;padding:20px}
+.status-admin{color:var(--verde);font-weight:bold;text-align:center;margin-bottom:15px}
+.grupo-botoes-admin{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:20px}
+.btn-admin-op{padding:12px;border-radius:8px;border:none;font-weight:bold;color:#fff;cursor:pointer;font-size:14px}
+.btn-planilha{background:var(--azul)}
+.btn-atualizar{background:var(--amarelo);color:#000}
+.btn-sair{background:var(--rosa);grid-column:1 / -1}
+.lista-registros{margin-top:20px}
+.card-registro{background:var(--painel2);border-radius:10px;padding:15px;margin-bottom:12px;border-left:4px solid var(--azul)}
+.card-registro.aprovado{border-left-color:var(--verde)}
+.card-registro.pendente{border-left-color:var(--amarelo)}
 </style>
 </head>
 <body>
@@ -65,95 +54,66 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
 <div class="cabecalho">
   <h1>PADRONIZA ASSESSORIA</h1>
 </div>
-<div class="aviso-topo">⏱️ Atualizações diretas da planilha!</div>
+<div class="aviso-topo">🎯 Acesse sua área se já foi aprovado!</div>
 
+<!-- TELA INICIAL SIMPLIFICADA -->
 <div id="telaInicial">
   <div class="botoes-principais">
-    <button class="btn-principal btn-visitante" onclick="abrirConteudo('visitante')">👤 VISITANTE</button>
-    <button class="btn-principal btn-agenciado" onclick="abrirConteudo('agenciado')">✅ SOU AGENCIADO</button>
-    <button class="btn-principal btn-agencia" onclick="abrirConteudo('agencia')">🏢 PARCEIROS</button>
-  </div>
-  <div class="link-admin">
-    <a href="#" onclick="abrirConteudo('admin');return false;">🔐 Acesso Administrativo</a>
+    <button class="btn-principal btn-aprovado" onclick="abrirConteudo('fuiAprovado')">✅ FUI APROVADO</button>
+    <button class="btn-principal btn-solicitar" onclick="abrirConteudo('solicitar')">📋 QUERO ME CADASTRAR</button>
+    <button class="btn-principal btn-admin" onclick="abrirConteudo('admin')">🔐 ÁREA DA AGÊNCIA</button>
   </div>
 </div>
 
-<!-- ÁREA DO STREAMER -->
-<div class="conteudo" id="conteudoAgenciado">
-  <h2 class="titulo-secao">🔍 Verifique seu acesso</h2>
-  <p style="margin-bottom:8px;color:var(--cinza)">Digite seu nome ou usuário cadastrado:</p>
-  <input type="text" id="verificaUsuario" class="campo-form" placeholder="Ex: Serena Tempestade">
-  <button class="btn-acao" style="background:var(--azul)" onclick="verificarStatus()">🔎 Verificar</button>
-  <div id="resultadoVerificacao" style="margin-top:15px"></div>
-
-  <div id="formSolicitacao" style="margin-top:20px">
-    <hr style="border-color:#293653;margin:20px 0">
-    <h3 style="text-align:center;color:var(--amarelo);margin-bottom:15px">📋 Solicitar cadastro</h3>
-    <input type="text" id="nomeCompleto" class="campo-form" placeholder="Seu nome completo">
-    <select id="plataforma" class="campo-form">
-      <option value="">Selecione plataforma</option>
-      <option value="TikTok">TikTok</option>
-      <option value="Kaku Live">Kaku Live</option>
-    </select>
-    <input type="text" id="usuarioPlataforma" class="campo-form" placeholder="Usuário ou ID">
-    <button class="btn-acao btn-whatsapp" onclick="enviarSolicitacao()">📩 Enviar para análise</button>
-  </div>
-
-  <div id="areaAprovado" style="display:none">
-    <div class="aviso-sucesso">✅ SEU ACESSO ESTÁ APROVADO E LIBERADO!</div>
-    <div id="dadosAgenciado" class="dados-streamer"></div>
-    <a href="https://wa.me/5569981478873" target="_blank" class="btn-acao btn-whatsapp">📩 Falar com a equipe</a>
-  </div>
-
+<!-- BOTÃO "FUI APROVADO" - EXATAMENTE COMO VOCÊ QUERIA -->
+<div class="conteudo" id="conteudoFuiAprovado">
+  <h2 class="titulo-secao">🎉 Acesso para aprovados</h2>
+  <p style="text-align:center;color:var(--cinza);margin-bottom:15px">Digite seu usuário cadastrado para entrar:</p>
+  <input type="text" id="usuarioAprovado" class="campo-form" placeholder="Ex: serenatempestadenotiktok">
+  <button class="btn-acao btn-confirmar" onclick="verificarAprovado()">🚀 ACESSAR AGORA</button>
+  <div id="resultadoAprovado" style="margin-top:15px"></div>
   <button class="btn-acao btn-voltar" onclick="voltarInicio()">Voltar</button>
 </div>
 
-<!-- ÁREA ADMINISTRATIVA COMPLETA -->
+<!-- SOLICITAR CADASTRO -->
+<div class="conteudo" id="conteudoSolicitar">
+  <h2 class="titulo-secao">📋 Solicitar cadastro</h2>
+  <input type="text" id="nomeCompleto" class="campo-form" placeholder="Seu nome completo">
+  <select id="plataforma" class="campo-form">
+    <option value="">Selecione plataforma</option>
+    <option value="TikTok">TikTok</option>
+    <option value="Kaku Live">Kaku Live</option>
+  </select>
+  <input type="text" id="usuarioPlataforma" class="campo-form" placeholder="Seu usuário/ID">
+  <button class="btn-acao btn-confirmar" onclick="enviarSolicitacao()">📩 Enviar para análise</button>
+  <button class="btn-acao btn-voltar" onclick="voltarInicio()">Voltar</button>
+</div>
+
+<!-- ÁREA ADMINISTRATIVA -->
 <div class="conteudo" id="conteudoAdmin">
   <div id="loginAdmin">
-    <h2 class="titulo-secao">🔐 Acesso Administrativo</h2>
+    <h2 class="titulo-secao">🔐 Acesso da Agência</h2>
     <input type="email" id="adminEmail" class="campo-form" placeholder="padronizaassessoria@gmail.com">
     <input type="password" id="adminSenha" class="campo-form" placeholder="Senha">
-    <button class="btn-acao" style="background:var(--verde)" onclick="verificarAdmin()">🔑 Entrar</button>
+    <button class="btn-acao btn-confirmar" onclick="verificarAdmin()">🔑 Entrar</button>
     <button class="btn-acao btn-voltar" onclick="voltarInicio()">Voltar</button>
   </div>
 
   <div id="painelAdmin" style="display:none">
-    <h2 class="titulo-secao">⚙️ Painel de Controle</h2>
+    <h2 class="titulo-secao">⚙️ Painel da Agência</h2>
     <div class="painel-admin">
       <p class="status-admin">✅ Conectado como administrador</p>
-      
       <div class="grupo-botoes-admin">
-        <a href="https://docs.google.com/spreadsheets/d/1R9eUsqF4kA0y22ryMUIsvGolBfk3-XwZ5R-RVpBiZA4/edit" target="_blank" class="btn-admin btn-planilha">📊 Abrir Planilha</a>
-        <button class="btn-admin btn-novo" onclick="alert('Cadastre direto na planilha!')">➕ Novo Cadastro</button>
-        <button class="btn-admin btn-liberar" onclick="carregarTodosRegistros()">🔄 Atualizar Lista</button>
-        <button class="btn-admin btn-sair" onclick="sairAdmin()">🚪 Sair do Painel</button>
+        <a href="https://docs.google.com/spreadsheets/d/1R9eUsqF4kA0y22ryMUIsvGolBfk3-XwZ5R-RVpBiZA4/edit" target="_blank" class="btn-admin-op btn-planilha">📊 Abrir Planilha</a>
+        <button class="btn-admin-op btn-atualizar" onclick="carregarTodosRegistros()">🔄 Atualizar Lista</button>
+        <button class="btn-admin-op btn-sair" onclick="sairAdmin()">🚪 Sair</button>
       </div>
-
       <div class="lista-registros">
-        <h3 style="color:var(--amarelo);margin-bottom:10px">📋 Todos os Streamers</h3>
-        <div id="listaRegistros">
-          <p style="text-align:center;color:var(--cinza)">Carregando dados...</p>
-        </div>
+        <h3 style="color:var(--amarelo);margin-bottom:10px">📋 Todos os streamers</h3>
+        <div id="listaRegistros"><p style="text-align:center;color:var(--cinza)">Carregando...</p></div>
       </div>
     </div>
   </div>
-</div>
-
-<div class="conteudo" id="conteudoVisitante" style="display:none">
-  <h2 class="titulo-secao">👤 Para novos interessados</h2>
-  <p style="text-align:center;color:var(--cinza);margin-bottom:15px">Preencha seus dados que entraremos em contato.</p>
-  <input type="text" class="campo-form" placeholder="Seu nome">
-  <input type="tel" class="campo-form" placeholder="Seu WhatsApp com DDD">
-  <button class="btn-acao btn-whatsapp">📩 Enviar</button>
-  <button class="btn-acao btn-voltar" onclick="voltarInicio()">Voltar</button>
-</div>
-
-<div class="conteudo" id="conteudoAgencia" style="display:none">
-  <h2 class="titulo-secao">🤝 Parcerias</h2>
-  <p style="text-align:center;color:var(--cinza);margin-bottom:15px">Entre em contato para parcerias e contratações.</p>
-  <a href="https://wa.me/5569981478873" target="_blank" class="btn-acao btn-whatsapp">📩 Chamar no WhatsApp</a>
-  <button class="btn-acao btn-voltar" onclick="voltarInicio()">Voltar</button>
 </div>
 
 </div>
@@ -166,22 +126,65 @@ const SENHA_CORRETA = "agency2026";
 function abrirConteudo(tipo){
   document.getElementById('telaInicial').style.display = 'none';
   document.querySelectorAll('.conteudo').forEach(el => el.classList.remove('visivel'));
-  document.getElementById('resultadoVerificacao').innerHTML = '';
-  document.getElementById('formSolicitacao').style.display = 'block';
-  document.getElementById('areaAprovado').style.display = 'none';
-  if(tipo === 'agenciado') document.getElementById('conteudoAgenciado').classList.add('visivel');
-  if(tipo === 'admin') {
-    document.getElementById('conteudoAdmin').classList.add('visivel');
-    document.getElementById('loginAdmin').style.display = 'block';
-    document.getElementById('painelAdmin').style.display = 'none';
-  }
-  if(tipo === 'visitante') document.getElementById('conteudoVisitante').classList.add('visivel');
-  if(tipo === 'agencia') document.getElementById('conteudoAgencia').classList.add('visivel');
+  document.getElementById(`conteudo${tipo.charAt(0).toUpperCase() + tipo.slice(1)}`).classList.add('visivel');
 }
 
 function voltarInicio(){
   document.querySelectorAll('.conteudo').forEach(el => el.classList.remove('visivel'));
   document.getElementById('telaInicial').style.display = 'block';
+  document.getElementById('resultadoAprovado').innerHTML = '';
+}
+
+// FUNÇÃO PRINCIPAL: VERIFICA SE FOI APROVADO E LIBERA ACESSO
+async function verificarAprovado(){
+  const usuario = document.getElementById('usuarioAprovado').value.trim().toLowerCase();
+  if(!usuario) return alert('Digite seu usuário!');
+  
+  document.getElementById('resultadoAprovado').innerHTML = '<p style="color:var(--cinza)">Verificando liberação...</p>';
+  
+  try {
+    const url = `https://docs.google.com/spreadsheets/d/${ID_PLANILHA}/gviz/tq?tqx=out:json&t=${Date.now()}`;
+    const res = await fetch(url);
+    const dados = JSON.parse((await res.text()).substr(47, -2));
+    
+    let encontrado = null;
+    dados.table.rows.forEach(linha => {
+      if(!linha.c) return;
+      const userPlanilha = (linha.c[0]?.v || '').toString().toLowerCase();
+      if(userPlanilha === usuario) encontrado = linha;
+    });
+
+    if(!encontrado){
+      document.getElementById('resultadoAprovado').innerHTML = `<div class="aviso-aguarde">❌ Usuário não encontrado. Confira se digitou igual ao cadastro ou solicite cadastro!</div>`;
+      return;
+    }
+
+    const status = (encontrado.c[1]?.v || '').toString().toUpperCase();
+    const liberado = (encontrado.c[12]?.v || '').toString().toUpperCase();
+    const validade = encontrado.c[13]?.v || '—';
+    const servico = encontrado.c[10]?.v || '—';
+    const tt = encontrado.c[3]?.v || '—';
+    const kk = encontrado.c[5]?.v || '—';
+
+    if(status === 'APROVADO' && liberado === 'SIM'){
+      document.getElementById('resultadoAprovado').innerHTML = `
+      <div class="aviso-sucesso">✅ ACESSO LIBERADO! SEJA BEM-VINDO(A)!</div>
+      <div class="dados-streamer">
+        <h4>Seus dados:</h4>
+        <p><strong>Plano:</strong> ${servico}</p>
+        <p><strong>Perfil TikTok:</strong> ${tt}</p>
+        <p><strong>Perfil Kaku:</strong> ${kk}</p>
+        <p><strong>Válido até:</strong> ${validade}</p>
+      </div>
+      <a href="https://wa.me/5569981478873" target="_blank" class="btn-acao btn-confirmar">💬 Falar com a agência</a>
+      `;
+    } else {
+      document.getElementById('resultadoAprovado').innerHTML = `<div class="aviso-aguarde">⏳ Ainda não liberado! Aguarde o aviso oficial da agência que já vamos liberar tudo para você!</div>`;
+    }
+
+  } catch {
+    document.getElementById('resultadoAprovado').innerHTML = `<div class="aviso-aguarde">⚠️ Aguarde um instante e tente novamente. Se persistir, confira com a agência.</div>`;
+  }
 }
 
 function verificarAdmin(){
@@ -191,133 +194,45 @@ function verificarAdmin(){
     document.getElementById('loginAdmin').style.display = 'none';
     document.getElementById('painelAdmin').style.display = 'block';
     carregarTodosRegistros();
-  }else{
-    alert('❌ E-mail ou senha incorretos!');
+  } else {
+    alert('❌ Dados incorretos!');
   }
 }
 
 function sairAdmin(){
   document.getElementById('adminEmail').value = '';
   document.getElementById('adminSenha').value = '';
+  document.getElementById('painelAdmin').style.display = 'none';
+  document.getElementById('loginAdmin').style.display = 'block';
   voltarInicio();
 }
 
-// FUNÇÃO PARA CARREGAR TODOS OS REGISTROS NO PAINEL ADMIN
 async function carregarTodosRegistros(){
   try {
-    const url = `https://docs.google.com/spreadsheets/d/${ID_PLANILHA}/gviz/tq?tqx=out:json`;
+    const url = `https://docs.google.com/spreadsheets/d/${ID_PLANILHA}/gviz/tq?tqx=out:json&t=${Date.now()}`;
     const res = await fetch(url);
-    const texto = await res.text();
-    const dados = JSON.parse(texto.substr(47, -2));
-    
+    const dados = JSON.parse((await res.text()).substr(47, -2));
     const lista = document.getElementById('listaRegistros');
     lista.innerHTML = '';
-
-    dados.table.rows.forEach((linha, indice) => {
-      if(indice === 0) return;
-      if(!linha.c) return;
+    
+    dados.table.rows.forEach((linha, i) => {
+      if(i === 0 || !linha.c) return;
+      const user = linha.c[0]?.v || '—';
+      const status = (linha.c[1]?.v || 'PENDENTE').toUpperCase();
+      const liberado = (linha.c[12]?.v || 'NAO').toUpperCase();
+      const servico = linha.c[10]?.v || '—';
+      const classe = status === 'APROVADO' && liberado === 'SIM' ? 'aprovado' : 'pendente';
       
-      const usuario    = linha.c[0]?.v || '—';
-      const status     = (linha.c[1]?.v || 'PENDENTE').toString().toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
-      const data       = linha.c[2]?.v || '—';
-      const ttPerfil   = linha.c[3]?.v || '—';
-      const ttLive     = linha.c[4]?.v || '—';
-      const kkPerfil   = linha.c[5]?.v || '—';
-      const kkLive     = linha.c[6]?.v || '—';
-      const capa       = linha.c[7]?.v || '—';
-      const aoVivoVal  = (linha.c[8]?.v || 'NAO').toString().toUpperCase();
-      const aoVivo     = (aoVivoVal === 'SIM' || aoVivoVal === 'TRUE' || aoVivoVal === 'VERDADEIRO') ? 'SIM' : 'NÃO';
-      const tipoAcesso = linha.c[9]?.v || '—';
-      const servico    = linha.c[10]?.v || '—';
-      const pgtoOk     = (linha.c[11]?.v || 'NAO').toString().toUpperCase();
-      const liberado   = (linha.c[12]?.v || 'NAO').toString().toUpperCase();
-      const validade   = linha.c[13]?.v || '—';
-
-      let classeCard = 'pendente';
-      if(status === 'APROVADO') classeCard = 'aprovado';
-      if(status === 'BLOQUEADO') classeCard = 'bloqueado';
-
       lista.innerHTML += `
-      <div class="card-registro ${classeCard}">
-        <p><span class="rotulo">Usuário:</span> ${usuario} ${aoVivo === 'SIM' ? '<span class="ao-vivo-badge">AO VIVO</span>' : ''}</p>
-        <p><span class="rotulo">Status:</span> ${status}</p>
-        <p><span class="rotulo">TikTok:</span> ${ttPerfil} ${ttLive !== '—' ? `| Live: ${ttLive}` : ''}</p>
-        <p><span class="rotulo">Kaku:</span> ${kkPerfil} ${kkLive !== '—' ? `| Live: ${kkLive}` : ''}</p>
-        <p><span class="rotulo">Serviço:</span> ${servico}</p>
-        <p><span class="rotulo">Pagamento:</span> <span class="${pgtoOk === 'SIM' ? 'sim' : 'nao'}">${pgtoOk}</span></p>
-        <p><span class="rotulo">Liberado:</span> <span class="${liberado === 'SIM' ? 'sim' : 'nao'}">${liberado}</span></p>
-        <p><span class="rotulo">Validade:</span> ${validade}</p>
+      <div class="card-registro ${classe}">
+        <p><strong>Usuário:</strong> ${user}</p>
+        <p><strong>Status:</strong> ${status} | Liberado: ${liberado === 'SIM' ? 'SIM' : 'NÃO'}</p>
+        <p><strong>Serviço:</strong> ${servico}</p>
       </div>
       `;
     });
-
-    if(!lista.innerHTML.trim()) lista.innerHTML = '<p style="text-align:center;color:var(--cinza)">Nenhum cadastro encontrado.</p>';
-
-  } catch (erro) {
-    console.log(erro);
-    document.getElementById('listaRegistros').innerHTML = '<p style="color:var(--amarelo)">⚠️ Erro ao carregar. Confira se a planilha está PÚBLICA para visualização e tente novamente.</p>';
-  }
-}
-
-// FUNÇÃO PARA VERIFICAR ACESSO DO STREAMER
-async function verificarStatus(){
-  const busca = document.getElementById('verificaUsuario').value.trim().toLowerCase();
-  if(!busca) return alert('Digite seu nome ou usuário!');
-  
-  document.getElementById('resultadoVerificacao').innerHTML = '<p style="color:var(--cinza)">Verificando cadastro...</p>';
-  
-  try {
-    const url = `https://docs.google.com/spreadsheets/d/${ID_PLANILHA}/gviz/tq?tqx=out:json`;
-    const res = await fetch(url);
-    const dados = JSON.parse((await res.text()).substr(47, -2));
-    
-    let encontrado = null;
-    
-    dados.table.rows.forEach(linha => {
-      if(!linha.c) return;
-      const userPlanilha = (linha.c[0]?.v || '').toString().toLowerCase();
-      if(userPlanilha.includes(busca) || busca.includes(userPlanilha)){
-        encontrado = linha;
-      }
-    });
-    
-    if(!encontrado){
-      document.getElementById('resultadoVerificacao').innerHTML = `<div class="aviso-aguarde">❌ Não encontramos seu cadastro. Preencha os dados abaixo para solicitar!</div>`;
-    } else {
-      const status     = (encontrado.c[1]?.v || 'PENDENTE').toString().toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
-      const liberado   = (encontrado.c[12]?.v || 'NAO').toString().toUpperCase();
-      const validade   = encontrado.c[13]?.v || '—';
-      const aoVivoVal  = (encontrado.c[8]?.v || 'NAO').toString().toUpperCase();
-      const aoVivo     = (aoVivoVal === 'SIM' || aoVivoVal === 'TRUE' || aoVivoVal === 'VERDADEIRO') ? 'SIM' : 'NÃO';
-      const tipoAcesso = encontrado.c[9]?.v || '—';
-      const servico    = encontrado.c[10]?.v || '—';
-      const ttPerfil   = encontrado.c[3]?.v || '—';
-      const kkPerfil   = encontrado.c[5]?.v || '—';
-
-      if(status === 'APROVADO' && liberado === 'SIM'){
-        document.getElementById('resultadoVerificacao').innerHTML = '';
-        document.getElementById('formSolicitacao').style.display = 'none';
-        document.getElementById('areaAprovado').style.display = 'block';
-        
-        document.getElementById('dadosAgenciado').innerHTML = `
-          <h4>👤 Seus dados cadastrados:</h4>
-          <p><strong>Status:</strong> <span class="sim">APROVADO ✅</span></p>
-          <p><strong>Perfil TikTok:</strong> ${ttPerfil}</p>
-          <p><strong>Perfil Kaku:</strong> ${kkPerfil}</p>
-          <p><strong>Está ao vivo:</strong> ${aoVivo === 'SIM' ? '<span class="sim">SIM ✅</span>' : 'NÃO'}</p>
-          <p><strong>Tipo de acesso:</strong> ${tipoAcesso}</p>
-          <p><strong>Serviço contratado:</strong> ${servico}</p>
-          <p><strong>Válido até:</strong> ${validade}</p>
-        `;
-      } else if(status === 'APROVADO' && liberado !== 'SIM'){
-        document.getElementById('resultadoVerificacao').innerHTML = `<div class="aviso-aguarde">⏳ Você foi aprovado! Aguardando apenas a liberação final do acesso.</div>`;
-      } else {
-        document.getElementById('resultadoVerificacao').innerHTML = `<div class="aviso-aguarde">⏳ Seu cadastro está em análise. Em breve entraremos em contato!</div>`;
-      }
-    }
-    
   } catch {
-    document.getElementById('resultadoVerificacao').innerHTML = `<p style="color:var(--amarelo)">⚠️ Erro ao verificar. Confira se a planilha está pública e tente novamente.</p>`;
+    document.getElementById('listaRegistros').innerHTML = '<p style="color:var(--amarelo)">⚠️ Confira se a planilha está pública e tente novamente.</p>';
   }
 }
 
@@ -326,11 +241,9 @@ function enviarSolicitacao(){
   const plat = document.getElementById('plataforma').value;
   const user = document.getElementById('usuarioPlataforma').value.trim();
   if(!nome || !plat || !user) return alert('Preencha todos os campos!');
-  const msg = `SOLICITAÇÃO DE CADASTRO:\nNome: ${nome}\nPlataforma: ${plat}\nUsuário: ${user}`;
+  const msg = `NOVO CADASTRO:\nNome: ${nome}\nPlataforma: ${plat}\nUsuário: ${user}`;
   window.open(`https://wa.me/5569981478873?text=${encodeURIComponent(msg)}`);
-  alert('✅ Solicitação enviada! Em breve analisaremos.');
-  document.getElementById('nomeCompleto').value = '';
-  document.getElementById('usuarioPlataforma').value = '';
+  alert('✅ Solicitação enviada! Em breve entraremos em contato.');
 }
 </script>
 
