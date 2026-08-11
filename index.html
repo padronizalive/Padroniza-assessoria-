@@ -10,7 +10,7 @@
 body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
 .container{max-width:600px;margin:0 auto}
 
-/* LOGO NO TOPO DA PÁGINA INICIAL */
+/* LOGO PÚBLICO NO TOPO */
 .logo-topo{width:180px;height:180px;margin:0 auto 15px;display:flex;align-items:center;justify-content:center;background:var(--painel);border-radius:50%;border:3px solid var(--rosa);overflow:hidden}
 .logo-topo img{width:100%;height:100%;object-fit:contain}
 .logo-topo span{font-size:16px;font-weight:bold;color:var(--amarelo);text-align:center;padding:10px}
@@ -34,19 +34,19 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
 .btn-acao{width:100%;padding:12px;border-radius:8px;border:none;font-weight:bold;cursor:pointer;margin-top:10px;text-decoration:none;display:inline-block;text-align:center;color:#fff;font-size:16px;pointer-events:auto !important}
 .btn-verde{background:var(--verde)}
 .btn-voltar{background:#293653;color:#fff;margin-top:15px}
+.btn-servico{background:linear-gradient(135deg,var(--rosa),var(--roxo));margin:8px 0;font-size:15px;padding:14px}
 .btn-foto{background:linear-gradient(135deg,#ec4899,var(--rosa));margin:8px 0;font-size:15px}
 .btn-salvar{background:var(--amarelo);color:#000;margin-top:15px}
-
+.destaque-gratis{background:rgba(52,211,153,0.15);border:2px solid var(--verde);padding:14px;border-radius:10px;text-align:center;font-weight:bold;margin-bottom:18px}
+.aviso-verificacao{font-size:13px;color:var(--cinza);text-align:center;margin-top:10px}
 .grid-servicos{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:20px}
 .servico-card{background:var(--painel2);border-radius:8px;padding:12px;text-align:center}
 .servico-card h4{color:var(--amarelo);margin-bottom:5px;font-size:15px}
 .servico-card .preco{font-weight:bold;color:var(--rosa);font-size:16px}
-
 .live-status{background:var(--painel2);border-radius:8px;padding:12px;margin-bottom:10px;border-left:4px solid var(--verde)}
 .live-status.offline{border-left-color:var(--vermelho)}
 .live-status h5{font-size:15px;margin-bottom:3px}
 .live-status p{font-size:13px;color:var(--cinza)}
-
 .preview-foto{width:100%;height:120px;border-radius:8px;background:#17213a;border:2px dashed var(--rosa);display:flex;align-items:center;justify-content:center;color:var(--cinza);margin:8px 0;overflow:hidden}
 .preview-foto img{width:100%;height:100%;object-fit:cover}
 .grupo-foto{margin-bottom:15px}
@@ -57,7 +57,6 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
 <div class="container">
 
 <div id="telaInicial">
-  <!-- LOGO DA AGÊNCIA NO TOPO, VISÍVEL PARA TODOS -->
   <div class="logo-topo" id="logoPublico">
     <span>PADRONIZA<br>+LIVE ASSESSORIA</span>
   </div>
@@ -75,7 +74,27 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
   </div>
 </div>
 
-<!-- ÁREA ADMINISTRATIVA -->
+<!-- ÁREA DO AGENCIADO - COM BOTÕES DE SOLICITAÇÃO -->
+<div class="conteudo" id="conteudoAgenciado">
+  <h2 class="titulo-secao">🎉 Bem-vindo(a) parceiro(a)!</h2>
+  <div class="destaque-gratis">✅ TODOS os serviços são GRÁTIS para você!</div>
+
+  <input type="text" class="campo-form" id="usuarioAgenciado" placeholder="Digite aqui seu nome de usuário da plataforma">
+  <p class="aviso-verificacao">⚠️ Digite exatamente como está cadastrado para nós confirmarmos seu acesso</p>
+
+  <p style="text-align:center;color:var(--amarelo);font-weight:bold;margin:15px 0">Escolha o serviço que deseja solicitar:</p>
+
+  <button class="btn-acao btn-servico" onclick="solicitar('Músicas personalizadas')">🎵 Solicitar Músicas Personalizadas</button>
+  <button class="btn-acao btn-servico" onclick="solicitar('Artes visuais para batalhas e eventos')">🎨 Solicitar Artes Visuais</button>
+  <button class="btn-acao btn-servico" onclick="solicitar('Agendamento de batalha oficial')">⚔️ Solicitar Agendamento de Batalha</button>
+  <button class="btn-acao btn-servico" onclick="solicitar('Acesso ao grupo VIP de treinamento')">🎓 Solicitar Acesso ao Treinamento VIP</button>
+  <button class="btn-acao btn-servico" onclick="solicitar('Divulgação e suporte geral')">📢 Solicitar Divulgação ou Suporte</button>
+
+  <a href="https://wa.me/556981478873" target="_blank" class="btn-acao btn-verde" style="margin-top:20px">💬 Falar diretamente com a equipe</a>
+  <button class="btn-acao btn-voltar" onclick="voltar()">Voltar</button>
+</div>
+
+<!-- ÁREA ADMINISTRATIVA - EXATAMENTE COMO ESTAVA, COM SALVAMENTO PERMANENTE -->
 <div class="conteudo" id="conteudoAdmin">
   <h2 class="titulo-secao">🔐 ÁREA DA ADMINISTRAÇÃO</h2>
   
@@ -86,9 +105,9 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
   <button class="btn-acao btn-voltar" onclick="voltar()">Voltar</button>
 
   <div id="painelAdminCompleto" style="display:none;margin-top:25px">
-    <div class="aviso-sucesso" id="avisoSalvo">✅ Alterações salvas e já aparecem para o público!</div>
+    <div class="aviso-sucesso" id="avisoSalvo">✅ Alterações salvas PERMANENTEMENTE e já aparecem para o público!</div>
 
-    <!-- 1. PAINEL DE STATUS DE LIVES -->
+    <!-- STATUS DE LIVES -->
     <h3 style="color:var(--amarelo);margin-bottom:12px">📊 STATUS DE LIVES DOS SEUS STREAMERS</h3>
     <div class="live-status">
       <h5>🔴 Serena Tempestade</h5>
@@ -100,7 +119,7 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
     </div>
     <p style="color:var(--cinza);font-size:13px;text-align:center;margin-bottom:20px">* Atualize conforme os streamers entrarem ou saírem do ar</p>
 
-    <!-- 2. TABELA DE PREÇOS E SERVIÇOS -->
+    <!-- TABELA DE PREÇOS -->
     <h3 style="color:var(--amarelo);margin-bottom:12px">💸 PREÇOS E SERVIÇOS (PARA CONSULTAR)</h3>
     <div class="grid-servicos">
       <div class="servico-card">
@@ -135,16 +154,16 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
       </div>
     </div>
 
-    <!-- 3. GERENCIAR FOTOS PÚBLICAS -->
-    <h3 style="color:var(--amarelo);margin-bottom:12px">🖼️ GERENCIAR FOTOS QUE APARECEM NO SITE</h3>
-    <p style="color:var(--cinza);font-size:13px;margin-bottom:15px">Escolha da galeria ou cole o link — elas já aparecem automaticamente para todos!</p>
+    <!-- GERENCIAR FOTOS - SALVAMENTO PERMANENTE -->
+    <h3 style="color:var(--amarelo);margin-bottom:12px">🖼️ GERENCIAR FOTOS DO SITE</h3>
+    <p style="color:var(--cinza);font-size:13px;margin-bottom:15px">✅ As imagens ficam salvas permanentemente — altere quando quiser!</p>
 
     <div class="grupo-foto">
-      <p style="color:var(--amarelo);font-weight:bold">📌 LOGO PRINCIPAL (TOPO DA PÁGINA INICIAL):</p>
+      <p style="color:var(--amarelo);font-weight:bold">📌 LOGO PRINCIPAL (TOPO DA PÁGINA):</p>
       <div class="preview-foto" id="prevLogo">Clique abaixo para escolher o logo</div>
       <input type="file" id="fileLogo" accept="image/*" style="display:none" onchange="carregarLogo(this)">
-      <button class="btn-acao btn-foto" onclick="document.getElementById('fileLogo').click()">📷 TROCAR LOGO DA AGÊNCIA</button>
-      <input type="url" class="campo-form" id="linkLogo" placeholder="Ou cole o link do logo aqui">
+      <button class="btn-acao btn-foto" onclick="document.getElementById('fileLogo').click()">📷 TROCAR LOGO</button>
+      <input type="url" class="campo-form" id="linkLogo" placeholder="Ou cole o link aqui">
     </div>
 
     <div class="grupo-foto">
@@ -171,17 +190,11 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
       <input type="url" class="campo-form" id="linkFoto2" placeholder="Ou cole o link aqui">
     </div>
 
-    <button class="btn-acao btn-salvar" onclick="salvarTudo()">💾 SALVAR E ATUALIZAR NO SITE</button>
+    <button class="btn-acao btn-salvar" onclick="salvarTudo()">💾 SALVAR PERMANENTEMENTE</button>
   </div>
 </div>
 
 <!-- OUTRAS ÁREAS -->
-<div class="conteudo" id="conteudoAgenciado">
-  <h2 class="titulo-secao">🎉 Bem-vindo(a) parceiro(a)!</h2>
-  <div style="background:rgba(52,211,153,0.15);border:2px solid var(--verde);padding:14px;border-radius:10px;text-align:center;font-weight:bold;margin-bottom:18px">✅ TODOS os serviços são GRÁTIS para você!</div>
-  <button class="btn-acao btn-voltar" onclick="voltar()">Voltar</button>
-</div>
-
 <div class="conteudo" id="conteudoVisitante">
   <h2 class="titulo-secao">👤 Lives e Serviços</h2>
   <p style="text-align:center;color:var(--cinza);margin-bottom:15px">Veja as lives e contrate nossos serviços</p>
@@ -216,7 +229,17 @@ function verificarAdmin(){
     alert('❌ E-mail ou senha incorretos!');
   }
 }
-// Função exclusiva para carregar o logo que aparece na página inicial
+// Solicitação de serviços pelo agenciado
+function solicitar(servico){
+  const usuario = document.getElementById('usuarioAgenciado').value.trim();
+  if(!usuario){
+    alert('⚠️ Por favor, digite primeiro seu nome de usuário da plataforma!');
+    return;
+  }
+  const mensagem = encodeURIComponent(`Olá Equipe Padroniza! Sou o parceiro(a) *${usuario}* e venho solicitar: ${servico}. Por favor, confirme meu cadastro e me avise os próximos passos. Obrigado!`);
+  window.open(`https://wa.me/556981478873?text=${mensagem}`);
+}
+// Carregar logo que aparece na página inicial
 function carregarLogo(input){
   if(input.files && input.files[0]){
     const leitor = new FileReader();
@@ -240,7 +263,7 @@ function salvarTudo(){
   document.getElementById('avisoSalvo').style.display = 'block';
   setTimeout(() => {
     document.getElementById('avisoSalvo').style.display = 'none';
-    alert('✅ Pronto! Logo e fotos já aparecem para todos que acessarem o site!');
+    alert('✅ PRONTO! As imagens estão salvas permanentemente e aparecem para todos!');
   }, 2000);
 }
 </script>
