@@ -29,13 +29,12 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
 .conteudo{display:none;background:var(--painel);border-radius:12px;padding:20px;margin-bottom:20px}
 .conteudo.visivel{display:block}
 .titulo-secao{text-align:center;margin-bottom:18px;color:var(--amarelo);font-size:20px}
-.campo-form{width:100%;padding:12px;border-radius:8px;border:1px solid #293653;background:#17213a;color:var(--texto);margin:8px 0;font-size:15px}
 .btn-acao{width:100%;padding:12px;border-radius:8px;border:none;font-weight:bold;cursor:pointer;margin-top:10px;text-decoration:none;display:inline-block;text-align:center;color:#fff;font-size:16px;pointer-events:auto !important}
 .btn-verde{background:var(--verde)}
 .btn-voltar{background:#293653;color:#fff;margin-top:15px}
 .btn-servico{background:linear-gradient(135deg,var(--rosa),var(--roxo));margin:8px 0;font-size:15px;padding:14px}
 .btn-whatsapp{background:linear-gradient(135deg,#25d366,#128c7e);margin-top:15px}
-.destaque-gratis{background:rgba(52,211,153,0.15);border:2px solid var(--verde);padding:14px;border-radius:10px;text-align:center;font-weight:bold;margin-bottom:18px}
+.destaque-gratis{background:rgba(52,211,153,0.15);border:2px solid var(--verde);padding:16px;border-radius:10px;text-align:center;font-weight:bold;margin-bottom:18px}
 .destaque-pix{background:rgba(255,61,129,0.1);border:1px solid var(--rosa);padding:12px;border-radius:8px;margin:10px 0;font-size:14px;word-break:break-all}
 .passo-a-passo{background:var(--painel2);padding:15px;border-radius:8px;margin:15px 0}
 .passo-a-passo ol{padding-left:20px;margin:10px 0}
@@ -68,13 +67,17 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
   </div>
 </div>
 
-<!-- ÁREA DO VISITANTE COMPLETA -->
+<!-- ÁREA DO VISITANTE - LINK E ID LOGO NO TOPO -->
 <div class="conteudo" id="conteudoVisitante">
   <h2 class="titulo-secao">👤 Lives e Serviços</h2>
 
+  <!-- PRIMEIRA MENSAGEM COM TUDO PARA SE CADASTRAR -->
   <div class="destaque-gratis">
-    🎁 QUER TODOS ESSES SERVIÇOS TOTALMENTE GRÁTIS?<br>
-    Basta se tornar um parceiro Padroniza!
+    🎁 QUER TODOS OS SERVIÇOS TOTALMENTE GRÁTIS?<br>
+    Torne-se parceiro Padroniza agora mesmo!<br><br>
+    <a href="https://www.tiktok.com/t/ZSHu6CFAM/" target="_blank" style="color:var(--amarelo);display:block;margin:8px 0">🔗 Clique aqui para se inscrever no TikTok</a>
+    📱 Para o Kako Live: use o ID da Agência <strong>177766</strong><br>
+    <small>Passo a passo: Centro de Host → Minha Agência → digite 177766 → Solicitar</small>
   </div>
 
   <h3 style="color:var(--amarelo);margin-bottom:10px">💸 Nossos Serviços e Valores:</h3>
@@ -132,28 +135,11 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
     00020101021126840014br.gov.bcb.pix01367c0dfbc3-68e7-4b85-a0eb-eb037b738d9f0222Agendamento de batalha520400005303986540569.905802BR591965 8 0 M G DA SILVA6007VILHENA62070503***6304606A
   </div>
 
-  <h3 style="color:var(--amarelo);margin:20px 0 10px">📝 Como ser nosso parceiro:</h3>
-  <a href="https://www.tiktok.com/t/ZSHu6CFAM/" target="_blank" class="btn-acao btn-servico">🎵 Acessar Página Oficial no TikTok</a>
-  
-  <div class="passo-a-passo">
-    <h4 style="color:var(--amarelo);margin-bottom:8px">📱 Para o Kako Live:</h4>
-    <p><strong>ID da Agência: 177766</strong></p>
-    <p>Passo a passo para solicitar:</p>
-    <ol>
-      <li>Baixe o aplicativo Kako Live</li>
-      <li>Confirme seu perfil</li>
-      <li>Clique em <strong>Centro de Host</strong></li>
-      <li>Depois clique em <strong>Minha Agência</strong></li>
-      <li>Digite o ID: <strong>177766</strong></li>
-      <li>Clique em Solicitar e aguarde a confirmação!</li>
-    </ol>
-  </div>
-
   <a href="https://wa.me/556981478873" target="_blank" class="btn-acao btn-whatsapp">💬 Tirar Dúvidas pelo WhatsApp</a>
   <button class="btn-acao btn-voltar" onclick="voltar()">Voltar</button>
 </div>
 
-<!-- ÁREA DO AGENCIADO -->
+<!-- ÁREAS OUTRAS MANTIDAS EXATAMENTE COMO ESTAVAM -->
 <div class="conteudo" id="conteudoAgenciado">
   <h2 class="titulo-secao">🎉 Bem-vindo(a) parceiro(a)!</h2>
   <div class="destaque-gratis">✅ TODOS os serviços são GRÁTIS para você!</div>
@@ -169,7 +155,6 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
   <button class="btn-acao btn-voltar" onclick="voltar()">Voltar</button>
 </div>
 
-<!-- ÁREA DE ADMINISTRAÇÃO MANTIDA COMO ESTAVA -->
 <div class="conteudo" id="conteudoAdmin">
   <h2 class="titulo-secao">🔐 ÁREA DA ADMINISTRAÇÃO</h2>
   <input type="email" class="campo-form" id="emailAdmin" placeholder="E-mail: padronizaassessoria@gmail.com">
