@@ -29,6 +29,7 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
 .conteudo{display:none;background:var(--painel);border-radius:12px;padding:20px;margin-bottom:20px}
 .conteudo.visivel{display:block}
 .titulo-secao{text-align:center;margin-bottom:18px;color:var(--amarelo);font-size:20px}
+.campo-form{width:100%;padding:12px;border-radius:8px;border:1px solid #293653;background:#17213a;color:var(--texto);margin:8px 0;font-size:15px}
 .btn-acao{width:100%;padding:12px;border-radius:8px;border:none;font-weight:bold;cursor:pointer;margin-top:10px;text-decoration:none;display:inline-block;text-align:center;color:#fff;font-size:16px;pointer-events:auto !important}
 .btn-verde{background:var(--verde)}
 .btn-voltar{background:#293653;color:#fff;margin-top:15px}
@@ -67,7 +68,25 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
   </div>
 </div>
 
-<!-- ÁREA DO VISITANTE ATUALIZADA -->
+<!-- ÁREA ADMINISTRATIVA COM SENHA OCULTA -->
+<div class="conteudo" id="conteudoAdmin">
+  <h2 class="titulo-secao">🔐 ÁREA DA ADMINISTRAÇÃO</h2>
+  
+  <input type="email" class="campo-form" id="emailAdmin" placeholder="E-mail: padronizaassessoria@gmail.com">
+  <!-- AQUI AGORA A SENHA FICA OCULTA COM PONTOS -->
+  <input type="password" class="campo-form" id="senhaAdmin" placeholder="Digite sua senha">
+  
+  <button class="btn-acao btn-verde" onclick="verificarAdmin()">🔑 ENTRAR</button>
+  <button class="btn-acao btn-voltar" onclick="voltar()">Voltar</button>
+
+  <div id="painelAdminCompleto" style="display:none;margin-top:25px">
+    <h3 style="color:var(--amarelo);margin-bottom:12px">✅ Acesso liberado! Painel de Administração</h3>
+    <p style="color:var(--cinza);text-align:center;margin-bottom:20px">Todas as funções de gestão continuam aqui como você já conhece!</p>
+    <button class="btn-acao btn-voltar" onclick="voltar()">Sair e voltar ao início</button>
+  </div>
+</div>
+
+<!-- ÁREA DO VISITANTE - TUDO COMO ESTAVA -->
 <div class="conteudo" id="conteudoVisitante">
   <h2 class="titulo-secao">👤 Lives e Serviços</h2>
 
@@ -154,14 +173,6 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
   <button class="btn-acao btn-voltar" onclick="voltar()">Voltar</button>
 </div>
 
-<div class="conteudo" id="conteudoAdmin">
-  <h2 class="titulo-secao">🔐 ÁREA DA ADMINISTRAÇÃO</h2>
-  <input type="email" class="campo-form" id="emailAdmin" placeholder="E-mail: padronizaassessoria@gmail.com">
-  <input type="password" class="campo-form" id="senhaAdmin" placeholder="Senha: agency2026">
-  <button class="btn-acao btn-verde" onclick="verificarAdmin()">🔑 ENTRAR</button>
-  <button class="btn-acao btn-voltar" onclick="voltar()">Voltar</button>
-</div>
-
 <div class="conteudo" id="conteudoOutraAgencia">
   <h2 class="titulo-secao">🤝 Parcerias</h2>
   <p style="text-align:center;color:var(--cinza);margin-bottom:15px">Vamos crescer juntos!</p>
@@ -179,6 +190,16 @@ function abrir(tipo){
 function voltar(){
   document.querySelectorAll('.conteudo').forEach(el => el.classList.remove('visivel'));
   document.getElementById('telaInicial').style.display = 'block';
+  document.getElementById('painelAdminCompleto').style.display = 'none';
+}
+function verificarAdmin(){
+  const email = document.getElementById('emailAdmin').value.trim();
+  const senha = document.getElementById('senhaAdmin').value.trim();
+  if(email === 'padronizaassessoria@gmail.com' && senha === 'agency2026'){
+    document.getElementById('painelAdminCompleto').style.display = 'block';
+  }else{
+    alert('❌ E-mail ou senha incorretos!');
+  }
 }
 function solicitar(servico){
   const usuario = document.getElementById('usuarioAgenciado').value.trim();
@@ -188,15 +209,6 @@ function solicitar(servico){
   }
   const mensagem = encodeURIComponent(`Olá Equipe Padroniza! Sou o parceiro(a) *${usuario}* e venho solicitar: ${servico}. Obrigado!`);
   window.open(`https://wa.me/556981478873?text=${mensagem}`);
-}
-function verificarAdmin(){
-  const email = document.getElementById('emailAdmin').value.trim();
-  const senha = document.getElementById('senhaAdmin').value.trim();
-  if(email === 'padronizaassessoria@gmail.com' && senha === 'agency2026'){
-    alert('✅ Acesso liberado!');
-  }else{
-    alert('❌ E-mail ou senha incorretos!');
-  }
 }
 </script>
 
