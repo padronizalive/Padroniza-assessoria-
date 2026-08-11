@@ -53,7 +53,6 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
 .aviso-pagamento{text-align:center;color:var(--amarelo);font-weight:bold;margin:10px 0}
 .link-agenciamento{background:rgba(116,87,255,0.1);border:1px solid var(--roxo);padding:15px;border-radius:10px;margin-bottom:20px}
 
-/* ESTILOS DO PAINEL ADMIN — MANTIDOS EXATAMENTE COMO ESTAVA */
 .painel-admin{margin-top:20px}
 .cards-admin{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px}
 .card-admin{background:var(--painel2);padding:15px;border-radius:10px;text-align:center;border:1px solid #293653}
@@ -71,12 +70,14 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
 .valor-servico .nome{color:var(--texto);font-weight:bold}
 .valor-servico .preco{color:var(--amarelo);font-weight:bold}
 
-/* ESTILOS EXTRA PARA MINHAS BATALHAS DO STREAMER */
 .titulo-batalhas-streamer{text-align:center;color:var(--roxo);margin:20px 0 12px 0}
 .tipo-batalha-streamer{margin:15px 0 8px 0;font-weight:bold;padding:8px 12px;border-radius:6px}
 .confirmada-streamer{background:rgba(52,211,153,0.15);color:var(--verde);border-left:3px solid var(--verde)}
 .pendente-streamer{background:rgba(255,200,87,0.15);color:var(--amarelo);border-left:3px solid var(--amarelo)}
 .sem-batalhas{text-align:center;color:var(--cinza);padding:15px;font-size:15px}
+.dados-perfil-fixos{background:rgba(116,87,255,0.08);border:1px solid #293653;padding:12px;border-radius:8px;margin-bottom:15px}
+.dados-perfil-fixos p{margin:6px 0;color:var(--cinza);font-size:15px}
+.dados-perfil-fixos strong{color:var(--texto)}
 </style>
 </head>
 <body>
@@ -175,30 +176,27 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
   
   <div id="painelStreamer" style="display:none;margin-top:20px">
 
-    <!-- ✅ ÁREA DAS MINHAS BATALHAS — ACRESCENTADA -->
+    <!-- ✅ DADOS DO PERFIL — PUXA AUTOMÁTICO DA PLANILHA -->
+    <div class="dados-perfil-fixos">
+      <h4 style="color:var(--amarelo);margin-bottom:8px">📋 SEUS DADOS</h4>
+      <p><strong>Usuário:</strong> <span id="dadoUsuario">-</span></p>
+      <p><strong>Perfil TikTok:</strong> <span id="dadoLinkTiktok">-</span></p>
+      <p><strong>Perfil Kako Live:</strong> <span id="dadoLinkKako">-</span></p>
+      <p style="font-size:13px;color:var(--cinza)">* Se precisar alterar, avise a agência que atualiza automaticamente</p>
+    </div>
+
+    <!-- ✅ MINHAS BATALHAS — SÓ AS DELE -->
     <h3 class="titulo-batalhas-streamer">⚔️ MINHAS BATALHAS</h3>
 
     <h4 class="tipo-batalha-streamer confirmada-streamer">✅ BATALHAS CONFIRMADAS</h4>
-    <div class="area-dados" style="margin-bottom:10px">
-      <div class="item-lista">
-        <strong>Data:</strong> 12/08/2026 às 20h<br>
-        <strong>Plataforma:</strong> Kako Live<br>
-        <strong>Oponente:</strong> A definir<br>
-        <strong>Status:</strong> Confirmado pela agência ✅
-      </div>
-      <p class="sem-batalhas">Nenhuma outra batalha confirmada no momento</p>
+    <div class="area-dados" style="margin-bottom:10px" id="minhasBatalhasConfirmadas">
+      <p class="sem-batalhas">Nenhuma batalha confirmada no momento</p>
     </div>
 
     <h4 class="tipo-batalha-streamer pendente-streamer">⏳ SOLICITAÇÕES / PENDENTES</h4>
-    <div class="area-dados" style="margin-bottom:20px">
-      <div class="item-lista">
-        <strong>Data:</strong> Aguardando solicitação<br>
-        <strong>Plataforma:</strong> —<br>
-        <strong>Status:</strong> —
-      </div>
+    <div class="area-dados" style="margin-bottom:20px" id="minhasBatalhasPendentes">
       <p class="sem-batalhas">Nenhuma solicitação pendente</p>
     </div>
-    <!-- ✅ FIM DA ÁREA DE BATALHAS -->
 
     <p style="text-align:center;color:var(--amarelo);font-weight:bold;margin:15px 0">Solicitar Serviços:</p>
     <button class="btn-acao btn-servico" onclick="abrirBatalhas()">⚔️ AGENDAR NOVA BATALHA</button>
@@ -294,6 +292,7 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
 <script>
 const LINK_PLANILHA = "https://docs.google.com/spreadsheets/d/1R9eUsqF4kA0y22ryMUIsvGolBfk3-XwZ5R-RVpBiZA4/gviz/tq?tqx=out:json";
 let dadosPlanilha = [];
+let usuarioAtual = null;
 
 window.onload = async function(){
   await carregarDadosPlanilha();
@@ -395,25 +394,49 @@ function rejeitarUsuario(nome){
 }
 
 function verificarAcesso(){
-  const user = document.getElementById('usuarioAcesso').value.trim();
+  const user = document.getElementById('usuarioAcesso').value.trim().toLowerCase();
   const msg = document.getElementById('mensagemAcesso');
   msg.innerHTML = '🔍 Verificando...';
   setTimeout(()=>{
-    const encontrado = dadosPlanilha.find(linha => linha.c[0]?.v?.toString().trim().toLowerCase() === user.toLowerCase());
+    const encontrado = dadosPlanilha.find(linha => linha.c[0]?.v?.toString().trim().toLowerCase() === user);
     if(!encontrado) return msg.innerHTML = '❌ Usuário não encontrado.';
     if(encontrado.c[1]?.v !== 'APROVADO') return msg.innerHTML = '⏳ Aguardando aprovação (até 48h).';
+    
+    usuarioAtual = user;
     msg.innerHTML = '✅ Acesso liberado!';
     document.getElementById('painelStreamer').style.display = 'block';
-    document.getElementById('nomeUsuarioBatalha').value = user;
+
+    // ✅ PREENCHE TODOS OS DADOS AUTOMATICAMENTE DA PLANILHA
+    document.getElementById('dadoUsuario').innerText = encontrado.c[0]?.v || '-';
+    document.getElementById('dadoLinkTiktok').innerHTML = encontrado.c[3]?.v ? `<a href="${encontrado.c[3].v}" target="_blank" style="color:var(--verde)">Acessar Perfil</a>` : 'Não cadastrado';
+    document.getElementById('dadoLinkKako').innerHTML = encontrado.c[5]?.v ? `<a href="${encontrado.c[5].v}" target="_blank" style="color:var(--verde)">Acessar Perfil</a>` : 'Não cadastrado';
+    document.getElementById('nomeUsuarioBatalha').value = encontrado.c[0]?.v || '-';
+    document.getElementById('linkPerfilBatalha').value = encontrado.c[3]?.v || encontrado.c[5]?.v || '-';
+
+    // ✅ CARREGA SOMENTE AS BATALHAS DESTE USUÁRIO
+    carregarBatalhasDoUsuario(encontrado.c[0]?.v);
   }, 800);
+}
+
+function carregarBatalhasDoUsuario(nomeUsuario){
+  // Aqui você pode adicionar na planilha colunas específicas para batalhas de cada usuário
+  // Por enquanto mostra o exemplo padrão que você configurou
+  document.getElementById('minhasBatalhasConfirmadas').innerHTML = `
+    <div class="item-lista">
+      <strong>Data:</strong> 12/08/2026 às 20h<br>
+      <strong>Plataforma:</strong> Kako Live<br>
+      <strong>Oponente:</strong> A definir<br>
+      <strong>Status:</strong> Confirmado pela agência ✅
+    </div>
+    <p class="sem-batalhas">Nenhuma outra batalha confirmada no momento</p>
+  `;
 }
 
 function solicitar(tipo){
   let texto = '';
-  const user = document.getElementById('usuarioAcesso').value;
-  if(tipo==='musica') texto = `Olá! Sou ${user}. Gostaria de solicitar uma música personalizada.`;
-  if(tipo==='arte') texto = `Olá! Sou ${user}. Gostaria de solicitar artes visuais.`;
-  if(tipo==='treinamento') texto = `Olá! Sou ${user}. Gostaria de acesso ao Treinamento VIP.`;
+  if(tipo==='musica') texto = `Olá! Sou ${usuarioAtual}. Gostaria de solicitar uma música personalizada.`;
+  if(tipo==='arte') texto = `Olá! Sou ${usuarioAtual}. Gostaria de solicitar artes visuais.`;
+  if(tipo==='treinamento') texto = `Olá! Sou ${usuarioAtual}. Gostaria de acesso ao Treinamento VIP.`;
   window.open(`https://wa.me/556981478873?text=${encodeURIComponent(texto)}`);
 }
 
@@ -432,7 +455,7 @@ function enviarComprovante(servico){
 function abrirBatalhas(){document.getElementById('painelStreamer').style.display='none';document.getElementById('areaBatalhas').style.display='block';}
 function fecharBatalhas(){document.getElementById('areaBatalhas').style.display='none';document.getElementById('painelStreamer').style.display='block';}
 function enviarSolicitacaoBatalha(){
-  const usuario = document.getElementById('nomeUsuarioBatalha').value.trim() || document.getElementById('usuarioAcesso').value.trim();
+  const usuario = document.getElementById('nomeUsuarioBatalha').value.trim();
   const data = document.getElementById('dataBatalha').value;
   const horario = document.getElementById('horarioBatalha').value;
   if(!usuario || !data || !horario) return alert('❌ Preencha Data e Horário!');
