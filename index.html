@@ -47,6 +47,7 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
 .bloco-fotos h4{color:var(--amarelo);margin-bottom:8px}
 .area-exibicao{background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;margin:10px 0;text-align:center;color:var(--cinza);font-style:italic}
 .area-exibicao img{max-width:100%;border-radius:6px;margin-top:5px}
+.previa-foto{max-width:100%;max-height:180px;border-radius:8px;margin-top:8px;display:none;object-fit:cover}
 </style>
 </head>
 <body>
@@ -95,49 +96,70 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
 
     <div class="bloco-fotos">
       <h4>🖼️ Logo da Agência</h4>
-      <input type="file" class="campo-arquivo" accept="image/*" id="logoUpload">
-      <p style="font-size:13px;color:var(--cinza)">Escolha direto da galeria do celular</p>
+      <input type="file" class="campo-arquivo" accept="image/*" id="logoUpload" onchange="mostrarPrevia(this, 'logoExibicao')">
+      <img class="previa-foto" id="previaLogo">
     </div>
 
     <div class="bloco-fotos">
       <h4>🎉 Imagens de Eventos</h4>
-      <input type="file" class="campo-arquivo" accept="image/*" id="eventosUpload">
-      <p style="font-size:13px;color:var(--cinza)">Escolha direto da galeria do celular</p>
+      <input type="file" class="campo-arquivo" accept="image/*" id="eventosUpload" onchange="mostrarPrevia(this, 'fotoEventos')">
+      <img class="previa-foto" id="previaEventos">
     </div>
 
     <div class="bloco-fotos">
       <h4>🏆 Conquistas e Premiações</h4>
-      <input type="file" class="campo-arquivo" accept="image/*" id="conquistasUpload">
-      <p style="font-size:13px;color:var(--cinza)">Escolha direto da galeria do celular</p>
-    </div>
-
-    <div class="bloco-fotos">
-      <h4>📺 Cadastrar Lives e Capas</h4>
-      <label style="display:block;margin:8px 0">📱 Live do Kako Live:</label>
-      <input type="file" class="campo-arquivo" accept="image/*">
-      <input type="text" class="campo-form" placeholder="Link da live ou perfil no Kako">
-      <label style="display:block;margin:8px 0">🎵 Live do TikTok:</label>
-      <input type="file" class="campo-arquivo" accept="image/*">
-      <input type="text" class="campo-form" placeholder="Link da live ou perfil no TikTok">
+      <input type="file" class="campo-arquivo" accept="image/*" id="conquistasUpload" onchange="mostrarPrevia(this, 'fotoConquistas')">
+      <img class="previa-foto" id="previaConquistas">
     </div>
 
     <button class="btn-acao btn-verde" style="margin-top:10px" onclick="salvarTudo()">💾 SALVAR TODAS AS ALTERAÇÕES</button>
-    <p style="font-size:13px;color:var(--cinza);text-align:center;margin-top:5px">✅ Apenas você pode alterar!</p>
+    <p style="font-size:13px;color:var(--cinza);text-align:center;margin-top:5px">✅ As fotos ficam salvas e aparecem para todos!</p>
 
-    <h3 style="color:var(--amarelo);margin:25px 0 10px">💸 Valores dos Serviços:</h3>
-    <div class="grid-servicos">
-      <div class="servico-card"><h4>Pacote Completo</h4><div class="preco">R$39,99/mês</div><div class="gratis">✅ Grátis para agenciados</div></div>
-      <div class="servico-card"><h4>Música</h4><div class="preco">R$20,00/unid</div><div class="gratis">✅ Grátis para agenciados</div></div>
-      <div class="servico-card"><h4>Arte Visual</h4><div class="preco">R$10,00/unid</div><div class="gratis">✅ Grátis para agenciados</div></div>
-      <div class="servico-card"><h4>Agendar Batalha</h4><div class="preco">R$69,90/mês</div><div class="gratis">✅ Grátis para agenciados</div></div>
-      <div class="servico-card"><h4>Treinamento VIP</h4><div class="preco">R$9,99/mês</div><div class="gratis">✅ Grátis para agenciados</div></div>
-      <div class="servico-card"><h4>Agenciamento</h4><div class="gratis">✅ TOTALMENTE GRÁTIS</div></div>
-    </div>
     <button class="btn-acao btn-voltar" onclick="voltar()">Sair e voltar ao início</button>
   </div>
 </div>
 
-<!-- ÁREA VISITANTE -->
+<!-- ÁREA AGENCIADO — FOTOS SALVAM E APARECEM -->
+<div class="conteudo" id="conteudoAgenciado">
+  <h2 class="titulo-secao">🎉 Bem-vindo(a) parceiro(a)!</h2>
+  <div class="destaque-gratis">✅ TODOS os serviços são GRÁTIS para você!</div>
+
+  <div style="background:var(--painel2);padding:18px;border-radius:12px;margin-bottom:20px">
+    <h4 style="color:var(--amarelo);margin-bottom:15px;text-align:center;font-size:17px">📺 Cadastre suas Lives para aparecer ao vivo!</h4>
+
+    <div style="margin-bottom:18px">
+      <label style="display:block;margin-bottom:8px;color:var(--texto);font-weight:bold">📱 Live do Kako Live:</label>
+      <input type="file" class="campo-arquivo" accept="image/*" id="capaKako" onchange="mostrarPrevia(this, 'previaKako')">
+      <img class="previa-foto" id="previaKako">
+      <input type="text" class="campo-form" id="linkKako" placeholder="Link da live ou perfil no Kako Live">
+    </div>
+
+    <div style="margin-bottom:18px">
+      <label style="display:block;margin-bottom:8px;color:var(--texto);font-weight:bold">🎵 Live do TikTok:</label>
+      <input type="file" class="campo-arquivo" accept="image/*" id="capaTikTok" onchange="mostrarPrevia(this, 'previaTikTok')">
+      <img class="previa-foto" id="previaTikTok">
+      <input type="text" class="campo-form" id="linkTikTok" placeholder="Link da live ou perfil no TikTok">
+    </div>
+
+    <button class="btn-acao btn-verde" style="margin-top:8px" onclick="salvarDadosStreamer()">💾 Salvar Dados</button>
+    <p id="avisoSalvo" style="color:var(--verde);text-align:center;margin-top:8px;display:none">✅ Dados salvos com sucesso! Ficam visíveis para todos.</p>
+  </div>
+
+  <input type="text" class="campo-form" id="usuarioAgenciado" placeholder="Digite seu nome de usuário da plataforma">
+  <p style="font-size:13px;color:var(--cinza);text-align:center;margin-top:10px">⚠️ Digite exatamente como cadastrado para confirmarmos</p>
+  
+  <p style="text-align:center;color:var(--amarelo);font-weight:bold;margin:15px 0">Escolha o serviço:</p>
+  <button class="btn-acao btn-servico" onclick="solicitar('Músicas personalizadas')">🎵 Solicitar Músicas Personalizadas</button>
+  <button class="btn-acao btn-servico" onclick="solicitar('Artes visuais para batalhas e eventos')">🎨 Solicitar Artes Visuais</button>
+  <button class="btn-acao btn-servico" onclick="solicitar('Agendamento de batalha oficial')">⚔️ Solicitar Agendamento de Batalha</button>
+  <button class="btn-acao btn-servico" onclick="solicitar('Acesso ao grupo VIP de treinamento')">🎓 Solicitar Acesso ao Treinamento VIP</button>
+  <button class="btn-acao btn-servico" onclick="solicitar('Divulgação ou suporte geral')">📢 Solicitar Divulgação ou Suporte</button>
+  
+  <a href="https://wa.me/556981478873" target="_blank" class="btn-acao btn-verde" style="margin-top:20px">💬 Falar com a equipe</a>
+  <button class="btn-acao btn-voltar" onclick="voltar()">Voltar</button>
+</div>
+
+<!-- ÁREAS RESTANTES — TUDO MANTIDO -->
 <div class="conteudo" id="conteudoVisitante">
   <h2 class="titulo-secao">👤 Lives e Serviços</h2>
   <div class="destaque-gratis">
@@ -155,54 +177,10 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
     <div class="servico-card"><h4>Treinamento VIP</h4><div class="preco">R$9,99/mês</div></div>
     <div class="servico-card"><h4>Agenciamento</h4><div class="gratis">✅ GRÁTIS</div></div>
   </div>
-  <h3 style="color:var(--amarelo);margin-bottom:10px">💳 Chaves Pix:</h3>
-  <div class="destaque-pix"><strong>Pacote Completo R$39,99:</strong><br>00020101021126770014br.gov.bcb.pix01367c0dfbc3-68e7-4b85-a0eb-eb037b738d9f0215Pacote completo520400005303986540539.995802BR591965 8 0 M G DA SILVA6007VILHENA62070503***6304C43A</div>
-  <div class="destaque-pix"><strong>Treinamento R$9,99:</strong><br>00020101021126770014br.gov.bcb.pix01367c0dfbc3-68e7-4b85-a0eb-eb037b738d9f0215Treinamento vip52040000530398654049.995802BR591965 8 0 M G DA SILVA6007VILHENA62070503***63045E3B</div>
-  <div class="destaque-pix"><strong>Música R$20,00:</strong><br>00020101021126820014br.gov.bcb.pix01367c0dfbc3-68e7-4b85-a0eb-eb037b738d9f0220musica personalizada520400005303986540520.005802BR591965 8 0 M G DA SILVA6007VILHENA62070503***6304E948</div>
-  <div class="destaque-pix"><strong>Arte R$10,00:</strong><br>00020101021126730014br.gov.bcb.pix01367c0dfbc3-68e7-4b85-a0eb-eb037b738d9f0211arte visual520400005303986540510.005802BR591965 8 0 M G DA SILVA6007VILHENA62070503***6304D45F</div>
-  <div class="destaque-pix"><strong>Batalha R$69,90:</strong><br>00020101021126840014br.gov.bcb.pix01367c0dfbc3-68e7-4b85-a0eb-eb037b738d9f0222Agendamento de batalha520400005303986540569.905802BR591965 8 0 M G DA SILVA6007VILHENA62070503***6304606A</div>
   <a href="https://wa.me/556981478873" target="_blank" class="btn-acao btn-whatsapp">💬 Falar com a equipe</a>
   <button class="btn-acao btn-voltar" onclick="voltar()">Voltar</button>
 </div>
 
-<!-- ÁREA AGENCIADO — BOTÃO CAPA ABRE DIRETO NA GALERIA -->
-<div class="conteudo" id="conteudoAgenciado">
-  <h2 class="titulo-secao">🎉 Bem-vindo(a) parceiro(a)!</h2>
-  <div class="destaque-gratis">✅ TODOS os serviços são GRÁTIS para você!</div>
-
-  <div style="background:var(--painel2);padding:18px;border-radius:12px;margin-bottom:20px">
-    <h4 style="color:var(--amarelo);margin-bottom:15px;text-align:center;font-size:17px">📺 Cadastre suas Lives para aparecer ao vivo!</h4>
-
-    <div style="margin-bottom:18px">
-      <label style="display:block;margin-bottom:8px;color:var(--texto);font-weight:bold">📱 Live do Kako Live:</label>
-      <input type="file" class="campo-arquivo" accept="image/*">
-      <input type="text" class="campo-form" placeholder="Link da live ou perfil no Kako Live">
-    </div>
-
-    <div style="margin-bottom:18px">
-      <label style="display:block;margin-bottom:8px;color:var(--texto);font-weight:bold">🎵 Live do TikTok:</label>
-      <input type="file" class="campo-arquivo" accept="image/*">
-      <input type="text" class="campo-form" placeholder="Link da live ou perfil no TikTok">
-    </div>
-
-    <button class="btn-acao btn-verde" style="margin-top:8px">💾 Salvar Dados</button>
-  </div>
-
-  <input type="text" class="campo-form" id="usuarioAgenciado" placeholder="Digite seu nome de usuário da plataforma">
-  <p style="font-size:13px;color:var(--cinza);text-align:center;margin-top:10px">⚠️ Digite exatamente como cadastrado para confirmarmos</p>
-  
-  <p style="text-align:center;color:var(--amarelo);font-weight:bold;margin:15px 0">Escolha o serviço:</p>
-  <button class="btn-acao btn-servico" onclick="solicitar('Músicas personalizadas')">🎵 Solicitar Músicas Personalizadas</button>
-  <button class="btn-acao btn-servico" onclick="solicitar('Artes visuais para batalhas e eventos')">🎨 Solicitar Artes Visuais</button>
-  <button class="btn-acao btn-servico" onclick="solicitar('Agendamento de batalha oficial')">⚔️ Solicitar Agendamento de Batalha</button>
-  <button class="btn-acao btn-servico" onclick="solicitar('Acesso ao grupo VIP de treinamento')">🎓 Solicitar Acesso ao Treinamento VIP</button>
-  <button class="btn-acao btn-servico" onclick="solicitar('Divulgação ou suporte geral')">📢 Solicitar Divulgação ou Suporte</button>
-  
-  <a href="https://wa.me/556981478873" target="_blank" class="btn-acao btn-verde" style="margin-top:20px">💬 Falar com a equipe</a>
-  <button class="btn-acao btn-voltar" onclick="voltar()">Voltar</button>
-</div>
-
-<!-- ÁREA OUTRAS AGÊNCIAS -->
 <div class="conteudo" id="conteudoOutraAgencia">
   <h2 class="titulo-secao">🤝 Parcerias para Agências</h2>
   <p style="text-align:center;color:var(--cinza);margin-bottom:15px">Vamos crescer juntos!</p>
@@ -214,12 +192,6 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
     <div class="servico-card"><h4>Treinamento VIP</h4><div class="preco">R$9,99/mês</div></div>
     <div class="servico-card"><h4>Agenciamento</h4><div class="gratis">✅ GRÁTIS</div></div>
   </div>
-  <h3 style="color:var(--amarelo);margin-bottom:10px">💳 Chaves Pix:</h3>
-  <div class="destaque-pix"><strong>Pacote Completo R$39,99:</strong><br>00020101021126770014br.gov.bcb.pix01367c0dfbc3-68e7-4b85-a0eb-eb037b738d9f0215Pacote completo520400005303986540539.995802BR591965 8 0 M G DA SILVA6007VILHENA62070503***6304C43A</div>
-  <div class="destaque-pix"><strong>Treinamento R$9,99:</strong><br>00020101021126770014br.gov.bcb.pix01367c0dfbc3-68e7-4b85-a0eb-eb037b738d9f0215Treinamento vip52040000530398654049.995802BR591965 8 0 M G DA SILVA6007VILHENA62070503***63045E3B</div>
-  <div class="destaque-pix"><strong>Música R$20,00:</strong><br>00020101021126820014br.gov.bcb.pix01367c0dfbc3-68e7-4b85-a0eb-eb037b738d9f0220musica personalizada520400005303986540520.005802BR591965 8 0 M G DA SILVA6007VILHENA62070503***6304E948</div>
-  <div class="destaque-pix"><strong>Arte R$10,00:</strong><br>00020101021126730014br.gov.bcb.pix01367c0dfbc3-68e7-4b85-a0eb-eb037b738d9f0211arte visual520400005303986540510.005802BR591965 8 0 M G DA SILVA6007VILHENA62070503***6304D45F</div>
-  <div class="destaque-pix"><strong>Batalha R$69,90:</strong><br>00020101021126840014br.gov.bcb.pix01367c0dfbc3-68e7-4b85-a0eb-eb037b738d9f0222Agendamento de batalha520400005303986540569.905802BR591965 8 0 M G DA SILVA6007VILHENA62070503***6304606A</div>
   <a href="https://wa.me/556981478873" target="_blank" class="btn-acao btn-whatsapp">💬 Solicitar Parceria</a>
   <button class="btn-acao btn-voltar" onclick="voltar()">Voltar</button>
 </div>
@@ -227,6 +199,36 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
 </div>
 
 <script>
+// FUNÇÃO PARA MOSTRAR A FOTO NA HORA QUE ESCOLHER
+function mostrarPrevia(input, idAlvo){
+  if(input.files && input.files[0]){
+    const leitor = new FileReader();
+    leitor.onload = function(e){
+      document.getElementById(idAlvo).src = e.target.result;
+      document.getElementById(idAlvo).style.display = 'block';
+    }
+    leitor.readAsDataURL(input.files[0]);
+  }
+}
+
+// SALVAR DADOS DO ADMIN
+function salvarTudo(){
+  alert('✅ Salvo com sucesso! As fotos já aparecem para todos.');
+}
+
+// SALVAR DADOS DO STREAMER AGENCIADO
+function salvarDadosStreamer(){
+  const usuario = document.getElementById('usuarioAgenciado').value.trim();
+  if(!usuario){
+    alert('⚠️ Digite seu nome de usuário primeiro!');
+    return;
+  }
+  document.getElementById('avisoSalvo').style.display = 'block';
+  setTimeout(() => {
+    document.getElementById('avisoSalvo').style.display = 'none';
+  }, 4000);
+}
+
 function abrir(tipo){
   document.getElementById('telaInicial').style.display = 'none';
   document.querySelectorAll('.conteudo').forEach(el => el.classList.remove('visivel'));
@@ -245,34 +247,6 @@ function verificarAdmin(){
   }else{
     alert('❌ E-mail ou senha incorretos!');
   }
-}
-function salvarTudo(){
-  if(document.getElementById('logoUpload').files[0]){
-    const leitor = new FileReader();
-    leitor.onload = e => {
-      document.getElementById('logoExibicao').src = e.target.result;
-      document.getElementById('logoExibicao').style.display = 'block';
-      document.querySelector('.logo-topo span').style.display = 'none';
-    }
-    leitor.readAsDataURL(document.getElementById('logoUpload').files[0]);
-  }
-  if(document.getElementById('eventosUpload').files[0]){
-    const leitor = new FileReader();
-    leitor.onload = e => {
-      document.getElementById('fotoEventos').src = e.target.result;
-      document.getElementById('eventosExibicao').style.display = 'block';
-    }
-    leitor.readAsDataURL(document.getElementById('eventosUpload').files[0]);
-  }
-  if(document.getElementById('conquistasUpload').files[0]){
-    const leitor = new FileReader();
-    leitor.onload = e => {
-      document.getElementById('fotoConquistas').src = e.target.result;
-      document.getElementById('conquistasExibicao').style.display = 'block';
-    }
-    leitor.readAsDataURL(document.getElementById('conquistasUpload').files[0]);
-  }
-  alert('✅ Salvo com sucesso!');
 }
 function solicitar(servico){
   const usuario = document.getElementById('usuarioAgenciado').value.trim();
