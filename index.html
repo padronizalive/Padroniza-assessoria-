@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Padroniza Assessoria | Serviços Oficiais</title>
+<title>Padroniza Assessoria | Portal Oficial</title>
 <style>
 :root{--fundo:#0b1020;--painel:#11182c;--painel2:#17213a;--azul:#3b82f6;--verde:#34d399;--amarelo:#ffc857;--vermelho:#ef4444;--cinza:#a9b4cb;--texto:#f7f9ff;--rosa:#ff3d81;--roxo:#7457ff}
 *{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
@@ -17,25 +17,22 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
 .botoes-principais{display:flex;flex-direction:column;gap:12px;margin-bottom:25px}
 .btn-principal{padding:16px;border-radius:12px;border:none;font-weight:bold;font-size:17px;cursor:pointer;text-align:center;color:#fff;box-shadow:0 4px 12px rgba(0,0,0,0.3);transition:0.2s}
 .btn-principal:hover{transform:translateY(-2px)}
-.btn-agenciado{background:linear-gradient(135deg,var(--verde),#16a34a)}
-.btn-servicos{background:linear-gradient(135deg,var(--azul),#2563eb)}
-.btn-parceria{background:linear-gradient(135deg,var(--roxo),#4f46e5)}
-.btn-quero-ser{background:linear-gradient(135deg,var(--amarelo),#f59e0b);color:#000}
+.btn-aprovado{background:linear-gradient(135deg,var(--verde),#16a34a)}
+.btn-cadastrar{background:linear-gradient(135deg,var(--azul),#2563eb)}
+.btn-admin{background:linear-gradient(135deg,var(--roxo),#4f46e5)}
 
-.area-servicos{background:var(--painel);border-radius:12px;padding:20px;margin-bottom:20px}
+.conteudo{display:none;background:var(--painel);border-radius:12px;padding:20px;margin-bottom:20px}
+.conteudo.visivel{display:block}
 .titulo-secao{text-align:center;margin-bottom:15px;color:var(--amarelo);font-size:21px}
-.destaque-gratis{background:rgba(52,211,153,0.15);border:2px solid var(--verde);padding:14px;border-radius:10px;text-align:center;font-weight:bold;margin-bottom:18px}
-
-.servico-card{background:var(--painel2);border-radius:10px;padding:15px;margin-bottom:12px;border-left:4px solid var(--azul)}
-.servico-card h4{color:var(--amarelo);margin-bottom:5px;font-size:17px}
-.valor{font-weight:bold;font-size:18px;margin:8px 0}
-.valor-riscado{text-decoration:line-through;color:var(--cinza);margin-right:8px}
-.btn-acao{width:100%;padding:13px;border-radius:8px;border:none;font-weight:bold;cursor:pointer;margin-top:10px;text-decoration:none;display:inline-block;text-align:center;color:#fff;font-size:16px}
-.btn-pix{background:var(--verde)}
-.btn-whats{background:#25d366}
+.campo-form{width:100%;padding:13px;border-radius:8px;border:1px solid #293653;background:#17213a;color:var(--texto);margin:8px 0;font-size:16px}
+.btn-acao{width:100%;padding:14px;border-radius:8px;border:none;font-weight:bold;cursor:pointer;margin-top:10px;text-decoration:none;display:inline-block;text-align:center;color:#fff;font-size:16px}
+.btn-verde{background:var(--verde)}
+.btn-azul{background:var(--azul)}
 .btn-voltar{background:#293653;color:#fff;margin-top:15px}
 
-.codigo-pix{background:#052e16;border:1px solid var(--verde);padding:12px;border-radius:8px;margin:10px 0;word-break:break-all;font-size:13px;color:var(--verde)}
+.destaque{background:rgba(255,200,87,0.15);border:1px solid var(--amarelo);padding:14px;border-radius:10px;margin:15px 0}
+.link-plataforma{background:var(--painel2);padding:12px;border-radius:8px;margin:10px 0;word-break:break-all}
+.link-plataforma strong{color:var(--amarelo)}
 </style>
 </head>
 <body>
@@ -43,109 +40,95 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
 
 <div class="cabecalho">
   <h1>PADRONIZA ASSESSORIA</h1>
-  <p>Serviços Profissionais para Streamers</p>
 </div>
-<div class="aviso-topo">🎉 Seja bem-vindo! Acesse tudo e contrate quando quiser!</div>
+<div class="aviso-topo">🎯 Acesse sua área ou solicite seu cadastro!</div>
 
 <div id="telaInicial">
-  <div class="destaque-gratis">
-    ✅ QUER SER AGENCIADO? É TOTALMENTE GRATUITO! 🚀
-    <a href="https://wa.me/556981478873" target="_blank" class="btn-acao btn-pix" style="margin-top:10px">Clique aqui para solicitar</a>
-  </div>
-
   <div class="botoes-principais">
-    <button class="btn-principal btn-agenciado" onclick="mostrar('beneficios')">🎁 BENEFÍCIOS PARA AGENCIADOS</button>
-    <button class="btn-principal btn-servicos" onclick="mostrar('servicos')">💼 SERVIÇOS E VALORES</button>
-    <button class="btn-principal btn-parceria" onclick="mostrar('agencias')">🤝 PARA OUTRAS AGÊNCIAS</button>
+    <button class="btn-principal btn-aprovado" onclick="abrir('aprovado')">✅ FUI APROVADO</button>
+    <button class="btn-principal btn-cadastrar" onclick="abrir('cadastrar')">📋 QUERO ME CADASTRAR</button>
+    <button class="btn-principal btn-admin" onclick="abrir('admin')">🔐 ÁREA DA AGÊNCIA</button>
   </div>
 </div>
 
-<!-- BENEFÍCIOS AGENCIADOS -->
-<div class="area-servicos" id="beneficios" style="display:none">
-  <h2 class="titulo-secao">🎁 Tudo GRÁTIS para você!</h2>
-  <div class="destaque-gratis">
-    Se você é agenciado Padroniza Assessoria, todos esses serviços são liberados sem custo nenhum!
-    <br>É só chamar a equipe pelo WhatsApp para solicitar!
-  </div>
-  <ul style="padding-left:20px;line-height:1.8">
-    <li>🎵 Músicas personalizadas</li>
-    <li>🎨 Artes visuais para batalhas e eventos</li>
-    <li>⚔️ Agendamento de batalhas oficiais</li>
-    <li>🎓 Acesso ao grupo VIP de treinamento</li>
-    <li>📢 Divulgação e suporte completo</li>
-  </ul>
-  <a href="https://wa.me/556981478873" target="_blank" class="btn-acao btn-whats">💬 Falar com a equipe</a>
+<!-- BOTÃO FUI APROVADO -->
+<div class="conteudo" id="conteudoAprovado">
+  <h2 class="titulo-secao">🎉 Acesso para aprovados</h2>
+  <p style="text-align:center;color:var(--cinza);margin-bottom:15px">Digite seu usuário cadastrado para entrar:</p>
+  <input type="text" class="campo-form" placeholder="Ex: serenatempestadenotiktok">
+  <button class="btn-acao btn-verde">🚀 ACESSAR AGORA</button>
   <button class="btn-acao btn-voltar" onclick="voltar()">Voltar</button>
 </div>
 
-<!-- SERVIÇOS E PREÇOS -->
-<div class="area-servicos" id="servicos" style="display:none">
-  <h2 class="titulo-secao">💼 Serviços e Valores</h2>
-
-  <div class="servico-card">
-    <h4>📦 PACOTE COMPLETO</h4>
-    <p>Todos os serviços + treinamento + suporte prioritário</p>
-    <p class="valor"><span class="valor-riscado">De R$ 59,90</span> Por apenas <span style="color:var(--rosa)">R$ 39,99/mês</span></p>
-    <div class="codigo-pix">Copia e cola o código: 00020101021126770014br.gov.bcb.pix01367c0dfbc3-68e7-4b85-a0eb-eb037b738d9f0215Pacote completo520400005303986540539.995802BR591965 8 0 M G DA SILVA6007VILHENA62070503***6304C43A</div>
-    <a href="https://wa.me/556981478873?text=Quero%20contratar%20o%20Pacote%20Completo%20de%20R%2439,99" target="_blank" class="btn-acao btn-pix">✅ Paguei! Enviar comprovante</a>
+<!-- BOTÃO QUERO ME CADASTRAR — EXATAMENTE COMO VOCÊ PEDIU -->
+<div class="conteudo" id="conteudoCadastrar">
+  <h2 class="titulo-secao">📝 Quero ser agenciado</h2>
+  <div class="destaque">
+    ✅ O agenciamento é TOTALMENTE GRATUITO! Escolha como quer se inscrever:
   </div>
 
-  <div class="servico-card">
-    <h4>🎵 Músicas Personalizadas</h4>
-    <p>Avulso: <strong>R$ 20,00 cada</strong> | Pacote com 6: R$ 100,00</p>
-    <div class="codigo-pix">Copia e cola: 00020101021126820014br.gov.bcb.pix01367c0dfbc3-68e7-4b85-a0eb-eb037b738d9f0220musica personalizada520400005303986540520.005802BR591965 8 0 M G DA SILVA6007VILHENA62070503***6304E948</div>
-    <a href="https://wa.me/556981478873?text=Quero%20solicitar%20m%C3%BAsica%20personalizada" target="_blank" class="btn-acao btn-pix">✅ Solicitar música</a>
+  <div class="link-plataforma">
+    <strong>📱 Para TikTok:</strong><br>
+    Acesse o link abaixo para solicitar:<br>
+    <a href="https://www.tiktok.com/@gw.agency.oficial?_r=1&_t=ZS-98kq6mkPH0b" target="_blank" style="color:var(--verde);display:block;margin-top:5px">https://www.tiktok.com/@gw.agency.oficial</a>
   </div>
 
-  <div class="servico-card">
-    <h4>🎨 Artes Visuais</h4>
-    <p>Avulso: <strong>R$ 10,00 cada</strong> | Pacote com 10: R$ 80,00</p>
-    <div class="codigo-pix">Copia e cola: 00020101021126730014br.gov.bcb.pix01367c0dfbc3-68e7-4b85-a0eb-eb037b738d9f0211arte visual520400005303986540510.005802BR591965 8 0 M G DA SILVA6007VILHENA62070503***6304D45F</div>
-    <a href="https://wa.me/556981478873?text=Quero%20solicitar%20arte%20visual" target="_blank" class="btn-acao btn-pix">✅ Solicitar arte</a>
+  <div class="link-plataforma">
+    <strong>🎮 Para Kako Live:</strong><br>
+    1. Baixe o aplicativo Kako Live<br>
+    2. Confirme seu perfil<br>
+    3. Clique em Central de Host → Agência<br>
+    4. Digite o ID: <strong style="color:var(--rosa);font-size:18px">177766</strong> e solicite entrada<br>
+    5. Aguarde nossa aprovação!
   </div>
 
-  <div class="servico-card">
-    <h4>⚔️ Agendamento de Batalha Oficial</h4>
-    <p>Avulso: <strong>R$ 10,00 por batalha</strong> | Mensalidade: R$ 69,90</p>
-    <div class="codigo-pix">Copia e cola: 00020101021126840014br.gov.bcb.pix01367c0dfbc3-68e7-4b85-a0eb-eb037b738d9f0222Agendamento de batalha520400005303986540569.995802BR591965 8 0 M G DA SILVA6007VILHENA62070503***6304606A</div>
-    <a href="https://wa.me/556981478873?text=Quero%20agendar%20batalha" target="_blank" class="btn-acao btn-pix">✅ Agendar batalha</a>
+  <div class="link-plataforma">
+    <strong>💬 Tem dúvidas? Fale conosco:</strong><br>
+    <a href="https://wa.me/556981478873" target="_blank" style="color:var(--verde);display:block;margin-top:5px">https://wa.me/556981478873</a>
   </div>
 
-  <div class="servico-card">
-    <h4>🎓 Treinamento e Grupo VIP</h4>
-    <p>Acesso exclusivo: <strong>R$ 9,99/mês</strong></p>
-    <div class="codigo-pix">Copia e cola: 00020101021126770014br.gov.bcb.pix01367c0dfbc3-68e7-4b85-a0eb-eb037b738d9f0213Treinamento vip52040000530398654049.995802BR591965 8 0 M G DA SILVA6007VILHENA62070503***63045E3B</div>
-    <a href="https://wa.me/556981478873?text=Quero%20acessar%20o%20Treinamento%20VIP" target="_blank" class="btn-acao btn-pix">✅ Contratar treinamento</a>
+  <div style="margin-top:20px">
+    <p style="color:var(--cinza);margin-bottom:8px">Ou deixe seu número que nós entramos em contato:</p>
+    <input type="tel" id="telefoneInteressado" class="campo-form" placeholder="Seu WhatsApp com DDD (ex: 69981478873)">
+    <button class="btn-acao btn-verde" onclick="enviarContato()">📩 Enviar meu contato</button>
   </div>
 
   <button class="btn-acao btn-voltar" onclick="voltar()">Voltar</button>
 </div>
 
-<!-- PARA OUTRAS AGÊNCIAS -->
-<div class="area-servicos" id="agencias" style="display:none">
-  <h2 class="titulo-secao">🤝 Parcerias para Agências</h2>
-  <p style="text-align:center;color:var(--cinza);margin-bottom:15px">Temos condições especiais para agências parceiras!</p>
-  <ul style="padding-left:20px;line-height:1.8;margin-bottom:15px">
-    <li>Pacotes de serviços com desconto</li>
-    <li>Agendamento de batalhas exclusivas</li>
-    <li>Treinamento para sua equipe</li>
-    <li>Suporte personalizado</li>
-  </ul>
-  <a href="https://wa.me/556981478873?text=Quero%20ser%20uma%20ag%C3%AAncia%20parceira" target="_blank" class="btn-acao btn-whats">💬 Solicitar proposta</a>
+<!-- ÁREA DA AGÊNCIA -->
+<div class="conteudo" id="conteudoAdmin">
+  <h2 class="titulo-secao">🔐 Área da Agência</h2>
+  <input type="email" class="campo-form" placeholder="E-mail da agência">
+  <input type="password" class="campo-form" placeholder="Senha">
+  <button class="btn-acao btn-verde">🔑 Entrar</button>
   <button class="btn-acao btn-voltar" onclick="voltar()">Voltar</button>
 </div>
 
 </div>
 
 <script>
-function mostrar(aba){
+function abrir(tipo){
   document.getElementById('telaInicial').style.display = 'none';
-  document.querySelectorAll('.area-servicos').forEach(el => el.style.display = 'none');
-  document.getElementById(aba).style.display = 'block';
+  document.querySelectorAll('.conteudo').forEach(el => el.classList.remove('visivel'));
+  document.getElementById(`conteudo${tipo.charAt(0).toUpperCase() + tipo.slice(1)}`).classList.add('visivel');
 }
+
 function voltar(){
-  document.querySelectorAll('.area-servicos').forEach(el => el.style.display = 'none');
+  document.querySelectorAll('.conteudo').forEach(el => el.classList.remove('visivel'));
   document.getElementById('telaInicial').style.display = 'block';
+}
+
+function enviarContato(){
+  const tel = document.getElementById('telefoneInteressado').value.trim();
+  if(!tel || tel.length < 10){
+    alert('Por favor, digite seu número completo com DDD!');
+    return;
+  }
+  const mensagem = `NOVO INTERESSADO EM AGENCIAMENTO:\nTelefone/WhatsApp: ${tel}`;
+  window.open(`https://wa.me/556981478873?text=${encodeURIComponent(mensagem)}`);
+  alert('✅ Obrigado! Em breve entraremos em contato com você!');
+  document.getElementById('telefoneInteressado').value = '';
 }
 </script>
 
