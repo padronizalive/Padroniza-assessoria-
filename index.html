@@ -91,7 +91,7 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
   <button class="btn-acao btn-voltar" onclick="voltarInicio()">Voltar</button>
 </div>
 
-<!-- ÁREA ADMINISTRATIVA COM TODAS AS COLUNAS -->
+<!-- ÁREA ADMINISTRATIVA -->
 <div class="conteudo" id="conteudoAdmin">
   <div id="loginAdmin">
     <h2 class="titulo-secao">🔐 Acesso Administrativo</h2>
@@ -168,7 +168,7 @@ function verificarAdmin(){
     document.getElementById('painelAdmin').style.display = 'block';
     carregarTodosRegistros();
   }else{
-    alert('❌ Dados incorretos!');
+    alert('❌ E-mail ou senha incorretos!');
   }
 }
 
@@ -189,24 +189,23 @@ async function carregarTodosRegistros(){
     lista.innerHTML = '';
 
     dados.table.rows.forEach((linha, indice) => {
-      if(indice === 0) return; // pula cabeçalho
+      if(indice === 0) return;
       if(!linha.c) return;
       
-      // COLUNAS EXATAS CONFORME VOCÊ TEM:
-      const usuario    = linha.c[0]?.v || '—'; // A
-      const status     = (linha.c[1]?.v || 'PENDENTE').toUpperCase(); // B
-      const data       = linha.c[2]?.v || '—'; // C
-      const ttPerfil   = linha.c[3]?.v || '—'; // D
-      const ttLive     = linha.c[4]?.v || '—'; // E
-      const kkPerfil   = linha.c[5]?.v || '—'; // F
-      const kkLive     = linha.c[6]?.v || '—'; // G
-      const capa       = linha.c[7]?.v || '—'; // H
-      const aoVivo     = (linha.c[8]?.v || 'NÃO').toUpperCase(); // I
-      const tipoAcesso = linha.c[9]?.v || '—'; // J
-      const servico    = linha.c[10]?.v || '—'; // K
-      const pgtoOk     = (linha.c[11]?.v || 'NÃO').toUpperCase(); // L
-      const liberado   = (linha.c[12]?.v || 'NÃO').toUpperCase(); // M
-      const validade   = linha.c[13]?.v || '—'; // N
+      const usuario    = linha.c[0]?.v || '—';
+      const status     = (linha.c[1]?.v || 'PENDENTE').toUpperCase();
+      const data       = linha.c[2]?.v || '—';
+      const ttPerfil   = linha.c[3]?.v || '—';
+      const ttLive     = linha.c[4]?.v || '—';
+      const kkPerfil   = linha.c[5]?.v || '—';
+      const kkLive     = linha.c[6]?.v || '—';
+      const capa       = linha.c[7]?.v || '—';
+      const aoVivo     = (linha.c[8]?.v || 'NÃO').toUpperCase();
+      const tipoAcesso = linha.c[9]?.v || '—';
+      const servico    = linha.c[10]?.v || '—';
+      const pgtoOk     = (linha.c[11]?.v || 'NÃO').toUpperCase();
+      const liberado   = (linha.c[12]?.v || 'NÃO').toUpperCase();
+      const validade   = linha.c[13]?.v || '—';
 
       let classeStatus = 'status-pendente';
       if(status === 'APROVADO') classeStatus = 'status-aprovado';
