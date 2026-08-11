@@ -8,7 +8,7 @@
 :root{--fundo:#0b1020;--painel:#11182c;--painel2:#17213a;--verde:#34d399;--rosa:#ff3d81;--roxo:#7457ff;--amarelo:#ffc857;--azul:#3b82f6;--laranja:#ffc107;--texto:#f7f9ff;--cinza:#a9b4cb;--vermelho:#ef4444}
 *{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
 body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
-.container{max-width:600px;margin:0 auto}
+.container{max-width:650px;margin:0 auto}
 
 .logo-topo{width:260px;height:200px;margin:0 auto 15px;display:flex;align-items:center;justify-content:center;background:var(--painel);border:3px solid var(--amarelo);border-radius:16px;text-align:center}
 .logo-topo h1{font-size:32px;color:var(--amarelo);font-weight:bold}
@@ -52,6 +52,24 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
 .pix-codigo{background:#00081a;padding:12px;border-radius:8px;border:1px solid var(--verde);word-break:break-all;font-size:13px;margin:10px 0;color:var(--verde)}
 .aviso-pagamento{text-align:center;color:var(--amarelo);font-weight:bold;margin:10px 0}
 .link-agenciamento{background:rgba(116,87,255,0.1);border:1px solid var(--roxo);padding:15px;border-radius:10px;margin-bottom:20px}
+
+/* ESTILOS DO PAINEL ADMIN */
+.painel-admin{margin-top:20px}
+.cards-admin{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px}
+.card-admin{background:var(--painel2);padding:15px;border-radius:10px;text-align:center;border:1px solid #293653}
+.card-admin h4{color:var(--amarelo);margin-bottom:5px}
+.card-admin p{font-size:22px;font-weight:bold;color:var(--verde)}
+.area-dados{background:var(--painel2);border-radius:10px;padding:15px;margin-bottom:15px}
+.area-dados h3{color:var(--roxo);margin-bottom:12px;text-align:center}
+.item-lista{padding:12px;border-bottom:1px solid #293653;margin-bottom:8px}
+.item-lista:last-child{border-bottom:none}
+.item-lista strong{color:var(--amarelo)}
+.btn-aprovar{background:var(--verde);border:none;padding:8px 12px;border-radius:6px;color:#fff;font-weight:bold;margin:5px 5px 5px 0;cursor:pointer}
+.btn-rejeitar{background:var(--vermelho);border:none;padding:8px 12px;border-radius:6px;color:#fff;font-weight:bold;margin:5px 5px 5px 0;cursor:pointer}
+.valor-servico{display:flex;justify-content:space-between;padding:10px;border-bottom:1px solid #293653}
+.valor-servico:last-child{border-bottom:none}
+.valor-servico .nome{color:var(--texto);font-weight:bold}
+.valor-servico .preco{color:var(--amarelo);font-weight:bold}
 </style>
 </head>
 <body>
@@ -79,10 +97,72 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
 
 <div class="conteudo" id="conteudoAdmin">
   <h2 class="titulo-secao">🔐 ÁREA DA ADMINISTRAÇÃO</h2>
-  <div class="grupo-campo"><input type="email" class="campo-form" id="emailAdmin" placeholder="E-mail: padronizaassessoria@gmail.com"></div>
-  <div class="grupo-campo"><input type="password" class="campo-form" id="senhaAdmin" placeholder="Digite sua senha"></div>
-  <button class="btn-acao btn-verde" onclick="verificarAdmin()">🔑 ENTRAR NO PAINEL</button>
-  <button class="btn-acao btn-voltar" onclick="voltar()">Voltar ao Início</button>
+  
+  <!-- TELA DE LOGIN ADMIN -->
+  <div id="loginAdmin">
+    <div class="grupo-campo"><input type="email" class="campo-form" id="emailAdmin" placeholder="E-mail: padronizaassessoria@gmail.com"></div>
+    <div class="grupo-campo"><input type="password" class="campo-form" id="senhaAdmin" placeholder="Digite sua senha"></div>
+    <button class="btn-acao btn-verde" onclick="verificarAdmin()">🔑 ENTRAR NO PAINEL</button>
+    <button class="btn-acao btn-voltar" onclick="voltar()">Voltar ao Início</button>
+  </div>
+
+  <!-- PAINEL ADMIN QUE APARECE DEPOIS DO LOGIN -->
+  <div id="painelAdmin" class="painel-admin" style="display:none">
+    <h2 class="titulo-secao">👑 PAINEL DE CONTROLE</h2>
+
+    <!-- CARDS RESUMO -->
+    <div class="cards-admin">
+      <div class="card-admin"><h4>Agenciados Ativos</h4><p id="qtdAgenciados">0</p></div>
+      <div class="card-admin"><h4>Lives Ao Vivo</h4><p id="qtdLives">0</p></div>
+      <div class="card-admin"><h4>Batalhas Confirmadas</h4><p id="qtdBatalhas">0</p></div>
+      <div class="card-admin"><h4>Solicitações Pendentes</h4><p id="qtdPendentes">0</p></div>
+    </div>
+
+    <!-- VALORES DOS SERVIÇOS -->
+    <div class="area-dados">
+      <h3>💸 VALORES DOS SERVIÇOS</h3>
+      <div class="valor-servico"><span class="nome">Pacote Completo</span><span class="preco">R$ 39,99/mês</span></div>
+      <div class="valor-servico"><span class="nome">Música Personalizada</span><span class="preco">R$ 20,00/unid</span></div>
+      <div class="valor-servico"><span class="nome">Arte Visual</span><span class="preco">R$ 10,00/unid</span></div>
+      <div class="valor-servico"><span class="nome">Treinamento VIP</span><span class="preco">R$ 9,99 taxa única</span></div>
+      <div class="valor-servico"><span class="nome">Agendamento Batalhas</span><span class="preco">R$ 69,90/mês</span></div>
+    </div>
+
+    <!-- SOLICITAÇÕES DE AGENCIAMENTO -->
+    <div class="area-dados">
+      <h3>📋 SOLICITAÇÕES DE AGENCIAMENTO</h3>
+      <div id="listaSolicitacoes">
+        <div class="item-lista">
+          <strong>Nome:</strong> Serena Tempestade<br>
+          <strong>Plataforma:</strong> TikTok<br>
+          <strong>Usuário:</strong> @serenatempestade<br>
+          <button class="btn-aprovar" onclick="aprovarUsuario('serenatempestade')">✅ APROVAR</button>
+          <button class="btn-rejeitar" onclick="rejeitarUsuario('serenatempestade')">❌ REJEITAR</button>
+        </div>
+        <p style="text-align:center;color:var(--cinza);margin-top:10px">Mais solicitações aparecem aqui conforme chegam</p>
+      </div>
+    </div>
+
+    <!-- BATALHAS -->
+    <div class="area-dados">
+      <h3>⚔️ BATALHAS</h3>
+      <h4 style="color:var(--verde);margin-bottom:8px">✅ Confirmadas</h4>
+      <div id="listaBatalhasConfirmadas">
+        <div class="item-lista">
+          <strong>Data:</strong> 12/08/2026 às 20h<br>
+          <strong>Desafiante:</strong> Serena Tempestade<br>
+          <strong>Oponente:</strong> A definir<br>
+          <strong>Plataforma:</strong> Kako Live
+        </div>
+      </div>
+      <h4 style="color:var(--amarelo);margin:15px 0 8px 0">⏳ Pendentes</h4>
+      <div id="listaBatalhasPendentes">
+        <p style="text-align:center;color:var(--cinza)">Nenhuma solicitação pendente no momento</p>
+      </div>
+    </div>
+
+    <button class="btn-acao btn-voltar" onclick="sairAdmin()">🚪 Sair do Painel</button>
+  </div>
 </div>
 
 <div class="conteudo" id="conteudoAgenciado">
@@ -191,6 +271,7 @@ let dadosPlanilha = [];
 window.onload = async function(){
   await carregarDadosPlanilha();
   carregarLivesNaInicial();
+  atualizarDadosAdmin();
 };
 
 async function carregarDadosPlanilha(){
@@ -232,10 +313,26 @@ function carregarLivesNaInicial(){
   });
 }
 
+function atualizarDadosAdmin(){
+  const qtdAgenciados = dadosPlanilha.filter(l=>l.c[1]?.v==='APROVADO').length;
+  const qtdLives = dadosPlanilha.filter(l=>l.c[8]?.v===true||l.c[8]?.v==='true'||l.c[8]?.v==='SIM').length;
+  const qtdBatalhas = 1;
+  const qtdPendentes = 1;
+  
+  document.getElementById('qtdAgenciados').innerText = qtdAgenciados;
+  document.getElementById('qtdLives').innerText = qtdLives;
+  document.getElementById('qtdBatalhas').innerText = qtdBatalhas;
+  document.getElementById('qtdPendentes').innerText = qtdPendentes;
+}
+
 function abrir(id){
   document.querySelectorAll('.conteudo').forEach(c=>c.classList.remove('visivel'));
   document.getElementById('telaInicial').style.display = 'none';
   document.getElementById('conteudo'+id.charAt(0).toUpperCase()+id.slice(1)).classList.add('visivel');
+  if(id==='admin'){
+    document.getElementById('loginAdmin').style.display='block';
+    document.getElementById('painelAdmin').style.display='none';
+  }
 }
 
 function voltar(){
@@ -246,8 +343,28 @@ function voltar(){
 function verificarAdmin(){
   const email = document.getElementById('emailAdmin').value.trim();
   const senha = document.getElementById('senhaAdmin').value.trim();
-  if(email === 'padronizaassessoria@gmail.com' && senha === 'agency2026.') alert('✅ Acesso liberado!');
-  else alert('❌ Dados incorretos!');
+  if(email === 'padronizaassessoria@gmail.com' && senha === 'agency2026.'){
+    alert('✅ Acesso liberado!');
+    document.getElementById('loginAdmin').style.display='none';
+    document.getElementById('painelAdmin').style.display='block';
+  }else{
+    alert('❌ E-mail ou senha incorretos!');
+  }
+}
+
+function sairAdmin(){
+  document.getElementById('emailAdmin').value='';
+  document.getElementById('senhaAdmin').value='';
+  document.getElementById('painelAdmin').style.display='none';
+  document.getElementById('loginAdmin').style.display='block';
+  voltar();
+}
+
+function aprovarUsuario(nome){
+  alert(`✅ Usuário ${nome} aprovado! Já está liberado para acessar.`);
+}
+function rejeitarUsuario(nome){
+  alert(`❌ Solicitação de ${nome} rejeitada.`);
 }
 
 function verificarAcesso(){
@@ -286,7 +403,7 @@ function enviarComprovante(servico){
 function abrirBatalhas(){document.getElementById('painelStreamer').style.display='none';document.getElementById('areaBatalhas').style.display='block';}
 function fecharBatalhas(){document.getElementById('areaBatalhas').style.display='none';document.getElementById('painelStreamer').style.display='block';}
 function enviarSolicitacaoBatalha(){
-  const usuario = document.getElementById('nomeUsuarioBatalha').value.trim();
+  const usuario = document.getElementById('nomeUsuarioBatalha').value.trim() || document.getElementById('usuarioAcesso').value.trim();
   const data = document.getElementById('dataBatalha').value;
   const horario = document.getElementById('horarioBatalha').value;
   if(!usuario || !data || !horario) return alert('❌ Preencha Data e Horário!');
