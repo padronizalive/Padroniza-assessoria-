@@ -71,14 +71,16 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
   </div>
 </div>
 
-<!-- ÁREA DO VISITANTE — TUDO IGUAL -->
+<!-- ÁREA DO VISITANTE -->
 <div class="conteudo" id="conteudoVisitante">
   <div class="aviso-gratis">🌟 QUER SER NOSSO AGENCIADO? É TOTALMENTE GRÁTIS!</div>
   
   <div style="background:#17213a;border-radius:10px;padding:15px;margin-bottom:15px">
     <p style="margin-bottom:10px;color:var(--cinza)">📌 Link oficial para se inscrever:</p>
     <a href="https://www.tiktok.com/t/ZSHu6CFAM/" target="_blank" style="color:var(--azul);font-weight:bold;display:block;margin-bottom:15px">👉 https://www.tiktok.com/t/ZSHu6CFAM/</a>
-    <p style="margin-bottom:10px;color:var(--cinza)">📌 ID da Agência: <strong style="color:var(--amarelo)">Agência do Caco</strong></p>
+    
+    <p style="margin-bottom:10px;color:var(--cinza)">📌 ID da Agência: <strong style="color:var(--amarelo)">Agência do Caco — Nº 177766</strong></p>
+
     <p style="margin:15px 0 10px 0;color:var(--cinza)">📱 Deixe seu WhatsApp:<br><small>Apenas DDD + número</small></p>
     <input type="tel" id="whatsappInteressado" class="campo-form" placeholder="Ex: 69999998873" maxlength="11">
     <button class="btn-acao btn-whatsapp" onclick="enviarCadastro()">📩 Enviar interesse</button>
@@ -124,7 +126,7 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
   <button class="btn-acao btn-voltar" onclick="voltarInicio()">Voltar</button>
 </div>
 
-<!-- ÁREA AGENCIADO — SÓ ACRESCENTADO O AVISO, TUDO O RESTO IGUAL -->
+<!-- ÁREA AGENCIADO -->
 <div class="conteudo" id="conteudoAgenciado">
   <div class="aviso-destaque-gratis">✅ TODO O CONTEÚDO E SERVIÇOS DESTE SITE SÃO TOTALMENTE GRÁTIS PARA VOCÊ!</div>
   <h2 class="titulo-secao">🎁 Benefícios Exclusivos</h2>
@@ -158,7 +160,7 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
   <button class="btn-acao btn-voltar" onclick="voltarInicio()">Voltar</button>
 </div>
 
-<!-- ÁREA OUTRA AGÊNCIA — TUDO IGUAL -->
+<!-- ÁREA OUTRA AGÊNCIA -->
 <div class="conteudo" id="conteudoAgencia">
   <h2 class="titulo-secao">🤝 Serviços para Parcerias</h2>
   <div class="servico">
@@ -211,7 +213,7 @@ function voltarInicio(){
 function enviarCadastro(){
   const whats = document.getElementById('whatsappInteressado').value.trim();
   if(!whats || whats.length < 10) return alert('Por favor, preencha com DDD!');
-  const msg = `NOVO INTERESSADO EM AGENCIAMENTO:\nWhatsApp: ${whats}\nID: Agência do Caco\nLink: https://www.tiktok.com/t/ZSHu6CFAM/`;
+  const msg = `NOVO INTERESSADO EM AGENCIAMENTO:\nWhatsApp: ${whats}\nAgência: Agência do Caco\nID: 177766\nLink: https://www.tiktok.com/t/ZSHu6CFAM/`;
   window.open(`https://wa.me/5569981478873?text=${encodeURIComponent(msg)}`);
   alert('✅ Enviado com sucesso!');
   document.getElementById('whatsappInteressado').value = '';
