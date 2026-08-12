@@ -10,15 +10,15 @@
 body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
 .container{max-width:650px;margin:0 auto}
 
-.logo-topo{width:260px;height:200px;margin:0 auto 15px;display:flex;align-items:center;justify-content:center;background:var(--painel);border:3px solid var(--amarelo);border-radius:16px;text-align:center}
-.logo-topo h1{font-size:32px;color:var(--amarelo);font-weight:bold}
-.cabecalho{text-align:center;margin-bottom:20px}
-.cabecalho h2{font-size:34px;color:var(--amarelo);margin-bottom:5px}
-.cabecalho p{font-size:18px;color:var(--cinza)}
+.logo-topo{width:280px;height:200px;margin:0 auto 15px;display:flex;align-items:center;justify-content:center;background:var(--painel);border:4px solid var(--amarelo);border-radius:20px;text-align:center}
+.logo-topo h1{font-size:36px;color:var(--amarelo);font-weight:bold;line-height:1.2}
+.cabecalho{text-align:center;margin-bottom:25px}
+.cabecalho h2{font-size:38px;color:var(--amarelo);margin-bottom:8px}
+.cabecalho p{font-size:19px;color:var(--cinza)}
 
-.botoes-principais{display:flex;flex-direction:column;gap:14px;margin-bottom:25px}
-.btn-principal{padding:18px;border-radius:12px;border:none;font-weight:bold;font-size:18px;cursor:pointer;text-align:center;color:#fff;transition:0.2s;text-decoration:none;display:block}
-.btn-principal:active{transform:scale(0.98)}
+.botoes-principais{display:flex;flex-direction:column;gap:16px;margin-bottom:30px}
+.btn-principal{padding:20px;border-radius:14px;border:none;font-weight:bold;font-size:19px;cursor:pointer;text-align:center;color:#fff;transition:0.2s;text-decoration:none;display:block}
+.btn-principal:active{transform:scale(0.97)}
 .btn-agenciado{background:linear-gradient(135deg,#22c55e,#15803d)}
 .btn-visitante{background:linear-gradient(135deg,#3b82f6,#1d4ed8)}
 .btn-outra-agencia{background:linear-gradient(135deg,#fbbf24,#f59e0b);color:#000}
@@ -99,6 +99,7 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
 <body>
 <div class="container">
 
+<!-- TELA INICIAL -->
 <div id="telaInicial">
   <div class="logo-topo"><h1>PADRONIZA<br>ASSESSORIA</h1></div>
   <div class="cabecalho">
@@ -106,10 +107,10 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
     <p>Seu sucesso nas lives começa aqui!</p>
   </div>
   <div class="botoes-principais">
-    <button class="btn-principal btn-agenciado" onclick="abrir('agenciado')">✅ SOU AGENCIADO PADRONIZA</button>
-    <button class="btn-principal btn-visitante" onclick="abrir('visitante')">👤 SOU VISITANTE / VER LIVES</button>
-    <button class="btn-principal btn-outra-agencia" onclick="abrir('outraAgencia')">🤝 SOU OUTRA AGÊNCIA</button>
-    <button class="btn-principal btn-admin" onclick="abrir('admin')">🔐 ÁREA DA ADMINISTRAÇÃO</button>
+    <button class="btn-principal btn-agenciado" onclick="abrirTela('agenciado')">✅ SOU AGENCIADO PADRONIZA</button>
+    <button class="btn-principal btn-visitante" onclick="abrirTela('visitante')">👤 SOU VISITANTE / VER LIVES</button>
+    <button class="btn-principal btn-outra-agencia" onclick="abrirTela('outraAgencia')">🤝 SOU OUTRA AGÊNCIA</button>
+    <button class="btn-principal btn-admin" onclick="abrirTela('admin')">🔐 ÁREA DA ADMINISTRAÇÃO</button>
     <a href="https://www.tiktok.com/coin?rc=7TGXGN69&rie=" target="_blank" class="btn-principal btn-moedas">💰 COMPRAR MOEDAS TIKTOK</a>
   </div>
 
@@ -119,13 +120,14 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
   </div>
 </div>
 
+<!-- ÁREA ADMINISTRATIVA -->
 <div class="conteudo" id="conteudoAdmin">
   <h2 class="titulo-secao">🔐 ÁREA DA ADMINISTRAÇÃO</h2>
   <div id="loginAdmin">
     <div class="grupo-campo"><input type="email" class="campo-form" id="emailAdmin" placeholder="E-mail: padronizaassessoria@gmail.com"></div>
     <div class="grupo-campo"><input type="password" class="campo-form" id="senhaAdmin" placeholder="Digite sua senha"> <span style="color:var(--cinza);font-size:13px">👁️ senha protegida</span></div>
     <button class="btn-acao btn-verde" onclick="verificarAdmin()">🔑 ENTRAR NO PAINEL</button>
-    <button class="btn-acao btn-voltar" onclick="voltar()">Voltar ao Início</button>
+    <button class="btn-acao btn-voltar" onclick="voltarInicio()">⬅️ Voltar ao Início</button>
   </div>
   <div id="painelAdmin" class="painel-admin" style="display:none">
     <h2 class="titulo-secao">👑 PAINEL DE CONTROLE</h2>
@@ -147,6 +149,7 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
   </div>
 </div>
 
+<!-- ÁREA DO AGENCIADO -->
 <div class="conteudo" id="conteudoAgenciado">
   <h2 class="titulo-secao">🎉 Bem-vindo(a) parceiro(a)!</h2>
   <div class="destaque-gratis">✅ TODOS os serviços são GRÁTIS para você!</div>
@@ -203,13 +206,14 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
 
     <button class="btn-acao btn-verde" onclick="enviarSolicitacaoBatalha()">📤 ENVIAR SOLICITAÇÃO</button>
     <a href="https://wa.me/556981478873" target="_blank" class="btn-acao btn-whatsapp">📅 SOLICITAR HORÁRIO ESPECIAL</a>
-    <button class="btn-acao btn-voltar" onclick="fecharBatalhas()">Voltar</button>
+    <button class="btn-acao btn-voltar" onclick="fecharBatalhas()">⬅️ Voltar</button>
   </div>
 
   <a href="https://wa.me/556981478873" target="_blank" class="btn-acao btn-whatsapp">💬 Falar com a Equipe</a>
-  <button class="btn-acao btn-voltar" onclick="voltar()">Voltar ao Início</button>
+  <button class="btn-acao btn-voltar" onclick="voltarInicio()">⬅️ Voltar ao Início</button>
 </div>
 
+<!-- ÁREA DO VISITANTE -->
 <div class="conteudo" id="conteudoVisitante">
   <h2 class="titulo-secao">👤 BEM-VINDO(A)</h2>
   <div class="link-agenciamento">
@@ -255,18 +259,20 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
     <div class="pix-codigo" id="pixBatalha">00020101021126840014br.gov.bcb.pix01367c0dfbc3-68e7-4b85-a0eb-eb037b738d9f0222Agendamento de batalha520400005303986540569.995802BR591965 8 0 M G DA SILVA6007VILHENA62070503***6304606A</div>
     <button class="btn-acao btn-whatsapp" onclick="copiarPix('pixBatalha', this)">📋 COPIAR CHAVE PIX</button>
   </div>
-  <button class="btn-acao btn-voltar" onclick="voltar()">Voltar ao Início</button>
+  <button class="btn-acao btn-voltar" onclick="voltarInicio()">⬅️ Voltar ao Início</button>
 </div>
 
+<!-- ÁREA DE OUTRA AGÊNCIA -->
 <div class="conteudo" id="conteudoOutraAgencia">
   <h2 class="titulo-secao">🤝 PARCERIAS</h2>
   <p style="text-align:center;color:var(--cinza);padding:20px">Área para parceiros.</p>
-  <button class="btn-acao btn-voltar" onclick="voltar()">Voltar</button>
+  <button class="btn-acao btn-voltar" onclick="voltarInicio()">⬅️ Voltar ao Início</button>
 </div>
 
 </div>
 
 <script>
+// LINKS DAS PLANILHAS
 const LINK_PLANILHA_CONTROLE = "https://docs.google.com/spreadsheets/d/1R9eUsqF4kA0y22ryMUIsvGolBfk3-XwZ5R-RVpBiZA4/gviz/tq?tqx=out:json";
 const LINK_PLANILHA_BATALHAS = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRtyHq643--RBIrq3drMcHGIoUtpY-IN5v2T0wNWnCNvUf2rE6UHOK55nI4uUK89x7U_S66Gl1XXDN4/pub?gid=0&single=true&output=json";
 const LINK_GRUPO_ARTE = "https://chat.whatsapp.com/I3edwkusrSC123QjrJBHHi?s=cl&p=a&ilr=1";
@@ -275,6 +281,39 @@ let dadosControle = [], dadosBatalhas = [], usuarioAtual = null, dataSelecionada
 let hoje = new Date(), mesAtual = hoje.getMonth(), anoAtual = hoje.getFullYear();
 let dataLimite = new Date(anoAtual, mesAtual + 1, 30);
 
+// FUNÇÃO PARA ABRIR AS TELAS
+function abrirTela(nome){
+  document.getElementById('telaInicial').style.display = 'none';
+  document.querySelectorAll('.conteudo').forEach(c => c.classList.remove('visivel'));
+  const alvo = document.getElementById('conteudo' + nome.charAt(0).toUpperCase() + nome.slice(1));
+  if(alvo) alvo.classList.add('visivel');
+  
+  if(nome === 'admin'){
+    document.getElementById('loginAdmin').style.display = 'block';
+    document.getElementById('painelAdmin').style.display = 'none';
+  }
+  if(nome === 'agenciado'){
+    document.getElementById('painelStreamer').style.display = 'none';
+    document.getElementById('areaBatalhas').style.display = 'none';
+    document.getElementById('usuarioAcesso').value = '';
+    document.getElementById('mensagemAcesso').innerHTML = '';
+    document.getElementById('caixaPendentes').innerHTML = '<p class="sem-batalhas">Nenhuma solicitação pendente.</p>';
+    document.getElementById('caixaConfirmadas').innerHTML = '<p class="sem-batalhas">Nenhuma batalha confirmada. Aguardando agência vincular oponentes.</p>';
+  }
+}
+
+// VOLTAR PARA A TELA INICIAL
+function voltarInicio(){
+  document.querySelectorAll('.conteudo').forEach(c => c.classList.remove('visivel'));
+  document.getElementById('telaInicial').style.display = 'block';
+}
+
+// NORMALIZAR TEXTO (ignorar acentos, maiúsculas e espaços)
+function normalizarTexto(t){
+  return ((t||'').toString().trim().toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/\s+/g, ""));
+}
+
+// CARREGAR DADOS AO ABRIR
 window.onload = async function(){
   await carregarPlanilhaControle();
   await carregarPlanilhaBatalhas();
@@ -306,10 +345,6 @@ function atualizarContadoresBatalhas(){
   }).length;
 }
 
-function normalizarTexto(t){
-  return ((t||'').toString().trim().toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/\s+/g, ""));
-}
-
 function carregarLivesNaInicial(){
   const l = document.getElementById('listaLivesInicial');
   l.innerHTML = '';
@@ -325,26 +360,7 @@ function carregarLivesNaInicial(){
   });
 }
 
-function abrir(id){
-  document.querySelectorAll('.conteudo').forEach(c => c.classList.remove('visivel'));
-  document.getElementById('telaInicial').style.display = 'none';
-  const alvo = document.getElementById('conteudo' + id.charAt(0).toUpperCase() + id.slice(1));
-  if(alvo) alvo.classList.add('visivel');
-  if(id === 'admin'){document.getElementById('loginAdmin').style.display='block';document.getElementById('painelAdmin').style.display='none';}
-  if(id === 'agenciado'){
-    document.getElementById('painelStreamer').style.display='none';
-    document.getElementById('areaBatalhas').style.display='none';
-    document.getElementById('usuarioAcesso').value='';
-    document.getElementById('caixaPendentes').innerHTML='<p class="sem-batalhas">Nenhuma solicitação pendente.</p>';
-    document.getElementById('caixaConfirmadas').innerHTML='<p class="sem-batalhas">Nenhuma batalha confirmada. Aguardando agência vincular oponentes.</p>';
-  }
-}
-
-function voltar(){
-  document.querySelectorAll('.conteudo').forEach(c => c.classList.remove('visivel'));
-  document.getElementById('telaInicial').style.display = 'block';
-}
-
+// VERIFICAR LOGIN ADMIN
 function verificarAdmin(){
   const e = document.getElementById('emailAdmin').value.trim(), s = document.getElementById('senhaAdmin').value.trim();
   if(e === 'padronizaassessoria@gmail.com' && s === 'agency2026.'){
@@ -361,9 +377,10 @@ function sairAdmin(){
   document.getElementById('senhaAdmin').value = '';
   document.getElementById('painelAdmin').style.display = 'none';
   document.getElementById('loginAdmin').style.display = 'block';
-  voltar();
+  voltarInicio();
 }
 
+// VERIFICAR ACESSO DO STREAMER
 function verificarAcesso(){
   const u = document.getElementById('usuarioAcesso').value.trim(), m = document.getElementById('mensagemAcesso');
   m.innerHTML = '🔍 Verificando...';
@@ -385,6 +402,7 @@ function verificarAcesso(){
   }, 800);
 }
 
+// CARREGAR BATALHAS DO USUÁRIO
 function carregarBatalhasDoUsuario(){
   const pendentes = [], confirmadas = [];
   dadosBatalhas.forEach(r => {
@@ -521,4 +539,9 @@ function copiarPix(id, btn){
     btn.innerText = '✅ COPIADO!';
     btn.classList.add('copiado');
     setTimeout(() => { btn.innerText = o; btn.classList.remove('copiado'); }, 3000);
-  }).catch(() => alert
+  }).catch(() => alert('❌ Copie manualmente.'));
+}
+
+function solicitar(tipo){
+  const txt = {
+    musica: '🎵 Solicito Música Personalizada
