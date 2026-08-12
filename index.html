@@ -74,6 +74,7 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
 .calendario-dias{display:grid;grid-template-columns:repeat(7,1fr);gap:8px}
 .dia-calendario{padding:10px 5px;text-align:center;border-radius:8px;cursor:pointer;font-weight:bold;font-size:14px;border:none}
 .dia-disponivel{background:rgba(52,211,153,0.2);color:var(--verde)}
+.dia-campanha{background:rgba(255,200,87,0.2);color:var(--amarelo);cursor:not-allowed;opacity:0.7}
 .dia-bloqueado{background:rgba(239,68,68,0.2);color:var(--vermelho);cursor:not-allowed;opacity:0.6}
 .dia-selecionado{box-shadow:0 0 0 2px var(--amarelo)}
 .aviso-horario{padding:12px;border-radius:8px;margin:10px 0;font-size:14px;line-height:1.5}
@@ -82,18 +83,16 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
 .situacao-batalha{padding:14px 12px;border-radius:8px;font-weight:bold;text-align:center;margin:12px 0;border-width:2px;border-style:solid}
 .situacao-falta-oponente{background:rgba(59,130,246,0.15);color:#93c5fd;border-color:var(--azul)}
 .situacao-pendente{background:rgba(255,200,87,0.15);color:#ffd980;border-color:var(--amarelo)}
-.situacao-confirmada{background:rgba(52,211,153,0.15);color:#93ffc8;border-color:var(--verde);font-size:18px}
-.cartao-batalha{background:rgba(247,249,255,0.05);border:2px solid #4b5563;border-radius:10px;padding:15px;margin:12px 0}
-.cartao-batalha h4{color:var(--amarelo);text-align:center;margin-bottom:12px;font-size:16px}
+.cartao-batalha-confirmada{background:rgba(247,249,255,0.05);border:2px solid #4b5563;border-radius:10px;padding:15px;margin:12px 0}
+.cartao-batalha-confirmada h4{color:var(--verde);text-align:center;margin-bottom:12px;font-size:16px}
 .linha-dado{display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid #293653;font-size:14px;flex-wrap:wrap;gap:4px}
 .linha-dado:last-child{border-bottom:none}
 .linha-dado strong{color:var(--amarelo)}
-.btn-oponente{display:block;background:linear-gradient(135deg,#3b82f6,#1d4ed8);color:#fff;text-align:center;padding:10px;border-radius:8px;text-decoration:none;font-weight:bold;margin:8px 0}
-.aviso-seguir{background:rgba(59,130,246,0.1);border:1px solid var(--azul);padding:10px;border-radius:8px;margin:10px 0;font-size:13px;text-align:center;color:#93c5fd}
+.btn-perfil-oponente{display:block;background:linear-gradient(135deg,#3b82f6,#1d4ed8);color:#fff;text-align:center;padding:10px;border-radius:8px;text-decoration:none;font-weight:bold;margin-top:10px}
 .btn-grupo-arte{display:block;background:linear-gradient(135deg,#7457ff,#6d28d9);color:#fff;text-align:center;padding:10px;border-radius:8px;text-decoration:none;font-weight:bold;margin-top:10px}
-.aviso-arte{background:rgba(116,87,255,0.1);border:1px solid var(--roxo);padding:10px;border-radius:8px;margin-top:10px;font-size:13px;text-align:center;color:#d4c5ff}
 .sem-batalhas{text-align:center;color:var(--cinza);padding:20px 15px;font-size:15px}
 .copiado{background:var(--verde);color:#fff}
+.aviso-arte{background:rgba(116,87,255,0.1);border:1px solid var(--roxo);padding:10px;border-radius:8px;margin-top:10px;font-size:13px;text-align:center;color:#d4c5ff}
 </style>
 </head>
 <body>
@@ -281,4 +280,246 @@ window.onload = async function(){
   carregarLivesNaInicial();
 };
 
-async function carregar
+async function carregarPlanilhaControle(){
+  try{
+    const r = await fetch(LINK_PLANILHA_CONTROLE);
+    const t = await r.text();
+    dadosControle = JSON.parse(t.substr(47).slice(0,-2)).table.rows;
+  }catch(e){console.log("Erro controle:", e);}
+}
+
+async function carregarPlanilhaBatalhas(){
+  try{
+    const r = await fetch(LINK_PLANILHA_BATALHAS);
+    const t = await r.text();
+    dadosBatalhas = JSON.parse(t.substr(47).slice(0,-2)).table.rows;
+    atualizarContadoresBatalhas();
+  }catch(e){console.log("Erro batalhas:", e);}
+}
+
+function atualizarContadoresBatalhas(){
+  document.getElementById('qtdBatalhas').innerText = dadosBatalhas.filter(r => r.c?.[5]?.v === 'CONFIRMADA').length;
+  document.getElementById('qtdPendentes').innerText = dadosBatalhas.filter(r => r.c?.[5]?.v !== 'CONFIRMADA').length;
+}
+
+function carregarLivesNaInicial(){
+  const l = document.getElementById('listaLivesInicial');
+  l.innerHTML = '';
+  const temLive = dadosControle.some(r => r.c?.[8]?.v === true || r.c?.[8]?.v === 'true' || r.c?.[8]?.v === 'SIM');
+  if(!temLive) return l.innerHTML = '<div class="sem-lives">🔍 Nenhuma live ao vivo no momento.</div>';
+  dadosControle.forEach(r => {
+    if(!r.c) return;
+    const aoVivo = r.c[8]?.v === true || r.c[8]?.v === 'true' || r.c[8]?.v === 'SIM';
+    if(!aoVivo) return;
+    const nome = r.c[0]?.v || 'Streamer', capa = r.c[7]?.v || '', t = r.c[3]?.v || '', k = r.c[5]?.v || '';
+    const link = t || k || '#', plat = t ? 'TikTok' : (k ? 'Kako Live' : '');
+    l.innerHTML += `<div class="cartao-live"><div class="nome-streamer">${nome}</div><div class="capa-live">${capa?'<img src="'+capa+'">':'🎬 Capa'}</div><span class="status-ao-vivo">🔴 AO VIVO</span> <span class="plataforma-live">${plat}</span><button class="btn-assistir" onclick="window.open('${link}','_blank')">▶️ ASSISTIR</button></div>`;
+  });
+}
+
+function abrir(id){
+  document.querySelectorAll('.conteudo').forEach(c => c.classList.remove('visivel'));
+  document.getElementById('telaInicial').style.display = 'none';
+  const alvo = document.getElementById('conteudo' + id.charAt(0).toUpperCase() + id.slice(1));
+  if(alvo) alvo.classList.add('visivel');
+  if(id === 'admin'){document.getElementById('loginAdmin').style.display='block';document.getElementById('painelAdmin').style.display='none';}
+  if(id === 'agenciado'){
+    document.getElementById('painelStreamer').style.display='none';
+    document.getElementById('areaBatalhas').style.display='none';
+    document.getElementById('usuarioAcesso').value='';
+    document.getElementById('caixaPendentes').innerHTML='<p class="sem-batalhas">Nenhuma solicitação pendente.</p>';
+    document.getElementById('caixaConfirmadas').innerHTML='<p class="sem-batalhas">Nenhuma batalha confirmada.</p>';
+  }
+}
+
+function voltar(){
+  document.querySelectorAll('.conteudo').forEach(c => c.classList.remove('visivel'));
+  document.getElementById('telaInicial').style.display = 'block';
+}
+
+function verificarAdmin(){
+  const e = document.getElementById('emailAdmin').value.trim(), s = document.getElementById('senhaAdmin').value.trim();
+  if(e === 'padronizaassessoria@gmail.com' && s === 'agency2026.'){
+    alert('✅ Acesso liberado! Bem-vindo, Administrador.');
+    document.getElementById('loginAdmin').style.display = 'none';
+    document.getElementById('painelAdmin').style.display = 'block';
+  }else{
+    alert('❌ E-mail ou senha incorretos!');
+  }
+}
+
+function sairAdmin(){
+  document.getElementById('emailAdmin').value = '';
+  document.getElementById('senhaAdmin').value = '';
+  document.getElementById('painelAdmin').style.display = 'none';
+  document.getElementById('loginAdmin').style.display = 'block';
+  voltar();
+}
+
+function verificarAcesso(){
+  const u = document.getElementById('usuarioAcesso').value.trim().toLowerCase(), m = document.getElementById('mensagemAcesso');
+  m.innerHTML = '🔍 Verificando...';
+  setTimeout(() => {
+    const enc = dadosControle.find(l => ((l.c?.[0]?.v)||'').toString().trim().toLowerCase() === u);
+    if(!enc) return m.innerHTML = '❌ Usuário não encontrado. Verifique o nome ou contate a agência.';
+    if(enc.c?.[1]?.v !== 'APROVADO') return m.innerHTML = '⏳ Aguardando aprovação (até 48h).';
+    usuarioAtual = ((enc.c?.[0]?.v)||'').toString().trim().toLowerCase();
+    m.innerHTML = '✅ Acesso liberado! Bem-vindo!';
+    document.getElementById('painelStreamer').style.display = 'block';
+    document.getElementById('dadoUsuario').innerText = enc.c?.[0]?.v || '-';
+    const lT = enc.c?.[3]?.v, lK = enc.c?.[5]?.v;
+    document.getElementById('dadoLinkTiktok').innerHTML = lT ? `<a href="${lT}" target="_blank" style="color:var(--verde)">Acessar Perfil</a>` : 'Não cadastrado';
+    document.getElementById('dadoLinkKako').innerHTML = lK ? `<a href="${lK}" target="_blank" style="color:var(--verde)">Acessar Perfil</a>` : 'Não cadastrado';
+    document.getElementById('nomeUsuarioBatalha').value = enc.c?.[0]?.v || '-';
+    document.getElementById('linkPerfilBatalha').value = lT || lK || '-';
+    carregarBatalhasDoUsuario();
+  }, 800);
+}
+
+function carregarBatalhasDoUsuario(){
+  const pendentes = [], confirmadas = [];
+  dadosBatalhas.forEach(r => {
+    if(!r.c) return;
+    const usuarioPlanilha = ((r.c[0]?.v)||'').toString().trim().toLowerCase();
+    if(usuarioPlanilha !== usuarioAtual) return;
+    const status = (r.c[5]?.v||'').toString().trim().toUpperCase();
+    const item = {
+      data: r.c[1]?.v || '-',
+      hora: r.c[2]?.v || '-',
+      oponente: r.c[3]?.v || '',
+      linkOponente: r.c[4]?.v || '',
+      status: status,
+      meta: r.c[6]?.v || '-',
+      rodadas: r.c[7]?.v || '-',
+      hold: r.c[8]?.v || '-'
+    };
+    if(status === 'CONFIRMADA') confirmadas.push(item);
+    else pendentes.push(item);
+  });
+
+  // PENDENTES
+  if(pendentes.length > 0){
+    document.getElementById('caixaPendentes').innerHTML = pendentes.map(b => `
+      <div class="situacao-batalha situacao-pendente">
+        ⏳ AGUARDANDO CONFIRMAÇÃO
+        <div class="linha-dado"><strong>Data:</strong> ${b.data} às ${b.hora}</div>
+        <div class="linha-dado"><strong>Oponente:</strong> Aguardando...</div>
+        <div class="linha-dado"><strong>Meta:</strong> ${b.meta} 💎</div>
+      </div>`).join('');
+  } else {
+    document.getElementById('caixaPendentes').innerHTML = '<p class="sem-batalhas">Nenhuma solicitação pendente.</p>';
+  }
+
+  // CONFIRMADAS
+  if(confirmadas.length > 0){
+    document.getElementById('caixaConfirmadas').innerHTML = confirmadas.map(b => `
+      <div class="cartao-batalha-confirmada">
+        <h4>✅ BATALHA CONFIRMADA</h4>
+        <div class="linha-dado"><strong>Data:</strong> ${b.data}</div>
+        <div class="linha-dado"><strong>Horário:</strong> ${b.hora}</div>
+        <div class="linha-dado"><strong>Oponente:</strong> ${b.oponente || 'Aguardando'}</div>
+        ${b.linkOponente ? `<a href="${b.linkOponente}" target="_blank" class="btn-perfil-oponente">🔗 Acessar Perfil do Oponente</a>` : ''}
+        <div class="linha-dado"><strong>Meta:</strong> ${b.meta} 💎</div>
+        <div class="linha-dado"><strong>Rodadas:</strong> ${b.rodadas}</div>
+        <div class="linha-dado"><strong>Hold:</strong> ${b.hold}</div>
+        <div class="aviso-arte">🎨 A arte será postada no grupo em até 48h</div>
+        <a href="${LINK_GRUPO_ARTE}" target="_blank" class="btn-grupo-arte">🎨 ACESSAR GRUPO DE ARTE VISUAL</a>
+      </div>`).join('');
+  } else {
+    document.getElementById('caixaConfirmadas').innerHTML = '<p class="sem-batalhas">Nenhuma batalha confirmada. Aguardando agência vincular oponente.</p>';
+  }
+}
+
+function abrirBatalhas(){
+  document.getElementById('painelStreamer').style.display = 'none';
+  document.getElementById('areaBatalhas').style.display = 'block';
+  gerarCalendario();
+}
+
+function fecharBatalhas(){
+  document.getElementById('areaBatalhas').style.display = 'none';
+  document.getElementById('painelStreamer').style.display = 'block';
+  document.getElementById('horarioBatalha').value = '';
+  document.getElementById('metaBatalha').value = '';
+  document.getElementById('avisoDiaSelecionado').style.display = 'none';
+  dataSelecionada = null;
+}
+
+function gerarCalendario(){
+  const nomes = ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
+  const diasSem = ['D','S','T','Q','Q','S','S'];
+  document.getElementById('mesCalendario').innerText = nomes[mesAtual] + ' de ' + anoAtual;
+  const c = document.getElementById('diasCalendario');
+  c.innerHTML = '';
+  diasSem.forEach(d => c.innerHTML += `<div style="text-align:center;color:var(--amarelo);font-weight:bold">${d}</div>`);
+  const pri = new Date(anoAtual, mesAtual, 1).getDay();
+  const ult = new Date(anoAtual, mesAtual + 1, 0).getDate();
+  const hj = hoje.getDate(), hjm = hoje.getMonth(), hja = hoje.getFullYear();
+  for(let i = 0; i < pri; i++) c.innerHTML += '<div></div>';
+  for(let d = 1; d <= ult; d++){
+    const dt = new Date(anoAtual, mesAtual, d);
+    const str = anoAtual + '-' + String(mesAtual+1).padStart(2,'0') + '-' + String(d).padStart(2,'0');
+    if(dt < new Date(hja, hjm, hj) || dt > dataLimite){
+      c.innerHTML += `<div class="dia-calendario dia-bloqueado">${d}</div>`;
+      continue;
+    }
+    if(dt.getDay() === 0){
+      c.innerHTML += `<div class="dia-calendario dia-bloqueado">${d}</div>`;
+      continue;
+    }
+    c.innerHTML += `<div class="dia-calendario dia-disponivel" onclick="selecionarDia('${str}', this)">${d}</div>`;
+  }
+}
+
+function selecionarDia(str, el){
+  document.querySelectorAll('.dia-calendario').forEach(d => d.classList.remove('dia-selecionado'));
+  el.classList.add('dia-selecionado');
+  dataSelecionada = str;
+  document.getElementById('avisoDiaSelecionado').style.display = 'block';
+  document.getElementById('horarioBatalha').innerHTML = '<option value="">⏰ Escolha o horário</option><option value="18h">18h ✅ Disponível</option><option value="22h">22h ✅ Disponível</option><option value="23h">23h ✅ Disponível</option>';
+}
+
+function enviarSolicitacaoBatalha(){
+  if(!dataSelecionada) return alert('❌ Selecione uma data!');
+  const h = document.getElementById('horarioBatalha').value;
+  const m = document.getElementById('metaBatalha').value.trim();
+  if(!h) return alert('❌ Selecione o horário!');
+  if(!m) return alert('❌ Digite a meta de diamantes!');
+  const u = document.getElementById('nomeUsuarioBatalha').value;
+  const l = document.getElementById('linkPerfilBatalha').value;
+  const msg = `⚔️ SOLICITAÇÃO DE BATALHA
+
+👤 Usuário: ${u}
+🔗 Perfil: ${l}
+📅 Data: ${dataSelecionada}
+⏰ Horário: ${h}
+💎 Meta: ${m}
+
+Aguardando confirmação e oponente.`;
+  window.open(`https://wa.me/556981478873?text=${encodeURIComponent(msg)}`, '_blank');
+  alert('✅ Solicitação enviada! Aguardando confirmação da agência.\n\nQuando confirmado, aparecerá abaixo com os dados do oponente.');
+  fecharBatalhas();
+}
+
+function copiarPix(id, btn){
+  const t = document.getElementById(id).innerText.trim();
+  navigator.clipboard.writeText(t).then(() => {
+    const o = btn.innerText;
+    btn.innerText = '✅ COPIADO!';
+    btn.classList.add('copiado');
+    setTimeout(() => { btn.innerText = o; btn.classList.remove('copiado'); }, 3000);
+  }).catch(() => alert('❌ Copie manualmente.'));
+}
+
+function solicitar(tipo){
+  const txt = {
+    musica: '🎵 Solicito Música Personalizada',
+    arte: '🎨 Solicito Arte Visual',
+    treinamento: '🎓 Solicito Acesso ao Treinamento VIP'
+  };
+  window.open(`https://wa.me/556981478873?text=${encodeURIComponent(txt[tipo])}`, '_blank');
+}
+</script>
+</div>
+</body>
+</html>
