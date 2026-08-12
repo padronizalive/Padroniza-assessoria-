@@ -69,10 +69,6 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
 .valor-servico .preco{color:var(--amarelo);font-weight:bold}
 
 .titulo-batalhas-streamer{text-align:center;color:var(--roxo);margin:20px 0 12px 0}
-.tipo-batalha-streamer{margin:15px 0 8px 0;font-weight:bold;padding:8px 12px;border-radius:6px}
-.confirmada-streamer{background:rgba(52,211,153,0.15);color:var(--verde);border-left:3px solid var(--verde)}
-.pendente-streamer{background:rgba(59,130,246,0.15);color:var(--azul);border-left:3px solid var(--azul)}
-.sem-batalhas{text-align:center;color:var(--cinza);padding:15px;font-size:15px}
 .dados-perfil-fixos{background:rgba(116,87,255,0.08);border:1px solid #293653;padding:12px;border-radius:8px;margin-bottom:15px}
 .dados-perfil-fixos p{margin:6px 0;color:var(--cinza);font-size:15px}
 .dados-perfil-fixos strong{color:var(--texto)}
@@ -89,12 +85,22 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
 .aviso-horario{padding:12px;border-radius:8px;margin:10px 0;font-size:14px;line-height:1.5}
 .aviso-bloqueado{background:rgba(239,68,68,0.1);color:var(--vermelho)}
 .aviso-campanha{background:rgba(255,200,87,0.1);color:var(--amarelo)}
-.status-batalha{padding:10px 12px;border-radius:6px;font-weight:bold;text-align:center;margin:10px 0}
-.status-falta-oponente{background:rgba(59,130,246,0.2);color:var(--azul);border:2px solid var(--azul)}
-.status-confirmado{background:rgba(52,211,153,0.15);color:var(--verde);border:2px solid var(--verde)}
-.link-oponente{color:var(--verde);text-decoration:none}
-.link-oponente:hover{text-decoration:underline}
-.botao-grupo-arte{display:inline-block;background:linear-gradient(135deg,#25d366,#128c7e);color:#fff;padding:10px 15px;border-radius:8px;text-decoration:none;font-weight:bold;margin-top:10px;text-align:center;width:100%}
+
+/* === SITUAÇÃO DA BATALHA === */
+.situacao-batalha{padding:14px 12px;border-radius:8px;font-weight:bold;text-align:center;margin:12px 0;border-width:2px;border-style:solid}
+.situacao-falta-oponente{background:rgba(59,130,246,0.15);color:#93c5fd;border-color:var(--azul)}
+.situacao-confirmada{background:rgba(247,249,255,0.08);color:var(--texto);border-color:#6b7280}
+
+/* === CARTAO DE BATALHA CONFIRMADA === */
+.cartao-batalha-confirmada{background:rgba(247,249,255,0.05);border:2px solid #4b5563;border-radius:10px;padding:15px;margin:12px 0}
+.cartao-batalha-confirmada h4{color:var(--verde);text-align:center;margin-bottom:12px;font-size:16px}
+.linha-dado{display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid #293653;font-size:14px}
+.linha-dado:last-child{border-bottom:none}
+.linha-dado strong{color:var(--amarelo)}
+.btn-perfil-oponente{display:block;background:linear-gradient(135deg,#3b82f6,#1d4ed8);color:#fff;text-align:center;padding:10px;border-radius:8px;text-decoration:none;font-weight:bold;margin-top:10px}
+.btn-perfil-oponente:hover{transform:translateY(-1px)}
+.sem-batalhas{text-align:center;color:var(--cinza);padding:20px 15px;font-size:15px}
+
 .copiado{background:var(--verde);color:#fff}
 </style>
 </head>
@@ -192,17 +198,23 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
 
     <h3 class="titulo-batalhas-streamer">⚔️ MINHAS BATALHAS</h3>
 
-    <h4 class="tipo-batalha-streamer confirmada-streamer">✅ BATALHAS CONFIRMADAS</h4>
-    <div class="area-dados" style="margin-bottom:10px" id="minhasBatalhasConfirmadas">
-      <p class="sem-batalhas">Nenhuma batalha confirmada no momento</p>
+    <!-- 🟦 FALTA OPONENTE -->
+    <div id="caixaFaltaOponente" style="display:none">
+      <div class="situacao-batalha situacao-falta-oponente">
+        🟦 SITUAÇÃO: FALTA OPONENTE
+        <small style="font-weight:normal;display:block;font-size:12px;margin-top:4px">(atualizado pela agência automaticamente)</small>
+      </div>
+      <div class="grupo-campo"><input type="text" class="campo-form" value="👤 Nome do oponente: Aguardando confirmação" disabled></div>
+      <div class="grupo-campo"><input type="text" class="campo-form" value="🔗 Link do oponente: Aguardando confirmação" disabled></div>
     </div>
 
-    <h4 class="tipo-batalha-streamer pendente-streamer">⏳ SOLICITAÇÕES / FALTA OPONENTE</h4>
-    <div class="area-dados" style="margin-bottom:20px" id="minhasBatalhasPendentes">
-      <p class="sem-batalhas">Nenhuma solicitação pendente</p>
+    <!-- ⬜ BATALHAS CONFIRMADAS -->
+    <h4 style="color:var(--verde);margin:20px 0 10px 0;text-align:center">✅ BATALHAS CONFIRMADAS</h4>
+    <div id="caixaConfirmadas">
+      <p class="sem-batalhas">Nenhuma batalha confirmada no momento. Aguardando agência vincular oponente.</p>
     </div>
 
-    <p style="text-align:center;color:var(--amarelo);font-weight:bold;margin:15px 0">Solicitar Serviços:</p>
+    <p style="text-align:center;color:var(--amarelo);font-weight:bold;margin:25px 0 15px 0">Solicitar Serviços:</p>
     <button class="btn-acao btn-servico" onclick="abrirBatalhas()">⚔️ AGENDAR NOVA BATALHA</button>
     <button class="btn-acao btn-servico" onclick="solicitar('musica')">🎵 Músicas Personalizadas</button>
     <button class="btn-acao btn-servico" onclick="solicitar('arte')">🎨 Artes Visuais</button>
@@ -227,13 +239,6 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
     </div>
 
     <div class="grupo-campo"><input type="text" class="campo-form" id="metaBatalha" placeholder="💎 Meta de diamantes (ex: 5000)"></div>
-
-    <div class="status-batalha status-falta-oponente">
-      🟦 SITUAÇÃO: FALTA OPONENTE <small style="font-weight:normal;display:block;font-size:12px">(atualizado pela agência automaticamente)</small>
-    </div>
-
-    <div class="grupo-campo"><input type="text" class="campo-form" id="nomeOponenteExibicao" value="👤 Nome do oponente: Aguardando confirmação" disabled></div>
-    <div class="grupo-campo"><input type="text" class="campo-form" id="linkOponenteExibicao" value="🔗 Link do oponente: Aguardando confirmação" disabled></div>
 
     <button class="btn-acao btn-verde" onclick="enviarSolicitacaoBatalha()">📤 ENVIAR SOLICITAÇÃO</button>
     <button class="btn-acao btn-voltar" onclick="fecharBatalhas()">Voltar</button>
@@ -317,17 +322,23 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
 
 <script>
 const LINK_PLANILHA_CONTROLE = "https://docs.google.com/spreadsheets/d/1R9eUsqF4kA0y22ryMUIsvGolBfk3-XwZ5R-RVpBiZA4/gviz/tq?tqx=out:json";
+const LINK_PLANILHA_BATALHA = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRtyHq643--RBIrq3drMcHGIoUtpY-IN5v2T0wNWnCNvUf2rE6UHOK55nI4uUK89x7U_S66Gl1XXDN4/pubhtml";
 const LINK_WHATSAPP = "https://wa.me/556981478873";
 
 let dadosControle = [];
+let dadosBatalhas = [];
 let usuarioAtual = null;
 let dataSelecionada = null;
 let hoje = new Date();
 let mesAtual = hoje.getMonth();
 let anoAtual = hoje.getFullYear();
 
+// Data limite: dia 30 do mês seguinte
+let dataLimite = new Date(anoAtual, mesAtual + 1, 30);
+
 window.onload = async function(){
   await carregarPlanilhaControle();
+  await carregarPlanilhaBatalhas();
   carregarLivesNaInicial();
   atualizarContadoresAdmin();
   gerarCalendario();
@@ -338,8 +349,20 @@ async function carregarPlanilhaControle(){
     const res = await fetch(LINK_PLANILHA_CONTROLE);
     const texto = await res.text();
     dadosControle = JSON.parse(texto.substr(47).slice(0,-2)).table.rows;
-    console.log("✅ Planilha carregada:", dadosControle.length, "linhas");
-  }catch(e){console.log("Erro planilha:", e);}
+    console.log("✅ Planilha Controle carregada:", dadosControle.length, "linhas");
+  }catch(e){console.log("Erro Planilha Controle:", e);}
+}
+
+async function carregarPlanilhaBatalhas(){
+  try{
+    // ⚠️ Atualize com o link JSON da sua planilha de batalhas
+    const linkJSON = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRtyHq643--RBIrq3drMcHGIoUtpY-IN5v2T0wNWnCNvUf2rE6UHOK55nI4uUK89x7U_S66Gl1XXDN4/pub?gid=0&single=true&output=json";
+    const res = await fetch(linkJSON);
+    if(!res.ok) return console.log("Planilha Batalhas: ainda não disponível");
+    const texto = await res.text();
+    dadosBatalhas = JSON.parse(texto.substr(47).slice(0,-2)).table.rows;
+    console.log("✅ Planilha Batalhas carregada:", dadosBatalhas.length, "linhas");
+  }catch(e){console.log("Planilha Batalhas ainda não vinculada:", e.message);}
 }
 
 function carregarLivesNaInicial(){
@@ -395,6 +418,8 @@ function abrir(id){
     document.getElementById('areaBatalhas').style.display = 'none';
     document.getElementById('mensagemAcesso').innerHTML = '';
     document.getElementById('usuarioAcesso').value = '';
+    document.getElementById('caixaFaltaOponente').style.display = 'none';
+    document.getElementById('caixaConfirmadas').innerHTML = '<p class="sem-batalhas">Nenhuma batalha confirmada no momento. Aguardando agência vincular oponente.</p>';
   }
 }
 
@@ -462,6 +487,78 @@ function verificarAcesso(){
   }, 800);
 }
 
+function estaNoPeriodo(dataStr){
+  if(!dataStr) return false;
+  const dataBatalha = new Date(dataStr);
+  return dataBatalha >= new Date(hoje.getFullYear(), hoje.getMonth(), hoje.getDate()) &&
+         dataBatalha <= dataLimite;
+}
+
+function carregarMinhasBatalhas(user){
+  const caixaFalta = document.getElementById('caixaFaltaOponente');
+  const caixaConfirmadas = document.getElementById('caixaConfirmadas');
+  caixaConfirmadas.innerHTML = '';
+  let temConfirmada = false;
+
+  // ⚠️ ATUALIZE AQUI os índices das colunas conforme sua planilha de batalhas
+  // Coluna A=0, B=1, C=2, D=3, E=4, F=5, G=6, H=7, I=8, J=9, K=10, L=11, M=12, N=13
+  const COL_USUARIO = 0;
+  const COL_SITUACAO = 1;
+  const COL_DATA = 2;
+  const COL_HORA = 3;
+  const COL_OPONENTE_NOME = 4;
+  const COL_OPONENTE_LINK = 5;
+  const COL_META = 6;
+  const COL_RODADAS = 7;
+  const COL_HOLD = 8;
+
+  if(dadosBatalhas.length === 0){
+    caixaConfirmadas.innerHTML = '<p class="sem-batalhas">Aguardando agência vincular oponente...</p>';
+    return;
+  }
+
+  dadosBatalhas.forEach(linha => {
+    if(!linha.c) return;
+    const nomeLinha = (linha.c[COL_USUARIO]?.v || '').toString().trim().toLowerCase();
+    if(nomeLinha !== user) return;
+
+    const situacao = (linha.c[COL_SITUACAO]?.v || '').toString().trim().toUpperCase();
+    const dataBatalha = linha.c[COL_DATA]?.v || '';
+    const horaBatalha = linha.c[COL_HORA]?.v || '';
+    const oponenteNome = linha.c[COL_OPONENTE_NOME]?.v || '';
+    const oponenteLink = linha.c[COL_OPONENTE_LINK]?.v || '';
+    const meta = linha.c[COL_META]?.v || '';
+    const rodadas = linha.c[COL_RODADAS]?.v || '';
+    const hold = linha.c[COL_HOLD]?.v || '';
+
+    // Verifica se está dentro do período válido
+    if(!estaNoPeriodo(dataBatalha)) return;
+
+    if(situacao === 'CONFIRMADA' && oponenteNome){
+      temConfirmada = true;
+      caixaFalta.style.display = 'none';
+      caixaConfirmadas.innerHTML += `
+        <div class="cartao-batalha-confirmada">
+          <h4>✅ BATALHA CONFIRMADA</h4>
+          <div class="linha-dado"><strong>Data:</strong> ${dataBatalha} às ${horaBatalha}</div>
+          <div class="linha-dado"><strong>Oponente:</strong> ${oponenteNome}</div>
+          <div class="linha-dado"><strong>💎 Meta:</strong> ${meta}</div>
+          <div class="linha-dado"><strong>🔄 Rodadas:</strong> ${rodadas}</div>
+          <div class="linha-dado"><strong>💰 Hold:</strong> ${hold}</div>
+          ${oponenteLink ? `<a href="${oponenteLink}" target="_blank" class="btn-perfil-oponente">🔗 ACESSAR PERFIL DO OPONENTE</a>` : ''}
+        </div>
+      `;
+    }else{
+      // Falta oponente — mostra caixa azul
+      caixaFalta.style.display = 'block';
+    }
+  });
+
+  if(!temConfirmada && caixaFalta.style.display !== 'block'){
+    caixaConfirmadas.innerHTML = '<p class="sem-batalhas">Nenhuma batalha confirmada no momento. Aguardando agência vincular oponente.</p>';
+  }
+}
+
 function gerarCalendario(){
   const nomesMes = ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
   const diasSemana = ['D','S','T','Q','Q','S','S'];
@@ -478,119 +575,4 @@ function gerarCalendario(){
   const ultimoDia = new Date(anoAtual, mesAtual + 1, 0).getDate();
   const hojeNum = hoje.getDate();
   const hojeMes = hoje.getMonth();
-  const hojeAno = hoje.getFullYear();
-
-  for(let i=0; i<primeiroDia; i++) container.innerHTML += `<div></div>`;
-
-  for(let dia=1; dia<=ultimoDia; dia++){
-    const data = new Date(anoAtual, mesAtual, dia);
-    const diaSemana = data.getDay();
-    const dataStr = `${anoAtual}-${String(mesAtual+1).padStart(2,'0')}-${String(dia).padStart(2,'0')}`;
-    
-    const dataLimite = new Date(anoAtual, mesAtual + 1, 30);
-    if(data < new Date(hojeAno, hojeMes, hojeNum) || data > dataLimite){
-      container.innerHTML += `<div class="dia-calendario dia-bloqueado">${dia}</div>`;
-      continue;
-    }
-
-    if(diaSemana === 0){
-      container.innerHTML += `<div class="dia-calendario dia-bloqueado" title="❌ Domingo — fechado">${dia}</div>`;
-      continue;
-    }
-
-    container.innerHTML += `<div class="dia-calendario dia-disponivel" onclick="selecionarDia('${dataStr}', this)">${dia}</div>`;
-  }
-}
-
-function selecionarDia(dataStr, elemento){
-  document.querySelectorAll('.dia-calendario').forEach(d => d.classList.remove('dia-selecionado'));
-  elemento.classList.add('dia-selecionado');
-  dataSelecionada = dataStr;
-
-  const aviso = document.getElementById('avisoDiaSelecionado');
-  aviso.style.display = 'block';
-  aviso.innerHTML = '⚠️ <strong>Horários disponíveis:</strong> 18h (com 1h de antecedência, antes da campanha) e 22h / 23h (após campanha). Horário de campanha 19h–22h está BLOQUEADO.';
-
-  const select = document.getElementById('horarioBatalha');
-  select.innerHTML = `<option value="">⏰ Escolha o horário</option>`;
-  select.innerHTML += `<option value="18h">18h ✅ Disponível</option>`;
-  select.innerHTML += `<option value="22h">22h ✅ Disponível</option>`;
-  select.innerHTML += `<option value="23h">23h ✅ Disponível</option>`;
-}
-
-function abrirBatalhas(){
-  document.getElementById('painelStreamer').style.display = 'none';
-  document.getElementById('areaBatalhas').style.display = 'block';
-  gerarCalendario();
-}
-
-function fecharBatalhas(){
-  document.getElementById('areaBatalhas').style.display = 'none';
-  document.getElementById('painelStreamer').style.display = 'block';
-  document.getElementById('horarioBatalha').innerHTML = `<option value="">Horário</option>`;
-  document.getElementById('metaBatalha').value = '';
-  document.getElementById('avisoDiaSelecionado').style.display = 'none';
-  dataSelecionada = null;
-}
-
-function enviarSolicitacaoBatalha(){
-  const usuario = document.getElementById('nomeUsuarioBatalha').value;
-  const linkPerfil = document.getElementById('linkPerfilBatalha').value;
-  const horario = document.getElementById('horarioBatalha').value;
-  const meta = document.getElementById('metaBatalha').value;
-
-  if(!dataSelecionada) return alert('❌ Selecione uma data no calendário!');
-  if(!horario) return alert('❌ Selecione um horário!');
-  if(!meta) return alert('❌ Digite a meta de diamantes!');
-
-  const mensagem = `⚔️ SOLICITAÇÃO DE BATALHA
-━━━━━━━━━━━━━━━━━━
-👤 Usuário: ${usuario}
-🔗 Perfil: ${linkPerfil}
-📅 Data: ${dataSelecionada}
-⏰ Horário: ${horario}
-💎 Meta: ${meta}
-📊 Situação: FALTA OPONENTE
-━━━━━━━━━━━━━━━━━━
-Copie esses dados e cole na planilha!`;
-
-  window.open(`https://wa.me/556981478873?text=${encodeURIComponent(mensagem)}`, '_blank');
-  alert('✅ Solicitação enviada! Os dados foram copiados. Aguarde confirmação da agência.');
-  fecharBatalhas();
-}
-
-function carregarMinhasBatalhas(user){
-  document.getElementById('minhasBatalhasConfirmadas').innerHTML = `<p class="sem-batalhas">Aguardando confirmação da agência...</p>`;
-  document.getElementById('minhasBatalhasPendentes').innerHTML = `<p class="sem-batalhas">Suas solicitações aparecerão aqui</p>`;
-}
-
-function copiarPix(idPix, botao){
-  const codigo = document.getElementById(idPix).innerText.trim();
-  navigator.clipboard.writeText(codigo).then(() => {
-    const textoOriginal = botao.innerText;
-    botao.innerText = '✅ CHAVE COPIADA!';
-    botao.classList.add('copiado');
-    setTimeout(() => {
-      botao.innerText = textoOriginal;
-      botao.classList.remove('copiado');
-    }, 3000);
-  }).catch(() => alert('❌ Não foi possível copiar. Selecione e copie manualmente.'));
-}
-
-function enviarComprovante(servico){
-  const mensagem = `Comprovante de pagamento — ${servico}`;
-  window.open(`https://wa.me/556981478873?text=${encodeURIComponent(mensagem)}`, '_blank');
-}
-
-function solicitar(tipo){
-  const textos = {
-    musica: '🎵 Solicito Música Personalizada',
-    arte: '🎨 Solicito Arte Visual',
-    treinamento: '🎓 Solicito Acesso ao Treinamento VIP'
-  };
-  window.open(`https://wa.me/556981478873?text=${encodeURIComponent(textos[tipo])}`, '_blank');
-}
-</script>
-</div>
-</body>
-</html>
+  const hojeAno
