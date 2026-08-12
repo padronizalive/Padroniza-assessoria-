@@ -10,7 +10,6 @@
 body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
 .container{max-width:650px;margin:0 auto}
 
-/* === LOGO DA AGÊNCIA — FIXO NO TOPO === */
 .logo-container{text-align:center;margin-bottom:20px}
 .logo-agencia{max-width:280px;width:100%;height:auto;border-radius:12px;border:3px solid var(--amarelo);box-shadow:0 0 20px rgba(255,200,87,0.3)}
 .cabecalho{text-align:center;margin-bottom:20px}
@@ -39,8 +38,8 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
 .cartao-live{background:var(--painel2);border-radius:12px;padding:15px;margin-bottom:15px;border:1px solid #293653}
 .nome-streamer{font-size:20px;font-weight:bold;color:var(--amarelo);margin-bottom:10px}
 .btn-assistir{background:var(--verde);color:#fff;border:none;padding:12px 20px;border-radius:8px;font-weight:bold;font-size:16px;width:100%;margin-bottom:10px;cursor:pointer;text-decoration:none;display:inline-block;text-align:center}
-.capa-live{width:100%;height:180px;border-radius:8px;background:#121a30;margin-bottom:10px;display:flex;align-items:center;justify-content:center;color:var(--cinza);overflow:hidden}
-.capa-live img{width:100%;height:100%;object-fit:cover}
+.capa-live{width:100%;height:180px;border-radius:8px;background:#121a30;margin-bottom:10px;display:flex;align-items:center;justify-content:center;overflow:hidden;border:1px solid #293653}
+.capa-live img{width:100%;height:100%;object-fit:cover;display:block;min-height:180px}
 .status-ao-vivo{display:inline-block;background:var(--vermelho);color:#fff;padding:6px 12px;border-radius:6px;font-weight:bold;font-size:14px;margin-right:10px}
 .sem-lives,.sem-destaques{text-align:center;padding:30px;color:var(--cinza);font-size:16px}
 
@@ -120,7 +119,6 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
 <div class="container">
 
 <div id="telaInicial" style="display:block">
-  <!-- === LOGO DA AGÊNCIA FIXO NO TOPO — LINK VERIFICADO === -->
   <div class="logo-container">
     <img src="https://i.imgur.com/yaTLVi3.jpeg" alt="Padroniza Assessoria" class="logo-agencia" loading="lazy" onerror="this.style.display='none'">
   </div>
@@ -152,7 +150,7 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
         </div>
         <div class="aba-pagina">
           <h3 class="titulo-aba">🌟 DESTAQUES DA PADRONIZA</h3>
-          <div id="listaDestaques"><p class="sem-destaques">🔄 Carregando destaques...</p></div>
+          <div id="listaDestaques"><p class="sem-destaques">✨ Nenhum destaque cadastrado ainda</p></div>
         </div>
       </div>
     </div>
@@ -255,9 +253,7 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
 
     <div style="margin-top:30px">
       <h3 style="color:var(--amarelo);margin-bottom:15px;text-align:center">🌟 MEUS DESTAQUES</h3>
-      <div id="destaquesStreamer">
-        <p style="color:var(--cinza);text-align:center;padding:15px">Nenhum destaque cadastrado ainda.</p>
-      </div>
+      <p style="color:var(--cinza);text-align:center;padding:15px">Em breve — botão para adicionar destaque ✨</p>
     </div>
   </div>
   <button class="btn-acao btn-voltar" onclick="voltar()">Voltar</button>
@@ -322,7 +318,7 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
 
 <script>
 const LINK_PLANILHA_LIVES = "https://docs.google.com/spreadsheets/d/1R9eUsqF4kA0y22ryMUIsvGolBfk3-XwZ5R-RVpBiZA4/gviz/tq?tqx=out:json";
-const CAPA_PADRAO = "https://i.imgur.com/IDqKKWk.jpg";
+const CAPA_PADRAO = "https://i.imgur.com/6pJQzqU.jpeg"; // ✅ CAPA PADRÃO CONFIRMADA!
 const SENHA_ADMIN = "agência. 2026";
 const EMAIL_ADMIN = "padronizaassessoria@gmail.com";
 
@@ -370,8 +366,7 @@ async function carregarPlanilhaLives(){
         linkTiktok: ((c[3]||{}).v||"").toString().trim(),
         linkKako: ((c[5]||{}).v||"").toString().trim(),
         capa: ((c[7]||{}).v||"").toString().trim(),
-        aoVivo: ((c[8]||{}).v||"").toString().trim().toUpperCase(),
-        destaques: ((c[10]||{}).v||"").toString().trim()
+        aoVivo: ((c[8]||{}).v||"").toString().trim().toUpperCase()
       };
     });
   }catch(e){console.error("Erro planilha:", e)}
@@ -385,11 +380,18 @@ function renderizarLives(){
     return;
   }
   container.innerHTML = aoVivo.map(s => {
-    const capa = s.capa && s.capa.startsWith('http') ? s.capa : CAPA_PADRAO;
+    // ✅ LÓGICA FORÇADA: se não tiver capa ou for inválida → usa CAPA PADRÃO
+    let capaUsar = CAPA_PADRAO;
+    if(s.capa && s.capa.length > 5 && s.capa.startsWith('http')){
+      capaUsar = s.capa;
+    }
     const link = s.linkTiktok || s.linkKako || "#";
     return `<div class="cartao-live">
       <div class="nome-streamer">${escaparHtml(s.usuario)}</div>
-      <div class="capa-live"><img src="${escaparHtml(capa)}" alt="Capa" onerror="this.src='${CAPA_PADRAO}'"></div>
+      <div class="capa-live">
+        <img src="${escaparHtml(capaUsar)}" alt="Capa da Live" 
+             onerror="this.src='${CAPA_PADRAO}'" loading="lazy">
+      </div>
       <span class="status-ao-vivo">🔴 AO VIVO</span>
       <a href="${escaparHtml(link)}" target="_blank" class="btn-assistir">▶️ ASSISTIR LIVE</a>
     </div>`;
@@ -397,21 +399,7 @@ function renderizarLives(){
 }
 
 function renderizarDestaques(){
-  const container = document.getElementById('listaDestaques');
-  const destaques = dadosPlanilha.filter(s => s.destaques);
-  if(!destaques.length){
-    container.innerHTML = '<p class="sem-destaques">🌟 Nenhum destaque cadastrado</p>';
-    return;
-  }
-  container.innerHTML = '<div class="galeria-destaques">' + destaques.map(s => `
-    <div class="cartao-destaque">
-      <img src="${escaparHtml(s.destaques)}" loading="lazy" alt="Destaque">
-      <div class="info">
-        <div class="nome">${escaparHtml(s.usuario)}</div>
-        <div class="desc">✨ Destaque da Padroniza</div>
-      </div>
-    </div>
-  `).join('') + '</div>';
+  document.getElementById('listaDestaques').innerHTML = '<p class="sem-destaques">✨ Nenhum destaque cadastrado ainda</p>';
 }
 
 function desenharCalendario(){
@@ -550,17 +538,6 @@ function verificarAcesso(){
   document.getElementById('dadoKako').innerHTML = encontrado.linkKako 
     ? `<a href="${encontrado.linkKako}" target="_blank" style="color:var(--verde)">🔗 Abrir perfil</a>` : "Não cadastrado";
   document.getElementById('perfilStreamer').style.display = 'block';
-  
-  const destContainer = document.getElementById('destaquesStreamer');
-  if(encontrado.destaques){
-    destContainer.innerHTML = `<div class="galeria-destaques"><div class="cartao-destaque">
-      <img src="${escaparHtml(encontrado.destaques)}" alt="Destaque">
-      <div class="info"><div class="nome">${escaparHtml(encontrado.usuario)}</div>
-      <div class="desc">✨ Meu destaque</div></div>
-    </div></div>`;
-  }else{
-    destContainer.innerHTML = '<p style="color:var(--cinza)">Nenhum destaque cadastrado ainda.</p>';
-  }
 }
 
 function enviarSolicitacao(){
@@ -580,7 +557,6 @@ function copiarPix(id){
 function atualizarContadores(){
   document.getElementById('qtdAgenciados').textContent = dadosPlanilha.filter(s => s.status === "APROVADO").length;
   document.getElementById('qtdLives').textContent = dadosPlanilha.filter(s => /^(SIM|S|TRUE)$/.test(s.aoVivo)).length;
-  document.getElementById('qtdConquistas').textContent = dadosPlanilha.filter(s => s.destaques).length;
 }
 
 function escaparHtml(texto){
