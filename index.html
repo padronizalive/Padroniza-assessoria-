@@ -388,7 +388,6 @@ function verificarAcesso(){
     document.getElementById('nomeUsuarioBatalha').value = encontrado.c[0]?.v || '-';
     document.getElementById('linkPerfilBatalha').value = encontrado.c[3]?.v || encontrado.c[5]?.v || '-';
 
-    // ✅ AGORA BUSCA EXATAMENTE COMO SUA PLANILHA:
     carregarBatalhasDoUsuario(user);
   }, 800);
 }
@@ -403,25 +402,20 @@ function carregarBatalhasDoUsuario(nomeUsuario){
   let htmlPendentes = '';
   const usuarioBusca = nomeUsuario.trim().toLowerCase();
 
-  // ✅ LÊ TODAS AS LINHAS, PULA SÓ O TÍTULO E CABEÇALHO
   dadosPlanilha.forEach((linha, indice) => {
     if(!linha.c) return;
     if(indice < 2) return; 
 
-    // ✅ COLUNA F = 1º OPONENTE / USUÁRIO PADRONIZA
-    // ✅ COLUNA H = 2º OPONENTE / OUTRO USUÁRIO
-    const usuarioPadroniza = (linha.c[5]?.v || '').toString().trim().toLowerCase(); // Coluna F
-    const oponente = (linha.c[7]?.v || '').toString().trim().toLowerCase(); // Coluna H
+    const usuarioPadroniza = (linha.c[5]?.v || '').toString().trim().toLowerCase();
+    const oponente = (linha.c[7]?.v || '').toString().trim().toLowerCase();
 
-    // ✅ APARECE SE FOR O PRIMEIRO OU O SEGUNDO NA BATALHA
     if(usuarioPadroniza !== usuarioBusca && oponente !== usuarioBusca) return;
 
-    // ✅ DADOS NA ORDEM CERTA DA SUA PLANILHA:
-    const dia = linha.c[2]?.v || '-';    // Coluna C = Dia
-    const hora = linha.c[3]?.v || '-';   // Coluna D = Hora/Round
+    const dia = linha.c[2]?.v || '-';
+    const hora = linha.c[3]?.v || '-';
     const adversario = usuarioPadroniza === usuarioBusca ? (linha.c[7]?.v || 'A definir') : (linha.c[5]?.v || 'A definir');
-    const meta = linha.c[9]?.v || '-';   // Coluna J = Meta
-    const situacao = (linha.c[10]?.v || '').toString().trim().toUpperCase(); // Coluna K = Situação
+    const meta = linha.c[9]?.v || '-';
+    const situacao = (linha.c[10]?.v || '').toString().trim().toUpperCase();
 
     const bloco = `
       <div class="item-lista">
