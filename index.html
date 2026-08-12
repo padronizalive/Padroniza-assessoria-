@@ -164,7 +164,6 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
   
   <div id="painelStreamer" style="display:none;margin-top:20px">
 
-    <!-- ✅ DADOS DO PERFIL — PUXA AUTOMÁTICO DA PLANILHA -->
     <div class="dados-perfil-fixos">
       <h4 style="color:var(--amarelo);margin-bottom:8px">📋 SEUS DADOS</h4>
       <p><strong>Usuário:</strong> <span id="dadoUsuario">-</span></p>
@@ -173,7 +172,6 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
       <p style="font-size:13px;color:var(--cinza)">* Se precisar alterar, avise a agência que atualiza automaticamente</p>
     </div>
 
-    <!-- ✅ MINHAS BATALHAS — AGORA LÊ EXATAMENTE SUAS COLUNAS DA PLANILHA -->
     <h3 class="titulo-batalhas-streamer">⚔️ MINHAS BATALHAS</h3>
 
     <h4 class="tipo-batalha-streamer confirmada-streamer">✅ BATALHAS CONFIRMADAS</h4>
@@ -383,14 +381,13 @@ function verificarAcesso(){
     msg.innerHTML = '✅ Acesso liberado!';
     document.getElementById('painelStreamer').style.display = 'block';
 
-    // ✅ PREENCHE DADOS DO PERFIL — MANTIDO IGUAL
     document.getElementById('dadoUsuario').innerText = encontrado.c[0]?.v || '-';
     document.getElementById('dadoLinkTiktok').innerHTML = encontrado.c[3]?.v ? `<a href="${encontrado.c[3].v}" target="_blank" style="color:var(--verde)">Acessar Perfil</a>` : 'Não cadastrado';
     document.getElementById('dadoLinkKako').innerHTML = encontrado.c[5]?.v ? `<a href="${encontrado.c[5].v}" target="_blank" style="color:var(--verde)">Acessar Perfil</a>` : 'Não cadastrado';
     document.getElementById('nomeUsuarioBatalha').value = encontrado.c[0]?.v || '-';
     document.getElementById('linkPerfilBatalha').value = encontrado.c[3]?.v || encontrado.c[5]?.v || '-';
 
-    // ✅ AGORA LÊ EXATAMENTE SUAS COLUNAS DA PLANILHA DE BATALHAS
+    // ✅ AGORA LÊ CERTO, PULA O CABEÇALHO E PEGA TODAS AS LINHAS
     carregarBatalhasDoUsuario(user);
   }, 800);
 }
@@ -404,20 +401,20 @@ function carregarBatalhasDoUsuario(nomeUsuario){
   let htmlConfirmadas = '';
   let htmlPendentes = '';
 
-  // ✅ LÊ COLUNAS EXATAS DA SUA PLANILHA:
-  // C=Dia, D=Hora, E=Seu Nome, G=Oponente, I=Meta, J=Situação, L=Link Seu, M=Link Oponente
-  dadosPlanilha.forEach(linha => {
+  // ✅ AGORA LÊ EXATAMENTE SUAS COLUNAS E NÃO PULA NENHUMA LINHA
+  dadosPlanilha.forEach((linha, indice) => {
     if(!linha.c) return;
-    const nomeNaLinha = (linha.c[4]?.v || '').toString().trim().toLowerCase(); // Coluna E = 1.OPONENTE
-    if(nomeNaLinha !== nomeUsuario.toLowerCase()) return; // Só mostra se for ele mesmo
+    // Pula só as 2 primeiras linhas que são títulos/cabeçalhos
+    if(indice < 2) return;
 
-    const dia = linha.c[2]?.v || '-';
-    const hora = linha.c[3]?.v || '-';
-    const oponente = linha.c[6]?.v || 'A definir';
-    const meta = linha.c[8]?.v || '-';
-    const situacao = (linha.c[9]?.v || '').toString().trim().toUpperCase();
-    const linkSeu = linha.c[11]?.v || '';
-    const linkOponente = linha.c[12]?.v || '';
+    const nomeNaLinha = (linha.c[4]?.v || '').toString().trim().toLowerCase(); // Coluna E = 1.OPONENTE
+    if(nomeNaLinha !== nomeUsuario.toLowerCase()) return;
+
+    const dia = linha.c[2]?.v || '-'; // Coluna C
+    const hora = linha.c[3]?.v || '-'; // Coluna D
+    const oponente = linha.c[6]?.v || 'A definir'; // Coluna G
+    const meta = linha.c[8]?.v || '-'; // Coluna I
+    const situacao = (linha.c[9]?.v || '').toString().trim().toUpperCase(); // Coluna J
 
     const bloco = `
       <div class="item-lista">
@@ -433,7 +430,6 @@ function carregarBatalhasDoUsuario(nomeUsuario){
     else htmlPendentes += bloco;
   });
 
-  // Atualiza na tela
   if(htmlConfirmadas) confirmadas.innerHTML = htmlConfirmadas;
   if(htmlPendentes) pendentes.innerHTML = htmlPendentes;
 }
