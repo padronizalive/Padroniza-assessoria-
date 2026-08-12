@@ -107,10 +107,10 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
     <p>Seu sucesso nas lives começa aqui!</p>
   </div>
   <div class="botoes-principais">
-    <button class="btn-principal btn-agenciado" onclick="abrirTela('agenciado')">✅ SOU AGENCIADO PADRONIZA</button>
-    <button class="btn-principal btn-visitante" onclick="abrirTela('visitante')">👤 SOU VISITANTE / VER LIVES</button>
-    <button class="btn-principal btn-outra-agencia" onclick="abrirTela('outraAgencia')">🤝 SOU OUTRA AGÊNCIA</button>
-    <button class="btn-principal btn-admin" onclick="abrirTela('admin')">🔐 ÁREA DA ADMINISTRAÇÃO</button>
+    <button class="btn-principal btn-agenciado" onclick="abrirAba('agenciado')">✅ SOU AGENCIADO PADRONIZA</button>
+    <button class="btn-principal btn-visitante" onclick="abrirAba('visitante')">👤 SOU VISITANTE / VER LIVES</button>
+    <button class="btn-principal btn-outra-agencia" onclick="abrirAba('outraAgencia')">🤝 SOU OUTRA AGÊNCIA</button>
+    <button class="btn-principal btn-admin" onclick="abrirAba('admin')">🔐 ÁREA DA ADMINISTRAÇÃO</button>
     <a href="https://www.tiktok.com/coin?rc=7TGXGN69&rie=" target="_blank" class="btn-principal btn-moedas">💰 COMPRAR MOEDAS TIKTOK</a>
   </div>
 
@@ -281,12 +281,13 @@ let dadosControle = [], dadosBatalhas = [], usuarioAtual = null, dataSelecionada
 let hoje = new Date(), mesAtual = hoje.getMonth(), anoAtual = hoje.getFullYear();
 let dataLimite = new Date(anoAtual, mesAtual + 1, 30);
 
-// FUNÇÃO PARA ABRIR AS TELAS
-function abrirTela(nome){
+// ✅ FUNÇÃO PRINCIPAL PARA ABRIR AS TELAS
+function abrirAba(nome){
+  console.log("Abrindo aba:", nome);
   document.getElementById('telaInicial').style.display = 'none';
-  document.querySelectorAll('.conteudo').forEach(c => c.classList.remove('visivel'));
+  document.querySelectorAll('.conteudo').forEach(c => {c.classList.remove('visivel'); c.style.display = 'none';});
   const alvo = document.getElementById('conteudo' + nome.charAt(0).toUpperCase() + nome.slice(1));
-  if(alvo) alvo.classList.add('visivel');
+  if(alvo){ alvo.classList.add('visivel'); alvo.style.display = 'block'; }
   
   if(nome === 'admin'){
     document.getElementById('loginAdmin').style.display = 'block';
@@ -302,13 +303,13 @@ function abrirTela(nome){
   }
 }
 
-// VOLTAR PARA A TELA INICIAL
+// ✅ VOLTAR PARA A TELA INICIAL
 function voltarInicio(){
-  document.querySelectorAll('.conteudo').forEach(c => c.classList.remove('visivel'));
+  document.querySelectorAll('.conteudo').forEach(c => {c.classList.remove('visivel'); c.style.display = 'none';});
   document.getElementById('telaInicial').style.display = 'block';
 }
 
-// NORMALIZAR TEXTO (ignorar acentos, maiúsculas e espaços)
+// NORMALIZAR TEXTO
 function normalizarTexto(t){
   return ((t||'').toString().trim().toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/\s+/g, ""));
 }
@@ -539,9 +540,4 @@ function copiarPix(id, btn){
     btn.innerText = '✅ COPIADO!';
     btn.classList.add('copiado');
     setTimeout(() => { btn.innerText = o; btn.classList.remove('copiado'); }, 3000);
-  }).catch(() => alert('❌ Copie manualmente.'));
-}
-
-function solicitar(tipo){
-  const txt = {
-    musica: '🎵 Solicito Música Personalizada
+  }).catch(() => alert('
