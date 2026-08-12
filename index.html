@@ -268,7 +268,7 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
 
 <script>
 const LINK_PLANILHA_CONTROLE = "https://docs.google.com/spreadsheets/d/1R9eUsqF4kA0y22ryMUIsvGolBfk3-XwZ5R-RVpBiZA4/gviz/tq?tqx=out:json";
-const LINK_PLANILHA_BATALHAS = ""; // Atualize com o link correto quando disponível
+const LINK_PLANILHA_BATALHAS = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRtyHq643--RBIrq3drMcHGIoUtpY-IN5v2T0wNWnCNvUf2rE6UHOK55nI4uUK89x7U_S66Gl1XXDN4/gviz/tq?tqx=out:json";
 const LINK_GRUPO_ARTE = "https://chat.whatsapp.com/I3edwkusrSC123QjrJBHHi?s=cl&p=a&ilr=1";
 
 let dadosControle = [], dadosBatalhas = [], usuarioAtual = null, dataSelecionada = null;
@@ -277,6 +277,7 @@ let usuariosCarregados = new Set();
 
 window.onload = async function(){
   await carregarPlanilhaControle();
+  await carregarPlanilhaBatalhas();
   carregarLivesNaInicial();
   atualizarContadoresAdmin();
 };
@@ -311,7 +312,33 @@ async function carregarPlanilhaControle(){
       });
     }
   }catch(e){
-    console.error("Erro ao carregar planilha:", e);
+    console.error("Erro ao carregar planilha de controle:", e);
+  }
+}
+
+async function carregarPlanilhaBatalhas(){
+  try{
+    const r = await fetch(LINK_PLANILHA_BATALHAS);
+    const t = await r.text();
+    const json = JSON.parse(t.substr(4));
+    dadosBatalhas = json.table.rows.map(linha => {
+      const c = linha.c || [];
+      return {
+        dia: c[0]?.v || "",
+        hora: c[1]?.v || "",
+        round: c[2]?.v || "",
+        oponente1: c[3]?.v || "",
+        agencia1: c[4]?.v || "",
+        oponente2: c[5]?.v || "",
+        agencia2: c[6]?.v || "",
+        meta: c[7]?.v || "",
+        situacao: c[8]?.v || "",
+        responsavel: c[9]?.v || ""
+      };
+    });
+    console.log("Batalhas carregadas:", dadosBatalhas);
+  }catch(e){
+    console.error("Erro ao carregar planilha de batalhas:", e);
   }
 }
 
@@ -378,6 +405,8 @@ function sairAdmin(){
 function atualizarContadoresAdmin(){
   document.getElementById("qtdAgenciados").textContent = dadosControle.length;
   document.getElementById("qtdLives").textContent = dadosControle.filter(u => u.esta_ao_vivo).length;
+  document.getElementById("qtdBatalhas").textContent = dadosBatalhas.filter(b => b.situacao?.includes("CONFIRMADO")).length;
+  document.getElementById("qtdPendentes").textContent = dadosBatalhas.filter(b => !b.situacao?.includes("CONFIRMADO") && b.situacao).length;
 }
 
 function verificarAcesso(){
@@ -448,7 +477,6 @@ function gerarCalendario(){
     el.className = "dia-calendario";
     el.textContent = d;
     
-    const dataStr = `${anoAtual}-${String(mesAtual+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
     const ehPassado = data < hojeData && data.toDateString() !== hojeData.toDateString();
     const ehFimDeSemana = diaSemana === 0 || diaSemana === 6;
     
@@ -491,10 +519,11 @@ function enviarSolicitacaoBatalha(){
 }
 
 function solicitar(tipo){
+  if(!usuarioAtual){ alert("⚠️ Acesse seu espaço primeiro!"); return; }
   const mensagens = {
     musica: "🎵 SOLICITAÇÃO DE MÚSICA PERSONALIZADA\n👤 Usuário: " + usuarioAtual.usuario,
     arte: "🎨 SOLICITAÇÃO DE ARTE VISUAL\n👤 Usuário: " + usuarioAtual.usuario,
-    treinamento: "🎨 SOLICITAÇÃO DE TREINAMENTO VIP\n👤 Usuário: " + usuarioAtual.usuario
+    treinamento: "🎓 SOLICITAÇÃO DE TREINAMENTO VIP\n👤 Usuário: " + usuarioAtual.usuario
   };
   window.open(`https://wa.me/556981478873?text=${encodeURIComponent(mensagens[tipo])}`, "_blank");
 }
