@@ -1,31 +1,108 @@
+<script>
 // ==========================================================
 // ⚔️ GERENCIAMENTO DE BATALHAS — CORRIGIDO
 // ==========================================================
+const CONFIG = {
+  PLANILHA_CONTROLE: "https://docs.google.com/spreadsheets/d/1R9eUsqF4kA0y22ryMUIsvGolBfk3-XwZ5R-RVpBiZA4/gviz/tq?tqx=out:json",
+  PLANILHA_BATALHAS: "https://docs.google.com/spreadsheets/d/e/2PACX-1vRtyHq643--RBIrq3drMcHGIoUtpY-IN5v2T0wNWnCNvUf2rE6UHOK55nI4uUK89x7U_S66Gl1XXDN4/pub?gid=0&single=true&output=json",
+  LINK_GRUPO_ARTE: "https://chat.whatsapp.com/I3edwkusrSC123QjrJBHHi?s=cl&p=a&ilr=1",
+  WHATSAPP: "556981478873",
+  ADMIN_EMAIL: "padronizaassessoria@gmail.com",
+  SENHA_HASH: "Admin@2026"
+};
+
+let dadosControle = [], dadosBatalhas = [], usuarioAtual = null;
+let hoje = new Date(), mesAtual = hoje.getMonth(), anoAtual = hoje.getFullYear();
+let dataSelecionada = null;
+
+async function init(){
+  try{
+    await Promise.allSettled([
+      carregarPlanilhaControle(),
+      carregarPlanilhaBatalhas()
+    ]);
+  }catch(e){ console.log("Erro ao carregar:", e); }
+  document.getElementById('telaLoading').style.display = 'none';
+  document.getElementById('app').style.display = 'block';
+  renderLives();
+}
+
+async function carregarPlanilhaControle(){
+  try{
+    const res = await fetch(CONFIG.PLANILHA_CONTROLE);
+    const texto = await res.text();
+    const json = JSON.parse(texto.slice(47, -2));
+    dadosControle = json.table.rows.slice(1).map(linha => {
+      const c = linha.c || [];
+      return {
+        usuario: (c[0]?.v||"").toString().trim(),
+        idKako: (c[1]?.v||"").toString().trim(),
+        linkTiktok: (c[2]?.v||"").toString().trim(),
+        linkKako: (c[3]?.v||"").toString().trim(),
+        status: (c[4]?.v||"").toString().trim(),
+        aoVivo: (c[8]?.v||"").toString().trim().toUpperCase(),
+        capa: (c[7]?.v||"").toString().trim()
+      };
+    }).filter(d => d.usuario);
+  }catch(e){ console.log("Planilha controle indisponível"); }
+}
+
+async function carregarPlanilhaBatalhas(){
+  try{
+    const res = await fetch(CONFIG.PLANILHA_BATALHAS);
+    const texto = await res.text();
+    const json = JSON.parse(texto.slice(47, -2));
+    dadosBatalhas = json.table.rows.slice(1).map(linha => {
+      const c = linha.c || [];
+      return {
+        dia: (c[2]?.v||"").toString().trim(),
+        hora: (c[3]?.v||"").toString().trim(),
+        round: (c[4]?.v||"").toString().trim(),
+        responsavel: (c[5]?.v||"").toString().trim().toUpperCase(),
+        oponente: (c[7]?.v||"").toString().trim(),
+        agenciaOponente: (c[8]?.v||"").toString().trim(),
+        meta: (c[9]?.v||"").toString().trim(),
+        situacao: (c[10]?.v||"").toString().trim().toUpperCase(),
+        linkOponente: (c[13]?.v||"").toString().trim()
+      };
+    }).filter(d => d.responsavel);
+  }catch(e){ console.log("Planilha batalhas indisponível"); }
+}
+
+function renderLives(){
+  const container = document.getElementById('listaLivesInicial');
+  const aoVivo = dadosControle.filter(u => /^(SIM|TRUE|VERDADEIRO|S)$/.test(u.aoVivo));
+  if(!dadosControle.length){
+    container.innerHTML = '<p class="sem-lives">Carregando...</p>'; return;
+  }
+  if(!aoVivo.length){
+    container.innerHTML = '<p class="sem-lives">🔴 Nenhuma live ao vivo.</p>'; return;
+  }
+  container.innerHTML = aoVivo.map(u => `
+    <div class="cartao-live">
+      <div class="nome-streamer">${escapeHtml(u.usuario)}</div>
+      <div class="capa-live">
+        ${u.capa ? `<img src="${escapeHtml(u.capa)}" alt="Capa" loading="lazy">` : '📷 Sem capa'}
+      </div>
+      <span class="status-ao-vivo">🔴 AO VIVO</span>
+      ${u.linkTiktok ? `<a href="${escapeHtml(u.linkTiktok)}" target="_blank" class="btn-assistir">🎵 TikTok</a>` : ''}
+      ${u.linkKako ? `<a href="${escapeHtml(u.linkKako)}" target="_blank" class="btn-assistir">🟣 Kako Live</a>` : ''}
+    </div>
+  `).join('');
+}
+
 function carregarSituacaoBatalha(){
-  const minhas = dadosBatalhas.filter(b => 
-    (b.responsavel || '').toString().trim().toUpperCase() === usuarioAtual
-  );
+  const minhas = dadosBatalhas.filter(b => b.responsavel === usuarioAtual);
   const container = document.getElementById('situacaoBatalhaTopo');
-  
   if(!minhas.length){
-    container.innerHTML = '<p class="sem-situacao">Nenhuma batalha vinculada no momento.</p>';
-    return;
+    container.innerHTML = '<p class="sem-situacao">Nenhuma batalha vinculada.</p>'; return;
   }
-
-  // ✅ CORRIGIDO: sem acento = igual à planilha
-  const confirmada = minhas.find(b => 
-    (b.situacao || '').toString().trim().toUpperCase() === "CONFIRMADA"
-  );
-  const faltaOponente = minhas.find(b => 
-    (b.situacao || '').toString().trim().toUpperCase() === "FALTA OPONENTE"
-  );
+  const confirmada = minhas.find(b => b.situacao === "CONFIRMADA");
+  const faltaOponente = minhas.find(b => b.situacao === "FALTA OPONENTE");
   const batalha = confirmada || faltaOponente;
-  
   if(!batalha){
-    container.innerHTML = '<p class="sem-situacao">Nenhuma batalha com situação definida.</p>';
-    return;
+    container.innerHTML = '<p class="sem-situacao">Nenhuma batalha definida.</p>'; return;
   }
-
   if(confirmada){
     container.innerHTML = `
       <div class="situacao-batalha-topo situacao-confirmada">
@@ -34,13 +111,11 @@ function carregarSituacaoBatalha(){
         <div class="linha-dado-situacao"><strong>⏱️ Round:</strong> ${escapeHtml(batalha.round||'—')}</div>
         <div class="linha-dado-situacao"><strong>💎 Meta:</strong> ${escapeHtml(batalha.meta||'—')}</div>
         <div class="linha-dado-situacao"><strong>👤 Oponente:</strong> ${escapeHtml(batalha.oponente||'—')}</div>
-        ${batalha.agenciaOponente ? `<div class="linha-dado-situacao"><strong>🏢 Agência:</strong> ${escapeHtml(batalha.agenciaOponente)}</div>` : ''}
-        ${batalha.linkOponente ? `<a href="${escapeHtml(batalha.linkOponente)}" target="_blank" rel="noopener" class="btn-seguir-oponente">🔗 CLIQUE AQUI PARA SEGUIR O OPONENTE</a>` : ''}
-        <a href="${CONFIG.LINK_GRUPO_ARTE}" target="_blank" rel="noopener" class="btn-grupo-arte">🎨 Grupo de Arte Visual</a>
-        <div class="aviso-arte">A arte será disponibilizada em até 48h úteis no grupo.</div>
-      </div>
-    `;
-  } else if(faltaOponente){
+        ${batalha.linkOponente ? `<a href="${escapeHtml(batalha.linkOponente)}" target="_blank" class="btn-seguir-oponente">🔗 Seguir Oponente</a>` : ''}
+        <a href="${CONFIG.LINK_GRUPO_ARTE}" target="_blank" class="btn-grupo-arte">🎨 Grupo de Arte</a>
+        <div class="aviso-arte">Arte em até 48h úteis.</div>
+      </div>`;
+  } else {
     container.innerHTML = `
       <div class="situacao-batalha-topo situacao-falta-oponente">
         <div class="titulo-situacao" style="color:var(--azul)">⏳ FALTA OPONENTE</div>
@@ -48,71 +123,39 @@ function carregarSituacaoBatalha(){
         <div class="linha-dado-situacao"><strong>⏱️ Round:</strong> ${escapeHtml(faltaOponente.round||'—')}</div>
         <div class="linha-dado-situacao"><strong>💎 Meta:</strong> ${escapeHtml(faltaOponente.meta||'A definir')}</div>
         <div style="margin-top:10px;padding:10px;background:rgba(59,130,246,0.1);border-radius:8px;text-align:center;color:#93c5fd">
-          ⚠️ A agência está buscando um oponente para esta data. Aguarde a confirmação.
+          ⚠️ Agência buscando oponente. Aguarde.
         </div>
-      </div>
-    `;
+      </div>`;
   }
 }
 
 function carregarMinhasBatalhas(){
-  const minhas = dadosBatalhas.filter(b => 
-    (b.responsavel || '').toString().trim().toUpperCase() === usuarioAtual
-  );
-  // ✅ CORRIGIDO: filtro simples sem regex problemático
-  const confirmadas = minhas.filter(b => 
-    (b.situacao || '').toString().trim().toUpperCase() === "CONFIRMADA"
-  );
-  const pendentes = minhas.filter(b => {
-    const sit = (b.situacao || '').toString().trim().toUpperCase();
-    return sit !== "CONFIRMADA" && sit !== "";
-  });
-
-  const caixaConf = document.getElementById('caixaConfirmadas');
-  const caixaPend = document.getElementById('caixaPendentes');
-
-  caixaConf.innerHTML = confirmadas.length ? confirmadas.map(b => `
-    <div class="cartao-batalha">
-      <h4>✅ CONFIRMADA — ${escapeHtml(b.dia)} às ${escapeHtml(b.hora)}</h4>
-      <div class="linha-dado"><strong>⏱️ Round:</strong> ${escapeHtml(b.round||'—')}</div>
-      <div class="linha-dado"><strong>💎 Meta:</strong> ${escapeHtml(b.meta||'—')}</div>
-      <div class="linha-dado"><strong>👤 Oponente:</strong> ${escapeHtml(b.oponente||'—')}</div>
-      ${b.linkOponente ? `<a href="${escapeHtml(b.linkOponente)}" target="_blank" rel="noopener" class="btn-perfil-oponente">🔗 Perfil do Oponente</a>` : ''}
-    </div>
-  `).join('') : '<p class="sem-batalhas">Nenhuma batalha confirmada.</p>';
-
-  caixaPend.innerHTML = pendentes.length ? pendentes.map(b => `
-    <div class="cartao-batalha">
-      <h4>⏳ ${escapeHtml(b.situacao||'PENDENTE')} — ${escapeHtml(b.dia)} às ${escapeHtml(b.hora)}</h4>
-      <div class="linha-dado"><strong>⏱️ Round:</strong> ${escapeHtml(b.round||'—')}</div>
-      <div class="linha-dado"><strong>💎 Meta:</strong> ${escapeHtml(b.meta||'—')}</div>
-      <div class="linha-dado"><strong>👤 Oponente:</strong> ${escapeHtml(b.oponente||'A definir')}</div>
-    </div>
-  `).join('') : '<p class="sem-batalhas">Nenhuma solicitação pendente.</p>';
+  const minhas = dadosBatalhas.filter(b => b.responsavel === usuarioAtual);
+  const confirmadas = minhas.filter(b => b.situacao === "CONFIRMADA");
+  const pendentes = minhas.filter(b => b.situacao !== "CONFIRMADA" && b.situacao !== "");
+  document.getElementById('caixaConfirmadas').innerHTML = confirmadas.length 
+    ? confirmadas.map(b => `<div class="cartao-batalha"><h4>✅ CONFIRMADA — ${escapeHtml(b.dia)} às ${escapeHtml(b.hora)}</h4>
+      <div class="linha-dado"><strong>Round:</strong> ${escapeHtml(b.round||'—')}</div>
+      <div class="linha-dado"><strong>Meta:</strong> ${escapeHtml(b.meta||'—')}</div>
+      <div class="linha-dado"><strong>Oponente:</strong> ${escapeHtml(b.oponente||'—')}</div>
+      ${b.linkOponente ? `<a href="${escapeHtml(b.linkOponente)}" target="_blank" class="btn-perfil-oponente">🔗 Perfil Oponente</a>` : ''}</div>`).join('')
+    : '<p class="sem-batalhas">Nenhuma confirmada.</p>';
+  document.getElementById('caixaPendentes').innerHTML = pendentes.length
+    ? pendentes.map(b => `<div class="cartao-batalha"><h4>⏳ ${escapeHtml(b.situacao||'PENDENTE')} — ${escapeHtml(b.dia)} às ${escapeHtml(b.hora)}</h4>
+      <div class="linha-dado"><strong>Round:</strong> ${escapeHtml(b.round||'—')}</div>
+      <div class="linha-dado"><strong>Meta:</strong> ${escapeHtml(b.meta||'—')}</div>
+      <div class="linha-dado"><strong>Oponente:</strong> ${escapeHtml(b.oponente||'A definir')}</div></div>`).join('')
+    : '<p class="sem-batalhas">Nenhuma pendente.</p>';
 }
 
 function enviarSolicitacaoBatalha(){
   const usuario = document.getElementById('nomeUsuarioBatalha').value.trim();
   const horario = document.getElementById('horarioBatalha').value;
   const meta = document.getElementById('metaBatalha').value.trim();
-
-  if(!usuario){
-    showToast("Erro: usuário não identificado!", "erro");
-    return;
-  }
-  if(!dataSelecionada){
-    showToast("Selecione uma data no calendário!", "erro");
-    return;
-  }
-  if(!horario){
-    showToast("Selecione um horário!", "erro");
-    return;
-  }
-  if(!meta){
-    showToast("Informe a meta de diamantes!", "erro");
-    return;
-  }
-
+  if(!usuario) return showToast("Informe o usuário!", "erro");
+  if(!dataSelecionada) return showToast("Selecione uma data!", "erro");
+  if(!horario) return showToast("Selecione horário!", "erro");
+  if(!meta) return showToast("Informe a meta!", "erro");
   const mensagem = `⚔️ SOLICITAÇÃO DE BATALHA
 
 👤 Host: ${usuario}
@@ -120,173 +163,89 @@ function enviarSolicitacaoBatalha(){
 ⏰ Horário: ${horario}
 💎 Meta: ${meta}
 
-Solicitação enviada pelo Portal Padroniza Assessoria 🟣`;
-
-  const url = `https://wa.me/${CONFIG.WHATSAPP}?text=${encodeURIComponent(mensagem)}`;
-  window.open(url, '_blank', 'noopener,noreferrer');
-  showToast("✅ Solicitação enviada!", "sucesso");
+Portal Padroniza Assessoria 🟣`;
+  window.open(`https://wa.me/${CONFIG.WHATSAPP}?text=${encodeURIComponent(mensagem)}`, '_blank', 'noopener,noreferrer');
+  showToast("✅ Enviada!", "sucesso");
 }
 
-// ==========================================================
-// 📋 CÓPIA DE CHAVE PIX
-// ==========================================================
 function copiarPix(id, btn){
-  const elemento = document.getElementById(id);
-  if(!elemento) return;
-  
-  navigator.clipboard.writeText(elemento.textContent).then(() => {
-    const textoOriginal = btn.innerHTML;
+  const el = document.getElementById(id);
+  if(!el) return;
+  navigator.clipboard.writeText(el.textContent).then(() => {
+    const txt = btn.innerHTML;
     btn.innerHTML = "✅ COPIADA!";
     btn.style.background = "var(--verde)";
-    setTimeout(() => {
-      btn.innerHTML = textoOriginal;
-      btn.style.background = "";
-    }, 2500);
-    showToast("✅ Chave PIX copiada!", "sucesso");
-  }).catch(() => {
-    const range = document.createRange();
-    range.selectNode(elemento);
-    window.getSelection().removeAllRanges();
-    window.getSelection().addRange(range);
-    document.execCommand('copy');
-    window.getSelection().removeAllRanges();
-    showToast("✅ Chave PIX copiada!", "sucesso");
+    setTimeout(() => { btn.innerHTML = txt; btn.style.background = ""; }, 2500);
+    showToast("✅ Copiada!", "sucesso");
   });
 }
 
-// ==========================================================
-// 🛠️ FUNÇÕES AUXILIARES
-// ==========================================================
-function escapeHtml(texto){
-  if(!texto) return "";
-  const div = document.createElement('div');
-  div.textContent = texto;
-  return div.innerHTML;
-}
-
-function validarEmail(email){
-  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-}
-
-function showToast(mensagem, tipo = "sucesso"){
-  const toast = document.getElementById('toast');
-  toast.textContent = mensagem;
-  toast.style.background = tipo === "sucesso" ? "var(--verde)" : "var(--vermelho)";
-  toast.classList.add('mostrar');
-  setTimeout(() => toast.classList.remove('mostrar'), 3000);
+function escapeHtml(t){if(!t)return"";const d=document.createElement('div');d.textContent=t;return d.innerHTML}
+function validarEmail(e){return/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e)}
+function showToast(m,tipo="sucesso"){
+  const t=document.getElementById('toast');t.textContent=m;
+  t.style.background=tipo==="sucesso"?"var(--verde)":"var(--vermelho)";
+  t.classList.add('mostrar');setTimeout(()=>t.classList.remove('mostrar'),3000);
 }
 
 function abrir(tela){
-  document.querySelectorAll('.conteudo').forEach(c => {
-    c.style.display = 'none';
-    c.classList.remove('visivel');
-  });
-  document.getElementById('telaInicial').style.display = 'none';
+  document.querySelectorAll('.conteudo').forEach(c=>{c.style.display='none';c.classList.remove('visivel');});
+  document.getElementById('telaInicial').style.display='none';
+  if(tela==='admin'){document.getElementById('conteudoAdmin').style.display='block';document.getElementById('loginAdmin').style.display='block';document.getElementById('painelAdmin').style.display='none';}
+  else if(tela==='agenciado'){document.getElementById('conteudoAgenciado').style.display='block';document.getElementById('painelStreamer').style.display='none';document.getElementById('areaBatalhas').style.display='none';usuarioAtual=null;}
+  else if(tela==='visitante'){document.getElementById('conteudoVisitante').style.display='block';}
+  else if(tela==='outraAgencia'){document.getElementById('conteudoOutraAgencia').style.display='block';}
+}
+function voltar(){document.querySelectorAll('.conteudo').forEach(c=>{c.style.display='none'});document.getElementById('telaInicial').style.display='block';renderLives();}
+function solicitar(s){const n={musica:"🎵 Música",arte:"🎨 Arte",treinamento:"🎓 Treinamento"};window.open(`https://wa.me/${CONFIG.WHATSAPP}?text=${encodeURIComponent(`Solicito: ${n[s]}\nUsuário: ${usuarioAtual||'—'}`)}`,'_blank');}
+function abrirBatalhas(){document.getElementById('painelStreamer').style.display='none';document.getElementById('areaBatalhas').style.display='block';renderCalendario();}
+function fecharBatalhas(){document.getElementById('areaBatalhas').style.display='none';document.getElementById('painelStreamer').style.display='block';dataSelecionada=null;}
 
-  if(tela === 'admin'){
-    document.getElementById('conteudoAdmin').style.display = 'block';
-    document.getElementById('conteudoAdmin').classList.add('visivel');
-    document.getElementById('loginAdmin').style.display = 'block';
-    document.getElementById('painelAdmin').style.display = 'none';
-  } else if(tela === 'agenciado'){
-    document.getElementById('conteudoAgenciado').style.display = 'block';
-    document.getElementById('conteudoAgenciado').classList.add('visivel');
-    document.getElementById('painelStreamer').style.display = 'none';
-    document.getElementById('areaBatalhas').style.display = 'none';
-    document.getElementById('usuarioAcesso').value = '';
-    document.getElementById('mensagemAcesso').textContent = '';
-    usuarioAtual = null;
-  } else if(tela === 'visitante'){
-    document.getElementById('conteudoVisitante').style.display = 'block';
-    document.getElementById('conteudoVisitante').classList.add('visivel');
-  } else if(tela === 'outraAgencia'){
-    document.getElementById('conteudoOutraAgencia').style.display = 'block';
-    document.getElementById('conteudoOutraAgencia').classList.add('visivel');
-  }
+function verificarAcesso(){
+  const u=document.getElementById('usuarioAcesso').value.trim();
+  if(!u)return showToast("Digite seu usuário!", "erro");
+  usuarioAtual=u.toUpperCase();
+  const d=dadosControle.find(x=>x.usuario.toUpperCase()===usuarioAtual);
+  document.getElementById('dadoUsuario').textContent=u;
+  document.getElementById('dadoLinkTiktok').innerHTML=d?.linkTiktok?`<a href="${escapeHtml(d.linkTiktok)}" target="_blank">🔗 Perfil</a>`:"Não cadastrado";
+  document.getElementById('dadoLinkKako').innerHTML=d?.linkKako?`<a href="${escapeHtml(d.linkKako)}" target="_blank">🔗 Perfil</a>`:"Não cadastrado";
+  document.getElementById('mensagemAcesso').innerHTML=d?"<span style='color:var(--verde)'>✅ Liberado!</span>":"<span style='color:var(--amarelo)'>⚠️ Usuário carregado</span>";
+  document.getElementById('painelStreamer').style.display='block';
+  document.getElementById('nomeUsuarioBatalha').value=u;
+  carregarSituacaoBatalha();carregarMinhasBatalhas();
 }
 
-function voltar(){
-  document.querySelectorAll('.conteudo').forEach(c => {
-    c.style.display = 'none';
-    c.classList.remove('visivel');
-  });
-  document.getElementById('telaInicial').style.display = 'block';
-  renderLives();
-}
-
-function solicitar(servico){
-  const nomes = {
-    musica: "🎵 Música Personalizada",
-    arte: "🎨 Arte Visual",
-    treinamento: "🎓 Treinamento VIP"
-  };
-  const mensagem = `Olá! Gostaria de solicitar: ${nomes[servico]}\n\nUsuário: ${usuarioAtual || 'Não informado'}\n\nPortal Padroniza Assessoria 🟣`;
-  window.open(`https://wa.me/${CONFIG.WHATSAPP}?text=${encodeURIComponent(mensagem)}`, '_blank', 'noopener,noreferrer');
-}
-
-function abrirBatalhas(){
-  document.getElementById('painelStreamer').style.display = 'none';
-  document.getElementById('areaBatalhas').style.display = 'block';
-  renderCalendario();
-}
-
-function fecharBatalhas(){
-  document.getElementById('areaBatalhas').style.display = 'none';
-  document.getElementById('painelStreamer').style.display = 'block';
-  dataSelecionada = null;
+function verificarAdmin(){
+  const e=document.getElementById('emailAdmin').value.trim(),s=document.getElementById('senhaAdmin').value;
+  if(e===CONFIG.ADMIN_EMAIL&&s===CONFIG.SENHA_HASH){
+    document.getElementById('loginAdmin').style.display='none';
+    document.getElementById('painelAdmin').style.display='block';
+    document.getElementById('qtdAgenciados').textContent=dadosControle.length;
+    document.getElementById('qtdLives').textContent=dadosControle.filter(u=>/^(SIM|TRUE)/.test(u.aoVivo)).length;
+    document.getElementById('qtdBatalhas').textContent=dadosBatalhas.filter(b=>b.situacao==="CONFIRMADA").length;
+    document.getElementById('qtdPendentes').textContent=dadosBatalhas.filter(b=>b.situacao!=="CONFIRMADA"&&b.situacao!=="").length;
+    showToast("✅ Admin liberado!", "sucesso");
+  }else showToast("❌ Dados incorretos!", "erro");
 }
 
 function renderCalendario(){
-  const nomesMeses = ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
-  const nomesDias = ['Dom','Seg','Ter','Qua','Qui','Sex','Sáb'];
-  
-  const primeiroDia = new Date(anoAtual, mesAtual, 1);
-  const ultimoDia = new Date(anoAtual, mesAtual + 1, 0);
-  const dataLimiteProxMes = new Date(anoAtual, mesAtual + 1, 30);
-  const hojeData = new Date();
-  hojeData.setHours(0,0,0,0);
-
-  document.getElementById('mesCalendario').textContent = `${nomesMeses[mesAtual]} ${anoAtual}`;
-  let html = '';
-
-  for(let d=0;d<7;d++){
-    html += `<div style="color:var(--amarelo);font-weight:bold;font-size:12px;text-align:center">${nomesDias[d]}</div>`;
+  const m=['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
+  const d=['Dom','Seg','Ter','Qua','Qui','Sex','Sáb'];
+  const p=new Date(anoAtual,mesAtual,1),u=new Date(anoAtual,mesAtual+1,0),lim=new Date(anoAtual,mesAtual+1,30),hoje=new Date();hoje.setHours(0,0,0,0);
+  document.getElementById('mesCalendario').textContent=`${m[mesAtual]} ${anoAtual}`;
+  let html='';
+  for(let i=0;i<7;i++)html+=`<div style="color:var(--amarelo);font-weight:bold;font-size:12px">${d[i]}</div>`;
+  for(let i=0;i<p.getDay();i++)html+='<div></div>';
+  for(let dia=1;dia<=u.getDate();dia++){
+    const data=new Date(anoAtual,mesAtual,dia),ds=data.getDay(),fim=ds===0||ds===6,fora=data<hoje||data>lim;
+    let cls='dia-disponivel';if(fim||fora)cls='dia-bloqueado';
+    html+=`<div class="dia-calendario ${cls}" ${cls==='dia-disponivel'?`onclick="selecionarData('${dia}/${mesAtual+1}/${anoAtual}')"`:''}>${dia}</div>`;
   }
-
-  for(let i=0;i<primeiroDia.getDay();i++){
-    html += `<div></div>`;
-  }
-
-  for(let dia=1;dia<=ultimoDia.getDate();dia++){
-    const dataAtual = new Date(anoAtual, mesAtual, dia);
-    const diaSemana = dataAtual.getDay();
-    const ehFimDeSemana = diaSemana === 0 || diaSemana === 6;
-    const foraDoPrazo = dataAtual < hojeData || dataAtual > dataLimiteProxMes;
-
-    let classe = 'dia-disponivel';
-    if(ehFimDeSemana || foraDoPrazo) classe = 'dia-bloqueado';
-
-    html += `<div class="dia-calendario ${classe}" 
-      ${classe.includes('disponivel') ? `onclick="selecionarData('${dia}/${mesAtual+1}/${anoAtual}')"` : ''}>
-      ${dia}
-    </div>`;
-  }
-
-  document.getElementById('diasCalendario').innerHTML = html;
+  document.getElementById('diasCalendario').innerHTML=html;
 }
+function selecionarData(d){dataSelecionada=d;document.querySelectorAll('.dia-calendario').forEach(x=>x.classList.remove('dia-selecionado'));event.target.classList.add('dia-selecionado');showToast(`📅 ${d}`,"sucesso");}
 
-function selecionarData(data){
-  dataSelecionada = data;
-  document.querySelectorAll('.dia-calendario').forEach(d => d.classList.remove('dia-selecionado'));
-  event.target.classList.add('dia-selecionado');
-  showToast(`📅 Data selecionada: ${data}`, "sucesso");
-}
-
-// ==========================================================
-// 🚀 INICIALIZAÇÃO AUTOMÁTICA
-// ==========================================================
 document.addEventListener('DOMContentLoaded', init);
 </script>
-
 </body>
 </html>
