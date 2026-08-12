@@ -135,31 +135,19 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
     <div class="area-dados">
       <h3>📋 SOLICITAÇÕES DE AGENCIAMENTO</h3>
       <div id="listaSolicitacoes">
-        <div class="item-lista">
-          <strong>Nome:</strong> Serena Tempestade<br>
-          <strong>Plataforma:</strong> TikTok<br>
-          <strong>Usuário:</strong> @serenatempestade<br>
-          <button class="btn-aprovar" onclick="aprovarUsuario('serenatempestade')">✅ APROVAR</button>
-          <button class="btn-rejeitar" onclick="rejeitarUsuario('serenatempestade')">❌ REJEITAR</button>
-        </div>
-        <p style="text-align:center;color:var(--cinza);margin-top:10px">Mais solicitações aparecem aqui conforme chegam</p>
+        <p style="text-align:center;color:var(--cinza);margin-top:10px">As solicitações aparecerão aqui conforme chegam</p>
       </div>
     </div>
 
     <div class="area-dados">
       <h3>⚔️ BATALHAS</h3>
       <h4 style="color:var(--verde);margin-bottom:8px">✅ Confirmadas</h4>
-      <div id="listaBatalhasConfirmadas">
-        <div class="item-lista">
-          <strong>Data:</strong> 12/08/2026 às 20h<br>
-          <strong>Desafiante:</strong> Serena Tempestade<br>
-          <strong>Oponente:</strong> A definir<br>
-          <strong>Plataforma:</strong> Kako Live
-        </div>
+      <div id="listaBatalhasConfirmadasAdmin">
+        <p style="text-align:center;color:var(--cinza)">Nenhuma batalha confirmada</p>
       </div>
       <h4 style="color:var(--amarelo);margin:15px 0 8px 0">⏳ Pendentes</h4>
-      <div id="listaBatalhasPendentes">
-        <p style="text-align:center;color:var(--cinza)">Nenhuma solicitação pendente no momento</p>
+      <div id="listaBatalhasPendentesAdmin">
+        <p style="text-align:center;color:var(--cinza)">Nenhuma solicitação pendente</p>
       </div>
     </div>
 
@@ -180,12 +168,12 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
     <div class="dados-perfil-fixos">
       <h4 style="color:var(--amarelo);margin-bottom:8px">📋 SEUS DADOS</h4>
       <p><strong>Usuário:</strong> <span id="dadoUsuario">-</span></p>
-      <p><strong>Perfil TikTok:</strong> <span id="dadoLinkTiktok">-</span></p>
-      <p><strong>Perfil Kako Live:</strong> <span id="dadoLinkKako">-</span></p>
+      <p><strong>Perfil TikTok:</strong> <span id="dadoLinkTiktok">Não cadastrado</span></p>
+      <p><strong>Perfil Kako Live:</strong> <span id="dadoLinkKako">Não cadastrado</span></p>
       <p style="font-size:13px;color:var(--cinza)">* Se precisar alterar, avise a agência que atualiza automaticamente</p>
     </div>
 
-    <!-- ✅ MINHAS BATALHAS — SÓ AS DELE -->
+    <!-- ✅ MINHAS BATALHAS — AGORA LÊ EXATAMENTE SUAS COLUNAS DA PLANILHA -->
     <h3 class="titulo-batalhas-streamer">⚔️ MINHAS BATALHAS</h3>
 
     <h4 class="tipo-batalha-streamer confirmada-streamer">✅ BATALHAS CONFIRMADAS</h4>
@@ -305,7 +293,7 @@ async function carregarDadosPlanilha(){
     const res = await fetch(LINK_PLANILHA);
     const texto = await res.text();
     dadosPlanilha = JSON.parse(texto.substr(47).slice(0,-2)).table.rows;
-  }catch(e){console.log("Erro:",e);}
+  }catch(e){console.log("Erro ao carregar planilha:",e);}
 }
 
 function carregarLivesNaInicial(){
@@ -342,13 +330,9 @@ function carregarLivesNaInicial(){
 function atualizarDadosAdmin(){
   const qtdAgenciados = dadosPlanilha.filter(l=>l.c[1]?.v==='APROVADO').length;
   const qtdLives = dadosPlanilha.filter(l=>l.c[8]?.v===true||l.c[8]?.v==='true'||l.c[8]?.v==='SIM').length;
-  const qtdBatalhas = 1;
-  const qtdPendentes = 1;
   
   document.getElementById('qtdAgenciados').innerText = qtdAgenciados;
   document.getElementById('qtdLives').innerText = qtdLives;
-  document.getElementById('qtdBatalhas').innerText = qtdBatalhas;
-  document.getElementById('qtdPendentes').innerText = qtdPendentes;
 }
 
 function abrir(id){
@@ -386,13 +370,6 @@ function sairAdmin(){
   voltar();
 }
 
-function aprovarUsuario(nome){
-  alert(`✅ Usuário ${nome} aprovado! Já está liberado para acessar.`);
-}
-function rejeitarUsuario(nome){
-  alert(`❌ Solicitação de ${nome} rejeitada.`);
-}
-
 function verificarAcesso(){
   const user = document.getElementById('usuarioAcesso').value.trim().toLowerCase();
   const msg = document.getElementById('mensagemAcesso');
@@ -406,30 +383,59 @@ function verificarAcesso(){
     msg.innerHTML = '✅ Acesso liberado!';
     document.getElementById('painelStreamer').style.display = 'block';
 
-    // ✅ PREENCHE TODOS OS DADOS AUTOMATICAMENTE DA PLANILHA
+    // ✅ PREENCHE DADOS DO PERFIL — MANTIDO IGUAL
     document.getElementById('dadoUsuario').innerText = encontrado.c[0]?.v || '-';
     document.getElementById('dadoLinkTiktok').innerHTML = encontrado.c[3]?.v ? `<a href="${encontrado.c[3].v}" target="_blank" style="color:var(--verde)">Acessar Perfil</a>` : 'Não cadastrado';
     document.getElementById('dadoLinkKako').innerHTML = encontrado.c[5]?.v ? `<a href="${encontrado.c[5].v}" target="_blank" style="color:var(--verde)">Acessar Perfil</a>` : 'Não cadastrado';
     document.getElementById('nomeUsuarioBatalha').value = encontrado.c[0]?.v || '-';
     document.getElementById('linkPerfilBatalha').value = encontrado.c[3]?.v || encontrado.c[5]?.v || '-';
 
-    // ✅ CARREGA SOMENTE AS BATALHAS DESTE USUÁRIO
-    carregarBatalhasDoUsuario(encontrado.c[0]?.v);
+    // ✅ AGORA LÊ EXATAMENTE SUAS COLUNAS DA PLANILHA DE BATALHAS
+    carregarBatalhasDoUsuario(user);
   }, 800);
 }
 
 function carregarBatalhasDoUsuario(nomeUsuario){
-  // Aqui você pode adicionar na planilha colunas específicas para batalhas de cada usuário
-  // Por enquanto mostra o exemplo padrão que você configurou
-  document.getElementById('minhasBatalhasConfirmadas').innerHTML = `
-    <div class="item-lista">
-      <strong>Data:</strong> 12/08/2026 às 20h<br>
-      <strong>Plataforma:</strong> Kako Live<br>
-      <strong>Oponente:</strong> A definir<br>
-      <strong>Status:</strong> Confirmado pela agência ✅
-    </div>
-    <p class="sem-batalhas">Nenhuma outra batalha confirmada no momento</p>
-  `;
+  const confirmadas = document.getElementById('minhasBatalhasConfirmadas');
+  const pendentes = document.getElementById('minhasBatalhasPendentes');
+  confirmadas.innerHTML = '<p class="sem-batalhas">Nenhuma batalha confirmada no momento</p>';
+  pendentes.innerHTML = '<p class="sem-batalhas">Nenhuma solicitação pendente</p>';
+
+  let htmlConfirmadas = '';
+  let htmlPendentes = '';
+
+  // ✅ LÊ COLUNAS EXATAS DA SUA PLANILHA:
+  // C=Dia, D=Hora, E=Seu Nome, G=Oponente, I=Meta, J=Situação, L=Link Seu, M=Link Oponente
+  dadosPlanilha.forEach(linha => {
+    if(!linha.c) return;
+    const nomeNaLinha = (linha.c[4]?.v || '').toString().trim().toLowerCase(); // Coluna E = 1.OPONENTE
+    if(nomeNaLinha !== nomeUsuario.toLowerCase()) return; // Só mostra se for ele mesmo
+
+    const dia = linha.c[2]?.v || '-';
+    const hora = linha.c[3]?.v || '-';
+    const oponente = linha.c[6]?.v || 'A definir';
+    const meta = linha.c[8]?.v || '-';
+    const situacao = (linha.c[9]?.v || '').toString().trim().toUpperCase();
+    const linkSeu = linha.c[11]?.v || '';
+    const linkOponente = linha.c[12]?.v || '';
+
+    const bloco = `
+      <div class="item-lista">
+        <strong>Data:</strong> ${dia} às ${hora}<br>
+        <strong>Plataforma:</strong> Kako Live / TikTok<br>
+        <strong>Oponente:</strong> ${oponente}<br>
+        <strong>Meta:</strong> ${meta}<br>
+        <strong>Status:</strong> ${situacao === 'CONFIRMADO' ? 'Confirmado pela agência ✅' : 'Aguardando confirmação ⏳'}
+      </div>
+    `;
+
+    if(situacao === 'CONFIRMADO') htmlConfirmadas += bloco;
+    else htmlPendentes += bloco;
+  });
+
+  // Atualiza na tela
+  if(htmlConfirmadas) confirmadas.innerHTML = htmlConfirmadas;
+  if(htmlPendentes) pendentes.innerHTML = htmlPendentes;
 }
 
 function solicitar(tipo){
