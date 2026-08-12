@@ -3,17 +3,17 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Padroniza Assessoria | Portal Oficial</title>
+<title>Padroniza Mais Live Assessoria | Portal Oficial</title>
 <style>
 :root{--fundo:#0b1020;--painel:#11182c;--painel2:#17213a;--verde:#34d399;--rosa:#ff3d81;--roxo:#7457ff;--amarelo:#ffc857;--azul:#3b82f6;--laranja:#ffc107;--texto:#f7f9ff;--cinza:#a9b4cb;--vermelho:#ef4444}
 *{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
 body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
 .container{max-width:650px;margin:0 auto}
 
-.logo-topo{width:260px;height:200px;margin:0 auto 15px;display:flex;align-items:center;justify-content:center;background:var(--painel);border:3px solid var(--amarelo);border-radius:16px;text-align:center}
-.logo-topo h1{font-size:32px;color:var(--amarelo);font-weight:bold}
+.logo-topo{width:280px;margin:0 auto 15px;display:flex;align-items:center;justify-content:center;background:var(--painel);border:3px solid var(--amarelo);border-radius:16px;text-align:center;padding:15px}
+.logo-topo h1{font-size:26px;color:var(--amarelo);font-weight:bold;line-height:1.3;text-transform:uppercase}
 .cabecalho{text-align:center;margin-bottom:20px}
-.cabecalho h2{font-size:34px;color:var(--amarelo);margin-bottom:5px}
+.cabecalho h2{font-size:30px;color:var(--amarelo);margin-bottom:5px}
 .cabecalho p{font-size:18px;color:var(--cinza)}
 
 .botoes-principais{display:flex;flex-direction:column;gap:14px;margin-bottom:25px}
@@ -45,12 +45,12 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
 .campo-form::placeholder{color:var(--cinza)}
 .btn-acao{width:100%;padding:14px;border-radius:10px;border:none;font-weight:bold;cursor:pointer;margin-top:12px;text-decoration:none;display:inline-block;text-align:center;color:#fff;font-size:17px}
 .btn-verde{background:var(--verde)}
+.btn-verde:hover{background:#22c55e}
 .btn-voltar{background:#293653;color:#fff;margin-top:15px}
 .btn-servico{background:linear-gradient(135deg,var(--rosa),var(--roxo));margin:10px 0;font-size:16px;padding:14px}
 .btn-whatsapp{background:linear-gradient(135deg,#25d366,#128c7e);margin-top:15px}
 .destaque-gratis{background:rgba(52,211,153,0.15);border:2px solid var(--verde);padding:16px;border-radius:10px;text-align:center;font-weight:bold;margin-bottom:18px}
 .pix-codigo{background:#00081a;padding:12px;border-radius:8px;border:1px solid var(--verde);word-break:break-all;font-size:13px;margin:10px 0;color:var(--verde)}
-.aviso-pagamento{text-align:center;color:var(--amarelo);font-weight:bold;margin:10px 0}
 .link-agenciamento{background:rgba(116,87,255,0.1);border:1px solid var(--roxo);padding:15px;border-radius:10px;margin-bottom:20px}
 
 .painel-admin{margin-top:20px}
@@ -63,8 +63,6 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
 .item-lista{padding:12px;border-bottom:1px solid #293653;margin-bottom:8px}
 .item-lista:last-child{border-bottom:none}
 .item-lista strong{color:var(--amarelo)}
-.btn-aprovar{background:var(--verde);border:none;padding:8px 12px;border-radius:6px;color:#fff;font-weight:bold;margin:5px 5px 5px 0;cursor:pointer}
-.btn-rejeitar{background:var(--vermelho);border:none;padding:8px 12px;border-radius:6px;color:#fff;font-weight:bold;margin:5px 5px 5px 0;cursor:pointer}
 .valor-servico{display:flex;justify-content:space-between;padding:10px;border-bottom:1px solid #293653}
 .valor-servico:last-child{border-bottom:none}
 .valor-servico .nome{color:var(--texto);font-weight:bold}
@@ -84,17 +82,17 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
 <div class="container">
 
 <div id="telaInicial">
-  <div class="logo-topo"><h1>PADRONIZA<br>ASSESSORIA</h1></div>
+  <div class="logo-topo"><h1>PADRONIZA MAIS LIVE<br>ASSESSORIA</h1></div>
   <div class="cabecalho">
-    <h2>PADRONIZA ASSESSORIA</h2>
+    <h2>Padroniza Mais Live Assessoria</h2>
     <p>Seu sucesso nas lives começa aqui!</p>
   </div>
   <div class="botoes-principais">
     <button class="btn-principal btn-agenciado" onclick="abrir('agenciado')">✅ SOU AGENCIADO PADRONIZA</button>
-    <button class="btn-principal btn-visitante" onclick="abrir('visitante')">👤 SOU VISITANTE / VER LIVES</button>
+    <button class="btn-principal btn-visitante" onclick="abrir('visitante')">👤 SOU VISITANTE / NÃO AGENCIADO</button>
     <button class="btn-principal btn-outra-agencia" onclick="abrir('outraAgencia')">🤝 SOU OUTRA AGÊNCIA</button>
     <button class="btn-principal btn-admin" onclick="abrir('admin')">🔐 ÁREA DA ADMINISTRAÇÃO</button>
-    <a href="https://www.tiktok.com/coin?rc=7TGXGN69&rie=" target="_blank" class="btn-principal btn-moedas">💰 COMPRAR MOEDAS TIKTOK</a>
+    <a href="https://www.tiktok.com/coin" target="_blank" class="btn-principal btn-moedas">💰 COMPRAR MOEDAS TIKTOK</a>
   </div>
 
   <div class="lives-na-inicial">
@@ -156,7 +154,7 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
 </div>
 
 <div class="conteudo" id="conteudoAgenciado">
-  <h2 class="titulo-secao">🎉 Bem-vindo(a) parceiro(a)!</h2>
+  <h2 class="titulo-secao">🎉 Bem-vindo(a) parceiro(a) da Padroniza Mais Live!</h2>
   <div class="destaque-gratis">✅ TODOS os serviços são GRÁTIS para você!</div>
   <div class="grupo-campo"><input type="text" class="campo-form" id="usuarioAcesso" placeholder="Digite seu nome de usuário / ID"></div>
   <button class="btn-acao btn-verde" onclick="verificarAcesso()">🔍 Acessar Meu Espaço</button>
@@ -169,7 +167,7 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
       <p><strong>Usuário:</strong> <span id="dadoUsuario">-</span></p>
       <p><strong>Perfil TikTok:</strong> <span id="dadoLinkTiktok">Não cadastrado</span></p>
       <p><strong>Perfil Kako Live:</strong> <span id="dadoLinkKako">Não cadastrado</span></p>
-      <p style="font-size:13px;color:var(--cinza)">* Se precisar alterar, avise a agência que atualiza automaticamente</p>
+      <p style="font-size:13px;color:var(--cinza)">* Se precisar alterar, avise a Padroniza Mais Live que atualiza automaticamente</p>
     </div>
 
     <h3 class="titulo-batalhas-streamer">⚔️ MINHAS BATALHAS</h3>
@@ -203,7 +201,7 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
     <button class="btn-acao btn-voltar" onclick="fecharBatalhas()">Voltar</button>
   </div>
 
-  <a href="https://wa.me/556981478873" target="_blank" class="btn-acao btn-whatsapp">💬 Falar com a Equipe</a>
+  <a href="https://wa.me/556981478873" target="_blank" class="btn-acao btn-whatsapp">💬 Falar com a Equipe Padroniza Mais Live</a>
   <button class="btn-acao btn-voltar" onclick="voltar()">Voltar ao Início</button>
 </div>
 
@@ -211,8 +209,8 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
   <h2 class="titulo-secao">👤 BEM-VINDO(A)</h2>
 
   <div class="link-agenciamento">
-    <h3 style="color:var(--verde);text-align:center;margin-bottom:10px">✅ QUER SER AGENCIADO? É TOTALMENTE GRÁTIS!</h3>
-    <p style="text-align:center;margin-bottom:15px">Acesse nossos serviços de graça fazendo parte da nossa equipe!</p>
+    <h3 style="color:var(--verde);text-align:center;margin-bottom:10px">✅ QUER SER AGENCIADO PELA PADRONIZA MAIS LIVE? É TOTALMENTE GRÁTIS!</h3>
+    <p style="text-align:center;margin-bottom:15px">Acesse todos os serviços de graça fazendo parte da nossa equipe!</p>
     <a href="https://www.tiktok.com/t/ZSHu6CFAM/" target="_blank" class="btn-acao btn-verde">🎵 SOLICITAR PELO TIKTOK</a>
     <div style="background:#00081a;padding:15px;border-radius:8px;margin:15px 0;text-align:center">
       <p style="color:var(--amarelo);font-weight:bold;margin-bottom:8px">📱 SOLICITAR PELO KAKO LIVE</p>
@@ -271,7 +269,12 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
   <button class="btn-acao btn-voltar" onclick="voltar()">Voltar ao Início</button>
 </div>
 
-<div class="conteudo" id="conteudoOutraAgencia"><h2 class="titulo-secao">🤝 PARCERIAS</h2><button class="btn-acao btn-voltar" onclick="voltar()">Voltar ao Início</button></div>
+<div class="conteudo" id="conteudoOutraAgencia">
+  <h2 class="titulo-secao">🤝 PARCERIAS COM OUTRAS AGÊNCIAS</h2>
+  <p style="text-align:center;color:var(--cinza);margin-bottom:20px">Conte com a Padroniza Mais Live Assessoria para impulsionar seus streamers!</p>
+  <button class="btn-acao btn-verde" onclick="window.open('https://wa.me/556981478873?text=Olá! Sou de outra agência e quero parceria com a Padroniza Mais Live.','_blank')">💬 SOLICITAR PARCERIA</button>
+  <button class="btn-acao btn-voltar" onclick="voltar()">Voltar ao Início</button>
+</div>
 
 </div>
 
@@ -291,6 +294,7 @@ async function carregarDadosPlanilha(){
     const res = await fetch(LINK_PLANILHA);
     const texto = await res.text();
     dadosPlanilha = JSON.parse(texto.substr(47).slice(0,-2)).table.rows;
+    console.log("✅ Planilha carregada! Total de linhas:", dadosPlanilha.length);
   }catch(e){console.log("Erro ao carregar planilha:",e);}
 }
 
@@ -374,8 +378,8 @@ function verificarAcesso(){
   msg.innerHTML = '🔍 Verificando...';
   setTimeout(()=>{
     const encontrado = dadosPlanilha.find(linha => linha.c[0]?.v?.toString().trim().toLowerCase() === user);
-    if(!encontrado) return msg.innerHTML = '❌ Usuário não encontrado.';
-    if(encontrado.c[1]?.v !== 'APROVADO') return msg.innerHTML = '⏳ Aguardando aprovação (até 48h).';
+    if(!encontrado) return msg.innerHTML = '❌ Usuário não encontrado na base da Padroniza Mais Live.';
+    if(encontrado.c[1]?.v !== 'APROVADO') return msg.innerHTML = '⏳ Aguardando aprovação da Padroniza Mais Live (até 48h).';
     
     usuarioAtual = user;
     msg.innerHTML = '✅ Acesso liberado!';
@@ -387,7 +391,6 @@ function verificarAcesso(){
     document.getElementById('nomeUsuarioBatalha').value = encontrado.c[0]?.v || '-';
     document.getElementById('linkPerfilBatalha').value = encontrado.c[3]?.v || encontrado.c[5]?.v || '-';
 
-    // ✅ AGORA LÊ CERTO, PULA O CABEÇALHO E PEGA TODAS AS LINHAS
     carregarBatalhasDoUsuario(user);
   }, 800);
 }
@@ -400,29 +403,30 @@ function carregarBatalhasDoUsuario(nomeUsuario){
 
   let htmlConfirmadas = '';
   let htmlPendentes = '';
+  const usuarioBusca = nomeUsuario.trim().toLowerCase();
 
-  // ✅ AGORA LÊ EXATAMENTE SUAS COLUNAS E NÃO PULA NENHUMA LINHA
   dadosPlanilha.forEach((linha, indice) => {
     if(!linha.c) return;
-    // Pula só as 2 primeiras linhas que são títulos/cabeçalhos
-    if(indice < 2) return;
+    if(indice < 2) return; 
 
-    const nomeNaLinha = (linha.c[4]?.v || '').toString().trim().toLowerCase(); // Coluna E = 1.OPONENTE
-    if(nomeNaLinha !== nomeUsuario.toLowerCase()) return;
+    const usuarioPadroniza = (linha.c[5]?.v || '').toString().trim().toLowerCase();
+    const oponente = (linha.c[7]?.v || '').toString().trim().toLowerCase();
 
-    const dia = linha.c[2]?.v || '-'; // Coluna C
-    const hora = linha.c[3]?.v || '-'; // Coluna D
-    const oponente = linha.c[6]?.v || 'A definir'; // Coluna G
-    const meta = linha.c[8]?.v || '-'; // Coluna I
-    const situacao = (linha.c[9]?.v || '').toString().trim().toUpperCase(); // Coluna J
+    if(usuarioPadroniza !== usuarioBusca && oponente !== usuarioBusca) return;
+
+    const dia = linha.c[2]?.v || '-';
+    const hora = linha.c[3]?.v || '-';
+    const adversario = usuarioPadroniza === usuarioBusca ? (linha.c[7]?.v || 'A definir') : (linha.c[5]?.v || 'A definir');
+    const meta = linha.c[9]?.v || '-';
+    const situacao = (linha.c[10]?.v || '').toString().trim().toUpperCase();
 
     const bloco = `
       <div class="item-lista">
         <strong>Data:</strong> ${dia} às ${hora}<br>
         <strong>Plataforma:</strong> Kako Live / TikTok<br>
-        <strong>Oponente:</strong> ${oponente}<br>
+        <strong>Oponente:</strong> ${adversario}<br>
         <strong>Meta:</strong> ${meta}<br>
-        <strong>Status:</strong> ${situacao === 'CONFIRMADO' ? 'Confirmado pela agência ✅' : 'Aguardando confirmação ⏳'}
+        <strong>Status:</strong> ${situacao === 'CONFIRMADO' ? '✅ Confirmado pela Padroniza Mais Live' : '⏳ Aguardando confirmação'}
       </div>
     `;
 
@@ -436,9 +440,9 @@ function carregarBatalhasDoUsuario(nomeUsuario){
 
 function solicitar(tipo){
   let texto = '';
-  if(tipo==='musica') texto = `Olá! Sou ${usuarioAtual}. Gostaria de solicitar uma música personalizada.`;
-  if(tipo==='arte') texto = `Olá! Sou ${usuarioAtual}. Gostaria de solicitar artes visuais.`;
-  if(tipo==='treinamento') texto = `Olá! Sou ${usuarioAtual}. Gostaria de acesso ao Treinamento VIP.`;
+  if(tipo==='musica') texto = `Olá! Sou ${usuarioAtual}. Gostaria de solicitar uma música personalizada pela Padroniza Mais Live.`;
+  if(tipo==='arte') texto = `Olá! Sou ${usuarioAtual}. Gostaria de solicitar artes visuais pela Padroniza Mais Live.`;
+  if(tipo==='treinamento') texto = `Olá! Sou ${usuarioAtual}. Gostaria de acesso ao Treinamento VIP da Padroniza Mais Live.`;
   window.open(`https://wa.me/556981478873?text=${encodeURIComponent(texto)}`);
 }
 
@@ -450,7 +454,7 @@ function copiarPix(botao,codigo){
 }
 
 function enviarComprovante(servico){
-  const texto = encodeURIComponent(`Olá! Acabei de pagar o serviço: ${servico}. Segue o comprovante.`);
+  const texto = encodeURIComponent(`Olá! Acabei de pagar o serviço: ${servico} da Padroniza Mais Live. Segue o comprovante.`);
   window.open(`https://wa.me/556981478873?text=${texto}`);
 }
 
@@ -461,7 +465,7 @@ function enviarSolicitacaoBatalha(){
   const data = document.getElementById('dataBatalha').value;
   const horario = document.getElementById('horarioBatalha').value;
   if(!usuario || !data || !horario) return alert('❌ Preencha Data e Horário!');
-  const mensagem = encodeURIComponent(`⚔️ SOLICITAÇÃO DE BATALHA\n👤 Usuário: ${usuario}\n📅 Data: ${data}\n⏰ Horário: ${horario}`);
+  const mensagem = encodeURIComponent(`⚔️ SOLICITAÇÃO DE BATALHA - PADRONIZA MAIS LIVE\n👤 Usuário: ${usuario}\n📅 Data: ${data}\n⏰ Horário: ${horario}`);
   window.open(`https://wa.me/556981478873?text=${mensagem}`);
   alert('✅ Solicitação enviada! Acompanhe aqui no seu espaço o status.');
   fecharBatalhas();
