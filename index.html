@@ -86,7 +86,7 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
 .dia-bloqueado{background:rgba(239,68,68,0.2);color:var(--vermelho);cursor:not-allowed;opacity:0.6}
 .dia-confirmado{background:rgba(247,249,255,0.1);color:var(--texto);border:1px solid #444}
 .dia-selecionado{box-shadow:0 0 0 2px var(--amarelo)}
-.aviso-horario{padding:10px;border-radius:8px;margin:10px 0;font-size:14px}
+.aviso-horario{padding:12px;border-radius:8px;margin:10px 0;font-size:14px;line-height:1.5}
 .aviso-bloqueado{background:rgba(239,68,68,0.1);color:var(--vermelho)}
 .aviso-campanha{background:rgba(255,200,87,0.1);color:var(--amarelo)}
 .status-batalha{padding:10px 12px;border-radius:6px;font-weight:bold;text-align:center;margin:10px 0}
@@ -218,7 +218,7 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
       <div class="calendario-mes" id="mesCalendario"></div>
       <div class="calendario-dias" id="diasCalendario"></div>
     </div>
-    <div id="avisoDiaSelecionado" class="aviso-horario" style="display:none"></div>
+    <div id="avisoDiaSelecionado" class="aviso-horario aviso-campanha" style="display:none"></div>
 
     <div class="grupo-campo">
       <select class="campo-form" id="horarioBatalha">
@@ -317,7 +317,6 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
 
 <script>
 const LINK_PLANILHA_CONTROLE = "https://docs.google.com/spreadsheets/d/1R9eUsqF4kA0y22ryMUIsvGolBfk3-XwZ5R-RVpBiZA4/gviz/tq?tqx=out:json";
-const LINK_GRUPO_ARTE = "https://chat.whatsapp.com/I3edwkusrSC123QjrJBHHi?s=cl&p=a&ilr=1";
 const LINK_WHATSAPP = "https://wa.me/556981478873";
 
 let dadosControle = [];
@@ -510,13 +509,11 @@ function selecionarDia(dataStr, elemento){
 
   const aviso = document.getElementById('avisoDiaSelecionado');
   aviso.style.display = 'block';
-  aviso.className = 'aviso-horario aviso-campanha';
-  aviso.innerHTML = '⚠️ <strong>Horários disponíveis:</strong> 18h, 19h (antes da campanha) e 22h, 23h (após campanha). Horário de campanha 19h–22h está bloqueado.';
+  aviso.innerHTML = '⚠️ <strong>Horários disponíveis:</strong> 18h (com 1h de antecedência, antes da campanha) e 22h / 23h (após campanha). Horário de campanha 19h–22h está BLOQUEADO.';
 
   const select = document.getElementById('horarioBatalha');
   select.innerHTML = `<option value="">⏰ Escolha o horário</option>`;
   select.innerHTML += `<option value="18h">18h ✅ Disponível</option>`;
-  select.innerHTML += `<option value="19h">19h ✅ Disponível</option>`;
   select.innerHTML += `<option value="22h">22h ✅ Disponível</option>`;
   select.innerHTML += `<option value="23h">23h ✅ Disponível</option>`;
 }
