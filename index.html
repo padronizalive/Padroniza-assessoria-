@@ -74,7 +74,6 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
 .calendario-dias{display:grid;grid-template-columns:repeat(7,1fr);gap:8px}
 .dia-calendario{padding:10px 5px;text-align:center;border-radius:8px;cursor:pointer;font-weight:bold;font-size:14px;border:none}
 .dia-disponivel{background:rgba(52,211,153,0.2);color:var(--verde)}
-.dia-campanha{background:rgba(255,200,87,0.2);color:var(--amarelo);cursor:not-allowed;opacity:0.7}
 .dia-bloqueado{background:rgba(239,68,68,0.2);color:var(--vermelho);cursor:not-allowed;opacity:0.6}
 .dia-selecionado{box-shadow:0 0 0 2px var(--amarelo)}
 .aviso-horario{padding:12px;border-radius:8px;margin:10px 0;font-size:14px;line-height:1.5}
@@ -83,16 +82,18 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
 .situacao-batalha{padding:14px 12px;border-radius:8px;font-weight:bold;text-align:center;margin:12px 0;border-width:2px;border-style:solid}
 .situacao-falta-oponente{background:rgba(59,130,246,0.15);color:#93c5fd;border-color:var(--azul)}
 .situacao-pendente{background:rgba(255,200,87,0.15);color:#ffd980;border-color:var(--amarelo)}
-.cartao-batalha-confirmada{background:rgba(247,249,255,0.05);border:2px solid #4b5563;border-radius:10px;padding:15px;margin:12px 0}
-.cartao-batalha-confirmada h4{color:var(--verde);text-align:center;margin-bottom:12px;font-size:16px}
+.situacao-confirmada{background:rgba(52,211,153,0.15);color:#93ffc8;border-color:var(--verde);font-size:18px}
+.cartao-batalha{background:rgba(247,249,255,0.05);border:2px solid #4b5563;border-radius:10px;padding:15px;margin:12px 0}
+.cartao-batalha h4{color:var(--amarelo);text-align:center;margin-bottom:12px;font-size:16px}
 .linha-dado{display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid #293653;font-size:14px;flex-wrap:wrap;gap:4px}
 .linha-dado:last-child{border-bottom:none}
 .linha-dado strong{color:var(--amarelo)}
-.btn-perfil-oponente{display:block;background:linear-gradient(135deg,#3b82f6,#1d4ed8);color:#fff;text-align:center;padding:10px;border-radius:8px;text-decoration:none;font-weight:bold;margin-top:10px}
+.btn-oponente{display:block;background:linear-gradient(135deg,#3b82f6,#1d4ed8);color:#fff;text-align:center;padding:10px;border-radius:8px;text-decoration:none;font-weight:bold;margin:8px 0}
+.aviso-seguir{background:rgba(59,130,246,0.1);border:1px solid var(--azul);padding:10px;border-radius:8px;margin:10px 0;font-size:13px;text-align:center;color:#93c5fd}
 .btn-grupo-arte{display:block;background:linear-gradient(135deg,#7457ff,#6d28d9);color:#fff;text-align:center;padding:10px;border-radius:8px;text-decoration:none;font-weight:bold;margin-top:10px}
+.aviso-arte{background:rgba(116,87,255,0.1);border:1px solid var(--roxo);padding:10px;border-radius:8px;margin-top:10px;font-size:13px;text-align:center;color:#d4c5ff}
 .sem-batalhas{text-align:center;color:var(--cinza);padding:20px 15px;font-size:15px}
 .copiado{background:var(--verde);color:#fff}
-.aviso-arte{background:rgba(116,87,255,0.1);border:1px solid var(--roxo);padding:10px;border-radius:8px;margin-top:10px;font-size:13px;text-align:center;color:#d4c5ff}
 </style>
 </head>
 <body>
@@ -298,8 +299,11 @@ async function carregarPlanilhaBatalhas(){
 }
 
 function atualizarContadoresBatalhas(){
-  document.getElementById('qtdBatalhas').innerText = dadosBatalhas.filter(r => r.c?.[5]?.v === 'CONFIRMADA').length;
-  document.getElementById('qtdPendentes').innerText = dadosBatalhas.filter(r => r.c?.[5]?.v !== 'CONFIRMADA').length;
+  document.getElementById('qtdBatalhas').innerText = dadosBatalhas.filter(r => ((r.c?.[9]?.v||'').toString().trim().toUpperCase()) === 'CONFIRMADA').length;
+  document.getElementById('qtdPendentes').innerText = dadosBatalhas.filter(r => {
+    const s = ((r.c?.[9]?.v||'').toString().trim().toUpperCase());
+    return s !== 'CONFIRMADA';
+  }).length;
 }
 
 function carregarLivesNaInicial(){
@@ -382,16 +386,17 @@ function carregarBatalhasDoUsuario(){
     if(!r.c) return;
     const usuarioPlanilha = ((r.c[0]?.v)||'').toString().trim().toLowerCase();
     if(usuarioPlanilha !== usuarioAtual) return;
-    const status = (r.c[5]?.v||'').toString().trim().toUpperCase();
+    const status = ((r.c[9]?.v||'').toString().trim().toUpperCase());
     const item = {
       data: r.c[1]?.v || '-',
       hora: r.c[2]?.v || '-',
-      oponente: r.c[3]?.v || '',
-      linkOponente: r.c[4]?.v || '',
-      status: status,
-      meta: r.c[6]?.v || '-',
-      rodadas: r.c[7]?.v || '-',
-      hold: r.c[8]?.v || '-'
+      op1Nome: r.c[3]?.v || '',
+      op1Link: r.c[4]?.v || '',
+      op2Nome: r.c[5]?.v || '',
+      op2Link: r.c[6]?.v || '',
+      meta: r.c[7]?.v || '-',
+      hold: r.c[8]?.v || '-',
+      status: status
     };
     if(status === 'CONFIRMADA') confirmadas.push(item);
     else pendentes.push(item);
@@ -413,20 +418,25 @@ function carregarBatalhasDoUsuario(){
   // CONFIRMADAS
   if(confirmadas.length > 0){
     document.getElementById('caixaConfirmadas').innerHTML = confirmadas.map(b => `
-      <div class="cartao-batalha-confirmada">
-        <h4>✅ BATALHA CONFIRMADA</h4>
-        <div class="linha-dado"><strong>Data:</strong> ${b.data}</div>
-        <div class="linha-dado"><strong>Horário:</strong> ${b.hora}</div>
-        <div class="linha-dado"><strong>Oponente:</strong> ${b.oponente || 'Aguardando'}</div>
-        ${b.linkOponente ? `<a href="${b.linkOponente}" target="_blank" class="btn-perfil-oponente">🔗 Acessar Perfil do Oponente</a>` : ''}
-        <div class="linha-dado"><strong>Meta:</strong> ${b.meta} 💎</div>
-        <div class="linha-dado"><strong>Rodadas:</strong> ${b.rodadas}</div>
-        <div class="linha-dado"><strong>Hold:</strong> ${b.hold}</div>
+      <div class="cartao-batalha">
+        <div class="situacao-batalha situacao-confirmada">✅ BATALHA CONFIRMADA</div>
+        <div class="linha-dado"><strong>📅 Data:</strong> ${b.data}</div>
+        <div class="linha-dado"><strong>⏰ Horário:</strong> ${b.hora}</div>
+        <div class="linha-dado"><strong>🛡️ Hold:</strong> ${b.hold}</div>
+        <div class="linha-dado"><strong>💎 Meta:</strong> ${b.meta}</div>
+        
+        ${b.op1Nome ? `<h4 style="margin:12px 0 4px 0">👤 Oponente 1: ${b.op1Nome}</h4>` : ''}
+        ${b.op1Link ? `<a href="${b.op1Link}" target="_blank" class="btn-oponente">🔗 Acessar e Seguir Perfil do Oponente 1</a>` : ''}
+        
+        ${b.op2Nome ? `<h4 style="margin:12px 0 4px 0">👤 Oponente 2: ${b.op2Nome}</h4>` : ''}
+        ${b.op2Link ? `<a href="${b.op2Link}" target="_blank" class="btn-oponente">🔗 Acessar e Seguir Perfil do Oponente 2</a>` : ''}
+        
+        <div class="aviso-seguir">⚠️ Acesse o link do oponente e siga o perfil para poder batalhar!</div>
         <div class="aviso-arte">🎨 A arte será postada no grupo em até 48h</div>
         <a href="${LINK_GRUPO_ARTE}" target="_blank" class="btn-grupo-arte">🎨 ACESSAR GRUPO DE ARTE VISUAL</a>
       </div>`).join('');
   } else {
-    document.getElementById('caixaConfirmadas').innerHTML = '<p class="sem-batalhas">Nenhuma batalha confirmada. Aguardando agência vincular oponente.</p>';
+    document.getElementById('caixaConfirmadas').innerHTML = '<p class="sem-batalhas">Nenhuma batalha confirmada. Aguardando agência vincular oponentes.</p>';
   }
 }
 
@@ -495,9 +505,9 @@ function enviarSolicitacaoBatalha(){
 ⏰ Horário: ${h}
 💎 Meta: ${m}
 
-Aguardando confirmação e oponente.`;
+Aguardando confirmação e oponentes.`;
   window.open(`https://wa.me/556981478873?text=${encodeURIComponent(msg)}`, '_blank');
-  alert('✅ Solicitação enviada! Aguardando confirmação da agência.\n\nQuando confirmado, aparecerá abaixo com os dados do oponente.');
+  alert('✅ Solicitação enviada! Aguardando confirmação da agência.\n\nQuando confirmado, aparecerá abaixo com os dados dos oponentes.');
   fecharBatalhas();
 }
 
