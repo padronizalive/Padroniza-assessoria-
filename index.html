@@ -318,7 +318,7 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
 
 <script>
 const LINK_PLANILHA_LIVES = "https://docs.google.com/spreadsheets/d/1R9eUsqF4kA0y22ryMUIsvGolBfk3-XwZ5R-RVpBiZA4/gviz/tq?tqx=out:json";
-const CAPA_PADRAO = "https://i.imgur.com/6pJQzqU.jpeg"; // ✅ CAPA PADRÃO CONFIRMADA!
+const CAPA_PADRAO = "https://i.imgur.com/6pJQzqU.jpeg";
 const SENHA_ADMIN = "agência. 2026";
 const EMAIL_ADMIN = "padronizaassessoria@gmail.com";
 
@@ -369,20 +369,27 @@ async function carregarPlanilhaLives(){
         aoVivo: ((c[8]||{}).v||"").toString().trim().toUpperCase()
       };
     });
-  }catch(e){console.error("Erro planilha:", e)}
+    console.log("✅ Planilha carregada! Streamers:", dadosPlanilha.length);
+  }catch(e){console.error("❌ Erro planilha:", e)}
 }
 
 function renderizarLives(){
   const container = document.getElementById('listaLives');
-  const aoVivo = dadosPlanilha.filter(s => /^(SIM|S|TRUE)$/.test(s.aoVivo) && s.usuario);
+  // ✅ CORRIGIDO: ACEITA SIM, S, TRUE, TRUE
+  const aoVivo = dadosPlanilha.filter(s => {
+    const val = (s.aoVivo || "").trim().toUpperCase();
+    return ["SIM", "S", "TRUE", "VERDADEIRO"].includes(val) && s.usuario;
+  });
+  console.log("✅ Lives ao vivo encontradas:", aoVivo.length, aoVivo);
+  
   if(!aoVivo.length){
     container.innerHTML = '<p class="sem-lives">🔴 Nenhuma live ao vivo no momento</p>';
     return;
   }
   container.innerHTML = aoVivo.map(s => {
-    // ✅ LÓGICA FORÇADA: se não tiver capa ou for inválida → usa CAPA PADRÃO
+    // ✅ LÓGICA DA CAPA: se tiver link válido → usa, senão → CAPA PADRÃO
     let capaUsar = CAPA_PADRAO;
-    if(s.capa && s.capa.length > 5 && s.capa.startsWith('http')){
+    if(s.capa && s.capa.length > 10 && s.capa.startsWith('http')){
       capaUsar = s.capa;
     }
     const link = s.linkTiktok || s.linkKako || "#";
@@ -556,7 +563,7 @@ function copiarPix(id){
 
 function atualizarContadores(){
   document.getElementById('qtdAgenciados').textContent = dadosPlanilha.filter(s => s.status === "APROVADO").length;
-  document.getElementById('qtdLives').textContent = dadosPlanilha.filter(s => /^(SIM|S|TRUE)$/.test(s.aoVivo)).length;
+  document.getElementById('qtdLives').textContent = dadosPlanilha.filter(s => ["SIM","S","TRUE","VERDADEIRO"].includes((s.aoVivo||"").trim().toUpperCase())).length;
 }
 
 function escaparHtml(texto){
