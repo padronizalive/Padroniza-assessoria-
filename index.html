@@ -79,18 +79,9 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
 .dados-perfil-fixos p{margin:6px 0;color:var(--cinza);font-size:15px}
 .dados-perfil-fixos strong{color:var(--texto)}
 
-/* Cores de situação de batalha */
-.sit-disponivel{color:#34d399;font-weight:bold}
-.sit-pendente{color:#c084fc;font-weight:bold}
-.sit-falta-oponente{color:#60a5fa;font-weight:bold}
-.sit-confirmado{color:#f7f9ff;font-weight:bold}
-.sit-campanha{color:#fbbf24;font-weight:bold}
-.sit-feriado{color:#ef4444;font-weight:bold}
-
-.aviso-bloqueio{background:rgba(239,68,68,0.1);border:1px solid var(--vermelho);padding:10px;border-radius:6px;color:var(--vermelho);font-size:14px;margin-top:8px}
-.aviso-ok{background:rgba(52,211,153,0.1);border:1px solid var(--verde);padding:10px;border-radius:6px;color:var(--verde);font-size:14px;margin-top:8px}
 .link-oponente{color:var(--verde);text-decoration:none}
 .link-oponente:hover{text-decoration:underline}
+.aviso-bloqueio{background:rgba(239,68,68,0.1);border:1px solid var(--vermelho);padding:10px;border-radius:6px;color:var(--vermelho);font-size:14px;margin-top:8px}
 </style>
 </head>
 <body>
@@ -292,7 +283,8 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
 </div>
 
 <script>
-const LINK_PLANILHA = "https://docs.google.com/spreadsheets/d/1R9eUsqF4kA0y22ryMUIsvGolBfk3-XwZ5R-RVpBiZA4/gviz/tq?tqx=out:json";
+// === LINKS DAS PLANILHAS ===
+const LINK_PLANILHA_CONTROLE = "https://docs.google.com/spreadsheets/d/1R9eUsqF4kA0y22ryMUIsvGolBfk3-XwZ5R-RVpBiZA4/gviz/tq?tqx=out:json";
 const LINK_PLANILHA_BATALHAS = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRtyHq643--RBIrq3drMcHGIoUtpY-IN5v2T0wNWnCNvUf2rE6UHOK55nI4uUK89x7U_S66Gl1XXDN4/pub?gid=0&single=true&output=json";
 const LINK_GRUPO_ARTE = "https://chat.whatsapp.com/I3edwkusrSC123QjrJBHHi?s=cl&p=a&ilr=1";
 
@@ -301,29 +293,29 @@ let dadosBatalhas = [];
 let usuarioAtual = null;
 
 window.onload = async function(){
-  await carregarDadosPlanilha();
-  await carregarDadosBatalhas();
+  await carregarPlanilhaControle();
+  await carregarPlanilhaBatalhas();
   carregarLivesNaInicial();
   atualizarDadosAdmin();
 };
 
-async function carregarDadosPlanilha(){
+async function carregarPlanilhaControle(){
   try{
-    const res = await fetch(LINK_PLANILHA);
+    const res = await fetch(LINK_PLANILHA_CONTROLE);
     const texto = await res.text();
     dadosPlanilha = JSON.parse(texto.substr(47).slice(0,-2)).table.rows;
-    console.log("✅ Planilha de Controle carregada! Linhas:", dadosPlanilha.length);
-  }catch(e){console.log("Erro ao carregar planilha de controle:",e);}
+    console.log("✅ Planilha de Controle carregada!");
+  }catch(e){console.log("Erro planilha controle:",e);}
 }
 
-async function carregarDadosBatalhas(){
+async function carregarPlanilhaBatalhas(){
   try{
     const res = await fetch(LINK_PLANILHA_BATALHAS);
-    if(!res.ok) throw new Error("Erro HTTP: " + res.status);
+    if(!res.ok) throw new Error("Erro " + res.status);
     dadosBatalhas = await res.json();
     console.log("✅ Planilha de Batalhas carregada!");
   }catch(e){
-    console.log("Aviso: Planilha de Batalhas em modo leitura:", e.message);
+    console.log("Aviso planilha batalhas:", e.message);
     dadosBatalhas = [];
   }
 }
@@ -351,7 +343,7 @@ function carregarLivesNaInicial(){
       <div class="cartao-live">
         <div class="nome-streamer">${nome}</div>
         <button class="btn-assistir" onclick="window.open('${linkAssistir}','_blank')">▶️ Assistir</button>
-        <div class="capa-live">${capa?`<img src="${capa}" alt="Capa da live">`:'Capa da Live'}</div>
+        <div class="capa-live">${capa?`<img src="${capa}" alt="Capa">`:'Capa da Live'}</div>
         <span class="status-ao-vivo">🔴 AO VIVO</span>
         <span class="plataforma-live">🎵 ${plataforma}</span>
       </div>
@@ -362,7 +354,6 @@ function carregarLivesNaInicial(){
 function atualizarDadosAdmin(){
   const qtdAgenciados = dadosPlanilha.filter(l=>l.c[1]?.v==='APROVADO').length;
   const qtdLives = dadosPlanilha.filter(l=>l.c[8]?.v===true||l.c[8]?.v==='true'||l.c[8]?.v==='SIM').length;
-  
   document.getElementById('qtdAgenciados').innerText = qtdAgenciados;
   document.getElementById('qtdLives').innerText = qtdLives;
 }
@@ -431,8 +422,7 @@ function carregarBatalhasDoUsuario(nomeUsuario){
   confirmadas.innerHTML = '<p class="sem-batalhas">Nenhuma batalha confirmada no momento</p>';
   pendentes.innerHTML = '<p class="sem-batalhas">Nenhuma solicitação pendente</p>';
 
-  let htmlConfirmadas = '';
-  let htmlPendentes = '';
+  let htmlConfirmadas = '', htmlPendentes = '';
   const usuarioBusca = nomeUsuario.trim().toLowerCase();
 
   if(dadosBatalhas && dadosBatalhas.table && dadosBatalhas.table.rows){
@@ -456,21 +446,18 @@ function carregarBatalhasDoUsuario(nomeUsuario){
       const linkOponente = oponente1 === usuarioBusca ? linkOponente2 : linkOponente1;
 
       let statusTexto = '';
-      let statusClasse = '';
       if(situacao.includes('CONFIRMADO') || situacao.includes('CONFIRMADA')){
-        statusTexto = '✅ Confirmado'; statusClasse = 'sit-confirmado';
+        statusTexto = '✅ Confirmado pela agência';
       }else if(situacao.includes('FALTA OPONENTE')){
-        statusTexto = '⏳ Falta oponente'; statusClasse = 'sit-falta-oponente';
+        statusTexto = '⏳ Aguardando oponente';
       }else if(situacao.includes('PENDENTE')){
-        statusTexto = '⏳ Confirmação pendente'; statusClasse = 'sit-pendente';
+        statusTexto = '⏳ Confirmação pendente';
       }else if(situacao.includes('CAMPANHA')){
-        statusTexto = '⚠️ Campanha'; statusClasse = 'sit-campanha';
+        statusTexto = '⚠️ Campanha';
       }else if(situacao.includes('DISPONÍVEL') || situacao.includes('DISPONIVEL')){
-        statusTexto = '✅ Disponível'; statusClasse = 'sit-disponivel';
-      }else if(situacao.includes('DOMINGO') || situacao.includes('FERIADO')){
-        statusTexto = '🔒 Fechado'; statusClasse = '';
+        statusTexto = '✅ Disponível';
       }else{
-        statusTexto = situacao; statusClasse = '';
+        statusTexto = '⏳ Aguardando confirmação';
       }
 
       const bloco = `
@@ -480,7 +467,7 @@ function carregarBatalhasDoUsuario(nomeUsuario){
           <strong>🏢 Agência:</strong> ${agencia2}<br>
           <strong>💎 Meta:</strong> ${meta}<br>
           <strong>🔗 Link oponente:</strong> ${linkOponente ? `<a href="${linkOponente}" target="_blank" class="link-oponente">Acessar Perfil</a>` : 'Aguardando confirmação'}<br>
-          <strong>📊 Status:</strong> <span class="${statusClasse}">${statusTexto}</span>
+          <strong>📊 Status:</strong> ${statusTexto}
           ${situacao.includes('CONFIRMADO') ? `<br><a href="${LINK_GRUPO_ARTE}" target="_blank" class="btn-acao btn-whatsapp" style="padding:8px 12px;font-size:14px;width:auto;display:inline-block;margin-top:8px">🎨 Acessar Grupo de Arte (até 48h)</a>` : ''}
         </div>
       `;
@@ -495,6 +482,21 @@ function carregarBatalhasDoUsuario(nomeUsuario){
 
   if(htmlConfirmadas) confirmadas.innerHTML = htmlConfirmadas;
   if(htmlPendentes) pendentes.innerHTML = htmlPendentes;
+}
+
+function abrirBatalhas(){document.getElementById('painelStreamer').style.display='none';document.getElementById('areaBatalhas').style.display='block';}
+function fecharBatalhas(){document.getElementById('areaBatalhas').style.display='none';document.getElementById('painelStreamer').style.display='block';}
+
+function enviarSolicitacaoBatalha(){
+  const usuario = document.getElementById('nomeUsuarioBatalha').value.trim();
+  const data = document.getElementById('dataBatalha').value;
+  const horario = document.getElementById('horarioBatalha').value;
+  if(!usuario || !data || !horario) return alert('❌ Preencha Data e Horário!');
+  
+  const mensagem = encodeURIComponent(`⚔️ SOLICITAÇÃO DE BATALHA\n👤 Usuário: ${usuario}\n📅 Data: ${data}\n⏰ Horário: ${horario}`);
+  window.open(`https://wa.me/556981478873?text=${mensagem}`);
+  alert('✅ Solicitação enviada! Acompanhe aqui no seu espaço o status.');
+  fecharBatalhas();
 }
 
 function solicitar(tipo){
@@ -516,11 +518,6 @@ function enviarComprovante(servico){
   const texto = encodeURIComponent(`Olá! Acabei de pagar o serviço: ${servico}. Segue o comprovante.`);
   window.open(`https://wa.me/556981478873?text=${texto}`);
 }
-
-function abrirBatalhas(){
-  document.getElementById('painelStreamer').style.display='none';
-  document.getElementById('areaBatalhas').style.display='block';
-  document.getElementById('avisoHorario').style.display='none';
-}
-
-function fecharBatal
+</script>
+</body>
+</html>
