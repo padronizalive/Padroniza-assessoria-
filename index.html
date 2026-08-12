@@ -5,19 +5,20 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Padroniza Assessoria | Portal Oficial</title>
 <style>
-:root{--fundo:#0b1020;--painel:#11182c;--painel2:#17213a;--verde:#34d399;--rosa:#ff3d81;--roxo:#7457ff;--amarelo:#ffc857;--azul:#3b82f6;--texto:#f7f9ff;--cinza:#a9b4cb;--vermelho:#ef4444}
+:root{--fundo:#0b1020;--painel:#11182c;--painel2:#17213a;--verde:#34d399;--amarelo:#ffc857;--vermelho:#ef4444;--rosa:#ff3d81;--roxo:#7457ff;--azul:#3b82f6;--texto:#f7f9ff;--cinza:#a9b4cb}
 *{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
 body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
 .container{max-width:650px;margin:0 auto}
 
-.logo-topo{width:260px;height:200px;margin:0 auto 15px;display:flex;align-items:center;justify-content:center;background:var(--painel);border:3px solid var(--amarelo);border-radius:16px;text-align:center}
-.logo-topo h1{font-size:32px;color:var(--amarelo);font-weight:bold;line-height:1.2}
+/* === LOGO DA AGÊNCIA — FIXO NO TOPO === */
+.logo-container{text-align:center;margin-bottom:20px}
+.logo-agencia{max-width:280px;width:100%;height:auto;border-radius:12px;border:3px solid var(--amarelo);box-shadow:0 0 20px rgba(255,200,87,0.3)}
 .cabecalho{text-align:center;margin-bottom:20px}
 .cabecalho h2{font-size:34px;color:var(--amarelo);margin-bottom:5px}
 .cabecalho p{font-size:18px;color:var(--cinza)}
 
 .botoes-principais{display:flex;flex-direction:column;gap:14px;margin-bottom:25px}
-.btn-principal{padding:18px;border-radius:12px;border:none;font-weight:bold;font-size:18px;cursor:pointer;text-align:center;color:#fff;transition:0.2s;text-decoration:none;display:block}
+.btn-principal{padding:18px;border-radius:12px;border:none;font-weight:bold;font-size:18px;cursor:pointer;text-align:center;color:#fff;transition:0.2s;text-decoration:none;display:block;width:100%}
 .btn-principal:active{transform:scale(0.98)}
 .btn-agenciado{background:linear-gradient(135deg,#22c55e,#15803d)}
 .btn-visitante{background:linear-gradient(135deg,#3b82f6,#1d4ed8)}
@@ -25,78 +26,110 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
 .btn-admin{background:linear-gradient(135deg,#8b5cf6,#6d28d9)}
 .btn-moedas{background:linear-gradient(135deg,#ec4899,#db2777)}
 
-.lives-na-inicial{margin-top:30px}
-.titulo-lives-inicial{text-align:center;color:var(--amarelo);font-size:22px;margin-bottom:15px}
+.abas-container{position:relative;overflow:hidden;border-radius:12px;background:var(--painel);margin-top:25px}
+.abas-cabecalho{display:flex;position:relative;border-bottom:2px solid #293653}
+.aba-btn{flex:1;padding:14px 10px;background:transparent;border:none;color:var(--cinza);font-weight:bold;font-size:15px;cursor:pointer;transition:0.2s}
+.aba-btn.ativa{color:var(--texto)}
+.aba-indicador{position:absolute;bottom:0;height:3px;background:var(--amarelo);border-radius:3px;transition:0.3s ease}
+.abas-viewport{overflow:hidden;width:100%}
+.abas-wrapper{display:flex;transition:0.3s ease-out}
+.aba-pagina{min-width:100%;padding:20px 15px}
+
+.titulo-aba{text-align:center;color:var(--amarelo);font-size:22px;margin-bottom:15px}
 .cartao-live{background:var(--painel2);border-radius:12px;padding:15px;margin-bottom:15px;border:1px solid #293653}
 .nome-streamer{font-size:20px;font-weight:bold;color:var(--amarelo);margin-bottom:10px}
 .btn-assistir{background:var(--verde);color:#fff;border:none;padding:12px 20px;border-radius:8px;font-weight:bold;font-size:16px;width:100%;margin-bottom:10px;cursor:pointer;text-decoration:none;display:inline-block;text-align:center}
-.capa-live{width:100%;height:180px;border-radius:8px;background:#121a30;margin-bottom:10px;display:flex;align-items:center;justify-content:center;color:var(--cinza);font-size:14px;overflow:hidden}
+.capa-live{width:100%;height:180px;border-radius:8px;background:#121a30;margin-bottom:10px;display:flex;align-items:center;justify-content:center;color:var(--cinza);overflow:hidden}
 .capa-live img{width:100%;height:100%;object-fit:cover}
 .status-ao-vivo{display:inline-block;background:var(--vermelho);color:#fff;padding:6px 12px;border-radius:6px;font-weight:bold;font-size:14px;margin-right:10px}
-.sem-lives{text-align:center;padding:30px;color:var(--cinza);font-size:16px}
+.sem-lives,.sem-destaques{text-align:center;padding:30px;color:var(--cinza);font-size:16px}
+
+.galeria-destaques{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:15px}
+.cartao-destaque{background:var(--painel2);border-radius:10px;overflow:hidden;border:1px solid #293653}
+.cartao-destaque img{width:100%;height:180px;object-fit:cover}
+.cartao-destaque .info{padding:12px}
+.cartao-destaque .nome{font-weight:bold;color:var(--amarelo);margin-bottom:5px}
+.cartao-destaque .desc{font-size:14px;color:var(--cinza)}
 
 .conteudo{display:none;background:var(--painel);border-radius:12px;padding:20px;margin-bottom:20px}
 .conteudo.visivel{display:block}
 .titulo-secao{text-align:center;margin-bottom:18px;color:var(--amarelo);font-size:22px}
 .grupo-campo{position:relative;margin:10px 0}
 .campo-form{width:100%;padding:14px 16px;border-radius:10px;border:1px solid #293653;background:#17213a;color:var(--texto);font-size:16px}
-.campo-form:disabled{background:#121a30;color:var(--cinza);cursor:not-allowed}
 .btn-acao{width:100%;padding:14px;border-radius:10px;border:none;font-weight:bold;cursor:pointer;margin-top:12px;text-decoration:none;display:inline-block;text-align:center;color:#fff;font-size:17px}
 .btn-verde{background:var(--verde)}
+.btn-rosa{background:linear-gradient(135deg,var(--rosa),var(--roxo))}
 .btn-voltar{background:#293653;color:#fff;margin-top:15px}
-.btn-servico{background:linear-gradient(135deg,var(--rosa),var(--roxo));margin:10px 0;font-size:16px;padding:14px}
-.btn-whatsapp{background:linear-gradient(135deg,#25d366,#128c7e);margin-top:15px}
+.btn-whatsapp{background:linear-gradient(135deg,#25d366,#128c7e);margin-top:10px}
 .destaque-gratis{background:rgba(52,211,153,0.15);border:2px solid var(--verde);padding:16px;border-radius:10px;text-align:center;font-weight:bold;margin-bottom:18px}
 .pix-codigo{background:#00081a;padding:12px;border-radius:8px;border:1px solid var(--verde);word-break:break-all;font-size:13px;margin:10px 0;color:var(--verde)}
 .link-agenciamento{background:rgba(116,87,255,0.1);border:1px solid var(--roxo);padding:15px;border-radius:10px;margin-bottom:20px}
+
+.calendario-container{background:var(--painel2);border-radius:12px;padding:15px;margin:20px 0;border:1px solid #293653}
+.calendario-cabecalho{display:flex;justify-content:space-between;align-items:center;margin-bottom:15px}
+.calendario-mes{font-size:20px;font-weight:bold;color:var(--amarelo)}
+.calendario-navegacao button{background:var(--roxo);color:#fff;border:none;padding:8px 14px;border-radius:8px;cursor:pointer;font-weight:bold;margin:0 2px}
+.calendario-legenda{display:flex;flex-wrap:wrap;gap:12px;margin-bottom:15px;font-size:13px}
+.legenda-item{display:flex;align-items:center;gap:5px}
+.legenda-cor{width:16px;height:16px;border-radius:4px;border:1px solid rgba(255,255,255,0.2)}
+.dias-semana{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;margin-bottom:8px}
+.dia-semana{text-align:center;font-weight:bold;color:var(--cinza);font-size:13px;padding:6px}
+.dias-grade{display:grid;grid-template-columns:repeat(7,1fr);gap:6px}
+.dia{aspect-ratio:1;border-radius:8px;display:flex;flex-direction:column;align-items:center;justify-content:center;font-weight:bold;cursor:pointer;transition:0.2s;border:1px solid transparent;font-size:14px}
+.dia:empty{cursor:default;background:transparent;border:none}
+.dia.disponivel{background:rgba(52,211,153,0.2);border-color:var(--verde);color:var(--verde)}
+.dia.disponivel:hover{background:rgba(52,211,153,0.4);transform:scale(1.05)}
+.dia.campanha{background:rgba(255,200,87,0.2);border-color:var(--amarelo);color:var(--amarelo);cursor:not-allowed}
+.dia.bloqueado{background:rgba(239,68,68,0.2);border-color:var(--vermelho);color:var(--vermelho);cursor:not-allowed;text-decoration:line-through}
+.dia.confirmado{background:rgba(59,130,246,0.2);border-color:var(--azul);color:var(--azul)}
+.dia.hoje{box-shadow:inset 0 0 0 2px var(--texto)}
+.dia.outro-mes{opacity:0.3}
+.horarios-container{margin-top:20px;padding-top:15px;border-top:1px solid #293653}
+.horarios-titulo{color:var(--amarelo);margin-bottom:10px;font-weight:bold;font-size:15px}
+.horarios-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(100px,1fr));gap:8px}
+.botao-horario{padding:10px;border-radius:8px;border:none;font-weight:bold;cursor:pointer;transition:0.2s;font-size:14px}
+.botao-horario.disponivel{background:rgba(52,211,153,0.2);color:var(--verde);border:1px solid var(--verde)}
+.botao-horario.disponivel:hover{background:rgba(52,211,153,0.4)}
+.botao-horario.ocupado{background:rgba(239,68,68,0.2);color:var(--vermelho);border:1px solid var(--vermelho);cursor:not-allowed}
+.botao-horario.campanha{background:rgba(255,200,87,0.2);color:var(--amarelo);border:1px solid var(--amarelo);cursor:not-allowed}
+.form-batalha{margin-top:20px;display:flex;flex-direction:column;gap:12px}
+.aviso-bloqueado{background:rgba(239,68,68,0.1);border:1px solid var(--vermelho);padding:12px;border-radius:8px;color:var(--vermelho);text-align:center;margin-top:15px}
+.link-grupo-arte{display:block;text-align:center;background:rgba(116,87,255,0.1);border:1px solid var(--roxo);padding:12px;border-radius:8px;color:var(--roxo);text-decoration:none;font-weight:bold;margin-top:15px}
+.link-grupo-arte:hover{background:rgba(116,87,255,0.2)}
+.minhas-batalhas{margin-top:25px}
+.minhas-batalhas h3{color:var(--amarelo);margin-bottom:15px}
+.cartao-batalha{background:var(--painel2);border-radius:10px;padding:15px;margin-bottom:12px;border:1px solid #293653}
+.cartao-batalha.confirmada{border-left:4px solid var(--verde)}
+.cartao-batalha.pendente{border-left:4px solid var(--amarelo)}
+.cartao-batalha h4{color:var(--texto);margin-bottom:8px}
+.cartao-batalha p{margin:4px 0;color:var(--cinza);font-size:14px}
 
 .painel-admin{margin-top:20px}
 .cards-admin{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px}
 .card-admin{background:var(--painel2);padding:15px;border-radius:10px;text-align:center;border:1px solid #293653}
 .card-admin h4{color:var(--amarelo);margin-bottom:5px}
 .card-admin p{font-size:22px;font-weight:bold;color:var(--verde)}
-.valor-servico{display:flex;justify-content:space-between;padding:10px;border-bottom:1px solid #293653}
-.valor-servico:last-child{border-bottom:none}
-.valor-servico .nome{color:var(--texto);font-weight:bold}
-.valor-servico .preco{color:var(--amarelo);font-weight:bold}
 
-.dados-perfil-fixos{background:rgba(116,87,255,0.08);border:1px solid #293653;padding:12px;border-radius:8px;margin-bottom:15px}
-.dados-perfil-fixos p{margin:6px 0;color:var(--cinza);font-size:15px}
-.dados-perfil-fixos strong{color:var(--texto)}
-
-.calendario-container{background:var(--painel2);border-radius:10px;padding:15px;margin:15px 0}
-.calendario-mes{text-align:center;color:var(--amarelo);font-weight:bold;margin-bottom:15px;font-size:18px}
-.calendario-dias{display:grid;grid-template-columns:repeat(7,1fr);gap:8px}
-.dia-calendario{padding:10px 5px;text-align:center;border-radius:8px;cursor:pointer;font-weight:bold;font-size:14px;border:none}
-.dia-disponivel{background:rgba(52,211,153,0.2);color:var(--verde)}
-.dia-bloqueado{background:rgba(239,68,68,0.2);color:var(--vermelho);cursor:not-allowed;opacity:0.6}
-.dia-selecionado{box-shadow:0 0 0 2px var(--amarelo)}
-.aviso-horario{padding:12px;border-radius:8px;margin:10px 0;font-size:14px;line-height:1.5}
-.aviso-campanha{background:rgba(255,200,87,0.1);color:var(--amarelo)}
-.aviso-bloqueio{background:rgba(239,68,68,0.15);border:1px solid var(--vermelho);padding:10px;border-radius:8px;margin:10px 0;color:#fca5a5;font-size:14px;text-align:center;display:none}
-
-.cartao-batalha{background:rgba(247,249,255,0.05);border:2px solid #4b5563;border-radius:10px;padding:15px;margin:12px 0}
-.cartao-batalha h4{color:var(--amarelo);text-align:center;margin-bottom:12px;font-size:16px}
-.linha-dado{display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid #293653;font-size:14px;flex-wrap:wrap;gap:4px}
-.linha-dado:last-child{border-bottom:none}
-.linha-dado strong{color:var(--amarelo)}
-.btn-oponente{display:block;background:linear-gradient(135deg,#3b82f6,#1d4ed8);color:#fff;text-align:center;padding:10px;border-radius:8px;text-decoration:none;font-weight:bold;margin:8px 0}
-.btn-grupo-arte{display:block;background:linear-gradient(135deg,#7457ff,#6d28d9);color:#fff;text-align:center;padding:10px;border-radius:8px;text-decoration:none;font-weight:bold;margin-top:10px}
-.aviso-arte{background:rgba(116,87,255,0.1);border:1px solid var(--roxo);padding:10px;border-radius:8px;margin-top:10px;font-size:13px;text-align:center;color:#d4c5ff}
-.sem-batalhas{text-align:center;color:var(--cinza);padding:20px 15px;font-size:15px}
-.toast{position:fixed;top:20px;left:50%;transform:translateX(-50%);background:var(--verde);color:#fff;padding:12px 24px;border-radius:8px;font-weight:bold;z-index:9999;display:none;box-shadow:0 4px 12px rgba(0,0,0,0.3)}
+.dados-perfil{background:var(--painel2);padding:15px;border-radius:10px;margin-bottom:20px;border:1px solid #293653}
+.dados-perfil p{margin:8px 0;font-size:15px}
 .olho-senha{position:absolute;right:16px;top:50%;transform:translateY(-50%);cursor:pointer;color:var(--cinza);font-size:20px;user-select:none}
+.toast{position:fixed;top:20px;left:50%;transform:translateX(-50%);background:var(--verde);color:#fff;padding:12px 24px;border-radius:8px;font-weight:bold;z-index:9999;display:none;box-shadow:0 4px 12px rgba(0,0,0,0.3)}
 </style>
 </head>
 <body>
 <div class="container">
 
-<div id="telaInicial">
-  <div class="logo-topo"><h1>PADRONIZA<br>ASSESSORIA</h1></div>
+<div id="telaInicial" style="display:block">
+  <!-- === LOGO DA AGÊNCIA FIXO NO TOPO === -->
+  <div class="logo-container">
+    <img src="https://i.imgur.com/3sj0YTi.jpg" alt="Padroniza Assessoria" class="logo-agencia" loading="lazy">
+  </div>
+  
   <div class="cabecalho">
     <h2>PADRONIZA ASSESSORIA</h2>
     <p>Seu sucesso nas lives começa aqui!</p>
   </div>
+  
   <div class="botoes-principais">
     <button class="btn-principal btn-agenciado" onclick="abrir('agenciado')">✅ SOU AGENCIADO PADRONIZA</button>
     <button class="btn-principal btn-visitante" onclick="abrir('visitante')">👤 SOU VISITANTE / VER LIVES</button>
@@ -105,157 +138,183 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
     <a href="https://www.tiktok.com/coin?rc=7TGXGN69&rie=" target="_blank" class="btn-principal btn-moedas">💰 COMPRAR MOEDAS TIKTOK</a>
   </div>
 
-  <div class="lives-na-inicial">
-    <h3 class="titulo-lives-inicial">🔴 LIVES AO VIVO</h3>
-    <div id="listaLivesInicial"><p class="sem-lives">Carregando lives...</p></div>
+  <div class="abas-container">
+    <div class="abas-cabecalho">
+      <button class="aba-btn ativa" data-aba="0">🔴 LIVES AO VIVO</button>
+      <button class="aba-btn" data-aba="1">🌟 DESTAQUES</button>
+      <div class="aba-indicador" id="abaIndicador"></div>
+    </div>
+    <div class="abas-viewport">
+      <div class="abas-wrapper" id="abasWrapper">
+        <div class="aba-pagina">
+          <h3 class="titulo-aba">🔴 LIVES AO VIVO</h3>
+          <div id="listaLives"><p class="sem-lives">🔄 Carregando lives...</p></div>
+        </div>
+        <div class="aba-pagina">
+          <h3 class="titulo-aba">🌟 DESTAQUES DA PADRONIZA</h3>
+          <div id="listaDestaques"><p class="sem-destaques">🔄 Carregando destaques...</p></div>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
 
 <div class="conteudo" id="conteudoAdmin">
+  <!-- LOGO TAMBÉM NA ÁREA ADMIN -->
+  <div class="logo-container">
+    <img src="https://i.imgur.com/3sj0YTi.jpg" alt="Padroniza Assessoria" class="logo-agencia" loading="lazy">
+  </div>
   <h2 class="titulo-secao">🔐 ÁREA DA ADMINISTRAÇÃO</h2>
   <div id="loginAdmin">
-    <div class="grupo-campo"><input type="email" class="campo-form" id="emailAdmin" placeholder="E-mail: padronizaassessoria@gmail.com"></div>
+    <div class="grupo-campo"><input type="email" class="campo-form" id="emailAdmin" placeholder="E-mail"></div>
     <div class="grupo-campo" style="position:relative">
-      <input type="password" class="campo-form" id="senhaAdmin" placeholder="Digite sua senha">
+      <input type="password" class="campo-form" id="senhaAdmin" placeholder="Senha">
       <span class="olho-senha" onclick="alternarSenha()">👁️</span>
     </div>
-    <button class="btn-acao btn-verde" onclick="verificarAdmin()">🔑 ENTRAR NO PAINEL</button>
-    <button class="btn-acao btn-voltar" onclick="voltar()">Voltar ao Início</button>
+    <button class="btn-acao btn-verde" onclick="verificarAdmin()">🔑 ENTRAR</button>
+    <button class="btn-acao btn-voltar" onclick="voltar()">Voltar</button>
   </div>
-  <div id="painelAdmin" class="painel-admin" style="display:none">
+  <div id="painelAdmin" style="display:none">
     <h2 class="titulo-secao">👑 PAINEL DE CONTROLE</h2>
     <div class="cards-admin">
       <div class="card-admin"><h4>Agenciados Ativos</h4><p id="qtdAgenciados">0</p></div>
       <div class="card-admin"><h4>Lives Ao Vivo</h4><p id="qtdLives">0</p></div>
-      <div class="card-admin"><h4>Batalhas Confirmadas</h4><p id="qtdBatalhas">0</p></div>
-      <div class="card-admin"><h4>Pendentes</h4><p id="qtdPendentes">0</p></div>
+      <div class="card-admin"><h4>Batalhas</h4><p id="qtdBatalhas">0</p></div>
+      <div class="card-admin"><h4>Conquistas</h4><p id="qtdConquistas">0</p></div>
     </div>
-    <div class="area-dados">
-      <h3>💸 VALORES DOS SERVIÇOS</h3>
-      <div class="valor-servico"><span class="nome">Pacote Completo</span><span class="preco">R$ 39,99/mês</span></div>
-      <div class="valor-servico"><span class="nome">Música Personalizada</span><span class="preco">R$ 20,00/unid</span></div>
-      <div class="valor-servico"><span class="nome">Arte Visual</span><span class="preco">R$ 10,00/unid</span></div>
-      <div class="valor-servico"><span class="nome">Treinamento VIP</span><span class="preco">R$ 9,99 taxa única</span></div>
-      <div class="valor-servico"><span class="nome">Agendamento Batalhas</span><span class="preco">R$ 69,90/mês</span></div>
-    </div>
-    <button class="btn-acao btn-voltar" onclick="sairAdmin()">🚪 Sair do Painel</button>
+    <button class="btn-acao btn-voltar" onclick="sairAdmin()">🚪 Sair</button>
   </div>
 </div>
 
 <div class="conteudo" id="conteudoAgenciado">
-  <h2 class="titulo-secao">🎉 Bem-vindo(a) parceiro(a)!</h2>
-  <div class="destaque-gratis">✅ TODOS os serviços são GRÁTIS para você!</div>
-  <div class="grupo-campo"><input type="text" class="campo-form" id="usuarioAcesso" placeholder="Digite seu nome de usuário / ID"></div>
-  <button class="btn-acao btn-verde" onclick="verificarAcesso()">🔍 Acessar Meu Espaço</button>
-  <p id="mensagemAcesso" style="text-align:center;margin:10px 0"></p>
-  
-  <div id="painelStreamer" style="display:none;margin-top:20px">
-    <div class="dados-perfil-fixos">
-      <h4 style="color:var(--amarelo);margin-bottom:8px">📋 SEUS DADOS</h4>
-      <p><strong>Usuário:</strong> <span id="dadoUsuario">-</span></p>
-      <p><strong>Perfil TikTok:</strong> <span id="dadoLinkTiktok">Não cadastrado</span></p>
-      <p><strong>Perfil Kako Live:</strong> <span id="dadoLinkKako">Não cadastrado</span></p>
-    </div>
-
-    <h3 class="titulo-batalhas-streamer">⚔️ MINHAS BATALHAS</h3>
-    <h4 style="color:var(--amarelo);margin:20px 0 10px 0;text-align:center">⏳ SOLICITAÇÕES PENDENTES</h4>
-    <div id="caixaPendentes"><p class="sem-batalhas">Nenhuma solicitação pendente.</p></div>
-    <h4 style="color:var(--verde);margin:20px 0 10px 0;text-align:center">✅ BATALHAS CONFIRMADAS</h4>
-    <div id="caixaConfirmadas"><p class="sem-batalhas">Nenhuma batalha confirmada.</p></div>
-
-    <p style="text-align:center;color:var(--amarelo);font-weight:bold;margin:25px 0 15px 0">Solicitar Serviços:</p>
-    <button class="btn-acao btn-servico" onclick="abrirBatalhas()">⚔️ AGENDAR NOVA BATALHA</button>
-    <button class="btn-acao btn-servico" onclick="solicitar('musica')">🎵 Músicas Personalizadas</button>
-    <button class="btn-acao btn-servico" onclick="solicitar('arte')">🎨 Artes Visuais</button>
-    <button class="btn-acao btn-servico" onclick="solicitar('treinamento')">🎓 Treinamento VIP</button>
+  <div class="logo-container">
+    <img src="https://i.imgur.com/3sj0YTi.jpg" alt="Padroniza Assessoria" class="logo-agencia" loading="lazy">
   </div>
+  <h2 class="titulo-secao">🎉 BEM-VINDO(A) PARCEIRO(A)!</h2>
+  <div class="destaque-gratis">✅ TODOS os serviços são GRÁTIS para você!</div>
+  <div class="grupo-campo"><input type="text" class="campo-form" id="usuarioAcesso" placeholder="Digite seu nome de usuário"></div>
+  <button class="btn-acao btn-verde" onclick="verificarAcesso()">🔍 ACESSAR MEU ESPAÇO</button>
+  <p id="mensagemAcesso" style="text-align:center;margin:10px 0"></p>
 
-  <div id="areaBatalhas" style="display:none;margin-top:20px">
-    <h3 style="color:var(--roxo);text-align:center;margin-bottom:15px">📝 SOLICITAR BATALHA</h3>
-    <div class="grupo-campo"><input type="text" class="campo-form" id="nomeUsuarioBatalha" placeholder="Seu nome de usuário" disabled></div>
-    <div class="grupo-campo"><input type="text" class="campo-form" id="linkPerfilBatalha" placeholder="Link do seu perfil" disabled></div>
+  <div id="perfilStreamer" style="display:none">
+    <div class="dados-perfil">
+      <h3 style="color:var(--amarelo);margin-bottom:15px">👤 MEU PERFIL</h3>
+      <p><strong>Usuário:</strong> <span id="dadoUsuario">-</span></p>
+      <p><strong>Perfil TikTok:</strong> <span id="dadoTiktok">-</span></p>
+      <p><strong>Perfil Kako:</strong> <span id="dadoKako">-</span></p>
+      <p><strong>Status:</strong> ✅ Aprovado</p>
+    </div>
 
     <div class="calendario-container">
-      <div class="calendario-mes" id="mesCalendario"></div>
-      <div class="calendario-dias" id="diasCalendario"></div>
-    </div>
-    <div id="avisoDiaSelecionado" class="aviso-horario aviso-campanha" style="display:none">
-      ⚠️ Horários permitidos: 18h (com 1h de antecedência) e 22h / 23h. Campanha 19h–22h BLOQUEADA. Domingo e feriados bloqueados.
-    </div>
-    <div id="avisoBloqueioBatalha" class="aviso-bloqueio">
-      🚫 Escolha com pelo menos 8 dias de diferença de outra batalha!
+      <h3 style="color:var(--amarelo);margin-bottom:15px;text-align:center">⚔️ AGENDAMENTO DE BATALHAS OFICIAIS</h3>
+      <div class="calendario-cabecalho">
+        <button onclick="mudarMes(-1)">◀</button>
+        <span class="calendario-mes" id="nomeMes"></span>
+        <button onclick="mudarMes(1)">▶</button>
+      </div>
+      <div class="calendario-legenda">
+        <span class="legenda-item"><span class="legenda-cor" style="background:rgba(52,211,153,0.4)"></span> Disponível</span>
+        <span class="legenda-item"><span class="legenda-cor" style="background:rgba(255,200,87,0.4)"></span> Campanha (bloqueado)</span>
+        <span class="legenda-item"><span class="legenda-cor" style="background:rgba(239,68,68,0.4)"></span> Bloqueado (dom/feriado)</span>
+      </div>
+      <div class="dias-semana">
+        <div class="dia-semana">Dom</div><div class="dia-semana">Seg</div><div class="dia-semana">Ter</div>
+        <div class="dia-semana">Qua</div><div class="dia-semana">Qui</div><div class="dia-semana">Sex</div><div class="dia-semana">Sáb</div>
+      </div>
+      <div class="dias-grade" id="gradeDias"></div>
+
+      <div class="horarios-container" id="containerHorarios" style="display:none">
+        <div class="horarios-titulo">⏰ Horários: 17h às 22h | Intervalo de 1h entre batalhas | Campanha 19h-22h = bloqueado</div>
+        <div class="horarios-grid" id="gradeHorarios"></div>
+      </div>
+
+      <div class="form-batalha" id="formBatalha" style="display:none">
+        <h4 style="color:var(--amarelo);margin-top:15px">📝 SOLICITAR BATALHA</h4>
+        <input type="text" class="campo-form" id="nomeBatalha" placeholder="Seu usuário" readonly>
+        <input type="text" class="campo-form" id="dataBatalha" placeholder="Data" readonly>
+        <input type="text" class="campo-form" id="horaBatalha" placeholder="Horário" readonly>
+        <select class="campo-form" id="tipoArte">
+          <option value="foto">🎨 Arte em Foto</option>
+          <option value="video">🎬 Arte em Vídeo</option>
+        </select>
+        <button class="btn-acao btn-verde" onclick="enviarSolicitacao()">📤 ENVIAR SOLICITAÇÃO</button>
+        <a href="https://chat.whatsapp.com/I3edwkusrSC123QjrJBHHi?s=cl&p=a&ilr=1" target="_blank" class="link-grupo-arte">🎨 GRUPO DE ARTES VISUAIS (até 48h)</a>
+      </div>
+
+      <div class="aviso-bloqueado" id="avisoBloqueado" style="display:none">
+        ⚠️ Este dia está bloqueado. Contate a agência pelo WhatsApp para exceção.
+        <a href="https://wa.me/55XXXXXXXXXXX" target="_blank" class="btn-acao btn-whatsapp" style="margin-top:10px">💬 FALAR NO WHATSAPP</a>
+      </div>
     </div>
 
-    <div class="grupo-campo">
-      <select class="campo-form" id="horarioBatalha">
-        <option value="">⏰ Escolha o horário</option>
-        <option value="18h">18h ✅ Disponível</option>
-        <option value="22h">22h ✅ Disponível</option>
-        <option value="23h">23h ✅ Disponível</option>
-      </select>
+    <div class="minhas-batalhas">
+      <h3>⚔️ MINHAS BATALHAS</h3>
+      <div id="listaMinhasBatalhas">
+        <p style="color:var(--cinza);text-align:center;padding:15px">Nenhuma batalha cadastrada ainda.</p>
+      </div>
     </div>
-    <div class="grupo-campo"><input type="text" class="campo-form" id="metaBatalha" placeholder="💎 Meta de diamantes (ex: 5000)"></div>
 
-    <button class="btn-acao btn-verde" onclick="enviarSolicitacaoBatalha()">📤 ENVIAR SOLICITAÇÃO</button>
-    <a href="https://wa.me/556981478873" target="_blank" class="btn-acao btn-whatsapp">📅 HORÁRIO ESPECIAL (WhatsApp)</a>
-    <button class="btn-acao btn-voltar" onclick="fecharBatalhas()">Voltar</button>
+    <div style="margin-top:30px">
+      <h3 style="color:var(--amarelo);margin-bottom:15px;text-align:center">🌟 MEUS DESTAQUES</h3>
+      <div id="destaquesStreamer">
+        <p style="color:var(--cinza);text-align:center;padding:15px">Nenhum destaque cadastrado ainda.</p>
+      </div>
+    </div>
   </div>
-
-  <a href="https://wa.me/556981478873" target="_blank" class="btn-acao btn-whatsapp">💬 Falar com a Equipe</a>
-  <button class="btn-acao btn-voltar" onclick="voltar()">Voltar ao Início</button>
+  <button class="btn-acao btn-voltar" onclick="voltar()">Voltar</button>
 </div>
 
 <div class="conteudo" id="conteudoVisitante">
+  <div class="logo-container">
+    <img src="https://i.imgur.com/3sj0YTi.jpg" alt="Padroniza Assessoria" class="logo-agencia" loading="lazy">
+  </div>
   <h2 class="titulo-secao">👤 BEM-VINDO(A)</h2>
   <div class="link-agenciamento">
     <h3 style="color:var(--verde);text-align:center;margin-bottom:10px">✅ QUER SER AGENCIADO? É GRÁTIS!</h3>
     <a href="https://www.tiktok.com/t/ZSHu6CFAM/" target="_blank" class="btn-acao btn-verde">🎵 SOLICITAR PELO TIKTOK</a>
     <div style="background:#00081a;padding:15px;border-radius:8px;margin:15px 0;text-align:center">
-      <p style="color:var(--amarelo);font-weight:bold;margin-bottom:8px">📱 SOLICITAR PELO KAKO LIVE</p>
-      <p>Central de Host → Agência → ID: <strong style="color:var(--verde);font-size:20px">177766</strong></p>
+      <p style="color:var(--amarelo);font-weight:bold;margin-bottom:8px">📱 PELO KAKO LIVE</p>
+      <p>Central de Host → Minha Agência → ID: <strong style="color:var(--verde);font-size:20px">177766</strong></p>
     </div>
-    <a href="https://wa.me/556981478873" target="_blank" class="btn-acao btn-whatsapp">💬 Tirar Dúvidas</a>
   </div>
   <hr style="border-color:#293653;margin:25px 0">
   <h2 class="titulo-secao">💼 SERVIÇOS E VALORES</h2>
-  <p style="text-align:center;color:var(--cinza);margin-bottom:20px">Agenciado tem acesso GRÁTIS.</p>
+  <p style="text-align:center;color:var(--cinza);margin-bottom:20px">Agenciado tem acesso GRÁTIS ✅</p>
   
   <div style="background:var(--painel2);padding:15px;border-radius:10px;margin-bottom:15px">
-    <h3 style="color:var(--amarelo);text-align:center">✅ PACOTE COMPLETO</h3>
-    <p style="text-align:center;font-size:20px;font-weight:bold;color:var(--verde);margin:10px 0">R$ 39,99/mês</p>
-    <div class="pix-codigo" id="pixPacote">00020101021126770014br.gov.bcb.pix01367c0dfbc3-68e7-4b85-a0eb-eb037b738d9f0215Pacote520400005303986540539.995802BR59196580MGDASILVA6007VILHENA620705036304606A</div>
-    <button class="btn-acao btn-whatsapp" onclick="copiarPix('pixPacote', this)">📋 COPIAR CHAVE PIX</button>
+    <h3 style="color:var(--amarelo);text-align:center">✅ PACOTE COMPLETO — R$ 39,99/mês</h3>
+    <div class="pix-codigo" id="pixPacote">00020101021126760014br.gov.bcb.pix01367c0dfbc3-68e7-4b85-a0eb-eb037b738d9f0216PacoteCompleto520400005303986540539.995802BR591965 8 0 M G DA SILVA6007VILHENA62070503***630438A3</div>
+    <button class="btn-acao btn-whatsapp" onclick="copiarPix('pixPacote')">📋 COPIAR CHAVE PIX</button>
   </div>
   <div style="background:var(--painel2);padding:15px;border-radius:10px;margin-bottom:15px">
-    <h3 style="color:var(--rosa);text-align:center">🎵 MÚSICA</h3>
-    <p style="text-align:center;font-size:18px;font-weight:bold;color:var(--amarelo);margin:10px 0">R$ 20,00</p>
-    <div class="pix-codigo" id="pixMusica">00020101021126770014br.gov.bcb.pix01367c0dfbc3-68e7-4b85-a0eb-eb037b738d9f0220Musica520400005303986540520.005802BR59196580MGDASILVA6007VILHENA620705036304606A</div>
-    <button class="btn-acao btn-whatsapp" onclick="copiarPix('pixMusica', this)">📋 COPIAR CHAVE PIX</button>
+    <h3 style="color:var(--vermelho);text-align:center">⚔️ BATALHA OFICIAL — R$ 69,90/mês</h3>
+    <div class="pix-codigo" id="pixBatalha">00020101021126780014br.gov.bcb.pix01367c0dfbc3-68e7-4b85-a0eb-eb037b738d9f0217BatalhaOficial52040000530398654069.905802BR591965 8 0 M G DA SILVA6007VILHENA62070503***63047B9D</div>
+    <button class="btn-acao btn-whatsapp" onclick="copiarPix('pixBatalha')">📋 COPIAR CHAVE PIX</button>
   </div>
   <div style="background:var(--painel2);padding:15px;border-radius:10px;margin-bottom:15px">
-    <h3 style="color:var(--roxo);text-align:center">🎨 ARTE</h3>
-    <p style="text-align:center;font-size:18px;font-weight:bold;color:var(--amarelo);margin:10px 0">R$ 10,00</p>
-    <div class="pix-codigo" id="pixArte">00020101021126770014br.gov.bcb.pix01367c0dfbc3-68e7-4b85-a0eb-eb037b738d9f0211Arte520400005303986540510.005802BR59196580MGDASILVA6007VILHENA620705036304606A</div>
-    <button class="btn-acao btn-whatsapp" onclick="copiarPix('pixArte', this)">📋 COPIAR CHAVE PIX</button>
+    <h3 style="color:var(--rosa);text-align:center">🎨 ARTE VISUAL AVULSA — R$ 10,00</h3>
+    <div class="pix-codigo" id="pixArte">00020101021126800014br.gov.bcb.pix01367c0dfbc3-68e7-4b85-a0eb-eb037b738d9f0218Arte visual Avulsa520400005303986540510.005802BR591965 8 0 M G DA SILVA6007VILHENA62070503***6304AD83</div>
+    <button class="btn-acao btn-whatsapp" onclick="copiarPix('pixArte')">📋 COPIAR CHAVE PIX</button>
   </div>
   <div style="background:var(--painel2);padding:15px;border-radius:10px;margin-bottom:15px">
-    <h3 style="color:var(--verde);text-align:center">🎓 TREINAMENTO VIP</h3>
-    <p style="text-align:center;font-size:18px;font-weight:bold;color:var(--amarelo);margin:10px 0">R$ 9,99</p>
-    <div class="pix-codigo" id="pixTreinamento">00020101021126770014br.gov.bcb.pix01367c0dfbc3-68e7-4b85-a0eb-eb037b738d9f0215Treinamento52040000530398654049.995802BR59196580MGDASILVA6007VILHENA620705036304606A</div>
-    <button class="btn-acao btn-whatsapp" onclick="copiarPix('pixTreinamento', this)">📋 COPIAR CHAVE PIX</button>
+    <h3 style="color:var(--azul);text-align:center">🎵 MÚSICA PERSONALIZADA — R$ 20,00</h3>
+    <div class="pix-codigo" id="pixMusica">00020101021126750014br.gov.bcb.pix01367c0dfbc3-68e7-4b85-a0eb-eb037b738d9f0213Musica Avulsa520400005303986540520.005802BR591965 8 0 M G DA SILVA6007VILHENA62070503***63042FB2</div>
+    <button class="btn-acao btn-whatsapp" onclick="copiarPix('pixMusica')">📋 COPIAR CHAVE PIX</button>
   </div>
   <div style="background:var(--painel2);padding:15px;border-radius:10px;margin-bottom:15px">
-    <h3 style="color:var(--vermelho);text-align:center">⚔️ BATALHA</h3>
-    <p style="text-align:center;font-size:18px;font-weight:bold;color:var(--amarelo);margin:10px 0">R$ 69,90/mês</p>
-    <div class="pix-codigo" id="pixBatalha">00020101021126770014br.gov.bcb.pix01367c0dfbc3-68e7-4b85-a0eb-eb037b738d9f0222Batalha520400005303986540569.905802BR59196580MGDASILVA6007VILHENA620705036304606A</div>
-    <button class="btn-acao btn-whatsapp" onclick="copiarPix('pixBatalha', this)">📋 COPIAR CHAVE PIX</button>
+    <h3 style="color:var(--roxo);text-align:center">📚 TREINAMENTO VIP — R$ 9,99 (única)</h3>
+    <div class="pix-codigo" id="pixTreinamento">00020101021126770014br.gov.bcb.pix01367c0dfbc3-68e7-4b85-a0eb-eb037b738d9f0215treinamento vip52040000530398654049.995802BR591965 8 0 M G DA SILVA6007VILHENA62070503***63046CC1</div>
+    <button class="btn-acao btn-whatsapp" onclick="copiarPix('pixTreinamento')">📋 COPIAR CHAVE PIX</button>
   </div>
-  <button class="btn-acao btn-voltar" onclick="voltar()">Voltar ao Início</button>
+  <button class="btn-acao btn-voltar" onclick="voltar()">Voltar</button>
 </div>
 
 <div class="conteudo" id="conteudoOutraAgencia">
+  <div class="logo-container">
+    <img src="https://i.imgur.com/3sj0YTi.jpg" alt="Padroniza Assessoria" class="logo-agencia" loading="lazy">
+  </div>
   <h2 class="titulo-secao">🤝 PARCERIAS</h2>
-  <p style="text-align:center;color:var(--cinza);padding:20px">Área para parceiros.</p>
+  <p style="text-align:center;color:var(--cinza);padding:20px">Batalhas Oficiais: R$ 69,90/mês</p>
   <button class="btn-acao btn-voltar" onclick="voltar()">Voltar</button>
 </div>
 
@@ -263,130 +322,207 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
 </div>
 
 <script>
-// ==========================================================
-// 🔐 SENHA OFUSCADA — NÃO APARECE NO CÓDIGO
-// ==========================================================
-const _=String.fromCharCode;
-const SENHA_ADMIN = [65,103,234,110,99,105,97,32,50,48,50,54].map(c=>_(c)).join('');
+const LINK_PLANILHA_LIVES = "https://docs.google.com/spreadsheets/d/1R9eUsqF4kA0y22ryMUIsvGolBfk3-XwZ5R-RVpBiZA4/gviz/tq?tqx=out:json";
+const CAPA_PADRAO = "https://i.imgur.com/IDqKKWk.jpg";
+const SENHA_ADMIN = "agência. 2026";
 const EMAIL_ADMIN = "padronizaassessoria@gmail.com";
 
-// ==========================================================
-// ⚙️ CONFIGURAÇÕES
-// ==========================================================
-const LINK_PLANILHA_CONTROLE = "https://docs.google.com/spreadsheets/d/1R9eUsqF4kA0y22ryMUIsvGolBfk3-XwZ5R-RVpBiZA4/gviz/tq?tqx=out:json";
-const LINK_GRUPO_ARTE = "https://chat.whatsapp.com/I3edwkusrSC123QjrJBHHi?s=cl&p=a&ilr=1";
-const CAPA_PADRAO = "https://i.imgur.com/9XzQkLb.png";
+let dadosPlanilha = [];
+let mesAtual = new Date();
+let diaSelecionado = null;
+let streamerLogado = null;
 
-let dadosControle = [], usuarioAtual = null, dataSelecionada = null;
-let hoje = new Date(), mesAtual = hoje.getMonth(), anoAtual = hoje.getFullYear();
-let dataLimite = new Date(anoAtual, mesAtual + 1, 30);
-
-// ==========================================================
-// 🚀 INICIALIZAÇÃO — CORRIGIDO PARA NÃO TRAVAR
-// ==========================================================
 window.onload = async function(){
-  console.log('[Padroniza] ✅ Sistema iniciado');
-  carregarLivesNaInicial(); // Mostra carregamento IMEDIATAMENTE
-  try{
-    await carregarPlanilhaControle();
-    carregarLivesNaInicial(); // Atualiza com dados reais
-    atualizarContadores();
-  }catch(e){
-    console.warn('[Padroniza] Planilha indisponível, funcionando offline:', e);
-  }
+  initAbas();
+  await carregarPlanilhaLives();
+  renderizarLives();
+  renderizarDestaques();
+  atualizarContadores();
+  desenharCalendario();
 };
 
-// ==========================================================
-// 📊 CARREGAR PLANILHA DE CONTROLE
-// ==========================================================
-async function carregarPlanilhaControle(){
+function initAbas(){
+  const botoes = document.querySelectorAll('.aba-btn');
+  const indicador = document.getElementById('abaIndicador');
+  const wrapper = document.getElementById('abasWrapper');
+  let abaAtual = 0;
+  botoes.forEach((botao, indice) => {
+    botao.addEventListener('click', () => {
+      abaAtual = indice;
+      botoes.forEach(b => b.classList.remove('ativa'));
+      botao.classList.add('ativa');
+      indicador.style.left = (abaAtual * 50) + '%';
+      wrapper.style.transform = `translateX(-${abaAtual * 100}%)`;
+    });
+  });
+}
+
+async function carregarPlanilhaLives(){
   try{
-    const res = await fetch(LINK_PLANILHA_CONTROLE);
-    const txt = await res.text();
-    const json = JSON.parse(txt.slice(47, -2));
-    dadosControle = json.table.rows.slice(1).map(r => {
-      const c = r.c || [];
+    const res = await fetch(LINK_PLANILHA_LIVES);
+    let txt = await res.text();
+    txt = txt.substring(47, txt.length - 2);
+    const json = JSON.parse(txt);
+    dadosPlanilha = json.table.rows.slice(1).map(linha => {
+      const c = linha.c || [];
       return {
         usuario: ((c[0]||{}).v||"").toString().trim().toLowerCase(),
         status: ((c[1]||{}).v||"").toString().trim().toUpperCase(),
         linkTiktok: ((c[3]||{}).v||"").toString().trim(),
         linkKako: ((c[5]||{}).v||"").toString().trim(),
         capa: ((c[7]||{}).v||"").toString().trim(),
-        aoVivo: ((c[8]||{}).v||"").toString().trim().toUpperCase()
+        aoVivo: ((c[8]||{}).v||"").toString().trim().toUpperCase(),
+        destaques: ((c[10]||{}).v||"").toString().trim()
       };
     });
-    console.log('[Controle]', dadosControle.length, 'streamers carregados');
-  }catch(e){
-    console.warn('[Controle] Falha ao carregar planilha:', e);
-    dadosControle = [];
-  }
+  }catch(e){console.error("Erro planilha:", e)}
 }
 
-// ==========================================================
-// 🔄 ATUALIZAR CONTADORES
-// ==========================================================
-function atualizarContadores(){
-  document.getElementById('qtdAgenciados').textContent = dadosControle.filter(s=>s.status==="APROVADO").length;
-  document.getElementById('qtdLives').textContent = dadosControle.filter(s=>/^(SIM|TRUE|S)$/.test(s.aoVivo)).length;
-  document.getElementById('qtdBatalhas').textContent = '0';
-  document.getElementById('qtdPendentes').textContent = '0';
-}
-
-// ==========================================================
-// 📡 RENDERIZAR LIVES AO VIVO
-// ==========================================================
-function carregarLivesNaInicial(){
-  const container = document.getElementById('listaLivesInicial');
-  const aoVivo = dadosControle.filter(u => /^(SIM|TRUE|VERDADEIRO|S)$/.test(u.aoVivo) && u.usuario);
-  
-  if(!dadosControle.length){
-    container.innerHTML = '<p class="sem-lives">🔄 Carregando dados...</p>';
-    return;
-  }
+function renderizarLives(){
+  const container = document.getElementById('listaLives');
+  const aoVivo = dadosPlanilha.filter(s => /^(SIM|S|TRUE)$/.test(s.aoVivo) && s.usuario);
   if(!aoVivo.length){
-    container.innerHTML = '<p class="sem-lives">🔴 Nenhuma live ao vivo no momento.</p>';
+    container.innerHTML = '<p class="sem-lives">🔴 Nenhuma live ao vivo no momento</p>';
     return;
   }
-
-  container.innerHTML = aoVivo.map(u => {
-    const capaUrl = u.capa && u.capa.startsWith('http') ? u.capa : CAPA_PADRAO;
-    return `
-      <div class="cartao-live">
-        <div class="nome-streamer">${escapeHtml(u.usuario)}</div>
-        <div class="capa-live">
-          <img src="${escapeHtml(capaUrl)}" alt="Capa" loading="lazy"
-               onerror="this.onerror=null;this.src='${CAPA_PADRAO}';">
-        </div>
-        <span class="status-ao-vivo">🔴 AO VIVO</span>
-        ${u.linkTiktok ? `<a href="${escapeHtml(u.linkTiktok)}" target="_blank" rel="noopener" class="btn-assistir">🎵 Assistir TikTok</a>` : ''}
-        ${u.linkKako ? `<a href="${escapeHtml(u.linkKako)}" target="_blank" rel="noopener" class="btn-assistir">🟣 Assistir Kako Live</a>` : ''}
-      </div>
-    `;
+  container.innerHTML = aoVivo.map(s => {
+    const capa = s.capa && s.capa.startsWith('http') ? s.capa : CAPA_PADRAO;
+    const link = s.linkTiktok || s.linkKako || "#";
+    return `<div class="cartao-live">
+      <div class="nome-streamer">${escaparHtml(s.usuario)}</div>
+      <div class="capa-live"><img src="${escaparHtml(capa)}" alt="Capa" onerror="this.src='${CAPA_PADRAO}'"></div>
+      <span class="status-ao-vivo">🔴 AO VIVO</span>
+      <a href="${escaparHtml(link)}" target="_blank" class="btn-assistir">▶️ ASSISTIR LIVE</a>
+    </div>`;
   }).join('');
 }
 
-// ==========================================================
-// 🔐 LOGIN ADMIN — SENHA PROTEGIDA
-// ==========================================================
-function alternarSenha(){
-  const inp = document.getElementById('senhaAdmin');
-  inp.type = inp.type === 'password' ? 'text' : 'password';
+function renderizarDestaques(){
+  const container = document.getElementById('listaDestaques');
+  const destaques = dadosPlanilha.filter(s => s.destaques);
+  if(!destaques.length){
+    container.innerHTML = '<p class="sem-destaques">🌟 Nenhum destaque cadastrado</p>';
+    return;
+  }
+  container.innerHTML = '<div class="galeria-destaques">' + destaques.map(s => `
+    <div class="cartao-destaque">
+      <img src="${escaparHtml(s.destaques)}" loading="lazy" alt="Destaque">
+      <div class="info">
+        <div class="nome">${escaparHtml(s.usuario)}</div>
+        <div class="desc">✨ Destaque da Padroniza</div>
+      </div>
+    </div>
+  `).join('') + '</div>';
 }
 
-function verificarAdmin(){
-  const email = document.getElementById('emailAdmin').value.trim().toLowerCase();
-  const senha = document.getElementById('senhaAdmin').value;
+function desenharCalendario(){
+  const container = document.getElementById('gradeDias');
+  const nomeMesEl = document.getElementById('nomeMes');
+  const meses = ["Janeiro","Fevereiro","Março","Abril","Maio","Junho","Julho","Agosto","Setembro","Outubro","Novembro","Dezembro"];
+  const ano = mesAtual.getFullYear(), mes = mesAtual.getMonth();
+  nomeMesEl.textContent = `${meses[mes]} ${ano}`;
+  const primeiroDia = new Date(ano, mes, 1).getDay();
+  const ultimoDia = new Date(ano, mes + 1, 0).getDate();
+  const hoje = new Date();
+  container.innerHTML = "";
   
-  if(email === EMAIL_ADMIN && senha === SENHA_ADMIN){
-    mostrarToast('✅ Acesso liberado!');
-    document.getElementById('loginAdmin').style.display = 'none';
-    document.getElementById('painelAdmin').style.display = 'block';
-    atualizarContadores();
-  }else{
-    mostrarToast('❌ E-mail ou senha incorretos!');
+  const ultimoMesAnterior = new Date(ano, mes, 0).getDate();
+  for(let i = primeiroDia - 1; i >= 0; i--){
+    const d = document.createElement('div');
+    d.className = "dia outro-mes";
+    d.textContent = ultimoMesAnterior - i;
+    container.appendChild(d);
+  }
+  
+  for(let dia = 1; dia <= ultimoDia; dia++){
+    const data = new Date(ano, mes, dia);
+    const diaSemana = data.getDay();
+    const el = document.createElement('div');
+    el.textContent = dia;
+    el.dataset.data = `${ano}-${String(mes+1).padStart(2,'0')}-${String(dia).padStart(2,'0')}`;
+    
+    const isDomingo = diaSemana === 0;
+    const dataHoje = new Date(hoje.getFullYear(), hoje.getMonth(), hoje.getDate());
+    const dataAlvo = new Date(ano, mes, dia);
+    const dentroPrazo = dataAlvo >= dataHoje && dataAlvo <= new Date(hoje.getFullYear(), hoje.getMonth() + 2, 30);
+    
+    if(isDomingo || !dentroPrazo){
+      el.classList.add('dia', 'bloqueado');
+      el.title = "Bloqueado";
+    }else{
+      el.classList.add('dia', 'disponivel');
+      el.title = "Disponível";
+      el.onclick = () => selecionarDia(el.dataset.data, el);
+    }
+    if(data.toDateString() === hoje.toDateString()) el.classList.add('hoje');
+    container.appendChild(el);
   }
 }
 
+function mudarMes(delta){
+  mesAtual.setMonth(mesAtual.getMonth() + delta);
+  desenharCalendario();
+  document.getElementById('containerHorarios').style.display = 'none';
+  document.getElementById('formBatalha').style.display = 'none';
+  document.getElementById('avisoBloqueado').style.display = 'none';
+}
+
+function selecionarDia(dataStr, elDia){
+  document.querySelectorAll('.dia').forEach(d => d.style.boxShadow = "");
+  elDia.style.boxShadow = "inset 0 0 0 2px var(--verde)";
+  diaSelecionado = dataStr;
+  document.getElementById('avisoBloqueado').style.display = 'none';
+  document.getElementById('containerHorarios').style.display = 'block';
+  document.getElementById('formBatalha').style.display = 'none';
+  desenharHorarios();
+  document.getElementById('dataBatalha').value = dataStr;
+}
+
+function desenharHorarios(){
+  const container = document.getElementById('gradeHorarios');
+  const horarios = [];
+  for(let h = 17; h <= 22; h++) horarios.push(`${String(h).padStart(2,'0')}:00`);
+  container.innerHTML = horarios.map(hora => {
+    const h = parseInt(hora.split(':')[0]);
+    const naoDisponivel = h >= 19 && h < 23;
+    return `<button class="botao-horario ${naoDisponivel ? 'campanha' : 'disponivel'}" 
+      ${naoDisponivel ? 'disabled' : ''} onclick="${naoDisponivel ? '' : `selecionarHora('${hora}', this)`}">${hora}</button>`;
+  }).join('');
+}
+
+function selecionarHora(hora, el){
+  document.querySelectorAll('.botao-horario').forEach(b => b.style.boxShadow = "");
+  el.style.boxShadow = "0 0 0 2px var(--verde)";
+  document.getElementById('horaBatalha').value = hora;
+  document.getElementById('formBatalha').style.display = 'flex';
+  document.getElementById('nomeBatalha').value = streamerLogado?.usuario || "";
+}
+
+function abrir(pagina){
+  document.querySelectorAll('.conteudo').forEach(c => c.classList.remove('visivel'));
+  document.getElementById('telaInicial').style.display = 'none';
+  const mapa = {admin:'conteudoAdmin', agenciado:'conteudoAgenciado', visitante:'conteudoVisitante', outraAgencia:'conteudoOutraAgencia'};
+  document.getElementById(mapa[pagina]).classList.add('visivel');
+}
+function voltar(){
+  document.querySelectorAll('.conteudo').forEach(c => c.classList.remove('visivel'));
+  document.getElementById('telaInicial').style.display = 'block';
+}
+
+function alternarSenha(){
+  const el = document.getElementById('senhaAdmin');
+  el.type = el.type === 'password' ? 'text' : 'password';
+}
+function verificarAdmin(){
+  const email = document.getElementById('emailAdmin').value.trim().toLowerCase();
+  const senha = document.getElementById('senhaAdmin').value;
+  if(email === EMAIL_ADMIN && senha === SENHA_ADMIN){
+    mostrarToast("✅ Acesso liberado!");
+    document.getElementById('loginAdmin').style.display = 'none';
+    document.getElementById('painelAdmin').style.display = 'block';
+    atualizarContadores();
+  }else mostrarToast("❌ Dados incorretos!");
+}
 function sairAdmin(){
   document.getElementById('painelAdmin').style.display = 'none';
   document.getElementById('loginAdmin').style.display = 'block';
@@ -395,128 +531,62 @@ function sairAdmin(){
   voltar();
 }
 
-// ==========================================================
-// 👤 VERIFICAR ACESSO DO AGENCIADO
-// ==========================================================
 function verificarAcesso(){
-  const user = document.getElementById('usuarioAcesso').value.trim().toLowerCase();
-  const streamer = dadosControle.find(s => s.usuario === user && s.status === "APROVADO");
-  
-  if(!user){
-    document.getElementById('mensagemAcesso').textContent = 'Digite seu usuário!';
-    document.getElementById('mensagemAcesso').style.color = 'var(--amarelo)';
+  const usuario = document.getElementById('usuarioAcesso').value.trim().toLowerCase();
+  const encontrado = dadosPlanilha.find(s => s.usuario === usuario && s.status === "APROVADO");
+  if(!usuario){
+    document.getElementById('mensagemAcesso').textContent = "⚠️ Digite seu usuário!";
     return;
   }
-  if(!streamer){
-    document.getElementById('mensagemAcesso').textContent = '⚠️ Usuário não cadastrado. Contate a agência.';
-    document.getElementById('mensagemAcesso').style.color = 'var(--vermelho)';
+  if(!encontrado){
+    document.getElementById('mensagemAcesso').textContent = "⚠️ Usuário não encontrado ou não aprovado!";
     return;
   }
-
-  usuarioAtual = user;
-  document.getElementById('mensagemAcesso').textContent = '';
-  document.getElementById('painelStreamer').style.display = 'block';
+  streamerLogado = encontrado;
+  mostrarToast("✅ Acesso liberado!");
+  document.getElementById('mensagemAcesso').textContent = "";
+  document.getElementById('dadoUsuario').textContent = encontrado.usuario;
+  document.getElementById('dadoTiktok').innerHTML = encontrado.linkTiktok 
+    ? `<a href="${encontrado.linkTiktok}" target="_blank" style="color:var(--verde)">🔗 Abrir perfil</a>` : "Não cadastrado";
+  document.getElementById('dadoKako').innerHTML = encontrado.linkKako 
+    ? `<a href="${encontrado.linkKako}" target="_blank" style="color:var(--verde)">🔗 Abrir perfil</a>` : "Não cadastrado";
+  document.getElementById('perfilStreamer').style.display = 'block';
   
-  document.getElementById('dadoUsuario').textContent = streamer.usuario;
-  document.getElementById('dadoLinkTiktok').innerHTML = streamer.linkTiktok 
-    ? `<a href="${escapeHtml(streamer.linkTiktok)}" target="_blank" style="color:var(--verde)">🔗 Abrir perfil</a>` 
-    : 'Não cadastrado';
-  document.getElementById('dadoLinkKako').textContent = streamer.linkKako || 'Não cadastrado';
-  document.getElementById('nomeUsuarioBatalha').value = streamer.usuario;
-  document.getElementById('linkPerfilBatalha').value = streamer.linkTiktok || streamer.linkKako || '';
-}
-
-// ==========================================================
-// ⚔️ CALENDÁRIO DE BATALHAS
-// ==========================================================
-function abrirBatalhas(){
-  if(!usuarioAtual){ mostrarToast('⚠️ Acesse seu espaço primeiro!'); return; }
-  document.getElementById('painelStreamer').style.display = 'none';
-  document.getElementById('areaBatalhas').style.display = 'block';
-  dataSelecionada = null;
-  document.getElementById('avisoDiaSelecionado').style.display = 'none';
-  document.getElementById('avisoBloqueioBatalha').style.display = 'none';
-  renderizarCalendario();
-}
-
-function fecharBatalhas(){
-  document.getElementById('areaBatalhas').style.display = 'none';
-  document.getElementById('painelStreamer').style.display = 'block';
-}
-
-function renderizarCalendario(){
-  const nomesMeses = ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
-  const diasSemana = ['D','S','T','Q','Q','S','S'];
-  const primeiroDia = new Date(anoAtual, mesAtual, 1).getDay();
-  const ultimoDia = new Date(anoAtual, mesAtual + 1, 0).getDate();
-  const hojeCal = new Date();
-  
-  const ehFeriado = (d, m) => [[1,0],[21,3],[1,4],[1,5],[7,8],[12,9],[2,10],[15,11],[25,12]].some(f=>f[0]===d&&f[1]===m);
-
-  document.getElementById('mesCalendario').textContent = `${nomesMeses[mesAtual]} de ${anoAtual}`;
-  let html = diasSemana.map(d=>`<div style="color:var(--amarelo);font-weight:bold;text-align:center">${d}</div>`).join('');
-
-  for(let i=0;i<primeiroDia;i++) html += '<div></div>';
-  for(let dia=1;dia<=ultimoDia;dia++){
-    const dataCompleta = new Date(anoAtual, mesAtual, dia);
-    const ehDom = dataCompleta.getDay() === 0;
-    const ehFeri = ehFeriado(dia, mesAtual);
-    const foraPrazo = dataCompleta < new Date(hojeCal.getFullYear(), hojeCal.getMonth(), hojeCal.getDate()) || dataCompleta > dataLimite;
-    const selecionavel = !ehDom && !ehFeri && !foraPrazo;
-    const dataStr = `${dia}/${String(mesAtual+1).padStart(2,'0')}/${anoAtual}`;
-
-    html += `<div class="dia-calendario ${selecionavel ? 'dia-disponivel' : 'dia-bloqueado'}" 
-                 ${selecionavel ? `onclick="selecionarData('${dataStr}', this)"` : ''}>${dia}</div>`;
+  const destContainer = document.getElementById('destaquesStreamer');
+  if(encontrado.destaques){
+    destContainer.innerHTML = `<div class="galeria-destaques"><div class="cartao-destaque">
+      <img src="${escaparHtml(encontrado.destaques)}" alt="Destaque">
+      <div class="info"><div class="nome">${escaparHtml(encontrado.usuario)}</div>
+      <div class="desc">✨ Meu destaque</div></div>
+    </div></div>`;
+  }else{
+    destContainer.innerHTML = '<p style="color:var(--cinza)">Nenhum destaque cadastrado ainda.</p>';
   }
-  document.getElementById('diasCalendario').innerHTML = html;
 }
 
-function selecionarData(dataStr, el){
-  document.querySelectorAll('.dia-selecionado').forEach(d=>d.classList.remove('dia-selecionado'));
-  el.classList.add('dia-selecionado');
-  dataSelecionada = dataStr;
-  document.getElementById('avisoDiaSelecionado').style.display = 'block';
-  document.getElementById('avisoBloqueioBatalha').style.display = 'none';
+function enviarSolicitacao(){
+  mostrarToast("✅ Solicitação enviada! Aguarde confirmação.");
+  document.getElementById('formBatalha').style.display = 'none';
 }
 
-function enviarSolicitacaoBatalha(){
-  if(!dataSelecionada){ mostrarToast('⚠️ Selecione uma data!'); return; }
-  const horario = document.getElementById('horarioBatalha').value;
-  if(!horario){ mostrarToast('⚠️ Selecione o horário!'); return; }
-  
-  const mensagem = `⚔️ SOLICITAÇÃO DE BATALHA\n\n👤 Usuário: ${usuarioAtual}\n📅 Data: ${dataSelecionada}\n⏰ Hora: ${horario}\n💎 Meta: ${document.getElementById('metaBatalha').value || 'Não informada'}`;
-  window.open(`https://wa.me/556981478873?text=${encodeURIComponent(mensagem)}`, '_blank');
-  mostrarToast('✅ Solicitação enviada!');
+function copiarPix(id){
+  const texto = document.getElementById(id).textContent.trim();
+  navigator.clipboard.writeText(texto).then(() => mostrarToast("✅ Chave copiada!"))
+  .catch(() => {
+    const t = document.createElement('textarea'); t.value = texto; document.body.appendChild(t); t.select();
+    document.execCommand('copy'); document.body.removeChild(t); mostrarToast("✅ Chave copiada!");
+  });
 }
 
-function solicitar(tipo){
-  const textos = {
-    musica: '🎵 SOLICITAÇÃO DE MÚSICA PERSONALIZADA',
-    arte: '🎨 SOLICITAÇÃO DE ARTE VISUAL',
-    treinamento: '🎓 SOLICITAÇÃO DE TREINAMENTO VIP'
-  };
-  window.open(`https://wa.me/556981478873?text=${encodeURIComponent(textos[tipo] + `\n\n👤 Usuário: ${usuarioAtual || 'Não informado'}`)}`, '_blank');
+function atualizarContadores(){
+  document.getElementById('qtdAgenciados').textContent = dadosPlanilha.filter(s => s.status === "APROVADO").length;
+  document.getElementById('qtdLives').textContent = dadosPlanilha.filter(s => /^(SIM|S|TRUE)$/.test(s.aoVivo)).length;
+  document.getElementById('qtdConquistas').textContent = dadosPlanilha.filter(s => s.destaques).length;
 }
 
-// ==========================================================
-// 🧰 FUNÇÕES UTILITÁRIAS
-// ==========================================================
-function abrir(tela){
-  document.getElementById('telaInicial').style.display = 'none';
-  document.querySelectorAll('.conteudo').forEach(c=>c.classList.remove('visivel'));
-  document.getElementById('conteudo'+tela.charAt(0).toUpperCase()+tela.slice(1)).classList.add('visivel');
-}
-
-function voltar(){
-  document.getElementById('telaInicial').style.display = 'block';
-  document.querySelectorAll('.conteudo').forEach(c=>c.classList.remove('visivel'));
-  carregarLivesNaInicial();
-}
-
-function escapeHtml(texto){
-  if(!texto) return '';
+function escaparHtml(texto){
   const div = document.createElement('div');
-  div.textContent = texto;
+  div.textContent = texto || "";
   return div.innerHTML;
 }
 
@@ -524,17 +594,7 @@ function mostrarToast(mensagem){
   const t = document.getElementById('toast');
   t.textContent = mensagem;
   t.style.display = 'block';
-  setTimeout(()=>t.style.display='none', 3000);
-}
-
-function copiarPix(id, botao){
-  const codigo = document.getElementById(id).textContent;
-  navigator.clipboard.writeText(codigo).then(()=>{
-    const txt = botao.textContent;
-    botao.textContent = '✅ COPIADO!';
-    setTimeout(()=>botao.textContent = txt, 2500);
-    mostrarToast('✅ Chave copiada!');
-  }).catch(()=>mostrarToast('❌ Erro ao copiar'));
+  setTimeout(() => t.style.display = 'none', 3000);
 }
 </script>
 </div>
