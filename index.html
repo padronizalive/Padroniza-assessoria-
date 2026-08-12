@@ -29,10 +29,11 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
 .titulo-lives-inicial{text-align:center;color:var(--amarelo);font-size:22px;margin-bottom:15px}
 .cartao-live{background:var(--painel2);border-radius:12px;padding:15px;margin-bottom:15px;border:1px solid #293653}
 .nome-streamer{font-size:20px;font-weight:bold;color:var(--amarelo);margin-bottom:10px}
-.btn-assistir{background:var(--verde);color:#fff;border:none;padding:12px 20px;border-radius:8px;font-weight:bold;font-size:16px;width:100%;margin-bottom:10px;cursor:pointer}
+.btn-assistir{background:var(--verde);color:#fff;border:none;padding:12px 20px;border-radius:8px;font-weight:bold;font-size:16px;width:100%;margin-bottom:10px;cursor:pointer;text-decoration:none;text-align:center;display:inline-block}
 .capa-live{width:100%;height:180px;border-radius:8px;background:#121a30;margin-bottom:10px;display:flex;align-items:center;justify-content:center;color:var(--cinza);font-size:14px;overflow:hidden}
 .capa-live img{width:100%;height:100%;object-fit:cover}
-.status-ao-vivo{display:inline-block;background:var(--vermelho);color:#fff;padding:6px 12px;border-radius:6px;font-weight:bold;font-size:14px;margin-right:10px}
+.status-ao-vivo{display:inline-block;background:var(--vermelho);color:#fff;padding:6px 12px;border-radius:6px;font-weight:bold;font-size:14px;margin-right:10px;animation:pulsar 2s infinite}
+@keyframes pulsar{0%{opacity:1}50%{opacity:0.5}100%{opacity:1}}
 .plataforma-live{color:var(--verde);font-weight:bold;font-size:15px}
 .sem-lives{text-align:center;padding:30px;color:var(--cinza);font-size:16px}
 
@@ -114,7 +115,7 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
 
   <div class="lives-na-inicial">
     <h3 class="titulo-lives-inicial">🔴 LIVES AO VIVO</h3>
-    <div id="listaLivesInicial"></div>
+    <div id="listaLivesInicial"><p class="sem-lives">Carregando lives...</p></div>
   </div>
 </div>
 
@@ -267,259 +268,249 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
 
 <script>
 const LINK_PLANILHA_CONTROLE = "https://docs.google.com/spreadsheets/d/1R9eUsqF4kA0y22ryMUIsvGolBfk3-XwZ5R-RVpBiZA4/gviz/tq?tqx=out:json";
-const LINK_PLANILHA_BATALHAS = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRtyHq643--RBIrq3drMcHGIoUtpY-IN5v2T0wNWnCNvUf2rE6UHOK55nI4uUK89x7U_S66Gl1XXDN4/pub?gid=0&single=true&output=json";
+const LINK_PLANILHA_BATALHAS = ""; // Atualize com o link correto quando disponível
 const LINK_GRUPO_ARTE = "https://chat.whatsapp.com/I3edwkusrSC123QjrJBHHi?s=cl&p=a&ilr=1";
 
 let dadosControle = [], dadosBatalhas = [], usuarioAtual = null, dataSelecionada = null;
 let hoje = new Date(), mesAtual = hoje.getMonth(), anoAtual = hoje.getFullYear();
-let dataLimite = new Date(anoAtual, mesAtual + 1, 30);
+let usuariosCarregados = new Set();
 
 window.onload = async function(){
   await carregarPlanilhaControle();
-  await carregarPlanilhaBatalhas();
   carregarLivesNaInicial();
+  atualizarContadoresAdmin();
 };
 
 async function carregarPlanilhaControle(){
   try{
     const r = await fetch(LINK_PLANILHA_CONTROLE);
     const t = await r.text();
-    dadosControle = JSON.parse(t.substr(47).slice(0,-2)).table.rows;
-  }catch(e){console.log("Erro controle:", e);}
-}
-
-async function carregarPlanilhaBatalhas(){
-  try{
-    const r = await fetch(LINK_PLANILHA_BATALHAS);
-    const t = await r.text();
-    dadosBatalhas = JSON.parse(t.substr(47).slice(0,-2)).table.rows;
-    atualizarContadoresBatalhas();
-  }catch(e){console.log("Erro batalhas:", e);}
-}
-
-function atualizarContadoresBatalhas(){
-  document.getElementById('qtdBatalhas').innerText = dadosBatalhas.filter(r => r.c?.[5]?.v === 'CONFIRMADA').length;
-  document.getElementById('qtdPendentes').innerText = dadosBatalhas.filter(r => r.c?.[5]?.v !== 'CONFIRMADA').length;
-}
-
-function carregarLivesNaInicial(){
-  const l = document.getElementById('listaLivesInicial');
-  l.innerHTML = '';
-  const temLive = dadosControle.some(r => r.c?.[8]?.v === true || r.c?.[8]?.v === 'true' || r.c?.[8]?.v === 'SIM');
-  if(!temLive) return l.innerHTML = '<div class="sem-lives">🔍 Nenhuma live ao vivo no momento.</div>';
-  dadosControle.forEach(r => {
-    if(!r.c) return;
-    const aoVivo = r.c[8]?.v === true || r.c[8]?.v === 'true' || r.c[8]?.v === 'SIM';
-    if(!aoVivo) return;
-    const nome = r.c[0]?.v || 'Streamer', capa = r.c[7]?.v || '', t = r.c[3]?.v || '', k = r.c[5]?.v || '';
-    const link = t || k || '#', plat = t ? 'TikTok' : (k ? 'Kako Live' : '');
-    l.innerHTML += `<div class="cartao-live"><div class="nome-streamer">${nome}</div><div class="capa-live">${capa?'<img src="'+capa+'">':'🎬 Capa'}</div><span class="status-ao-vivo">🔴 AO VIVO</span> <span class="plataforma-live">${plat}</span><button class="btn-assistir" onclick="window.open('${link}','_blank')">▶️ ASSISTIR</button></div>`;
-  });
-}
-
-function abrir(id){
-  document.querySelectorAll('.conteudo').forEach(c => c.classList.remove('visivel'));
-  document.getElementById('telaInicial').style.display = 'none';
-  const alvo = document.getElementById('conteudo' + id.charAt(0).toUpperCase() + id.slice(1));
-  if(alvo) alvo.classList.add('visivel');
-  if(id === 'admin'){document.getElementById('loginAdmin').style.display='block';document.getElementById('painelAdmin').style.display='none';}
-  if(id === 'agenciado'){
-    document.getElementById('painelStreamer').style.display='none';
-    document.getElementById('areaBatalhas').style.display='none';
-    document.getElementById('usuarioAcesso').value='';
-    document.getElementById('caixaPendentes').innerHTML='<p class="sem-batalhas">Nenhuma solicitação pendente.</p>';
-    document.getElementById('caixaConfirmadas').innerHTML='<p class="sem-batalhas">Nenhuma batalha confirmada.</p>';
+    const json = JSON.parse(t.substr(4));
+    const linhas = json.table.rows;
+    
+    for(const linha of linhas){
+      const celulas = linha.c || [];
+      const usuario = celulas[0]?.v || "";
+      const status = celulas[1]?.v || "";
+      
+      if(status !== "APROVADO" || !usuario) continue;
+      if(usuariosCarregados.has(usuario)) continue;
+      usuariosCarregados.add(usuario);
+      
+      dadosControle.push({
+        usuario: usuario,
+        status: status,
+        data: celulas[2]?.f || "",
+        tiktok_perfil: celulas[3]?.v || "",
+        tiktok_live: celulas[4]?.v || "",
+        kako_perfil: celulas[5]?.v || "",
+        kako_live: celulas[6]?.v || "",
+        capa: celulas[7]?.v || "",
+        esta_ao_vivo: celulas[8]?.v || false,
+        tipo_acesso: celulas[9]?.v || ""
+      });
+    }
+  }catch(e){
+    console.error("Erro ao carregar planilha:", e);
   }
 }
 
+function carregarLivesNaInicial(){
+  const container = document.getElementById("listaLivesInicial");
+  const livesAoVivo = dadosControle.filter(u => u.esta_ao_vivo === true);
+  
+  if(livesAoVivo.length === 0){
+    container.innerHTML = '<p class="sem-lives">🔴 Nenhuma live ao vivo no momento.</p>';
+    return;
+  }
+  
+  container.innerHTML = livesAoVivo.map(u => {
+    const temCapaValida = u.capa && u.capa.startsWith("http") && !u.capa.startsWith("blob:");
+    return `
+      <div class="cartao-live">
+        <div class="capa-live">
+          ${temCapaValida ? `<img src="${u.capa}" alt="Capa de ${u.usuario}" loading="lazy">` : "📷 Sem capa"}
+        </div>
+        <h4 class="nome-streamer">${u.usuario}</h4>
+        <span class="status-ao-vivo">🔴 AO VIVO</span>
+        ${u.tiktok_live ? `<a href="${u.tiktok_live}" target="_blank" class="btn-assistir">🎵 Assistir no TikTok</a>` : ""}
+        ${u.kako_live ? `<a href="${u.kako_live}" target="_blank" class="btn-assistir">📱 Assistir no Kako Live</a>` : ""}
+      </div>
+    `;
+  }).join("");
+}
+
+function abrir(tela){
+  document.getElementById("telaInicial").style.display = "none";
+  document.querySelectorAll(".conteudo").forEach(el => el.classList.remove("visivel"));
+  document.getElementById("conteudo" + tela.charAt(0).toUpperCase() + tela.slice(1)).classList.add("visivel");
+  
+  if(tela === "batalhas") gerarCalendario();
+}
+
 function voltar(){
-  document.querySelectorAll('.conteudo').forEach(c => c.classList.remove('visivel'));
-  document.getElementById('telaInicial').style.display = 'block';
+  document.getElementById("telaInicial").style.display = "block";
+  document.querySelectorAll(".conteudo").forEach(el => el.classList.remove("visivel"));
+  usuarioAtual = null;
+  document.getElementById("painelStreamer").style.display = "none";
+  document.getElementById("areaBatalhas").style.display = "none";
 }
 
 function verificarAdmin(){
-  const e = document.getElementById('emailAdmin').value.trim(), s = document.getElementById('senhaAdmin').value.trim();
-  if(e === 'padronizaassessoria@gmail.com' && s === 'agency2026.'){
-    alert('✅ Acesso liberado! Bem-vindo, Administrador.');
-    document.getElementById('loginAdmin').style.display = 'none';
-    document.getElementById('painelAdmin').style.display = 'block';
+  const email = document.getElementById("emailAdmin").value;
+  const senha = document.getElementById("senhaAdmin").value;
+  if(email === "padronizaassessoria@gmail.com" && senha === "padron2026"){
+    document.getElementById("loginAdmin").style.display = "none";
+    document.getElementById("painelAdmin").style.display = "block";
   }else{
-    alert('❌ E-mail ou senha incorretos!');
+    alert("❌ E-mail ou senha incorretos!");
   }
 }
 
 function sairAdmin(){
-  document.getElementById('emailAdmin').value = '';
-  document.getElementById('senhaAdmin').value = '';
-  document.getElementById('painelAdmin').style.display = 'none';
-  document.getElementById('loginAdmin').style.display = 'block';
+  document.getElementById("loginAdmin").style.display = "block";
+  document.getElementById("painelAdmin").style.display = "none";
+  document.getElementById("emailAdmin").value = "";
+  document.getElementById("senhaAdmin").value = "";
   voltar();
 }
 
-function verificarAcesso(){
-  const u = document.getElementById('usuarioAcesso').value.trim().toLowerCase(), m = document.getElementById('mensagemAcesso');
-  m.innerHTML = '🔍 Verificando...';
-  setTimeout(() => {
-    const enc = dadosControle.find(l => ((l.c?.[0]?.v)||'').toString().trim().toLowerCase() === u);
-    if(!enc) return m.innerHTML = '❌ Usuário não encontrado. Verifique o nome ou contate a agência.';
-    if(enc.c?.[1]?.v !== 'APROVADO') return m.innerHTML = '⏳ Aguardando aprovação (até 48h).';
-    usuarioAtual = ((enc.c?.[0]?.v)||'').toString().trim().toLowerCase();
-    m.innerHTML = '✅ Acesso liberado! Bem-vindo!';
-    document.getElementById('painelStreamer').style.display = 'block';
-    document.getElementById('dadoUsuario').innerText = enc.c?.[0]?.v || '-';
-    const lT = enc.c?.[3]?.v, lK = enc.c?.[5]?.v;
-    document.getElementById('dadoLinkTiktok').innerHTML = lT ? `<a href="${lT}" target="_blank" style="color:var(--verde)">Acessar Perfil</a>` : 'Não cadastrado';
-    document.getElementById('dadoLinkKako').innerHTML = lK ? `<a href="${lK}" target="_blank" style="color:var(--verde)">Acessar Perfil</a>` : 'Não cadastrado';
-    document.getElementById('nomeUsuarioBatalha').value = enc.c?.[0]?.v || '-';
-    document.getElementById('linkPerfilBatalha').value = lT || lK || '-';
-    carregarBatalhasDoUsuario();
-  }, 800);
+function atualizarContadoresAdmin(){
+  document.getElementById("qtdAgenciados").textContent = dadosControle.length;
+  document.getElementById("qtdLives").textContent = dadosControle.filter(u => u.esta_ao_vivo).length;
 }
 
-function carregarBatalhasDoUsuario(){
-  const pendentes = [], confirmadas = [];
-  dadosBatalhas.forEach(r => {
-    if(!r.c) return;
-    const usuarioPlanilha = ((r.c[0]?.v)||'').toString().trim().toLowerCase();
-    if(usuarioPlanilha !== usuarioAtual) return;
-    const status = (r.c[5]?.v||'').toString().trim().toUpperCase();
-    const item = {
-      data: r.c[1]?.v || '-',
-      hora: r.c[2]?.v || '-',
-      oponente: r.c[3]?.v || '',
-      linkOponente: r.c[4]?.v || '',
-      status: status,
-      meta: r.c[6]?.v || '-',
-      rodadas: r.c[7]?.v || '-',
-      hold: r.c[8]?.v || '-'
-    };
-    if(status === 'CONFIRMADA') confirmadas.push(item);
-    else pendentes.push(item);
-  });
-
-  // PENDENTES
-  if(pendentes.length > 0){
-    document.getElementById('caixaPendentes').innerHTML = pendentes.map(b => `
-      <div class="situacao-batalha situacao-pendente">
-        ⏳ AGUARDANDO CONFIRMAÇÃO
-        <div class="linha-dado"><strong>Data:</strong> ${b.data} às ${b.hora}</div>
-        <div class="linha-dado"><strong>Oponente:</strong> Aguardando...</div>
-        <div class="linha-dado"><strong>Meta:</strong> ${b.meta} 💎</div>
-      </div>`).join('');
-  } else {
-    document.getElementById('caixaPendentes').innerHTML = '<p class="sem-batalhas">Nenhuma solicitação pendente.</p>';
-  }
-
-  // CONFIRMADAS
-  if(confirmadas.length > 0){
-    document.getElementById('caixaConfirmadas').innerHTML = confirmadas.map(b => `
-      <div class="cartao-batalha-confirmada">
-        <h4>✅ BATALHA CONFIRMADA</h4>
-        <div class="linha-dado"><strong>Data:</strong> ${b.data}</div>
-        <div class="linha-dado"><strong>Horário:</strong> ${b.hora}</div>
-        <div class="linha-dado"><strong>Oponente:</strong> ${b.oponente || 'Aguardando'}</div>
-        ${b.linkOponente ? `<a href="${b.linkOponente}" target="_blank" class="btn-perfil-oponente">🔗 Acessar Perfil do Oponente</a>` : ''}
-        <div class="linha-dado"><strong>Meta:</strong> ${b.meta} 💎</div>
-        <div class="linha-dado"><strong>Rodadas:</strong> ${b.rodadas}</div>
-        <div class="linha-dado"><strong>Hold:</strong> ${b.hold}</div>
-        <div class="aviso-arte">🎨 A arte será postada no grupo em até 48h</div>
-        <a href="${LINK_GRUPO_ARTE}" target="_blank" class="btn-grupo-arte">🎨 ACESSAR GRUPO DE ARTE VISUAL</a>
-      </div>`).join('');
-  } else {
-    document.getElementById('caixaConfirmadas').innerHTML = '<p class="sem-batalhas">Nenhuma batalha confirmada. Aguardando agência vincular oponente.</p>';
+function verificarAcesso(){
+  const usuario = document.getElementById("usuarioAcesso").value.trim();
+  const mensagem = document.getElementById("mensagemAcesso");
+  const encontrado = dadosControle.find(u => u.usuario.toLowerCase() === usuario.toLowerCase());
+  
+  if(encontrado){
+    usuarioAtual = encontrado;
+    mensagem.textContent = "✅ Acesso autorizado!";
+    mensagem.style.color = "var(--verde)";
+    document.getElementById("painelStreamer").style.display = "block";
+    document.getElementById("dadoUsuario").textContent = encontrado.usuario;
+    document.getElementById("dadoLinkTiktok").innerHTML = encontrado.tiktok_perfil ? `<a href="${encontrado.tiktok_perfil}" target="_blank" style="color:var(--azul)">Acessar →</a>` : "Não cadastrado";
+    document.getElementById("dadoLinkKako").textContent = encontrado.kako_perfil || "Não cadastrado";
+    document.getElementById("nomeUsuarioBatalha").value = encontrado.usuario;
+    document.getElementById("linkPerfilBatalha").value = encontrado.tiktok_live || encontrado.kako_live || "";
+  }else{
+    mensagem.textContent = "❌ Usuário não encontrado. Verifique o nome ou contate a administração.";
+    mensagem.style.color = "var(--vermelho)";
   }
 }
 
 function abrirBatalhas(){
-  document.getElementById('painelStreamer').style.display = 'none';
-  document.getElementById('areaBatalhas').style.display = 'block';
+  document.getElementById("painelStreamer").style.display = "none";
+  document.getElementById("areaBatalhas").style.display = "block";
   gerarCalendario();
 }
 
 function fecharBatalhas(){
-  document.getElementById('areaBatalhas').style.display = 'none';
-  document.getElementById('painelStreamer').style.display = 'block';
-  document.getElementById('horarioBatalha').value = '';
-  document.getElementById('metaBatalha').value = '';
-  document.getElementById('avisoDiaSelecionado').style.display = 'none';
+  document.getElementById("areaBatalhas").style.display = "none";
+  document.getElementById("painelStreamer").style.display = "block";
   dataSelecionada = null;
 }
 
 function gerarCalendario(){
-  const nomes = ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
-  const diasSem = ['D','S','T','Q','Q','S','S'];
-  document.getElementById('mesCalendario').innerText = nomes[mesAtual] + ' de ' + anoAtual;
-  const c = document.getElementById('diasCalendario');
-  c.innerHTML = '';
-  diasSem.forEach(d => c.innerHTML += `<div style="text-align:center;color:var(--amarelo);font-weight:bold">${d}</div>`);
-  const pri = new Date(anoAtual, mesAtual, 1).getDay();
-  const ult = new Date(anoAtual, mesAtual + 1, 0).getDate();
-  const hj = hoje.getDate(), hjm = hoje.getMonth(), hja = hoje.getFullYear();
-  for(let i = 0; i < pri; i++) c.innerHTML += '<div></div>';
-  for(let d = 1; d <= ult; d++){
-    const dt = new Date(anoAtual, mesAtual, d);
-    const str = anoAtual + '-' + String(mesAtual+1).padStart(2,'0') + '-' + String(d).padStart(2,'0');
-    if(dt < new Date(hja, hjm, hj) || dt > dataLimite){
-      c.innerHTML += `<div class="dia-calendario dia-bloqueado">${d}</div>`;
-      continue;
+  const nomesMeses = ["Janeiro","Fevereiro","Março","Abril","Maio","Junho","Julho","Agosto","Setembro","Outubro","Novembro","Dezembro"];
+  const diasSemana = ["Dom","Seg","Ter","Qua","Qui","Sex","Sáb"];
+  const container = document.getElementById("diasCalendario");
+  const mesEl = document.getElementById("mesCalendario");
+  
+  mesEl.textContent = `${nomesMeses[mesAtual]} ${anoAtual}`;
+  container.innerHTML = "";
+  
+  for(const d of diasSemana){
+    const el = document.createElement("button");
+    el.className = "dia-calendario";
+    el.style.background = "transparent";
+    el.style.color = "var(--amarelo)";
+    el.textContent = d;
+    el.disabled = true;
+    container.appendChild(el);
+  }
+  
+  const primeiroDia = new Date(anoAtual, mesAtual, 1).getDay();
+  const totalDias = new Date(anoAtual, mesAtual + 1, 0).getDate();
+  
+  for(let i = 0; i < primeiroDia; i++){
+    const vazio = document.createElement("div");
+    container.appendChild(vazio);
+  }
+  
+  const hojeData = new Date();
+  for(let d = 1; d <= totalDias; d++){
+    const data = new Date(anoAtual, mesAtual, d);
+    const diaSemana = data.getDay();
+    const el = document.createElement("button");
+    el.className = "dia-calendario";
+    el.textContent = d;
+    
+    const dataStr = `${anoAtual}-${String(mesAtual+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+    const ehPassado = data < hojeData && data.toDateString() !== hojeData.toDateString();
+    const ehFimDeSemana = diaSemana === 0 || diaSemana === 6;
+    
+    if(ehPassado || ehFimDeSemana){
+      el.classList.add("dia-bloqueado");
+      el.disabled = true;
+      el.title = ehFimDeSemana ? "Fim de semana bloqueado" : "Data passada";
+    }else{
+      el.classList.add("dia-disponivel");
+      el.onclick = () => selecionarDia(data, el);
     }
-    if(dt.getDay() === 0){
-      c.innerHTML += `<div class="dia-calendario dia-bloqueado">${d}</div>`;
-      continue;
-    }
-    c.innerHTML += `<div class="dia-calendario dia-disponivel" onclick="selecionarDia('${str}', this)">${d}</div>`;
+    
+    container.appendChild(el);
   }
 }
 
-function selecionarDia(str, el){
-  document.querySelectorAll('.dia-calendario').forEach(d => d.classList.remove('dia-selecionado'));
-  el.classList.add('dia-selecionado');
-  dataSelecionada = str;
-  document.getElementById('avisoDiaSelecionado').style.display = 'block';
-  document.getElementById('horarioBatalha').innerHTML = '<option value="">⏰ Escolha o horário</option><option value="18h">18h ✅ Disponível</option><option value="22h">22h ✅ Disponível</option><option value="23h">23h ✅ Disponível</option>';
+function selecionarDia(data, elBotao){
+  document.querySelectorAll(".dia-selecionado").forEach(el => el.classList.remove("dia-selecionado"));
+  elBotao.classList.add("dia-selecionado");
+  dataSelecionada = data;
+  document.getElementById("avisoDiaSelecionado").style.display = "block";
 }
 
 function enviarSolicitacaoBatalha(){
-  if(!dataSelecionada) return alert('❌ Selecione uma data!');
-  const h = document.getElementById('horarioBatalha').value;
-  const m = document.getElementById('metaBatalha').value.trim();
-  if(!h) return alert('❌ Selecione o horário!');
-  if(!m) return alert('❌ Digite a meta de diamantes!');
-  const u = document.getElementById('nomeUsuarioBatalha').value;
-  const l = document.getElementById('linkPerfilBatalha').value;
-  const msg = `⚔️ SOLICITAÇÃO DE BATALHA
-
-👤 Usuário: ${u}
-🔗 Perfil: ${l}
-📅 Data: ${dataSelecionada}
-⏰ Horário: ${h}
-💎 Meta: ${m}
-
-Aguardando confirmação e oponente.`;
-  window.open(`https://wa.me/556981478873?text=${encodeURIComponent(msg)}`, '_blank');
-  alert('✅ Solicitação enviada! Aguardando confirmação da agência.\n\nQuando confirmado, aparecerá abaixo com os dados do oponente.');
-  fecharBatalhas();
-}
-
-function copiarPix(id, btn){
-  const t = document.getElementById(id).innerText.trim();
-  navigator.clipboard.writeText(t).then(() => {
-    const o = btn.innerText;
-    btn.innerText = '✅ COPIADO!';
-    btn.classList.add('copiado');
-    setTimeout(() => { btn.innerText = o; btn.classList.remove('copiado'); }, 3000);
-  }).catch(() => alert('❌ Copie manualmente.'));
+  if(!dataSelecionada){ alert("⚠️ Selecione uma data primeiro!"); return; }
+  const horario = document.getElementById("horarioBatalha").value;
+  const meta = document.getElementById("metaBatalha").value.trim();
+  if(!horario){ alert("⚠️ Escolha um horário!"); return; }
+  if(!meta){ alert("⚠️ Digite a meta de diamantes!"); return; }
+  
+  const mensagem = `⚔️ SOLICITAÇÃO DE BATALHA
+👤 Usuário: ${usuarioAtual.usuario}
+📅 Data: ${dataSelecionada.toLocaleDateString('pt-BR')}
+⏰ Horário: ${horario}
+💎 Meta: ${meta}
+🔗 Perfil: ${document.getElementById("linkPerfilBatalha").value}`;
+  
+  window.open(`https://wa.me/556981478873?text=${encodeURIComponent(mensagem)}`, "_blank");
+  alert("✅ Solicitação enviada pelo WhatsApp!");
 }
 
 function solicitar(tipo){
-  const txt = {
-    musica: '🎵 Solicito Música Personalizada',
-    arte: '🎨 Solicito Arte Visual',
-    treinamento: '🎓 Solicito Acesso ao Treinamento VIP'
+  const mensagens = {
+    musica: "🎵 SOLICITAÇÃO DE MÚSICA PERSONALIZADA\n👤 Usuário: " + usuarioAtual.usuario,
+    arte: "🎨 SOLICITAÇÃO DE ARTE VISUAL\n👤 Usuário: " + usuarioAtual.usuario,
+    treinamento: "🎨 SOLICITAÇÃO DE TREINAMENTO VIP\n👤 Usuário: " + usuarioAtual.usuario
   };
-  window.open(`https://wa.me/556981478873?text=${encodeURIComponent(txt[tipo])}`, '_blank');
+  window.open(`https://wa.me/556981478873?text=${encodeURIComponent(mensagens[tipo])}`, "_blank");
+}
+
+function copiarPix(id, botao){
+  const codigo = document.getElementById(id).textContent;
+  navigator.clipboard.writeText(codigo).then(() => {
+    const textoOriginal = botao.textContent;
+    botao.textContent = "✅ COPIADO!";
+    botao.classList.add("copiado");
+    setTimeout(() => {
+      botao.textContent = textoOriginal;
+      botao.classList.remove("copiado");
+    }, 2000);
+  }).catch(() => alert("❌ Erro ao copiar. Selecione e copie manualmente."));
 }
 </script>
-</div>
 </body>
 </html>
