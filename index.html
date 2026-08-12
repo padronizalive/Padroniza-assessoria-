@@ -67,6 +67,9 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
 .valor-servico:last-child{border-bottom:none}
 .valor-servico .nome{color:var(--texto);font-weight:bold}
 .valor-servico .preco{color:var(--amarelo);font-weight:bold}
+.solicitacao-batalha{background:rgba(116,87,255,0.1);border:1px solid var(--roxo);padding:12px;border-radius:8px;margin-bottom:10px}
+.btn-aprovar{background:var(--verde);border:none;padding:8px 12px;border-radius:6px;color:#fff;font-weight:bold;margin:5px 5px 5px 0;cursor:pointer}
+.btn-rejeitar{background:var(--vermelho);border:none;padding:8px 12px;border-radius:6px;color:#fff;font-weight:bold;margin:5px 5px 5px 0;cursor:pointer}
 
 .titulo-batalhas-streamer{text-align:center;color:var(--roxo);margin:20px 0 12px 0}
 .tipo-batalha-streamer{margin:15px 0 8px 0;font-weight:bold;padding:8px 12px;border-radius:6px}
@@ -76,6 +79,7 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
 .dados-perfil-fixos{background:rgba(116,87,255,0.08);border:1px solid #293653;padding:12px;border-radius:8px;margin-bottom:15px}
 .dados-perfil-fixos p{margin:6px 0;color:var(--cinza);font-size:15px}
 .dados-perfil-fixos strong{color:var(--texto)}
+.aviso-regra{background:rgba(255,200,87,0.1);border:1px solid var(--amarelo);padding:10px;border-radius:6px;margin:10px 0;font-size:14px;color:var(--amarelo)}
 </style>
 </head>
 <body>
@@ -122,19 +126,19 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
     </div>
 
     <div class="area-dados">
+      <h3>📥 SOLICITAÇÕES DE BATALHA PARA ANÁLISE</h3>
+      <div id="listaSolicitacoesBatalha">
+        <p style="text-align:center;color:var(--cinza);margin-top:10px">Nenhuma solicitação no momento</p>
+      </div>
+    </div>
+
+    <div class="area-dados">
       <h3>💸 VALORES DOS SERVIÇOS</h3>
       <div class="valor-servico"><span class="nome">Pacote Completo</span><span class="preco">R$ 39,99/mês</span></div>
       <div class="valor-servico"><span class="nome">Música Personalizada</span><span class="preco">R$ 20,00/unid</span></div>
       <div class="valor-servico"><span class="nome">Arte Visual</span><span class="preco">R$ 10,00/unid</span></div>
       <div class="valor-servico"><span class="nome">Treinamento VIP</span><span class="preco">R$ 9,99 taxa única</span></div>
       <div class="valor-servico"><span class="nome">Agendamento Batalhas</span><span class="preco">R$ 69,90/mês</span></div>
-    </div>
-
-    <div class="area-dados">
-      <h3>📋 SOLICITAÇÕES DE AGENCIAMENTO</h3>
-      <div id="listaSolicitacoes">
-        <p style="text-align:center;color:var(--cinza);margin-top:10px">As solicitações aparecerão aqui conforme chegam</p>
-      </div>
     </div>
 
     <div class="area-dados">
@@ -191,13 +195,13 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
 
   <div id="areaBatalhas" style="display:none;margin-top:20px">
     <h3 style="color:var(--roxo);text-align:center;margin-bottom:15px">📝 SOLICITAR BATALHA</h3>
+    <div class="aviso-regra">ℹ️ Regras: mínimo de 1 hora de diferença entre batalhas, sem conflitos com campanhas ou feriados.</div>
     <div class="grupo-campo"><input type="text" class="campo-form" id="nomeUsuarioBatalha" placeholder="Seu nome de usuário" disabled></div>
     <div class="grupo-campo"><input type="text" class="campo-form" id="linkPerfilBatalha" placeholder="Link do seu perfil" disabled></div>
     <div class="grupo-campo"><input type="date" class="campo-form" id="dataBatalha"></div>
     <div class="grupo-campo"><select class="campo-form" id="horarioBatalha"><option value="">Horário</option><option>17h</option><option>18h</option><option>19h</option><option>20h</option><option>21h</option><option>22h</option></select></div>
-    <div class="grupo-campo"><input type="text" class="campo-form" id="nomeOponenteExibicao" value="👤 Nome do oponente: Aguardando confirmação" disabled></div>
-    <div class="grupo-campo"><input type="text" class="campo-form" id="linkOponenteExibicao" value="🔗 Link do oponente: Aguardando confirmação" disabled></div>
-    <button class="btn-acao btn-verde" onclick="enviarSolicitacaoBatalha()">📤 ENVIAR SOLICITAÇÃO</button>
+    <div class="grupo-campo"><textarea class="campo-form" id="observacaoBatalha" placeholder="Observação (opcional): qual plataforma, meta, etc." rows="3"></textarea></div>
+    <button class="btn-acao btn-verde" onclick="enviarSolicitacaoBatalha()">📤 ENVIAR SOLICITAÇÃO PARA ANÁLISE</button>
     <button class="btn-acao btn-voltar" onclick="fecharBatalhas()">Voltar</button>
   </div>
 
@@ -282,6 +286,7 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
 const LINK_PLANILHA = "https://docs.google.com/spreadsheets/d/1R9eUsqF4kA0y22ryMUIsvGolBfk3-XwZ5R-RVpBiZA4/gviz/tq?tqx=out:json";
 let dadosPlanilha = [];
 let usuarioAtual = null;
+const FERIADOS = []; // Adicione datas aqui, ex: ['2026-09-07']
 
 window.onload = async function(){
   await carregarDadosPlanilha();
@@ -329,12 +334,87 @@ function carregarLivesNaInicial(){
   });
 }
 
+function verificarConflitoBatalha(data, horario){
+  const dataHoraEscolhida = `${data} ${horario}`;
+  if(FERIADOS.includes(data)) return "❌ Essa data é feriado, escolha outra.";
+  
+  const horaEscolhida = parseInt(horario);
+  const conflitoCampanha = dadosPlanilha.some(linha => {
+    if(!linha.c) return false;
+    const dataLinha = linha.c[2]?.v;
+    const horaLinha = linha.c[3]?.v;
+    const status = (linha.c[10]?.v || '').toUpperCase();
+    const oponente = (linha.c[7]?.v || '').toString().trim().toLowerCase();
+    const solicitante = (linha.c[0]?.v || '').toString().trim().toLowerCase();
+    if(!dataLinha || !horaLinha || status !== 'CONFIRMADO') return false;
+    if(dataLinha !== data) return false;
+    // REGRA PRINCIPAL: ignora maiúsculas/minúsculas
+    if(oponente.includes('todos da agência') || solicitante.includes('todos da agência')) return true;
+    // Verifica diferença mínima de 1 hora
+    const dif = Math.abs(parseInt(horaLinha) - horaEscolhida);
+    return dif < 1;
+  });
+  
+  if(conflitoCampanha) return "❌ Esse horário está reservado para campanha interna da Padroniza+Live, escolha outro horário.";
+  return true;
+}
+
 function atualizarDadosAdmin(){
   const qtdAgenciados = dadosPlanilha.filter(l=>l.c[1]?.v==='APROVADO').length;
   const qtdLives = dadosPlanilha.filter(l=>l.c[8]?.v===true||l.c[8]?.v==='true'||l.c[8]?.v==='SIM').length;
+  const solicitacoesPendentes = dadosPlanilha.filter(l=>l.c[10]?.v==='SOLICITADO').length;
   
   document.getElementById('qtdAgenciados').innerText = qtdAgenciados;
   document.getElementById('qtdLives').innerText = qtdLives;
+  document.getElementById('qtdPendentes').innerText = solicitacoesPendentes;
+  
+  carregarSolicitacoesAdmin();
+  carregarBatalhasAdmin();
+}
+
+function carregarSolicitacoesAdmin(){
+  const lista = document.getElementById('listaSolicitacoesBatalha');
+  lista.innerHTML = '';
+  const solicitacoes = dadosPlanilha.filter(l=>l.c[10]?.v==='SOLICITADO');
+  if(solicitacoes.length === 0){
+    lista.innerHTML = `<p style="text-align:center;color:var(--cinza)">Nenhuma solicitação pendente</p>`;
+    return;
+  }
+  solicitacoes.forEach(linha => {
+    lista.innerHTML += `
+      <div class="solicitacao-batalha">
+        <p><strong>Solicitante:</strong> ${linha.c[0]?.v || '-'}</p>
+        <p><strong>Data:</strong> ${linha.c[2]?.v || '-'} às ${linha.c[3]?.v || '-'}</p>
+        <p><strong>Observação:</strong> ${linha.c[11]?.v || 'Nenhuma'}</p>
+        <button class="btn-aprovar" onclick="alert('✅ Aprovado! Agora preencha os dados do oponente na planilha e coloque o status como CONFIRMADO.')">✅ APROVAR</button>
+        <button class="btn-rejeitar" onclick="alert('❌ Rejeitado! Atualize o status na planilha.')">❌ REJEITAR</button>
+      </div>
+    `;
+  });
+}
+
+function carregarBatalhasAdmin(){
+  const confirmadas = document.getElementById('listaBatalhasConfirmadasAdmin');
+  const pendentes = document.getElementById('listaBatalhasPendentesAdmin');
+  confirmadas.innerHTML = '<p style="text-align:center;color:var(--cinza)">Nenhuma batalha confirmada</p>';
+  pendentes.innerHTML = '<p style="text-align:center;color:var(--cinza)">Nenhuma solicitação pendente</p>';
+  
+  let htmlConf = '';
+  let htmlPend = '';
+  dadosPlanilha.forEach(linha => {
+    if(!linha.c || !linha.c[0]?.v) return;
+    const status = (linha.c[10]?.v || '').toUpperCase();
+    const bloco = `
+      <div class="item-lista">
+        <strong>${linha.c[0]?.v}</strong> → ${linha.c[2]?.v} às ${linha.c[3]?.v}<br>
+        Oponente: ${linha.c[7]?.v || 'A definir'}
+      </div>
+    `;
+    if(status === 'CONFIRMADO') htmlConf += bloco;
+    else if(status === 'APROVADO') htmlPend += bloco;
+  });
+  if(htmlConf) confirmadas.innerHTML = htmlConf;
+  if(htmlPend) pendentes.innerHTML = htmlPend;
 }
 
 function abrir(id){
@@ -377,7 +457,7 @@ function verificarAcesso(){
   const msg = document.getElementById('mensagemAcesso');
   msg.innerHTML = '🔍 Verificando...';
   setTimeout(()=>{
-    const encontrado = dadosPlanilha.find(linha => linha.c[0]?.v?.toString().trim().toLowerCase() === user);
+    const encontrado = dadosPlanilha.find(linha => (linha.c[0]?.v || '').toString().trim().toLowerCase() === user);
     if(!encontrado) return msg.innerHTML = '❌ Usuário não encontrado na base da Padroniza+Live.';
     if(encontrado.c[1]?.v !== 'APROVADO') return msg.innerHTML = '⏳ Aguardando aprovação da Padroniza+Live (até 48h).';
     
@@ -409,14 +489,14 @@ function carregarBatalhasDoUsuario(nomeUsuario){
     if(!linha.c) return;
     if(indice < 2) return; 
 
-    const usuarioPadroniza = (linha.c[5]?.v || '').toString().trim().toLowerCase();
+    const usuarioPadroniza = (linha.c[0]?.v || '').toString().trim().toLowerCase();
     const oponente = (linha.c[7]?.v || '').toString().trim().toLowerCase();
 
     if(usuarioPadroniza !== usuarioBusca && oponente !== usuarioBusca) return;
 
     const dia = linha.c[2]?.v || '-';
     const hora = linha.c[3]?.v || '-';
-    const adversario = usuarioPadroniza === usuarioBusca ? (linha.c[7]?.v || 'A definir') : (linha.c[5]?.v || 'A definir');
+    const adversario = usuarioPadroniza === usuarioBusca ? (linha.c[7]?.v || 'A definir') : (linha.c[0]?.v || 'A definir');
     const meta = linha.c[9]?.v || '-';
     const situacao = (linha.c[10]?.v || '').toString().trim().toUpperCase();
 
@@ -447,29 +527,4 @@ function solicitar(tipo){
 }
 
 function copiarPix(botao,codigo){
-  navigator.clipboard.writeText(codigo).then(()=>{
-    botao.innerText = '✅ COPIADO COM SUCESSO!';
-    setTimeout(()=>{botao.innerText = '📋 COPIAR CÓDIGO PIX';},3000);
-  }).catch(()=>{alert('Copie manualmente o código na caixa acima.');});
-}
-
-function enviarComprovante(servico){
-  const texto = encodeURIComponent(`Olá! Acabei de pagar o serviço: ${servico} da Padroniza+Live. Segue o comprovante.`);
-  window.open(`https://wa.me/556981478873?text=${texto}`);
-}
-
-function abrirBatalhas(){document.getElementById('painelStreamer').style.display='none';document.getElementById('areaBatalhas').style.display='block';}
-function fecharBatalhas(){document.getElementById('areaBatalhas').style.display='none';document.getElementById('painelStreamer').style.display='block';}
-function enviarSolicitacaoBatalha(){
-  const usuario = document.getElementById('nomeUsuarioBatalha').value.trim();
-  const data = document.getElementById('dataBatalha').value;
-  const horario = document.getElementById('horarioBatalha').value;
-  if(!usuario || !data || !horario) return alert('❌ Preencha Data e Horário!');
-  const mensagem = encodeURIComponent(`⚔️ SOLICITAÇÃO DE BATALHA - PADRONIZA+LIVE\n👤 Usuário: ${usuario}\n📅 Data: ${data}\n⏰ Horário: ${horario}`);
-  window.open(`https://wa.me/556981478873?text=${mensagem}`);
-  alert('✅ Solicitação enviada! Acompanhe aqui no seu espaço o status.');
-  fecharBatalhas();
-}
-</script>
-</body>
-</html>
+  navigator.clipboard.writeText(codigo
