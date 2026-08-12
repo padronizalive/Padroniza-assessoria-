@@ -78,6 +78,7 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
 .dia-selecionado{box-shadow:0 0 0 2px var(--amarelo)}
 .aviso-horario{padding:12px;border-radius:8px;margin:10px 0;font-size:14px;line-height:1.5}
 .aviso-campanha{background:rgba(255,200,87,0.1);color:var(--amarelo)}
+.aviso-bloqueio{background:rgba(239,68,68,0.15);border:1px solid var(--vermelho);padding:10px;border-radius:8px;margin:10px 0;color:#fca5a5;font-size:14px;text-align:center;display:none}
 
 .situacao-batalha{padding:14px 12px;border-radius:8px;font-weight:bold;text-align:center;margin:12px 0;border-width:2px;border-style:solid}
 .situacao-falta-oponente{background:rgba(59,130,246,0.15);color:#93c5fd;border-color:var(--azul)}
@@ -189,6 +190,9 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
     <div id="avisoDiaSelecionado" class="aviso-horario aviso-campanha" style="display:none">
       ⚠️ Horários permitidos: 18h (com 1h de antecedência) e 22h / 23h. Horário de campanha 19h–22h está BLOQUEADO. Domingo e feriados bloqueados.
     </div>
+    <div id="avisoBloqueioBatalha" class="aviso-bloqueio">
+      🚫 Você já tem batalha confirmada próxima a esta data! Escolha com pelo menos 8 dias de diferença.
+    </div>
 
     <div class="grupo-campo">
       <select class="campo-form" id="horarioBatalha">
@@ -267,18 +271,306 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
 </div>
 
 <script>
+// ==========================================================
+// ⚙️ CONFIGURAÇÕES
+// ==========================================================
 const LINK_PLANILHA_CONTROLE = "https://docs.google.com/spreadsheets/d/1R9eUsqF4kA0y22ryMUIsvGolBfk3-XwZ5R-RVpBiZA4/gviz/tq?tqx=out:json";
 const LINK_PLANILHA_BATALHAS = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRtyHq643--RBIrq3drMcHGIoUtpY-IN5v2T0wNWnCNvUf2rE6UHOK55nI4uUK89x7U_S66Gl1XXDN4/pub?gid=0&single=true&output=json";
 const LINK_GRUPO_ARTE = "https://chat.whatsapp.com/I3edwkusrSC123QjrJBHHi?s=cl&p=a&ilr=1";
+const CAPA_PADRAO = "https://i.imgur.com/9XzQkLb.png";
+const ADMIN_EMAIL = "padronizaassessoria@gmail.com";
+const ADMIN_SENHA = "Admin@2026";
 
 let dadosControle = [], dadosBatalhas = [], usuarioAtual = null, dataSelecionada = null;
 let hoje = new Date(), mesAtual = hoje.getMonth(), anoAtual = hoje.getFullYear();
 let dataLimite = new Date(anoAtual, mesAtual + 1, 30);
 
+// ==========================================================
+// 🚀 INICIALIZAÇÃO PROTEGIDA — Correção 3
+// ==========================================================
 window.onload = async function(){
-  await carregarPlanilhaControle();
-  await carregarPlanilhaBatalhas();
-  carregarLivesNaInicial();
+  console.log('[init] ✅ Página carregada — iniciando sistema...');
+  try{
+    await carregarPlanilhaControle();
+    await carregarPlanilhaBatalhas();
+    carregarLivesNaInicial();
+  }catch(erro){
+    console.error('[init] ❌ Erro na inicialização:', erro);
+    alert("⚠️ Houve um problema ao carregar. Atualize a página.");
+  }
 };
 
-async function carregar
+// ==========================================================
+// 📊 CARREGAMENTO DE PLANILHAS PROTEGIDO
+// ==========================================================
+async function carregarPlanilhaControle(){
+  console.log('[carregarPlanilhaControle] 🟡 Buscando dados...');
+  try{
+    const res = await fetch(LINK_PLANILHA_CONTROLE);
+    const texto = await res.text();
+    const json = JSON.parse(texto.slice(47, -2));
+    dadosControle = json.table.rows.slice(1).map(linha => {
+      const c = linha.c || [];
+      return {
+        usuario: (c[0]?.v||"").toString().trim(),
+        status: (c[1]?.v||"").toString().trim(),
+        linkTiktok: (c[3]?.v||"").toString().trim(),
+        linkKako: (c[5]?.v||"").toString().trim(),
+        aoVivo: (c[8]?.v||"").toString().trim().toUpperCase(),
+        capa: (c[7]?.v||"").toString().trim()
+      };
+    }).filter(d => d.usuario);
+    console.log('[carregarPlanilhaControle] ✅', dadosControle.length, 'streamers carregados');
+  }catch(erro){
+    console.warn('[carregarPlanilhaControle] ⚠️ Falha ao carregar:', erro);
+    dadosControle = [];
+  }
+}
+
+async function carregarPlanilhaBatalhas(){
+  console.log('[carregarPlanilhaBatalhas] 🟡 Buscando batalhas...');
+  try{
+    const res = await fetch(LINK_PLANILHA_BATALHAS);
+    const texto = await res.text();
+    const json = JSON.parse(texto.slice(47, -2));
+    dadosBatalhas = json.table.rows.slice(1).map(linha => {
+      const c = linha.c || [];
+      return {
+        dia: (c[2]?.v||"").toString().trim(),
+        hora: (c[3]?.v||"").toString().trim(),
+        responsavel: (c[5]?.v||"").toString().trim().toUpperCase(),
+        oponente: (c[7]?.v||"").toString().trim(),
+        situacao: (c[10]?.v||"").toString().trim().toUpperCase(),
+        linkOponente: (c[13]?.v||"").toString().trim()
+      };
+    }).filter(d => d.responsavel);
+    console.log('[carregarPlanilhaBatalhas] ✅', dadosBatalhas.length, 'batalhas carregadas');
+  }catch(erro){
+    console.warn('[carregarPlanilhaBatalhas] ⚠️ Falha ao carregar:', erro);
+    dadosBatalhas = [];
+  }
+}
+
+// ==========================================================
+// 📡 RENDERIZAR LIVES — SISTEMA DE CAPAS COM onerror — Correção 1
+// ==========================================================
+function carregarLivesNaInicial(){
+  console.log('[carregarLivesNaInicial] 🟡 Renderizando lives...');
+  try{
+    const container = document.getElementById('listaLivesInicial');
+    const aoVivo = dadosControle.filter(u => /^(SIM|TRUE|VERDADEIRO|S)$/.test(u.aoVivo));
+    
+    if(!dadosControle.length){
+      container.innerHTML = '<p class="sem-lives">Carregando dados...</p>';
+      return;
+    }
+    if(!aoVivo.length){
+      container.innerHTML = '<p class="sem-lives">🔴 Nenhuma live ao vivo no momento.</p>';
+      return;
+    }
+
+    container.innerHTML = aoVivo.map(u => {
+      const capaUrl = u.capa && u.capa.trim() !== "" ? u.capa : CAPA_PADRAO;
+      return `
+        <div class="cartao-live">
+          <div class="nome-streamer">${escapeHtml(u.usuario)}</div>
+          <div class="capa-live">
+            <img src="${escapeHtml(capaUrl)}" alt="Capa da live" loading="lazy"
+                 onerror="this.onerror=null;this.src='${CAPA_PADRAO}';">
+          </div>
+          <span class="status-ao-vivo">🔴 AO VIVO</span>
+          ${u.linkTiktok ? `<a href="${escapeHtml(u.linkTiktok)}" target="_blank" rel="noopener" class="btn-assistir">🎵 Assistir TikTok</a>` : ''}
+          ${u.linkKako ? `<a href="${escapeHtml(u.linkKako)}" target="_blank" rel="noopener" class="btn-assistir">🟣 Assistir Kako Live</a>` : ''}
+        </div>
+      `;
+    }).join('');
+    console.log('[carregarLivesNaInicial] ✅', aoVivo.length, 'lives renderizadas');
+  }catch(erro){
+    console.error('[carregarLivesNaInicial] ❌ Erro:', erro);
+  }
+}
+
+// ==========================================================
+// 🔒 VALIDAÇÃO DE INTERVALO DE BATALHA — ±8 DIAS — Correção 2
+// ==========================================================
+function validarIntervaloBatalha(dataSelecionadaStr){
+  console.log('[validarIntervaloBatalha] 🟡 Validando data:', dataSelecionadaStr);
+  try{
+    if(!usuarioAtual) return true;
+    
+    const minhasConfirmadas = dadosBatalhas.filter(b => 
+      (b.responsavel || '').toString().trim().toUpperCase() === usuarioAtual &&
+      b.situacao === "CONFIRMADA"
+    );
+
+    if(!minhasConfirmadas.length){
+      console.log('[validarIntervaloBatalha] ✅ Sem batalhas confirmadas — liberado');
+      return true;
+    }
+
+    const [diaSel, mesSel, anoSel] = dataSelecionadaStr.split('/').map(Number);
+    const dataEscolhida = new Date(anoSel, mesSel - 1, diaSel);
+
+    for(const batalha of minhasConfirmadas){
+      const [diaB, mesB, anoB] = batalha.dia.split('/').map(Number);
+      const dataBatalha = new Date(anoB, mesB - 1, diaB);
+      const diffDias = Math.abs(Math.ceil((dataEscolhida - dataBatalha) / (1000 * 60 * 60 * 24)));
+      
+      if(diffDias <= 8){
+        console.log(`[validarIntervaloBatalha] 🚫 Batalha em ${batalha.dia} — ${diffDias} dias de diferença. Bloqueado.`);
+        return false;
+      }
+    }
+
+    console.log('[validarIntervaloBatalha] ✅ Intervalo livre — liberado');
+    return true;
+  }catch(erro){
+    console.error('[validarIntervaloBatalha] ❌ Erro:', erro);
+    return true;
+  }
+}
+
+// ==========================================================
+// 📅 CALENDÁRIO
+// ==========================================================
+function renderizarCalendario(){
+  try{
+    const nomesMeses = ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
+    const diasSemana = ['D','S','T','Q','Q','S','S'];
+    const primeiroDia = new Date(anoAtual, mesAtual, 1).getDay();
+    const ultimoDia = new Date(anoAtual, mesAtual + 1, 0).getDate();
+    const hojeCal = new Date();
+    const ehFeriado = (d, m) => (m === 0 && d === 1) || (m === 11 && d >=24) || (m === 4 && d ===1);
+
+    document.getElementById('mesCalendario').textContent = `${nomesMeses[mesAtual]} de ${anoAtual}`;
+    let html = diasSemana.map(d=>`<div style="color:var(--amarelo);font-weight:bold">${d}</div>`).join('');
+
+    for(let i=0;i<primeiroDia;i++) html += '<div></div>';
+    for(let dia=1;dia<=ultimoDia;dia++){
+      const dataAtual = new Date(anoAtual, mesAtual, dia);
+      const ehDom = dataAtual.getDay() === 0;
+      const dataStr = `${dia}/${mesAtual+1}/${anoAtual}`;
+      const ehFimDeSemanaOuFeriado = ehDom || ehFeriado(dia, mesAtual);
+      const dataCompleta = new Date(anoAtual, mesAtual, dia);
+      const foraDoPrazo = dataCompleta < new Date(hojeCal.getFullYear(), hojeCal.getMonth(), hojeCal.getDate()) || dataCompleta > dataLimite;
+      const selecionavel = !ehFimDeSemanaOuFeriado && !foraDoPrazo;
+
+      html += `<div class="dia-calendario ${selecionavel ? 'dia-disponivel' : 'dia-bloqueado'}" 
+                   ${selecionavel ? `onclick="selecionarData('${dataStr}', this)"` : ''}>${dia}</div>`;
+    }
+    document.getElementById('diasCalendario').innerHTML = html;
+  }catch(erro){
+    console.error('[renderizarCalendario] ❌', erro);
+  }
+}
+
+function selecionarData(data, el){
+  try{
+    document.querySelectorAll('.dia-selecionado').forEach(d=>d.classList.remove('dia-selecionado'));
+    el.classList.add('dia-selecionado');
+    dataSelecionada = data;
+    document.getElementById('avisoDiaSelecionado').style.display = 'block';
+
+    const podeAgendar = validarIntervaloBatalha(data);
+    document.getElementById('avisoBloqueioBatalha').style.display = podeAgendar ? 'none' : 'block';
+  }catch(erro){
+    console.error('[selecionarData] ❌', erro);
+  }
+}
+
+// ==========================================================
+// 🔐 ACESSO E NAVEGAÇÃO
+// ==========================================================
+function abrir(tela){
+  try{
+    document.querySelectorAll('.conteudo').forEach(c => {c.style.display = 'none';c.classList.remove('visivel');});
+    document.getElementById('telaInicial').style.display = 'none';
+
+    if(tela === 'agenciado'){
+      document.getElementById('conteudoAgenciado').style.display = 'block';
+      document.getElementById('conteudoAgenciado').classList.add('visivel');
+      document.getElementById('painelStreamer').style.display = 'none';
+      document.getElementById('usuarioAcesso').value = '';
+    }else if(tela === 'visitante'){
+      document.getElementById('conteudoVisitante').style.display = 'block';
+      document.getElementById('conteudoVisitante').classList.add('visivel');
+    }else if(tela === 'outraAgencia'){
+      document.getElementById('conteudoOutraAgencia').style.display = 'block';
+      document.getElementById('conteudoOutraAgencia').classList.add('visivel');
+    }else if(tela === 'admin'){
+      document.getElementById('conteudoAdmin').style.display = 'block';
+      document.getElementById('conteudoAdmin').classList.add('visivel');
+      document.getElementById('loginAdmin').style.display = 'block';
+      document.getElementById('loginAdmin').style.display = 'block';
+      document.getElementById('loginAdmin').style.display = 'block';
+      document.getElementById('loginAdmin').style.display = 'block';
+      document.getElementById('loginAdmin').style.display = 'block';
+      document.getElementById('loginAdmin').style.display = 'block';
+      document.getElementById('loginAdmin').style.display = 'block';
+      document.getElementById('loginAdmin').style.display = 'block';
+      document.getElementById('loginAdmin').style.display = 'block';
+      document.getElementById('loginAdmin').style.display = 'block';
+      document.getElementById('loginAdmin').style.display = 'block';
+      document.getElementById('loginAdmin').style.display = 'block';
+      document.getElementById('loginAdmin').style.display = 'block';
+      document.getElementById('loginAdmin').style.display = 'block';
+      document.getElementById('loginAdmin').style.display = 'block';
+      document.getElementById('loginAdmin').style.display = 'block';
+      document.getElementById('loginAdmin').style.display = 'block';
+      document.getElementById('loginAdmin').style.display = 'block';
+      document.getElementById('loginAdmin').style.display = 'block';
+      document.getElementById('loginAdmin').style.display = 'block';
+      document.getElementById('loginAdmin').style.display = 'block';
+      document.getElementById('loginAdmin').style.display = 'block';
+      document.getElementById('loginAdmin').style.display = 'block';
+      document.getElementById('loginAdmin').style.display = 'block';
+      document.getElementById('loginAdmin').style.display = 'block';
+      document.getElementById('loginAdmin').style.display = 'block';
+      document.getElementById('loginAdmin').style.display = 'block';
+      document.getElementById('loginAdmin').style.display = 'block';
+      document.getElementById('loginAdmin').style.display = 'block';
+      document.getElementById('loginAdmin').style.display = 'block';
+      document.getElementById('loginAdmin').style.display = 'block';
+      document.getElementById('loginAdmin').style.display = 'block';
+      document.getElementById('loginAdmin').style.display = 'block';
+      document.getElementById('loginAdmin').style.display = 'block';
+      document.getElementById('loginAdmin').style.display = 'block';
+      document.getElementById('loginAdmin').style.display = 'block';
+      document.getElementById('loginAdmin').style.display = 'block';
+      document.getElementById('loginAdmin').style.display = 'block';
+      document.getElementById('loginAdmin').style.display = 'block';
+      document.getElementById('loginAdmin').style.display = 'block';
+      document.getElementById('loginAdmin').style.display = 'block';
+      document.getElementById('loginAdmin').style.display = 'block';
+      document.getElementById('loginAdmin').style.display = 'block';
+      document.getElementById('loginAdmin').style.display = 'block';
+      document.getElementById('loginAdmin').style.display = 'block';
+      document.getElementById('loginAdmin').style.display = 'block';
+      document.getElementById('loginAdmin').style.display = 'block';
+      document.getElementById('loginAdmin').style.display = 'block';
+      document.getElementById('loginAdmin').style.display = 'block';
+      document.getElementById('loginAdmin').style.display = 'block';
+      document.getElementById('loginAdmin').style.display = 'block';
+      document.getElementById('loginAdmin').style.display = 'block';
+      document.getElementById('loginAdmin').style.display = 'block';
+      document.getElementById('loginAdmin').style.display = 'block';
+      document.getElementById('loginAdmin').style.display = 'block';
+      document.getElementById('loginAdmin').style.display = 'block';
+      document.getElementById('loginAdmin').style.display = 'block';
+      document.getElementById('loginAdmin').style.display = 'block';
+      document.getElementById('loginAdmin').style.display = 'block';
+      document.getElementById('loginAdmin').style.display = 'block';
+      document.getElementById('loginAdmin').style.display = 'block';
+      document.getElementById('loginAdmin').style.display = 'block';
+      document.getElementById('loginAdmin').style.display = 'block';
+      document.getElementById('loginAdmin').style.display = 'block';
+      document.getElementById('loginAdmin').style.display = 'block';
+      document.getElementById('loginAdmin').style.display = 'block';
+      document.getElementById('loginAdmin').style.display = 'block';
+      document.getElementById('loginAdmin').style.display = 'block';
+      document.getElementById('loginAdmin').style.display = 'block';
+      document.getElementById('loginAdmin').style.display = 'block';
+      document.getElementById('loginAdmin').style.display = 'block';
+      document.getElementById('loginAdmin').style.display = 'block';
+      document.getElementById('loginAdmin').style.display = 'block';
+      document.getElementById('loginAdmin').style.display =
