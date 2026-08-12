@@ -63,8 +63,6 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
 .item-lista{padding:12px;border-bottom:1px solid #293653;margin-bottom:8px}
 .item-lista:last-child{border-bottom:none}
 .item-lista strong{color:var(--amarelo)}
-.btn-aprovar{background:var(--verde);border:none;padding:8px 12px;border-radius:6px;color:#fff;font-weight:bold;margin:5px 5px 5px 0;cursor:pointer}
-.btn-rejeitar{background:var(--vermelho);border:none;padding:8px 12px;border-radius:6px;color:#fff;font-weight:bold;margin:5px 5px 5px 0;cursor:pointer}
 .valor-servico{display:flex;justify-content:space-between;padding:10px;border-bottom:1px solid #293653}
 .valor-servico:last-child{border-bottom:none}
 .valor-servico .nome{color:var(--texto);font-weight:bold}
@@ -73,15 +71,30 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
 .titulo-batalhas-streamer{text-align:center;color:var(--roxo);margin:20px 0 12px 0}
 .tipo-batalha-streamer{margin:15px 0 8px 0;font-weight:bold;padding:8px 12px;border-radius:6px}
 .confirmada-streamer{background:rgba(52,211,153,0.15);color:var(--verde);border-left:3px solid var(--verde)}
-.pendente-streamer{background:rgba(255,200,87,0.15);color:var(--amarelo);border-left:3px solid var(--amarelo)}
+.pendente-streamer{background:rgba(59,130,246,0.15);color:var(--azul);border-left:3px solid var(--azul)}
 .sem-batalhas{text-align:center;color:var(--cinza);padding:15px;font-size:15px}
 .dados-perfil-fixos{background:rgba(116,87,255,0.08);border:1px solid #293653;padding:12px;border-radius:8px;margin-bottom:15px}
 .dados-perfil-fixos p{margin:6px 0;color:var(--cinza);font-size:15px}
 .dados-perfil-fixos strong{color:var(--texto)}
 
+.calendario-container{background:var(--painel2);border-radius:10px;padding:15px;margin:15px 0}
+.calendario-mes{text-align:center;color:var(--amarelo);font-weight:bold;margin-bottom:15px;font-size:18px}
+.calendario-dias{display:grid;grid-template-columns:repeat(7,1fr);gap:8px}
+.dia-calendario{padding:10px 5px;text-align:center;border-radius:8px;cursor:pointer;font-weight:bold;font-size:14px;border:none}
+.dia-disponivel{background:rgba(52,211,153,0.2);color:var(--verde)}
+.dia-campanha{background:rgba(255,200,87,0.2);color:var(--amarelo)}
+.dia-bloqueado{background:rgba(239,68,68,0.2);color:var(--vermelho);cursor:not-allowed;opacity:0.6}
+.dia-confirmado{background:rgba(247,249,255,0.1);color:var(--texto);border:1px solid #444}
+.dia-selecionado{box-shadow:0 0 0 2px var(--amarelo)}
+.aviso-horario{padding:10px;border-radius:8px;margin:10px 0;font-size:14px}
+.aviso-bloqueado{background:rgba(239,68,68,0.1);color:var(--vermelho)}
+.aviso-campanha{background:rgba(255,200,87,0.1);color:var(--amarelo)}
+.status-batalha{padding:8px 12px;border-radius:6px;font-weight:bold;text-align:center;margin:8px 0}
+.status-falta-oponente{background:rgba(59,130,246,0.2);color:var(--azul)}
+.status-confirmado{background:rgba(247,249,255,0.1);color:var(--texto);border:1px solid #555}
 .link-oponente{color:var(--verde);text-decoration:none}
 .link-oponente:hover{text-decoration:underline}
-.aviso-bloqueio{background:rgba(239,68,68,0.1);border:1px solid var(--vermelho);padding:10px;border-radius:6px;color:var(--vermelho);font-size:14px;margin-top:8px}
+.botao-grupo-arte{display:inline-block;background:linear-gradient(135deg,#25d366,#128c7e);color:#fff;padding:10px 15px;border-radius:8px;text-decoration:none;font-weight:bold;margin-top:10px;text-align:center;width:100%}
 </style>
 </head>
 <body>
@@ -112,7 +125,7 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
   
   <div id="loginAdmin">
     <div class="grupo-campo"><input type="email" class="campo-form" id="emailAdmin" placeholder="E-mail: padronizaassessoria@gmail.com"></div>
-    <div class="grupo-campo"><input type="password" class="campo-form" id="senhaAdmin" placeholder="Digite sua senha"></div>
+    <div class="grupo-campo"><input type="password" class="campo-form" id="senhaAdmin" placeholder="Digite sua senha"> <span style="color:var(--cinza);font-size:13px">👁️ senha protegida</span></div>
     <button class="btn-acao btn-verde" onclick="verificarAdmin()">🔑 ENTRAR NO PAINEL</button>
     <button class="btn-acao btn-voltar" onclick="voltar()">Voltar ao Início</button>
   </div>
@@ -149,7 +162,7 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
       <div id="listaBatalhasConfirmadasAdmin">
         <p style="text-align:center;color:var(--cinza)">Nenhuma batalha confirmada</p>
       </div>
-      <h4 style="color:var(--amarelo);margin:15px 0 8px 0">⏳ Pendentes</h4>
+      <h4 style="color:var(--amarelo);margin:15px 0 8px 0">⏳ Pendentes / Falta Oponente</h4>
       <div id="listaBatalhasPendentesAdmin">
         <p style="text-align:center;color:var(--cinza)">Nenhuma solicitação pendente</p>
       </div>
@@ -183,7 +196,7 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
       <p class="sem-batalhas">Nenhuma batalha confirmada no momento</p>
     </div>
 
-    <h4 class="tipo-batalha-streamer pendente-streamer">⏳ SOLICITAÇÕES / PENDENTES</h4>
+    <h4 class="tipo-batalha-streamer pendente-streamer">⏳ SOLICITAÇÕES / FALTA OPONENTE</h4>
     <div class="area-dados" style="margin-bottom:20px" id="minhasBatalhasPendentes">
       <p class="sem-batalhas">Nenhuma solicitação pendente</p>
     </div>
@@ -199,13 +212,30 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
     <h3 style="color:var(--roxo);text-align:center;margin-bottom:15px">📝 SOLICITAR BATALHA</h3>
     <div class="grupo-campo"><input type="text" class="campo-form" id="nomeUsuarioBatalha" placeholder="Seu nome de usuário" disabled></div>
     <div class="grupo-campo"><input type="text" class="campo-form" id="linkPerfilBatalha" placeholder="Link do seu perfil" disabled></div>
-    <div class="grupo-campo"><input type="date" class="campo-form" id="dataBatalha"></div>
-    <div class="grupo-campo"><select class="campo-form" id="horarioBatalha"><option value="">Horário</option><option>18h</option><option>19h</option><option>20h</option><option>21h</option><option>22h</option></select></div>
-    <div id="avisoHorario" style="display:none;margin-bottom:12px"></div>
-    <div class="grupo-campo"><input type="text" class="campo-form" id="nomeOponenteExibicao" value="👤 Oponente: Aguardando confirmação da agência" disabled></div>
-    <div class="grupo-campo"><input type="text" class="campo-form" id="agenciaOponenteExibicao" value="🏢 Agência: Aguardando confirmação" disabled></div>
-    <div class="grupo-campo"><input type="text" class="campo-form" id="metaExibicao" value="💎 Meta de diamantes: A definir" disabled></div>
+
+    <!-- CALENDÁRIO INTELIGENTE -->
+    <div class="calendario-container">
+      <div class="calendario-mes" id="mesCalendario"></div>
+      <div class="calendario-dias" id="diasCalendario"></div>
+    </div>
+    <div id="avisoDiaSelecionado" class="aviso-horario" style="display:none"></div>
+
+    <div class="grupo-campo">
+      <select class="campo-form" id="horarioBatalha">
+        <option value="">⏰ Selecione primeiro o dia acima</option>
+      </select>
+    </div>
+
+    <div class="grupo-campo"><input type="text" class="campo-form" id="metaBatalha" placeholder="💎 Meta de diamantes (ex: 5000)" required></div>
+
+    <!-- STATUS AUTOMÁTICO - NÃO PODE ALTERAR -->
+    <div class="status-batalha status-falta-oponente">
+      🟦 SITUAÇÃO: FALTA OPONENTE <small style="font-weight:normal;display:block;font-size:12px">(atualizado pela agência)</small>
+    </div>
+
+    <div class="grupo-campo"><input type="text" class="campo-form" id="nomeOponenteExibicao" value="👤 Nome do oponente: Aguardando confirmação" disabled></div>
     <div class="grupo-campo"><input type="text" class="campo-form" id="linkOponenteExibicao" value="🔗 Link do oponente: Aguardando confirmação" disabled></div>
+
     <button class="btn-acao btn-verde" onclick="enviarSolicitacaoBatalha()">📤 ENVIAR SOLICITAÇÃO</button>
     <button class="btn-acao btn-voltar" onclick="fecharBatalhas()">Voltar</button>
   </div>
@@ -231,14 +261,14 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
   <hr style="border-color:#293653;margin:25px 0">
 
   <h2 class="titulo-secao">💼 SERVIÇOS DISPONÍVEIS</h2>
-  <p style="text-align:center;color:var(--cinza);margin-bottom:20px">Ou contrate nossos serviços avulsos ou pacotes:</p>
+  <p style="text-align:center;color:var(--cinza);margin-bottom:20px">Agenciado tem acesso GRÁTIS. Confira valores para outros:</p>
   
   <div style="background:var(--painel2);padding:15px;border-radius:10px;margin-bottom:15px">
     <h3 style="color:var(--amarelo);text-align:center">✅ PACOTE COMPLETO</h3>
     <p style="text-align:center;font-size:20px;font-weight:bold;color:var(--verde);margin:10px 0">De R$ 59,90 → por R$ 39,99/mês</p>
     <p style="text-align:center">Acesso a todos os serviços + 1 música por dia</p>
     <div class="pix-codigo">00020101021126770014br.gov.bcb.pix01367c0dfbc3-68e7-4b85-a0eb-eb037b738d9f0215Pacote completo520400005303986540539.995802BR591965 8 0 M G DA SILVA6007VILHENA62070503***6304C43A</div>
-    <button class="btn-acao btn-whatsapp" onclick="copiarPix(this,'00020101021126770014br.gov.bcb.pix01367c0dfbc3-68e7-4b85-a0eb-eb037b738d9f0215Pacote completo520400005303986540539.995802BR591965 8 0 M G DA SILVA6007VILHENA62070503***6304C43A')">📋 COPIAR CÓDIGO PIX</button>
+    <button class="btn-acao btn-whatsapp" onclick="copiarPix(this,'00020101021126770014br.gov.bcb.pix01367c0dfbc3-68e7-4b85-a0eb-eb037b738d9f0215Pacote completo520400005303986540539.995802BR591965 8 0 M G DA SILVA6007VILHENA62070503***6304C43A')">📋 COPIAR CHAVE PIX</button>
     <button class="btn-acao btn-verde" onclick="enviarComprovante('Pacote Completo R$39,99')">✅ JÁ PAGUEI — ENVIAR COMPROVANTE</button>
   </div>
 
@@ -246,7 +276,7 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
     <h3 style="color:var(--rosa);text-align:center">🎵 MÚSICA PERSONALIZADA</h3>
     <p style="text-align:center;font-size:18px;font-weight:bold;color:var(--amarelo);margin:10px 0">R$ 20,00 por unidade</p>
     <div class="pix-codigo">00020101021126820014br.gov.bcb.pix01367c0dfbc3-68e7-4b85-a0eb-eb037b738d9f0220musica personalizada520400005303986540520.005802BR591965 8 0 M G DA SILVA6007VILHENA62070503***6304E948</div>
-    <button class="btn-acao btn-whatsapp" onclick="copiarPix(this,'00020101021126820014br.gov.bcb.pix01367c0dfbc3-68e7-4b85-a0eb-eb037b738d9f0220musica personalizada520400005303986540520.005802BR591965 8 0 M G DA SILVA6007VILHENA62070503***6304E948')">📋 COPIAR CÓDIGO PIX</button>
+    <button class="btn-acao btn-whatsapp" onclick="copiarPix(this,'00020101021126820014br.gov.bcb.pix01367c0dfbc3-68e7-4b85-a0eb-eb037b738d9f0220musica personalizada520400005303986540520.005802BR591965 8 0 M G DA SILVA6007VILHENA62070503***6304E948')">📋 COPIAR CHAVE PIX</button>
     <button class="btn-acao btn-verde" onclick="enviarComprovante('Música Personalizada R$20,00')">✅ JÁ PAGUEI — ENVIAR COMPROVANTE</button>
   </div>
 
@@ -254,7 +284,7 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
     <h3 style="color:var(--roxo);text-align:center">🎨 ARTE VISUAL</h3>
     <p style="text-align:center;font-size:18px;font-weight:bold;color:var(--amarelo);margin:10px 0">R$ 10,00 por unidade</p>
     <div class="pix-codigo">00020101021126730014br.gov.bcb.pix01367c0dfbc3-68e7-4b85-a0eb-eb037b738d9f0211arte visual520400005303986540510.005802BR591965 8 0 M G DA SILVA6007VILHENA62070503***6304D45F</div>
-    <button class="btn-acao btn-whatsapp" onclick="copiarPix(this,'00020101021126730014br.gov.bcb.pix01367c0dfbc3-68e7-4b85-a0eb-eb037b738d9f0211arte visual520400005303986540510.005802BR591965 8 0 M G DA SILVA6007VILHENA62070503***6304D45F')">📋 COPIAR CÓDIGO PIX</button>
+    <button class="btn-acao btn-whatsapp" onclick="copiarPix(this,'00020101021126730014br.gov.bcb.pix01367c0dfbc3-68e7-4b85-a0eb-eb037b738d9f0211arte visual520400005303986540510.005802BR591965 8 0 M G DA SILVA6007VILHENA62070503***6304D45F')">📋 COPIAR CHAVE PIX</button>
     <button class="btn-acao btn-verde" onclick="enviarComprovante('Arte Visual R$10,00')">✅ JÁ PAGUEI — ENVIAR COMPROVANTE</button>
   </div>
 
@@ -262,7 +292,7 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
     <h3 style="color:var(--verde);text-align:center">🎓 TREINAMENTO VIP / GRUPO</h3>
     <p style="text-align:center;font-size:18px;font-weight:bold;color:var(--amarelo);margin:10px 0">R$ 9,99 taxa única de acesso</p>
     <div class="pix-codigo">00020101021126770014br.gov.bcb.pix01367c0dfbc3-68e7-4b85-a0eb-eb037b738d9f0215Treinamento vip52040000530398654049.995802BR591965 8 0 M G DA SILVA6007VILHENA62070503***63045E3B</div>
-    <button class="btn-acao btn-whatsapp" onclick="copiarPix(this,'00020101021126770014br.gov.bcb.pix01367c0dfbc3-68e7-4b85-a0eb-eb037b738d9f0215Treinamento vip52040000530398654049.995802BR591965 8 0 M G DA SILVA6007VILHENA62070503***63045E3B')">📋 COPIAR CÓDIGO PIX</button>
+    <button class="btn-acao btn-whatsapp" onclick="copiarPix(this,'00020101021126770014br.gov.bcb.pix01367c0dfbc3-68e7-4b85-a0eb-eb037b738d9f0215Treinamento vip52040000530398654049.995802BR591965 8 0 M G DA SILVA6007VILHENA62070503***63045E3B')">📋 COPIAR CHAVE PIX</button>
     <button class="btn-acao btn-verde" onclick="enviarComprovante('Treinamento VIP R$9,99')">✅ JÁ PAGUEI — ENVIAR COMPROVANTE</button>
   </div>
 
@@ -270,7 +300,7 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
     <h3 style="color:var(--vermelho);text-align:center">⚔️ AGENDAMENTO DE BATALHA</h3>
     <p style="text-align:center;font-size:18px;font-weight:bold;color:var(--amarelo);margin:10px 0">R$ 69,90/mês</p>
     <div class="pix-codigo">00020101021126840014br.gov.bcb.pix01367c0dfbc3-68e7-4b85-a0eb-eb037b738d9f0222Agendamento de batalha520400005303986540569.995802BR591965 8 0 M G DA SILVA6007VILHENA62070503***6304606A</div>
-    <button class="btn-acao btn-whatsapp" onclick="copiarPix(this,'00020101021126840014br.gov.bcb.pix01367c0dfbc3-68e7-4b85-a0eb-eb037b738d9f0222Agendamento de batalha520400005303986540569.995802BR591965 8 0 M G DA SILVA6007VILHENA62070503***6304606A')">📋 COPIAR CÓDIGO PIX</button>
+    <button class="btn-acao btn-whatsapp" onclick="copiarPix(this,'00020101021126840014br.gov.bcb.pix01367c0dfbc3-68e7-4b85-a0eb-eb037b738d9f0222Agendamento de batalha520400005303986540569.995802BR591965 8 0 M G DA SILVA6007VILHENA62070503***6304606A')">📋 COPIAR CHAVE PIX</button>
     <button class="btn-acao btn-verde" onclick="enviarComprovante('Agendamento de Batalha R$69,90')">✅ JÁ PAGUEI — ENVIAR COMPROVANTE</button>
   </div>
 
@@ -278,7 +308,11 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
   <button class="btn-acao btn-voltar" onclick="voltar()">Voltar ao Início</button>
 </div>
 
-<div class="conteudo" id="conteudoOutraAgencia"><h2 class="titulo-secao">🤝 PARCERIAS</h2><button class="btn-acao btn-voltar" onclick="voltar()">Voltar ao Início</button></div>
+<div class="conteudo" id="conteudoOutraAgencia">
+  <h2 class="titulo-secao">🤝 PARCERIAS E OUTRAS AGÊNCIAS</h2>
+  <p style="text-align:center;color:var(--cinza);padding:20px">Área exclusiva para parceiros. Batalhas e agendamentos disponíveis mediante parceria.</p>
+  <button class="btn-acao btn-voltar" onclick="voltar()">Voltar ao Início</button>
+</div>
 
 </div>
 
@@ -287,237 +321,237 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
 const LINK_PLANILHA_CONTROLE = "https://docs.google.com/spreadsheets/d/1R9eUsqF4kA0y22ryMUIsvGolBfk3-XwZ5R-RVpBiZA4/gviz/tq?tqx=out:json";
 const LINK_PLANILHA_BATALHAS = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRtyHq643--RBIrq3drMcHGIoUtpY-IN5v2T0wNWnCNvUf2rE6UHOK55nI4uUK89x7U_S66Gl1XXDN4/pub?gid=0&single=true&output=json";
 const LINK_GRUPO_ARTE = "https://chat.whatsapp.com/I3edwkusrSC123QjrJBHHi?s=cl&p=a&ilr=1";
+const LINK_WHATSAPP = "https://wa.me/556981478873";
 
-let dadosPlanilha = [];
+let dadosControle = [];
 let dadosBatalhas = [];
 let usuarioAtual = null;
+let dataSelecionada = null;
+let hoje = new Date();
+let mesAtual = hoje.getMonth();
+let anoAtual = hoje.getFullYear();
 
+// === INICIALIZAÇÃO ===
 window.onload = async function(){
   await carregarPlanilhaControle();
   await carregarPlanilhaBatalhas();
   carregarLivesNaInicial();
-  atualizarDadosAdmin();
+  atualizarContadoresAdmin();
+  gerarCalendario();
 };
 
+// === CARREGAR PLANILHA DE CONTROLE ===
 async function carregarPlanilhaControle(){
   try{
     const res = await fetch(LINK_PLANILHA_CONTROLE);
     const texto = await res.text();
-    dadosPlanilha = JSON.parse(texto.substr(47).slice(0,-2)).table.rows;
-    console.log("✅ Planilha de Controle carregada!");
-  }catch(e){console.log("Erro planilha controle:",e);}
+    dadosControle = JSON.parse(texto.substr(47).slice(0,-2)).table.rows;
+    console.log("✅ Planilha Controle carregada:", dadosControle.length, "linhas");
+  }catch(e){console.log("Erro planilha controle:", e);}
 }
 
+// === CARREGAR PLANILHA DE BATALHAS ===
 async function carregarPlanilhaBatalhas(){
   try{
     const res = await fetch(LINK_PLANILHA_BATALHAS);
     if(!res.ok) throw new Error("Erro " + res.status);
     dadosBatalhas = await res.json();
-    console.log("✅ Planilha de Batalhas carregada!");
+    console.log("✅ Planilha Batalhas carregada");
   }catch(e){
-    console.log("Aviso planilha batalhas:", e.message);
+    console.log("Aviso: Planilha Batalhas em modo leitura:", e.message);
     dadosBatalhas = [];
   }
 }
 
+// === CARREGAR LIVES NA TELA INICIAL ===
 function carregarLivesNaInicial(){
   const lista = document.getElementById('listaLivesInicial');
   if(!lista) return;
   lista.innerHTML = '';
-  const temLive = dadosPlanilha.some(linha => linha.c[8]?.v === true || linha.c[8]?.v === 'true' || linha.c[8]?.v === 'SIM');
-  if(!temLive){lista.innerHTML = `<div class="sem-lives">🔍 Nenhuma live ao vivo no momento. Volte mais tarde!</div>`;return;}
   
-  dadosPlanilha.forEach(linha => {
+  const temLive = dadosControle.some(linha => {
+    const val = linha.c?.[8]?.v;
+    return val === true || val === 'true' || val === 'SIM';
+  });
+  
+  if(!temLive){
+    lista.innerHTML = `<div class="sem-lives">🔍 Nenhuma live ao vivo no momento. Volte mais tarde!</div>`;
+    return;
+  }
+
+  dadosControle.forEach(linha => {
     if(!linha.c) return;
     const aoVivo = linha.c[8]?.v === true || linha.c[8]?.v === 'true' || linha.c[8]?.v === 'SIM';
     if(!aoVivo) return;
-    
+
     const nome = linha.c[0]?.v || 'Streamer';
     const capa = linha.c[7]?.v || '';
-    const linkTiktok = linha.c[4]?.v || '';
-    const linkKako = linha.c[6]?.v || '';
-    const plataforma = linkTiktok ? 'TikTok' : (linkKako ? 'Kako Live' : '');
-    const linkAssistir = linkTiktok || linkKako || '#';
-    
+    const linkT = linha.c[3]?.v || '';
+    const linkK = linha.c[5]?.v || '';
+    const plataforma = linkT ? 'TikTok' : (linkK ? 'Kako Live' : '');
+    const linkLive = linkT || linkK || '#';
+
     lista.innerHTML += `
       <div class="cartao-live">
         <div class="nome-streamer">${nome}</div>
-        <button class="btn-assistir" onclick="window.open('${linkAssistir}','_blank')">▶️ Assistir</button>
-        <div class="capa-live">${capa?`<img src="${capa}" alt="Capa">`:'Capa da Live'}</div>
+        <div class="capa-live">${capa ? `<img src="${capa}" alt="Capa da live" onerror="this.style.display='none'">` : '🎬 Capa da Live'}</div>
         <span class="status-ao-vivo">🔴 AO VIVO</span>
         <span class="plataforma-live">🎵 ${plataforma}</span>
+        <button class="btn-assistir" onclick="window.open('${linkLive}','_blank')">▶️ ASSISTIR LIVE</button>
       </div>
     `;
   });
 }
 
-function atualizarDadosAdmin(){
-  const qtdAgenciados = dadosPlanilha.filter(l=>l.c[1]?.v==='APROVADO').length;
-  const qtdLives = dadosPlanilha.filter(l=>l.c[8]?.v===true||l.c[8]?.v==='true'||l.c[8]?.v==='SIM').length;
-  document.getElementById('qtdAgenciados').innerText = qtdAgenciados;
-  document.getElementById('qtdLives').innerText = qtdLives;
-}
-
+// === ABRIR TELAS ===
 function abrir(id){
-  document.querySelectorAll('.conteudo').forEach(c=>c.classList.remove('visivel'));
+  document.querySelectorAll('.conteudo').forEach(c => c.classList.remove('visivel'));
   document.getElementById('telaInicial').style.display = 'none';
-  document.getElementById('conteudo'+id.charAt(0).toUpperCase()+id.slice(1)).classList.add('visivel');
-  if(id==='admin'){
-    document.getElementById('loginAdmin').style.display='block';
-    document.getElementById('painelAdmin').style.display='none';
+  const alvo = document.getElementById('conteudo' + id.charAt(0).toUpperCase() + id.slice(1));
+  if(alvo) alvo.classList.add('visivel');
+  if(id === 'admin'){
+    document.getElementById('loginAdmin').style.display = 'block';
+    document.getElementById('painelAdmin').style.display = 'none';
+  }
+  if(id === 'agenciado'){
+    document.getElementById('painelStreamer').style.display = 'none';
+    document.getElementById('areaBatalhas').style.display = 'none';
+    document.getElementById('mensagemAcesso').innerHTML = '';
+    document.getElementById('usuarioAcesso').value = '';
   }
 }
 
+// === VOLTAR AO INÍCIO ===
 function voltar(){
-  document.querySelectorAll('.conteudo').forEach(c=>c.classList.remove('visivel'));
+  document.querySelectorAll('.conteudo').forEach(c => c.classList.remove('visivel'));
   document.getElementById('telaInicial').style.display = 'block';
 }
 
+// === LOGIN ADMIN ===
 function verificarAdmin(){
   const email = document.getElementById('emailAdmin').value.trim();
   const senha = document.getElementById('senhaAdmin').value.trim();
   if(email === 'padronizaassessoria@gmail.com' && senha === 'agency2026.'){
-    alert('✅ Acesso liberado!');
-    document.getElementById('loginAdmin').style.display='none';
-    document.getElementById('painelAdmin').style.display='block';
+    alert('✅ Acesso liberado! Bem-vindo, Administrador.');
+    document.getElementById('loginAdmin').style.display = 'none';
+    document.getElementById('painelAdmin').style.display = 'block';
   }else{
     alert('❌ E-mail ou senha incorretos!');
   }
 }
 
 function sairAdmin(){
-  document.getElementById('emailAdmin').value='';
-  document.getElementById('senhaAdmin').value='';
-  document.getElementById('painelAdmin').style.display='none';
-  document.getElementById('loginAdmin').style.display='block';
+  document.getElementById('emailAdmin').value = '';
+  document.getElementById('senhaAdmin').value = '';
+  document.getElementById('painelAdmin').style.display = 'none';
+  document.getElementById('loginAdmin').style.display = 'block';
   voltar();
 }
 
+// === ATUALIZAR CONTADORES ===
+function atualizarContadoresAdmin(){
+  const aprovados = dadosControle.filter(l => l.c?.[1]?.v === 'APROVADO').length;
+  const aoVivo = dadosControle.filter(l => {
+    const v = l.c?.[8]?.v; return v === true || v === 'true' || v === 'SIM';
+  }).length;
+  document.getElementById('qtdAgenciados').innerText = aprovados;
+  document.getElementById('qtdLives').innerText = aoVivo;
+}
+
+// === VERIFICAR ACESSO DO STREAMER ===
 function verificarAcesso(){
   const user = document.getElementById('usuarioAcesso').value.trim().toLowerCase();
   const msg = document.getElementById('mensagemAcesso');
   msg.innerHTML = '🔍 Verificando...';
-  setTimeout(()=>{
-    const encontrado = dadosPlanilha.find(linha => linha.c[0]?.v?.toString().trim().toLowerCase() === user);
-    if(!encontrado) return msg.innerHTML = '❌ Usuário não encontrado.';
-    if(encontrado.c[1]?.v !== 'APROVADO') return msg.innerHTML = '⏳ Aguardando aprovação (até 48h).';
-    
+
+  setTimeout(() => {
+    const encontrado = dadosControle.find(linha => {
+      const nome = (linha.c?.[0]?.v || '').toString().trim().toLowerCase();
+      return nome === user;
+    });
+
+    if(!encontrado) return msg.innerHTML = '❌ Usuário não encontrado. Verifique o nome ou contate a agência.';
+    if(encontrado.c?.[1]?.v !== 'APROVADO') return msg.innerHTML = '⏳ Aguardando aprovação (até 48h).';
+
     usuarioAtual = user;
-    msg.innerHTML = '✅ Acesso liberado!';
+    msg.innerHTML = '✅ Acesso liberado! Bem-vindo!';
     document.getElementById('painelStreamer').style.display = 'block';
 
-    document.getElementById('dadoUsuario').innerText = encontrado.c[0]?.v || '-';
-    document.getElementById('dadoLinkTiktok').innerHTML = encontrado.c[3]?.v ? `<a href="${encontrado.c[3].v}" target="_blank" style="color:var(--verde)">Acessar Perfil</a>` : 'Não cadastrado';
-    document.getElementById('dadoLinkKako').innerHTML = encontrado.c[5]?.v ? `<a href="${encontrado.c[5].v}" target="_blank" style="color:var(--verde)">Acessar Perfil</a>` : 'Não cadastrado';
-    document.getElementById('nomeUsuarioBatalha').value = encontrado.c[0]?.v || '-';
-    document.getElementById('linkPerfilBatalha').value = encontrado.c[3]?.v || encontrado.c[5]?.v || '-';
+    // PREENCHER DADOS AUTOMÁTICOS
+    document.getElementById('dadoUsuario').innerText = encontrado.c?.[0]?.v || '-';
+    const linkT = encontrado.c?.[3]?.v;
+    const linkK = encontrado.c?.[5]?.v;
+    document.getElementById('dadoLinkTiktok').innerHTML = linkT ? `<a href="${linkT}" target="_blank" style="color:var(--verde)">Acessar Perfil</a>` : 'Não cadastrado';
+    document.getElementById('dadoLinkKako').innerHTML = linkK ? `<a href="${linkK}" target="_blank" style="color:var(--verde)">Acessar Perfil</a>` : 'Não cadastrado';
+    document.getElementById('nomeUsuarioBatalha').value = encontrado.c?.[0]?.v || '-';
+    document.getElementById('linkPerfilBatalha').value = linkT || linkK || '-';
 
-    carregarBatalhasDoUsuario(user);
+    carregarMinhasBatalhas(user);
   }, 800);
 }
 
-function carregarBatalhasDoUsuario(nomeUsuario){
-  const confirmadas = document.getElementById('minhasBatalhasConfirmadas');
-  const pendentes = document.getElementById('minhasBatalhasPendentes');
-  confirmadas.innerHTML = '<p class="sem-batalhas">Nenhuma batalha confirmada no momento</p>';
-  pendentes.innerHTML = '<p class="sem-batalhas">Nenhuma solicitação pendente</p>';
-
-  let htmlConfirmadas = '', htmlPendentes = '';
-  const usuarioBusca = nomeUsuario.trim().toLowerCase();
-
-  if(dadosBatalhas && dadosBatalhas.table && dadosBatalhas.table.rows){
-    dadosBatalhas.table.rows.forEach((linha, indice) => {
-      if(indice < 1) return;
-      const col = linha.c || [];
-      const oponente1 = (col[5]?.v || '').toString().trim().toLowerCase();
-      const oponente2 = (col[7]?.v || '').toString().trim().toLowerCase();
-      if(oponente1 !== usuarioBusca && oponente2 !== usuarioBusca) return;
-
-      const dia = col[2]?.v || '-';
-      const hora = col[3]?.v || '-';
-      const round = col[4]?.v || '-';
-      const agencia1 = col[6]?.v || '-';
-      const nomeOponente = oponente1 === usuarioBusca ? (col[7]?.v || 'A definir') : (col[5]?.v || 'A definir');
-      const agencia2 = oponente1 === usuarioBusca ? (col[8]?.v || '-') : (col[6]?.v || '-');
-      const meta = col[9]?.v || '-';
-      const situacao = (col[10]?.v || '').toString().trim().toUpperCase();
-      const linkOponente1 = col[12]?.v || '';
-      const linkOponente2 = col[13]?.v || '';
-      const linkOponente = oponente1 === usuarioBusca ? linkOponente2 : linkOponente1;
-
-      let statusTexto = '';
-      if(situacao.includes('CONFIRMADO') || situacao.includes('CONFIRMADA')){
-        statusTexto = '✅ Confirmado pela agência';
-      }else if(situacao.includes('FALTA OPONENTE')){
-        statusTexto = '⏳ Aguardando oponente';
-      }else if(situacao.includes('PENDENTE')){
-        statusTexto = '⏳ Confirmação pendente';
-      }else if(situacao.includes('CAMPANHA')){
-        statusTexto = '⚠️ Campanha';
-      }else if(situacao.includes('DISPONÍVEL') || situacao.includes('DISPONIVEL')){
-        statusTexto = '✅ Disponível';
-      }else{
-        statusTexto = '⏳ Aguardando confirmação';
-      }
-
-      const bloco = `
-        <div class="item-lista">
-          <strong>📅 Data:</strong> ${dia} às ${hora} | Round ${round}<br>
-          <strong>👤 Oponente:</strong> ${nomeOponente}<br>
-          <strong>🏢 Agência:</strong> ${agencia2}<br>
-          <strong>💎 Meta:</strong> ${meta}<br>
-          <strong>🔗 Link oponente:</strong> ${linkOponente ? `<a href="${linkOponente}" target="_blank" class="link-oponente">Acessar Perfil</a>` : 'Aguardando confirmação'}<br>
-          <strong>📊 Status:</strong> ${statusTexto}
-          ${situacao.includes('CONFIRMADO') ? `<br><a href="${LINK_GRUPO_ARTE}" target="_blank" class="btn-acao btn-whatsapp" style="padding:8px 12px;font-size:14px;width:auto;display:inline-block;margin-top:8px">🎨 Acessar Grupo de Arte (até 48h)</a>` : ''}
-        </div>
-      `;
-
-      if(situacao.includes('CONFIRMADO') || situacao.includes('CONFIRMADA')){
-        htmlConfirmadas += bloco;
-      }else{
-        htmlPendentes += bloco;
-      }
-    });
-  }
-
-  if(htmlConfirmadas) confirmadas.innerHTML = htmlConfirmadas;
-  if(htmlPendentes) pendentes.innerHTML = htmlPendentes;
-}
-
-function abrirBatalhas(){document.getElementById('painelStreamer').style.display='none';document.getElementById('areaBatalhas').style.display='block';}
-function fecharBatalhas(){document.getElementById('areaBatalhas').style.display='none';document.getElementById('painelStreamer').style.display='block';}
-
-function enviarSolicitacaoBatalha(){
-  const usuario = document.getElementById('nomeUsuarioBatalha').value.trim();
-  const data = document.getElementById('dataBatalha').value;
-  const horario = document.getElementById('horarioBatalha').value;
-  if(!usuario || !data || !horario) return alert('❌ Preencha Data e Horário!');
+// === GERAR CALENDÁRIO INTELIGENTE ===
+function gerarCalendario(){
+  const nomesMes = ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
+  const diasSemana = ['D','S','T','Q','Q','S','S'];
   
-  const mensagem = encodeURIComponent(`⚔️ SOLICITAÇÃO DE BATALHA\n👤 Usuário: ${usuario}\n📅 Data: ${data}\n⏰ Horário: ${horario}`);
-  window.open(`https://wa.me/556981478873?text=${mensagem}`);
-  alert('✅ Solicitação enviada! Acompanhe aqui no seu espaço o status.');
-  fecharBatalhas();
+  document.getElementById('mesCalendario').innerText = `${nomesMes[mesAtual]} de ${anoAtual}`;
+  const container = document.getElementById('diasCalendario');
+  container.innerHTML = '';
+
+  // Cabeçalho dias da semana
+  diasSemana.forEach(d => {
+    container.innerHTML += `<div style="text-align:center;color:var(--amarelo);font-weight:bold">${d}</div>`;
+  });
+
+  const primeiroDia = new Date(anoAtual, mesAtual, 1).getDay();
+  const ultimoDia = new Date(anoAtual, mesAtual + 1, 0).getDate();
+  const hojeNum = hoje.getDate();
+  const hojeMes = hoje.getMonth();
+  const hojeAno = hoje.getFullYear();
+
+  // Dias vazios
+  for(let i=0; i<primeiroDia; i++) container.innerHTML += `<div></div>`;
+
+  // Dias do mês
+  for(let dia=1; dia<=ultimoDia; dia++){
+    const data = new Date(anoAtual, mesAtual, dia);
+    const diaSemana = data.getDay();
+    const dataStr = `${anoAtual}-${String(mesAtual+1).padStart(2,'0')}-${String(dia).padStart(2,'0')}`;
+    
+    // Limite: mês atual e próximo mês
+    const dataLimite = new Date(anoAtual, mesAtual + 1, 30);
+    if(data < new Date(hojeAno, hojeMes, hojeNum) || data > dataLimite){
+      container.innerHTML += `<div class="dia-calendario dia-bloqueado">${dia}</div>`;
+      continue;
+    }
+
+    // Domingo = BLOQUEADO
+    if(diaSemana === 0){
+      container.innerHTML += `<div class="dia-calendario dia-bloqueado" title="Domingo — fechado">${dia}</div>`;
+      continue;
+    }
+
+    // Verificar se tem batalha ou é dia de campanha
+    const situacaoDia = verificarSituacaoDia(dataStr);
+    let classeDia = 'dia-disponivel';
+    let tituloDia = 'Disponível';
+
+    if(situacaoDia === 'bloqueado'){
+      classeDia = 'dia-bloqueado';
+      tituloDia = 'Feriado ou fechado';
+    }else if(situacaoDia === 'campanha'){
+      classeDia = 'dia-campanha';
+      tituloDia = 'Dia de campanha — horários limitados';
+    }else if(situacaoDia === 'confirmado'){
+      classeDia = 'dia-confirmado';
+      tituloDia = 'Já tem batalha — horários limitados';
+    }
+
+    container.innerHTML += `<div class="dia-calendario ${classeDia}" title="${tituloDia}" onclick="selecionarDia('${dataStr}', this)">${dia}</div>`;
+  }
 }
 
-function solicitar(tipo){
-  let texto = '';
-  if(tipo==='musica') texto = `Olá! Sou ${usuarioAtual}. Gostaria de solicitar uma música personalizada.`;
-  if(tipo==='arte') texto = `Olá! Sou ${usuarioAtual}. Gostaria de solicitar artes visuais.`;
-  if(tipo==='treinamento') texto = `Olá! Sou ${usuarioAtual}. Gostaria de acesso ao Treinamento VIP.`;
-  window.open(`https://wa.me/556981478873?text=${encodeURIComponent(texto)}`);
-}
-
-function copiarPix(botao,codigo){
-  navigator.clipboard.writeText(codigo).then(()=>{
-    botao.innerText = '✅ COPIADO COM SUCESSO!';
-    setTimeout(()=>{botao.innerText = '📋 COPIAR CÓDIGO PIX';},3000);
-  }).catch(()=>{alert('Copie manualmente o código na caixa acima.');});
-}
-
-function enviarComprovante(servico){
-  const texto = encodeURIComponent(`Olá! Acabei de pagar o serviço: ${servico}. Segue o comprovante.`);
-  window.open(`https://wa.me/556981478873?text=${texto}`);
-}
-</script>
-</body>
-</html>
+// === VERIFICAR SITUAÇÃO DO DIA NA PLANILHA ===
+function verificarSituacaoDia(dataStr){
+  if(!dadosBatalhas || !dadosB
