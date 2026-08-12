@@ -1,8 +1,10 @@
 // ==========================================================
-// ⚔️ GERENCIAMENTO DE BATALHAS
+// ⚔️ GERENCIAMENTO DE BATALHAS — CORRIGIDO
 // ==========================================================
 function carregarSituacaoBatalha(){
-  const minhas = dadosBatalhas.filter(b => b.responsavel === usuarioAtual);
+  const minhas = dadosBatalhas.filter(b => 
+    (b.responsavel || '').toString().trim().toUpperCase() === usuarioAtual
+  );
   const container = document.getElementById('situacaoBatalhaTopo');
   
   if(!minhas.length){
@@ -10,8 +12,13 @@ function carregarSituacaoBatalha(){
     return;
   }
 
-  const confirmada = minhas.find(b => /^CONFIRMADA?$/.test(b.situacao));
-  const faltaOponente = minhas.find(b => b.situacao === "FALTA OPONENTE");
+  // ✅ CORRIGIDO: sem acento = igual à planilha
+  const confirmada = minhas.find(b => 
+    (b.situacao || '').toString().trim().toUpperCase() === "CONFIRMADA"
+  );
+  const faltaOponente = minhas.find(b => 
+    (b.situacao || '').toString().trim().toUpperCase() === "FALTA OPONENTE"
+  );
   const batalha = confirmada || faltaOponente;
   
   if(!batalha){
@@ -49,9 +56,17 @@ function carregarSituacaoBatalha(){
 }
 
 function carregarMinhasBatalhas(){
-  const minhas = dadosBatalhas.filter(b => b.responsavel === usuarioAtual);
-  const confirmadas = minhas.filter(b => /^CONFIRMADA?$/.test(b.situacao));
-  const pendentes = minhas.filter(b => !/^(CONFIRMADA?|)$/.test(b.situacao));
+  const minhas = dadosBatalhas.filter(b => 
+    (b.responsavel || '').toString().trim().toUpperCase() === usuarioAtual
+  );
+  // ✅ CORRIGIDO: filtro simples sem regex problemático
+  const confirmadas = minhas.filter(b => 
+    (b.situacao || '').toString().trim().toUpperCase() === "CONFIRMADA"
+  );
+  const pendentes = minhas.filter(b => {
+    const sit = (b.situacao || '').toString().trim().toUpperCase();
+    return sit !== "CONFIRMADA" && sit !== "";
+  });
 
   const caixaConf = document.getElementById('caixaConfirmadas');
   const caixaPend = document.getElementById('caixaPendentes');
@@ -247,11 +262,9 @@ function renderCalendario(){
     const diaSemana = dataAtual.getDay();
     const ehFimDeSemana = diaSemana === 0 || diaSemana === 6;
     const foraDoPrazo = dataAtual < hojeData || dataAtual > dataLimiteProxMes;
-    const ehBloqueio8Dias = false;
 
     let classe = 'dia-disponivel';
     if(ehFimDeSemana || foraDoPrazo) classe = 'dia-bloqueado';
-    else if(ehBloqueio8Dias) classe = 'dia-bloqueado-8dias';
 
     html += `<div class="dia-calendario ${classe}" 
       ${classe.includes('disponivel') ? `onclick="selecionarData('${dia}/${mesAtual+1}/${anoAtual}')"` : ''}>
