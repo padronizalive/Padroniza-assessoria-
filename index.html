@@ -94,6 +94,7 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
 .sem-batalhas{text-align:center;color:var(--cinza);padding:20px 15px;font-size:15px}
 .copiado{background:var(--verde);color:#fff}
 .aviso-arte{background:rgba(116,87,255,0.1);border:1px solid var(--roxo);padding:10px;border-radius:8px;margin-top:10px;font-size:13px;text-align:center;color:#d4c5ff}
+.aviso-carregamento{background:rgba(59,130,246,0.1);border:1px solid var(--azul);padding:12px;border-radius:8px;margin:10px 0;text-align:center;color:#93c5fd;font-size:14px}
 </style>
 </head>
 <body>
@@ -150,6 +151,9 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
 <div class="conteudo" id="conteudoAgenciado">
   <h2 class="titulo-secao">🎉 Bem-vindo(a) parceiro(a)!</h2>
   <div class="destaque-gratis">✅ TODOS os serviços são GRÁTIS para você!</div>
+  
+  <div id="avisoPlanilha" class="aviso-carregamento">📋 Carregando lista de agenciados... Aguarde um momento!</div>
+  
   <div class="grupo-campo"><input type="text" class="campo-form" id="usuarioAcesso" placeholder="Digite seu nome de usuário / ID"></div>
   <button class="btn-acao btn-verde" onclick="verificarAcesso()">🔍 Acessar Meu Espaço</button>
   <p id="mensagemAcesso" style="text-align:center;margin:10px 0"></p>
@@ -267,60 +271,109 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
 </div>
 
 <script>
+// 🔗 LINKS DAS PLANILHAS - CONECTADOS E CONFIRMADOS
 const LINK_PLANILHA_CONTROLE = "https://docs.google.com/spreadsheets/d/1R9eUsqF4kA0y22ryMUIsvGolBfk3-XwZ5R-RVpBiZA4/gviz/tq?tqx=out:json";
 const LINK_PLANILHA_BATALHAS = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRtyHq643--RBIrq3drMcHGIoUtpY-IN5v2T0wNWnCNvUf2rE6UHOK55nI4uUK89x7U_S66Gl1XXDN4/gviz/tq?tqx=out:json";
 const LINK_GRUPO_ARTE = "https://chat.whatsapp.com/I3edwkusrSC123QjrJBHHi?s=cl&p=a&ilr=1";
 
+// 🔐 SENHA DO ADMIN - CONFORME SOLICITADO
+const SENHA_ADMIN_CORRETA = "agency2026";
+
 let dadosControle = [], dadosBatalhas = [], usuarioAtual = null, dataSelecionada = null;
 let hoje = new Date(), mesAtual = hoje.getMonth(), anoAtual = hoje.getFullYear();
 let usuariosCarregados = new Set();
+let planilhaCarregada = false;
 
 window.onload = async function(){
   await carregarPlanilhaControle();
   await carregarPlanilhaBatalhas();
   carregarLivesNaInicial();
   atualizarContadoresAdmin();
+  // Atualizar aviso de carregamento
+  const aviso = document.getElementById("avisoPlanilha");
+  if(planilhaCarregada && dadosControle.length > 0){
+    aviso.style.display = "none";
+  }else if(planilhaCarregada){
+    aviso.innerHTML = "⚠️ Planilha carregada, mas nenhum usuário com status APROVADO encontrado.";
+    aviso.style.background = "rgba(239,68,68,0.1)";
+    aviso.style.borderColor = "var(--vermelho)";
+    aviso.style.color = "#fca5a5";
+  }
 };
 
+// 📋 CARREGAR PLANILHA DE CONTROLE - LEITURA MELHORADA
 async function carregarPlanilhaControle(){
   try{
+    console.log("📋 Buscando planilha de controle...");
     const r = await fetch(LINK_PLANILHA_CONTROLE);
-    const t = await r.text();
-    const json = JSON.parse(t.substr(4));
-    const linhas = json.table.rows;
+    if(!r.ok) throw new Error("Erro ao acessar planilha: " + r.status);
     
-    for(const linha of linhas){
+    const t = await r.text();
+    // Remover o wrapper do JSON
+    const jsonTexto = t.substring(47, t.length - 2);
+    const json = JSON.parse(jsonTexto);
+    
+    const linhas = json.table.rows;
+    const cabecalho = json.table.cols.map(c => c.label || "");
+    console.log("📋 Colunas encontradas:", cabecalho);
+    console.log("📋 Total de linhas na planilha:", linhas.length);
+    
+    dadosControle = [];
+    usuariosCarregados.clear();
+    
+    // Começar da linha 1 (ignorar cabeçalho)
+    for(let i = 1; i < linhas.length; i++){
+      const linha = linhas[i];
       const celulas = linha.c || [];
-      const usuario = celulas[0]?.v || "";
-      const status = celulas[1]?.v || "";
       
-      if(status !== "APROVADO" || !usuario) continue;
+      // Pegar valores das colunas
+      const usuario = (celulas[0]?.v || "").toString().trim();
+      const status = (celulas[1]?.v || "").toString().trim().toUpperCase();
+      
+      // Pular linhas vazias
+      if(!usuario) continue;
+      
+      // Filtrar só aprovados
+      if(status !== "APROVADO"){
+        console.log(`ℹ️ ${usuario} - Status: ${status} (não aprovado, pulando)`);
+        continue;
+      }
+      
+      // Evitar duplicatas
       if(usuariosCarregados.has(usuario)) continue;
       usuariosCarregados.add(usuario);
       
       dadosControle.push({
         usuario: usuario,
         status: status,
-        data: celulas[2]?.f || "",
+        data_cadastro: celulas[2]?.f || celulas[2]?.v || "",
         tiktok_perfil: celulas[3]?.v || "",
         tiktok_live: celulas[4]?.v || "",
         kako_perfil: celulas[5]?.v || "",
         kako_live: celulas[6]?.v || "",
         capa: celulas[7]?.v || "",
-        esta_ao_vivo: celulas[8]?.v || false,
+        esta_ao_vivo: celulas[8]?.v === true || celulas[8]?.v === "SIM" || celulas[8]?.v === "sim",
         tipo_acesso: celulas[9]?.v || ""
       });
     }
+    
+    planilhaCarregada = true;
+    console.log("✅ Usuários aprovados carregados:", dadosControle.length);
+    console.log("📋 Lista de usuários:", dadosControle.map(u => u.usuario));
+    
   }catch(e){
-    console.error("Erro ao carregar planilha de controle:", e);
+    console.error("❌ Erro ao carregar planilha de controle:", e);
+    planilhaCarregada = false;
+    alert("⚠️ Erro ao carregar dados. Verifique se a planilha está publicada e com permissão 'Qualquer pessoa com o link'.");
   }
 }
 
+// ⚔️ CARREGAR PLANILHA DE BATALHAS
 async function carregarPlanilhaBatalhas(){
   try{
     const r = await fetch(LINK_PLANILHA_BATALHAS);
     const t = await r.text();
-    const json = JSON.parse(t.substr(4));
+    const json = JSON.parse(t.substr(47, t.length - 2));
     dadosBatalhas = json.table.rows.map(linha => {
       const c = linha.c || [];
       return {
@@ -336,12 +389,13 @@ async function carregarPlanilhaBatalhas(){
         responsavel: c[9]?.v || ""
       };
     });
-    console.log("Batalhas carregadas:", dadosBatalhas);
+    console.log("✅ Batalhas carregadas:", dadosBatalhas.length);
   }catch(e){
-    console.error("Erro ao carregar planilha de batalhas:", e);
+    console.error("❌ Erro ao carregar planilha de batalhas:", e);
   }
 }
 
+// 🔴 CARREGAR LIVES NA TELA INICIAL
 function carregarLivesNaInicial(){
   const container = document.getElementById("listaLivesInicial");
   const livesAoVivo = dadosControle.filter(u => u.esta_ao_vivo === true);
@@ -367,6 +421,7 @@ function carregarLivesNaInicial(){
   }).join("");
 }
 
+// 🔄 NAVEGAÇÃO ENTRE TELAS
 function abrir(tela){
   document.getElementById("telaInicial").style.display = "none";
   document.querySelectorAll(".conteudo").forEach(el => el.classList.remove("visivel"));
@@ -383,10 +438,12 @@ function voltar(){
   document.getElementById("areaBatalhas").style.display = "none";
 }
 
+// 🔐 VERIFICAR ACESSO DE ADMIN
 function verificarAdmin(){
-  const email = document.getElementById("emailAdmin").value;
-  const senha = document.getElementById("senhaAdmin").value;
-  if(email === "padronizaassessoria@gmail.com" && senha === "padron2026"){
+  const email = document.getElementById("emailAdmin").value.trim().toLowerCase();
+  const senha = document.getElementById("senhaAdmin").value.trim();
+  
+  if(email === "padronizaassessoria@gmail.com" && senha === SENHA_ADMIN_CORRETA){
     document.getElementById("loginAdmin").style.display = "none";
     document.getElementById("painelAdmin").style.display = "block";
   }else{
@@ -402,31 +459,112 @@ function sairAdmin(){
   voltar();
 }
 
+// 📊 ATUALIZAR CONTADORES DO ADMIN
 function atualizarContadoresAdmin(){
   document.getElementById("qtdAgenciados").textContent = dadosControle.length;
   document.getElementById("qtdLives").textContent = dadosControle.filter(u => u.esta_ao_vivo).length;
-  document.getElementById("qtdBatalhas").textContent = dadosBatalhas.filter(b => b.situacao?.includes("CONFIRMADO")).length;
-  document.getElementById("qtdPendentes").textContent = dadosBatalhas.filter(b => !b.situacao?.includes("CONFIRMADO") && b.situacao).length;
+  document.getElementById("qtdBatalhas").textContent = dadosBatalhas.filter(b => (b.situacao || "").toUpperCase().includes("CONFIRMADO")).length;
+  document.getElementById("qtdPendentes").textContent = dadosBatalhas.filter(b => b.situacao && !(b.situacao || "").toUpperCase().includes("CONFIRMADO")).length;
 }
 
+// 👤 VERIFICAR ACESSO DO AGENCIADO - BUSCA MELHORADA
 function verificarAcesso(){
-  const usuario = document.getElementById("usuarioAcesso").value.trim();
+  const entrada = document.getElementById("usuarioAcesso").value.trim();
   const mensagem = document.getElementById("mensagemAcesso");
-  const encontrado = dadosControle.find(u => u.usuario.toLowerCase() === usuario.toLowerCase());
+  
+  if(!entrada){
+    mensagem.textContent = "⚠️ Digite seu nome de usuário!";
+    mensagem.style.color = "var(--amarelo)";
+    return;
+  }
+  
+  // Busca FLEXÍVEL: ignora maiúsculas, minúsculas, espaços e @
+  const entradaNormalizada = entrada.replace(/\s+/g, "").replace(/^@/, "").toLowerCase();
+  
+  const encontrado = dadosControle.find(u => {
+    const usuarioNormalizado = u.usuario.replace(/\s+/g, "").replace(/^@/, "").toLowerCase();
+    return usuarioNormalizado === entradaNormalizado;
+  });
   
   if(encontrado){
     usuarioAtual = encontrado;
-    mensagem.textContent = "✅ Acesso autorizado!";
+    mensagem.textContent = "✅ Acesso autorizado! Bem-vindo(a), " + encontrado.usuario + "!";
     mensagem.style.color = "var(--verde)";
     document.getElementById("painelStreamer").style.display = "block";
     document.getElementById("dadoUsuario").textContent = encontrado.usuario;
-    document.getElementById("dadoLinkTiktok").innerHTML = encontrado.tiktok_perfil ? `<a href="${encontrado.tiktok_perfil}" target="_blank" style="color:var(--azul)">Acessar →</a>` : "Não cadastrado";
-    document.getElementById("dadoLinkKako").textContent = encontrado.kako_perfil || "Não cadastrado";
+    
+    // TikTok
+    if(encontrado.tiktok_perfil){
+      document.getElementById("dadoLinkTiktok").innerHTML = `<a href="${encontrado.tiktok_perfil}" target="_blank" style="color:var(--azul);text-decoration:none">🔗 ${encontrado.tiktok_perfil}</a>`;
+    }else{
+      document.getElementById("dadoLinkTiktok").textContent = "Não cadastrado";
+    }
+    
+    // Kako Live
+    if(encontrado.kako_perfil){
+      document.getElementById("dadoLinkKako").innerHTML = `<a href="${encontrado.kako_perfil}" target="_blank" style="color:var(--azul);text-decoration:none">🔗 ${encontrado.kako_perfil}</a>`;
+    }else{
+      document.getElementById("dadoLinkKako").textContent = "Não cadastrado";
+    }
+    
+    // Preencher dados da batalha
     document.getElementById("nomeUsuarioBatalha").value = encontrado.usuario;
     document.getElementById("linkPerfilBatalha").value = encontrado.tiktok_live || encontrado.kako_live || "";
+    
+    // Carregar batalhas do usuário
+    carregarBatalhasDoUsuario(encontrado.usuario);
+    
   }else{
-    mensagem.textContent = "❌ Usuário não encontrado. Verifique o nome ou contate a administração.";
+    mensagem.innerHTML = "❌ Usuário não encontrado.<br>Verifique o nome exato na planilha ou contate a administração.";
     mensagem.style.color = "var(--vermelho)";
+    console.log("🔍 Usuário digitado:", entrada);
+    console.log("📋 Usuários disponíveis:", dadosControle.map(u => u.usuario));
+  }
+}
+
+// ⚔️ CARREGAR BATALHAS DO USUÁRIO LOGADO
+function carregarBatalhasDoUsuario(nomeUsuario){
+  const confirmadas = dadosBatalhas.filter(b => {
+    const nomes = [b.oponente1, b.oponente2].map(n => (n || "").toLowerCase());
+    return nomes.includes(nomeUsuario.toLowerCase()) && (b.situacao || "").toUpperCase().includes("CONFIRMADO");
+  });
+  
+  const pendentes = dadosBatalhas.filter(b => {
+    const nomes = [b.oponente1, b.oponente2].map(n => (n || "").toLowerCase());
+    return nomes.includes(nomeUsuario.toLowerCase()) && !(b.situacao || "").toUpperCase().includes("CONFIRMADO") && b.situacao;
+  });
+  
+  // Renderizar confirmadas
+  const caixaConfirmadas = document.getElementById("caixaConfirmadas");
+  if(confirmadas.length === 0){
+    caixaConfirmadas.innerHTML = '<p class="sem-batalhas">Nenhuma batalha confirmada.</p>';
+  }else{
+    caixaConfirmadas.innerHTML = confirmadas.map(b => `
+      <div class="cartao-batalha-confirmada">
+        <h4>✅ BATALHA CONFIRMADA</h4>
+        <div class="linha-dado"><strong>Data:</strong> <span>${b.dia}</span></div>
+        <div class="linha-dado"><strong>Horário:</strong> <span>${b.hora}</span></div>
+        <div class="linha-dado"><strong>Round:</strong> <span>${b.round || "1"}</span></div>
+        <div class="linha-dado"><strong>Seu oponente:</strong> <span>${b.oponente1 === nomeUsuario ? b.oponente2 : b.oponente1}</span></div>
+        <div class="linha-dado"><strong>Agência:</strong> <span>${b.oponente1 === nomeUsuario ? b.agencia2 : b.agencia1}</span></div>
+        <div class="linha-dado"><strong>Meta:</strong> <span>${b.meta}</span></div>
+      </div>
+    `).join("");
+  }
+  
+  // Renderizar pendentes
+  const caixaPendentes = document.getElementById("caixaPendentes");
+  if(pendentes.length === 0){
+    caixaPendentes.innerHTML = '<p class="sem-batalhas">Nenhuma solicitação pendente.</p>';
+  }else{
+    caixaPendentes.innerHTML = pendentes.map(b => `
+      <div class="situacao-batalha situacao-pendente">
+        ⏳ ${b.situacao || "PENDENTE"}
+        <div style="margin-top:10px;font-size:14px;color:var(--texto)">
+          📅 ${b.dia} às ${b.hora} • 💎 ${b.meta}
+        </div>
+      </div>
+    `).join("");
   }
 }
 
@@ -442,104 +580,8 @@ function fecharBatalhas(){
   dataSelecionada = null;
 }
 
+// 📅 CALENDÁRIO
 function gerarCalendario(){
   const nomesMeses = ["Janeiro","Fevereiro","Março","Abril","Maio","Junho","Julho","Agosto","Setembro","Outubro","Novembro","Dezembro"];
   const diasSemana = ["Dom","Seg","Ter","Qua","Qui","Sex","Sáb"];
-  const container = document.getElementById("diasCalendario");
-  const mesEl = document.getElementById("mesCalendario");
-  
-  mesEl.textContent = `${nomesMeses[mesAtual]} ${anoAtual}`;
-  container.innerHTML = "";
-  
-  for(const d of diasSemana){
-    const el = document.createElement("button");
-    el.className = "dia-calendario";
-    el.style.background = "transparent";
-    el.style.color = "var(--amarelo)";
-    el.textContent = d;
-    el.disabled = true;
-    container.appendChild(el);
-  }
-  
-  const primeiroDia = new Date(anoAtual, mesAtual, 1).getDay();
-  const totalDias = new Date(anoAtual, mesAtual + 1, 0).getDate();
-  
-  for(let i = 0; i < primeiroDia; i++){
-    const vazio = document.createElement("div");
-    container.appendChild(vazio);
-  }
-  
-  const hojeData = new Date();
-  for(let d = 1; d <= totalDias; d++){
-    const data = new Date(anoAtual, mesAtual, d);
-    const diaSemana = data.getDay();
-    const el = document.createElement("button");
-    el.className = "dia-calendario";
-    el.textContent = d;
-    
-    const ehPassado = data < hojeData && data.toDateString() !== hojeData.toDateString();
-    const ehFimDeSemana = diaSemana === 0 || diaSemana === 6;
-    
-    if(ehPassado || ehFimDeSemana){
-      el.classList.add("dia-bloqueado");
-      el.disabled = true;
-      el.title = ehFimDeSemana ? "Fim de semana bloqueado" : "Data passada";
-    }else{
-      el.classList.add("dia-disponivel");
-      el.onclick = () => selecionarDia(data, el);
-    }
-    
-    container.appendChild(el);
-  }
-}
-
-function selecionarDia(data, elBotao){
-  document.querySelectorAll(".dia-selecionado").forEach(el => el.classList.remove("dia-selecionado"));
-  elBotao.classList.add("dia-selecionado");
-  dataSelecionada = data;
-  document.getElementById("avisoDiaSelecionado").style.display = "block";
-}
-
-function enviarSolicitacaoBatalha(){
-  if(!dataSelecionada){ alert("⚠️ Selecione uma data primeiro!"); return; }
-  const horario = document.getElementById("horarioBatalha").value;
-  const meta = document.getElementById("metaBatalha").value.trim();
-  if(!horario){ alert("⚠️ Escolha um horário!"); return; }
-  if(!meta){ alert("⚠️ Digite a meta de diamantes!"); return; }
-  
-  const mensagem = `⚔️ SOLICITAÇÃO DE BATALHA
-👤 Usuário: ${usuarioAtual.usuario}
-📅 Data: ${dataSelecionada.toLocaleDateString('pt-BR')}
-⏰ Horário: ${horario}
-💎 Meta: ${meta}
-🔗 Perfil: ${document.getElementById("linkPerfilBatalha").value}`;
-  
-  window.open(`https://wa.me/556981478873?text=${encodeURIComponent(mensagem)}`, "_blank");
-  alert("✅ Solicitação enviada pelo WhatsApp!");
-}
-
-function solicitar(tipo){
-  if(!usuarioAtual){ alert("⚠️ Acesse seu espaço primeiro!"); return; }
-  const mensagens = {
-    musica: "🎵 SOLICITAÇÃO DE MÚSICA PERSONALIZADA\n👤 Usuário: " + usuarioAtual.usuario,
-    arte: "🎨 SOLICITAÇÃO DE ARTE VISUAL\n👤 Usuário: " + usuarioAtual.usuario,
-    treinamento: "🎓 SOLICITAÇÃO DE TREINAMENTO VIP\n👤 Usuário: " + usuarioAtual.usuario
-  };
-  window.open(`https://wa.me/556981478873?text=${encodeURIComponent(mensagens[tipo])}`, "_blank");
-}
-
-function copiarPix(id, botao){
-  const codigo = document.getElementById(id).textContent;
-  navigator.clipboard.writeText(codigo).then(() => {
-    const textoOriginal = botao.textContent;
-    botao.textContent = "✅ COPIADO!";
-    botao.classList.add("copiado");
-    setTimeout(() => {
-      botao.textContent = textoOriginal;
-      botao.classList.remove("copiado");
-    }, 2000);
-  }).catch(() => alert("❌ Erro ao copiar. Selecione e copie manualmente."));
-}
-</script>
-</body>
-</html>
+  const container = document.getElementById("dias
