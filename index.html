@@ -168,7 +168,7 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
     <div id="caixaPendentes"><p class="sem-batalhas">Nenhuma solicitação pendente.</p></div>
 
     <h4 style="color:var(--verde);margin:20px 0 10px 0;text-align:center">✅ BATALHAS CONFIRMADAS</h4>
-    <div id="caixaConfirmadas"><p class="sem-batalhas">Nenhuma batalha confirmada.</p></div>
+    <div id="caixaConfirmadas"><p class="sem-batalhas">Nenhuma batalha confirmada. Aguardando agência vincular oponentes.</p></div>
 
     <p style="text-align:center;color:var(--amarelo);font-weight:bold;margin:25px 0 15px 0">Solicitar Serviços:</p>
     <button class="btn-acao btn-servico" onclick="abrirBatalhas()">⚔️ AGENDAR NOVA BATALHA</button>
@@ -306,6 +306,10 @@ function atualizarContadoresBatalhas(){
   }).length;
 }
 
+function normalizarTexto(t){
+  return ((t||'').toString().trim().toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/\s+/g, ""));
+}
+
 function carregarLivesNaInicial(){
   const l = document.getElementById('listaLivesInicial');
   l.innerHTML = '';
@@ -332,7 +336,7 @@ function abrir(id){
     document.getElementById('areaBatalhas').style.display='none';
     document.getElementById('usuarioAcesso').value='';
     document.getElementById('caixaPendentes').innerHTML='<p class="sem-batalhas">Nenhuma solicitação pendente.</p>';
-    document.getElementById('caixaConfirmadas').innerHTML='<p class="sem-batalhas">Nenhuma batalha confirmada.</p>';
+    document.getElementById('caixaConfirmadas').innerHTML='<p class="sem-batalhas">Nenhuma batalha confirmada. Aguardando agência vincular oponentes.</p>';
   }
 }
 
@@ -361,13 +365,14 @@ function sairAdmin(){
 }
 
 function verificarAcesso(){
-  const u = document.getElementById('usuarioAcesso').value.trim().toLowerCase(), m = document.getElementById('mensagemAcesso');
+  const u = document.getElementById('usuarioAcesso').value.trim(), m = document.getElementById('mensagemAcesso');
   m.innerHTML = '🔍 Verificando...';
   setTimeout(() => {
-    const enc = dadosControle.find(l => ((l.c?.[0]?.v)||'').toString().trim().toLowerCase() === u);
+    const uNorm = normalizarTexto(u);
+    const enc = dadosControle.find(l => normalizarTexto(l.c?.[0]?.v) === uNorm);
     if(!enc) return m.innerHTML = '❌ Usuário não encontrado. Verifique o nome ou contate a agência.';
     if(enc.c?.[1]?.v !== 'APROVADO') return m.innerHTML = '⏳ Aguardando aprovação (até 48h).';
-    usuarioAtual = ((enc.c?.[0]?.v)||'').toString().trim().toLowerCase();
+    usuarioAtual = uNorm;
     m.innerHTML = '✅ Acesso liberado! Bem-vindo!';
     document.getElementById('painelStreamer').style.display = 'block';
     document.getElementById('dadoUsuario').innerText = enc.c?.[0]?.v || '-';
@@ -384,7 +389,7 @@ function carregarBatalhasDoUsuario(){
   const pendentes = [], confirmadas = [];
   dadosBatalhas.forEach(r => {
     if(!r.c) return;
-    const usuarioPlanilha = ((r.c[0]?.v)||'').toString().trim().toLowerCase();
+    const usuarioPlanilha = normalizarTexto(r.c?.[0]?.v);
     if(usuarioPlanilha !== usuarioAtual) return;
     const status = ((r.c[9]?.v||'').toString().trim().toUpperCase());
     const item = {
@@ -402,7 +407,6 @@ function carregarBatalhasDoUsuario(){
     else pendentes.push(item);
   });
 
-  // PENDENTES
   if(pendentes.length > 0){
     document.getElementById('caixaPendentes').innerHTML = pendentes.map(b => `
       <div class="situacao-batalha situacao-pendente">
@@ -415,7 +419,6 @@ function carregarBatalhasDoUsuario(){
     document.getElementById('caixaPendentes').innerHTML = '<p class="sem-batalhas">Nenhuma solicitação pendente.</p>';
   }
 
-  // CONFIRMADAS
   if(confirmadas.length > 0){
     document.getElementById('caixaConfirmadas').innerHTML = confirmadas.map(b => `
       <div class="cartao-batalha">
@@ -518,18 +521,4 @@ function copiarPix(id, btn){
     btn.innerText = '✅ COPIADO!';
     btn.classList.add('copiado');
     setTimeout(() => { btn.innerText = o; btn.classList.remove('copiado'); }, 3000);
-  }).catch(() => alert('❌ Copie manualmente.'));
-}
-
-function solicitar(tipo){
-  const txt = {
-    musica: '🎵 Solicito Música Personalizada',
-    arte: '🎨 Solicito Arte Visual',
-    treinamento: '🎓 Solicito Acesso ao Treinamento VIP'
-  };
-  window.open(`https://wa.me/556981478873?text=${encodeURIComponent(txt[tipo])}`, '_blank');
-}
-</script>
-</div>
-</body>
-</html>
+  }).catch(() => alert
