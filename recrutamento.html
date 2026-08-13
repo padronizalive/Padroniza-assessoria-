@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<title>Padroniza Recrutamento | Portal Exclusivo</title>
+<style>
+:root{
+  --fundo:#0b1020;--painel:#11182c;--painel2:#17213a;
+  --verde:#34d399;--rosa:#ff3d81;--roxo:#7457ff;--amarelo:#ffc857;
+  --azul:#3b82f6;--texto:#f7f9ff;--cinza:#a9b4cb;--vermelho:#ef4444;
+  --sombra:0 4px 20px rgba(0,0,0,0.3);--raio:12px;--transicao:0.2s ease
+}
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',Arial,sans-serif}
+html{font-size:16px;-webkit-text-size-adjust:100%}
+body{
+  background:var(--fundo);color:var(--texto);min-height:100vh;
+  padding:clamp(10px,3vw,15px);line-height:1.5
+}
+.container{max-width:640px;margin:0 auto;width:100%}
+
+/* LOADING */
+#loadingOverlay{
+  position:fixed;inset:0;background:rgba(11,16,32,0.95);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  z-index:9999;transition:opacity var(--transicao)
+}
+#loadingOverlay.escondido{opacity:0;pointer-events:none}
+.spinner{
+  width:50px;height:50px;border:4px solid var(--painel2);
+  border-top-color:var(--amarelo);border-radius:50%;
+  animation:girar 1s linear infinite;margin-bottom:20px
+}
+@keyframes girar{to{transform:rotate(360deg)}}
+.texto-loading{color:var(--amarelo);font-size:16px;text-align:center;padding:0 20px}
+
+/* TOAST */
+#toast{
+  position:fixed;bottom:30px;left:50%;transform:translateX(-50%) translateY(100px);
+  background:var(--painel2);color:var(--texto);padding:12px 24px;
+  border-radius:var(--raio);border:1px solid var(--amarelo);
+  box-shadow:var(--sombra);z-index:9998;opacity:0;
+  transition:all var(--transicao);max-width:90%;text-align:center
+}
+#toast.mostrar{transform:translateX(-50%) translateY(0);opacity:1}
+#toast.sucesso{border-color:var(--verde)}
+#toast.erro{border-color:var(--vermelho)}
+
+/* LOGIN */
+.logo-topo{
+  width:100%;max-width:280px;height:160px;margin:0 auto 20px;
+  display:flex;align-items:center;justify-content:center;
+  background:var(--painel);border:3px solid var(--amarelo);
+  border-radius:16px;text-align:center
+}
+.logo-topo h1{font-size:clamp(22px,5vw,28px);color:var(--amarelo);line-height:1.2}
+.titulo-pagina{text-align:center;margin-bottom:25px}
+.titulo-pagina h2{font-size:clamp(24px,5vw,28px);color:var(--amarelo);margin-bottom:5px}
+.titulo-pagina p{color:var(--cinza);font-size:15px}
+
+/* CAMPOS E BOTÕES */
+.grupo-campo{margin-bottom:15px}
+.label{display:block;margin-bottom:6px;color:var(--cinza);font-size:14px}
+.campo-form{
+  width:100%;padding:clamp(12px,4vw,14px) clamp(14px,4vw,16px);
+  border-radius:10px;border:1px solid #293653;
+  background:#17213a;color:var(--texto);font-size:16px;
+  transition:border-color var(--transicao)
+}
+.campo-form:focus{outline:none;border-color:var(--amarelo)}
+.campo-form.invalido{border-color:var(--vermelho)}
+textarea.campo-form{min-height:120px;resize:vertical}
+
+.btn-acao{
+  width:100%;padding:clamp(13px,4vw,15px);border-radius:10px;border:none;
+  font-weight:bold;cursor:pointer;margin-top:10px;text-decoration:none;
+  display:inline-block;text-align:center;color:#fff;
+  font-size:clamp(15px,4vw,17px);transition:all var(--transicao)
+}
+.btn-acao:hover{opacity:0.95;transform:translateY(-1px)}
+.btn-verde{background:linear-gradient(135deg,#22c55e,#15803d)}
+.btn-azul{background:linear-gradient(135deg,#3b82f6,#1d4ed8)}
+.btn-roxo{background:linear-gradient(135deg,#8b5cf6,#6d28d9)}
+.btn-amarelo{background:linear-gradient(135deg,#fbbf24,#f59e0b);color:#000}
+.btn-voltar{background:#293653;color:#fff}
+.btn-pequeno{width:auto;padding:8px 16px;font-size:14px;margin:4px}
+
+/* CONTEÚDO */
+.painel{
+  background:var(--painel);border-radius:var(--raio);
+  padding:clamp(15px,5vw,20px);margin-bottom:20px
+}
+.area-secao{display:none}
+.area-secao.ativa{display:block;animation:aparecer 0.3s ease}
+@keyframes aparecer{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+
+/* PAINEL GERAL */
+.cards-estatisticas{
+  display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-bottom:20px
+}
+.card-stat{
+  background:var(--painel2);padding:15px;border-radius:10px;text-align:center
+}
+.card-stat h4{color:var(--cinza);font-size:13px;margin-bottom:5px}
+.card-stat p{font-size:22px;font-weight:bold}
+.card-stat .num-pendente{color:var(--amarelo)}
+.card-stat .num-enviado{color:var(--azul)}
+.card-stat .num-resposta{color:var(--verde)}
+.card-stat .num-contratado{color:var(--roxo)}
+
+/* LISTA CANDIDATOS */
+.ferramentas{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:15px}
+.campo-busca{flex:1;min-width:150px;padding:10px 12px;border-radius:8px;border:1px solid #293653;background:#17213a;color:var(--texto)}
+.filtro-status{padding:10px 12px;border-radius:8px;border:1px solid #293653;background:#17213a;color:var(--texto)}
+
+.item-candidato{
+  background:var(--painel2);border-radius:10px;padding:14px;margin-bottom:10px;
+  border-left:4px solid var(--cinza);transition:all var(--transicao)
+}
+.item-candidato.pendente{border-left-color:var(--amarelo)}
+.item-candidato.enviado{border-left-color:var(--azul)}
+.item-candidato.resposta{border-left-color:var(--verde)}
+.item-candidato.contratado{border-left-color:var(--roxo)}
+.item-candidato.recusado{border-left-color:var(--vermelho)}
+
+.cabecalho-item{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px;flex-wrap:wrap;gap:8px}
+.nome-usuario{font-weight:bold;font-size:16px;color:var(--texto)}
+.tag-status{
+  font-size:12px;padding:3px 10px;border-radius:20px;font-weight:bold
+}
+.tag-pendente{background:rgba(255,200,87,0.15);color:var(--amarelo)}
+.tag-enviado{background:rgba(59,130,246,0.15);color:var(--azul)}
+.tag-resposta{background:rgba(52,211,153,0.15);color:var(--verde)}
+.tag-contratado{background:rgba(116,87,255,0.15);color:var(--roxo)}
+.tag-recusado{background:rgba(239,68,68,0.15);color:var(--vermelho)}
+
+.dados-item{font-size:14px;color:var(--cinza);margin-bottom:10px;line-height:1.6}
+.acoes-item{display:flex;gap:6px;flex-wrap:wrap}
+
+/* ÁREA IMPORTAÇÃO */
+.aviso-importante{
+  background:rgba(59,130,246,0.1);border:1px solid var(--azul);
+  padding:12px;border-radius:8px;margin-bottom:15px;font-size:14px;line-height:1.6
+}
+.sucesso-importacao{
+  background:rgba(52,211,153,0.1);border:1px solid var(--verde);
+  padding:12px;border-radius:8px;margin-top:15px;display:none
+}
+
+/* MENSAGEM */
+.area-mensagem{
+  background:#00081a;padding:15px;border-radius:8px;border:1px solid var(--verde);
+  margin:15px 0;white-space:pre-wrap;line-height:1.7;font-size:14px
+}
+.modelos-mensagem{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:15px}
+.btn-modelo{
+  padding:8px 14px;border-radius:8px;border:1px solid var(--roxo);
+  background:rgba(116,87,255,0.1);color:var(--texto);cursor:pointer;
+  font-size:14px;transition:all var(--transicao)
+}
+.btn-modelo:hover{background:rgba(116,87,255,0.25)}
+
+/* RESPONSIVO */
+@media(max-width:480px){
+  .cards-estatisticas{grid-template-columns:1fr 1fr;gap:8px}
+  .acoes-item{flex-direction:column}
+  .btn-pequeno{width:100%}
+}
+</style>
+</head>
+<body>
+
+<!-- LOADING -->
+<div id="loadingOverlay">
+  <div class="spinner"></div>
+  <p class="texto-loading">🚀 Inicializando Portal de Recrutamento...</p>
+</div>
+
+<!-- TOAST -->
+<div id="toast"></div>
+
+<div class="container">
+
+<!-- 🔐 TELA DE LOGIN -->
+<div id="telaLogin" class="area-secao ativa">
+  <div class="logo-topo"><h1>PADRONIZA<br>RECRUTAMENTO</h1></div>
+  <div class="titulo-pagina">
+    <h2>🔐 Acesso Exclusivo</h2>
+    <p>Portal de Recrutamento Padroniza Assessoria</p>
+  </div>
+  <div class="painel">
+    <div class="grupo-campo">
+      <label class="label">Usuário</label>
+      <input type="text" class="campo-form" id="usuarioLogin" placeholder="Digite seu usuário">
+    </div>
+    <div class="grupo-campo">
+      <label class="label">Senha</label>
+      <input type="password" class="campo-form" id="senhaLogin" placeholder="Digite sua senha">
+    </div>
+    <button class="btn-acao btn-verde" onclick="fazerLogin()">🚀 ENTRAR NO SISTEMA</button>
+    <p style="text-align:center;margin-top:15px;font-size:13px;color:var(--cinza)">
+      Acesso exclusivo — seus dados ficam salvos apenas no seu navegador
+    </p>
+  </div>
+</div>
+
+<!-- 📊 PAINEL PRINCIPAL -->
+<div id="telaPrincipal" class="area-secao">
+  <div class="titulo-pagina">
+    <h2>📊 Painel de Recrutamento</h2>
+    <p>Bem-vinda! Veja o andamento do seu recrutamento</p>
+  </div>
+
+  <!-- ESTATÍSTICAS -->
+  <div class="cards-estatisticas">
+    <div class="card-stat"><h4>🟡 Pendentes</h4><p class="num-pendente" id="statPendente">0</p></div>
+    <div class="card-stat"><h4>🔵 Enviados</h4><p class="num-enviado" id="statEnviado">0</p></div>
+    <div class="card-stat"><h4>🟢 Responderam</h4><p class="num-resposta" id="statResposta">0</p></div>
+    <div class="card-stat"><h4>🟣 Contratados</h4><p class="num-contratado" id="statContratado">0</p></div>
+  </div>
+
+  <!-- BOTÕES PRINCIPAIS -->
+  <div style="display:flex;gap:10px;margin-bottom:20px;flex-wrap:wrap">
+    <button class="btn-acao btn-azul" style="flex:1;min-width:140px" onclick="mostrarTela('importar')">📥 IMPORTAR STREAMERS</button>
+    <button class="btn-acao btn-roxo" style="flex:1;min-width:140px" onclick="mostrarTela('lista')">📋 VER LISTA COMPLETA</button>
+  </div>
+
+  <!-- LEMBRETES -->
+  <div class="painel" id="areaLembretes" style="display:none">
+    <h3 style="color:var(--amarelo);margin-bottom:12px">⏰ Para dar seguimento</h3>
+    <div id="listaLembretes"></div>
+  </div>
+</div>
+
+<!-- 📥 TELA DE IMPORTAÇÃO -->
+<div id="telaImportar" class="area-secao">
+  <div class="titulo-pagina">
+    <h2>📥 Importar Streamers</h2>
+    <p>Cole a lista de @usuários abaixo — o sistema faz o resto!</p>
+  </div>
+  <div class="painel">
+    <div class="aviso-importante">
+      💡 <strong>Como funciona:</strong><br>
+      1. Busque streamers no TikTok (busca por hashtags, lives ao vivo, etc.)<br>
+      2. Copie os @usuários — pode ser vários de uma vez<br>
+      3. Cole na caixa abaixo → clique em "Importar"<br>
+      4. O sistema remove duplicatas, limpa e organiza TUDO sozinho! ✅
+    </div>
+    <div class="grupo-campo">
+      <label class="label">Cole a lista de @usuários (1 por linha ou separados por espaço)</label>
+      <textarea class="campo-form" id="listaUsuarios" placeholder="@usuario1 @usuario2 @usuario3..."></textarea>
+    </div>
+    <div class="grupo-campo">
+      <label class="label">Nicho / Categoria (opcional)</label>
+      <select class="campo-form" id="nichoImport">
+        <option value="">Selecione...</option>
+        <option value="Dança">💃 Dança</option>
+        <option value="Games">🎮 Games</option>
+        <option value="Música">🎵 Música</option>
+        <option value="Beleza">💄 Beleza</option>
+        <option value="Conversa">💬 Conversa / Variedades</option>
+        <option value="Culinária">🍳 Culinária</option>
+        <option value="Esportes">⚽ Esportes</option>
+        <option value="Outro">📌 Outro</option>
+      </select>
+    </div>
+    <button class="btn-acao btn-verde" onclick="importarLista()">🚀 IMPORTAR AUTOMATICAMENTE</button>
+    <div class="sucesso-importacao" id="avisoSucesso">
+      ✅ <strong>Importação concluída!</strong><br>
+      <span id="detalhesImport"></span>
+    </div>
+    <button class="btn-acao btn-voltar" onclick="mostrarTela('principal')">← Voltar ao Painel</button>
+  </div>
+</div>
+
+<!-- 📋 LISTA DE CANDIDATOS -->
+<div id="telaLista" class="area-secao">
+  <div class="titulo-pagina">
+    <h2>📋 Lista de Candidatos</h2>
+    <p id="qtdCandidatos">0 streamers cadastrados</p>
+  </div>
+  <div class="painel">
+    <div class="ferramentas">
+      <input type="text" class="campo-busca" id="buscaCandidato" placeholder="🔍 Buscar @..." oninput="filtrarLista()">
+      <select class="filtro-status" id="filtroStatus" onchange="filtrarLista()">
+        <option value="todos">Todos os status</option>
+        <option value="pendente">🟡 Pendentes</option>
+        <option value="enviado">🔵 Convite Enviado</option>
+        <option value="resposta">🟢 Responderam</option>
+        <option value="contratado">🟣 Contratados</option>
+        <option value="recusado">🔴 Recusados</option>
+      </select>
+    </div>
+    <div id="listaCandidatos">
+      <p style="text-align:center;color:var(--cinza);padding:30px">Nenhum candidato cadastrado ainda. Importe uma lista!</p>
+    </div>
+  </div>
+  <button class="btn-acao btn-voltar" onclick="mostrarTela('principal')">← Voltar ao Painel</button>
+</div>
+
+<!-- ✉️ ENVIAR CONVITE -->
+<div id="telaConvite" class="area-secao">
+  <div class="titulo-pagina">
+    <h2>✉️ Enviar Convite</h2>
+    <p id="convitePara">Preparando mensagem...</p>
+  </div>
+  <div class="painel">
+    <div class="modelos-mensagem">
+      <button class="btn-modelo" onclick="aplicarModelo('iniciante')">🌱 Iniciante</button>
+      <button class="btn-modelo" onclick="aplicarModelo('ativo')">📡 Já faz live</button>
+      <button class="btn-modelo" onclick="aplicarModelo('experiente')">⭐ Experiente</button>
+      <button class="btn-modelo" onclick="aplicarModelo('curto')">⚡ Curto</button>
+    </div>
+    <div class="grupo-campo">
+      <label class="label">Mensagem de Convite</label>
+      <textarea class="campo-form" id="mensagemConvite"></textarea>
+    </div>
+    <button class="btn-acao btn-amarelo" onclick="copiarMensagem()">📋 COPIAR MENSAGEM PRONTA</button>
+    <p style="text-align:center;margin:10px 0;font-size:14px;color:var(--cinza)">
+      Depois de copiar → envie no Backstage do TikTok para o streamer
+    </p>
+    <button class="btn-acao btn-verde" onclick="marcarComoEnviado()">✅ MARCAR COMO "CONVITE ENVIADO"</button>
+    <button class="btn-acao btn-voltar" onclick="mostrarTela('lista')">← Voltar para Lista</button>
+  </div>
+</div>
+
+</div>
+
+<script>
+// =====================================
+// 🔐 CONFIGURAÇÕES E DADOS
+// =====================================
+const CONFIG = {
+  USUARIO_PERMITIDO: 'padroniza',
+  SENHA_PERMITIDA: 'agency2026'
+};
+
+let candidatos = [];
+let candidatoAtual = null;
+
+// MODELOS DE MENSAGEM — VOCÊ PODE EDITAR ELES!
+const MODELOS = {
+  iniciante: `Olá, @NOME! 👋
+
+Somos da Padroniza Assessoria! 🎉
+
+Vimos que você tem um perfil incrível e queríamos convidar você pra fazer parte da nossa agência. Apoiamos criadores que estão começando e querem crescer no TikTok! 💚
+
+✅ O que oferecemos:
+• Suporte todos os dias
+• Ajuda com conteúdo e ideias
+• Treinamento de lives
+• Divulgação e parcerias
+• Tudo GRÁTIS para você! 🎁
+
+Ficou interessado(a)? É só responder que a gente conversa! 🚀
+
+Atenciosamente,
+Equipe Padroniza Assessoria 🎤✨`,
+
+  ativo: `Olá, @NOME! 👋
+
+Somos da Padroniza Assessoria! 🎉
+
+Adoramos suas lives! Você tem muito potencial e queríamos convidar você pra fazer parte da nossa agência. 🎤
+
+✅ Benefícios:
+• Suporte 1-on-1 diário
+• Estratégias pra crescer mais rápido
+• Parcerias e divulgação
+• Treinamento de performance
+• Tudo GRÁTIS! 💚
+
+Vamos conversar? Responda aqui que a gente te explica tudo! 🚀
+
+Atenciosamente,
+Equipe Padroniza Assessoria ✨`,
+
+  experiente: `Olá, @NOME! 👋
+
+Somos da Padroniza Assessoria! 🎉
+
+Seguimos seu trabalho e achamos incrível! Queríamos propor uma parceria de agência pra potencializar ainda mais suas lives. 🚀
+
+✅ O que podemos fazer juntos:
+• Estratégias personalizadas de crescimento
+• Apoio em campanhas e parcerias
+• Otimização de conteúdo
+• Suporte dedicado
+• Sem custo pra você! 💚
+
+Gostaria de conversar? É só responder! 🤝
+
+Atenciosamente,
+Equipe Padroniza Assessoria ✨`,
+
+  curto: `Olá, @NOME! 👋
+
+Somos da Padroniza Assessoria! 🎤
+
+Gostamos muito do seu perfil e queríamos convidar você pra fazer parte da nossa agência. Oferecemos suporte, treinamento e parcerias — tudo GRÁTIS! 💚
+
+Quer saber mais? É só responder! 🚀
+
+Atenciosamente,
+Equipe Padroniza Assessoria ✨`
+};
+
+// =====================================
+// ⏳ INICIALIZAÇÃO
+// =====================================
+function init(){
+  setTimeout(() => {
+    carregarDados();
+    esconderLoading();
+  }, 800);
+}
+function esconderLoading(){
+  document.getElementById('loadingOverlay').classList.add('escondido');
+}
+
+// =====================================
+// 🔔 TOAST
+// =====================================
+function showToast(mensagem, tipo='info'){
+  const t = document.getElementById('toast');
+  t.textContent = mensagem;
+  t.className = 'mostrar';
+  if(tipo==='sucesso') t.classList.add('sucesso');
+  if(tipo==='erro') t.classList.add('erro');
+  setTimeout(()=>t.classList.remove('mostrar'),3000);
+}
+
+// =====================================
+// 🔐 LOGIN
+// =====================================
+function fazerLogin(){
+  const user = document.getElementById('usuarioLogin').value.trim();
+  const senha = document.getElementById('senhaLogin').value;
+  
+  if(user === CONFIG.USUARIO_PERMITIDO && senha === CONFIG.SENHA_PERMITIDA){
+    showToast('✅ Login realizado com sucesso!', 'sucesso');
+    setTimeout(()=>{
+      mostrarTela('principal');
+      atualizarPainel();
+    },800);
+  }else{
+    showToast('❌ Usuário ou senha incorretos', 'erro');
+  }
+}
+
+// =====================================
+// 🔄 NAVEGAÇÃO
+// =====================================
+function mostrarTela(nome){
+  document.querySelectorAll('.area-secao').forEach(el=>el.classList.remove('ativa'));
+  document.getElementById('tela'+nome.charAt(0).toUpperCase()+nome.slice(1)).classList.add('ativa');
+  if(nome==='principal') atualizarPainel();
+  if(nome==='lista') renderizarLista();
+}
+
+// =====================================
+// 💾 SALVAR / CARREGAR DADOS
+// =====================================
+function salvarDados(){
+  localStorage.setItem('padronizaCandidatos', JSON.stringify(candidatos));
+}
+function carregarDados(){
+  const dados = localStorage.getItem('padronizaCandidatos');
+  if(dados) candidatos = JSON.parse(dados);
+}
+
+// =====================================
+// 📊 ATUALIZAR PAINEL
+// =====================================
+function atualizarPainel(){
+  document.getElementById('statPendente').textContent = candidatos.filter(c=>c.status==='pendente').length;
+  document.getElementById('statEnviado').textContent = candidatos.filter(c=>c.status==='enviado').length;
+  document.getElementById('statResposta').textContent = candidatos.filter(c=>c.status==='resposta').length;
+  document.getElementById('statContratado').textContent = candidatos.filter(c=>c.status==='contratado').length;
+  verificarLembretes();
+}
+
+// =====================================
+// 📥 IMPORTAR LISTA — AUTOMATIZADO
+// =====================================
+function importarLista(){
+  const texto = document.getElementById('listaUsuarios').value.trim();
+  const nicho = document.getElementById('nichoImport').value || 'Não informado';
+  if(!texto){
+    showToast('⚠️ Cole uma lista de usuários primeiro!', 'erro');
+    return;
+  }
+
+  // EXTRAIR @ — limpa TUDO automaticamente
+  const regexUsuarios = /@[\w._]+/g;
+  const encontrados = texto.match(regexUsuarios) || [];
+  
+  if(encontrados.length===0){
+    showToast('⚠️ Nenhum @ de usuário encontrado', 'erro');
+    return;
+  }
+
+  // REMOVER DUPLICATAS e quem já existe
+  const novos = [];
+  encontrados.forEach(usuario=>{
+    const limpo = usuario.toLowerCase().trim();
+    const existe = candidatos.some(c=>c.usuario.toLowerCase()===limpo);
+    if(!existe){
+      novos.push({
+        id: Date.now()+Math.random(),
+        usuario: limpo,
+        nicho: nicho,
+        status: 'pendente',
+        dataCadastro: new Date().toISOString(),
+        dataConvite: null,
+        observacoes: ''
+      });
+    }
+  });
+
+  candidatos.push(...novos);
+  salvarDados();
+
+  // MOSTRAR RESULTADO
+  document.getElementById('detalhesImport').innerHTML = 
+    `${encontrados.length} encontrados → ${novos.length} NOVOS cadastrados → ${encontrados.length-novos.length} já estavam na lista`;
+  document.getElementById('avisoSucesso').style.display = 'block';
+  document.getElementById('listaUsuarios').value = '';
+  
+  showToast(`✅ ${novos.length} streamers importados com sucesso!`, 'sucesso');
+  atualizarPainel();
+  
+  setTimeout(()=>document.getElementById('avisoSucesso').style.display='none',5000);
+}
+
+// =====================================
+// 📋 RENDERIZAR LISTA
+// =====================================
+function renderizarLista(){
+  const container = document.getElementById('listaCandidatos');
+  const busca = document.getElementById('buscaCandidato').value.toLowerCase();
+  const filtro = document.getElementById('filtroStatus').value;
+
+  let filtrados = candidatos;
+  if(filtro!=='todos') filtrados = filtrados.filter(c=>c.status===filtro);
+  if(busca) filtrados = filtrados.filter(c=>c.usuario.toLowerCase().includes(busca));
+
+  document.getElementById('qtdCandidatos').textContent = `${filtrados.length} de ${candidatos.length} cadastrados`;
+
+  if(filtrados.length===0){
+    container.innerHTML = '<p style="text-align:center;color:var(--cinza);padding:30px">Nenhum candidato encontrado</p>';
+    return;
+  }
+
+  const statusTexto = {
+    pendente: '🟡 Pendente',
+    enviado: '🔵 Convite Enviado',
+    resposta: '🟢 Responderam',
+    contratado: '🟣 Contratado',
+    recusado: '🔴 Recusado'
+  };
+
+  container.innerHTML = filtrados.map(c=>`
+    <div class="item-candidato ${c.status}">
+      <div class="cabecalho-item">
+        <span class="nome-usuario">${c.usuario}</span>
+        <span class="tag-status tag-${c.status}">${statusTexto[c.status]}</span>
+      </div>
+      <div class="dados-item">
+        📂 ${c.nicho} • 📅 ${new Date(c.dataCadastro).toLocaleDateString('pt-BR')}
+        ${c.dataConvite ? `<br>✉️ Convite: ${new Date(c.dataConvite).toLocaleDateString('pt-BR')}` : ''}
+      </div>
+      <div class="acoes-item">
+        <button class="btn-acao btn-pequeno btn-azul" onclick="prepararConvite('${c.id}')">✉️ Enviar Convite</button>
+        <button class="btn-acao btn-pequeno btn-verde" onclick="mudarStatus('${c.id}','resposta')">✓ Respondeu</button>
+        <button class="btn-acao btn-pequeno btn-roxo" onclick="mudarStatus('${c.id}','contratado')">⭐ Contratou</button>
+        <button class="btn-acao btn-pequeno btn-voltar" onclick="mudarStatus('${c.id}','recusado')">✗ Recusou</button>
+      </div>
+    </div>
+  `).join('');
+}
+function filtrarLista(){ renderizarLista(); }
+
+// =====================================
+// ✉️ PREPARAR CONVITE
+// =====================================
+function prepararConvite(id){
+  candidatoAtual = candidatos.find(c=>c.id==id);
+  if(!candidatoAtual) return;
+  document.getElementById('convitePara').textContent = `Convite para: ${candidatoAtual.usuario}`;
+  aplicarModelo('iniciante');
+  mostrarTela('convite');
+}
+function aplicarModelo(nome){
+  if(!candidatoAtual) return;
+  let msg = MODELOS[nome];
+  msg = msg.replace(/@NOME/g, candidatoAtual.usuario);
+  document.getElementById('mensagemConvite').value = msg;
+}
+function copiarMensagem(){
+  const msg = document.getElementById('mensagemConvite').value;
+  navigator.clipboard.writeText(msg).then(()=>{
+    showToast('📋 Mensagem copiada! Vá no Backstage e cole!', 'sucesso');
+  }).catch(()=>{
+    showToast('⚠️ Não foi possível copiar automaticamente', 'erro');
+  });
+}
+function marcarComoEnviado(){
+  if(!candidatoAtual) return;
+  const c = candidatos.find(x=>x.id===candidatoAtual.id);
+  c.status = 'enviado';
+  c.dataConvite = new Date().toISOString();
+  salvarDados();
+  showToast('✅ Marcado como "Convite Enviado"!', 'sucesso');
+  setTimeout(()=>mostrarTela('lista'),1000);
+}
+
+// =====================================
+// 🔄 MUDAR STATUS
+// =====================================
+function mudarStatus(id, novoStatus){
+  const c = candidatos.find(x=>x.id==id);
+  if(!c) return;
+  c.status = novoStatus;
+  salvarDados();
+  atualizarPainel();
+  renderizarLista();
+  showToast('✅ Status atualizado!', 'sucesso');
+}
+
+// =====================================
+// ⏰ LEMBRETES AUTOMÁTICOS
+// =====================================
+function verificarLembretes(){
+  const limiteDias = 3;
+  const pendentesAtrasados = candidatos.filter(c=>{
+    if(c.status!=='enviado') return false;
+    const dias = (new Date() - new Date(c.dataConvite)) / (1000*60*60*24);
+    return dias >= limiteDias;
+  });
+
+  const container = document.getElementById('listaLembretes');
+  const area = document.getElementById('areaLembretes');
+  
+  if(pendentesAtrasados.length===0){
+    area.style.display = 'none';
+    return;
+  }
+
+  area.style.display = 'block';
+  container.innerHTML = pendentesAtrasados.map(c=>`
+    <div style="padding:10px;background:var(--painel2);border-radius:8px;margin-bottom:8px;display:flex;justify-content:space-between;align-items:center">
+      <span>${c.usuario} — convite enviado há ${Math.round((new Date()-new Date(c.dataConvite))/(1000*60*60*24))} dias</span>
+      <button class="btn-acao btn-pequeno btn-azul" onclick="prepararConvite('${c.id}')">Reenviar</button>
+    </div>
+  `).join('');
+}
+
+// =====================================
+// 🚀 INICIAR
+// =====================================
+init();
+</script>
+</body>
+</html>
