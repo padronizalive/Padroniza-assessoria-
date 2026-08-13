@@ -68,7 +68,6 @@ body{
   transition:border-color var(--transicao)
 }
 .campo-form:focus{outline:none;border-color:var(--amarelo)}
-.campo-form.invalido{border-color:var(--vermelho)}
 textarea.campo-form{min-height:120px;resize:vertical}
 
 .btn-acao{
@@ -82,8 +81,10 @@ textarea.campo-form{min-height:120px;resize:vertical}
 .btn-azul{background:linear-gradient(135deg,#3b82f6,#1d4ed8)}
 .btn-roxo{background:linear-gradient(135deg,#8b5cf6,#6d28d9)}
 .btn-amarelo{background:linear-gradient(135deg,#fbbf24,#f59e0b);color:#000}
+.btn-rosa{background:linear-gradient(135deg,#ec4899,#db2777)}
 .btn-voltar{background:#293653;color:#fff}
-.btn-pequeno{width:auto;padding:8px 16px;font-size:14px;margin:4px}
+.btn-pequeno{width:auto;padding:8px 14px;font-size:14px;margin:4px}
+.btn-1clique{background:linear-gradient(135deg,#06b6d4,#0891b2);font-size:15px;padding:12px}
 
 /* CONTEÚDO */
 .painel{
@@ -108,6 +109,22 @@ textarea.campo-form{min-height:120px;resize:vertical}
 .card-stat .num-resposta{color:var(--verde)}
 .card-stat .num-contratado{color:var(--roxo)}
 
+/* 🆕 BUSCAS RÁPIDAS */
+.buscas-rapidas{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:20px}
+.btn-busca-tiktok{
+  background:linear-gradient(135deg,#00f2ea,#ff0050);color:#000;
+  font-weight:bold;padding:12px 10px;border-radius:10px;
+  text-align:center;text-decoration:none;font-size:14px;
+  transition:all var(--transicao);border:none;cursor:pointer
+}
+.btn-busca-tiktok:hover{transform:scale(1.05)}
+.grupo-botoes{display:flex;gap:8px;flex-wrap:wrap;margin:15px 0}
+
+/* 🆕 SELEÇÃO EM LOTE */
+.linha-selecao{display:flex;align-items:center;gap:10px;padding:10px;background:var(--painel2);border-radius:8px;margin-bottom:8px}
+.checkbox-item{width:22px;height:22px;cursor:pointer}
+.area-acoes-lote{display:flex;gap:10px;flex-wrap:wrap;margin:15px 0;padding:15px;background:rgba(52,211,153,0.08);border-radius:10px;border:1px solid var(--verde)}
+
 /* LISTA CANDIDATOS */
 .ferramentas{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:15px}
 .campo-busca{flex:1;min-width:150px;padding:10px 12px;border-radius:8px;border:1px solid #293653;background:#17213a;color:var(--texto)}
@@ -123,7 +140,7 @@ textarea.campo-form{min-height:120px;resize:vertical}
 .item-candidato.contratado{border-left-color:var(--roxo)}
 .item-candidato.recusado{border-left-color:var(--vermelho)}
 
-.cabecalho-item{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px;flex-wrap:wrap;gap:8px}
+.cabecalho-item{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;flex-wrap:wrap;gap:8px}
 .nome-usuario{font-weight:bold;font-size:16px;color:var(--texto)}
 .tag-status{
   font-size:12px;padding:3px 10px;border-radius:20px;font-weight:bold
@@ -163,6 +180,7 @@ textarea.campo-form{min-height:120px;resize:vertical}
 /* RESPONSIVO */
 @media(max-width:480px){
   .cards-estatisticas{grid-template-columns:1fr 1fr;gap:8px}
+  .buscas-rapidas{grid-template-columns:1fr 1fr}
   .acoes-item{flex-direction:column}
   .btn-pequeno{width:100%}
 }
@@ -204,11 +222,29 @@ textarea.campo-form{min-height:120px;resize:vertical}
   </div>
 </div>
 
-<!-- 📊 PAINEL PRINCIPAL -->
+<!-- 📊 PAINEL PRINCIPAL COM BUSCAS RÁPIDAS -->
 <div id="telaPrincipal" class="area-secao">
   <div class="titulo-pagina">
     <h2>📊 Painel de Recrutamento</h2>
-    <p>Bem-vinda! Veja o andamento do seu recrutamento</p>
+    <p>Bem-vinda! Tudo pra recrutar rápido e seguro 💚</p>
+  </div>
+
+  <!-- 🆕 BUSCAS RÁPIDAS NO TIKTOK — 1 CLIQUE! -->
+  <div class="painel">
+    <h3 style="color:var(--amarelo);margin-bottom:15px;text-align:center">🔍 BUSCAS RÁPIDAS — 1 CLIQUE NO TIKTOK</h3>
+    <div class="buscas-rapidas">
+      <button class="btn-busca-tiktok" onclick="buscarTikTok('querofazerlive')">🎤 Quero Fazer Live</button>
+      <button class="btn-busca-tiktok" onclick="buscarTikTok('iniciante em live')">🌱 Iniciantes</button>
+      <button class="btn-busca-tiktok" onclick="buscarTikTok('sem agência')">✅ Sem Agência</button>
+      <button class="btn-busca-tiktok" onclick="buscarTikTok('projeto de live')">📋 Projetos</button>
+      <button class="btn-busca-tiktok" onclick="buscarTikTok('recrutamento criadores')">👥 Criadores</button>
+      <button class="btn-busca-tiktok" onclick="buscarTikTok('fazendo live')">🔴 Ao Vivo</button>
+      <button class="btn-busca-tiktok" onclick="buscarTikTok('dança ao vivo')">💃 Dança</button>
+      <button class="btn-busca-tiktok" onclick="buscarTikTok('games ao vivo')">🎮 Games</button>
+    </div>
+    <p style="text-align:center;margin-top:12px;font-size:13px;color:var(--cinza)">
+      💡 Clica em um botão → abre direto no TikTok os perfis pra você verificar!
+    </p>
   </div>
 
   <!-- ESTATÍSTICAS -->
@@ -236,22 +272,22 @@ textarea.campo-form{min-height:120px;resize:vertical}
 <div id="telaImportar" class="area-secao">
   <div class="titulo-pagina">
     <h2>📥 Importar Streamers</h2>
-    <p>Cole a lista de @usuários abaixo — o sistema faz o resto!</p>
+    <p>Cole a lista de @usuários — o sistema faz o resto!</p>
   </div>
   <div class="painel">
     <div class="aviso-importante">
-      💡 <strong>Como funciona:</strong><br>
-      1. Busque streamers no TikTok (busca por hashtags, lives ao vivo, etc.)<br>
-      2. Copie os @usuários — pode ser vários de uma vez<br>
-      3. Cole na caixa abaixo → clique em "Importar"<br>
-      4. O sistema remove duplicatas, limpa e organiza TUDO sozinho! ✅
+      💡 <strong>Fluxo rápido:</strong><br>
+      1. Use os botões de "Busca Rápida" no Painel Principal<br>
+      2. No TikTok → copie até 30 @ dos perfis que te interessam<br>
+      3. Cole aqui → clique em "Importar" → pronto! ✅<br>
+      4. Depois use "Copiar em Lote" pra levar pro Backstage
     </div>
     <div class="grupo-campo">
       <label class="label">Cole a lista de @usuários (1 por linha ou separados por espaço)</label>
       <textarea class="campo-form" id="listaUsuarios" placeholder="@usuario1 @usuario2 @usuario3..."></textarea>
     </div>
     <div class="grupo-campo">
-      <label class="label">Nicho / Categoria (opcional)</label>
+      <label class="label">Nicho / Categoria</label>
       <select class="campo-form" id="nichoImport">
         <option value="">Selecione...</option>
         <option value="Dança">💃 Dança</option>
@@ -273,7 +309,7 @@ textarea.campo-form{min-height:120px;resize:vertical}
   </div>
 </div>
 
-<!-- 📋 LISTA DE CANDIDATOS -->
+<!-- 📋 LISTA DE CANDIDATOS COM AÇÕES EM LOTE -->
 <div id="telaLista" class="area-secao">
   <div class="titulo-pagina">
     <h2>📋 Lista de Candidatos</h2>
@@ -291,6 +327,19 @@ textarea.campo-form{min-height:120px;resize:vertical}
         <option value="recusado">🔴 Recusados</option>
       </select>
     </div>
+
+    <!-- 🆕 AÇÕES EM LOTE — 1 CLIQUE! -->
+    <div class="area-acoes-lote">
+      <h4 style="color:var(--verde);margin-bottom:10px">⚡ AÇÕES EM LOTE — 1 CLIQUE!</h4>
+      <button class="btn-acao btn-pequeno btn-azul" onclick="selecionarTodos()">☑️ Selecionar Todos</button>
+      <button class="btn-acao btn-pequeno btn-voltar" onclick="desmarcarTodos()">⬜ Desmarcar Todos</button>
+      <button class="btn-acao btn-pequeno btn-amarelo" onclick="copiarSelecionados()">📋 COPIAR @ SELECIONADOS</button>
+      <button class="btn-acao btn-pequeno btn-rosa" onclick="abrirPerfisSelecionados()">🔗 ABRIR PERFIS NO TIKTOK</button>
+      <p style="font-size:13px;color:var(--cinza);margin-top:8px">
+        💡 Copie até 30 @ → cole direto no Backstage do TikTok para verificação!
+      </p>
+    </div>
+
     <div id="listaCandidatos">
       <p style="text-align:center;color:var(--cinza);padding:30px">Nenhum candidato cadastrado ainda. Importe uma lista!</p>
     </div>
@@ -337,8 +386,9 @@ const CONFIG = {
 
 let candidatos = [];
 let candidatoAtual = null;
+let selecionados = new Set(); // Para ações em lote
 
-// MODELOS DE MENSAGEM — VOCÊ PODE EDITAR ELES!
+// MODELOS DE MENSAGEM — EDITÁVEIS!
 const MODELOS = {
   iniciante: `Olá, @NOME! 👋
 
@@ -450,11 +500,21 @@ function fazerLogin(){
 }
 
 // =====================================
+// 🔍 BUSCA NO TIKTOK — 1 CLIQUE! 🆕
+// =====================================
+function buscarTikTok(termo){
+  const url = `https://www.tiktok.com/search?q=${encodeURIComponent(termo)}`;
+  window.open(url, '_blank', 'noopener');
+  showToast(`🔍 Buscando "${termo}" no TikTok!`, 'sucesso');
+}
+
+// =====================================
 // 🔄 NAVEGAÇÃO
 // =====================================
 function mostrarTela(nome){
   document.querySelectorAll('.area-secao').forEach(el=>el.classList.remove('ativa'));
   document.getElementById('tela'+nome.charAt(0).toUpperCase()+nome.slice(1)).classList.add('ativa');
+  selecionados.clear(); // Limpa seleção ao trocar de tela
   if(nome==='principal') atualizarPainel();
   if(nome==='lista') renderizarLista();
 }
@@ -492,7 +552,6 @@ function importarLista(){
     return;
   }
 
-  // EXTRAIR @ — limpa TUDO automaticamente
   const regexUsuarios = /@[\w._]+/g;
   const encontrados = texto.match(regexUsuarios) || [];
   
@@ -501,7 +560,6 @@ function importarLista(){
     return;
   }
 
-  // REMOVER DUPLICATAS e quem já existe
   const novos = [];
   encontrados.forEach(usuario=>{
     const limpo = usuario.toLowerCase().trim();
@@ -522,7 +580,6 @@ function importarLista(){
   candidatos.push(...novos);
   salvarDados();
 
-  // MOSTRAR RESULTADO
   document.getElementById('detalhesImport').innerHTML = 
     `${encontrados.length} encontrados → ${novos.length} NOVOS cadastrados → ${encontrados.length-novos.length} já estavam na lista`;
   document.getElementById('avisoSucesso').style.display = 'block';
@@ -535,7 +592,7 @@ function importarLista(){
 }
 
 // =====================================
-// 📋 RENDERIZAR LISTA
+// 📋 RENDERIZAR LISTA COM SELEÇÃO EM LOTE 🆕
 // =====================================
 function renderizarLista(){
   const container = document.getElementById('listaCandidatos');
@@ -564,7 +621,12 @@ function renderizarLista(){
   container.innerHTML = filtrados.map(c=>`
     <div class="item-candidato ${c.status}">
       <div class="cabecalho-item">
-        <span class="nome-usuario">${c.usuario}</span>
+        <div class="linha-selecao">
+          <input type="checkbox" class="checkbox-item" id="check-${c.id}" 
+            ${selecionados.has(c.id) ? 'checked' : ''} 
+            onchange="toggleSelecao('${c.id}')">
+          <span class="nome-usuario">${c.usuario}</span>
+        </div>
         <span class="tag-status tag-${c.status}">${statusTexto[c.status]}</span>
       </div>
       <div class="dados-item">
@@ -572,15 +634,60 @@ function renderizarLista(){
         ${c.dataConvite ? `<br>✉️ Convite: ${new Date(c.dataConvite).toLocaleDateString('pt-BR')}` : ''}
       </div>
       <div class="acoes-item">
-        <button class="btn-acao btn-pequeno btn-azul" onclick="prepararConvite('${c.id}')">✉️ Enviar Convite</button>
-        <button class="btn-acao btn-pequeno btn-verde" onclick="mudarStatus('${c.id}','resposta')">✓ Respondeu</button>
+        <a href="https://www.tiktok.com/${c.usuario}" target="_blank" rel="noopener" 
+           class="btn-acao btn-pequeno btn-azul">🔗 Ver Perfil</a>
+        <button class="btn-acao btn-pequeno btn-verde" onclick="prepararConvite('${c.id}')">✉️ Convite</button>
         <button class="btn-acao btn-pequeno btn-roxo" onclick="mudarStatus('${c.id}','contratado')">⭐ Contratou</button>
-        <button class="btn-acao btn-pequeno btn-voltar" onclick="mudarStatus('${c.id}','recusado')">✗ Recusou</button>
       </div>
     </div>
   `).join('');
 }
 function filtrarLista(){ renderizarLista(); }
+
+// =====================================
+// ⚡ AÇÕES EM LOTE — 1 CLIQUE! 🆕
+// =====================================
+function toggleSelecao(id){
+  if(selecionados.has(id)) selecionados.delete(id);
+  else selecionados.add(id);
+}
+function selecionarTodos(){
+  candidatos.forEach(c=>selecionados.add(c.id));
+  renderizarLista();
+  showToast(`☑️ ${selecionados.size} selecionados!`, 'sucesso');
+}
+function desmarcarTodos(){
+  selecionados.clear();
+  renderizarLista();
+  showToast('⬜ Todos desmarcados!', 'info');
+}
+function copiarSelecionados(){
+  if(selecionados.size===0){
+    showToast('⚠️ Selecione pelo menos um streamer!', 'erro');
+    return;
+  }
+  const selec = candidatos.filter(c=>selecionados.has(c.id));
+  const listaTexto = selec.map(c=>c.usuario).join(' ');
+  
+  navigator.clipboard.writeText(listaTexto).then(()=>{
+    showToast(`📋 ${selec.length} @ copiados! Cole no Backstage!`, 'sucesso');
+  }).catch(()=>{
+    showToast('⚠️ Não foi possível copiar', 'erro');
+  });
+}
+function abrirPerfisSelecionados(){
+  if(selecionados.size===0){
+    showToast('⚠️ Selecione pelo menos um streamer!', 'erro');
+    return;
+  }
+  const selec = candidatos.filter(c=>selecionados.has(c.id));
+  selec.forEach((c, i)=>{
+    setTimeout(()=>{
+      window.open(`https://www.tiktok.com/${c.usuario}`, '_blank', 'noopener');
+    }, i * 800); // Abre um por um pra não bloquear
+  });
+  showToast(`🔗 Abrindo ${selec.length} perfis...`, 'sucesso');
+}
 
 // =====================================
 // ✉️ PREPARAR CONVITE
@@ -650,7 +757,7 @@ function verificarLembretes(){
 
   area.style.display = 'block';
   container.innerHTML = pendentesAtrasados.map(c=>`
-    <div style="padding:10px;background:var(--painel2);border-radius:8px;margin-bottom:8px;display:flex;justify-content:space-between;align-items:center">
+    <div style="padding:10px;background:var(--painel2);border-radius:8px;margin-bottom:8px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px">
       <span>${c.usuario} — convite enviado há ${Math.round((new Date()-new Date(c.dataConvite))/(1000*60*60*24))} dias</span>
       <button class="btn-acao btn-pequeno btn-azul" onclick="prepararConvite('${c.id}')">Reenviar</button>
     </div>
