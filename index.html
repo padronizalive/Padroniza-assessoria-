@@ -318,8 +318,8 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
 
 <script>
 const LINK_PLANILHA_LIVES = "https://docs.google.com/spreadsheets/d/1R9eUsqF4kA0y22ryMUIsvGolBfk3-XwZ5R-RVpBiZA4/gviz/tq?tqx=out:json";
-const CAPA_PADRAO = "https://i.imgur.com/6pJQzqU.jpeg";
-const SENHA_ADMIN = "agência. 2026";
+const CAPA_PADRAO = "https://i.imgur.com/oxlyYsQ.png";
+const SENHA_ADMIN = "agência2026";
 const EMAIL_ADMIN = "padronizaassessoria@gmail.com";
 
 let dadosPlanilha = [];
@@ -375,7 +375,6 @@ async function carregarPlanilhaLives(){
 
 function renderizarLives(){
   const container = document.getElementById('listaLives');
-  // ✅ CORRIGIDO: ACEITA SIM, S, TRUE, TRUE
   const aoVivo = dadosPlanilha.filter(s => {
     const val = (s.aoVivo || "").trim().toUpperCase();
     return ["SIM", "S", "TRUE", "VERDADEIRO"].includes(val) && s.usuario;
@@ -387,7 +386,6 @@ function renderizarLives(){
     return;
   }
   container.innerHTML = aoVivo.map(s => {
-    // ✅ LÓGICA DA CAPA: se tiver link válido → usa, senão → CAPA PADRÃO
     let capaUsar = CAPA_PADRAO;
     if(s.capa && s.capa.length > 10 && s.capa.startsWith('http')){
       capaUsar = s.capa;
