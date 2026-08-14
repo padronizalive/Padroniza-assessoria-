@@ -1,174 +1,76 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Parcerias | Padroniza Assessoria</title>
-<style>
-:root{--fundo:#0b1020;--painel:#11182c;--painel2:#17213a;--verde:#34d399;--amarelo:#ffc857;--vermelho:#ef4444;--azul:#3b82f6;--texto:#f7f9ff;--cinza:#a9b4cb}
-*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
-body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
-.container{max-width:650px;margin:0 auto}
-.logo-container{text-align:center;margin-bottom:20px}
-.logo-agencia{max-width:280px;width:100%;height:auto;border-radius:12px;border:3px solid var(--amarelo);box-shadow:0 0 20px rgba(255,200,87,0.3)}
-.cabecalho{text-align:center;margin-bottom:25px}
-.cabecalho h2{font-size:28px;color:var(--amarelo);margin-bottom:8px}
-.cabecalho p{font-size:16px;color:var(--cinza)}
-.cartao{background:var(--painel2);border-radius:12px;padding:20px;margin-bottom:20px;border:1px solid #293653}
-.cartao h3{color:var(--amarelo);margin-bottom:15px;font-size:20px}
-.cartao h4{color:var(--texto);margin-bottom:10px}
-.cartao p{color:var(--cinza);margin-bottom:8px;line-height:1.5}
-.destaque{background:rgba(52,211,153,0.1);border:2px solid var(--verde);padding:15px;border-radius:10px;text-align:center;margin-bottom:20px}
-.destaque h3{color:var(--verde);margin-bottom:5px}
-.valor-destaque{font-size:28px;font-weight:bold;color:var(--amarelo)}
-.grupo-campo{margin:12px 0}
-.campo-form{width:100%;padding:14px 16px;border-radius:10px;border:1px solid #293653;background:#17213a;color:var(--texto);font-size:16px}
-.btn-acao{width:100%;padding:14px;border-radius:10px;border:none;font-weight:bold;cursor:pointer;text-decoration:none;display:inline-block;text-align:center;color:#fff;font-size:17px;transition:0.2s}
-.btn-verde{background:linear-gradient(135deg,#22c55e,#15803d)}
-.btn-azul{background:linear-gradient(135deg,#3b82f6,#1d4ed8)}
-.btn-voltar{background:#293653;color:#fff;margin-top:15px}
-.btn-acao:active{transform:scale(0.98)}
-.resultado-busca{margin-top:15px;padding:15px;background:rgba(59,130,246,0.1);border-radius:10px;border:1px solid var(--azul);display:none}
-.resultado-busca.visivel{display:block}
-.status-disponivel{color:var(--verde);font-weight:bold}
-.status-pendente{color:var(--amarelo);font-weight:bold}
-.status-ocupado{color:var(--vermelho);font-weight:bold}
-.aviso{background:rgba(255,200,87,0.1);border:1px solid var(--amarelo);padding:12px;border-radius:8px;color:var(--amarelo);margin-top:15px}
-hr{border:none;border-top:1px solid #293653;margin:25px 0}
-.toast{position:fixed;top:20px;left:50%;transform:translateX(-50%);background:var(--verde);color:#fff;padding:12px 24px;border-radius:8px;font-weight:bold;z-index:9999;display:none;box-shadow:0 4px 12px rgba(0,0,0,0.3)}
-</style>
-</head>
-<body>
-<div class="container">
-
-<div class="logo-container">
-  <img src="https://i.imgur.com/blank.png" alt="Padroniza Assessoria" class="logo-agencia">
-</div>
-
-<div class="cabecalho">
-  <h2>🤝 PARCERIAS COM OUTRAS AGÊNCIAS</h2>
-  <p>Expanda suas batalhas e cresça junto com a gente!</p>
-</div>
-
+<!-- 💰 PLANOS DE PARCERIA PAGA — COMPLETO -->
 <div class="cartao">
-  <h3>📋 PACOTES DE PARCERIA</h3>
-  
-  <div class="destaque">
-    <h3>⚔️ BATALHAS OFICIAIS</h3>
-    <p style="color:var(--texto)">Agendamento + Divulgação + Suporte</p>
-    <div class="valor-destaque">R$ 69,90 / mês</div>
-  </div>
+  <h3>💎 PARCERIAS PAGAS — ESCOLHA SEU PACOTE</h3>
 
-  <div style="display:grid;gap:12px;margin-top:15px">
-    <div style="background:var(--painel);padding:15px;border-radius:10px">
-      <h4>🆓 Plano de Divulgação Grátis</h4>
-      <p style="color:var(--verde)">✅ Sem custo — preencha o formulário e entre na lista de parceiros!</p>
-    </div>
-    <div style="background:var(--painel);padding:15px;border-radius:10px">
-      <h4>💰 Plano Completo</h4>
-      <p style="color:var(--amarelo)">✅ Batalhas oficiais + Divulgação + Arte visual + Suporte prioritário</p>
+  <!-- 📦 PACOTE INICIAL -->
+  <div class="plano-pago" style="border-left:3px solid var(--verde)">
+    <h4>📦 PACOTE INICIAL</h4>
+    <div class="valor-plano">R$ 149,90</div>
+    <p style="color:var(--cinza);font-size:14px;margin-bottom:12px">⚔️ 30 Batalhas — Sem prazo de validade</p>
+    <ul class="lista-beneficios">
+      <li>30 batalhas completas — use quando quiser</li>
+      <li>🎬 Vídeo curto de divulgação + foto por batalha</li>
+      <li>✨ Destaque para o streamer da sua agência</li>
+      <li>🎵 2 músicas exclusivas — oficial OU premiação</li>
+      <li>📋 Suporte e histórico de batalhas</li>
+    </ul>
+    <div style="margin-top:12px;padding:10px;background:rgba(52,211,153,0.1);border-radius:8px">
+      <p style="font-size:13px;color:var(--cinza);margin-bottom:5px">🔑 Pague via Pix:</p>
+      <button class="btn-acao btn-verde" style="padding:8px 12px;font-size:13px" 
+        onclick="navigator.clipboard.writeText('00020101021126760014br.gov.bcb.pix01367c0dfbc3-68e7-4b85-a0eb-eb037b738d9f0214Pacote inicial5204000053039865406149.905802BR591965 8 0 M G DA SILVA6007VILHENA62070503***6304301C');mostrarToast('✅ Pix copiado!')">
+        📋 COPIAR CHAVE PIX
+      </button>
     </div>
   </div>
-</div>
 
-<div class="cartao">
-  <h3>🔍 BUSCAR STATUS DE PARCERIA</h3>
-  <p style="color:var(--cinza);margin-bottom:10px">Digite o nome da agência para verificar disponibilidade e contato</p>
-  <div class="grupo-campo">
-    <input type="text" class="campo-form" id="buscaAgencia" placeholder="Nome da agência parceira">
+  <!-- 📦 PACOTE INTERMEDIÁRIO -->
+  <div class="plano-pago" style="border-left:3px solid var(--azul);margin-top:18px">
+    <h4>📦 PACOTE INTERMEDIÁRIO</h4>
+    <div class="valor-plano">R$ 269,90</div>
+    <p style="color:var(--cinza);font-size:14px;margin-bottom:12px">⚔️ 60 Batalhas — Sem prazo de validade</p>
+    <ul class="lista-beneficios">
+      <li>✅ Tudo do Pacote Inicial + MAIS:</li>
+      <li>⚔️ 60 batalhas — o dobro do pacote inicial</li>
+      <li>🎵 3 músicas exclusivas — oficial + premiação + sorteio</li>
+      <li>⚡ Suporte Prioritário — resposta mais rápida</li>
+      <li>📜 Histórico completo detalhado</li>
+    </ul>
+    <div style="margin-top:12px;padding:10px;background:rgba(59,130,246,0.1);border-radius:8px">
+      <p style="font-size:13px;color:var(--cinza);margin-bottom:5px">🔑 Pague via Pix:</p>
+      <button class="btn-acao btn-azul" style="padding:8px 12px;font-size:13px" 
+        onclick="navigator.clipboard.writeText('00020101021126820014br.gov.bcb.pix01367c0dfbc3-68e7-4b85-a0eb-eb037b738d9f0220Pacote intermediario5204000053039865406269.905802BR591965 8 0 M G DA SILVA6007VILHENA62070503***630438A8');mostrarToast('✅ Pix copiado!')">
+        📋 COPIAR CHAVE PIX
+      </button>
+    </div>
   </div>
-  <button class="btn-acao btn-azul" onclick="buscarAgencia()">🔍 BUSCAR</button>
-  
-  <div class="resultado-busca" id="resultadoBusca">
-    <h4 id="nomeAgenciaEncontrada">-</h4>
-    <p><strong>Status:</strong> <span id="statusAgencia">-</span></p>
-    <p><strong>Contato:</strong> <span id="contatoAgencia">-</span></p>
-    <p><strong>Tipo de parceria:</strong> <span id="tipoParceria">-</span></p>
+
+  <!-- 🏆 PACOTE PREMIUM — DESTAQUE PRINCIPAL -->
+  <div class="plano-pago" style="border:2px solid var(--roxo);box-shadow:0 0 15px rgba(116,87,255,0.25);margin-top:18px">
+    <div style="background:var(--roxo);color:#fff;text-align:center;padding:6px;border-radius:6px 6px 0 0;font-weight:bold;font-size:14px">👑 MAIS ESCOLHIDO — PACOTE PREMIUM</div>
+    <h4 style="margin-top:12px">🏆 PACOTE PREMIUM</h4>
+    <div class="valor-plano">R$ 399,90</div>
+    <p style="color:var(--cinza);font-size:14px;margin-bottom:12px">⚔️ 100 Batalhas — Sem prazo de validade</p>
+    <ul class="lista-beneficios">
+      <li>✅ Tudo dos pacotes anteriores + MAIS:</li>
+      <li>⚔️ 100 batalhas — nosso maior pacote!</li>
+      <li>🎬 Vídeo PREMIUM + foto em alta resolução</li>
+      <li>✨ Destaque visual especial para seu streamer</li>
+      <li>🎵 5 músicas exclusivas — uso completo e personalizado</li>
+      <li>⚡ Suporte VIP Dedicado — atendimento exclusivo</li>
+      <li>📢 Sua agência em destaque nas nossas redes</li>
+      <li>📊 Relatório detalhado de desempenho</li>
+      <li>🎁 <strong>BÔNUS: 1 batalha grátis por mês!</strong></li>
+    </ul>
+    <div style="margin-top:12px;padding:10px;background:rgba(116,87,255,0.15);border-radius:8px">
+      <p style="font-size:13px;color:var(--cinza);margin-bottom:5px">🔑 Pague via Pix:</p>
+      <button class="btn-acao" style="background:linear-gradient(135deg,#8b5cf6,#6d28d9);padding:8px 12px;font-size:13px" 
+        onclick="navigator.clipboard.writeText('00020101021126760014br.gov.bcb.pix01367c0dfbc3-68e7-4b85-a0eb-eb037b738d9f0214Pacote Premium5204000053039865406399.905802BR591965 8 0 M G DA SILVA6007VILHENA62070503***630407E9');mostrarToast('✅ Pix copiado!')">
+        📋 COPIAR CHAVE PIX
+      </button>
+    </div>
+  </div>
+
+  <div style="text-align:center;color:var(--cinza);padding:15px;font-style:italic;margin-top:10px">
+    💳 Após o pagamento, envie o comprovante via WhatsApp para liberação imediata do serviço!
   </div>
 </div>
-
-<div class="cartao">
-  <h3>📝 SOLICITAR PARCERIA</h3>
-  <p style="color:var(--cinza);margin-bottom:15px">Preencha o formulário oficial para se tornar parceira</p>
-  <a href="https://forms.gle/LSYkbSA5nxjDWTQr6" target="_blank" class="btn-acao btn-verde">📋 ABRIR FORMULÁRIO DE PARCERIA</a>
-  <div class="aviso">
-    ⚠️ Após enviar, aguarde a confirmação em até 48h. Sua agência aparecerá na lista de parceiros!
-  </div>
-</div>
-
-<hr>
-
-<button class="btn-acao btn-voltar" onclick="window.history.back()">← VOLTAR PARA PORTAL</button>
-
-<div class="toast" id="toast"></div>
-</div>
-
-<script>
-const LINK_PLANILHA_PARCERIAS = "https://docs.google.com/spreadsheets/d/1R9eUsqF4kA0y22ryMUIsvGolBfk3-XwZ5R-RVpBiZA4/gviz/tq?tqx=out:json";
-
-let dadosParcerias = [];
-
-window.onload = async function(){
-  await carregarPlanilhaParcerias();
-};
-
-async function carregarPlanilhaParcerias(){
-  try{
-    const res = await fetch(LINK_PLANILHA_PARCERIAS);
-    let txt = await res.text();
-    txt = txt.substring(47, txt.length - 2);
-    const json = JSON.parse(txt);
-    dadosParcerias = json.table.rows.map(linha => ({
-      nome: (linha.c[0]?.v || "").toString().trim().toLowerCase(),
-      status: linha.c[1]?.v || "Disponível",
-      contato: linha.c[2]?.v || "Não informado",
-      tipo: linha.c[3]?.v || "Gratuito"
-    }));
-    console.log("✅ Parcerias carregadas:", dadosParcerias.length);
-  }catch(e){
-    dadosParcerias = [
-      {nome: "exemplo agência", status: "Disponível", contato: "WhatsApp: (XX) XXXXX-XXXX", tipo: "Completo"}
-    ];
-  }
-}
-
-function buscarAgencia(){
-  const busca = document.getElementById('buscaAgencia').value.trim().toLowerCase();
-  const resultado = document.getElementById('resultadoBusca');
-  
-  if(!busca){
-    mostrarToast("⚠️ Digite o nome da agência!");
-    return;
-  }
-
-  const encontrada = dadosParcerias.find(a => a.nome.includes(busca));
-  
-  if(encontrada){
-    document.getElementById('nomeAgenciaEncontrada').textContent = encontrada.nome;
-    
-    const statusEl = document.getElementById('statusAgencia');
-    statusEl.textContent = encontrada.status;
-    statusEl.className = "";
-    if(encontrada.status.includes("Disponível")) statusEl.classList.add("status-disponivel");
-    else if(encontrada.status.includes("Pendente")) statusEl.classList.add("status-pendente");
-    else statusEl.classList.add("status-ocupado");
-    
-    document.getElementById('contatoAgencia').textContent = encontrada.contato;
-    document.getElementById('tipoParceria').textContent = encontrada.tipo;
-    resultado.classList.add("visivel");
-    mostrarToast("✅ Agência encontrada!");
-  }else{
-    resultado.classList.remove("visivel");
-    mostrarToast("❌ Agência não encontrada — preencha o formulário!");
-  }
-}
-
-function mostrarToast(mensagem){
-  const t = document.getElementById('toast');
-  t.textContent = mensagem;
-  t.style.display = 'block';
-  setTimeout(() => t.style.display = 'none', 3000);
-}
-</script>
-</body>
-</html>
