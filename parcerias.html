@@ -27,25 +27,13 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
 .btn-acao:active{transform:scale(0.98)}
 .resultado-busca{margin-top:15px;padding:15px;background:rgba(59,130,246,0.1);border-radius:10px;border:1px solid var(--azul);display:none}
 .resultado-busca.visivel{display:block}
-.status-liberado{color:var(--verde);font-weight:bold}
-.status-pendente{color:var(--amarelo);font-weight:bold}
-.status-confirmada{color:var(--verde);font-weight:bold}
 .status-aguardando{color:var(--amarelo);font-weight:bold}
+.status-confirmada{color:var(--verde);font-weight:bold}
 .status-recusada{color:var(--vermelho);font-weight:bold}
-.aviso-bloqueado{background:rgba(239,68,68,0.1);border:1px solid var(--vermelho);padding:15px;border-radius:10px;color:var(--vermelho);text-align:center}
-.aviso-liberado{background:rgba(52,211,153,0.15);border:1px solid var(--verde);padding:15px;border-radius:10px;color:var(--verde);text-align:center}
 .aviso-gratuito{background:rgba(249,115,22,0.1);border:1px solid var(--laranja);padding:15px;border-radius:10px;color:var(--laranja);text-align:center;margin-bottom:15px}
-hr{border:none;border-top:1px solid #293653;margin:25px 0}
 .toast{position:fixed;top:20px;left:50%;transform:translateX(-50%);background:var(--verde);color:#fff;padding:12px 24px;border-radius:8px;font-weight:bold;z-index:9999;display:none;box-shadow:0 4px 12px rgba(0,0,0,0.3)}
-.campo-streamer{background:rgba(116,87,255,0.08);border:1px solid rgba(116,87,255,0.3);border-radius:8px;padding:12px;margin-bottom:10px}
-.campo-streamer label{display:block;color:var(--roxo);font-weight:bold;margin-bottom:5px;font-size:14px}
-.contador-streamers{color:var(--cinza);font-size:14px;margin-bottom:10px}
-.sucesso-envio{background:rgba(52,211,153,0.15);border:2px solid var(--verde);padding:20px;border-radius:12px;text-align:center;display:none}
+.sucesso-envio{background:rgba(52,211,153,0.15);border:2px solid var(--verde);padding:20px;border-radius:12px;text-align:center;display:none;margin-top:15px}
 .sucesso-envio.visivel{display:block}
-.etiqueta-pacote{display:inline-block;padding:6px 12px;border-radius:20px;font-weight:bold;font-size:14px;margin-bottom:15px}
-.etiqueta-inicial{background:rgba(52,211,153,0.2);color:#34d399;border:1px solid #34d399}
-.etiqueta-intermediario{background:rgba(59,130,246,0.2);color:#3b82f6;border:1px solid #3b82f6}
-.etiqueta-premium{background:rgba(116,87,255,0.2);color:#a78bfa;border:1px solid #7457ff}
 .solicitacao-card{background:rgba(249,115,22,0.05);border:1px solid var(--laranja);border-radius:10px;padding:15px;margin-bottom:12px}
 .botoes-confirmacao{display:flex;gap:10px;margin-top:12px}
 .botoes-confirmacao button{flex:1}
@@ -54,6 +42,11 @@ hr{border:none;border-top:1px solid #293653;margin:25px 0}
 .aba.inativa{background:transparent;border-color:#293653;color:var(--cinza)}
 .conteudo-aba{display:none}
 .conteudo-aba.ativo{display:block}
+hr{border:none;border-top:1px solid #293653;margin:25px 0}
+.etiqueta-pacote{display:inline-block;padding:6px 12px;border-radius:20px;font-weight:bold;font-size:14px;margin-bottom:15px}
+.etiqueta-inicial{background:rgba(52,211,153,0.2);color:#34d399;border:1px solid #34d399}
+.etiqueta-intermediario{background:rgba(59,130,246,0.2);color:#3b82f6;border:1px solid #3b82f6}
+.etiqueta-premium{background:rgba(116,87,255,0.2);color:#a78bfa;border:1px solid #7457ff}
 </style>
 </head>
 <body>
@@ -68,9 +61,9 @@ hr{border:none;border-top:1px solid #293653;margin:25px 0}
   <p>Expanda suas batalhas e cresça junto com a gente!</p>
 </div>
 
-<!-- ⚔️ PLATAFORMA GRATUITA: ENCONTRE SEU OPONENTE -->
+<!-- ⚔️ PLATAFORMA GRATUITA: AGENDAMENTO DE BATALHA -->
 <div class="cartao">
-  <h3 style="text-align:center;font-size:22px;color:var(--laranja)">⚔️ ENCONTRE SEU OPONENTE — GRATUITO</h3>
+  <h3 style="text-align:center;font-size:22px;color:var(--laranja)">⚔️ AGENDAMENTO DE BATALHA — GRATUITO</h3>
   <div class="aviso-gratuito">
     ✅ <strong>Plataforma gratuita!</strong> Agências solicitam batalhas, oponentes recebem e negociam direto no WhatsApp — sem intervenção da Padroniza!
   </div>
@@ -84,49 +77,50 @@ hr{border:none;border-top:1px solid #293653;margin:25px 0}
   <!-- ABA 1: Solicitar Batalha -->
   <div class="conteudo-aba ativo" id="conteudoSolicitar">
     <div class="grupo-campo">
-      <label style="color:var(--laranja);font-weight:bold;display:block;margin-bottom:8px">🏢 Nome da Sua Agência</label>
-      <input type="text" class="campo-form" id="agenciaSolicitante" placeholder="Ex: Padroniza Assessoria">
+      <label style="color:var(--laranja);font-weight:bold;display:block;margin-bottom:8px">🏢 Nome da Sua Agência *</label>
+      <input type="text" class="campo-form" id="nomeAgencia" placeholder="Ex: Padroniza Assessoria" required>
     </div>
     <div class="grupo-campo">
-      <label style="color:var(--laranja);font-weight:bold;display:block;margin-bottom:8px">🎤 Nome do Streamer</label>
-      <input type="text" class="campo-form" id="streamerSolicitante" placeholder="Nome do streamer que vai batalhar">
+      <label style="color:var(--laranja);font-weight:bold;display:block;margin-bottom:8px">🔗 Link do Perfil do Streamer *</label>
+      <input type="url" class="campo-form" id="linkPerfil" placeholder="Link TikTok / Kako" required>
     </div>
     <div class="grupo-campo">
-      <label style="color:var(--laranja);font-weight:bold;display:block;margin-bottom:8px">🔗 Link do Perfil (TikTok/Kako)</label>
-      <input type="text" class="campo-form" id="perfilSolicitante" placeholder="Link completo do perfil">
+      <label style="color:var(--laranja);font-weight:bold;display:block;margin-bottom:8px">💬 WhatsApp do Streamer / Agência *</label>
+      <input type="tel" class="campo-form" id="whatsapp" placeholder="(XX) XXXXX-XXXX" required>
     </div>
     <div class="grupo-campo">
-      <label style="color:var(--laranja);font-weight:bold;display:block;margin-bottom:8px">⚔️ Rodadas / Round</label>
-      <input type="text" class="campo-form" id="rodadas" placeholder="Ex: 3 rodadas / 15 minutos">
+      <label style="color:var(--laranja);font-weight:bold;display:block;margin-bottom:8px">⚔️ Round / Rodada *</label>
+      <input type="text" class="campo-form" id="rodada" placeholder="Ex: 3 rodadas / 15 min" required>
     </div>
     <div class="grupo-campo">
-      <label style="color:var(--laranja);font-weight:bold;display:block;margin-bottom:8px">📅 Dias e Horários Disponíveis</label>
-      <input type="text" class="campo-form" id="diasHorarios" placeholder="Ex: Seg a Sex às 20h">
+      <label style="color:var(--laranja);font-weight:bold;display:block;margin-bottom:8px">💎 Meta de Diamantes *</label>
+      <input type="text" class="campo-form" id="metaDiamantes" placeholder="Ex: 50.000 / 100.000" required>
     </div>
     <div class="grupo-campo">
-      <label style="color:var(--laranja);font-weight:bold;display:block;margin-bottom:8px">💬 WhatsApp da Sua Agência</label>
-      <input type="text" class="campo-form" id="whatsappSolicitante" placeholder="(XX) XXXXX-XXXX">
-    </div>
-    <div class="grupo-campo">
-      <label style="color:var(--laranja);font-weight:bold;display:block;margin-bottom:8px">🏢 Nome da Agência Oponente</label>
-      <input type="text" class="campo-form" id="agenciaOponente" placeholder="Nome da agência que você quer desafiar">
+      <label style="color:var(--laranja);font-weight:bold;display:block;margin-bottom:8px">📝 Observações (opcional)</label>
+      <textarea class="campo-form" id="observacoes" rows="3" placeholder="Premiação, regras, data, etc."></textarea>
     </div>
     <button class="btn-acao btn-laranja" onclick="enviarSolicitacao()">📤 ENVIAR SOLICITAÇÃO DE BATALHA</button>
     <div class="sucesso-envio" id="sucessoSolicitacao">
-      <h3>✅ SOLICITAÇÃO ENVIADA!</h3>
-      <p style="color:var(--verde);margin-bottom:10px">Os dados foram registrados! A agência oponente poderá ver sua solicitação e confirmar!</p>
-      <p style="color:var(--cinza)">Assim que confirmarem, vocês negociam direto no WhatsApp. Boa batalha! ⚔️🔥</p>
+      <h3>✅ SOLICITAÇÃO ENVIADA COM SUCESSO!</h3>
+      <p style="color:var(--verde);margin-bottom:10px">Os dados foram cadastrados na planilha! As agências poderão ver sua solicitação!</p>
+      <p style="color:var(--cinza)">Quando alguém aceitar, vocês negociam direto no WhatsApp. Boa batalha! ⚔️🔥</p>
     </div>
   </div>
 
   <!-- ABA 2: Ver Solicitações Recebidas -->
   <div class="conteudo-aba" id="conteudoRecebidas">
     <div class="grupo-campo">
-      <label style="color:var(--laranja);font-weight:bold;display:block;margin-bottom:8px">🏢 Digite o NOME DA SUA AGÊNCIA para ver quem te desafiou</label>
-      <input type="text" class="campo-form" id="buscarAgenciaRecebida" placeholder="Nome da sua agência">
+      <label style="color:var(--laranja);font-weight:bold;display:block;margin-bottom:8px">🔍 Digite o nome da sua agência para ver quem te desafiou</label>
+      <input type="text" class="campo-form" id="buscaAgencia" placeholder="Nome da sua agência">
     </div>
-    <button class="btn-acao btn-azul" onclick="buscarSolicitacoes()">🔍 VERIFICAR SOLICITAÇÕES</button>
-    <div id="listaSolicitacoes" style="margin-top:20px"></div>
+    <button class="btn-acao btn-azul" onclick="buscarSolicitacoes()">🔍 BUSCAR SOLICITAÇÕES</button>
+    <div id="listaSolicitacoes" style="margin-top:20px">
+      <div style="text-align:center;padding:30px;color:var(--cinza)">
+        💡 As solicitações aparecerão aqui quando vinculada a leitura da planilha.<br>
+        Os envios já estão salvos automaticamente! ✅
+      </div>
+    </div>
   </div>
 </div>
 
@@ -211,85 +205,27 @@ hr{border:none;border-top:1px solid #293653;margin:25px 0}
   </div>
 </div>
 
-<!-- 🔍 BUSCA DE PARCERIA PAGA -->
-<div class="cartao">
-  <h3>🔍 BUSCAR STATUS DA SUA PARCERIA PAGA</h3>
-  <p style="color:var(--cinza);margin-bottom:10px">Digite o nome da sua agência para verificar status e acessar o formulário</p>
-  <div class="grupo-campo">
-    <input type="text" class="campo-form" id="buscaAgencia" placeholder="Nome da sua agência parceira">
-  </div>
-  <button class="btn-acao btn-azul" onclick="buscarAgencia()">🔍 BUSCAR MINHA PARCERIA</button>
-  
-  <div class="resultado-busca" id="resultadoBusca">
-    <h4 id="nomeAgenciaEncontrada">-</h4>
-    <p><strong>Status:</strong> <span id="statusAgencia">-</span></p>
-    <p><strong>Pacote:</strong> <span id="tipoParceria">-</span></p>
-    <p><strong>Contato:</strong> <span id="contatoAgencia">-</span></p>
-    <div id="avisoFormulario" style="margin-top:15px"></div>
-  </div>
-</div>
-
-<!-- 📋 FORMULÁRIO DE PARCERIA PAGA — LIBERADO APÓS PAGAMENTO -->
-<div class="cartao" id="areaFormulario" style="display:none">
-  <h3>📋 PREENCHER DADOS DAS BATALHAS</h3>
-  
-  <div id="dadosAgencia" style="margin-bottom:20px"></div>
-  
-  <div class="grupo-campo">
-    <label style="color:var(--amarelo);font-weight:bold;display:block;margin-bottom:8px">💬 WhatsApp da Agência</label>
-    <input type="text" class="campo-form" id="whatsappAgencia" placeholder="(XX) XXXXX-XXXX">
-  </div>
-
-  <div class="grupo-campo">
-    <label style="color:var(--amarelo);font-weight:bold;display:block;margin-bottom:8px">🎵 Preferência de Música</label>
-    <select class="campo-form" id="preferenciaMusica">
-      <option value="oficial">🎵 Música Oficial da Batalha</option>
-      <option value="premiacao">🏆 Música de Premiação</option>
-      <option value="sorteio">🎁 Música de Sorteio</option>
-      <option value="personalizada">✨ Personalizada (escreva nas observações)</option>
-    </select>
-  </div>
-
-  <div class="grupo-campo">
-    <label style="color:var(--amarelo);font-weight:bold;display:block;margin-bottom:8px">📝 Observações / Preferências Especiais</label>
-    <textarea class="campo-form" id="observacoes" rows="3" placeholder="Detalhes importantes, preferências de arte, etc."></textarea>
-  </div>
-
-  <div id="areaStreamers" style="margin-top:20px"></div>
-
-  <button class="btn-acao btn-roxo" onclick="enviarFormulario()" style="margin-top:25px">📤 ENVIAR DADOS PARA A PADRONIZA</button>
-</div>
-
-<!-- ✅ SUCESSO PARCERIA PAGA -->
-<div class="cartao sucesso-envio" id="sucessoEnvio">
-  <h3>✅ DADOS ENVIADOS COM SUCESSO!</h3>
-  <p style="color:var(--verde);margin-bottom:10px">Recebemos todos os dados dos seus streamers! 🎉</p>
-  <p style="color:var(--cinza)">Nossa equipe vai buscar os oponentes e confirmar as batalhas em breve. Você receberá a confirmação e o material pronto assim que estiver disponível!</p>
-  <p style="color:var(--amarelo);margin-top:15px">⚔️ Obrigado pela parceria — vamos crescer juntos! 💪</p>
-</div>
-
-<hr>
-
 <a href="index.html" class="btn-acao btn-voltar">← VOLTAR PARA O PORTAL</a>
 <div class="toast" id="toast"></div>
 </div>
 
 <script>
-// 🔗 LINKS DAS PLANILHAS — CONFIGURADOS!
-const LINK_PLANILHA_PARCERIAS = "https://docs.google.com/spreadsheets/d/1R9eUsqF4kA0y22ryMUIsvGolBfk3-XwZ5R-RVpBiZA4/gviz/tq?tqx=out:json";
-const LINK_PLANILHA_OPONENTES = "https://docs.google.com/spreadsheets/d/e/2PACX-1vR5kiIfjh3npL5icijBqXFa3nBczw1PLXrLhZHZB9ZvVygJMhU0GhF2cjXg6ruEtTzBKBsQh1ko8zEY/pub?gid=0&single=true&output=csv";
+// 🔗 LINK DE ENVIO DO FORMULÁRIO — CONFIGURADO!
+const FORMULARIO_ENVIO_URL = "https://docs.google.com/forms/d/e/1FAIpQLSeB3rI-H-DQO2mWCRjGzAV2JTlkhabqAYKuF1Aq3M74Xq_gKA/formResponse";
 
-let dadosParcerias = [];
-let dadosSolicitacoes = [];
-let agenciaAtual = null;
-let limiteStreamers = 0;
-
-window.onload = async function(){
-  await carregarPlanilhaParcerias();
-  await carregarSolicitacoes();
+// ⚠️ INSTRUÇÃO: Para descobrir os IDs reais dos campos:
+// 1. Abra o formulário → clique com botão direito → Ver código-fonte
+// 2. Pressione Ctrl+F → digite "entry." → anote os números de cada campo
+// 3. Substitua os números abaixo pelos encontrados
+const CAMPOS = {
+  nomeAgencia: "entry.2005175655",   // ← Nome da sua Agência
+  linkPerfil: "entry.1071559528",    // ← Link do Perfil
+  whatsapp: "entry.1672562221",      // ← WhatsApp do Streamer
+  rodada: "entry.1986380598",        // ← Round/Rodada
+  metaDiamantes: "entry.1529938564", // ← Meta de Diamantes
+  observacoes: "entry.1214366388"    // ← Observações
 };
 
-// === 📋 ABA DE ENCONTRE SEU OPONENTE ===
 function trocarAba(nomeAba){
   document.getElementById('abaSolicitar').classList.toggle('ativa', nomeAba==='solicitar');
   document.getElementById('abaSolicitar').classList.toggle('inativa', nomeAba!=='solicitar');
@@ -299,254 +235,53 @@ function trocarAba(nomeAba){
   document.getElementById('conteudoRecebidas').classList.toggle('ativo', nomeAba==='recebidas');
 }
 
-async function carregarSolicitacoes(){
-  try{
-    const res = await fetch(LINK_PLANILHA_OPONENTES);
-    const texto = await res.text();
-    const linhas = texto.split('\n').map(l => l.split(',')).slice(1); // cabeçalho na linha 1
-    dadosSolicitacoes = linhas.map(linha => ({
-      solicitante: (linha[0] || "").trim().toLowerCase(),
-      streamer: linha[1] || "",
-      perfilSolicitante: linha[2] || "",
-      rodadas: linha[4] || "",
-      diasHorarios: linha[5] || "",
-      whatsappSolicitante: linha[6] || "",
-      status: linha[7] || "Aguardando",
-      oponente: (linha[8] || "").trim().toLowerCase(),
-      perfilOponente: linha[9] || "",
-      agenciaOponente: linha[10] || "",
-      whatsappOponente: linha[11] || "",
-      dataCadastro: linha[12] || ""
-    }));
-    console.log("✅ Planilha de oponentes carregada:", dadosSolicitacoes.length, "registros");
-  }catch(e){
-    console.log("⚠️ Erro ao carregar planilha de oponentes:", e);
-    dadosSolicitacoes = [];
-  }
-}
+async function enviarSolicitacao(){
+  const nomeAgencia = document.getElementById("nomeAgencia").value.trim();
+  const linkPerfil = document.getElementById("linkPerfil").value.trim();
+  const whatsapp = document.getElementById("whatsapp").value.trim();
+  const rodada = document.getElementById("rodada").value.trim();
+  const metaDiamantes = document.getElementById("metaDiamantes").value.trim();
+  const observacoes = document.getElementById("observacoes").value.trim();
 
-function enviarSolicitacao(){
-  const agencia = document.getElementById("agenciaSolicitante").value.trim();
-  const streamer = document.getElementById("streamerSolicitante").value.trim();
-  const perfil = document.getElementById("perfilSolicitante").value.trim();
-  const rodadas = document.getElementById("rodadas").value.trim();
-  const diasHorarios = document.getElementById("diasHorarios").value.trim();
-  const whatsapp = document.getElementById("whatsappSolicitante").value.trim();
-  const oponente = document.getElementById("agenciaOponente").value.trim();
-
-  if(!agencia || !streamer || !whatsapp || !oponente){
+  if(!nomeAgencia || !linkPerfil || !whatsapp || !rodada || !metaDiamantes){
     mostrarToast("⚠️ Preencha todos os campos obrigatórios!");
     return;
   }
 
-  const solicitacao = {
-    solicitante: agencia,
-    streamerSolicitante: streamer,
-    perfilSolicitante: perfil,
-    rodadas: rodadas,
-    diasHorarios: diasHorarios,
-    whatsappSolicitante: whatsapp,
-    oponente: oponente,
-    status: "Aguardando Confirmação",
-    dataCadastro: new Date().toLocaleString('pt-BR')
-  };
+  const dados = new FormData();
+  dados.append(CAMPOS.nomeAgencia, nomeAgencia);
+  dados.append(CAMPOS.linkPerfil, linkPerfil);
+  dados.append(CAMPOS.whatsapp, whatsapp);
+  dados.append(CAMPOS.rodada, rodada);
+  dados.append(CAMPOS.metaDiamantes, metaDiamantes);
+  dados.append(CAMPOS.observacoes, observacoes);
 
-  console.log("📤 SOLICITAÇÃO ENVIADA:", solicitacao);
+  try{
+    await fetch(FORMULARIO_ENVIO_URL, {
+      method: "POST",
+      mode: "no-cors",
+      body: dados
+    });
 
-  // Limpar formulário
-  document.getElementById("agenciaSolicitante").value = "";
-  document.getElementById("streamerSolicitante").value = "";
-  document.getElementById("perfilSolicitante").value = "";
-  document.getElementById("rodadas").value = "";
-  document.getElementById("diasHorarios").value = "";
-  document.getElementById("whatsappSolicitante").value = "";
-  document.getElementById("agenciaOponente").value = "";
-  
-  document.getElementById("sucessoSolicitacao").classList.add("visivel");
-  mostrarToast("✅ Solicitação enviada com sucesso!");
-  setTimeout(() => document.getElementById("sucessoSolicitacao").classList.remove("visivel"), 5000);
+    // Limpar formulário
+    document.getElementById("nomeAgencia").value = "";
+    document.getElementById("linkPerfil").value = "";
+    document.getElementById("whatsapp").value = "";
+    document.getElementById("rodada").value = "";
+    document.getElementById("metaDiamantes").value = "";
+    document.getElementById("observacoes").value = "";
+
+    document.getElementById("sucessoSolicitacao").classList.add("visivel");
+    mostrarToast("✅ Enviado com sucesso!");
+    setTimeout(() => document.getElementById("sucessoSolicitacao").classList.remove("visivel"), 6000);
+  }catch(e){
+    console.error("Erro:", e);
+    mostrarToast("⚠️ Erro ao enviar. Tente novamente!");
+  }
 }
 
 function buscarSolicitacoes(){
-  const nomeAgencia = document.getElementById("buscarAgenciaRecebida").value.trim().toLowerCase();
-  if(!nomeAgencia){
-    mostrarToast("⚠️ Digite o nome da sua agência!");
-    return;
-  }
-
-  // Busca onde a agência é a OPONENTE (recebeu o desafio)
-  const recebidas = dadosSolicitacoes.filter(s => s.oponente.includes(nomeAgencia));
-  const listaEl = document.getElementById("listaSolicitacoes");
-
-  if(recebidas.length === 0){
-    listaEl.innerHTML = `<div style="text-align:center;padding:20px;color:var(--cinza)">🔍 Nenhuma solicitação de batalha encontrada para "<strong>${nomeAgencia}</strong>"</div>`;
-    mostrarToast("Nenhuma solicitação encontrada");
-    return;
-  }
-
-  listaEl.innerHTML = `<p style="color:var(--laranja);font-weight:bold;margin-bottom:15px">📬 ${recebidas.length} solicitação(ões) recebida(s):</p>`;
-  
-  recebidas.forEach((s, idx) => {
-    listaEl.innerHTML += `
-      <div class="solicitacao-card">
-        <p><strong>🏢 Agência Desafiante:</strong> ${s.solicitante}</p>
-        <p><strong>🎤 Streamer:</strong> ${s.streamer || "Não informado"}</p>
-        <p><strong>⚔️ Rodadas:</strong> ${s.rodadas || "Não informado"}</p>
-        <p><strong>📅 Disponibilidade:</strong> ${s.diasHorarios || "Não informada"}</p>
-        <p><strong>📊 Status:</strong> <span class="status-aguardando">${s.status}</span></p>
-        <div class="botoes-confirmacao">
-          <button class="btn-acao btn-verde" onclick="confirmarBatalha(${idx}, '${s.whatsappSolicitante}', '${s.solicitante}')">✅ CONFIRMAR</button>
-          <button class="btn-acao btn-voltar" onclick="recusarBatalha(${idx})">❌ RECUSAR</button>
-        </div>
-      </div>
-    `;
-  });
-}
-
-function confirmarBatalha(indice, whatsapp, nomeAgencia){
-  const mensagem = encodeURIComponent(
-    `Olá ${nomeAgencia}! 👋 Recebemos sua solicitação de batalha e CONFIRMAMOS! ⚔️🔥\n\n` +
-    `Podemos prosseguir com a negociação. Nos envie os dados do seu streamer e combinamos tudo! 🎤`
-  );
-  const numeroLimpo = whatsapp.replace(/\D/g,'');
-  window.open(`https://wa.me/${numeroLimpo}?text=${mensagem}`, '_blank');
-  mostrarToast("✅ Conversa aberta no WhatsApp!");
-}
-
-function recusarBatalha(indice){
-  mostrarToast("❌ Solicitação recusada!");
-}
-
-// === 📋 FUNÇÕES EXISTENTES DE PARCERIA PAGA ===
-async function carregarPlanilhaParcerias(){
-  try{
-    const res = await fetch(LINK_PLANILHA_PARCERIAS);
-    let txt = await res.text();
-    txt = txt.substring(47, txt.length - 2);
-    const json = JSON.parse(txt);
-    dadosParcerias = json.table.rows.map(linha => ({
-      nome: (linha.c[0]?.v || "").toString().trim().toLowerCase(),
-      status: (linha.c[1]?.v || "Disponível").toString().trim(),
-      contato: linha.c[2]?.v || "Não informado",
-      tipo: (linha.c[3]?.v || "Gratuito").toString().trim(),
-      pacote: (linha.c[4]?.v || "").toString().trim()
-    }));
-  }catch(e){
-    console.error("Erro ao carregar parcerias:", e);
-  }
-}
-
-function buscarAgencia(){
-  const busca = document.getElementById("buscaAgencia").value.trim().toLowerCase();
-  const resultado = document.getElementById("resultadoBusca");
-  const areaForm = document.getElementById("areaFormulario");
-  const aviso = document.getElementById("avisoFormulario");
-  
-  if(!busca){ mostrarToast("⚠️ Digite o nome da agência!"); return; }
-
-  const encontrada = dadosParcerias.find(a => a.nome.includes(busca));
-  
-  if(encontrada){
-    agenciaAtual = encontrada;
-    document.getElementById("nomeAgenciaEncontrada").textContent = encontrada.nome;
-    document.getElementById("statusAgencia").textContent = encontrada.status;
-    document.getElementById("tipoParceria").textContent = encontrada.tipo;
-    document.getElementById("contatoAgencia").textContent = encontrada.contato;
-    
-    const status = encontrada.status.toUpperCase();
-    if(status.includes("PAGO") || status.includes("LIBERADO")){
-      document.getElementById("statusAgencia").className = "status-liberado";
-      aviso.innerHTML = `<div class="aviso-liberado">✅ PARCERIA LIBERADA — Preencha os dados abaixo!</div>`;
-      areaForm.style.display = "block";
-      configurarFormulario(encontrada);
-    }else if(status.includes("PENDENTE")){
-      document.getElementById("statusAgencia").className = "status-pendente";
-      aviso.innerHTML = `<div class="aviso-bloqueado">🔒 Aguardando pagamento — envie o comprovante para liberação!</div>`;
-      areaForm.style.display = "none";
-    }else{
-      aviso.innerHTML = `<div class="aviso-bloqueado">🔒 Parceria não liberada — escolha um pacote acima!</div>`;
-      areaForm.style.display = "none";
-    }
-    resultado.classList.add("visivel");
-    mostrarToast("✅ Agência encontrada!");
-  }else{
-    resultado.classList.remove("visivel");
-    areaForm.style.display = "none";
-    mostrarToast("❌ Agência não encontrada!");
-  }
-}
-
-function configurarFormulario(agencia){
-  const pacote = agencia.pacote || agencia.tipo;
-  let classe = "", limite = 0;
-  
-  if(pacote.includes("Inicial") || pacote.includes("30")){
-    classe = "etiqueta-inicial"; limite = 30;
-  }else if(pacote.includes("Intermediário") || pacote.includes("60")){
-    classe = "etiqueta-intermediario"; limite = 60;
-  }else if(pacote.includes("Premium") || pacote.includes("100")){
-    classe = "etiqueta-premium"; limite = 100;
-  }else{
-    classe = "etiqueta-inicial"; limite = 30;
-  }
-  limiteStreamers = limite;
-  
-  document.getElementById("dadosAgencia").innerHTML = `
-    <div style="background:rgba(52,211,153,0.1);border:1px solid var(--verde);border-radius:10px;padding:15px">
-      <p><strong>🏢 Agência:</strong> ${agencia.nome}</p>
-      <p><strong>📦 Pacote:</strong> <span class="etiqueta-pacote ${classe}">${pacote}</span></p>
-      <p><strong>⚔️ Limite:</strong> até ${limite} streamers</p>
-    </div>
-  `;
-  
-  document.getElementById("areaStreamers").innerHTML = `
-    <p class="contador-streamers">📋 Preencha os streamers (máx. ${limite}) — pode repetir para datas diferentes</p>
-    <div id="listaStreamers"></div>
-    <button class="btn-acao btn-verde" style="max-width:250px;margin-top:10px" onclick="adicionarStreamer()">➕ ADICIONAR STREAMER</button>
-  `;
-  
-  for(let i=1; i<=3; i++) adicionarStreamer();
-}
-
-function adicionarStreamer(){
-  const lista = document.getElementById("listaStreamers");
-  const total = lista.querySelectorAll(".campo-streamer").length;
-  if(total >= limiteStreamers){ mostrarToast(`⚠️ Limite de ${limiteStreamers} atingido!`); return; }
-  
-  const num = total + 1;
-  const div = document.createElement("div");
-  div.className = "campo-streamer";
-  div.innerHTML = `
-    <label>🎤 Streamer ${num}</label>
-    <input type="text" class="campo-form" placeholder="Nome do streamer" style="margin-bottom:6px" id="nome-${num}">
-    <input type="text" class="campo-form" placeholder="Perfil TikTok/Kako (link)" style="margin-bottom:6px" id="perfil-${num}">
-    <input type="text" class="campo-form" placeholder="Data da batalha (opcional)" id="data-${num}">
-  `;
-  lista.appendChild(div);
-}
-
-function enviarFormulario(){
-  if(!agenciaAtual){ mostrarToast("❌ Busque a agência primeiro!"); return; }
-  const whatsapp = document.getElementById("whatsappAgencia").value.trim();
-  const musica = document.getElementById("preferenciaMusica").value;
-  const obs = document.getElementById("observacoes").value.trim();
-  
-  if(!whatsapp){ mostrarToast("⚠️ Preencha o WhatsApp!"); return; }
-  
-  const streamers = [];
-  document.querySelectorAll(".campo-streamer").forEach((el, idx) => {
-    const nome = document.getElementById(`nome-${idx+1}`)?.value.trim();
-    const perfil = document.getElementById(`perfil-${idx+1}`)?.value.trim();
-    const data = document.getElementById(`data-${idx+1}`)?.value.trim();
-    if(nome) streamers.push({nome, perfil, data});
-  });
-  
-  if(streamers.length === 0){ mostrarToast("⚠️ Preencha pelo menos 1 streamer!"); return; }
-  
-  console.log("📤 DADOS ENVIADOS:", {agencia: agenciaAtual.nome, streamers});
-  document.getElementById("areaFormulario").style.display = "none";
-  document.getElementById("sucessoEnvio").classList.add("visivel");
-  mostrarToast("✅ Enviado com sucesso!");
+  mostrarToast("🔍 Função de leitura em desenvolvimento!");
 }
 
 function mostrarToast(msg){
