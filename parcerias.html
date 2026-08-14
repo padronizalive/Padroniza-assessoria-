@@ -16,22 +16,11 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
 .cabecalho p{font-size:16px;color:var(--cinza)}
 .cartao{background:var(--painel2);border-radius:12px;padding:20px;margin-bottom:20px;border:1px solid #293653}
 .cartao h3{color:var(--amarelo);margin-bottom:15px;font-size:20px}
-.cartao h4{color:var(--texto);margin-bottom:10px}
-.cartao p{color:var(--cinza);margin-bottom:8px;line-height:1.5}
-.destaque{background:rgba(52,211,153,0.1);border:2px solid var(--verde);padding:15px;border-radius:10px;text-align:center;margin-bottom:20px}
-.destaque h3{color:var(--verde);margin-bottom:5px}
-.valor-destaque{font-size:28px;font-weight:bold;color:var(--amarelo)}
-.plano-pago{background:rgba(116,87,255,0.08);border:1px solid var(--roxo);border-radius:10px;padding:15px;margin-bottom:12px}
-.plano-pago h4{color:var(--texto);margin-bottom:8px}
-.valor-plano{font-size:20px;font-weight:bold;color:var(--amarelo);margin:8px 0}
-.lista-beneficios{margin:10px 0;padding-left:20px}
-.lista-beneficios li{color:var(--texto);margin-bottom:5px;list-style-type:"✅ ";padding-left:8px}
 .grupo-campo{margin:12px 0}
 .campo-form{width:100%;padding:14px 16px;border-radius:10px;border:1px solid #293653;background:#17213a;color:var(--texto);font-size:16px}
 .btn-acao{width:100%;padding:14px;border-radius:10px;border:none;font-weight:bold;cursor:pointer;text-decoration:none;display:inline-block;text-align:center;color:#fff;font-size:17px;transition:0.2s}
 .btn-verde{background:linear-gradient(135deg,#22c55e,#15803d)}
 .btn-azul{background:linear-gradient(135deg,#3b82f6,#1d4ed8)}
-.btn-roxo{background:linear-gradient(135deg,#8b5cf6,#6d28d9)}
 .btn-voltar{background:#293653;color:#fff;margin-top:15px}
 .btn-acao:active{transform:scale(0.98)}
 .resultado-busca{margin-top:15px;padding:15px;background:rgba(59,130,246,0.1);border-radius:10px;border:1px solid var(--azul);display:none}
@@ -61,88 +50,79 @@ hr{border:none;border-top:1px solid #293653;margin:25px 0}
   <h3>🎁 PLANO GRATUITO DE PARCERIA</h3>
   <div style="background:rgba(52,211,153,0.1);border:1px solid var(--verde);padding:15px;border-radius:10px">
     <p style="color:var(--verde);font-weight:bold;margin-bottom:10px">✅ Sem custo — parceria de divulgação mútua!</p>
-    <ul class="lista-beneficios">
-      <li>Divulgação da sua agência em nossas plataformas</li>
-      <li>Link de retorno para seu perfil</li>
-      <li>Participação na lista de agências parceiras</li>
-      <li>Comunicação via WhatsApp oficial</li>
+    <ul style="padding-left:20px">
+      <li style="color:var(--texto);margin-bottom:5px">✅ Divulgação da sua agência em nossas plataformas</li>
+      <li style="color:var(--texto);margin-bottom:5px">✅ Link de retorno para seu perfil</li>
+      <li style="color:var(--texto);margin-bottom:5px">✅ Participação na lista de agências parceiras</li>
+      <li style="color:var(--texto);margin-bottom:5px">✅ Comunicação via WhatsApp oficial</li>
     </ul>
   </div>
 </div>
 
-<!-- 💰 PLANOS PAGOS — COMPLETO -->
+<!-- 💰 PLANOS PAGOS — COLORIDOS -->
 <div class="cartao">
-  <h3>💎 PARCERIAS PAGAS — ESCOLHA SEU PACOTE</h3>
+  <h3 style="text-align:center;font-size:22px">💎 PARCERIAS PAGAS — ESCOLHA SEU PACOTE</h3>
 
-  <!-- 📦 PACOTE INICIAL -->
-  <div class="plano-pago" style="border-left:3px solid var(--verde)">
-    <h4>📦 PACOTE INICIAL</h4>
-    <div class="valor-plano">R$ 149,90</div>
-    <p style="color:var(--cinza);font-size:14px;margin-bottom:12px">⚔️ 30 Batalhas — Sem prazo de validade</p>
-    <ul class="lista-beneficios">
-      <li>30 batalhas completas — use quando quiser</li>
-      <li>🎬 Vídeo curto de divulgação + foto por batalha</li>
-      <li>✨ Destaque para o streamer da sua agência</li>
-      <li>🎵 2 músicas exclusivas — oficial OU premiação</li>
-      <li>📋 Suporte e histórico de batalhas</li>
+  <!-- 🟢 PACOTE INICIAL — COR VERDE -->
+  <div style="background:rgba(52,211,153,0.1);border:2px solid #34d399;border-radius:14px;padding:18px;margin-bottom:20px">
+    <h4 style="color:#34d399;font-size:20px;margin-bottom:8px">📦 PACOTE INICIAL</h4>
+    <div style="font-size:26px;font-weight:bold;color:#ffc857;margin-bottom:8px">R$ 149,90</div>
+    <p style="color:#cbd5e1;font-size:14px;margin-bottom:15px">⚔️ 30 Batalhas — Sem prazo de validade</p>
+    <ul style="padding-left:20px;margin-bottom:15px">
+      <li style="color:#f7f9ff;margin-bottom:6px">✅ 30 batalhas completas — use quando quiser</li>
+      <li style="color:#f7f9ff;margin-bottom:6px">✅ 🎬 Vídeo curto de divulgação + foto por batalha</li>
+      <li style="color:#f7f9ff;margin-bottom:6px">✅ ✨ Destaque para o streamer da sua agência</li>
+      <li style="color:#f7f9ff;margin-bottom:6px">✅ 🎵 2 músicas exclusivas — oficial OU premiação</li>
+      <li style="color:#f7f9ff;margin-bottom:6px">✅ Suporte e histórico de batalhas</li>
     </ul>
-    <div style="margin-top:12px;padding:10px;background:rgba(52,211,153,0.1);border-radius:8px">
-      <p style="font-size:13px;color:var(--cinza);margin-bottom:5px">🔑 Pague via Pix:</p>
-      <button class="btn-acao btn-verde" style="padding:8px 12px;font-size:13px" 
-        onclick="navigator.clipboard.writeText('00020101021126760014br.gov.bcb.pix01367c0dfbc3-68e7-4b85-a0eb-eb037b738d9f0214Pacote inicial5204000053039865406149.905802BR591965 8 0 M G DA SILVA6007VILHENA62070503***6304301C');mostrarToast('✅ Pix copiado!')">
-        📋 COPIAR CHAVE PIX
-      </button>
-    </div>
+    <button style="width:100%;padding:12px;background:linear-gradient(135deg,#22c55e,#15803d);color:#fff;border:none;border-radius:10px;font-weight:bold;font-size:15px;cursor-pointer" 
+      onclick="navigator.clipboard.writeText('00020101021126760014br.gov.bcb.pix01367c0dfbc3-68e7-4b85-a0eb-eb037b738d9f0214Pacote inicial5204000053039865406149.905802BR591965 8 0 M G DA SILVA6007VILHENA62070503***6304301C');mostrarToast('✅ Pix copiado!')">
+      📋 COPIAR CHAVE PIX
+    </button>
   </div>
 
-  <!-- 📦 PACOTE INTERMEDIÁRIO -->
-  <div class="plano-pago" style="border-left:3px solid var(--azul);margin-top:18px">
-    <h4>📦 PACOTE INTERMEDIÁRIO</h4>
-    <div class="valor-plano">R$ 269,90</div>
-    <p style="color:var(--cinza);font-size:14px;margin-bottom:12px">⚔️ 60 Batalhas — Sem prazo de validade</p>
-    <ul class="lista-beneficios">
-      <li>✅ Tudo do Pacote Inicial + MAIS:</li>
-      <li>⚔️ 60 batalhas — o dobro do pacote inicial</li>
-      <li>🎵 3 músicas exclusivas — oficial + premiação + sorteio</li>
-      <li>⚡ Suporte Prioritário — resposta mais rápida</li>
-      <li>📜 Histórico completo detalhado</li>
+  <!-- 🔵 PACOTE INTERMEDIÁRIO — COR AZUL -->
+  <div style="background:rgba(59,130,246,0.1);border:2px solid #3b82f6;border-radius:14px;padding:18px;margin-bottom:20px">
+    <h4 style="color:#60a5fa;font-size:20px;margin-bottom:8px">📦 PACOTE INTERMEDIÁRIO</h4>
+    <div style="font-size:26px;font-weight:bold;color:#ffc857;margin-bottom:8px">R$ 269,90</div>
+    <p style="color:#cbd5e1;font-size:14px;margin-bottom:15px">⚔️ 60 Batalhas — Sem prazo de validade</p>
+    <ul style="padding-left:20px;margin-bottom:15px">
+      <li style="color:#f7f9ff;margin-bottom:6px">✅ Tudo do Pacote Inicial + MAIS:</li>
+      <li style="color:#f7f9ff;margin-bottom:6px">✅ ⚔️ 60 batalhas — o dobro do pacote inicial</li>
+      <li style="color:#f7f9ff;margin-bottom:6px">✅ 🎵 3 músicas exclusivas — oficial + premiação + sorteio</li>
+      <li style="color:#f7f9ff;margin-bottom:6px">✅ ⚡ Suporte Prioritário — resposta mais rápida</li>
+      <li style="color:#f7f9ff;margin-bottom:6px">✅ 📜 Histórico completo detalhado</li>
     </ul>
-    <div style="margin-top:12px;padding:10px;background:rgba(59,130,246,0.1);border-radius:8px">
-      <p style="font-size:13px;color:var(--cinza);margin-bottom:5px">🔑 Pague via Pix:</p>
-      <button class="btn-acao btn-azul" style="padding:8px 12px;font-size:13px" 
-        onclick="navigator.clipboard.writeText('00020101021126820014br.gov.bcb.pix01367c0dfbc3-68e7-4b85-a0eb-eb037b738d9f0220Pacote intermediario5204000053039865406269.905802BR591965 8 0 M G DA SILVA6007VILHENA62070503***630438A8');mostrarToast('✅ Pix copiado!')">
-        📋 COPIAR CHAVE PIX
-      </button>
-    </div>
+    <button style="width:100%;padding:12px;background:linear-gradient(135deg,#3b82f6,#1d4ed8);color:#fff;border:none;border-radius:10px;font-weight:bold;font-size:15px;cursor-pointer" 
+      onclick="navigator.clipboard.writeText('00020101021126820014br.gov.bcb.pix01367c0dfbc3-68e7-4b85-a0eb-eb037b738d9f0220Pacote intermediario5204000053039865406269.905802BR591965 8 0 M G DA SILVA6007VILHENA62070503***630438A8');mostrarToast('✅ Pix copiado!')">
+      📋 COPIAR CHAVE PIX
+    </button>
   </div>
 
-  <!-- 🏆 PACOTE PREMIUM -->
-  <div class="plano-pago" style="border:2px solid var(--roxo);box-shadow:0 0 15px rgba(116,87,255,0.25);margin-top:18px">
-    <div style="background:var(--roxo);color:#fff;text-align:center;padding:6px;border-radius:6px 6px 0 0;font-weight:bold;font-size:14px">👑 MAIS ESCOLHIDO — PACOTE PREMIUM</div>
-    <h4 style="margin-top:12px">🏆 PACOTE PREMIUM</h4>
-    <div class="valor-plano">R$ 399,90</div>
-    <p style="color:var(--cinza);font-size:14px;margin-bottom:12px">⚔️ 100 Batalhas — Sem prazo de validade</p>
-    <ul class="lista-beneficios">
-      <li>✅ Tudo dos pacotes anteriores + MAIS:</li>
-      <li>⚔️ 100 batalhas — nosso maior pacote!</li>
-      <li>🎬 Vídeo PREMIUM + foto em alta resolução</li>
-      <li>✨ Destaque visual especial para seu streamer</li>
-      <li>🎵 5 músicas exclusivas — uso completo e personalizado</li>
-      <li>⚡ Suporte VIP Dedicado — atendimento exclusivo</li>
-      <li>📢 Sua agência em destaque nas nossas redes</li>
-      <li>📊 Relatório detalhado de desempenho</li>
-      <li>🎁 <strong>BÔNUS: 1 batalha grátis por mês!</strong></li>
+  <!-- 🟣 PACOTE PREMIUM — COR ROXA + DESTAQUE -->
+  <div style="background:rgba(116,87,255,0.15);border:3px solid #7457ff;border-radius:14px;padding:18px;box-shadow:0 0 20px rgba(116,87,255,0.3)">
+    <div style="background:linear-gradient(90deg,#7457ff,#a78bfa);color:#fff;text-align:center;padding:8px;border-radius:8px;font-weight:bold;font-size:15px;margin-bottom:12px">👑 MAIS ESCOLHIDO — PACOTE PREMIUM</div>
+    <h4 style="color:#a78bfa;font-size:20px;margin-bottom:8px">🏆 PACOTE PREMIUM</h4>
+    <div style="font-size:26px;font-weight:bold;color:#ffc857;margin-bottom:8px">R$ 399,90</div>
+    <p style="color:#cbd5e1;font-size:14px;margin-bottom:15px">⚔️ 100 Batalhas — Sem prazo de validade</p>
+    <ul style="padding-left:20px;margin-bottom:15px">
+      <li style="color:#f7f9ff;margin-bottom:6px">✅ Tudo dos pacotes anteriores + MAIS:</li>
+      <li style="color:#f7f9ff;margin-bottom:6px">✅ ⚔️ 100 batalhas — nosso maior pacote!</li>
+      <li style="color:#f7f9ff;margin-bottom:6px">✅ 🎬 Vídeo PREMIUM + foto em alta resolução</li>
+      <li style="color:#f7f9ff;margin-bottom:6px">✅ ✨ Destaque visual especial para seu streamer</li>
+      <li style="color:#f7f9ff;margin-bottom:6px">✅ 🎵 5 músicas exclusivas — uso completo e personalizado</li>
+      <li style="color:#f7f9ff;margin-bottom:6px">✅ ⚡ Suporte VIP Dedicado — atendimento exclusivo</li>
+      <li style="color:#f7f9ff;margin-bottom:6px">✅ 📢 Sua agência em destaque nas nossas redes</li>
+      <li style="color:#f7f9ff;margin-bottom:6px">✅ 📊 Relatório detalhado de desempenho</li>
+      <li style="color:#ffc857;font-weight:bold;margin-bottom:6px">🎁 BÔNUS: 1 batalha grátis por mês!</li>
     </ul>
-    <div style="margin-top:12px;padding:10px;background:rgba(116,87,255,0.15);border-radius:8px">
-      <p style="font-size:13px;color:var(--cinza);margin-bottom:5px">🔑 Pague via Pix:</p>
-      <button class="btn-acao btn-roxo" style="padding:8px 12px;font-size:13px" 
-        onclick="navigator.clipboard.writeText('00020101021126760014br.gov.bcb.pix01367c0dfbc3-68e7-4b85-a0eb-eb037b738d9f0214Pacote Premium5204000053039865406399.905802BR591965 8 0 M G DA SILVA6007VILHENA62070503***630407E9');mostrarToast('✅ Pix copiado!')">
-        📋 COPIAR CHAVE PIX
-      </button>
-    </div>
+    <button style="width:100%;padding:12px;background:linear-gradient(135deg,#8b5cf6,#6d28d9);color:#fff;border:none;border-radius:10px;font-weight:bold;font-size:15px;cursor-pointer" 
+      onclick="navigator.clipboard.writeText('00020101021126760014br.gov.bcb.pix01367c0dfbc3-68e7-4b85-a0eb-eb037b738d9f0214Pacote Premium5204000053039865406399.905802BR591965 8 0 M G DA SILVA6007VILHENA62070503***630407E9');mostrarToast('✅ Pix copiado!')">
+      📋 COPIAR CHAVE PIX
+    </button>
   </div>
 
-  <div style="text-align:center;color:var(--cinza);padding:15px;font-style:italic;margin-top:10px">
+  <div style="text-align:center;color:#cbd5e1;padding:15px;font-style:italic;margin-top:15px">
     💳 Após o pagamento, envie o comprovante via WhatsApp para liberação imediata do serviço!
   </div>
 </div>
