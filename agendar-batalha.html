@@ -3,86 +3,105 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Agendar Batalha — Padroniza Assessoria</title>
+    <title>Minha Agenda — Padroniza Assessoria</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
         :root {
             --verde: #00ff9c; --verde-escuro: #00cc7d;
             --amarelo: #ffd700; --azul: #00a8ff; --branco: #f0f0f0;
-            --vermelho: #ff4444; --fundo: #0f0f1a; --card: #1a1a2e; --texto: #ffffff;
+            --vermelho: #ff4444; --roxo: #8a2be2; --fundo: #0f0f1a; --card: #1a1a2e; --texto: #ffffff;
         }
-        body { background: var(--fundo); color: var(--texto); min-height: 100vh; padding: 20px; }
-        .container { max-width: 900px; margin: 0 auto; }
-        .header { text-align: center; margin-bottom: 30px; }
-        .logo { font-size: 28px; font-weight: bold; background: linear-gradient(90deg, var(--verde), var(--azul)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 10px; }
-        .subtitulo { color: #aaa; font-size: 16px; }
-        .info-usuario { background: var(--card); padding: 15px 20px; border-radius: 12px; margin-bottom: 25px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; }
-        .usuario-nome { font-size: 18px; font-weight: 600; }
-        .legenda { background: var(--card); padding: 18px; border-radius: 12px; margin-bottom: 25px; }
-        .legenda h3 { margin-bottom: 12px; font-size: 16px; }
-        .legenda-itens { display: flex; flex-wrap: wrap; gap: 12px; }
-        .item-legenda { display: flex; align-items: center; gap: 6px; font-size: 13px; }
-        .cor { width: 16px; height: 16px; border-radius: 4px; border: 1px solid rgba(255,255,255,0.2); }
-        .calendario { background: var(--card); padding: 20px; border-radius: 12px; margin-bottom: 25px; }
-        .navegacao-mes { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
-        .btn-nav { background: transparent; border: 1px solid var(--verde); color: var(--verde); padding: 8px 16px; border-radius: 8px; cursor: pointer; font-size: 16px; transition: 0.2s; }
-        .btn-nav:hover { background: var(--verde); color: #000; }
-        .nome-mes { font-size: 20px; font-weight: 600; }
-        .dias-semana { display: grid; grid-template-columns: repeat(7, 1fr); gap: 6px; margin-bottom: 10px; }
-        .dia-semana { text-align: center; font-size: 13px; color: #888; padding: 8px; font-weight: 600; }
-        .grade-dias { display: grid; grid-template-columns: repeat(7, 1fr); gap: 6px; }
-        .dia { aspect-ratio: 1; display: flex; flex-direction: column; justify-content: center; align-items: center; border-radius: 10px; cursor: pointer; transition: 0.2s; font-size: 15px; position: relative; border: 1px solid transparent; }
-        .dia:hover { transform: scale(1.05); }
+        body { background: var(--fundo); color: var(--texto); min-height: 100vh; padding: 16px; }
+        .container { max-width: 95%; margin: 0 auto; }
+        .header { text-align: center; margin-bottom: 20px; }
+        .logo { font-size: 24px; font-weight: bold; background: linear-gradient(90deg, var(--verde), var(--azul)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 6px; }
+        .subtitulo { color: #aaa; font-size: 14px; }
+
+        /* ===== MINHA AGENDA ===== */
+        .agenda-section { background: var(--card); padding: 18px; border-radius: 14px; margin-bottom: 24px; border: 1px solid rgba(0,255,156,0.2); }
+        .agenda-titulo { font-size: 18px; font-weight: bold; margin-bottom: 16px; display: flex; align-items: center; gap: 8px; }
+        .agenda-vazia { color: #888; font-size: 14px; padding: 15px; text-align: center; }
+        .agenda-lista { display: flex; flex-direction: column; gap: 12px; }
+        .agenda-card { padding: 14px; border-radius: 10px; border-left: 4px solid; transition: 0.2s; }
+        .agenda-card:hover { transform: translateY(-2px); }
+        .card-campanha { background: rgba(255,215,0,0.08); border-color: var(--amarelo); }
+        .card-falta-oponente { background: rgba(0,168,255,0.08); border-color: var(--azul); }
+        .card-confirmada { background: rgba(0,255,156,0.08); border-color: var(--verde); }
+        .card-cancelada { background: rgba(255,68,68,0.08); border-color: var(--vermelho); }
+        .card-cabecalho { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; flex-wrap: wrap; gap: 6px; }
+        .card-data { font-weight: 600; font-size: 15px; }
+        .card-status { font-size: 12px; padding: 3px 10px; border-radius: 20px; font-weight: 600; }
+        .status-campanha { background: rgba(255,215,0,0.2); color: var(--amarelo); }
+        .status-falta-oponente { background: rgba(0,168,255,0.2); color: var(--azul); }
+        .status-confirmada { background: rgba(0,255,156,0.2); color: var(--verde); }
+        .card-corpo { font-size: 14px; line-height: 1.6; }
+        .card-batalha { font-weight: 600; font-size: 15px; margin: 6px 0; }
+        .card-detalhes { font-size: 13px; color: #ccc; margin-top: 6px; }
+        .card-detalhes span { display: inline-block; margin-right: 12px; }
+        .tag-geral { display: inline-block; font-size: 11px; background: rgba(255,215,0,0.15); color: var(--amarelo); padding: 2px 8px; border-radius: 4px; margin-left: 8px; }
+
+        .info-usuario { background: var(--card); padding: 14px 18px; border-radius: 12px; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; }
+        .usuario-nome { font-size: 17px; font-weight: 600; }
+        .legenda { background: var(--card); padding: 16px; border-radius: 12px; margin-bottom: 20px; }
+        .legenda h3 { margin-bottom: 10px; font-size: 15px; }
+        .legenda-itens { display: flex; flex-wrap: wrap; gap: 10px; }
+        .item-legenda { display: flex; align-items: center; gap: 5px; font-size: 12px; }
+        .cor { width: 14px; height: 14px; border-radius: 3px; border: 1px solid rgba(255,255,255,0.2); }
+
+        .calendario { background: var(--card); padding: 18px; border-radius: 12px; margin-bottom: 20px; }
+        .navegacao-mes { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
+        .btn-nav { background: transparent; border: 1px solid var(--verde); color: var(--verde); padding: 6px 14px; border-radius: 8px; cursor: pointer; font-size: 15px; }
+        .nome-mes { font-size: 18px; font-weight: 600; }
+        .dias-semana { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; margin-bottom: 6px; }
+        .dia-semana { text-align: center; font-size: 12px; color: #888; padding: 6px; }
+        .grade-dias { display: grid; grid-template-columns: repeat(7, 1fr); gap: 5px; }
+        .dia { aspect-ratio: 1; display: flex; flex-direction: column; justify-content: center; align-items: center; border-radius: 8px; cursor: pointer; transition: 0.2s; font-size: 14px; border: 1px solid transparent; }
         .dia.vazio { cursor: default; background: transparent; }
-        .dia.disponivel { background: rgba(0,255,156,0.15); border-color: var(--verde); color: var(--verde); }
-        .dia.campanha { background: rgba(255,215,0,0.15); border-color: var(--amarelo); color: var(--amarelo); }
-        .dia.falta-oponente { background: rgba(0,168,255,0.15); border-color: var(--azul); color: var(--azul); }
-        .dia.confirmada { background: rgba(240,240,240,0.1); border-color: var(--branco); color: #ccc; cursor: not-allowed; }
-        .dia.bloqueado { background: rgba(255,68,68,0.15); border-color: var(--vermelho); color: var(--vermelho); cursor: not-allowed; }
-        .dia.domingo { background: rgba(255,68,68,0.15); border-color: var(--vermelho); color: var(--vermelho); cursor: not-allowed; }
-        .dia.feriado { background: rgba(138,43,226,0.15); border-color: #8a2be2; color: #c8a2ff; cursor: not-allowed; }
-        .status-mini { font-size: 9px; margin-top: 2px; text-align: center; padding: 0 2px; line-height: 1.2; }
-        .secao-horario { background: var(--card); padding: 25px; border-radius: 12px; margin-bottom: 25px; display: none; }
+        .dia.disponivel { background: rgba(0,255,156,0.12); border-color: var(--verde); color: var(--verde); }
+        .dia.campanha { background: rgba(255,215,0,0.12); border-color: var(--amarelo); color: var(--amarelo); }
+        .dia.falta-oponente { background: rgba(0,168,255,0.12); border-color: var(--azul); color: var(--azul); }
+        .dia.confirmada { background: rgba(240,240,240,0.08); border-color: #555; color: #999; cursor: not-allowed; }
+        .dia.bloqueado { background: rgba(255,68,68,0.12); border-color: var(--vermelho); color: var(--vermelho); cursor: not-allowed; }
+        .dia.domingo { background: rgba(255,68,68,0.12); border-color: var(--vermelho); color: var(--vermelho); cursor: not-allowed; }
+        .dia.feriado { background: rgba(138,43,226,0.12); border-color: var(--roxo); color: #c8a2ff; cursor: not-allowed; }
+        .status-mini { font-size: 8px; margin-top: 1px; }
+
+        .secao-horario { background: var(--card); padding: 20px; border-radius: 12px; margin-bottom: 20px; display: none; }
         .secao-horario.visivel { display: block; }
-        .secao-horario h3 { margin-bottom: 18px; font-size: 17px; }
-        .relogio-container { display: flex; flex-direction: column; gap: 15px; margin-bottom: 20px; }
-        .grupo-horario { display: flex; gap: 15px; align-items: center; flex-wrap: wrap; }
-        .grupo-form label { display: block; margin-bottom: 6px; font-size: 14px; color: #ccc; }
-        .input-horario { flex: 1; min-width: 140px; padding: 14px 16px; border-radius: 10px; border: 2px solid #333; background: #0f0f1a; color: white; font-size: 22px; font-weight: 600; text-align: center; cursor: pointer; transition: 0.2s; }
-        .input-horario:focus { outline: none; border-color: var(--verde); box-shadow: 0 0 12px rgba(0,255,156,0.3); }
-        .btn-verificar { padding: 14px 24px; background: linear-gradient(90deg, var(--verde), var(--verde-escuro)); color: #000; border: none; border-radius: 10px; font-size: 15px; font-weight: bold; cursor: pointer; transition: 0.2s; }
-        .btn-verificar:hover { transform: scale(1.05); }
-        .status-horario { margin-top: 15px; padding: 14px; border-radius: 10px; display: none; }
+        .secao-horario h3 { margin-bottom: 14px; font-size: 16px; }
+        .grupo-horario { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; margin-top: 10px; }
+        .input-horario { flex: 1; min-width: 130px; padding: 12px; border-radius: 8px; border: 2px solid #333; background: #0f0f1a; color: white; font-size: 18px; font-weight: 600; text-align: center; }
+        .btn-verificar { padding: 12px 20px; background: linear-gradient(90deg, var(--verde), var(--verde-escuro)); color: #000; border: none; border-radius: 8px; font-size: 15px; font-weight: bold; cursor: pointer; }
+        .status-horario { margin-top: 12px; padding: 12px; border-radius: 8px; display: none; }
         .status-horario.visivel { display: block; }
         .status-horario.livre { background: rgba(0,255,156,0.1); border: 1px solid var(--verde); color: var(--verde); }
         .status-horario.bloqueado { background: rgba(255,68,68,0.1); border: 1px solid var(--vermelho); color: var(--vermelho); }
-        .formulario { background: var(--card); padding: 25px; border-radius: 12px; margin-bottom: 25px; display: none; }
+
+        .formulario { background: var(--card); padding: 20px; border-radius: 12px; margin-bottom: 20px; display: none; }
         .formulario.visivel { display: block; }
-        .formulario h3 { margin-bottom: 20px; font-size: 18px; }
-        .grupo-form { margin-bottom: 15px; }
-        .grupo-form input, .grupo-form select { width: 100%; padding: 12px; border-radius: 8px; border: 1px solid #333; background: #0f0f1a; color: white; font-size: 15px; }
-        .checkbox-group { display: flex; gap: 15px; flex-wrap: wrap; padding: 8px 0; }
-        .checkbox-label { display: flex; align-items: center; gap: 8px; cursor: pointer; font-size: 15px; }
-        .btn-enviar { width: 100%; padding: 15px; background: linear-gradient(90deg, var(--verde), var(--verde-escuro)); color: #000; border: none; border-radius: 10px; font-size: 16px; font-weight: bold; cursor: pointer; margin-top: 10px; transition: 0.3s; }
-        .btn-enviar:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(0,255,156,0.3); }
-        .botoes-acao { display: flex; gap: 12px; margin-top: 20px; flex-wrap: wrap; }
-        .btn-voltar { flex: 1; min-width: 140px; padding: 14px; background: transparent; border: 1px solid #666; color: #aaa; border-radius: 10px; font-size: 15px; cursor: pointer; transition: 0.2s; }
-        .btn-voltar:hover { border-color: var(--vermelho); color: var(--vermelho); }
-        .materiais { background: var(--card); padding: 20px; border-radius: 12px; margin-bottom: 25px; display: none; }
+        .formulario h3 { margin-bottom: 16px; font-size: 16px; }
+        .grupo-form { margin-bottom: 12px; }
+        .grupo-form label { display: block; margin-bottom: 5px; font-size: 14px; color: #ccc; }
+        .grupo-form input, .grupo-form select { width: 100%; padding: 10px; border-radius: 6px; border: 1px solid #333; background: #0f0f1a; color: white; font-size: 14px; }
+        .checkbox-group { display: flex; gap: 15px; flex-wrap: wrap; padding: 6px 0; }
+        .checkbox-label { display: flex; align-items: center; gap: 6px; cursor: pointer; font-size: 14px; }
+        .btn-enviar { width: 100%; padding: 14px; background: linear-gradient(90deg, var(--verde), var(--verde-escuro)); color: #000; border: none; border-radius: 8px; font-size: 15px; font-weight: bold; cursor: pointer; margin-top: 8px; }
+        .botoes-acao { display: flex; gap: 10px; margin-top: 16px; flex-wrap: wrap; }
+        .btn-voltar { flex: 1; min-width: 120px; padding: 12px; background: transparent; border: 1px solid #666; color: #aaa; border-radius: 8px; font-size: 14px; cursor: pointer; }
+        .materiais { background: var(--card); padding: 16px; border-radius: 12px; margin-bottom: 20px; display: none; }
         .materiais.visivel { display: block; }
-        .materiais h3 { margin-bottom: 15px; font-size: 16px; }
-        .item-material { display: flex; align-items: center; justify-content: space-between; padding: 12px 15px; background: rgba(255,255,255,0.05); border-radius: 8px; margin-bottom: 10px; flex-wrap: wrap; gap: 10px; }
-        .btn-material { padding: 8px 16px; border-radius: 6px; border: none; font-size: 14px; cursor: pointer; text-decoration: none; display: inline-block; font-weight: 600; }
+        .item-material { display: flex; align-items: center; justify-content: space-between; padding: 10px 12px; background: rgba(255,255,255,0.05); border-radius: 6px; margin-bottom: 8px; flex-wrap: wrap; gap: 8px; }
+        .btn-material { padding: 6px 12px; border-radius: 5px; border: none; font-size: 13px; cursor: pointer; text-decoration: none; font-weight: 600; }
         .btn-banner { background: var(--verde); color: #000; }
         .btn-video { background: var(--azul); color: #fff; }
-        .toast { position: fixed; top: 20px; left: 50%; transform: translateX(-50%); background: var(--verde); color: #000; padding: 12px 24px; border-radius: 8px; font-weight: bold; z-index: 9999; display: none; box-shadow: 0 4px 12px rgba(0,0,0,0.5); }
-        .modal { position: fixed; inset: 0; background: rgba(0,0,0,0.9); display: none; align-items: center; justify-content: center; z-index: 10000; padding: 20px; }
+        .toast { position: fixed; top: 15px; left: 50%; transform: translateX(-50%); background: var(--verde); color: #000; padding: 10px 20px; border-radius: 6px; font-weight: bold; z-index: 9999; display: none; font-size: 14px; }
+        .modal { position: fixed; inset: 0; background: rgba(0,0,0,0.92); display: none; align-items: center; justify-content: center; z-index: 10000; padding: 20px; }
         .modal.visivel { display: flex; }
         .modal-conteudo { max-width: 90%; max-height: 90%; position: relative; }
-        .modal-conteudo img, .modal-conteudo video { max-width: 100%; max-height: 80vh; border-radius: 8px; }
-        .modal-fechar { position: absolute; top: -40px; right: 0; background: none; border: none; color: white; font-size: 30px; cursor: pointer; }
+        .modal-conteudo img, .modal-conteudo video { max-width: 100%; max-height: 75vh; border-radius: 8px; }
+        .modal-fechar { position: absolute; top: -35px; right: 0; background: none; border: none; color: white; font-size: 28px; cursor: pointer; }
         .modal-botoes { display: flex; gap: 10px; margin-top: 15px; justify-content: center; }
-        @media(max-width:600px) { .dia { font-size: 12px; } .status-mini { font-size: 8px; } .grupo-horario { flex-direction: column; align-items: stretch; } }
+        @media(max-width:600px) { .dia { font-size: 12px; } .status-mini { font-size: 7px; } }
     </style>
 </head>
 <body>
@@ -97,13 +116,21 @@
             <div>📅 Hoje: <span id="dataHoje"></span></div>
         </div>
 
+        <!-- 📋 MINHA AGENDA -- NO TOPO! -->
+        <div class="agenda-section">
+            <h2 class="agenda-titulo">📋 Minha Agenda — <span id="mesAgenda"></span></h2>
+            <div id="listaAgenda" class="agenda-lista">
+                <div class="agenda-vazia">Carregando suas batalhas...</div>
+            </div>
+        </div>
+
         <div class="legenda">
             <h3>📋 Legenda</h3>
             <div class="legenda-itens">
                 <div class="item-legenda"><div class="cor" style="background:rgba(0,255,156,0.3);"></div> Disponível</div>
                 <div class="item-legenda"><div class="cor" style="background:rgba(255,215,0,0.3);"></div> Campanha</div>
                 <div class="item-legenda"><div class="cor" style="background:rgba(0,168,255,0.3);"></div> Falta Oponente</div>
-                <div class="item-legenda"><div class="cor" style="background:rgba(240,240,240,0.2);"></div> Confirmada</div>
+                <div class="item-legenda"><div class="cor" style="background:rgba(0,255,156,0.3);"></div> Confirmada</div>
                 <div class="item-legenda"><div class="cor" style="background:rgba(255,68,68,0.3);"></div> Domingo/Feriado</div>
             </div>
         </div>
@@ -122,17 +149,12 @@
 
         <div class="secao-horario" id="secaoHorario">
             <h3>⏰ Selecione o Horário — <span id="dataSelecionada"></span></h3>
-            <div class="relogio-container">
-                <div class="grupo-form">
-                    <label>🕐 Horário desejado</label>
-                    <div class="grupo-horario">
-                        <input type="time" id="inputHorario" class="input-horario" step="60">
-                        <button class="btn-verificar" id="btnVerificarHorario">✅ Verificar Disponibilidade</button>
-                    </div>
-                </div>
-                <div class="status-horario" id="statusHorario">
-                    <strong id="textoStatusHorario"></strong>
-                </div>
+            <div class="grupo-horario">
+                <input type="time" id="inputHorario" class="input-horario" step="60">
+                <button class="btn-verificar" id="btnVerificarHorario">✅ Verificar Disponibilidade</button>
+            </div>
+            <div class="status-horario" id="statusHorario">
+                <strong id="textoStatusHorario"></strong>
             </div>
         </div>
 
@@ -176,7 +198,7 @@
             </div>
             <button class="btn-enviar" id="btnEnviarSolicitacao">📤 ENVIAR SOLICITAÇÃO</button>
             <div class="botoes-acao">
-                <button class="btn-voltar" id="btnVoltarCalendario">◀ Voltar ao Calendário</button>
+                <button class="btn-voltar" id="btnVoltarCalendario">◀ Voltar</button>
             </div>
         </div>
     </div>
@@ -199,33 +221,16 @@
 const LINK_APPS_SCRIPT = "https://script.google.com/macros/s/AKfycbx6Bpw0OdmfdznHovpbCNhJmUSLeWUi5ZaWeVGqHks5Iy4PC1M-E32EXqUqcCc7L1oP/exec";
 const WHATSAPP_AGENCIA = "5569981478873";
 
-// FERIADOS NACIONAIS DO BRASIL (MM-DD)
 const FERIADOS = {
-    "01-01": "Confraternização Universal",
-    "03-04": "Carnaval",
-    "04-10": "Paixão de Cristo",
-    "04-21": "Tiradentes",
-    "05-01": "Dia do Trabalho",
-    "06-19": "Corpus Christi",
-    "09-07": "Independência",
-    "10-12": "Nossa Senhora Aparecida",
-    "11-02": "Finados",
-    "11-15": "Proclamação da República",
-    "12-25": "Natal"
+    "01-01": "Confraternização Universal", "03-04": "Carnaval", "04-10": "Paixão de Cristo",
+    "04-21": "Tiradentes", "05-01": "Dia do Trabalho", "06-19": "Corpus Christi",
+    "09-07": "Independência", "10-12": "Nossa Senhora Aparecida", "11-02": "Finados",
+    "11-15": "Proclamação da República", "12-25": "Natal"
 };
 
-// COLUNAS DA PLANILHA (índice começa em 0)
 const COL = {
-    NUMERO_DIA: 1,
-    DATA: 2,
-    HORA_INICIO: 3,
-    HORA_FIM: 4,
-    ROUND: 5,
-    STREAMER: 6,
-    OPONENTE: 8,
-    SITUACAO: 11,
-    BANNER: 16,
-    VIDEO: 17
+    NUMERO_DIA: 1, DATA: 2, HORA_INICIO: 3, HORA_FIM: 4, ROUND: 5,
+    STREAMER: 6, OPONENTE: 8, LINK: 7, META: 10, SITUACAO: 11, ARTE: 12, BANNER: 16, VIDEO: 17
 };
 
 let dataAtual = new Date();
@@ -242,8 +247,10 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     const hoje = new Date();
     document.getElementById("dataHoje").textContent = formatarData(hoje);
+    document.getElementById("mesAgenda").textContent = ["Janeiro","Fevereiro","Março","Abril","Maio","Junho","Julho","Agosto","Setembro","Outubro","Novembro","Dezembro"][hoje.getMonth()] + " " + hoje.getFullYear();
 
     await carregarBatalhas();
+    renderizarAgendaDoStreamer();
     renderizarCalendario();
 
     document.getElementById("btnMesAnterior").addEventListener("click", () => { dataAtual.setMonth(dataAtual.getMonth() - 1); renderizarCalendario(); });
@@ -252,6 +259,83 @@ document.addEventListener("DOMContentLoaded", async () => {
     document.getElementById("btnVoltarCalendario").addEventListener("click", voltarAoCalendario);
     document.getElementById("btnEnviarSolicitacao").addEventListener("click", enviarSolicitacao);
 });
+
+// ====================== 📋 AGENDA DO STREAMER — NO TOPO! ======================
+function renderizarAgendaDoStreamer() {
+    const lista = document.getElementById("listaAgenda");
+    const nomesMeses = ["Janeiro","Fevereiro","Março","Abril","Maio","Junho","Julho","Agosto","Setembro","Outubro","Novembro","Dezembro"];
+    document.getElementById("mesAgenda").textContent = nomesMeses[dataAtual.getMonth()] + " " + dataAtual.getFullYear();
+
+    const batalhasDoStreamer = batalhas.filter(b => {
+        const situacao = b.situacao;
+        const ehCampanha = situacao === "CAMPANHA";
+        const ehFaltaOp = situacao === "FALTA OPONENTE";
+        const ehConfirmada = ["CONFIRMADA", "CONFIMADO"].includes(situacao);
+        if (!ehCampanha && !ehFaltaOp && !ehConfirmada) return false;
+
+        // Campanha aparece para TODOS; as outras aparecem se o nome bater
+        if (ehCampanha) return true;
+        return b.streamer === nomeUsuario;
+    });
+
+    // Ordenar por data + horário
+    batalhasDoStreamer.sort((a, b) => {
+        const dataA = extrairDataBatalha(a.data, dataAtual.getFullYear(), dataAtual.getMonth());
+        const dataB = extrairDataBatalha(b.data, dataAtual.getFullYear(), dataAtual.getMonth());
+        if (!dataA || !dataB) return 0;
+        if (dataA.getTime() !== dataB.getTime()) return dataA - dataB;
+        return converterParaMinutos(a.horaInicio) - converterParaMinutos(b.horaInicio);
+    });
+
+    if (!batalhasDoStreamer.length) {
+        lista.innerHTML = `<div class="agenda-vazia">📭 Nenhuma batalha ou campanha agendada para você neste mês.</div>`;
+        return;
+    }
+
+    lista.innerHTML = batalhasDoStreamer.map(b => {
+        const situacao = b.situacao;
+        const ehCampanha = situacao === "CAMPANHA";
+        const ehFaltaOp = situacao === "FALTA OPONENTE";
+        const ehConfirmada = ["CONFIRMADA", "CONFIMADO"].includes(situacao);
+
+        let classeCard = "", classeStatus = "", textoStatus = "";
+        if (ehCampanha) { classeCard = "card-campanha"; classeStatus = "status-campanha"; textoStatus = "📢 CAMPANHA"; }
+        else if (ehFaltaOp) { classeCard = "card-falta-oponente"; classeStatus = "status-falta-oponente"; textoStatus = "⏳ FALTA OPONENTE"; }
+        else if (ehConfirmada) { classeCard = "card-confirmada"; classeStatus = "status-confirmada"; textoStatus = "✅ CONFIRMADA"; }
+
+        const dataFormatada = b.data || "—";
+        const horario = b.horaInicio || "—";
+        const oponente = b.oponente && b.oponente.trim() ? b.oponente : "???";
+        const link = b.link || "";
+        const meta = b.meta || "";
+        const ehCampanhaGeral = ehCampanha && !b.streamer;
+
+        let batalhaTexto = "";
+        if (ehCampanha) {
+            if (ehCampanhaGeral) {
+                batalhaTexto = `<strong>📢 CAMPANHA PARA TODOS</strong>`;
+            } else {
+                batalhaTexto = `<strong>${b.streamer}</strong> ⚔️ ???`;
+            }
+        } else if (ehFaltaOp) {
+            batalhaTexto = `<strong>${b.streamer}</strong> ⚔️ <span style="color:#888">${oponente}</span>`;
+        } else if (ehConfirmada) {
+            batalhaTexto = `<strong>${b.streamer}</strong> ⚔️ <strong>${oponente}</strong>`;
+        }
+
+        return `
+        <div class="agenda-card ${classeCard}">
+            <div class="card-cabecalho">
+                <span class="card-data">📅 ${dataFormatada} — ${horario}</span>
+                <span class="card-status ${classeStatus}">${textoStatus}</span>
+            </div>
+            <div class="card-corpo">
+                <div class="card-batalha">${batalhaTexto}</div>
+                ${(link || meta) ? `<div class="card-detalhes">${link ? `<span>🔗 <a href="${link}" target="_blank" style="color:var(--azul)">Perfil</a></span>` : ""}${meta ? `<span>💎 Meta: ${meta}</span>` : ""}</div>` : ""}
+            </div>
+        </div>`;
+    }).join("");
+}
 
 // ====================== CARREGAR BATALHAS ======================
 async function carregarBatalhas() {
@@ -265,6 +349,9 @@ async function carregarBatalhas() {
                 horaInicio: converterHora(linha[COL.HORA_INICIO]),
                 horaFim: converterHora(linha[COL.HORA_FIM]),
                 streamer: (linha[COL.STREAMER] || "").toString().trim().toUpperCase(),
+                oponente: (linha[COL.OPONENTE] || "").toString().trim().toUpperCase(),
+                link: linha[COL.LINK] || "",
+                meta: linha[COL.META] || "",
                 situacao: (linha[COL.SITUACAO] || "").toString().trim().toUpperCase(),
                 banner: linha[COL.BANNER] || "",
                 video: linha[COL.VIDEO] || ""
@@ -272,7 +359,6 @@ async function carregarBatalhas() {
         }
     } catch (erro) {
         console.error("Erro ao carregar batalhas:", erro);
-        mostrarToast("⚠️ Erro ao carregar dados — recarregue a página");
     }
 }
 
@@ -292,11 +378,7 @@ function converterParaMinutos(horario) {
 }
 
 function formatarData(data) {
-    if (typeof data === "string") {
-        const d = new Date(data);
-        if (isNaN(d.getTime())) return data;
-        return `${String(d.getDate()).padStart(2,"0")}/${String(d.getMonth()+1).padStart(2,"0")}/${d.getFullYear()}`;
-    }
+    if (typeof data === "string") return data;
     return `${String(data.getDate()).padStart(2,"0")}/${String(data.getMonth()+1).padStart(2,"0")}/${data.getFullYear()}`;
 }
 
@@ -320,7 +402,6 @@ function verificarBloqueio(horario, dataAlvo) {
     const diaSemana = dataAlvo.getDay();
 
     if (diaSemana === 0) return { bloqueado: true, motivo: "🚫 DOMINGO — Sem agendamento" };
-
     const feriado = verificarFeriado(dataAlvo);
     if (feriado) return { bloqueado: true, motivo: `🎉 FERIADO: ${feriado}` };
 
@@ -337,19 +418,17 @@ function verificarBloqueio(horario, dataAlvo) {
         const inicio = converterParaMinutos(b.horaInicio);
         const fim = converterParaMinutos(b.horaFim) || inicio + 60;
         const situacao = b.situacao;
-
         const ehBloqueio = ["CAMPANHA", "CONFIRMADA", "CONFIMADO", "FALTA OPONENTE"].includes(situacao);
         const horarioConflita = horarioMin >= inicio && horarioMin < fim;
 
         if (ehBloqueio && horarioConflita) {
             let tipo = "";
             if (situacao === "CAMPANHA") tipo = "⛔ CAMPANHA";
-            else if (["CONFIRMADA", "CONFIMADO"].includes(situacao)) tipo = "⛔ BATALHA CONFIRMADA";
+            else if (["CONFIRMADA", "CONFIMADO"].includes(situacao)) tipo = "⛔ CONFIRMADA";
             else if (situacao === "FALTA OPONENTE") tipo = "⏳ FALTA OPONENTE";
-            return { bloqueado: true, motivo: `${tipo} às ${b.horaInicio} — Horário ocupado` };
+            return { bloqueado: true, motivo: `${tipo} às ${b.horaInicio}` };
         }
     }
-
     return { bloqueado: false, motivo: "✅ HORÁRIO DISPONÍVEL!" };
 }
 
@@ -387,6 +466,8 @@ function renderizarCalendario() {
     const nomesMeses = ["Janeiro","Fevereiro","Março","Abril","Maio","Junho","Julho","Agosto","Setembro","Outubro","Novembro","Dezembro"];
     document.getElementById("nomeMes").textContent = `${nomesMeses[mes]} ${ano}`;
 
+    renderizarAgendaDoStreamer(); // ← Atualiza agenda ao mudar mês!
+
     const primeiroDia = new Date(ano, mes, 1).getDay();
     const totalDias = new Date(ano, mes + 1, 0).getDate();
     const hoje = new Date(); hoje.setHours(0,0,0,0);
@@ -402,7 +483,6 @@ function renderizarCalendario() {
         const feriado = verificarFeriado(dataDia);
 
         let classe = "disponivel", statusTexto = "";
-
         if (feriado) { classe = "feriado"; statusTexto = "🎉"; }
         else if (diaSemana === 0) { classe = "domingo"; statusTexto = "Dom"; }
         else {
@@ -431,15 +511,9 @@ function verificarStatusDia(dia, mes, ano) {
         const d = extrairDataBatalha(b.data, ano, mes);
         return d && d.getDate() === dia && d.getMonth() === mes && d.getFullYear() === ano;
     });
-    for (const b of batalhasDoDia) {
-        if (b.situacao === "CAMPANHA") return "CAMPANHA";
-    }
-    for (const b of batalhasDoDia) {
-        if (b.situacao === "FALTA OPONENTE") return "FALTA OPONENTE";
-    }
-    for (const b of batalhasDoDia) {
-        if (["CONFIRMADA", "CONFIMADO"].includes(b.situacao)) return "CONFIRMADA";
-    }
+    for (const b of batalhasDoDia) if (b.situacao === "CAMPANHA") return "CAMPANHA";
+    for (const b of batalhasDoDia) if (b.situacao === "FALTA OPONENTE") return "FALTA OPONENTE";
+    for (const b of batalhasDoDia) if (["CONFIRMADA", "CONFIMADO"].includes(b.situacao)) return "CONFIRMADA";
     return "DISPONÍVEL";
 }
 
@@ -509,7 +583,6 @@ async function enviarSolicitacao() {
 
     try {
         mostrarToast("⏳ Enviando...");
-        
         await fetch(LINK_APPS_SCRIPT, {
             method: "POST",
             mode: "no-cors",
