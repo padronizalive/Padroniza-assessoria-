@@ -61,8 +61,8 @@
         .formulario h3 { margin-bottom: 20px; font-size: 18px; }
         .grupo-form { margin-bottom: 15px; }
         .grupo-form input, .grupo-form select { width: 100%; padding: 12px; border-radius: 8px; border: 1px solid #333; background: #0f0f1a; color: white; font-size: 15px; }
-        .checkbox-group { display:flex; gap:15px; flex-wrap:wrap; padding:8px 0; }
-        .checkbox-label { display:flex; align-items:center; gap:8px; cursor:pointer; font-size:15px; }
+        .checkbox-group { display: flex; gap: 15px; flex-wrap: wrap; padding: 8px 0; }
+        .checkbox-label { display: flex; align-items: center; gap: 8px; cursor: pointer; font-size: 15px; }
         .btn-enviar { width: 100%; padding: 15px; background: linear-gradient(90deg, var(--verde), var(--verde-escuro)); color: #000; border: none; border-radius: 10px; font-size: 16px; font-weight: bold; cursor: pointer; margin-top: 10px; transition: 0.3s; }
         .btn-enviar:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(0,255,156,0.3); }
         .botoes-acao { display: flex; gap: 12px; margin-top: 20px; flex-wrap: wrap; }
@@ -75,10 +75,6 @@
         .btn-material { padding: 8px 16px; border-radius: 6px; border: none; font-size: 14px; cursor: pointer; text-decoration: none; display: inline-block; font-weight: 600; }
         .btn-banner { background: var(--verde); color: #000; }
         .btn-video { background: var(--azul); color: #fff; }
-        .aviso { margin-top: 10px; padding: 12px 15px; border-radius: 8px; font-size: 14px; line-height: 1.6; }
-        .aviso.amarelo { background: rgba(255,215,0,0.1); color: #ffd700; border: 1px solid rgba(255,215,0,0.3); }
-        .aviso.azul { background: rgba(0,168,255,0.1); color: #00a8ff; }
-        .aviso.vermelho { background: rgba(255,68,68,0.1); color: #ff4444; }
         .toast { position: fixed; top: 20px; left: 50%; transform: translateX(-50%); background: var(--verde); color: #000; padding: 12px 24px; border-radius: 8px; font-weight: bold; z-index: 9999; display: none; box-shadow: 0 4px 12px rgba(0,0,0,0.5); }
         .modal { position: fixed; inset: 0; background: rgba(0,0,0,0.9); display: none; align-items: center; justify-content: center; z-index: 10000; padding: 20px; }
         .modal.visivel { display: flex; }
@@ -86,30 +82,29 @@
         .modal-conteudo img, .modal-conteudo video { max-width: 100%; max-height: 80vh; border-radius: 8px; }
         .modal-fechar { position: absolute; top: -40px; right: 0; background: none; border: none; color: white; font-size: 30px; cursor: pointer; }
         .modal-botoes { display: flex; gap: 10px; margin-top: 15px; justify-content: center; }
-        @media(max-width:600px) { .dia { font-size:12px; } .status-mini { font-size:8px; } .grupo-horario { flex-direction: column; align-items: stretch; } }
+        @media(max-width:600px) { .dia { font-size: 12px; } .status-mini { font-size: 8px; } .grupo-horario { flex-direction: column; align-items: stretch; } }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="header">
-            <div class="logo">⚔️ Padroniza Assessoria</div>
-            <p class="subtitulo">Agendamento de Batalhas Oficiais</p>
+            <h1 class="logo">⚔️ Padroniza Assessoria</h1>
+            <p class="subtitulo">Agendamento de Batalhas — Kako Live & TikTok</p>
         </div>
 
         <div class="info-usuario">
-            <div>👤 Streamer: <span class="usuario-nome" id="nomeUsuario">Carregando...</span></div>
+            <div>👤 Streamer: <strong id="nomeUsuario">Carregando...</strong></div>
             <div>📅 Hoje: <span id="dataHoje"></span></div>
         </div>
 
         <div class="legenda">
             <h3>📋 Legenda</h3>
             <div class="legenda-itens">
-                <div class="item-legenda"><div class="cor" style="background:rgba(0,255,156,0.3);"></div> DISPONÍVEL</div>
-                <div class="item-legenda"><div class="cor" style="background:rgba(255,215,0,0.3);"></div> CAMPANHA</div>
-                <div class="item-legenda"><div class="cor" style="background:rgba(0,168,255,0.3);"></div> FALTA OPONENTE</div>
-                <div class="item-legenda"><div class="cor" style="background:rgba(240,240,240,0.2);"></div> CONFIRMADA</div>
-                <div class="item-legenda"><div class="cor" style="background:rgba(255,68,68,0.3);"></div> DOMINGO/BLOQ</div>
-                <div class="item-legenda"><div class="cor" style="background:rgba(138,43,226,0.3);"></div> FERIADO</div>
+                <div class="item-legenda"><div class="cor" style="background:rgba(0,255,156,0.3);"></div> Disponível</div>
+                <div class="item-legenda"><div class="cor" style="background:rgba(255,215,0,0.3);"></div> Campanha</div>
+                <div class="item-legenda"><div class="cor" style="background:rgba(0,168,255,0.3);"></div> Falta Oponente</div>
+                <div class="item-legenda"><div class="cor" style="background:rgba(240,240,240,0.2);"></div> Confirmada</div>
+                <div class="item-legenda"><div class="cor" style="background:rgba(255,68,68,0.3);"></div> Domingo/Feriado</div>
             </div>
         </div>
 
@@ -120,25 +115,19 @@
                 <button class="btn-nav" id="btnProximoMes">▶</button>
             </div>
             <div class="dias-semana">
-                <div class="dia-semana">DOM</div>
-                <div class="dia-semana">SEG</div>
-                <div class="dia-semana">TER</div>
-                <div class="dia-semana">QUA</div>
-                <div class="dia-semana">QUI</div>
-                <div class="dia-semana">SEX</div>
-                <div class="dia-semana">SÁB</div>
+                <div>Dom</div><div>Seg</div><div>Ter</div><div>Qua</div><div>Qui</div><div>Sex</div><div>Sáb</div>
             </div>
             <div class="grade-dias" id="gradeDias"></div>
         </div>
 
         <div class="secao-horario" id="secaoHorario">
-            <h3>⏰ SELECIONE O HORÁRIO — <span id="dataSelecionada"></span></h3>
+            <h3>⏰ Selecione o Horário — <span id="dataSelecionada"></span></h3>
             <div class="relogio-container">
                 <div class="grupo-form">
-                    <label>🕐 Escolha o horário que deseja (qualquer horário)</label>
+                    <label>🕐 Horário desejado</label>
                     <div class="grupo-horario">
                         <input type="time" id="inputHorario" class="input-horario" step="60">
-                        <button class="btn-verificar" id="btnVerificarHorario">✅ VERIFICAR DISPONIBILIDADE</button>
+                        <button class="btn-verificar" id="btnVerificarHorario">✅ Verificar Disponibilidade</button>
                     </div>
                 </div>
                 <div class="status-horario" id="statusHorario">
@@ -148,53 +137,47 @@
         </div>
 
         <div class="materiais" id="secaoMateriais">
-            <h3>📦 MATERIAIS DA BATALHA</h3>
+            <h3>📦 Materiais da Batalha</h3>
             <div id="listaMateriais"></div>
         </div>
 
         <div class="formulario" id="secaoFormulario">
-            <h3>📝 SOLICITAR BATALHA OFICIAL</h3>
+            <h3>📝 Solicitar Batalha Oficial</h3>
             <div class="grupo-form">
-                <label>Streamer Padroniza</label>
+                <label>Streamer</label>
                 <input type="text" id="formStreamer" readonly>
             </div>
             <div class="grupo-form">
-                <label>Data Solicitada</label>
+                <label>Data</label>
                 <input type="text" id="formData" readonly>
             </div>
             <div class="grupo-form">
-                <label>Horário Escolhido</label>
+                <label>Horário</label>
                 <input type="text" id="formHorario" readonly>
             </div>
             <div class="grupo-form">
                 <label>Link do Perfil (TikTok/Kako)</label>
-                <input type="url" id="formLink" placeholder="Cole seu link aqui">
+                <input type="url" id="formLink" placeholder="Cole o link do seu perfil aqui">
             </div>
             <div class="grupo-form">
                 <label>Meta de Diamantes</label>
-                <input type="text" id="formMeta" placeholder="Ex: 50.000">
+                <input type="text" id="formMeta" placeholder="Ex: 5.000">
             </div>
             <div class="grupo-form">
-                <label>🎨 TIPO DE ARTE (pode escolher 1 ou os 2)</label>
+                <label>🎨 Tipo de Arte (pode escolher os dois)</label>
                 <div class="checkbox-group">
                     <label class="checkbox-label">
-                        <input type="checkbox" id="arteFoto" value="foto">
-                        📸 ARTE EM FOTO
+                        <input type="checkbox" id="arteFoto"> 📸 Foto
                     </label>
                     <label class="checkbox-label">
-                        <input type="checkbox" id="arteVideo" value="video">
-                        🎬 ARTE EM VÍDEO
+                        <input type="checkbox" id="arteVideo"> 🎬 Vídeo
                     </label>
                 </div>
             </div>
             <button class="btn-enviar" id="btnEnviarSolicitacao">📤 ENVIAR SOLICITAÇÃO</button>
             <div class="botoes-acao">
-                <button class="btn-voltar" id="btnVoltarCalendario">◀ VOLTAR AO CALENDÁRIO</button>
+                <button class="btn-voltar" id="btnVoltarCalendario">◀ Voltar ao Calendário</button>
             </div>
-        </div>
-
-        <div class="botoes-acao" style="margin-top:30px;">
-            <button class="btn-voltar" onclick="window.history.back()">◀ VOLTAR AO PERFIL</button>
         </div>
     </div>
 
@@ -203,8 +186,8 @@
             <button class="modal-fechar" onclick="fecharModal()">×</button>
             <div id="conteudoModal"></div>
             <div class="modal-botoes">
-                <a href="#" id="btnDownloadMaterial" class="btn-material btn-banner" download>💾 BAIXAR</a>
-                <button class="btn-material btn-voltar" onclick="fecharModal()">FECHAR</button>
+                <a href="#" id="btnDownloadMaterial" class="btn-material btn-banner" download>💾 Baixar</a>
+                <button class="btn-material btn-voltar" onclick="fecharModal()">Fechar</button>
             </div>
         </div>
     </div>
@@ -216,7 +199,7 @@
 const LINK_APPS_SCRIPT = "https://script.google.com/macros/s/AKfycbx6Bpw0OdmfdznHovpbCNhJmUSLeWUi5ZaWeVGqHks5Iy4PC1M-E32EXqUqcCc7L1oP/exec";
 const WHATSAPP_AGENCIA = "5569981478873";
 
-// FERIADOS NACIONAIS DO BRASIL (formato: "MM-DD")
+// FERIADOS NACIONAIS DO BRASIL (MM-DD)
 const FERIADOS = {
     "01-01": "Confraternização Universal",
     "03-04": "Carnaval",
@@ -231,8 +214,9 @@ const FERIADOS = {
     "12-25": "Natal"
 };
 
-// MAPEAMENTO DAS COLUNAS DA PLANILHA
+// COLUNAS DA PLANILHA (índice começa em 0)
 const COL = {
+    NUMERO_DIA: 1,
     DATA: 2,
     HORA_INICIO: 3,
     HORA_FIM: 4,
@@ -253,51 +237,52 @@ let nomeUsuario = "VISITANTE";
 // ====================== INICIALIZAÇÃO ======================
 document.addEventListener("DOMContentLoaded", async () => {
     const params = new URLSearchParams(window.location.search);
-    nomeUsuario = (params.get("streamer") || params.get("usuario") || "NÃO IDENTIFICADO").toUpperCase();
+    nomeUsuario = (params.get("streamer") || params.get("usuario") || "VISITANTE").toUpperCase();
     document.getElementById("nomeUsuario").textContent = nomeUsuario;
 
     const hoje = new Date();
     document.getElementById("dataHoje").textContent = formatarData(hoje);
 
-    await carregarPlanilhaBatalhas();
+    await carregarBatalhas();
     renderizarCalendario();
 
-    document.getElementById("btnMesAnterior").addEventListener("click", () => { dataAtual.setMonth(dataAtual.getMonth() -1); renderizarCalendario(); });
-    document.getElementById("btnProximoMes").addEventListener("click", () => { dataAtual.setMonth(dataAtual.getMonth() +1); renderizarCalendario(); });
+    document.getElementById("btnMesAnterior").addEventListener("click", () => { dataAtual.setMonth(dataAtual.getMonth() - 1); renderizarCalendario(); });
+    document.getElementById("btnProximoMes").addEventListener("click", () => { dataAtual.setMonth(dataAtual.getMonth() + 1); renderizarCalendario(); });
     document.getElementById("btnVerificarHorario").addEventListener("click", verificarDisponibilidade);
-    document.getElementById("btnVoltarCalendario").addEventListener("click", voltarParaCalendario);
+    document.getElementById("btnVoltarCalendario").addEventListener("click", voltarAoCalendario);
     document.getElementById("btnEnviarSolicitacao").addEventListener("click", enviarSolicitacao);
 });
 
 // ====================== CARREGAR BATALHAS ======================
-async function carregarPlanilhaBatalhas() {
+async function carregarBatalhas() {
     try {
         const resposta = await fetch(LINK_APPS_SCRIPT + "?acao=lerBatalhas");
         const dados = await resposta.json();
         if (dados.batalhas && Array.isArray(dados.batalhas)) {
             batalhas = dados.batalhas.slice(1).map(linha => ({
-                data: linha[COL.DATA] || "",
+                numeroDia: linha[COL.NUMERO_DIA],
+                data: linha[COL.DATA],
                 horaInicio: converterHora(linha[COL.HORA_INICIO]),
                 horaFim: converterHora(linha[COL.HORA_FIM]),
                 streamer: (linha[COL.STREAMER] || "").toString().trim().toUpperCase(),
                 situacao: (linha[COL.SITUACAO] || "").toString().trim().toUpperCase(),
-                oponente: linha[COL.OPONENTE] || "",
                 banner: linha[COL.BANNER] || "",
                 video: linha[COL.VIDEO] || ""
             }));
         }
     } catch (erro) {
-        console.log("Erro carregamento:", erro);
-        batalhas = [];
+        console.error("Erro ao carregar batalhas:", erro);
+        mostrarToast("⚠️ Erro ao carregar dados — recarregue a página");
     }
 }
 
 function converterHora(valor) {
-    if (!valor || valor === "") return "";
-    const str = String(valor);
-    if (str.includes(":")) return str;
-    if (str.length === 4) return str.slice(0, 2) + ":" + str.slice(2);
-    return str;
+    if (!valor && valor !== 0) return "";
+    const num = Number(valor);
+    if (isNaN(num)) return String(valor);
+    const h = Math.floor(num / 100);
+    const m = num % 100;
+    return `${String(h).padStart(2, "0")}:${String(m).padStart(2, "0")}`;
 }
 
 function converterParaMinutos(horario) {
@@ -320,101 +305,78 @@ function verificarFeriado(data) {
     return FERIADOS[mesDia] || null;
 }
 
-// ====================== BLOQUEIO DE HORÁRIOS — REGRAS PRINCIPAIS ======================
-function verificarBloqueioDeHorario(horario, dataAlvo) {
+function extrairDataBatalha(dataTexto, anoRef, mesRef) {
+    if (!dataTexto) return null;
+    const d = new Date(dataTexto);
+    if (!isNaN(d.getTime())) return d;
+    const match = dataTexto.match(/(\d{1,2})/);
+    if (match) return new Date(anoRef, mesRef, parseInt(match[1], 10));
+    return null;
+}
+
+// ====================== REGRAS DE BLOQUEIO ======================
+function verificarBloqueio(horario, dataAlvo) {
     const horarioMin = converterParaMinutos(horario);
     const diaSemana = dataAlvo.getDay();
 
-    // ⛔ REGRA 1: DOMINGO SEMPRE BLOQUEADO
-    if (diaSemana === 0) {
-        return { bloqueado: true, motivo: "DOMINGO — Sem agendamento" };
-    }
+    if (diaSemana === 0) return { bloqueado: true, motivo: "🚫 DOMINGO — Sem agendamento" };
 
-    // ⛔ REGRA 2: FERIADO SEMPRE BLOQUEADO
     const feriado = verificarFeriado(dataAlvo);
-    if (feriado) {
-        return { bloqueado: true, motivo: `FERIADO: ${feriado}` };
-    }
+    if (feriado) return { bloqueado: true, motivo: `🎉 FERIADO: ${feriado}` };
 
-    const dataAlvoStr = dataAlvo.toISOString().split("T")[0];
+    const diaAlvo = dataAlvo.getDate();
+    const mesAlvo = dataAlvo.getMonth();
+    const anoAlvo = dataAlvo.getFullYear();
+
     const batalhasDoDia = batalhas.filter(b => {
-        if (!b.data) return false;
-        const dataB = new Date(b.data);
-        return dataB.toISOString().split("T")[0] === dataAlvoStr;
+        const d = extrairDataBatalha(b.data, anoAlvo, mesAlvo);
+        return d && d.getDate() === diaAlvo && d.getMonth() === mesAlvo && d.getFullYear() === anoAlvo;
     });
 
-    // ⛔ REGRA 3: CAMPANHA — BLOQUEIA EXATAMENTE O INTERVALO INFORMADO
     for (const b of batalhasDoDia) {
         const inicio = converterParaMinutos(b.horaInicio);
-        const fim = converterParaMinutos(b.horaFim);
-        const status = b.situacao;
+        const fim = converterParaMinutos(b.horaFim) || inicio + 60;
+        const situacao = b.situacao;
 
-        if (!inicio || !fim) continue;
+        const ehBloqueio = ["CAMPANHA", "CONFIRMADA", "CONFIMADO", "FALTA OPONENTE"].includes(situacao);
+        const horarioConflita = horarioMin >= inicio && horarioMin < fim;
 
-        if (status === "CAMPANHA" || status === "CAMP") {
-            if (horarioMin >= inicio && horarioMin < fim) {
-                return { 
-                    bloqueado: true, 
-                    motivo: `⛔ CAMPANHA (${b.horaInicio} às ${b.horaFim}) — Horário bloqueado` 
-                };
-            }
-        }
-
-        // ⛔ REGRA 4: BATALHA CONFIRMADA — BLOQUEIA O HORÁRIO PARA TODOS
-        if (status === "CONFIRMADO" || status === "CONFIRMADA") {
-            if (horarioMin >= inicio && horarioMin < fim) {
-                return { 
-                    bloqueado: true, 
-                    motivo: `⛔ BATALHA CONFIRMADA (${b.horaInicio} às ${b.horaFim}) — Horário já ocupado` 
-                };
-            }
-        }
-
-        // ⛔ REGRA 5: FALTA OPONENTE — também bloqueia o horário
-        if (status === "FALTA OPONENTE") {
-            if (horarioMin >= inicio && horarioMin < fim) {
-                return { 
-                    bloqueado: true, 
-                    motivo: `⏳ AGUARDANDO OPONENTE — Horário em negociação` 
-                };
-            }
+        if (ehBloqueio && horarioConflita) {
+            let tipo = "";
+            if (situacao === "CAMPANHA") tipo = "⛔ CAMPANHA";
+            else if (["CONFIRMADA", "CONFIMADO"].includes(situacao)) tipo = "⛔ BATALHA CONFIRMADA";
+            else if (situacao === "FALTA OPONENTE") tipo = "⏳ FALTA OPONENTE";
+            return { bloqueado: true, motivo: `${tipo} às ${b.horaInicio} — Horário ocupado` };
         }
     }
 
-    // ✅ TODAS AS REGRAS PASSARAM — HORÁRIO LIVRE!
-    return { bloqueado: false, motivo: "✅ HORÁRIO DISPONÍVEL PARA AGENDAMENTO!" };
+    return { bloqueado: false, motivo: "✅ HORÁRIO DISPONÍVEL!" };
 }
 
-// ====================== VERIFICAR DISPONIBILIDADE DO HORÁRIO ESCOLHIDO ======================
+// ====================== VERIFICAR DISPONIBILIDADE ======================
 function verificarDisponibilidade() {
     const input = document.getElementById("inputHorario");
     const horario = input.value;
-    
-    if (!horario) {
-        mostrarToast("⚠️ SELECIONE UM HORÁRIO PRIMEIRO!");
-        return;
-    }
+    if (!horario) { mostrarToast("⚠️ Selecione um horário"); return; }
 
-    const resultado = verificarBloqueioDeHorario(horario, dataSelecionada);
+    const res = verificarBloqueio(horario, dataSelecionada);
     const statusDiv = document.getElementById("statusHorario");
     const textoDiv = document.getElementById("textoStatusHorario");
 
     statusDiv.classList.add("visivel");
-    textoDiv.textContent = resultado.motivo;
+    textoDiv.textContent = res.motivo;
+    statusDiv.className = "status-horario visivel " + (res.bloqueado ? "bloqueado" : "livre");
 
-    if (resultado.bloqueado) {
-        statusDiv.className = "status-horario visivel bloqueado";
-        horarioEscolhido = null;
-    } else {
-        statusDiv.className = "status-horario visivel livre";
+    if (!res.bloqueado) {
         horarioEscolhido = horario;
-        // Preenche o formulário automaticamente
         document.getElementById("formStreamer").value = nomeUsuario;
         document.getElementById("formData").value = formatarData(dataSelecionada);
         document.getElementById("formHorario").value = horario;
-        // Mostra o formulário
         document.getElementById("secaoFormulario").classList.add("visivel");
         window.scrollTo({ top: document.getElementById("secaoFormulario").offsetTop - 20, behavior: "smooth" });
+    } else {
+        horarioEscolhido = null;
+        document.getElementById("secaoFormulario").classList.remove("visivel");
     }
 }
 
@@ -422,7 +384,7 @@ function verificarDisponibilidade() {
 function renderizarCalendario() {
     const ano = dataAtual.getFullYear();
     const mes = dataAtual.getMonth();
-    const nomesMeses = ["JANEIRO","FEVEREIRO","MARÇO","ABRIL","MAIO","JUNHO","JULHO","AGOSTO","SETEMBRO","OUTUBRO","NOVEMBRO","DEZEMBRO"];
+    const nomesMeses = ["Janeiro","Fevereiro","Março","Abril","Maio","Junho","Julho","Agosto","Setembro","Outubro","Novembro","Dezembro"];
     document.getElementById("nomeMes").textContent = `${nomesMeses[mes]} ${ano}`;
 
     const primeiroDia = new Date(ano, mes, 1).getDay();
@@ -433,224 +395,170 @@ function renderizarCalendario() {
     for (let i = 0; i < primeiroDia; i++) html += `<div class="dia vazio"></div>`;
 
     for (let dia = 1; dia <= totalDias; dia++) {
-        const dataDoDia = new Date(ano, mes, dia);
-        const ehHoje = dataDoDia.toDateString() === hoje.toDateString();
-        const ehPassado = dataDoDia < hoje;
-        const diaSemana = dataDoDia.getDay();
-        const feriado = verificarFeriado(dataDoDia);
-        const dataStrISO = dataDoDia.toISOString().split("T")[0];
+        const dataDia = new Date(ano, mes, dia);
+        const ehHoje = dataDia.getTime() === hoje.getTime();
+        const ehPassado = dataDia < hoje;
+        const diaSemana = dataDia.getDay();
+        const feriado = verificarFeriado(dataDia);
 
-        let classeStatus = "disponivel", textoStatus = "";
+        let classe = "disponivel", statusTexto = "";
 
-        // 📌 Verificações de status do dia
-        if (feriado) {
-            classeStatus = "feriado"; textoStatus = "🎉 FERIADO";
-        } else if (diaSemana === 0) {
-            classeStatus = "domingo"; textoStatus = "🚫 DOM";
-        } else {
-            const statusDia = verificarStatusDoDia(dataDoDia);
-            if (statusDia === "CAMPANHA" || statusDia === "CAMP") {
-                classeStatus = "campanha"; textoStatus = "⚠️ CAMP";
-            } else if (statusDia === "FALTA OPONENTE") {
-                classeStatus = "falta-oponente"; textoStatus = "⏳ OP";
-            } else if (statusDia === "CONFIRMADO" || statusDia === "CONFIRMADA") {
-                classeStatus = "confirmada"; textoStatus = "✅ OK";
-            } else if (ehPassado) {
-                classeStatus = "bloqueado";
-            }
+        if (feriado) { classe = "feriado"; statusTexto = "🎉"; }
+        else if (diaSemana === 0) { classe = "domingo"; statusTexto = "Dom"; }
+        else {
+            const st = verificarStatusDia(dia, mes, ano);
+            if (st === "CAMPANHA") { classe = "campanha"; statusTexto = "⚠️ Camp"; }
+            else if (st === "FALTA OPONENTE") { classe = "falta-oponente"; statusTexto = "⏳ Op"; }
+            else if (["CONFIRMADA", "CONFIMADO"].includes(st)) { classe = "confirmada"; statusTexto = "✅ Ok"; }
+            else if (ehPassado) { classe = "bloqueado"; }
         }
 
-        const clicavel = (classeStatus === "disponivel" || classeStatus === "campanha" || classeStatus === "falta-oponente") 
-            ? `onclick="selecionarDia('${dataStrISO}', ${ano}, ${mes}, ${dia})"` 
-            : "";
-        const estiloHoje = ehHoje ? "border:2px solid #fff; font-weight:bold;" : "";
+        const clicavel = ["disponivel", "campanha", "falta-oponente"].includes(classe) && !ehPassado;
+        const estilo = ehHoje ? "border:2px solid var(--verde);font-weight:bold;" : "";
 
-        html += `<div class="dia ${classeStatus}" ${clicavel} style="${estiloHoje}">${dia}${textoStatus ? `<div class="status-mini">${textoStatus}</div>` : ""}</div>`;
+        html += `<div class="dia ${classe}" ${clicavel ? `onclick="selecionarDia(${ano},${mes},${dia})"` : ""} style="${estilo}">${dia}${statusTexto ? `<div class="status-mini">${statusTexto}</div>` : ""}</div>`;
     }
+
     document.getElementById("gradeDias").innerHTML = html;
-    
-    // Esconde seções ao navegar pelo calendário
     document.getElementById("secaoHorario").classList.remove("visivel");
     document.getElementById("secaoFormulario").classList.remove("visivel");
     document.getElementById("secaoMateriais").classList.remove("visivel");
     horarioEscolhido = null;
 }
 
-function verificarStatusDoDia(dataAlvo) {
-    const dataAlvoStr = dataAlvo.toISOString().split("T")[0];
+function verificarStatusDia(dia, mes, ano) {
     const batalhasDoDia = batalhas.filter(b => {
-        if (!b.data) return false;
-        const dataB = new Date(b.data);
-        return dataB.toISOString().split("T")[0] === dataAlvoStr;
+        const d = extrairDataBatalha(b.data, ano, mes);
+        return d && d.getDate() === dia && d.getMonth() === mes && d.getFullYear() === ano;
     });
-
     for (const b of batalhasDoDia) {
-        if (b.situacao === "CAMPANHA" || b.situacao === "CAMP") return "CAMPANHA";
+        if (b.situacao === "CAMPANHA") return "CAMPANHA";
     }
     for (const b of batalhasDoDia) {
         if (b.situacao === "FALTA OPONENTE") return "FALTA OPONENTE";
     }
     for (const b of batalhasDoDia) {
-        if (b.situacao === "CONFIRMADO" || b.situacao === "CONFIRMADA") return "CONFIRMADO";
+        if (["CONFIRMADA", "CONFIMADO"].includes(b.situacao)) return "CONFIRMADA";
     }
     return "DISPONÍVEL";
 }
 
 // ====================== SELECIONAR DIA ======================
-window.selecionarDia = function(dataStrISO, ano, mes, dia) {
+window.selecionarDia = function(ano, mes, dia) {
     dataSelecionada = new Date(ano, mes, dia);
     document.getElementById("dataSelecionada").textContent = formatarData(dataSelecionada);
-
-    // Reseta o input de horário
     document.getElementById("inputHorario").value = "";
     document.getElementById("statusHorario").classList.remove("visivel");
+    document.getElementById("secaoFormulario").classList.remove("visivel");
     horarioEscolhido = null;
 
-    // Verifica se é domingo ou feriado
-    const diaSemana = dataSelecionada.getDay();
     const feriado = verificarFeriado(dataSelecionada);
+    if (feriado) { mostrarToast(`🎉 ${feriado}`); return; }
+    if (dataSelecionada.getDay() === 0) { mostrarToast("🚫 Domingo"); return; }
 
-    if (feriado) {
-        mostrarToast(`🎉 ${feriado} — Sem agendamento`);
-        document.getElementById("secaoHorario").classList.remove("visivel");
-        return;
-    }
-    if (diaSemana === 0) {
-        mostrarToast("🚫 DOMINGO — Sem agendamento");
-        document.getElementById("secaoHorario").classList.remove("visivel");
-        return;
-    }
-
-    // Mostra o seletor de horário
     document.getElementById("secaoHorario").classList.add("visivel");
-    document.getElementById("secaoFormulario").classList.remove("visivel");
-    
-    // Carrega materiais se houver
-    const dataAlvoStr = dataSelecionada.toISOString().split("T")[0];
-    const batalhasDoDia = batalhas.filter(b => {
-        if (!b.data) return false;
-        const dataB = new Date(b.data);
-        return dataB.toISOString().split("T")[0] === dataAlvoStr;
-    });
-    carregarMateriais(batalhasDoDia);
-
-    window.scrollTo({ top: document.querySelector(".calendario").offsetTop - 10, behavior: "smooth" });
+    carregarMateriais(ano, mes, dia);
+    window.scrollTo({ top: document.getElementById("secaoHorario").offsetTop - 20, behavior: "smooth" });
 };
 
-// ====================== CARREGAR MATERIAIS ======================
-function carregarMateriais(batalhasDoDia) {
-    const minhasBatalhas = batalhasDoDia.filter(b => b.streamer === nomeUsuario || nomeUsuario === "VISITANTE");
-    if (!minhasBatalhas.length) {
-        document.getElementById("secaoMateriais").classList.remove("visivel");
-        return;
-    }
+function carregarMateriais(ano, mes, dia) {
+    const batalhasDoDia = batalhas.filter(b => {
+        const d = extrairDataBatalha(b.data, ano, mes);
+        return d && d.getDate() === dia && d.getMonth() === mes && d.getFullYear() === ano;
+    });
+    const minhas = batalhasDoDia.filter(b => b.streamer === nomeUsuario || nomeUsuario === "VISITANTE");
+    if (!minhas.length) { document.getElementById("secaoMateriais").classList.remove("visivel"); return; }
 
     let html = "";
-    for (const b of minhasBatalhas) {
-        if (b.banner && b.banner.trim()) {
-            html += `
-                <div class="item-material">
-                    <span>📸 BANNER DA BATALHA</span>
-                    <div>
-                        <button class="btn-material btn-banner" onclick="visualizarImagem('${b.banner}')">👁️ VISUALIZAR</button>
-                        <a href="${b.banner}" download class="btn-material btn-banner">💾 BAIXAR</a>
-                    </div>
-                </div>
-            `;
-        }
-        if (b.video && b.video.trim()) {
-            html += `
-                <div class="item-material">
-                    <span>🎬 VÍDEO DE DIVULGAÇÃO</span>
-                    <div>
-                        <button class="btn-material btn-video" onclick="visualizarVideo('${b.video}')">▶️ ASSISTIR</button>
-                        <a href="${b.video}" download class="btn-material btn-video">💾 BAIXAR</a>
-                    </div>
-                </div>
-            `;
-        }
+    for (const b of minhas) {
+        if (b.banner) html += `<div class="item-material"><span>📸 Banner</span><div><button class="btn-material btn-banner" onclick="abrirImagem('${b.banner}')">👁️ Ver</button><a href="${b.banner}" download class="btn-material btn-banner">💾 Baixar</a></div></div>`;
+        if (b.video) html += `<div class="item-material"><span>🎬 Vídeo</span><div><button class="btn-material btn-video" onclick="abrirVideo('${b.video}')">▶️ Assistir</button><a href="${b.video}" download class="btn-material btn-video">💾 Baixar</a></div></div>`;
     }
-
-    if (html) {
-        document.getElementById("listaMateriais").innerHTML = html;
-        document.getElementById("secaoMateriais").classList.add("visivel");
-    } else {
-        document.getElementById("secaoMateriais").classList.remove("visivel");
-    }
+    if (html) { document.getElementById("listaMateriais").innerHTML = html; document.getElementById("secaoMateriais").classList.add("visivel"); }
 }
 
-function voltarParaCalendario() {
+function voltarAoCalendario() {
+    document.getElementById("secaoHorario").classList.remove("visivel");
     document.getElementById("secaoFormulario").classList.remove("visivel");
-    document.getElementById("statusHorario").classList.remove("visivel");
-    document.getElementById("inputHorario").value = "";
+    document.getElementById("secaoMateriais").classList.remove("visivel");
     horarioEscolhido = null;
+    dataSelecionada = null;
+    window.scrollTo({ top: 0, behavior: "smooth" });
 }
 
 // ====================== ENVIAR SOLICITAÇÃO ======================
 async function enviarSolicitacao() {
-    const link = document.getElementById("formLink").value.trim() || "NÃO INFORMADO";
-    const meta = document.getElementById("formMeta").value.trim() || "NÃO INFORMADA";
-    
-    const artesSelecionadas = [];
-    if (document.getElementById("arteFoto").checked) artesSelecionadas.push("📸 FOTO");
-    if (document.getElementById("arteVideo").checked) artesSelecionadas.push("🎬 VÍDEO");
-    const tipoArte = artesSelecionadas.length > 0 ? artesSelecionadas.join(" + ") : "NÃO INFORMADO";
+    const link = document.getElementById("formLink").value.trim() || "";
+    const meta = document.getElementById("formMeta").value.trim() || "";
+    const artes = [];
+    if (document.getElementById("arteFoto").checked) artes.push("📸 Foto");
+    if (document.getElementById("arteVideo").checked) artes.push("🎬 Vídeo");
+    const tipoArte = artes.length ? artes.join(" + ") : "Não informado";
+    const dataStr = formatarData(dataSelecionada);
 
-    const dataFormatada = formatarData(dataSelecionada);
+    if (!horarioEscolhido) { mostrarToast("⚠️ Verifique o horário primeiro"); return; }
 
-    if (!horarioEscolhido) { 
-        mostrarToast("⚠️ VERIFIQUE UM HORÁRIO DISPONÍVEL PRIMEIRO!"); 
-        return; 
-    }
+    const dados = {
+        streamer: nomeUsuario,
+        data: dataSelecionada.toISOString(),
+        horaInicio: horarioEscolhido,
+        link: link,
+        meta: meta,
+        tipoArte: tipoArte
+    };
 
-    const mensagem = `⚔️ NOVA SOLICITAÇÃO DE BATALHA
+    try {
+        mostrarToast("⏳ Enviando...");
+        
+        await fetch(LINK_APPS_SCRIPT, {
+            method: "POST",
+            mode: "no-cors",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(dados)
+        });
+
+        const mensagem = `⚔️ NOVA SOLICITAÇÃO DE BATALHA
 
 👤 STREAMER: ${nomeUsuario}
-📅 DATA: ${dataFormatada}
-⏰ HORÁRIO SOLICITADO: ${horarioEscolhido}
-🔗 LINK PERFIL: ${link}
-💎 META DE DIAMANTES: ${meta}
-🎨 TIPO DE ARTE: ${tipoArte}
+📅 DATA: ${dataStr}
+⏰ HORÁRIO: ${horarioEscolhido}
+🔗 LINK: ${link || "Não informado"}
+💎 META: ${meta || "Não informada"}
+🎨 ARTE: ${tipoArte}
 
-📊 SITUAÇÃO: ⏳ AGUARDANDO CONFIRMAÇÃO DA AGÊNCIA
+📊 Situação: ⏳ FALTA OPONENTE — Já gravada na planilha!
 
 ---
 PADRONIZA ASSESSORIA 🛡️`;
 
-    window.open(`https://wa.me/${WHATSAPP_AGENCIA}?text=${encodeURIComponent(mensagem)}`, "_blank");
-    mostrarToast("✅ SOLICITAÇÃO ENVIADA! ABRINDO WHATSAPP...");
-    setTimeout(() => location.reload(), 2500);
+        window.open(`https://wa.me/${WHATSAPP_AGENCIA}?text=${encodeURIComponent(mensagem)}`, "_blank");
+        mostrarToast("✅ Enviado! Abrindo WhatsApp...");
+        setTimeout(() => location.reload(), 3000);
+
+    } catch (erro) {
+        mostrarToast("⚠️ Erro — tente novamente");
+        console.error(erro);
+    }
 }
 
-// ====================== VISUALIZADOR DE MATERIAIS ======================
-window.visualizarImagem = function(url) {
-    const modal = document.getElementById("modalMaterial");
-    const conteudo = document.getElementById("conteudoModal");
+// ====================== MODAIS E UTILITÁRIOS ======================
+window.abrirImagem = function(url) {
+    document.getElementById("conteudoModal").innerHTML = `<img src="${url}" alt="Banner">`;
     document.getElementById("btnDownloadMaterial").href = url;
-    conteudo.innerHTML = `<img src="${url}" alt="Banner da Batalha" loading="lazy">`;
-    modal.classList.add("visivel");
+    document.getElementById("modalMaterial").classList.add("visivel");
 };
-
-window.visualizarVideo = function(url) {
-    const modal = document.getElementById("modalMaterial");
-    const conteudo = document.getElementById("conteudoModal");
+window.abrirVideo = function(url) {
+    document.getElementById("conteudoModal").innerHTML = `<video src="${url}" controls style="width:100%;border-radius:8px;"></video>`;
     document.getElementById("btnDownloadMaterial").href = url;
-    conteudo.innerHTML = `<video src="${url}" controls playsinline style="width:100%; border-radius:8px;"></video>`;
-    modal.classList.add("visivel");
+    document.getElementById("modalMaterial").classList.add("visivel");
 };
-
 function fecharModal() {
     document.getElementById("modalMaterial").classList.remove("visivel");
     document.getElementById("conteudoModal").innerHTML = "";
 }
-
-document.getElementById("modalMaterial").addEventListener("click", (e) => {
-    if (e.target.id === "modalMaterial") fecharModal();
-});
-
-function mostrarToast(mensagem) {
+function mostrarToast(texto) {
     const t = document.getElementById("toast");
-    t.textContent = mensagem;
+    t.textContent = texto;
     t.style.display = "block";
     setTimeout(() => t.style.display = "none", 3500);
 }
