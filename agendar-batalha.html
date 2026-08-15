@@ -35,25 +35,31 @@
         .dia:hover { transform: scale(1.05); }
         .dia.vazio { cursor: default; background: transparent; }
         .dia.disponivel { background: rgba(0,255,156,0.15); border-color: var(--verde); color: var(--verde); }
-        .dia.campanha { background: rgba(255,215,0,0.15); border-color: var(--amarelo); color: var(--amarelo); cursor: pointer; }
-        .dia.falta-oponente { background: rgba(0,168,255,0.15); border-color: var(--azul); color: var(--azul); cursor: pointer; }
+        .dia.campanha { background: rgba(255,215,0,0.15); border-color: var(--amarelo); color: var(--amarelo); }
+        .dia.falta-oponente { background: rgba(0,168,255,0.15); border-color: var(--azul); color: var(--azul); }
         .dia.confirmada { background: rgba(240,240,240,0.1); border-color: var(--branco); color: #ccc; cursor: not-allowed; }
         .dia.bloqueado { background: rgba(255,68,68,0.15); border-color: var(--vermelho); color: var(--vermelho); cursor: not-allowed; }
         .dia.domingo { background: rgba(255,68,68,0.15); border-color: var(--vermelho); color: var(--vermelho); cursor: not-allowed; }
+        .dia.feriado { background: rgba(138,43,226,0.15); border-color: #8a2be2; color: #c8a2ff; cursor: not-allowed; }
         .status-mini { font-size: 9px; margin-top: 2px; text-align: center; padding: 0 2px; line-height: 1.2; }
-        .horarios { background: var(--card); padding: 20px; border-radius: 12px; margin-bottom: 25px; display: none; }
-        .horarios.visivel { display: block; }
-        .horarios h3 { margin-bottom: 15px; font-size: 16px; }
-        .grade-horarios { display: grid; grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); gap: 10px; }
-        .btn-horario { padding: 12px; border-radius: 8px; border: none; cursor: pointer; font-size: 14px; transition: 0.2s; }
-        .btn-horario.disponivel { background: var(--verde); color: #000; }
-        .btn-horario.disponivel:hover { transform: scale(1.05); box-shadow: 0 0 10px var(--verde); }
-        .btn-horario.bloqueado { background: #333; color: #888; cursor: not-allowed; text-decoration: line-through; }
+        .secao-horario { background: var(--card); padding: 25px; border-radius: 12px; margin-bottom: 25px; display: none; }
+        .secao-horario.visivel { display: block; }
+        .secao-horario h3 { margin-bottom: 18px; font-size: 17px; }
+        .relogio-container { display: flex; flex-direction: column; gap: 15px; margin-bottom: 20px; }
+        .grupo-horario { display: flex; gap: 15px; align-items: center; flex-wrap: wrap; }
+        .grupo-form label { display: block; margin-bottom: 6px; font-size: 14px; color: #ccc; }
+        .input-horario { flex: 1; min-width: 140px; padding: 14px 16px; border-radius: 10px; border: 2px solid #333; background: #0f0f1a; color: white; font-size: 22px; font-weight: 600; text-align: center; cursor: pointer; transition: 0.2s; }
+        .input-horario:focus { outline: none; border-color: var(--verde); box-shadow: 0 0 12px rgba(0,255,156,0.3); }
+        .btn-verificar { padding: 14px 24px; background: linear-gradient(90deg, var(--verde), var(--verde-escuro)); color: #000; border: none; border-radius: 10px; font-size: 15px; font-weight: bold; cursor: pointer; transition: 0.2s; }
+        .btn-verificar:hover { transform: scale(1.05); }
+        .status-horario { margin-top: 15px; padding: 14px; border-radius: 10px; display: none; }
+        .status-horario.visivel { display: block; }
+        .status-horario.livre { background: rgba(0,255,156,0.1); border: 1px solid var(--verde); color: var(--verde); }
+        .status-horario.bloqueado { background: rgba(255,68,68,0.1); border: 1px solid var(--vermelho); color: var(--vermelho); }
         .formulario { background: var(--card); padding: 25px; border-radius: 12px; margin-bottom: 25px; display: none; }
         .formulario.visivel { display: block; }
         .formulario h3 { margin-bottom: 20px; font-size: 18px; }
         .grupo-form { margin-bottom: 15px; }
-        .grupo-form label { display: block; margin-bottom: 6px; font-size: 14px; color: #ccc; }
         .grupo-form input, .grupo-form select { width: 100%; padding: 12px; border-radius: 8px; border: 1px solid #333; background: #0f0f1a; color: white; font-size: 15px; }
         .checkbox-group { display:flex; gap:15px; flex-wrap:wrap; padding:8px 0; }
         .checkbox-label { display:flex; align-items:center; gap:8px; cursor:pointer; font-size:15px; }
@@ -80,7 +86,7 @@
         .modal-conteudo img, .modal-conteudo video { max-width: 100%; max-height: 80vh; border-radius: 8px; }
         .modal-fechar { position: absolute; top: -40px; right: 0; background: none; border: none; color: white; font-size: 30px; cursor: pointer; }
         .modal-botoes { display: flex; gap: 10px; margin-top: 15px; justify-content: center; }
-        @media(max-width:600px) { .dia { font-size:12px; } .status-mini { font-size:8px; } }
+        @media(max-width:600px) { .dia { font-size:12px; } .status-mini { font-size:8px; } .grupo-horario { flex-direction: column; align-items: stretch; } }
     </style>
 </head>
 <body>
@@ -103,7 +109,7 @@
                 <div class="item-legenda"><div class="cor" style="background:rgba(0,168,255,0.3);"></div> FALTA OPONENTE</div>
                 <div class="item-legenda"><div class="cor" style="background:rgba(240,240,240,0.2);"></div> CONFIRMADA</div>
                 <div class="item-legenda"><div class="cor" style="background:rgba(255,68,68,0.3);"></div> DOMINGO/BLOQ</div>
-                <div class="item-legenda"><div class="cor" style="background:rgba(138,43,226,0.3);"></div> 📦 MATERIAIS</div>
+                <div class="item-legenda"><div class="cor" style="background:rgba(138,43,226,0.3);"></div> FERIADO</div>
             </div>
         </div>
 
@@ -125,10 +131,20 @@
             <div class="grade-dias" id="gradeDias"></div>
         </div>
 
-        <div class="horarios" id="secaoHorarios">
-            <h3>⏰ HORÁRIOS DISPONÍVEIS — <span id="dataSelecionada"></span></h3>
-            <div id="avisoHorario"></div>
-            <div class="grade-horarios" id="gradeHorarios"></div>
+        <div class="secao-horario" id="secaoHorario">
+            <h3>⏰ SELECIONE O HORÁRIO — <span id="dataSelecionada"></span></h3>
+            <div class="relogio-container">
+                <div class="grupo-form">
+                    <label>🕐 Escolha o horário que deseja (qualquer horário)</label>
+                    <div class="grupo-horario">
+                        <input type="time" id="inputHorario" class="input-horario" step="60">
+                        <button class="btn-verificar" id="btnVerificarHorario">✅ VERIFICAR DISPONIBILIDADE</button>
+                    </div>
+                </div>
+                <div class="status-horario" id="statusHorario">
+                    <strong id="textoStatusHorario"></strong>
+                </div>
+            </div>
         </div>
 
         <div class="materiais" id="secaoMateriais">
@@ -147,7 +163,7 @@
                 <input type="text" id="formData" readonly>
             </div>
             <div class="grupo-form">
-                <label>Horário de Início</label>
+                <label>Horário Escolhido</label>
                 <input type="text" id="formHorario" readonly>
             </div>
             <div class="grupo-form">
@@ -199,25 +215,38 @@
 // ====================== CONFIGURAÇÃO ======================
 const LINK_APPS_SCRIPT = "https://script.google.com/macros/s/AKfycbx6Bpw0OdmfdznHovpbCNhJmUSLeWUi5ZaWeVGqHks5Iy4PC1M-E32EXqUqcCc7L1oP/exec";
 const WHATSAPP_AGENCIA = "5569981478873";
-const HORARIOS_PADRAO = ["17:00", "18:00", "19:00", "20:00", "21:00", "22:00", "23:00"];
 
-// MAPEAMENTO DAS COLUNAS DA PLANILHA (índice começa em 0)
+// FERIADOS NACIONAIS DO BRASIL (formato: "MM-DD")
+const FERIADOS = {
+    "01-01": "Confraternização Universal",
+    "03-04": "Carnaval",
+    "04-10": "Paixão de Cristo",
+    "04-21": "Tiradentes",
+    "05-01": "Dia do Trabalho",
+    "06-19": "Corpus Christi",
+    "09-07": "Independência",
+    "10-12": "Nossa Senhora Aparecida",
+    "11-02": "Finados",
+    "11-15": "Proclamação da República",
+    "12-25": "Natal"
+};
+
+// MAPEAMENTO DAS COLUNAS DA PLANILHA
 const COL = {
-    NUMERO_DIA: 1,
-    DATA: 2,          // C = DATA (formato ISO)
-    HORA_INICIO: 3,   // D = HORA INÍCIO (formato 1900 = 19:00)
-    HORA_FIM: 4,      // E = HORA FIM
-    ROUND: 5,         // F = ROUND
-    STREAMER: 6,      // G = STREAMER PADRONIZA
-    OPONENTE: 8,      // I = OPONENTE
-    SITUACAO: 11,     // L = SITUAÇÃO
-    BANNER: 16,       // Q = MATERIAIS — BANNER
-    VIDEO: 17         // R = MATERIAIS — VÍDEO DIVULGAÇÃO
+    DATA: 2,
+    HORA_INICIO: 3,
+    HORA_FIM: 4,
+    ROUND: 5,
+    STREAMER: 6,
+    OPONENTE: 8,
+    SITUACAO: 11,
+    BANNER: 16,
+    VIDEO: 17
 };
 
 let dataAtual = new Date();
 let dataSelecionada = null;
-let horarioSelecionado = null;
+let horarioEscolhido = null;
 let batalhas = [];
 let nomeUsuario = "VISITANTE";
 
@@ -235,17 +264,18 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     document.getElementById("btnMesAnterior").addEventListener("click", () => { dataAtual.setMonth(dataAtual.getMonth() -1); renderizarCalendario(); });
     document.getElementById("btnProximoMes").addEventListener("click", () => { dataAtual.setMonth(dataAtual.getMonth() +1); renderizarCalendario(); });
+    document.getElementById("btnVerificarHorario").addEventListener("click", verificarDisponibilidade);
     document.getElementById("btnVoltarCalendario").addEventListener("click", voltarParaCalendario);
     document.getElementById("btnEnviarSolicitacao").addEventListener("click", enviarSolicitacao);
 });
 
-// ====================== CARREGAR BATALHAS DA PLANILHA ======================
+// ====================== CARREGAR BATALHAS ======================
 async function carregarPlanilhaBatalhas() {
     try {
         const resposta = await fetch(LINK_APPS_SCRIPT + "?acao=lerBatalhas");
         const dados = await resposta.json();
         if (dados.batalhas && Array.isArray(dados.batalhas)) {
-            batalhas = dados.batalhas.slice(1).map(linha => ({ // Pula cabeçalho
+            batalhas = dados.batalhas.slice(1).map(linha => ({
                 data: linha[COL.DATA] || "",
                 horaInicio: converterHora(linha[COL.HORA_INICIO]),
                 horaFim: converterHora(linha[COL.HORA_FIM]),
@@ -262,7 +292,6 @@ async function carregarPlanilhaBatalhas() {
     }
 }
 
-// ====================== CONVERTER HORA DA PLANILHA ======================
 function converterHora(valor) {
     if (!valor || valor === "") return "";
     const str = String(valor);
@@ -271,12 +300,10 @@ function converterHora(valor) {
     return str;
 }
 
-// ====================== FORMATAR DATA ======================
-function formatarDataISO(dataStr) {
-    if (!dataStr) return "";
-    const d = new Date(dataStr);
-    if (isNaN(d.getTime())) return "";
-    return d;
+function converterParaMinutos(horario) {
+    if (!horario || horario === "") return 9999;
+    const [h, m] = String(horario).split(":").map(Number);
+    return h * 60 + (m || 0);
 }
 
 function formatarData(data) {
@@ -288,10 +315,107 @@ function formatarData(data) {
     return `${String(data.getDate()).padStart(2,"0")}/${String(data.getMonth()+1).padStart(2,"0")}/${data.getFullYear()}`;
 }
 
-function formatarDataCurta(data) {
-    const d = typeof data === "string" ? new Date(data) : data;
-    if (isNaN(d.getTime())) return "";
-    return `${d.getDate()}`;
+function verificarFeriado(data) {
+    const mesDia = `${String(data.getMonth()+1).padStart(2,"0")}-${String(data.getDate()).padStart(2,"0")}`;
+    return FERIADOS[mesDia] || null;
+}
+
+// ====================== BLOQUEIO DE HORÁRIOS — REGRAS PRINCIPAIS ======================
+function verificarBloqueioDeHorario(horario, dataAlvo) {
+    const horarioMin = converterParaMinutos(horario);
+    const diaSemana = dataAlvo.getDay();
+
+    // ⛔ REGRA 1: DOMINGO SEMPRE BLOQUEADO
+    if (diaSemana === 0) {
+        return { bloqueado: true, motivo: "DOMINGO — Sem agendamento" };
+    }
+
+    // ⛔ REGRA 2: FERIADO SEMPRE BLOQUEADO
+    const feriado = verificarFeriado(dataAlvo);
+    if (feriado) {
+        return { bloqueado: true, motivo: `FERIADO: ${feriado}` };
+    }
+
+    const dataAlvoStr = dataAlvo.toISOString().split("T")[0];
+    const batalhasDoDia = batalhas.filter(b => {
+        if (!b.data) return false;
+        const dataB = new Date(b.data);
+        return dataB.toISOString().split("T")[0] === dataAlvoStr;
+    });
+
+    // ⛔ REGRA 3: CAMPANHA — BLOQUEIA EXATAMENTE O INTERVALO INFORMADO
+    for (const b of batalhasDoDia) {
+        const inicio = converterParaMinutos(b.horaInicio);
+        const fim = converterParaMinutos(b.horaFim);
+        const status = b.situacao;
+
+        if (!inicio || !fim) continue;
+
+        if (status === "CAMPANHA" || status === "CAMP") {
+            if (horarioMin >= inicio && horarioMin < fim) {
+                return { 
+                    bloqueado: true, 
+                    motivo: `⛔ CAMPANHA (${b.horaInicio} às ${b.horaFim}) — Horário bloqueado` 
+                };
+            }
+        }
+
+        // ⛔ REGRA 4: BATALHA CONFIRMADA — BLOQUEIA O HORÁRIO PARA TODOS
+        if (status === "CONFIRMADO" || status === "CONFIRMADA") {
+            if (horarioMin >= inicio && horarioMin < fim) {
+                return { 
+                    bloqueado: true, 
+                    motivo: `⛔ BATALHA CONFIRMADA (${b.horaInicio} às ${b.horaFim}) — Horário já ocupado` 
+                };
+            }
+        }
+
+        // ⛔ REGRA 5: FALTA OPONENTE — também bloqueia o horário
+        if (status === "FALTA OPONENTE") {
+            if (horarioMin >= inicio && horarioMin < fim) {
+                return { 
+                    bloqueado: true, 
+                    motivo: `⏳ AGUARDANDO OPONENTE — Horário em negociação` 
+                };
+            }
+        }
+    }
+
+    // ✅ TODAS AS REGRAS PASSARAM — HORÁRIO LIVRE!
+    return { bloqueado: false, motivo: "✅ HORÁRIO DISPONÍVEL PARA AGENDAMENTO!" };
+}
+
+// ====================== VERIFICAR DISPONIBILIDADE DO HORÁRIO ESCOLHIDO ======================
+function verificarDisponibilidade() {
+    const input = document.getElementById("inputHorario");
+    const horario = input.value;
+    
+    if (!horario) {
+        mostrarToast("⚠️ SELECIONE UM HORÁRIO PRIMEIRO!");
+        return;
+    }
+
+    const resultado = verificarBloqueioDeHorario(horario, dataSelecionada);
+    const statusDiv = document.getElementById("statusHorario");
+    const textoDiv = document.getElementById("textoStatusHorario");
+
+    statusDiv.classList.add("visivel");
+    textoDiv.textContent = resultado.motivo;
+
+    if (resultado.bloqueado) {
+        statusDiv.className = "status-horario visivel bloqueado";
+        horarioEscolhido = null;
+    } else {
+        statusDiv.className = "status-horario visivel livre";
+        horarioEscolhido = horario;
+        // Preenche o formulário automaticamente
+        document.getElementById("formStreamer").value = nomeUsuario;
+        document.getElementById("formData").value = formatarData(dataSelecionada);
+        document.getElementById("formHorario").value = horario;
+        // Mostra o formulário
+        document.getElementById("secaoFormulario").classList.add("visivel");
+        window.scrollTo({ top: document.getElementById("secaoFormulario").offsetTop - 20, behavior: "smooth" });
+    }
 }
 
 // ====================== RENDERIZAR CALENDÁRIO ======================
@@ -312,29 +436,31 @@ function renderizarCalendario() {
         const dataDoDia = new Date(ano, mes, dia);
         const ehHoje = dataDoDia.toDateString() === hoje.toDateString();
         const ehPassado = dataDoDia < hoje;
+        const diaSemana = dataDoDia.getDay();
+        const feriado = verificarFeriado(dataDoDia);
         const dataStrISO = dataDoDia.toISOString().split("T")[0];
-
-        const statusDia = verificarStatusDoDia(dataDoDia);
-        const temMateriais = verificarMateriaisDoDia(dataDoDia);
 
         let classeStatus = "disponivel", textoStatus = "";
 
-        if (statusDia === "DOMINGO") {
+        // 📌 Verificações de status do dia
+        if (feriado) {
+            classeStatus = "feriado"; textoStatus = "🎉 FERIADO";
+        } else if (diaSemana === 0) {
             classeStatus = "domingo"; textoStatus = "🚫 DOM";
-        } else if (statusDia === "CAMPANHA") {
-            classeStatus = "campanha"; textoStatus = "⚠️ CAMP";
-        } else if (statusDia === "FALTA OPONENTE") {
-            classeStatus = "falta-oponente"; textoStatus = "⏳ OP";
-        } else if (statusDia === "CONFIRMADO") {
-            classeStatus = "confirmada"; textoStatus = "✅ OK";
-        } else if (ehPassado) {
-            classeStatus = "bloqueado";
+        } else {
+            const statusDia = verificarStatusDoDia(dataDoDia);
+            if (statusDia === "CAMPANHA" || statusDia === "CAMP") {
+                classeStatus = "campanha"; textoStatus = "⚠️ CAMP";
+            } else if (statusDia === "FALTA OPONENTE") {
+                classeStatus = "falta-oponente"; textoStatus = "⏳ OP";
+            } else if (statusDia === "CONFIRMADO" || statusDia === "CONFIRMADA") {
+                classeStatus = "confirmada"; textoStatus = "✅ OK";
+            } else if (ehPassado) {
+                classeStatus = "bloqueado";
+            }
         }
 
-        if (temMateriais && textoStatus) textoStatus += " 📦";
-        else if (temMateriais) textoStatus = "📦";
-
-        const clicavel = (classeStatus === "disponivel" || classeStatus === "campanha" || classeStatus === "falta-oponente" || temMateriais) 
+        const clicavel = (classeStatus === "disponivel" || classeStatus === "campanha" || classeStatus === "falta-oponente") 
             ? `onclick="selecionarDia('${dataStrISO}', ${ano}, ${mes}, ${dia})"` 
             : "";
         const estiloHoje = ehHoje ? "border:2px solid #fff; font-weight:bold;" : "";
@@ -342,12 +468,14 @@ function renderizarCalendario() {
         html += `<div class="dia ${classeStatus}" ${clicavel} style="${estiloHoje}">${dia}${textoStatus ? `<div class="status-mini">${textoStatus}</div>` : ""}</div>`;
     }
     document.getElementById("gradeDias").innerHTML = html;
-    document.getElementById("secaoHorarios").classList.remove("visivel");
+    
+    // Esconde seções ao navegar pelo calendário
+    document.getElementById("secaoHorario").classList.remove("visivel");
     document.getElementById("secaoFormulario").classList.remove("visivel");
     document.getElementById("secaoMateriais").classList.remove("visivel");
+    horarioEscolhido = null;
 }
 
-// ====================== VERIFICAR STATUS DO DIA ======================
 function verificarStatusDoDia(dataAlvo) {
     const dataAlvoStr = dataAlvo.toISOString().split("T")[0];
     const batalhasDoDia = batalhas.filter(b => {
@@ -356,13 +484,8 @@ function verificarStatusDoDia(dataAlvo) {
         return dataB.toISOString().split("T")[0] === dataAlvoStr;
     });
 
-    if (!batalhasDoDia.length) return "DISPONÍVEL";
-
     for (const b of batalhasDoDia) {
-        if (b.situacao === "DOMINGO") return "DOMINGO";
-    }
-    for (const b of batalhasDoDia) {
-        if (b.situacao === "CAMPANHA") return "CAMPANHA";
+        if (b.situacao === "CAMPANHA" || b.situacao === "CAMP") return "CAMPANHA";
     }
     for (const b of batalhasDoDia) {
         if (b.situacao === "FALTA OPONENTE") return "FALTA OPONENTE";
@@ -373,111 +496,46 @@ function verificarStatusDoDia(dataAlvo) {
     return "DISPONÍVEL";
 }
 
-function verificarMateriaisDoDia(dataAlvo) {
-    const dataAlvoStr = dataAlvo.toISOString().split("T")[0];
-    const batalhasDoDia = batalhas.filter(b => {
-        if (!b.data) return false;
-        const dataB = new Date(b.data);
-        return dataB.toISOString().split("T")[0] === dataAlvoStr;
-    });
-    return batalhasDoDia.some(b => b.banner || b.video);
-}
-
 // ====================== SELECIONAR DIA ======================
 window.selecionarDia = function(dataStrISO, ano, mes, dia) {
     dataSelecionada = new Date(ano, mes, dia);
     document.getElementById("dataSelecionada").textContent = formatarData(dataSelecionada);
 
-    const status = verificarStatusDoDia(dataSelecionada);
+    // Reseta o input de horário
+    document.getElementById("inputHorario").value = "";
+    document.getElementById("statusHorario").classList.remove("visivel");
+    horarioEscolhido = null;
+
+    // Verifica se é domingo ou feriado
+    const diaSemana = dataSelecionada.getDay();
+    const feriado = verificarFeriado(dataSelecionada);
+
+    if (feriado) {
+        mostrarToast(`🎉 ${feriado} — Sem agendamento`);
+        document.getElementById("secaoHorario").classList.remove("visivel");
+        return;
+    }
+    if (diaSemana === 0) {
+        mostrarToast("🚫 DOMINGO — Sem agendamento");
+        document.getElementById("secaoHorario").classList.remove("visivel");
+        return;
+    }
+
+    // Mostra o seletor de horário
+    document.getElementById("secaoHorario").classList.add("visivel");
+    document.getElementById("secaoFormulario").classList.remove("visivel");
+    
+    // Carrega materiais se houver
     const dataAlvoStr = dataSelecionada.toISOString().split("T")[0];
     const batalhasDoDia = batalhas.filter(b => {
         if (!b.data) return false;
         const dataB = new Date(b.data);
         return dataB.toISOString().split("T")[0] === dataAlvoStr;
-    }).filter(b => b.streamer === nomeUsuario || nomeUsuario === "VISITANTE");
-
-    const campanha = batalhasDoDia.find(b => b.situacao === "CAMPANHA");
-
-    let avisoHtml = "";
-    if (status === "CAMPANHA" && campanha) {
-        const inicio = campanha.horaInicio || "??:??";
-        const fim = campanha.horaFim || "??:??";
-        avisoHtml = `
-            <div class="aviso amarelo">
-                ⚠️ <strong>DIA DE CAMPANHA — ${inicio} às ${fim}</strong><br>
-                • Horários liberados: até 1h antes do início e a partir de 1h após o fim<br>
-                • Durante a campanha e o período de bloqueio não é possível agendar batalhas
-            </div>
-        `;
-        document.getElementById("avisoHorario").innerHTML = avisoHtml;
-        document.getElementById("secaoHorarios").classList.add("visivel");
-        carregarHorariosDisponiveis(dataAlvoStr, batalhasDoDia);
-    } else if (status === "FALTA OPONENTE") {
-        avisoHtml = `<div class="aviso azul">⏳ <strong>AGUARDANDO OPONENTE:</strong> Já existe solicitação neste dia. A agência está buscando um oponente.</div>`;
-        document.getElementById("avisoHorario").innerHTML = avisoHtml;
-        document.getElementById("secaoHorarios").classList.remove("visivel");
-    } else if (status === "CONFIRMADO") {
-        avisoHtml = `<div class="aviso vermelho">✅ <strong>BATALHA CONFIRMADA!</strong> Batalha agendada com sucesso.</div>`;
-        document.getElementById("avisoHorario").innerHTML = avisoHtml;
-        document.getElementById("secaoHorarios").classList.remove("visivel");
-    } else if (status === "DOMINGO") {
-        avisoHtml = `<div class="aviso vermelho">🚫 <strong>DOMINGO — SEM AGENDAMENTO</strong></div>`;
-        document.getElementById("avisoHorario").innerHTML = avisoHtml;
-        document.getElementById("secaoHorarios").classList.remove("visivel");
-    } else {
-        document.getElementById("avisoHorario").innerHTML = "";
-        document.getElementById("secaoHorarios").classList.add("visivel");
-        carregarHorariosDisponiveis(dataAlvoStr, []);
-    }
-
+    });
     carregarMateriais(batalhasDoDia);
-    document.getElementById("secaoFormulario").classList.remove("visivel");
+
     window.scrollTo({ top: document.querySelector(".calendario").offsetTop - 10, behavior: "smooth" });
 };
-
-// ====================== REGRAS DE BLOQUEIO DE CAMPANHA ======================
-function verificarBloqueioDeHorario(horario, batalhasDoDia) {
-    const horarioMin = converterParaMinutos(horario);
-    const ehDomingo = dataSelecionada.getDay() === 0;
-    if (ehDomingo) return true;
-
-    for (const b of batalhasDoDia) {
-        const inicio = converterParaMinutos(b.horaInicio);
-        const fim = converterParaMinutos(b.horaFim);
-        const status = b.situacao;
-        if (!inicio) continue;
-
-        if (status === "CAMPANHA") {
-            const bloqueioInicio = inicio - 60;
-            const bloqueioFim = fim + 60;
-            if (horarioMin >= bloqueioInicio && horarioMin < bloqueioFim) return true;
-        }
-        else if (status === "CONFIRMADO" || status === "FALTA OPONENTE") {
-            const bloqueioInicio = inicio - 60;
-            const bloqueioFim = fim + 60;
-            if (horarioMin >= bloqueioInicio && horarioMin < bloqueioFim) return true;
-        }
-    }
-    return false;
-}
-
-function converterParaMinutos(horario) {
-    if (!horario || horario === "") return 9999;
-    const [h, m] = String(horario).split(":").map(Number);
-    return h * 60 + (m || 0);
-}
-
-// ====================== CARREGAR HORÁRIOS ======================
-function carregarHorariosDisponiveis(dataStr, batalhasDoDia = []) {
-    let html = "";
-    for (const horario of HORARIOS_PADRAO) {
-        const bloqueado = verificarBloqueioDeHorario(horario, batalhasDoDia);
-        html += bloqueado 
-            ? `<button class="btn-horario bloqueado" disabled>${horario}</button>` 
-            : `<button class="btn-horario disponivel" onclick="selecionarHorario('${dataStr}', '${horario}')">${horario}</button>`;
-    }
-    document.getElementById("gradeHorarios").innerHTML = html;
-}
 
 // ====================== CARREGAR MATERIAIS ======================
 function carregarMateriais(batalhasDoDia) {
@@ -521,19 +579,11 @@ function carregarMateriais(batalhasDoDia) {
     }
 }
 
-// ====================== SELECIONAR HORÁRIO ======================
-window.selecionarHorario = function(dataStr, horario) {
-    horarioSelecionado = horario;
-    document.getElementById("formStreamer").value = nomeUsuario;
-    document.getElementById("formData").value = formatarData(dataSelecionada);
-    document.getElementById("formHorario").value = horario;
-    document.getElementById("secaoFormulario").classList.add("visivel");
-    window.scrollTo({ top: document.getElementById("secaoFormulario").offsetTop - 20, behavior: "smooth" });
-};
-
 function voltarParaCalendario() {
     document.getElementById("secaoFormulario").classList.remove("visivel");
-    horarioSelecionado = null;
+    document.getElementById("statusHorario").classList.remove("visivel");
+    document.getElementById("inputHorario").value = "";
+    horarioEscolhido = null;
 }
 
 // ====================== ENVIAR SOLICITAÇÃO ======================
@@ -548,18 +598,21 @@ async function enviarSolicitacao() {
 
     const dataFormatada = formatarData(dataSelecionada);
 
-    if (!horarioSelecionado) { mostrarToast("⚠️ SELECIONE UM HORÁRIO!"); return; }
+    if (!horarioEscolhido) { 
+        mostrarToast("⚠️ VERIFIQUE UM HORÁRIO DISPONÍVEL PRIMEIRO!"); 
+        return; 
+    }
 
     const mensagem = `⚔️ NOVA SOLICITAÇÃO DE BATALHA
 
 👤 STREAMER: ${nomeUsuario}
 📅 DATA: ${dataFormatada}
-⏰ HORÁRIO: ${horarioSelecionado}
+⏰ HORÁRIO SOLICITADO: ${horarioEscolhido}
 🔗 LINK PERFIL: ${link}
 💎 META DE DIAMANTES: ${meta}
 🎨 TIPO DE ARTE: ${tipoArte}
 
-📊 SITUAÇÃO: ⏳ FALTA DE OPONENTE — AGÊNCIA BUSCANDO PARCEIRO
+📊 SITUAÇÃO: ⏳ AGUARDANDO CONFIRMAÇÃO DA AGÊNCIA
 
 ---
 PADRONIZA ASSESSORIA 🛡️`;
