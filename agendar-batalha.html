@@ -14,111 +14,129 @@
         body { background: var(--fundo); color: var(--texto); min-height: 100vh; padding: 16px; }
         .container { max-width: 95%; margin: 0 auto; }
         .header { text-align: center; margin-bottom: 20px; }
-        .logo { font-size: 24px; font-weight: bold; background: linear-gradient(90deg, var(--verde), var(--azul)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 6px; }
+        .logo { font-size: 26px; font-weight: bold; background: linear-gradient(90deg, var(--verde), var(--azul)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 6px; display: flex; align-items: center; justify-content: center; gap: 8px; }
+        .logo::before { content: "⚔️"; font-size: 28px; }
         .subtitulo { color: #aaa; font-size: 14px; }
 
-        /* ===== MINHA AGENDA ===== */
-        .agenda-section { background: var(--card); padding: 18px; border-radius: 14px; margin-bottom: 24px; border: 1px solid rgba(0,255,156,0.2); }
-        .agenda-titulo { font-size: 18px; font-weight: bold; margin-bottom: 16px; display: flex; align-items: center; gap: 8px; }
-        .agenda-vazia { color: #888; font-size: 14px; padding: 15px; text-align: center; }
-        .agenda-lista { display: flex; flex-direction: column; gap: 12px; }
-        .agenda-card { padding: 14px; border-radius: 10px; border-left: 4px solid; transition: 0.2s; }
-        .agenda-card:hover { transform: translateY(-2px); }
-        .card-campanha { background: rgba(255,215,0,0.08); border-color: var(--amarelo); }
-        .card-falta-oponente { background: rgba(0,168,255,0.08); border-color: var(--azul); }
-        .card-confirmada { background: rgba(0,255,156,0.08); border-color: var(--verde); }
-        .card-cancelada { background: rgba(255,68,68,0.08); border-color: var(--vermelho); }
-        .card-cabecalho { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; flex-wrap: wrap; gap: 6px; }
-        .card-data { font-weight: 600; font-size: 15px; }
-        .card-status { font-size: 12px; padding: 3px 10px; border-radius: 20px; font-weight: 600; }
-        .status-campanha { background: rgba(255,215,0,0.2); color: var(--amarelo); }
-        .status-falta-oponente { background: rgba(0,168,255,0.2); color: var(--azul); }
-        .status-confirmada { background: rgba(0,255,156,0.2); color: var(--verde); }
-        .card-corpo { font-size: 14px; line-height: 1.6; }
-        .card-batalha { font-weight: 600; font-size: 15px; margin: 6px 0; }
-        .card-detalhes { font-size: 13px; color: #ccc; margin-top: 6px; }
-        .card-detalhes span { display: inline-block; margin-right: 12px; }
-        .tag-geral { display: inline-block; font-size: 11px; background: rgba(255,215,0,0.15); color: var(--amarelo); padding: 2px 8px; border-radius: 4px; margin-left: 8px; }
+        /* ===== INFO USUÁRIO ===== */
+        .info-usuario { background: var(--card); padding: 16px 20px; border-radius: 14px; margin-bottom: 24px; display: flex; flex-direction: column; gap: 8px; }
+        .info-linha { display: flex; align-items: center; gap: 8px; font-size: 17px; }
+        .info-icone { font-size: 20px; }
+        .info-valor { font-weight: 600; color: var(--verde); }
 
-        .info-usuario { background: var(--card); padding: 14px 18px; border-radius: 12px; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; }
-        .usuario-nome { font-size: 17px; font-weight: 600; }
+        /* ===== MINHA AGENDA — DESIGN BONITO ===== */
+        .agenda-section { background: var(--card); padding: 20px; border-radius: 14px; margin-bottom: 24px; border: 1px solid rgba(0,255,156,0.2); }
+        .agenda-titulo { font-size: 20px; font-weight: bold; margin-bottom: 20px; display: flex; align-items: center; gap: 10px; }
+        .agenda-titulo::before { content: "📋"; font-size: 22px; }
+        .agenda-vazia { color: #888; font-size: 15px; padding: 30px; text-align: center; }
+        .agenda-lista { display: flex; flex-direction: column; gap: 14px; }
+        .agenda-card { padding: 16px; border-radius: 12px; border-left: 4px solid; transition: 0.2s; background: rgba(255,255,255,0.03); }
+        .agenda-card:hover { transform: translateY(-2px); background: rgba(255,255,255,0.05); }
+
+        /* Cores por status */
+        .card-campanha { border-color: var(--amarelo); }
+        .card-campanha .etiqueta { background: rgba(255,215,0,0.15); color: var(--amarelo); }
+        .card-falta-oponente { border-color: var(--azul); }
+        .card-falta-oponente .etiqueta { background: rgba(0,168,255,0.15); color: var(--azul); }
+        .card-confirmada { border-color: var(--verde); }
+        .card-confirmada .etiqueta { background: rgba(0,255,156,0.15); color: var(--verde); }
+
+        .card-cabecalho { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; flex-wrap: wrap; gap: 8px; }
+        .card-data { display: flex; align-items: center; gap: 6px; font-size: 15px; color: #ccc; }
+        .card-data::before { content: "📅"; }
+        .etiqueta { font-size: 12px; padding: 4px 12px; border-radius: 20px; font-weight: bold; display: flex; align-items: center; gap: 5px; }
+        .etiqueta-campanha::before { content: "📢"; }
+        .etiqueta-oponente::before { content: "⏳"; }
+        .etiqueta-confirmada::before { content: "✅"; }
+
+        .card-corpo { font-size: 18px; font-weight: bold; margin: 10px 0; line-height: 1.5; }
+        .card-batalha-nome { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+        .nome-streamer { color: var(--verde); }
+        .nome-oponente { color: var(--azul); }
+        .icone-batalha { color: #888; font-size: 20px; }
+        .sem-oponente { color: #888; }
+
+        .card-detalhes { display: flex; gap: 20px; flex-wrap: wrap; margin-top: 10px; font-size: 14px; }
+        .detalhe-item { display: flex; align-items: center; gap: 5px; color: #aaa; }
+        .detalhe-item a { color: var(--azul); text-decoration: none; }
+        .detalhe-item a:hover { text-decoration: underline; }
+
+        /* ===== CALENDÁRIO E OUTROS ===== */
         .legenda { background: var(--card); padding: 16px; border-radius: 12px; margin-bottom: 20px; }
-        .legenda h3 { margin-bottom: 10px; font-size: 15px; }
-        .legenda-itens { display: flex; flex-wrap: wrap; gap: 10px; }
-        .item-legenda { display: flex; align-items: center; gap: 5px; font-size: 12px; }
+        .legenda h3 { margin-bottom: 12px; font-size: 15px; }
+        .legenda-itens { display: flex; flex-wrap: wrap; gap: 12px; }
+        .item-legenda { display: flex; align-items: center; gap: 6px; font-size: 13px; }
         .cor { width: 14px; height: 14px; border-radius: 3px; border: 1px solid rgba(255,255,255,0.2); }
 
-        .calendario { background: var(--card); padding: 18px; border-radius: 12px; margin-bottom: 20px; }
-        .navegacao-mes { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
-        .btn-nav { background: transparent; border: 1px solid var(--verde); color: var(--verde); padding: 6px 14px; border-radius: 8px; cursor: pointer; font-size: 15px; }
-        .nome-mes { font-size: 18px; font-weight: 600; }
-        .dias-semana { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; margin-bottom: 6px; }
-        .dia-semana { text-align: center; font-size: 12px; color: #888; padding: 6px; }
-        .grade-dias { display: grid; grid-template-columns: repeat(7, 1fr); gap: 5px; }
-        .dia { aspect-ratio: 1; display: flex; flex-direction: column; justify-content: center; align-items: center; border-radius: 8px; cursor: pointer; transition: 0.2s; font-size: 14px; border: 1px solid transparent; }
+        .calendario { background: var(--card); padding: 20px; border-radius: 12px; margin-bottom: 20px; }
+        .navegacao-mes { display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px; }
+        .btn-nav { background: transparent; border: 1px solid var(--verde); color: var(--verde); padding: 8px 16px; border-radius: 8px; cursor: pointer; font-size: 16px; font-weight: 600; }
+        .nome-mes { font-size: 20px; font-weight: bold; }
+        .dias-semana { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; margin-bottom: 8px; }
+        .dia-semana { text-align: center; font-size: 13px; color: #888; padding: 8px; font-weight: 600; }
+        .grade-dias { display: grid; grid-template-columns: repeat(7, 1fr); gap: 6px; }
+        .dia { aspect-ratio: 1; display: flex; flex-direction: column; justify-content: center; align-items: center; border-radius: 10px; cursor: pointer; transition: 0.2s; font-size: 15px; border: 1px solid transparent; font-weight: 600; }
         .dia.vazio { cursor: default; background: transparent; }
-        .dia.disponivel { background: rgba(0,255,156,0.12); border-color: var(--verde); color: var(--verde); }
-        .dia.campanha { background: rgba(255,215,0,0.12); border-color: var(--amarelo); color: var(--amarelo); }
-        .dia.falta-oponente { background: rgba(0,168,255,0.12); border-color: var(--azul); color: var(--azul); }
-        .dia.confirmada { background: rgba(240,240,240,0.08); border-color: #555; color: #999; cursor: not-allowed; }
-        .dia.bloqueado { background: rgba(255,68,68,0.12); border-color: var(--vermelho); color: var(--vermelho); cursor: not-allowed; }
-        .dia.domingo { background: rgba(255,68,68,0.12); border-color: var(--vermelho); color: var(--vermelho); cursor: not-allowed; }
-        .dia.feriado { background: rgba(138,43,226,0.12); border-color: var(--roxo); color: #c8a2ff; cursor: not-allowed; }
-        .status-mini { font-size: 8px; margin-top: 1px; }
+        .dia.disponivel { background: rgba(0,255,156,0.1); border-color: rgba(0,255,156,0.3); color: var(--verde); }
+        .dia.campanha { background: rgba(255,215,0,0.1); border-color: rgba(255,215,0,0.3); color: var(--amarelo); }
+        .dia.falta-oponente { background: rgba(0,168,255,0.1); border-color: rgba(0,168,255,0.3); color: var(--azul); }
+        .dia.confirmada { background: rgba(80,80,80,0.2); border-color: rgba(150,150,150,0.3); color: #999; cursor: not-allowed; }
+        .dia.bloqueado { background: rgba(255,68,68,0.08); border-color: rgba(255,68,68,0.2); color: var(--vermelho); cursor: not-allowed; }
+        .dia.domingo { background: rgba(255,68,68,0.08); border-color: rgba(255,68,68,0.2); color: var(--vermelho); cursor: not-allowed; }
+        .dia.feriado { background: rgba(138,43,226,0.08); border-color: rgba(138,43,226,0.2); color: #c8a2ff; cursor: not-allowed; }
+        .status-mini { font-size: 9px; margin-top: 2px; font-weight: normal; }
 
-        .secao-horario { background: var(--card); padding: 20px; border-radius: 12px; margin-bottom: 20px; display: none; }
+        .secao-horario { background: var(--card); padding: 22px; border-radius: 12px; margin-bottom: 20px; display: none; }
         .secao-horario.visivel { display: block; }
-        .secao-horario h3 { margin-bottom: 14px; font-size: 16px; }
-        .grupo-horario { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; margin-top: 10px; }
-        .input-horario { flex: 1; min-width: 130px; padding: 12px; border-radius: 8px; border: 2px solid #333; background: #0f0f1a; color: white; font-size: 18px; font-weight: 600; text-align: center; }
-        .btn-verificar { padding: 12px 20px; background: linear-gradient(90deg, var(--verde), var(--verde-escuro)); color: #000; border: none; border-radius: 8px; font-size: 15px; font-weight: bold; cursor: pointer; }
-        .status-horario { margin-top: 12px; padding: 12px; border-radius: 8px; display: none; }
+        .secao-horario h3 { margin-bottom: 16px; font-size: 17px; display: flex; align-items: center; gap: 8px; }
+        .secao-horario h3::before { content: "⏰"; }
+        .grupo-horario { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; margin-top: 12px; }
+        .input-horario { flex: 1; min-width: 140px; padding: 14px; border-radius: 8px; border: 2px solid #333; background: #0f0f1a; color: white; font-size: 20px; font-weight: bold; text-align: center; }
+        .btn-verificar { padding: 14px 24px; background: linear-gradient(90deg, var(--verde), var(--verde-escuro)); color: #000; border: none; border-radius: 8px; font-size: 16px; font-weight: bold; cursor: pointer; }
+        .status-horario { margin-top: 16px; padding: 14px; border-radius: 8px; display: none; font-weight: 600; }
         .status-horario.visivel { display: block; }
         .status-horario.livre { background: rgba(0,255,156,0.1); border: 1px solid var(--verde); color: var(--verde); }
         .status-horario.bloqueado { background: rgba(255,68,68,0.1); border: 1px solid var(--vermelho); color: var(--vermelho); }
 
-        .formulario { background: var(--card); padding: 20px; border-radius: 12px; margin-bottom: 20px; display: none; }
+        .formulario { background: var(--card); padding: 22px; border-radius: 12px; margin-bottom: 20px; display: none; }
         .formulario.visivel { display: block; }
-        .formulario h3 { margin-bottom: 16px; font-size: 16px; }
-        .grupo-form { margin-bottom: 12px; }
-        .grupo-form label { display: block; margin-bottom: 5px; font-size: 14px; color: #ccc; }
-        .grupo-form input, .grupo-form select { width: 100%; padding: 10px; border-radius: 6px; border: 1px solid #333; background: #0f0f1a; color: white; font-size: 14px; }
-        .checkbox-group { display: flex; gap: 15px; flex-wrap: wrap; padding: 6px 0; }
-        .checkbox-label { display: flex; align-items: center; gap: 6px; cursor: pointer; font-size: 14px; }
-        .btn-enviar { width: 100%; padding: 14px; background: linear-gradient(90deg, var(--verde), var(--verde-escuro)); color: #000; border: none; border-radius: 8px; font-size: 15px; font-weight: bold; cursor: pointer; margin-top: 8px; }
-        .botoes-acao { display: flex; gap: 10px; margin-top: 16px; flex-wrap: wrap; }
-        .btn-voltar { flex: 1; min-width: 120px; padding: 12px; background: transparent; border: 1px solid #666; color: #aaa; border-radius: 8px; font-size: 14px; cursor: pointer; }
-        .materiais { background: var(--card); padding: 16px; border-radius: 12px; margin-bottom: 20px; display: none; }
-        .materiais.visivel { display: block; }
-        .item-material { display: flex; align-items: center; justify-content: space-between; padding: 10px 12px; background: rgba(255,255,255,0.05); border-radius: 6px; margin-bottom: 8px; flex-wrap: wrap; gap: 8px; }
-        .btn-material { padding: 6px 12px; border-radius: 5px; border: none; font-size: 13px; cursor: pointer; text-decoration: none; font-weight: 600; }
-        .btn-banner { background: var(--verde); color: #000; }
-        .btn-video { background: var(--azul); color: #fff; }
-        .toast { position: fixed; top: 15px; left: 50%; transform: translateX(-50%); background: var(--verde); color: #000; padding: 10px 20px; border-radius: 6px; font-weight: bold; z-index: 9999; display: none; font-size: 14px; }
-        .modal { position: fixed; inset: 0; background: rgba(0,0,0,0.92); display: none; align-items: center; justify-content: center; z-index: 10000; padding: 20px; }
-        .modal.visivel { display: flex; }
-        .modal-conteudo { max-width: 90%; max-height: 90%; position: relative; }
-        .modal-conteudo img, .modal-conteudo video { max-width: 100%; max-height: 75vh; border-radius: 8px; }
-        .modal-fechar { position: absolute; top: -35px; right: 0; background: none; border: none; color: white; font-size: 28px; cursor: pointer; }
-        .modal-botoes { display: flex; gap: 10px; margin-top: 15px; justify-content: center; }
-        @media(max-width:600px) { .dia { font-size: 12px; } .status-mini { font-size: 7px; } }
+        .formulario h3 { margin-bottom: 18px; font-size: 17px; }
+        .grupo-form { margin-bottom: 14px; }
+        .grupo-form label { display: block; margin-bottom: 6px; font-size: 14px; color: #ccc; }
+        .grupo-form input, .grupo-form select { width: 100%; padding: 12px; border-radius: 8px; border: 1px solid #333; background: #0f0f1a; color: white; font-size: 15px; }
+        .checkbox-group { display: flex; gap: 20px; flex-wrap: wrap; padding: 8px 0; }
+        .checkbox-label { display: flex; align-items: center; gap: 8px; cursor: pointer; font-size: 15px; }
+        .btn-enviar { width: 100%; padding: 16px; background: linear-gradient(90deg, var(--verde), var(--verde-escuro)); color: #000; border: none; border-radius: 8px; font-size: 16px; font-weight: bold; cursor: pointer; margin-top: 10px; }
+        .botoes-acao { display: flex; gap: 12px; margin-top: 20px; flex-wrap: wrap; }
+        .btn-voltar { flex: 1; min-width: 130px; padding: 14px; background: transparent; border: 1px solid #555; color: #aaa; border-radius: 8px; font-size: 15px; cursor: pointer; }
+
+        .toast { position: fixed; top: 20px; left: 50%; transform: translateX(-50%); background: var(--verde); color: #000; padding: 12px 24px; border-radius: 8px; font-weight: bold; z-index: 9999; display: none; font-size: 15px; box-shadow: 0 4px 20px rgba(0,255,156,0.3); }
+        @media(max-width:600px) { .dia { font-size: 13px; } .card-corpo { font-size: 16px; } }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="header">
-            <h1 class="logo">⚔️ Padroniza Assessoria</h1>
+            <h1 class="logo">Padroniza Assessoria</h1>
             <p class="subtitulo">Agendamento de Batalhas — Kako Live & TikTok</p>
         </div>
 
         <div class="info-usuario">
-            <div>👤 Streamer: <strong id="nomeUsuario">Carregando...</strong></div>
-            <div>📅 Hoje: <span id="dataHoje"></span></div>
+            <div class="info-linha">
+                <span class="info-icone">👤</span>
+                <span>Streamer:</span>
+                <span class="info-valor" id="nomeUsuario">Carregando...</span>
+            </div>
+            <div class="info-linha">
+                <span class="info-icone">📅</span>
+                <span>Hoje:</span>
+                <span class="info-valor" id="dataHoje"></span>
+            </div>
         </div>
 
-        <!-- 📋 MINHA AGENDA -- NO TOPO! -->
+        <!-- 📋 MINHA AGENDA — DESIGN BONITO! -->
         <div class="agenda-section">
-            <h2 class="agenda-titulo">📋 Minha Agenda — <span id="mesAgenda"></span></h2>
+            <h2 class="agenda-titulo">Minha Agenda — <span id="mesAgenda"></span></h2>
             <div id="listaAgenda" class="agenda-lista">
                 <div class="agenda-vazia">Carregando suas batalhas...</div>
             </div>
@@ -127,7 +145,6 @@
         <div class="legenda">
             <h3>📋 Legenda</h3>
             <div class="legenda-itens">
-                <div class="item-legenda"><div class="cor" style="background:rgba(0,255,156,0.3);"></div> Disponível</div>
                 <div class="item-legenda"><div class="cor" style="background:rgba(255,215,0,0.3);"></div> Campanha</div>
                 <div class="item-legenda"><div class="cor" style="background:rgba(0,168,255,0.3);"></div> Falta Oponente</div>
                 <div class="item-legenda"><div class="cor" style="background:rgba(0,255,156,0.3);"></div> Confirmada</div>
@@ -148,7 +165,7 @@
         </div>
 
         <div class="secao-horario" id="secaoHorario">
-            <h3>⏰ Selecione o Horário — <span id="dataSelecionada"></span></h3>
+            <h3>Selecione o Horário — <span id="dataSelecionada"></span></h3>
             <div class="grupo-horario">
                 <input type="time" id="inputHorario" class="input-horario" step="60">
                 <button class="btn-verificar" id="btnVerificarHorario">✅ Verificar Disponibilidade</button>
@@ -156,11 +173,6 @@
             <div class="status-horario" id="statusHorario">
                 <strong id="textoStatusHorario"></strong>
             </div>
-        </div>
-
-        <div class="materiais" id="secaoMateriais">
-            <h3>📦 Materiais da Batalha</h3>
-            <div id="listaMateriais"></div>
         </div>
 
         <div class="formulario" id="secaoFormulario">
@@ -186,30 +198,15 @@
                 <input type="text" id="formMeta" placeholder="Ex: 5.000">
             </div>
             <div class="grupo-form">
-                <label>🎨 Tipo de Arte (pode escolher os dois)</label>
+                <label>🎨 Tipo de Arte</label>
                 <div class="checkbox-group">
-                    <label class="checkbox-label">
-                        <input type="checkbox" id="arteFoto"> 📸 Foto
-                    </label>
-                    <label class="checkbox-label">
-                        <input type="checkbox" id="arteVideo"> 🎬 Vídeo
-                    </label>
+                    <label class="checkbox-label"><input type="checkbox" id="arteFoto"> 📸 Foto</label>
+                    <label class="checkbox-label"><input type="checkbox" id="arteVideo"> 🎬 Vídeo</label>
                 </div>
             </div>
             <button class="btn-enviar" id="btnEnviarSolicitacao">📤 ENVIAR SOLICITAÇÃO</button>
             <div class="botoes-acao">
                 <button class="btn-voltar" id="btnVoltarCalendario">◀ Voltar</button>
-            </div>
-        </div>
-    </div>
-
-    <div class="modal" id="modalMaterial">
-        <div class="modal-conteudo">
-            <button class="modal-fechar" onclick="fecharModal()">×</button>
-            <div id="conteudoModal"></div>
-            <div class="modal-botoes">
-                <a href="#" id="btnDownloadMaterial" class="btn-material btn-banner" download>💾 Baixar</a>
-                <button class="btn-material btn-voltar" onclick="fecharModal()">Fechar</button>
             </div>
         </div>
     </div>
@@ -230,7 +227,7 @@ const FERIADOS = {
 
 const COL = {
     NUMERO_DIA: 1, DATA: 2, HORA_INICIO: 3, HORA_FIM: 4, ROUND: 5,
-    STREAMER: 6, OPONENTE: 8, LINK: 7, META: 10, SITUACAO: 11, ARTE: 12, BANNER: 16, VIDEO: 17
+    STREAMER: 6, OPONENTE: 8, LINK: 7, META: 10, SITUACAO: 11, BANNER: 16, VIDEO: 17
 };
 
 let dataAtual = new Date();
@@ -247,7 +244,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     const hoje = new Date();
     document.getElementById("dataHoje").textContent = formatarData(hoje);
-    document.getElementById("mesAgenda").textContent = ["Janeiro","Fevereiro","Março","Abril","Maio","Junho","Julho","Agosto","Setembro","Outubro","Novembro","Dezembro"][hoje.getMonth()] + " " + hoje.getFullYear();
+    atualizarMesAgenda();
 
     await carregarBatalhas();
     renderizarAgendaDoStreamer();
@@ -260,21 +257,28 @@ document.addEventListener("DOMContentLoaded", async () => {
     document.getElementById("btnEnviarSolicitacao").addEventListener("click", enviarSolicitacao);
 });
 
-// ====================== 📋 AGENDA DO STREAMER — NO TOPO! ======================
-function renderizarAgendaDoStreamer() {
-    const lista = document.getElementById("listaAgenda");
+function atualizarMesAgenda() {
     const nomesMeses = ["Janeiro","Fevereiro","Março","Abril","Maio","Junho","Julho","Agosto","Setembro","Outubro","Novembro","Dezembro"];
-    document.getElementById("mesAgenda").textContent = nomesMeses[dataAtual.getMonth()] + " " + dataAtual.getFullYear();
+    document.getElementById("mesAgenda").textContent = `${nomesMeses[dataAtual.getMonth()]} ${dataAtual.getFullYear()}`;
+}
+
+// ====================== 📋 AGENDA DO STREAMER — REGRA EXATA! ======================
+function renderizarAgendaDoStreamer() {
+    atualizarMesAgenda();
 
     const batalhasDoStreamer = batalhas.filter(b => {
         const situacao = b.situacao;
         const ehCampanha = situacao === "CAMPANHA";
         const ehFaltaOp = situacao === "FALTA OPONENTE";
         const ehConfirmada = ["CONFIRMADA", "CONFIMADO"].includes(situacao);
+
         if (!ehCampanha && !ehFaltaOp && !ehConfirmada) return false;
 
-        // Campanha aparece para TODOS; as outras aparecem se o nome bater
-        if (ehCampanha) return true;
+        // ✅ REGRA EXATA:
+        // Campanha "TODOS DA AGÊNCIA" → aparece para TODOS
+        if (ehCampanha && b.streamer.includes("TODOS DA AGÊNCIA")) return true;
+        
+        // Outras campanhas, Falta Oponente e Confirmada → aparecem SÓ para o dono
         return b.streamer === nomeUsuario;
     });
 
@@ -287,8 +291,9 @@ function renderizarAgendaDoStreamer() {
         return converterParaMinutos(a.horaInicio) - converterParaMinutos(b.horaInicio);
     });
 
+    const lista = document.getElementById("listaAgenda");
     if (!batalhasDoStreamer.length) {
-        lista.innerHTML = `<div class="agenda-vazia">📭 Nenhuma batalha ou campanha agendada para você neste mês.</div>`;
+        lista.innerHTML = `<div class="agenda-vazia">📭 Nenhuma batalha ou campanha para você neste mês.</div>`;
         return;
     }
 
@@ -297,42 +302,72 @@ function renderizarAgendaDoStreamer() {
         const ehCampanha = situacao === "CAMPANHA";
         const ehFaltaOp = situacao === "FALTA OPONENTE";
         const ehConfirmada = ["CONFIRMADA", "CONFIMADO"].includes(situacao);
+        const ehCampanhaGeral = ehCampanha && b.streamer.includes("TODOS DA AGÊNCIA");
 
-        let classeCard = "", classeStatus = "", textoStatus = "";
-        if (ehCampanha) { classeCard = "card-campanha"; classeStatus = "status-campanha"; textoStatus = "📢 CAMPANHA"; }
-        else if (ehFaltaOp) { classeCard = "card-falta-oponente"; classeStatus = "status-falta-oponente"; textoStatus = "⏳ FALTA OPONENTE"; }
-        else if (ehConfirmada) { classeCard = "card-confirmada"; classeStatus = "status-confirmada"; textoStatus = "✅ CONFIRMADA"; }
+        // Definir classes e etiquetas
+        let classeCard = "", etiquetaTexto = "", classeEtiqueta = "";
+        if (ehCampanha) {
+            classeCard = "card-campanha";
+            etiquetaTexto = "CAMPANHA";
+            classeEtiqueta = "etiqueta-campanha";
+        } else if (ehFaltaOp) {
+            classeCard = "card-falta-oponente";
+            etiquetaTexto = "FALTA OPONENTE";
+            classeEtiqueta = "etiqueta-oponente";
+        } else if (ehConfirmada) {
+            classeCard = "card-confirmada";
+            etiquetaTexto = "CONFIRMADA";
+            classeEtiqueta = "etiqueta-confirmada";
+        }
 
-        const dataFormatada = b.data || "—";
-        const horario = b.horaInicio || "—";
+        // Formatar data bonito
+        let dataExibicao = b.data || "—";
+        if (dataExibicao.includes("T")) {
+            const d = new Date(dataExibicao);
+            if (!isNaN(d.getTime())) {
+                dataExibicao = `${String(d.getDate()).padStart(2,"0")}/${String(d.getMonth()+1).padStart(2,"0")} — ${b.horaInicio || "—"}`;
+            } else {
+                dataExibicao = dataExibicao.replace("T", " — ").substring(0, 16);
+            }
+        } else {
+            dataExibicao = `${b.data || "—"} — ${b.horaInicio || "—"}`;
+        }
+
         const oponente = b.oponente && b.oponente.trim() ? b.oponente : "???";
         const link = b.link || "";
         const meta = b.meta || "";
-        const ehCampanhaGeral = ehCampanha && !b.streamer;
 
+        // Texto da batalha
         let batalhaTexto = "";
         if (ehCampanha) {
             if (ehCampanhaGeral) {
-                batalhaTexto = `<strong>📢 CAMPANHA PARA TODOS</strong>`;
+                batalhaTexto = `<div class="card-batalha-nome"><span class="nome-streamer">TODOS DA AGÊNCIA</span> <span class="icone-batalha">⚔️</span> <span class="sem-oponente">???</span></div>`;
             } else {
-                batalhaTexto = `<strong>${b.streamer}</strong> ⚔️ ???`;
+                batalhaTexto = `<div class="card-batalha-nome"><span class="nome-streamer">${b.streamer}</span> <span class="icone-batalha">⚔️</span> <span class="sem-oponente">???</span></div>`;
             }
         } else if (ehFaltaOp) {
-            batalhaTexto = `<strong>${b.streamer}</strong> ⚔️ <span style="color:#888">${oponente}</span>`;
+            batalhaTexto = `<div class="card-batalha-nome"><span class="nome-streamer">${b.streamer}</span> <span class="icone-batalha">⚔️</span> <span class="sem-oponente">${oponente}</span></div>`;
         } else if (ehConfirmada) {
-            batalhaTexto = `<strong>${b.streamer}</strong> ⚔️ <strong>${oponente}</strong>`;
+            batalhaTexto = `<div class="card-batalha-nome"><span class="nome-streamer">${b.streamer}</span> <span class="icone-batalha">⚔️</span> <span class="nome-oponente">${oponente}</span></div>`;
+        }
+
+        // Detalhes (link e meta)
+        let detalhesHtml = "";
+        if (link || meta) {
+            detalhesHtml = `<div class="card-detalhes">
+                ${link ? `<div class="detalhe-item">🔗 <a href="${link}" target="_blank">Perfil</a></div>` : ""}
+                ${meta ? `<div class="detalhe-item">💎 Meta: ${meta}</div>` : ""}
+            </div>`;
         }
 
         return `
         <div class="agenda-card ${classeCard}">
             <div class="card-cabecalho">
-                <span class="card-data">📅 ${dataFormatada} — ${horario}</span>
-                <span class="card-status ${classeStatus}">${textoStatus}</span>
+                <div class="card-data">${dataExibicao}</div>
+                <div class="etiqueta ${classeEtiqueta}">${etiquetaTexto}</div>
             </div>
-            <div class="card-corpo">
-                <div class="card-batalha">${batalhaTexto}</div>
-                ${(link || meta) ? `<div class="card-detalhes">${link ? `<span>🔗 <a href="${link}" target="_blank" style="color:var(--azul)">Perfil</a></span>` : ""}${meta ? `<span>💎 Meta: ${meta}</span>` : ""}</div>` : ""}
-            </div>
+            <div class="card-corpo">${batalhaTexto}</div>
+            ${detalhesHtml}
         </div>`;
     }).join("");
 }
@@ -502,7 +537,6 @@ function renderizarCalendario() {
     document.getElementById("gradeDias").innerHTML = html;
     document.getElementById("secaoHorario").classList.remove("visivel");
     document.getElementById("secaoFormulario").classList.remove("visivel");
-    document.getElementById("secaoMateriais").classList.remove("visivel");
     horarioEscolhido = null;
 }
 
@@ -531,30 +565,12 @@ window.selecionarDia = function(ano, mes, dia) {
     if (dataSelecionada.getDay() === 0) { mostrarToast("🚫 Domingo"); return; }
 
     document.getElementById("secaoHorario").classList.add("visivel");
-    carregarMateriais(ano, mes, dia);
     window.scrollTo({ top: document.getElementById("secaoHorario").offsetTop - 20, behavior: "smooth" });
 };
-
-function carregarMateriais(ano, mes, dia) {
-    const batalhasDoDia = batalhas.filter(b => {
-        const d = extrairDataBatalha(b.data, ano, mes);
-        return d && d.getDate() === dia && d.getMonth() === mes && d.getFullYear() === ano;
-    });
-    const minhas = batalhasDoDia.filter(b => b.streamer === nomeUsuario || nomeUsuario === "VISITANTE");
-    if (!minhas.length) { document.getElementById("secaoMateriais").classList.remove("visivel"); return; }
-
-    let html = "";
-    for (const b of minhas) {
-        if (b.banner) html += `<div class="item-material"><span>📸 Banner</span><div><button class="btn-material btn-banner" onclick="abrirImagem('${b.banner}')">👁️ Ver</button><a href="${b.banner}" download class="btn-material btn-banner">💾 Baixar</a></div></div>`;
-        if (b.video) html += `<div class="item-material"><span>🎬 Vídeo</span><div><button class="btn-material btn-video" onclick="abrirVideo('${b.video}')">▶️ Assistir</button><a href="${b.video}" download class="btn-material btn-video">💾 Baixar</a></div></div>`;
-    }
-    if (html) { document.getElementById("listaMateriais").innerHTML = html; document.getElementById("secaoMateriais").classList.add("visivel"); }
-}
 
 function voltarAoCalendario() {
     document.getElementById("secaoHorario").classList.remove("visivel");
     document.getElementById("secaoFormulario").classList.remove("visivel");
-    document.getElementById("secaoMateriais").classList.remove("visivel");
     horarioEscolhido = null;
     dataSelecionada = null;
     window.scrollTo({ top: 0, behavior: "smooth" });
@@ -599,7 +615,7 @@ async function enviarSolicitacao() {
 💎 META: ${meta || "Não informada"}
 🎨 ARTE: ${tipoArte}
 
-📊 Situação: ⏳ FALTA OPONENTE — Já gravada na planilha!
+📊 Situação: ⏳ FALTA OPONENTE
 
 ---
 PADRONIZA ASSESSORIA 🛡️`;
@@ -614,21 +630,6 @@ PADRONIZA ASSESSORIA 🛡️`;
     }
 }
 
-// ====================== MODAIS E UTILITÁRIOS ======================
-window.abrirImagem = function(url) {
-    document.getElementById("conteudoModal").innerHTML = `<img src="${url}" alt="Banner">`;
-    document.getElementById("btnDownloadMaterial").href = url;
-    document.getElementById("modalMaterial").classList.add("visivel");
-};
-window.abrirVideo = function(url) {
-    document.getElementById("conteudoModal").innerHTML = `<video src="${url}" controls style="width:100%;border-radius:8px;"></video>`;
-    document.getElementById("btnDownloadMaterial").href = url;
-    document.getElementById("modalMaterial").classList.add("visivel");
-};
-function fecharModal() {
-    document.getElementById("modalMaterial").classList.remove("visivel");
-    document.getElementById("conteudoModal").innerHTML = "";
-}
 function mostrarToast(texto) {
     const t = document.getElementById("toast");
     t.textContent = texto;
