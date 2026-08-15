@@ -260,7 +260,7 @@ const CAMPOS_DESAFIOS = {
   observacoes: "entry.1151245897"
 };
 
-// ✅ ID CORRETO DA SUA PLANILHA — AGORA VAI!
+// ✅ LINK CORRIGIDO — O QUE FUNCIONOU NO NAVEGADOR!
 const PLANILHA_PAGOS_URL = "https://docs.google.com/spreadsheets/d/1uCFSxUzln9lPc3YtAf5UVUQEhNNw_WP3Y3iZwFS9Xrc/pub?output=csv";
 
 const SEU_WHATSAPP = "5569981478873";
@@ -414,7 +414,7 @@ async function verificarAcesso(){
     const texto = await res.text();
     const linhas = texto.split('\n').map(l=>l.split('","').map(c=>c.replace(/^"|"$/g,'')));
     
-    // Coluna B = índice 1 (Nome da Agência), Coluna K = índice 10 (Status)
+    // Coluna B = índice 1, Coluna K = índice 10
     const linhaEncontrada = linhas.find(linha=> 
       linha[1] && linha[1].trim().toLowerCase() === nomeAgencia
     );
