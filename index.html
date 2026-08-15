@@ -64,55 +64,36 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
 .pix-codigo{background:#00081a;padding:12px;border-radius:8px;border:1px solid var(--verde);word-break:break-all;font-size:13px;margin:10px 0;color:var(--verde)}
 .link-agenciamento{background:rgba(116,87,255,0.1);border:1px solid var(--roxo);padding:15px;border-radius:10px;margin-bottom:20px}
 
-.calendario-container{background:var(--painel2);border-radius:12px;padding:15px;margin:20px 0;border:1px solid #293653}
-.calendario-cabecalho{display:flex;justify-content:space-between;align-items:center;margin-bottom:15px}
-.calendario-mes{font-size:20px;font-weight:bold;color:var(--amarelo)}
-.calendario-navegacao button{background:var(--roxo);color:#fff;border:none;padding:8px 14px;border-radius:8px;cursor:pointer;font-weight:bold;margin:0 2px}
-.calendario-legenda{display:flex;flex-wrap:wrap;gap:12px;margin-bottom:15px;font-size:13px}
-.legenda-item{display:flex;align-items:center;gap:5px}
-.legenda-cor{width:16px;height:16px;border-radius:4px;border:1px solid rgba(255,255,255,0.2)}
-.dias-semana{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;margin-bottom:8px}
-.dia-semana{text-align:center;font-weight:bold;color:var(--cinza);font-size:13px;padding:6px}
-.dias-grade{display:grid;grid-template-columns:repeat(7,1fr);gap:6px}
-.dia{aspect-ratio:1;border-radius:8px;display:flex;flex-direction:column;align-items:center;justify-content:center;font-weight:bold;cursor:pointer;transition:0.2s;border:1px solid transparent;font-size:14px}
-.dia:empty{cursor:default;background:transparent;border:none}
-.dia.disponivel{background:rgba(52,211,153,0.2);border-color:var(--verde);color:var(--verde)}
-.dia.disponivel:hover{background:rgba(52,211,153,0.4);transform:scale(1.05)}
-.dia.campanha{background:rgba(255,200,87,0.2);border-color:var(--amarelo);color:var(--amarelo);cursor:not-allowed}
-.dia.bloqueado{background:rgba(239,68,68,0.2);border-color:var(--vermelho);color:var(--vermelho);cursor:not-allowed;text-decoration:line-through}
-.dia.confirmado{background:rgba(59,130,246,0.2);border-color:var(--azul);color:var(--azul)}
-.dia.hoje{box-shadow:inset 0 0 0 2px var(--texto)}
-.dia.outro-mes{opacity:0.3}
-.horarios-container{margin-top:20px;padding-top:15px;border-top:1px solid #293653}
-.horarios-titulo{color:var(--amarelo);margin-bottom:10px;font-weight:bold;font-size:15px}
-.horarios-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(100px,1fr));gap:8px}
-.botao-horario{padding:10px;border-radius:8px;border:none;font-weight:bold;cursor:pointer;transition:0.2s;font-size:14px}
-.botao-horario.disponivel{background:rgba(52,211,153,0.2);color:var(--verde);border:1px solid var(--verde)}
-.botao-horario.disponivel:hover{background:rgba(52,211,153,0.4)}
-.botao-horario.ocupado{background:rgba(239,68,68,0.2);color:var(--vermelho);border:1px solid var(--vermelho);cursor:not-allowed}
-.botao-horario.campanha{background:rgba(255,200,87,0.2);color:var(--amarelo);border:1px solid var(--amarelo);cursor:not-allowed}
-.form-batalha{margin-top:20px;display:flex;flex-direction:column;gap:12px}
-.aviso-bloqueado{background:rgba(239,68,68,0.1);border:1px solid var(--vermelho);padding:12px;border-radius:8px;color:var(--vermelho);text-align:center;margin-top:15px}
-.link-grupo-arte{display:block;text-align:center;background:rgba(116,87,255,0.1);border:1px solid var(--roxo);padding:12px;border-radius:8px;color:var(--roxo);text-decoration:none;font-weight:bold;margin-top:15px}
-.link-grupo-arte:hover{background:rgba(116,87,255,0.2)}
-.minhas-batalhas{margin-top:25px}
-.minhas-batalhas h3{color:var(--amarelo);margin-bottom:15px}
-.cartao-batalha{background:var(--painel2);border-radius:10px;padding:15px;margin-bottom:12px;border:1px solid #293653}
-.cartao-batalha.confirmada{border-left:4px solid var(--verde)}
-.cartao-batalha.pendente{border-left:4px solid var(--amarelo)}
-.cartao-batalha h4{color:var(--texto);margin-bottom:8px}
-.cartao-batalha p{margin:4px 0;color:var(--cinza);font-size:14px}
+.dados-perfil{background:var(--painel2);padding:15px;border-radius:10px;margin-bottom:20px;border:1px solid #293653}
+.dados-perfil p{margin:8px 0;font-size:15px}
+.olho-senha{position:absolute;right:16px;top:50%;transform:translateY(-50%);cursor:pointer;color:var(--cinza);font-size:20px;user-select:none}
+.toast{position:fixed;top:20px;left:50%;transform:translateX(-50%);background:var(--verde);color:#fff;padding:12px 24px;border-radius:8px;font-weight:bold;z-index:9999;display:none;box-shadow:0 4px 12px rgba(0,0,0,0.3)}
+
+/* BOTÃO DE AGENDAR BATALHA — COLORIDO */
+.btn-agendar-batalha{
+  background:linear-gradient(135deg,#00ff9c,#00cc7d);
+  color:#000;
+  font-weight:bold;
+  font-size:18px;
+  padding:16px;
+  border-radius:14px;
+  border:none;
+  width:100%;
+  cursor:pointer;
+  box-shadow:0 6px 20px rgba(0,255,156,0.35);
+  margin-top:25px;
+  transition:all 0.3s ease;
+}
+.btn-agendar-batalha:hover{
+  transform:translateY(-3px);
+  box-shadow:0 10px 30px rgba(0,255,156,0.5);
+}
 
 .painel-admin{margin-top:20px}
 .cards-admin{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px}
 .card-admin{background:var(--painel2);padding:15px;border-radius:10px;text-align:center;border:1px solid #293653}
 .card-admin h4{color:var(--amarelo);margin-bottom:5px}
 .card-admin p{font-size:22px;font-weight:bold;color:var(--verde)}
-
-.dados-perfil{background:var(--painel2);padding:15px;border-radius:10px;margin-bottom:20px;border:1px solid #293653}
-.dados-perfil p{margin:8px 0;font-size:15px}
-.olho-senha{position:absolute;right:16px;top:50%;transform:translateY(-50%);cursor:pointer;color:var(--cinza);font-size:20px;user-select:none}
-.toast{position:fixed;top:20px;left:50%;transform:translateX(-50%);background:var(--verde);color:#fff;padding:12px 24px;border-radius:8px;font-weight:bold;z-index:9999;display:none;box-shadow:0 4px 12px rgba(0,0,0,0.3)}
 </style>
 </head>
 <body>
@@ -131,7 +112,6 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
   <div class="botoes-principais">
     <button class="btn-principal btn-agenciado" onclick="abrir('agenciado')">✅ SOU AGENCIADO PADRONIZA</button>
     <button class="btn-principal btn-visitante" onclick="abrir('visitante')">👤 SOU VISITANTE / VER LIVES</button>
-    <!-- ✅ BOTÃO VINCULADO À PÁGINA DE PARCERIAS -->
     <a href="parcerias.html" target="_blank" class="btn-principal btn-outra-agencia">🤝 SOU OUTRA AGÊNCIA</a>
     <button class="btn-principal btn-admin" onclick="abrir('admin')">🔐 ÁREA DA ADMINISTRAÇÃO</button>
     <a href="https://www.tiktok.com/coin?rc=7TGXGN69&rie=" target="_blank" class="btn-principal btn-moedas">💰 COMPRAR MOEDAS TIKTOK</a>
@@ -203,54 +183,10 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
       <p><strong>Status:</strong> ✅ Aprovado</p>
     </div>
 
-    <div class="calendario-container">
-      <h3 style="color:var(--amarelo);margin-bottom:15px;text-align:center">⚔️ AGENDAMENTO DE BATALHAS OFICIAIS</h3>
-      <div class="calendario-cabecalho">
-        <button onclick="mudarMes(-1)">◀</button>
-        <span class="calendario-mes" id="nomeMes"></span>
-        <button onclick="mudarMes(1)">▶</button>
-      </div>
-      <div class="calendario-legenda">
-        <span class="legenda-item"><span class="legenda-cor" style="background:rgba(52,211,153,0.4)"></span> Disponível</span>
-        <span class="legenda-item"><span class="legenda-cor" style="background:rgba(255,200,87,0.4)"></span> Campanha (bloqueado)</span>
-        <span class="legenda-item"><span class="legenda-cor" style="background:rgba(239,68,68,0.4)"></span> Bloqueado (dom/feriado)</span>
-      </div>
-      <div class="dias-semana">
-        <div class="dia-semana">Dom</div><div class="dia-semana">Seg</div><div class="dia-semana">Ter</div>
-        <div class="dia-semana">Qua</div><div class="dia-semana">Qui</div><div class="dia-semana">Sex</div><div class="dia-semana">Sáb</div>
-      </div>
-      <div class="dias-grade" id="gradeDias"></div>
-
-      <div class="horarios-container" id="containerHorarios" style="display:none">
-        <div class="horarios-titulo">⏰ Horários: 17h às 22h | Intervalo de 1h entre batalhas | Campanha 19h-22h = bloqueado</div>
-        <div class="horarios-grid" id="gradeHorarios"></div>
-      </div>
-
-      <div class="form-batalha" id="formBatalha" style="display:none">
-        <h4 style="color:var(--amarelo);margin-top:15px">📝 SOLICITAR BATALHA</h4>
-        <input type="text" class="campo-form" id="nomeBatalha" placeholder="Seu usuário" readonly>
-        <input type="text" class="campo-form" id="dataBatalha" placeholder="Data" readonly>
-        <input type="text" class="campo-form" id="horaBatalha" placeholder="Horário" readonly>
-        <select class="campo-form" id="tipoArte">
-          <option value="foto">🎨 Arte em Foto</option>
-          <option value="video">🎬 Arte em Vídeo</option>
-        </select>
-        <button class="btn-acao btn-verde" onclick="enviarSolicitacao()">📤 ENVIAR SOLICITAÇÃO</button>
-        <a href="https://chat.whatsapp.com/I3edwkusrSC123QjrJBHHi?s=cl&p=a&ilr=1" target="_blank" class="link-grupo-arte">🎨 GRUPO DE ARTES VISUAIS (até 48h)</a>
-      </div>
-
-      <div class="aviso-bloqueado" id="avisoBloqueado" style="display:none">
-        ⚠️ Este dia está bloqueado. Contate a agência pelo WhatsApp para exceção.
-        <a href="https://wa.me/55XXXXXXXXXXX" target="_blank" class="btn-acao btn-whatsapp" style="margin-top:10px">💬 FALAR NO WHATSAPP</a>
-      </div>
-    </div>
-
-    <div class="minhas-batalhas">
-      <h3>⚔️ MINHAS BATALHAS</h3>
-      <div id="listaMinhasBatalhas">
-        <p style="color:var(--cinza);text-align:center;padding:15px">Nenhuma batalha cadastrada ainda.</p>
-      </div>
-    </div>
+    <!-- ⚔️ BOTÃO DE AGENDAR BATALHA — SEM CALENDÁRIO AQUI -->
+    <button class="btn-agendar-batalha" onclick="irParaAgendarBatalha()">
+      ⚔️ AGENDAR BATALHA OFICIAL
+    </button>
 
     <div style="margin-top:30px">
       <h3 style="color:var(--amarelo);margin-bottom:15px;text-align:center">🌟 MEUS DESTAQUES</h3>
@@ -324,8 +260,6 @@ const SENHA_ADMIN = "agência2026";
 const EMAIL_ADMIN = "padronizaassessoria@gmail.com";
 
 let dadosPlanilha = [];
-let mesAtual = new Date();
-let diaSelecionado = null;
 let streamerLogado = null;
 
 window.onload = async function(){
@@ -334,7 +268,6 @@ window.onload = async function(){
   renderizarLives();
   renderizarDestaques();
   atualizarContadores();
-  desenharCalendario();
 };
 
 function initAbas(){
@@ -408,89 +341,6 @@ function renderizarDestaques(){
   document.getElementById('listaDestaques').innerHTML = '<p class="sem-destaques">✨ Nenhum destaque cadastrado ainda</p>';
 }
 
-function desenharCalendario(){
-  const container = document.getElementById('gradeDias');
-  const nomeMesEl = document.getElementById('nomeMes');
-  const meses = ["Janeiro","Fevereiro","Março","Abril","Maio","Junho","Julho","Agosto","Setembro","Outubro","Novembro","Dezembro"];
-  const ano = mesAtual.getFullYear(), mes = mesAtual.getMonth();
-  nomeMesEl.textContent = `${meses[mes]} ${ano}`;
-  const primeiroDia = new Date(ano, mes, 1).getDay();
-  const ultimoDia = new Date(ano, mes + 1, 0).getDate();
-  const hoje = new Date();
-  container.innerHTML = "";
-  
-  const ultimoMesAnterior = new Date(ano, mes, 0).getDate();
-  for(let i = primeiroDia - 1; i >= 0; i--){
-    const d = document.createElement('div');
-    d.className = "dia outro-mes";
-    d.textContent = ultimoMesAnterior - i;
-    container.appendChild(d);
-  }
-  
-  for(let dia = 1; dia <= ultimoDia; dia++){
-    const data = new Date(ano, mes, dia);
-    const diaSemana = data.getDay();
-    const el = document.createElement('div');
-    el.textContent = dia;
-    el.dataset.data = `${ano}-${String(mes+1).padStart(2,'0')}-${String(dia).padStart(2,'0')}`;
-    
-    const isDomingo = diaSemana === 0;
-    const dataHoje = new Date(hoje.getFullYear(), hoje.getMonth(), hoje.getDate());
-    const dataAlvo = new Date(ano, mes, dia);
-    const dentroPrazo = dataAlvo >= dataHoje && dataAlvo <= new Date(hoje.getFullYear(), hoje.getMonth() + 2, 30);
-    
-    if(isDomingo || !dentroPrazo){
-      el.classList.add('dia', 'bloqueado');
-      el.title = "Bloqueado";
-    }else{
-      el.classList.add('dia', 'disponivel');
-      el.title = "Disponível";
-      el.onclick = () => selecionarDia(el.dataset.data, el);
-    }
-    if(data.toDateString() === hoje.toDateString()) el.classList.add('hoje');
-    container.appendChild(el);
-  }
-}
-
-function mudarMes(delta){
-  mesAtual.setMonth(mesAtual.getMonth() + delta);
-  desenharCalendario();
-  document.getElementById('containerHorarios').style.display = 'none';
-  document.getElementById('formBatalha').style.display = 'none';
-  document.getElementById('avisoBloqueado').style.display = 'none';
-}
-
-function selecionarDia(dataStr, elDia){
-  document.querySelectorAll('.dia').forEach(d => d.style.boxShadow = "");
-  elDia.style.boxShadow = "inset 0 0 0 2px var(--verde)";
-  diaSelecionado = dataStr;
-  document.getElementById('avisoBloqueado').style.display = 'none';
-  document.getElementById('containerHorarios').style.display = 'block';
-  document.getElementById('formBatalha').style.display = 'none';
-  desenharHorarios();
-  document.getElementById('dataBatalha').value = dataStr;
-}
-
-function desenharHorarios(){
-  const container = document.getElementById('gradeHorarios');
-  const horarios = [];
-  for(let h = 17; h <= 22; h++) horarios.push(`${String(h).padStart(2,'0')}:00`);
-  container.innerHTML = horarios.map(hora => {
-    const h = parseInt(hora.split(':')[0]);
-    const naoDisponivel = h >= 19 && h < 23;
-    return `<button class="botao-horario ${naoDisponivel ? 'campanha' : 'disponivel'}" 
-      ${naoDisponivel ? 'disabled' : ''} onclick="${naoDisponivel ? '' : `selecionarHora('${hora}', this)`}">${hora}</button>`;
-  }).join('');
-}
-
-function selecionarHora(hora, el){
-  document.querySelectorAll('.botao-horario').forEach(b => b.style.boxShadow = "");
-  el.style.boxShadow = "0 0 0 2px var(--verde)";
-  document.getElementById('horaBatalha').value = hora;
-  document.getElementById('formBatalha').style.display = 'flex';
-  document.getElementById('nomeBatalha').value = streamerLogado?.usuario || "";
-}
-
 function abrir(pagina){
   document.querySelectorAll('.conteudo').forEach(c => c.classList.remove('visivel'));
   document.getElementById('telaInicial').style.display = 'none';
@@ -546,9 +396,16 @@ function verificarAcesso(){
   document.getElementById('perfilStreamer').style.display = 'block';
 }
 
-function enviarSolicitacao(){
-  mostrarToast("✅ Solicitação enviada! Aguarde confirmação.");
-  document.getElementById('formBatalha').style.display = 'none';
+// ==========================================
+// 🔗 FUNÇÃO QUE LEVA PARA PÁGINA DE BATALHA
+// ==========================================
+function irParaAgendarBatalha(){
+  if(!streamerLogado){
+    mostrarToast("⚠️ Acesse seu perfil digitando seu usuário primeiro!");
+    return;
+  }
+  // Abre a página nova PASSANDO o usuário automaticamente na URL
+  window.open(`agendar-batalha.html?usuario=${encodeURIComponent(streamerLogado.usuario)}`, '_blank');
 }
 
 function copiarPix(id){
