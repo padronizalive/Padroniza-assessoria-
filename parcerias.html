@@ -85,7 +85,6 @@ iframe{border-radius:8px;border:1px solid #293653;background:#fff;width:100%}
   <p>Batalhas entre agências — gratuitas e com assessoria premium</p>
 </div>
 
-<!-- 🏠 ÁREA GRATUITA -->
 <div class="aviso-gratuito">✅ ÁREA GRATUITA — Negocie batalhas direto com outras agências!</div>
 
 <div class="abas">
@@ -123,19 +122,14 @@ iframe{border-radius:8px;border:1px solid #293653;background:#fff;width:100%}
   <div id="listaMeusDesafios" style="margin-top:20px"><div class="aviso-vazio">Digite o nome da sua agência.</div></div>
 </div>
 
-<!-- ═══════════════════════════════════════════ -->
-<!-- 💎 ÁREA DE PARCERIA PAGA — COM LIBERAÇÃO -->
-<!-- ═══════════════════════════════════════════ -->
 <div class="aviso-separador">
   <h3>💎 PARCERIA PAGA — ASSESSORIA COMPLETA</h3>
   <p style="color:var(--cinza);font-size:14px">A Padroniza faz tudo: arte, vídeo, música, agendamento e negociação! ✨</p>
 </div>
 
-<!-- 💎 PACOTES À VISTA -->
 <div>
   <h3 style="text-align:center;color:var(--ouro);margin-bottom:20px">ESCOLHA SEU PACOTE DE BATALHAS</h3>
 
-  <!-- PACOTE INICIAL -->
   <div class="cartao-plano">
     <h3 style="color:var(--verde)">🟢 PACOTE INICIAL</h3>
     <div class="valor-plano" style="color:var(--verde)">R$ 149,90</div>
@@ -155,7 +149,6 @@ iframe{border-radius:8px;border:1px solid #293653;background:#fff;width:100%}
     </div>
   </div>
 
-  <!-- PACOTE INTERMEDIÁRIO -->
   <div class="cartao-plano">
     <h3 style="color:var(--azul)">🔵 PACOTE INTERMEDIÁRIO</h3>
     <div class="valor-plano" style="color:var(--azul)">R$ 269,90</div>
@@ -175,7 +168,6 @@ iframe{border-radius:8px;border:1px solid #293653;background:#fff;width:100%}
     </div>
   </div>
 
-  <!-- PACOTE PREMIUM → DESTAQUE -->
   <div class="cartao-plano destaque">
     <h3 style="color:var(--ouro)">👑 PACOTE PREMIUM — MAIS ESCOLHIDO</h3>
     <div class="valor-plano" style="color:var(--ouro)">R$ 399,90</div>
@@ -197,14 +189,12 @@ iframe{border-radius:8px;border:1px solid #293653;background:#fff;width:100%}
     </div>
   </div>
 
-  <!-- 🔐 VERIFICAÇÃO DE LIBERAÇÃO — SÓ ABRE SE APROVADO -->
   <div class="bloco-form-externo">
     <h3>📋 SOLICITAR ASSESSORIA DE BATALHA</h3>
     <div class="aviso-destaque">
       <p style="margin:0;color:var(--verde);font-size:14px"><strong>✅ Após confirmação do pagamento, preencha os dados do seu streamer.</strong><br>A Padroniza cuida de tudo: arte, vídeo, música, agendamento e negociação. Você só recebe o resultado! 🎨⚔️</p>
     </div>
 
-    <!-- 🔍 CAMPO DE VERIFICAÇÃO -->
     <div class="verificacao-box">
       <div class="grupo-campo">
         <label style="color:var(--azul);font-weight:bold;display:block;margin-bottom:8px">🏢 Digite o nome da sua Agência para verificação de acesso</label>
@@ -212,14 +202,12 @@ iframe{border-radius:8px;border:1px solid #293653;background:#fff;width:100%}
       </div>
       <button class="btn-acao btn-azul" onclick="verificarAcesso()">🔍 VERIFICAR MEU ACESSO</button>
 
-      <!-- 📊 RESULTADO DA VERIFICAÇÃO -->
       <div id="statusAcesso" class="status-box">
         <h4 id="statusTitulo"></h4>
         <p id="statusTexto"></p>
       </div>
     </div>
 
-    <!-- 📋 FORMULÁRIO — SÓ APARECE SE APROVADO -->
     <div id="blocoFormulario" class="formulario-iframe">
       <p style="color:var(--verde);font-weight:bold;text-align:center;margin-bottom:15px">✅ ACESSO LIBERADO! Preencha os dados abaixo:</p>
       <iframe 
@@ -243,7 +231,6 @@ iframe{border-radius:8px;border:1px solid #293653;background:#fff;width:100%}
 
 </div>
 
-<!-- MODAL DESAFIAR -->
 <div class="modal-fundo" id="modalDesafiar">
   <div class="modal-conteudo">
     <div class="cabecalho-modal"><h3>⚔️ DESAFIAR ESSE STREAMER</h3><button class="botao-fechar" onclick="fecharModal()">&times;</button></div>
@@ -259,7 +246,6 @@ iframe{border-radius:8px;border:1px solid #293653;background:#fff;width:100%}
 <div class="toast" id="toast"></div>
 
 <script>
-// 🔗 CONFIGURAÇÕES — DESAFIOS GRATUITOS
 const FORM_DESAFIOS_URL = "https://docs.google.com/forms/d/e/1FAIpQLSeoz827upf-eiIEeIfXQhnvFFJaEoSISYA408T4D_ucekcL8A/formResponse";
 const PLANILHA_DESAFIOS_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vR5kiIfjh3npL5icijBqXFa3nBczw1PLXrLhZHZB9ZvVygJMhU0GhF2cjXg6ruEtTzBKBsQh1ko8zEY/pub?output=csv";
 const CAMPOS_DESAFIOS = {
@@ -274,16 +260,12 @@ const CAMPOS_DESAFIOS = {
   observacoes: "entry.1151245897"
 };
 
-// 🔗 PLANILHA DE PARCEIROS PAGOS — LINK JÁ INSERIDO ✅
+// ✅ ID CORRETO DA SUA PLANILHA — AGORA VAI!
 const PLANILHA_PAGOS_URL = "https://docs.google.com/spreadsheets/d/1uCFSxUzln9lPc3YtAf5UVUQEhNNw_WP3Y3iZwFS9Xrc/pub?output=csv";
-// 📍 Coluna B = Nome da Agência (índice 1), Coluna K = Status (índice 10)
 
-// 📱 SEU WHATSAPP PARA COMPROVANTES
 const SEU_WHATSAPP = "5569981478873";
-
 let desafioAlvo = null;
 
-// 🔄 TROCAR ABA
 function trocarAba(nomeAba){
   document.querySelectorAll('.aba').forEach(el=>{el.classList.remove('ativa','inativa');el.classList.add(el.id.includes(nomeAba)?'ativa':'inativa')});
   document.querySelectorAll('.conteudo-aba').forEach(el=>el.classList.remove('ativo'));
@@ -291,7 +273,6 @@ function trocarAba(nomeAba){
   if(nomeAba==='quadro') carregarDesafios();
 }
 
-// ⚔️ CRIAR DESAFIO GRATUITO
 async function criarDesafio(){
   const dados = {
     nomeAgencia: document.getElementById("nomeAgencia").value.trim(),
@@ -326,7 +307,6 @@ async function criarDesafio(){
   }catch(e){mostrarToast("⚠️ Erro ao publicar!")}
 }
 
-// 🔄 CARREGAR DESAFIOS
 async function carregarDesafios(){
   const lista = document.getElementById('listaDesafios');
   lista.innerHTML = '<div class="aviso-vazio">🔄 Carregando...</div>';
@@ -361,7 +341,6 @@ async function carregarDesafios(){
   }catch(e){lista.innerHTML = '<div class="aviso-vazio">⚠️ Erro ao carregar. Atualize!</div>'}
 }
 
-// 📋 CARREGAR MEUS DESAFIOS
 async function carregarMeusDesafios(){
   const nomeBusca = document.getElementById('buscaMinhas').value.trim().toLowerCase();
   if(!nomeBusca){ mostrarToast("Digite o nome da sua agência!"); return; }
@@ -389,7 +368,6 @@ async function carregarMeusDesafios(){
 
 function formatarData(d){if(!d||d==='—')return'—';const p=d.split('-');return p.length===3?`${p[2]}/${p[1]}/${p[0]}`:d}
 
-// 📱 MODAL DESAFIAR
 function abrirModalDesafiar(linha){desafioAlvo=linha;document.getElementById('dadosDesafioAlvo').innerHTML=`<strong>Desafio de:</strong> ${linha[2]} (${linha[1]})<br>📅 ${formatarData(linha[5])} às ${linha[6]} · 💎 ${linha[8]} · ⚔️ ${linha[7]}`;document.getElementById('modalDesafiar').style.display='flex'}
 function fecharModal(){document.getElementById('modalDesafiar').style.display='none';desafioAlvo=null;['meuStreamer','meuLinkPerfil','meuWhatsApp'].forEach(id=>document.getElementById(id).value='')}
 function enviarProposta(){
@@ -418,7 +396,6 @@ Podemos confirmar? 🤝`;
   mostrarToast("✅ WhatsApp aberto!")
 }
 
-// 🔐 SISTEMA DE VERIFICAÇÃO DE LIBERAÇÃO
 async function verificarAcesso(){
   const nomeAgencia = document.getElementById('nomeAgenciaVerifica').value.trim().toLowerCase();
   if(!nomeAgencia){ mostrarToast("Digite o nome da sua agência!"); return; }
@@ -437,7 +414,7 @@ async function verificarAcesso(){
     const texto = await res.text();
     const linhas = texto.split('\n').map(l=>l.split('","').map(c=>c.replace(/^"|"$/g,'')));
     
-    // Procurar a agência na planilha (Coluna B = índice 1)
+    // Coluna B = índice 1 (Nome da Agência), Coluna K = índice 10 (Status)
     const linhaEncontrada = linhas.find(linha=> 
       linha[1] && linha[1].trim().toLowerCase() === nomeAgencia
     );
@@ -450,7 +427,6 @@ async function verificarAcesso(){
       return;
     }
 
-    // Coluna K = Status (índice 10)
     const status = (linhaEncontrada[10] || '').trim().toUpperCase();
 
     if(status === 'APROVADO'){
@@ -478,7 +454,6 @@ async function verificarAcesso(){
   }
 }
 
-// 💎 FUNÇÕES PARCERIA PAGA
 async function copiarPix(id,btn){
   const texto = document.getElementById(id).textContent;
   try{await navigator.clipboard.writeText(texto);btn.classList.add('copiado');btn.textContent='✅ COPIADO!';setTimeout(()=>{btn.classList.remove('copiado');btn.textContent='📋 COPIAR PIX'},2500)}
