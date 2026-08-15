@@ -7,27 +7,33 @@
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
         :root {
-            --verde: #00ff9c; --verde-escuro: #00cc7d;
-            --amarelo: #ffd700; --azul: #00a8ff; --branco: #f0f0f0;
-            --vermelho: #ff4444; --roxo: #8a2be2; --fundo: #0f0f1a; --card: #1a1a2e; --texto: #ffffff;
+            --verde: #00ff9c; --verde-fundo: #00aa66;
+            --amarelo: #ffd700; --amarelo-fundo: #cc9900;
+            --azul: #00a8ff; --azul-fundo: #0066cc;
+            --vermelho: #ff4444; --vermelho-fundo: #662222;
+            --fundo: #0f0f1a; --card: #1a1a2e; --texto: #ffffff;
         }
         body { background: var(--fundo); color: var(--texto); min-height: 100vh; padding: 16px; }
         .container { max-width: 95%; margin: 0 auto; }
-        .header { text-align: center; margin-bottom: 20px; }
-        .logo { font-size: 26px; font-weight: bold; background: linear-gradient(90deg, var(--verde), var(--azul)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 6px; display: flex; align-items: center; justify-content: center; gap: 8px; }
-        .logo::before { content: "⚔️"; font-size: 28px; }
-        .subtitulo { color: #aaa; font-size: 14px; }
 
-        /* ===== INFO USUÁRIO ===== */
-        .info-usuario { background: var(--card); padding: 16px 20px; border-radius: 14px; margin-bottom: 20px; display: flex; flex-direction: column; gap: 8px; }
-        .info-linha { display: flex; align-items: center; gap: 8px; font-size: 17px; }
-        .info-icone { font-size: 20px; }
-        .info-valor { font-weight: 600; color: var(--verde); }
+        /* 👤 CABEÇALHO — NOME DO USUÁRIO */
+        .cabecalho-usuario { 
+            background: linear-gradient(135deg, #1a1a2e, #252542); 
+            padding: 20px; border-radius: 14px; margin-bottom: 20px;
+            border: 2px solid var(--verde); text-align: center;
+        }
+        .logo { font-size: 24px; font-weight: bold; background: linear-gradient(90deg, var(--verde), var(--azul)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 8px; display: flex; align-items: center; justify-content: center; gap: 8px; }
+        .logo::before { content: "⚔️"; font-size: 26px; }
+        .nome-usuario { font-size: 22px; font-weight: bold; color: var(--verde); margin: 8px 0; }
+        .data-hoje { font-size: 14px; color: #aaa; }
 
-        /* ===== 🔝 MINHA AGENDA — TOPO: TUDO NO NOME DELE! ===== */
-        .agenda-pessoal { background: var(--card); padding: 20px; border-radius: 14px; margin-bottom: 24px; border: 2px solid var(--verde); }
+        /* 📋 MINHAS BATALHAS — NO TOPO */
+        .minhas-batalhas { 
+            background: var(--card); padding: 20px; border-radius: 14px; 
+            margin-bottom: 24px; border: 2px solid var(--verde);
+        }
         .titulo-secao { font-size: 18px; font-weight: bold; margin-bottom: 15px; display: flex; align-items: center; gap: 8px; }
-        .titulo-secao.pessoal::before { content: "👤"; font-size: 20px; }
+        .titulo-secao.minhas::before { content: "👤"; font-size: 20px; }
         .lista-vazia { color: #888; font-size: 14px; padding: 18px; text-align: center; }
         .lista-itens { display: flex; flex-direction: column; gap: 10px; }
         .item-card { padding: 12px 14px; border-radius: 10px; border-left: 4px solid; background: rgba(255,255,255,0.03); transition: 0.2s; }
@@ -46,89 +52,97 @@
         .detalhes-item { display: flex; gap: 12px; flex-wrap: wrap; font-size: 12px; color: #aaa; margin-top: 2px; }
         .detalhes-item a { color: var(--azul); text-decoration: none; }
 
-        /* ===== LEGENDA ===== */
-        .legenda { background: var(--card); padding: 14px 16px; border-radius: 12px; margin-bottom: 20px; }
-        .legenda h3 { margin-bottom: 10px; font-size: 14px; }
-        .legenda-itens { display: flex; flex-wrap: wrap; gap: 15px; }
-        .item-legenda { display: flex; align-items: center; gap: 6px; font-size: 13px; }
-        .cor { width: 14px; height: 14px; border-radius: 3px; border: 1px solid rgba(255,255,255,0.2); }
-
-        /* ===== CALENDÁRIO — PINTA CORES DIRETO DA PLANILHA ===== */
-        .calendario { background: var(--card); padding: 20px; border-radius: 12px; margin-bottom: 28px; }
+        /* 📅 CALENDÁRIO — LOGO EMBAIXO DAS MINHAS BATALHAS */
+        .calendario { 
+            background: var(--card); padding: 20px; border-radius: 12px; 
+            margin-bottom: 28px; border: 2px solid #444;
+        }
+        .titulo-calendario { font-size: 18px; font-weight: bold; margin-bottom: 15px; display: flex; align-items: center; gap: 8px; }
+        .titulo-calendario::before { content: "📅"; font-size: 20px; }
         .navegacao-mes { display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px; }
         .btn-nav { background: transparent; border: 1px solid var(--verde); color: var(--verde); padding: 8px 16px; border-radius: 8px; cursor: pointer; font-size: 16px; font-weight: 600; }
         .nome-mes { font-size: 20px; font-weight: bold; }
         .dias-semana { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; margin-bottom: 8px; }
         .dia-semana { text-align: center; font-size: 13px; color: #888; padding: 8px; font-weight: 600; }
         .grade-dias { display: grid; grid-template-columns: repeat(7, 1fr); gap: 6px; }
-        .dia { aspect-ratio: 1; display: flex; flex-direction: column; justify-content: center; align-items: center; border-radius: 10px; font-size: 15px; font-weight: 600; border: 1px solid transparent; }
+        .dia { aspect-ratio: 1; display: flex; flex-direction: column; justify-content: center; align-items: center; border-radius: 10px; font-size: 15px; font-weight: 600; border: 2px solid transparent; transition: 0.2s; }
         .dia.vazio { background: transparent; border: none; }
-        .dia.campanha { background: rgba(255,215,0,0.12); border-color: rgba(255,215,0,0.35); color: var(--amarelo); }
-        .dia.falta-oponente { background: rgba(0,168,255,0.12); border-color: rgba(0,168,255,0.35); color: var(--azul); }
-        .dia.confirmada { background: rgba(0,255,156,0.08); border-color: rgba(0,255,156,0.25); color: var(--verde); }
-        .dia.domingo-feriado { background: rgba(255,68,68,0.08); border-color: rgba(255,68,68,0.2); color: var(--vermelho); }
-        .status-mini { font-size: 9px; margin-top: 2px; font-weight: normal; }
 
-        /* ===== 🌍 AGENDA GERAL — EMBAIXO DO CALENDÁRIO ===== */
-        .agencia-completa { margin-top: 10px; }
-        .titulo-secao-agencia { font-size: 20px; font-weight: bold; border-bottom: 2px solid #333; padding-bottom: 10px; margin-bottom: 20px; display: flex; align-items: center; gap: 10px; }
-        .titulo-secao-agencia::before { content: "🌍"; font-size: 22px; }
+        /* 🟡 CAMPANHA — COR DA PLANILHA */
+        .dia.campanha { 
+            background: linear-gradient(135deg, #ffd700, #cc9900); 
+            border-color: #ffd700; color: #000; 
+            box-shadow: 0 0 10px rgba(255,215,0,0.4);
+        }
+        /* 🔵 FALTA OPONENTE — COR DA PLANILHA */
+        .dia.falta-oponente { 
+            background: linear-gradient(135deg, #00a8ff, #0066cc); 
+            border-color: #00a8ff; color: #fff; 
+            box-shadow: 0 0 10px rgba(0,168,255,0.4);
+        }
+        /* 🟢 CONFIRMADA — COR DA PLANILHA */
+        .dia.confirmada { 
+            background: linear-gradient(135deg, #00ff9c, #00aa66); 
+            border-color: #00ff9c; color: #000; 
+            box-shadow: 0 0 10px rgba(0,255,156,0.4);
+        }
+        /* 🔴 DOMINGO/FERIADO */
+        .dia.domingo-feriado { 
+            background: rgba(255,68,68,0.15); 
+            border-color: rgba(255,68,68,0.3); color: #ff8888; 
+        }
+        .status-mini { font-size: 10px; margin-top: 2px; font-weight: bold; line-height: 1; }
+        .dia.confirmada .status-mini, .dia.campanha .status-mini { color: #000; }
+        .dia.falta-oponente .status-mini { color: #fff; }
+
+        /* 📋 LEGENDA */
+        .legenda { background: var(--card); padding: 14px 16px; border-radius: 12px; margin-bottom: 20px; }
+        .legenda h3 { margin-bottom: 10px; font-size: 14px; }
+        .legenda-itens { display: flex; flex-wrap: wrap; gap: 15px; }
+        .item-legenda { display: flex; align-items: center; gap: 6px; font-size: 13px; }
+        .cor { width: 16px; height: 16px; border-radius: 4px; border: 1px solid rgba(255,255,255,0.3); }
+
+        /* 🌍 AGENDA DA AGÊNCIA — EMBAIXO DO CALENDÁRIO */
+        .agencia { margin-top: 10px; }
+        .titulo-secao-agencia { 
+            font-size: 18px; font-weight: bold; border-bottom: 2px solid #333; 
+            padding-bottom: 10px; margin-bottom: 20px; display: flex; align-items: center; gap: 10px; 
+        }
+        .titulo-secao-agencia::before { content: "🌍"; font-size: 20px; }
         .secao-agencia { background: var(--card); padding: 18px; border-radius: 12px; margin-bottom: 16px; }
         .subtitulo-agencia { font-size: 15px; font-weight: bold; margin-bottom: 12px; display: flex; align-items: center; gap: 8px; color: #ccc; }
         .subtitulo-agencia.camp::before { content: "📢"; }
         .subtitulo-agencia.conf::before { content: "✅"; }
         .subtitulo-agencia.falta::before { content: "⏳"; }
 
-        .destaque-pessoal { border-left: 5px solid var(--verde); box-shadow: 0 0 8px rgba(0,255,156,0.15); }
-        @media(max-width:600px) { .dia { font-size: 13px; } }
+        @media(max-width:600px) { .dia { font-size: 13px; } .status-mini { font-size: 9px; } }
     </style>
 </head>
 <body>
     <div class="container">
-        <div class="header">
+
+        <!-- 👤 CABEÇALHO — NOME DO USUÁRIO -->
+        <div class="cabecalho-usuario">
             <h1 class="logo">Padroniza Assessoria</h1>
-            <p class="subtitulo">Agendamento de Batalhas — Kako Live & TikTok</p>
+            <div class="nome-usuario">👤 Streamer: <span id="nomeUsuario">VISITANTE</span></div>
+            <div class="data-hoje">📅 Hoje: <span id="dataHoje"></span></div>
         </div>
 
-        <!-- 👤 PERFIL -->
-        <div class="info-usuario">
-            <div class="info-linha">
-                <span class="info-icone">👤</span>
-                <span>Streamer:</span>
-                <span class="info-valor" id="nomeUsuario">VISITANTE</span>
-            </div>
-            <div class="info-linha">
-                <span class="info-icone">📅</span>
-                <span>Hoje:</span>
-                <span class="info-valor" id="dataHoje"></span>
-            </div>
-        </div>
-
-        <!-- 🔝 MINHA AGENDA — TOPO: TUDO NO NOME DELE, TODAS AS SITUAÇÕES JUNTAS! -->
-        <div class="agenda-pessoal">
-            <h2 class="titulo-secao pessoal">Minhas Batalhas Oficiais — <span id="mesAgenda"></span></h2>
+        <!-- 📋 MINHAS BATALHAS — NO TOPO, SÓ DELE -->
+        <div class="minhas-batalhas">
+            <h2 class="titulo-secao minhas">📋 Minhas Batalhas</h2>
             <div id="minhasBatalhas" class="lista-itens">
-                <div class="lista-vazia">📭 Nenhuma batalha no seu nome neste mês.</div>
+                <div class="lista-vazia">📭 Carregando suas batalhas...</div>
             </div>
         </div>
 
-        <!-- 📅 LEGENDA -->
-        <div class="legenda">
-            <h3>📋 Legenda</h3>
-            <div class="legenda-itens">
-                <div class="item-legenda"><div class="cor" style="background:rgba(255,215,0,0.3);"></div> Campanha</div>
-                <div class="item-legenda"><div class="cor" style="background:rgba(0,168,255,0.3);"></div> Falta Oponente</div>
-                <div class="item-legenda"><div class="cor" style="background:rgba(0,255,156,0.3);"></div> Confirmada</div>
-                <div class="item-legenda"><div class="cor" style="background:rgba(255,68,68,0.25);"></div> Domingo/Feriado</div>
-            </div>
-        </div>
-
-        <!-- 📅 CALENDÁRIO — PINTA CORES DIRETO DA PLANILHA! -->
+        <!-- 📅 CALENDÁRIO — LOGO EMBAIXO, COM CORES DA PLANILHA -->
         <div class="calendario">
+            <h2 class="titulo-calendario">📅 Calendário de Batalhas</h2>
             <div class="navegacao-mes">
-                <button class="btn-nav" id="btnMesAnterior">◀</button>
+                <button class="btn-nav" id="btnMesAnterior">◀ Mês Anterior</button>
                 <h2 class="nome-mes" id="nomeMes"></h2>
-                <button class="btn-nav" id="btnProximoMes">▶</button>
+                <button class="btn-nav" id="btnProximoMes">Próximo Mês ▶</button>
             </div>
             <div class="dias-semana">
                 <div>Dom</div><div>Seg</div><div>Ter</div><div>Qua</div><div>Qui</div><div>Sex</div><div>Sáb</div>
@@ -136,9 +150,20 @@
             <div class="grade-dias" id="gradeDias"></div>
         </div>
 
-        <!-- 🌍 AGENDA GERAL — EMBAIXO: TODOS OS STREAMERS -->
-        <div class="agencia-completa">
-            <h2 class="titulo-secao-agencia">Agência — Todos os Eventos</h2>
+        <!-- 📋 LEGENDA DO CALENDÁRIO -->
+        <div class="legenda">
+            <h3>📋 Legenda das Cores</h3>
+            <div class="legenda-itens">
+                <div class="item-legenda"><div class="cor" style="background:linear-gradient(135deg,#ffd700,#cc9900);"></div> Campanha</div>
+                <div class="item-legenda"><div class="cor" style="background:linear-gradient(135deg,#00a8ff,#0066cc);"></div> Falta Oponente</div>
+                <div class="item-legenda"><div class="cor" style="background:linear-gradient(135deg,#00ff9c,#00aa66);"></div> Confirmada</div>
+                <div class="item-legenda"><div class="cor" style="background:rgba(255,68,68,0.2);"></div> Domingo/Feriado</div>
+            </div>
+        </div>
+
+        <!-- 🌍 AGENDA DA AGÊNCIA — EMBAIXO DO CALENDÁRIO, TODOS OS OUTROS -->
+        <div class="agencia">
+            <h2 class="titulo-secao-agencia">🌍 Agenda Completa da Agência</h2>
 
             <div class="secao-agencia">
                 <h3 class="subtitulo-agencia camp">📢 Todas as Campanhas</h3>
@@ -161,10 +186,10 @@
                 </div>
             </div>
         </div>
+
     </div>
 
 <script>
-// ✅ LINK JÁ INSERIDO!
 const LINK_APPS_SCRIPT = "https://script.google.com/macros/s/AKfycbygvZq1vAaSRy-eBkrWe73Y7x1GX5c5nj1untYB5T-8ErAntowbMVLvqmTO7uZ9cujH4A/exec";
 
 const FERIADOS = {
@@ -174,21 +199,28 @@ const FERIADOS = {
     "11-15": "Proclamação da República", "12-25": "Natal"
 };
 
+// 📊 COLUNAS DA PLANILHA — AJUSTE CONFORME SUA PLANILHA!
+const COL = { DATA: 1, HORA_INICIO: 2, STREAMER: 4, OPONENTE: 5, SITUACAO: 6, META: 7, LINK: 8 };
+
 let dataAtual = new Date();
 let batalhas = [];
 let nomeUsuario = "VISITANTE";
 
 document.addEventListener("DOMContentLoaded", async () => {
+    // 🔐 PEGAR NOME DO STREAMER DA URL
     const params = new URLSearchParams(window.location.search);
-    nomeUsuario = (params.get("streamer") || params.get("usuario") || "VISITANTE").toUpperCase();
+    nomeUsuario = (params.get("streamer") || params.get("usuario") || "VISITANTE").toUpperCase().trim();
     document.getElementById("nomeUsuario").textContent = nomeUsuario;
 
+    // 📅 DATA DE HOJE
     document.getElementById("dataHoje").textContent = formatarDataCurta(new Date());
-    atualizarMesAgenda();
+    atualizarNomeMes();
     
+    // 📥 CARREGAR DADOS DA PLANILHA
     await carregarBatalhas();
     renderizarTudo();
 
+    // ⏭️ NAVEGAÇÃO DOS MESES
     document.getElementById("btnMesAnterior").addEventListener("click", () => { 
         dataAtual.setMonth(dataAtual.getMonth() - 1); 
         renderizarTudo(); 
@@ -199,101 +231,114 @@ document.addEventListener("DOMContentLoaded", async () => {
     });
 });
 
-function atualizarMesAgenda() {
+function atualizarNomeMes() {
     const nomes = ["Janeiro","Fevereiro","Março","Abril","Maio","Junho","Julho","Agosto","Setembro","Outubro","Novembro","Dezembro"];
-    document.getElementById("mesAgenda").textContent = `${nomes[dataAtual.getMonth()]} ${dataAtual.getFullYear()}`;
     document.getElementById("nomeMes").textContent = `${nomes[dataAtual.getMonth()]} ${dataAtual.getFullYear()}`;
 }
 
 function formatarDataCurta(data) {
+    if (!data) return "—";
     const d = new Date(data);
-    if (isNaN(d.getTime())) return String(data);
+    if (isNaN(d.getTime())) {
+        const partes = String(data).split(/[-/]/);
+        if (partes.length === 3) {
+            const dia = partes[2].length === 4 ? partes[1] : partes[0];
+            const mes = partes[2].length === 4 ? partes[0] : partes[1];
+            const ano = partes[2].length === 4 ? partes[2] : partes[0];
+            return `${String(dia).padStart(2,"0")}/${String(mes).padStart(2,"0")}/${ano}`;
+        }
+        return String(data);
+    }
     return `${String(d.getDate()).padStart(2,"0")}/${String(d.getMonth()+1).padStart(2,"0")}/${d.getFullYear()}`;
 }
 
 function formatarDataParaComparar(dataStr) {
     if (!dataStr) return "";
     const d = new Date(dataStr);
-    if (isNaN(d.getTime())) return dataStr;
-    return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`;
+    if (!isNaN(d.getTime())) {
+        return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`;
+    }
+    const partes = String(dataStr).split(/[-/]/);
+    if (partes.length === 3) {
+        let dia, mes, ano;
+        if (partes[0].length === 4) { ano = partes[0]; mes = partes[1]; dia = partes[2]; }
+        else { dia = partes[0]; mes = partes[1]; ano = partes[2]; }
+        return `${ano}-${String(parseInt(mes)).padStart(2,"0")}-${String(parseInt(dia)).padStart(2,"0")}`;
+    }
+    return String(dataStr);
 }
 
+// 🎯 LER SITUAÇÃO DIRETO DA PLANILHA
 function getSituacao(b) {
     if (!b.situacao) return "CONFIRMADA";
-    const sit = b.situacao.toUpperCase();
+    const sit = String(b.situacao).toUpperCase().trim();
     if (sit.includes("CAMPANHA")) return "CAMPANHA";
     if (sit.includes("FALTA OPONENTE")) return "FALTA OPONENTE";
     return "CONFIRMADA";
 }
 
 function ordenarPorData(a, b) {
-    const da = new Date(a.data);
-    const db = new Date(b.data);
-    if (isNaN(da.getTime())) return 1;
-    if (isNaN(db.getTime())) return -1;
-    return da - db;
+    const da = formatarDataParaComparar(a.data);
+    const db = formatarDataParaComparar(b.data);
+    return da < db ? -1 : da > db ? 1 : 0;
 }
 
+// 📥 BUSCAR DADOS DIRETO DA PLANILHA
 async function carregarBatalhas() {
     try {
         const res = await fetch(LINK_APPS_SCRIPT + "?acao=lerBatalhas");
         const dados = await res.json();
-        if (dados.status === "sucesso") {
-            batalhas = dados.batalhas || [];
+        if (dados.status === "sucesso" && Array.isArray(dados.batalhas)) {
+            const linhas = dados.batalhas;
+            batalhas = [];
+            // 🔄 LER CADA LINHA DA PLANILHA
+            for (let i = 1; i < linhas.length; i++) {
+                const l = linhas[i];
+                if (!l || !l[COL.DATA]) continue;
+                batalhas.push({
+                    data: l[COL.DATA],
+                    horaInicio: l[COL.HORA_INICIO] || "",
+                    streamer: String(l[COL.STREAMER] || "").trim().toUpperCase(),
+                    oponente: String(l[COL.OPONENTE] || "").trim().toUpperCase(),
+                    situacao: String(l[COL.SITUACAO] || "").trim().toUpperCase(),
+                    meta: String(l[COL.META] || "").trim(),
+                    link: String(l[COL.LINK] || "").trim()
+                });
+            }
+            console.log("✅ Carregadas", batalhas.length, "batalhas da planilha");
+        } else {
+            console.log("⚠️ Sem dados da planilha:", dados);
+            batalhas = [];
         }
-    } catch (e) { console.error("Erro:", e); }
+    } catch (e) {
+        console.error("❌ Erro ao carregar da planilha:", e);
+        batalhas = [];
+    }
 }
 
+// 🎨 RENDERIZAR TUDO NA ORDEM CERTA
 function renderizarTudo() {
-    atualizarMesAgenda();
-    renderizarMinhasBatalhas(); // 🔝 TODAS as dele, juntas!
-    renderizarCalendario();
-    renderizarTodasCampanhas();
-    renderizarTodasConfirmadas();
-    renderizarTodasFaltaOponente();
+    atualizarNomeMes();
+    renderizarMinhasBatalhas();   // 1º — SÓ DELE, NO TOPO
+    renderizarCalendario();       // 2º — CALENDÁRIO COLORIDO
+    renderizarAgencia();          // 3º — TODOS OS OUTROS, EMBAIXO
 }
 
-// 🔝 MINHA AGENDA: TODAS as batalhas no nome dele, qualquer situação!
+// 📋 RENDERIZAR SOMENTE AS BATALHAS DO STREAMER LOGADO
 function renderizarMinhasBatalhas() {
     const minhas = batalhas.filter(b => {
-        if (!b.streamer) return false;
-        const nomeBatalha = b.streamer.toString().toUpperCase().trim();
-        return nomeBatalha.includes(nomeUsuario.trim());
+        if (!b.streamer || nomeUsuario === "VISITANTE") return false;
+        return b.streamer.includes(nomeUsuario);
     });
     minhas.sort(ordenarPorData);
-    
     const el = document.getElementById("minhasBatalhas");
     el.innerHTML = minhas.length 
-        ? minhas.map(b => montarCard(b, true)).join("") 
-        : `<div class="lista-vazia">📭 Nenhuma batalha no seu nome neste mês.</div>`;
+        ? minhas.map(b => montarCard(b)).join("") 
+        : `<div class="lista-vazia">📭 Nenhuma batalha encontrada no seu nome (${nomeUsuario}).</div>`;
 }
 
-// 🌍 GERAL — TODAS AS CAMPANHAS
-function renderizarTodasCampanhas() {
-    const todas = batalhas.filter(b => getSituacao(b) === "CAMPANHA");
-    todas.sort(ordenarPorData);
-    const el = document.getElementById("todasCampanhas");
-    el.innerHTML = todas.length ? todas.map(b => montarCard(b, false)).join("") : `<div class="lista-vazia">📭 Nenhuma campanha ativa.</div>`;
-}
-
-// 🌍 GERAL — TODAS CONFIRMADAS
-function renderizarTodasConfirmadas() {
-    const todas = batalhas.filter(b => getSituacao(b) === "CONFIRMADA");
-    todas.sort(ordenarPorData);
-    const el = document.getElementById("todasConfirmadas");
-    el.innerHTML = todas.length ? todas.map(b => montarCard(b, false)).join("") : `<div class="lista-vazia">📭 Nenhuma batalha confirmada.</div>`;
-}
-
-// 🌍 GERAL — TODAS FALTA OPONENTE
-function renderizarTodasFaltaOponente() {
-    const todas = batalhas.filter(b => getSituacao(b) === "FALTA OPONENTE");
-    todas.sort(ordenarPorData);
-    const el = document.getElementById("todasFaltaOponente");
-    el.innerHTML = todas.length ? todas.map(b => montarCard(b, false)).join("") : `<div class="lista-vazia">📭 Nenhuma batalha aguardando oponente.</div>`;
-}
-
-// 🧩 MONTAR CARD
-function montarCard(b, destaque) {
+// 📋 MONTAR CARD DE BATALHA
+function montarCard(b) {
     const sit = getSituacao(b);
     let classe = "", etiqueta = "", icone = "";
     if (sit === "CAMPANHA") { classe = "item-campanha"; etiqueta = "CAMPANHA"; icone = "📢"; }
@@ -301,11 +346,10 @@ function montarCard(b, destaque) {
     else { classe = "item-confirmada"; etiqueta = "CONFIRMADA"; icone = "✅"; }
 
     const dataBonita = formatarDataCurta(b.data);
-    const destaqueClass = destaque ? "destaque-pessoal" : "";
     const oponente = b.oponente || "???";
 
     return `
-    <div class="item-card ${classe} ${destaqueClass}">
+    <div class="item-card ${classe}">
         <div class="cabecalho-item">
             <span class="data-item">${dataBonita} — ${b.horaInicio || "--:--"}</span>
             <span class="etiqueta">${icone} ${etiqueta}</span>
@@ -318,7 +362,7 @@ function montarCard(b, destaque) {
     </div>`;
 }
 
-// 📅 CALENDÁRIO — PINTA CORES DIRETO DA PLANILHA!
+// 📅 CALENDÁRIO COLORIDO — DIRETO DA SITUAÇÃO DA PLANILHA
 function renderizarCalendario() {
     const ano = dataAtual.getFullYear();
     const mes = dataAtual.getMonth();
@@ -328,10 +372,12 @@ function renderizarCalendario() {
 
     let html = "";
 
+    // Dias vazios antes do 1º dia
     for (let i = 0; i < priDia; i++) {
         html += `<div class="dia vazio"></div>`;
     }
 
+    // 🎨 PINTAR CADA DIA BASEADO NA SITUAÇÃO DA PLANILHA
     for (let dia = 1; dia <= totalDias; dia++) {
         const dataStr = `${ano}-${String(mes+1).padStart(2,"0")}-${String(dia).padStart(2,"0")}`;
         const dataCompleta = new Date(ano, mes, dia);
@@ -339,33 +385,63 @@ function renderizarCalendario() {
         const chaveFeriado = `${String(mes+1).padStart(2,"0")}-${String(dia).padStart(2,"0")}`;
         const ehFeriado = FERIADOS[chaveFeriado];
 
-        const batalhasDoDia = batalhas.filter(b => formatarDataParaComparar(b.data) === dataStr);
+        // 📊 BUSCAR TODAS BATALHAS DESSE DIA NA PLANILHA
+        const batalhasDoDia = batalhas.filter(b => {
+            const bData = formatarDataParaComparar(b.data);
+            return bData === dataStr;
+        });
         
         let classeDia = "", statusMini = "";
 
+        // 🔴 DOMINGO OU FERIADO
         if (ehFeriado || diaSemana === 0) {
             classeDia = "domingo-feriado";
             statusMini = diaSemana === 0 ? "Dom" : "🎉";
-        } else if (batalhasDoDia.length > 0) {
-            if (batalhasDoDia.some(b => getSituacao(b) === "CAMPANHA")) {
-                classeDia = "campanha";
-                statusMini = "📢";
-            } else if (batalhasDoDia.some(b => getSituacao(b) === "FALTA OPONENTE")) {
-                classeDia = "falta-oponente";
-                statusMini = "⏳";
-            } else {
-                classeDia = "confirmada";
-                statusMini = "✅";
-            }
+        }
+        // 🟡 SE TIVER CAMPANHA — PRIORIDADE MAIOR
+        else if (batalhasDoDia.some(b => getSituacao(b) === "CAMPANHA")) {
+            classeDia = "campanha";
+            statusMini = "📢";
+        }
+        // 🔵 SE TIVER FALTA OPONENTE
+        else if (batalhasDoDia.some(b => getSituacao(b) === "FALTA OPONENTE")) {
+            classeDia = "falta-oponente";
+            statusMini = "⏳";
+        }
+        // 🟢 SE TIVER CONFIRMADA
+        else if (batalhasDoDia.some(b => getSituacao(b) === "CONFIRMADA")) {
+            classeDia = "confirmada";
+            statusMini = "✅";
         }
 
+        // 🎯 DESTACAR HOJE
         const ehHoje = dataCompleta.toDateString() === hoje.toDateString();
-        const estilo = ehHoje ? "border:2px solid var(--verde);font-weight:bold;" : "";
+        const estilo = ehHoje ? "border:3px solid #fff; font-weight:bold;" : "";
 
         html += `<div class="dia ${classeDia}" style="${estilo}">${dia}${statusMini ? `<div class="status-mini">${statusMini}</div>` : ""}</div>`;
     }
 
     document.getElementById("gradeDias").innerHTML = html;
+    console.log("📅 Calendário renderizado —", batalhas.length, "batalhas lidas da planilha");
+}
+
+// 🌍 AGENDA DA AGÊNCIA — TODAS AS BATALHAS
+function renderizarAgencia() {
+    const campanhas = batalhas.filter(b => getSituacao(b) === "CAMPANHA").sort(ordenarPorData);
+    const confirmadas = batalhas.filter(b => getSituacao(b) === "CONFIRMADA").sort(ordenarPorData);
+    const falta = batalhas.filter(b => getSituacao(b) === "FALTA OPONENTE").sort(ordenarPorData);
+
+    document.getElementById("todasCampanhas").innerHTML = campanhas.length 
+        ? campanhas.map(b => montarCard(b)).join("") 
+        : `<div class="lista-vazia">📭 Nenhuma campanha ativa.</div>`;
+
+    document.getElementById("todasConfirmadas").innerHTML = confirmadas.length 
+        ? confirmadas.map(b => montarCard(b)).join("") 
+        : `<div class="lista-vazia">📭 Nenhuma batalha confirmada.</div>`;
+
+    document.getElementById("todasFaltaOponente").innerHTML = falta.length 
+        ? falta.map(b => montarCard(b)).join("") 
+        : `<div class="lista-vazia">📭 Nenhuma batalha aguardando oponente.</div>`;
 }
 </script>
 </body>
