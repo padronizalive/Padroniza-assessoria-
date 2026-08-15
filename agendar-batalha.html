@@ -1,228 +1,312 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Agenda de Batalhas — Padroniza Assessoria</title>
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
-        :root {
-            --fundo-pagina: #0f0f1a;
-            --fundo-card: #1a1a2e;
-            --fundo-calendario: #16162a;
-            --campanha-fundo: #8a7500; --campanha-borda: #ffd700; --campanha-texto: #fff;
-            --oponente-fundo: #004488; --oponente-borda: #00a8ff; --oponente-texto: #fff;
-            --confirmada-fundo: #005533; --confirmada-borda: #00ff9c; --confirmada-texto: #fff;
-            --domingo-fundo: #661a1a; --domingo-borda: #ff4444; --domingo-texto: #ff8888;
-            --dia-vazio: #252540; --texto-dia: #ddd;
-        }
-        body { background: var(--fundo-pagina); color: #fff; min-height: 100vh; padding: 16px; }
-        .container { max-width: 95%; margin: 0 auto; }
-        .cabecalho-usuario { background: linear-gradient(135deg, #1a1a2e, #252542); padding: 20px; border-radius: 14px; margin-bottom: 20px; border: 2px solid var(--confirmada-borda); text-align: center; }
-        .logo { font-size: 24px; font-weight: bold; background: linear-gradient(90deg, var(--confirmada-borda), var(--oponente-borda)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 8px; display: flex; align-items: center; justify-content: center; gap: 8px; }
-        .logo::before { content: "⚔️"; font-size: 26px; }
-        .nome-usuario { font-size: 22px; font-weight: bold; color: var(--confirmada-borda); margin: 8px 0; }
-        .data-hoje { font-size: 14px; color: #888; }
-        .minhas-batalhas { background: var(--fundo-card); padding: 20px; border-radius: 14px; margin-bottom: 20px; border: 2px solid var(--confirmada-borda); }
-        .titulo-secao { font-size: 18px; font-weight: bold; margin-bottom: 15px; display: flex; align-items: center; gap: 8px; }
-        .titulo-secao.minhas::before { content: "👤"; font-size: 20px; }
-        .lista-vazia { color: #888; font-size: 14px; padding: 18px; text-align: center; }
-        .lista-itens { display: flex; flex-direction: column; gap: 10px; }
-        .item-card { padding: 12px 14px; border-radius: 10px; border-left: 4px solid; background: rgba(255,255,255,0.03); }
-        .item-campanha { border-color: var(--campanha-borda); }
-        .item-oponente { border-color: var(--oponente-borda); }
-        .item-confirmada { border-color: var(--confirmada-borda); }
-        .cabecalho-item { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; flex-wrap: wrap; gap: 6px; }
-        .etiqueta { font-size: 11px; padding: 2px 8px; border-radius: 20px; font-weight: bold; }
-        .item-campanha .etiqueta { background: rgba(255,215,0,0.2); color: var(--campanha-borda); }
-        .item-oponente .etiqueta { background: rgba(0,168,255,0.2); color: var(--oponente-borda); }
-        .item-confirmada .etiqueta { background: rgba(0,255,156,0.2); color: var(--confirmada-borda); }
-        .nome-batalha { font-size: 15px; font-weight: bold; margin: 4px 0; }
-        .detalhes-item { display: flex; gap: 12px; flex-wrap: wrap; font-size: 12px; color: #aaa; margin-top: 2px; }
-        .detalhes-item a { color: var(--oponente-borda); text-decoration: none; }
-        .data-item { display: flex; align-items: center; gap: 4px; font-size: 13px; color: #aaa; }
-        .calendario { background: var(--fundo-calendario); padding: 20px; border-radius: 14px; margin-bottom: 20px; border: 2px solid #2a2a4e; }
-        .titulo-calendario { font-size: 18px; font-weight: bold; margin-bottom: 15px; display: flex; align-items: center; gap: 8px; }
-        .titulo-calendario::before { content: "📅"; font-size: 20px; }
-        .navegacao-mes { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
-        .btn-nav { background: transparent; border: 2px solid var(--confirmada-borda); color: var(--confirmada-borda); padding: 10px 16px; border-radius: 10px; cursor: pointer; font-size: 15px; font-weight: bold; }
-        .btn-nav:hover { background: rgba(0,255,156,0.1); }
-        .nome-mes { font-size: 22px; font-weight: bold; text-align: center; flex: 1; }
-        .dias-semana { display: grid; grid-template-columns: repeat(7, 1fr); gap: 6px; margin-bottom: 10px; }
-        .dia-semana { text-align: center; font-size: 14px; color: #aaa; padding: 8px; font-weight: 600; }
-        .grade-dias { display: grid; grid-template-columns: repeat(7, 1fr); gap: 8px; }
-        .dia { aspect-ratio: 1; display: flex; flex-direction: column; justify-content: center; align-items: center; border-radius: 10px; font-size: 16px; font-weight: bold; background: var(--dia-vazio); color: var(--texto-dia); border: 2px solid transparent; }
-        .dia.vazio { background: transparent; border: none; }
-        .dia.campanha { background: var(--campanha-fundo); border: 3px solid var(--campanha-borda); color: var(--campanha-texto); }
-        .dia.falta-oponente { background: var(--oponente-fundo); border: 3px solid var(--oponente-borda); color: var(--oponente-texto); }
-        .dia.confirmada { background: var(--confirmada-fundo); border: 3px solid var(--confirmada-borda); color: var(--confirmada-texto); }
-        .dia.domingo-feriado { background: var(--domingo-fundo); border: 3px solid var(--domingo-borda); color: var(--domingo-texto); }
-        .dia.hoje { box-shadow: 0 0 0 3px #fff; }
-        .status-mini { font-size: 10px; margin-top: 2px; font-weight: bold; line-height: 1; }
-        .legenda { background: var(--fundo-card); padding: 16px; border-radius: 12px; margin-bottom: 24px; }
-        .legenda h3 { margin-bottom: 12px; font-size: 15px; display: flex; align-items: center; gap: 8px; }
-        .legenda h3::before { content: "📋"; }
-        .legenda-itens { display: flex; flex-wrap: wrap; gap: 20px; }
-        .item-legenda { display: flex; align-items: center; gap: 8px; font-size: 14px; }
-        .cor { width: 20px; height: 20px; border-radius: 4px; border: 2px solid; }
-        .cor.campanha { background: var(--campanha-fundo); border-color: var(--campanha-borda); }
-        .cor.oponente { background: var(--oponente-fundo); border-color: var(--oponente-borda); }
-        .cor.confirmada { background: var(--confirmada-fundo); border-color: var(--confirmada-borda); }
-        .cor.domingo { background: var(--domingo-fundo); border-color: var(--domingo-borda); }
-        .agencia { margin-top: 10px; }
-        .titulo-secao-agencia { font-size: 20px; font-weight: bold; border-bottom: 2px solid #2a2a4e; padding-bottom: 12px; margin-bottom: 20px; display: flex; align-items: center; gap: 10px; }
-        .titulo-secao-agencia::before { content: "🌍"; font-size: 22px; }
-        .secao-agencia { background: var(--fundo-card); padding: 18px; border-radius: 12px; margin-bottom: 16px; }
-        .subtitulo-agencia { font-size: 15px; font-weight: bold; margin-bottom: 12px; display: flex; align-items: center; gap: 8px; color: #ccc; }
-        .subtitulo-agencia.camp::before { content: "📢"; }
-        .subtitulo-agencia.conf::before { content: "✅"; }
-        .subtitulo-agencia.falta::before { content: "⏳"; }
-        @media(max-width:600px) { .dia { font-size: 14px; } .status-mini { font-size: 9px; } .nome-mes { font-size: 18px; } }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>⚔️ Calendário de Batalhas — Padroniza Assessoria</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Roboto, sans-serif; }
+    :root {
+      --bg-principal: #0f1115; --bg-card: #1a1d23; --bg-card-hover: #22262e;
+      --texto: #e6e6e6; --texto-claro: #b0b0b0; --borda: #2c303a;
+      --disponivel: #22c55e; --confirmada: #3b82f6; --campanha: #f59e0b;
+      --bloqueado: #ef4444; --aguardando: #06b6d4;
+    }
+    body {
+      background: linear-gradient(135deg, #0f1115 0%, #171a1f 100%);
+      min-height: 100vh; padding: 24px 16px; color: var(--texto);
+    }
+    .container { max-width: 1200px; margin: 0 auto; }
+    header {
+      text-align: center; margin-bottom: 32px; padding-bottom: 20px;
+      border-bottom: 1px solid var(--borda);
+    }
+    header h1 {
+      font-size: 30px; background: linear-gradient(90deg, #3b82f6, #22c55e);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 6px;
+    }
+    header p { color: var(--texto-claro); font-size: 15px; }
+    .navegacao-mes {
+      display: flex; justify-content: space-between; align-items: center;
+      background: var(--bg-card); padding: 16px 24px; border-radius: 14px;
+      margin-bottom: 24px; border: 1px solid var(--borda);
+    }
+    .btn-nav {
+      background: var(--primaria); color: #fff; border: none;
+      padding: 10px 20px; border-radius: 8px; cursor: pointer; font-size: 18px;
+      transition: all 0.2s;
+    }
+    .btn-nav:hover { background: #2563eb; transform: scale(1.05); }
+    .nome-mes { font-size: 24px; font-weight: 700; color: #fff; }
+    .legenda {
+      display: flex; flex-wrap: wrap; gap: 16px; background: var(--bg-card);
+      padding: 18px 24px; border-radius: 14px; margin-bottom: 24px;
+      border: 1px solid var(--borda);
+    }
+    .item-legenda { display: flex; align-items: center; gap: 10px; font-size: 14px; }
+    .cor-legenda { width: 20px; height: 20px; border-radius: 6px; border: 1px solid rgba(255,255,255,0.1); }
+    .calendario { display: grid; grid-template-columns: repeat(7, 1fr); gap: 10px; }
+    .cabecalho-dia-semana {
+      text-align: center; padding: 12px 8px; font-weight: 700; font-size: 13px;
+      color: var(--texto-claro); text-transform: uppercase; letter-spacing: 0.5px;
+    }
+    .dia-calendario {
+      min-height: 110px; padding: 10px; border-radius: 12px; border: 1px solid var(--borda);
+      background: var(--bg-card); transition: all 0.25s ease;
+      position: relative; overflow: hidden;
+    }
+    .dia-calendario:hover { transform: translateY(-3px); box-shadow: 0 8px 20px rgba(0,0,0,0.3); }
+    .dia-vazio { background: transparent; border: none; pointer-events: none; }
+    .cabecalho-dia-do-mes {
+      display: flex; justify-content: space-between; align-items: center;
+      margin-bottom: 6px; padding-bottom: 4px; border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+    .numero-dia { font-size: 20px; font-weight: 800; color: #fff; line-height: 1; }
+    .nome-dia-semana { font-size: 11px; color: var(--texto-claro); font-weight: 500; }
+    .conteudo-dia { font-size: 11.5px; line-height: 1.5; }
+    .tag-batalha {
+      background: rgba(255,255,255,0.08); padding: 3px 6px; border-radius: 5px;
+      margin-bottom: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    }
+    .dia-calendario.disponivel { border-left: 4px solid var(--disponivel); cursor: pointer; }
+    .dia-calendario.disponivel:hover { background: rgba(34,197,94,0.15); border-color: #4ade80; }
+    .dia-calendario.confirmada { border-left: 4px solid var(--confirmada); background: rgba(59,130,246,0.08); }
+    .dia-calendario.campanha { border-left: 4px solid var(--campanha); background: rgba(245,158,11,0.08); }
+    .dia-calendario.bloqueado { border-left: 4px solid var(--bloqueado); background: rgba(239,68,68,0.08); opacity: 0.6; pointer-events: none; }
+    .dia-calendario.falta-oponente { border-left: 4px solid var(--aguardando); background: rgba(6,182,212,0.08); cursor: not-allowed; }
+    .dia-calendario.falta-oponente::after {
+      content: "⏳ Aguardando"; font-size: 10px; background: rgba(6,182,212,0.2);
+      padding: 2px 6px; border-radius: 4px; position: absolute; bottom: 8px; right: 8px;
+    }
+    #overlay {
+      display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.8);
+      backdrop-filter: blur(6px); z-index: 998;
+    }
+    #formularioSolicitacao {
+      display: none; position: fixed; top: 50%; left: 50%;
+      transform: translate(-50%, -50%); background: var(--bg-card);
+      padding: 32px; border-radius: 16px; border: 1px solid var(--borda);
+      box-shadow: 0 10px 40px rgba(0,0,0,0.5); z-index: 999;
+      max-width: 460px; width: 92%;
+    }
+    #formularioSolicitacao h3 { margin-top: 0; color: #fff; font-size: 22px; margin-bottom: 8px; }
+    #formularioSolicitacao p { color: var(--texto-claro); font-size: 14px; margin-bottom: 24px; }
+    .grupo-form { margin-bottom: 18px; }
+    .grupo-form label {
+      display: block; margin-bottom: 6px; font-weight: 600; color: #ddd; font-size: 14px;
+    }
+    .grupo-form input {
+      width: 100%; padding: 12px 14px; background: var(--bg-principal); color: #fff;
+      border: 1px solid var(--borda); border-radius: 8px; font-size: 15px; transition: all 0.2s;
+    }
+    .grupo-form input:focus { outline: none; border-color: var(--confirmada); box-shadow: 0 0 0 3px rgba(59,130,246,0.2); }
+    .grupo-form input[readonly] { color: #888; background: #252830; }
+    .botoes-form { display: flex; gap: 12px; justify-content: flex-end; margin-top: 24px; }
+    .btn-cancelar {
+      padding: 12px 24px; background: transparent; color: #ccc;
+      border: 1px solid var(--borda); border-radius: 8px; cursor: pointer;
+      font-size: 14px; font-weight: 600; transition: all 0.2s;
+    }
+    .btn-cancelar:hover { background: var(--bg-card-hover); color: #fff; }
+    .btn-enviar {
+      padding: 12px 28px; background: linear-gradient(90deg, #22c55e, #16a34a);
+      color: #fff; border: none; border-radius: 8px; cursor: pointer;
+      font-size: 14px; font-weight: 700; transition: all 0.2s;
+    }
+    .btn-enviar:hover { transform: scale(1.03); box-shadow: 0 4px 12px rgba(34,197,94,0.3); }
+    #toast {
+      position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%);
+      background: var(--bg-card); color: #fff; padding: 14px 28px;
+      border-radius: 10px; z-index: 2000; font-size: 15px; display: none;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.4); border: 1px solid var(--borda);
+    }
+    #toast.sucesso { border-left: 4px solid var(--disponivel); }
+    #toast.erro { border-left: 4px solid var(--bloqueado); }
+    #toast.aviso { border-left: 4px solid var(--campanha); }
+    @media (max-width: 768px) {
+      .calendario { grid-template-columns: repeat(7, 1fr); gap: 6px; }
+      .dia-calendario { min-height: 80px; padding: 6px; }
+      .numero-dia { font-size: 16px; }
+      .nome-dia-semana { font-size: 9px; }
+      .nome-mes { font-size: 18px; }
+      .cabecalho-dia-semana { font-size: 11px; padding: 8px 4px; }
+      #formularioSolicitacao { padding: 24px; width: 95%; }
+    }
+  </style>
 </head>
 <body>
-    <div class="container">
-        <div class="cabecalho-usuario">
-            <h1 class="logo">Padroniza Assessoria</h1>
-            <div class="nome-usuario">👤 Streamer: <span id="nomeUsuario">VISITANTE</span></div>
-            <div class="data-hoje">📅 Hoje: <span id="dataHoje"></span></div>
-        </div>
-        <div class="minhas-batalhas">
-            <h2 class="titulo-secao minhas">📋 Minhas Batalhas</h2>
-            <div id="minhasBatalhas" class="lista-itens"><div class="lista-vazia">📭 Carregando...</div></div>
-        </div>
-        <div class="calendario">
-            <h2 class="titulo-calendario">📅 Calendário de Batalhas</h2>
-            <div class="navegacao-mes">
-                <button class="btn-nav" id="btnMesAnterior">◀</button>
-                <h2 class="nome-mes" id="nomeMes"></h2>
-                <button class="btn-nav" id="btnProximoMes">▶</button>
-            </div>
-            <div class="dias-semana"><div>Dom</div><div>Seg</div><div>Ter</div><div>Qua</div><div>Qui</div><div>Sex</div><div>Sáb</div></div>
-            <div class="grade-dias" id="gradeDias"></div>
-        </div>
-        <div class="legenda">
-            <h3>Legenda</h3>
-            <div class="legenda-itens">
-                <div class="item-legenda"><div class="cor campanha"></div> Campanha</div>
-                <div class="item-legenda"><div class="cor oponente"></div> Falta Oponente</div>
-                <div class="item-legenda"><div class="cor confirmada"></div> Confirmada</div>
-                <div class="item-legenda"><div class="cor domingo"></div> Domingo/Feriado</div>
-            </div>
-        </div>
-        <div class="agencia">
-            <h2 class="titulo-secao-agencia">🌍 Agenda da Agência</h2>
-            <div class="secao-agencia"><h3 class="subtitulo-agencia camp">📢 Campanhas</h3><div id="todasCampanhas" class="lista-itens"><div class="lista-vazia">📭 Vazio</div></div></div>
-            <div class="secao-agencia"><h3 class="subtitulo-agencia conf">✅ Confirmadas</h3><div id="todasConfirmadas" class="lista-itens"><div class="lista-vazia">📭 Vazio</div></div></div>
-            <div class="secao-agencia"><h3 class="subtitulo-agencia falta">⏳ Falta Oponente</h3><div id="todasFaltaOponente" class="lista-itens"><div class="lista-vazia">📭 Vazio</div></div></div>
-        </div>
-    </div>
+
+<div class="container">
+  <header>
+    <h1>⚔️ Calendário de Batalhas</h1>
+    <p>Padroniza Assessoria — Escolha o dia e solicite sua batalha</p>
+  </header>
+
+  <div class="legenda">
+    <div class="item-legenda"><div class="cor-legenda" style="background:#22c55e"></div> Disponível</div>
+    <div class="item-legenda"><div class="cor-legenda" style="background:#3b82f6"></div> Confirmada</div>
+    <div class="item-legenda"><div class="cor-legenda" style="background:#f59e0b"></div> Campanha</div>
+    <div class="item-legenda"><div class="cor-legenda" style="background:#ef4444"></div> Bloqueado</div>
+    <div class="item-legenda"><div class="cor-legenda" style="background:#06b6d4"></div> Aguardando Oponente</div>
+  </div>
+
+  <div class="navegacao-mes">
+    <button class="btn-nav" onclick="mudarMes(-1)">◀</button>
+    <h2 class="nome-mes" id="nomeMes"></h2>
+    <button class="btn-nav" onclick="mudarMes(1)">▶</button>
+  </div>
+
+  <div id="calendario">
+    <div class="cabecalho-dia-semana">Dom</div>
+    <div class="cabecalho-dia-semana">Seg</div>
+    <div class="cabecalho-dia-semana">Ter</div>
+    <div class="cabecalho-dia-semana">Qua</div>
+    <div class="cabecalho-dia-semana">Qui</div>
+    <div class="cabecalho-dia-semana">Sex</div>
+    <div class="cabecalho-dia-semana">Sáb</div>
+  </div>
+</div>
+
+<div id="overlay" onclick="fecharFormulario()"></div>
+<div id="formularioSolicitacao" data-data="">
+  <h3>⚔️ Solicitar Batalha</h3>
+  <p>Preencha os dados. A Padroniza buscará um oponente para você!</p>
+  <div class="grupo-form"><label>📅 Data</label><input type="text" id="sol_data" readonly></div>
+  <div class="grupo-form"><label>⏰ Hora de início *</label><input type="time" id="sol_horaInicio" required></div>
+  <div class="grupo-form"><label>⏰ Hora de término</label><input type="time" id="sol_horaFim"></div>
+  <div class="grupo-form"><label>🔄 Rounds</label><input type="number" id="sol_round" placeholder="Ex: 3" min="1"></div>
+  <div class="grupo-form"><label>💎 Meta de diamantes</label><input type="text" id="sol_meta" placeholder="Ex: 5.000"></div>
+  <div class="grupo-form"><label>🔗 Link do TikTok *</label><input type="url" id="sol_linkStreamer" required placeholder="https://tiktok.com/@seuusuario"></div>
+  <input type="hidden" id="sol_streamer" value="">
+  <input type="hidden" id="sol_responsavel" value="PADRONIZA">
+  <div class="botoes-form">
+    <button class="btn-cancelar" onclick="fecharFormulario()">Cancelar</button>
+    <button class="btn-enviar" onclick="enviarSolicitacao()">📤 Enviar</button>
+  </div>
+</div>
+
+<div id="toast"></div>
+
 <script>
-const FERIADOS = {"01-01":"Confraternização Universal","03-04":"Carnaval","04-10":"Paixão de Cristo","04-21":"Tiradentes","05-01":"Dia do Trabalho","06-19":"Corpus Christi","09-07":"Independência","10-12":"Nossa Senhora Aparecida","11-02":"Finados","11-15":"Proclamação da República","12-25":"Natal"};
-let dataAtual = new Date(), batalhas = [], nomeUsuario = "VISITANTE";
+// 🔗 LINK JÁ VINCULADO — NÃO MEXER!
+const LINK_APPS_SCRIPT = "https://script.google.com/macros/s/AKfycbx6Bpw0OdmfdznHovpbCNhJmUSLeWUi5ZaWeVGqHks5Iy4PC1M-E32EXqUqcCc7L1oP/exec";
 
-document.addEventListener("DOMContentLoaded", async () => {
-    const params = new URLSearchParams(window.location.search);
-    nomeUsuario = (params.get("streamer") || "VISITANTE").toUpperCase().trim();
-    document.getElementById("nomeUsuario").textContent = nomeUsuario;
-    const hoje = new Date();
-    document.getElementById("dataHoje").textContent = `${String(hoje.getDate()).padStart(2,"0")}/${String(hoje.getMonth()+1).padStart(2,"0")}/${hoje.getFullYear()}`;
-    atualizarNomeMes();
-    await carregarBatalhas();
-    renderizarTudo();
-    document.getElementById("btnMesAnterior").onclick = () => { dataAtual.setMonth(dataAtual.getMonth()-1); renderizarTudo(); };
-    document.getElementById("btnProximoMes").onclick = () => { dataAtual.setMonth(dataAtual.getMonth()+1); renderizarTudo(); };
-});
+let dataAtual = new Date(), mesAtual = dataAtual.getMonth() + 1, anoAtual = dataAtual.getFullYear(), batalhas = [];
+const NOMES_MESES = ["Janeiro","Fevereiro","Março","Abril","Maio","Junho","Julho","Agosto","Setembro","Outubro","Novembro","Dezembro"];
+const NOMES_DIAS_SEMANA = ["Dom","Seg","Ter","Qua","Qui","Sex","Sáb"];
 
-function atualizarNomeMes() {
-    const nomes = ["Janeiro","Fevereiro","Março","Abril","Maio","Junho","Julho","Agosto","Setembro","Outubro","Novembro","Dezembro"];
-    document.getElementById("nomeMes").textContent = `${nomes[dataAtual.getMonth()]} ${dataAtual.getFullYear()}`;
-}
-
-function normalizarData(data) {
-    if (!data) return "";
-    if (data instanceof Date && !isNaN(data.getTime())) return `${data.getFullYear()}-${String(data.getMonth()+1).padStart(2,"0")}-${String(data.getDate()).padStart(2,"0")}`;
-    const s = String(data).trim();
-    if (/^\d{1,2}\/\d{1,2}\/\d{4}$/.test(s)) { const [d,m,a]=s.split("/"); return `${a}-${String(parseInt(m)).padStart(2,"0")}-${String(parseInt(d)).padStart(2,"0")}`; }
-    if (/^\d{4}-\d{1,2}-\d{1,2}$/.test(s)) { const [a,m,d]=s.split("-"); return `${a}-${String(parseInt(m)).padStart(2,"0")}-${String(parseInt(d)).padStart(2,"0")}`; }
-    const d = new Date(s); if (!isNaN(d.getTime())) return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`;
-    return "";
-}
-
-function getSituacao(b) {
-    if (!b.situacao) return "CONFIRMADA";
-    const sit = String(b.situacao).toUpperCase().trim();
-    if (sit.includes("CAMPANHA")) return "CAMPANHA";
-    if (sit.includes("FALTA OPONENTE")) return "FALTA OPONENTE";
-    return "CONFIRMADA";
-}
-
-function ordenarPorData(a,b) { const da=normalizarData(a.data), db=normalizarData(b.data); return da<db?-1:da>db?1:0; }
+document.addEventListener("DOMContentLoaded", () => carregarBatalhas());
 
 async function carregarBatalhas() {
-    try {
-        const res = await new Promise((sucesso, falha) => {
-            google.script.run.withSuccessHandler(sucesso).withFailureHandler(falha).buscarBatalhas();
-        });
-        if (res.status === "sucesso" && Array.isArray(res.batalhas)) {
-            batalhas = res.batalhas.slice(1).map(l => ({
-                data: l[1] || l[0], horaInicio: l[2] || "", streamer: String(l[6]||"").trim().toUpperCase(),
-                oponente: String(l[5]||"").trim().toUpperCase(), situacao: String(l[8]||"").trim().toUpperCase(),
-                meta: String(l[16]||"").trim(), link: String(l[12]||"").trim()
-            }));
-        }
-    } catch(e) { console.error("Erro:", e); }
-}
-
-function renderizarTudo() { atualizarNomeMes(); renderizarMinhasBatalhas(); renderizarCalendario(); renderizarAgencia(); }
-function formatarDataExibir(d) { const n=normalizarData(d); if(!n)return d; const [a,m,dd]=n.split("-"); return `${dd}/${m}/${a}`; }
-
-function renderizarMinhasBatalhas() {
-    const minhas = batalhas.filter(b => !b.streamer || nomeUsuario === "VISITANTE" || b.streamer.includes(nomeUsuario));
-    minhas.sort(ordenarPorData);
-    document.getElementById("minhasBatalhas").innerHTML = minhas.length ? minhas.map(montarCard).join("") : `<div class="lista-vazia">📭 Nenhuma batalha no seu nome.</div>`;
-}
-
-function montarCard(b) {
-    const sit = getSituacao(b);
-    let classe="", etiqueta="", icone="";
-    if (sit==="CAMPANHA") { classe="item-campanha"; etiqueta="CAMPANHA"; icone="📢"; }
-    else if (sit==="FALTA OPONENTE") { classe="item-oponente"; etiqueta="FALTA OPONENTE"; icone="⏳"; }
-    else { classe="item-confirmada"; etiqueta="CONFIRMADA"; icone="✅"; }
-    const op = b.oponente || "???";
-    return `<div class="item-card ${classe}"><div class="cabecalho-item"><span class="data-item">📅 ${formatarDataExibir(b.data)} — ${b.horaInicio||"--:--"}</span><span class="etiqueta">${icone} ${etiqueta}</span></div><div class="nome-batalha">🎥 ${b.streamer||"—"} ⚔️ ${op}</div>${b.meta||b.link?`<div class="detalhes-item">${b.meta?`<span>💎 Meta: ${b.meta}</span>`:""}${b.link?`<a href="${b.link}" target="_blank">🔗 Perfil</a>`:""}</div>`:""}</div>`;
+  mostrarToast("⏳ Carregando...", "aviso");
+  try {
+    const res = await fetch(`${LINK_APPS_SCRIPT}?acao=lerBatalhas&mes=${mesAtual}`);
+    const dados = await res.json();
+    if (dados.status === "sucesso") { batalhas = dados.batalhas || []; renderizarCalendario(); esconderToast(); }
+    else mostrarToast("⚠️ " + dados.mensagem, "erro");
+  } catch { mostrarToast("❌ Erro de conexão", "erro"); }
 }
 
 function renderizarCalendario() {
-    const ano = dataAtual.getFullYear(), mes = dataAtual.getMonth();
-    const priDia = new Date(ano, mes, 1).getDay(), totalDias = new Date(ano, mes+1, 0).getDate();
-    const hoje = new Date(), hojeStr = `${ano}-${String(mes+1).padStart(2,"0")}-${String(hoje.getDate()).padStart(2,"0")}`;
-    let html = "";
-    for (let i=0; i<priDia; i++) html += `<div class="dia vazio"></div>`;
-    for (let dia=1; dia<=totalDias; dia++) {
-        const dataStr = `${ano}-${String(mes+1).padStart(2,"0")}-${String(dia).padStart(2,"0")}`;
-        const ds = new Date(ano, mes, dia), dw = ds.getDay();
-        const chaveF = `${String(mes+1).padStart(2,"0")}-${String(dia).padStart(2,"0")}`, ehFeriado = FERIADOS[chaveF];
-        const doDia = batalhas.filter(b => normalizarData(b.data) === dataStr);
-        let classe = "", status = "";
-        if (ehFeriado || dw === 0) { classe = "domingo-feriado"; status = "DOM"; }
-        else if (doDia.some(b => getSituacao(b) === "CAMPANHA")) { classe = "campanha"; status = "⚠️"; }
-        else if (doDia.some(b => getSituacao(b) === "FALTA OPONENTE")) { classe = "falta-oponente"; status = "⏳"; }
-        else if (doDia.some(b => getSituacao(b) === "CONFIRMADA")) { classe = "confirmada"; status = "✓"; }
-        const ehHoje = dataStr === hojeStr, destaque = ehHoje ? "hoje" : "";
-        html += `<div class="dia ${classe} ${destaque}">${dia}${status?`<div class="status-mini">${status}</div>`:""}</div>`;
+  document.getElementById("nomeMes").textContent = `${NOMES_MESES[mesAtual - 1]} ${anoAtual}`;
+  const container = document.getElementById("calendario");
+  const cabecalhos = Array.from(container.children).slice(0, 7);
+  container.innerHTML = ""; cabecalhos.forEach(c => container.appendChild(c));
+
+  const primeiroDia = new Date(anoAtual, mesAtual - 1, 1).getDay();
+  const ultimoDia = new Date(anoAtual, mesAtual, 0).getDate();
+
+  for (let i = 0; i < primeiroDia; i++) {
+    const d = document.createElement("div"); d.className = "dia-calendario dia-vazio"; container.appendChild(d);
+  }
+
+  for (let dia = 1; dia <= ultimoDia; dia++) {
+    const dataISO = `${anoAtual}-${String(mesAtual).padStart(2,"0")}-${String(dia).padStart(2,"0")}`;
+    const diaSemanaNum = new Date(anoAtual, mesAtual - 1, dia).getDay();
+    const nomeDiaSemana = NOMES_DIAS_SEMANA[diaSemanaNum];
+    const batalhasNoDia = batalhas.filter(b => b.data === dataISO);
+
+    let classeCor = "disponivel";
+    if (batalhasNoDia.length > 0) {
+      if (batalhasNoDia.some(b => b.classeCor === "bloqueado")) classeCor = "bloqueado";
+      else if (batalhasNoDia.some(b => b.classeCor === "campanha")) classeCor = "campanha";
+      else if (batalhasNoDia.some(b => b.classeCor === "falta-oponente")) classeCor = "falta-oponente";
+      else if (batalhasNoDia.some(b => b.classeCor === "confirmada")) classeCor = "confirmada";
     }
-    document.getElementById("gradeDias").innerHTML = html;
+
+    const div = document.createElement("div");
+    div.className = `dia-calendario ${classeCor}`;
+    div.dataset.data = dataISO;
+
+    let html = `<div class="cabecalho-dia-do-mes"><span class="numero-dia">${dia}</span><span class="nome-dia-semana">${nomeDiaSemana}</span></div><div class="conteudo-dia">`;
+    if (batalhasNoDia.length > 0) {
+      batalhasNoDia.forEach(b => {
+        if (b.horaInicio || b.streamer) html += `<div class="tag-batalha">${b.horaInicio||""} ${b.streamer||b.situacao}</div>`;
+      });
+    } else html += `<div style="color:#22c55e; font-size:11px;">Disponível</div>`;
+    html += `</div>`;
+    div.innerHTML = html;
+
+    if (classeCor === "disponivel") div.onclick = () => abrirFormulario(dataISO);
+    container.appendChild(div);
+  }
 }
 
-function renderizarAgencia() {
-    const camp = batalhas.filter(b => getSituacao(b) === "CAMPANHA").sort(ordenarPorData);
-    const conf = batalhas.filter(b => getSituacao(b) === "CONFIRMADA").sort(ordenarPorData);
-    const falt = batalhas.filter(b => getSituacao(b) === "FALTA OPONENTE").sort(ordenarPorData);
-    document.getElementById("todasCampanhas").innerHTML = camp.length ? camp.map(montarCard).join("") : `<div class="lista-vazia">📭 Vazio</div>`;
-    document.getElementById("todasConfirmadas").innerHTML = conf.length ? conf.map(montarCard).join("") : `<div class="lista-vazia">📭 Vazio</div>`;
-    document.getElementById("todasFaltaOponente").innerHTML = falt.length ? falt.map(montarCard).join("") : `<div class="lista-vazia">📭 Vazio</div>`;
+function mudarMes(delta) {
+  mesAtual += delta;
+  if (mesAtual < 1) { mesAtual = 12; anoAtual--; }
+  if (mesAtual > 12) { mesAtual = 1; anoAtual++; }
+  carregarBatalhas();
 }
+
+function abrirFormulario(dataISO) {
+  const d = new Date(dataISO);
+  const diasCompletos = ["Domingo","Segunda-feira","Terça-feira","Quarta-feira","Quinta-feira","Sexta-feira","Sábado"];
+  const dataExibicao = `${d.getDate()} de ${NOMES_MESES[d.getMonth()]} — ${diasCompletos[d.getDay()]}`;
+  document.getElementById("sol_data").value = dataExibicao;
+  document.getElementById("formularioSolicitacao").dataset.data = dataExibicao;
+  document.getElementById("overlay").style.display = "block";
+  document.getElementById("formularioSolicitacao").style.display = "block";
+}
+
+function fecharFormulario() {
+  document.getElementById("overlay").style.display = "none";
+  document.getElementById("formularioSolicitacao").style.display = "none";
+  document.getElementById("sol_horaInicio").value = "";
+  document.getElementById("sol_horaFim").value = "";
+  document.getElementById("sol_round").value = "";
+  document.getElementById("sol_meta").value = "";
+  document.getElementById("sol_linkStreamer").value = "";
+}
+
+async function enviarSolicitacao() {
+  const dataExibicao = document.getElementById("formularioSolicitacao").dataset.data;
+  const horaInicio = document.getElementById("sol_horaInicio").value;
+  const horaFim = document.getElementById("sol_horaFim").value;
+  const round = document.getElementById("sol_round").value;
+  const meta = document.getElementById("sol_meta").value;
+  const linkStreamer = document.getElementById("sol_linkStreamer").value;
+
+  if (!horaInicio) { mostrarToast("⚠️ Selecione a hora!", "aviso"); return; }
+  if (!linkStreamer) { mostrarToast("⚠️ Link do perfil obrigatório!", "aviso"); return; }
+
+  mostrarToast("⏳ Enviando...", "aviso");
+  try {
+    await fetch(`${LINK_APPS_SCRIPT}?acao=solicitarBatalha`, {
+      method: "POST", mode: "no-cors", headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ dataExibicao, horaInicio, horaFim, round, meta, streamer: "", linkStreamer, responsavel: "PADRONIZA" })
+    });
+    await carregarBatalhas();
+    fecharFormulario();
+    mostrarToast("✅ Solicitado! Aguardando oponente...", "sucesso");
+  } catch { mostrarToast("❌ Erro ao enviar", "erro"); }
+}
+
+function mostrarToast(mensagem, tipo = "") {
+  const t = document.getElementById("toast");
+  t.textContent = mensagem; t.className = tipo; t.style.display = "block";
+}
+function esconderToast() { setTimeout(() => document.getElementById("toast").style.display = "none", 4000); }
 </script>
 </body>
 </html>
