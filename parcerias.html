@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Padroniza Assessoria | Batalhas & Parcerias</title>
+<title>Padroniza Assessoria | Parcerias Pagas</title>
 <style>
 :root{--fundo:#0b1020;--painel:#11182c;--painel2:#17213a;--verde:#34d399;--amarelo:#ffc857;--vermelho:#ef4444;--azul:#3b82f6;--texto:#f7f9ff;--cinza:#a9b4cb;--laranja:#f97316;--roxo:#a855f7;--ouro:#eab308}
 *{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
@@ -11,45 +11,9 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
 .container{max-width:700px;margin:0 auto}
 .logo-container{text-align:center;margin-bottom:20px}
 .logo-agencia{max-width:240px;width:100%;height:auto;border-radius:12px;border:3px solid var(--amarelo);box-shadow:0 0 20px rgba(255,200,87,0.3)}
-.cabecalho{text-align:center;margin-bottom:20px}
+.cabecalho{text-align:center;margin-bottom:25px}
 .cabecalho h2{font-size:24px;color:var(--amarelo);margin-bottom:6px}
 .cabecalho p{font-size:15px;color:var(--cinza)}
-.aviso-gratuito{background:rgba(52,211,153,0.1);border:1px solid var(--verde);padding:12px;border-radius:10px;color:var(--verde);text-align:center;margin-bottom:20px;font-size:14px}
-.aviso-separador{text-align:center;padding:25px 0;margin:30px 0 20px;border-top:1px dashed #293653;border-bottom:1px dashed #293653}
-.aviso-separador h3{color:var(--ouro);font-size:18px;margin-bottom:5px}
-.abas{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:20px}
-.aba{padding:10px 12px;border-radius:8px;cursor:pointer;font-weight:bold;border:2px solid transparent;transition:0.2s;font-size:13px}
-.aba.ativa{background:linear-gradient(135deg,var(--laranja),#c2410c);border-color:var(--laranja);color:#fff}
-.aba.inativa{background:transparent;border-color:#293653;color:var(--cinza)}
-.conteudo-aba{display:none}
-.conteudo-aba.ativo{display:block}
-.cartao-desafio{background:var(--painel2);border-radius:12px;padding:16px;margin-bottom:15px;border:1px solid #293653;transition:0.2s}
-.cartao-desafio:hover{border-color:var(--laranja);transform:translateY(-2px)}
-.cartao-desafio h4{color:var(--amarelo);font-size:17px;margin-bottom:10px;display:flex;align-items:center;gap:8px}
-.dados-linha{display:flex;flex-wrap:wrap;gap:12px;margin-bottom:8px;font-size:14px}
-.etiqueta-meta{background:rgba(255,200,87,0.15);color:var(--amarelo);padding:3px 10px;border-radius:12px;font-weight:bold;font-size:13px}
-.etiqueta-data{background:rgba(59,130,246,0.15);color:var(--azul);padding:3px 10px;border-radius:12px;font-size:13px}
-.btn-acao{width:100%;padding:13px;border-radius:10px;border:none;font-weight:bold;cursor:pointer;text-decoration:none;display:inline-block;text-align:center;color:#fff;font-size:15px;transition:0.2s}
-.btn-laranja{background:linear-gradient(135deg,#f97316,#c2410c)}
-.btn-verde{background:linear-gradient(135deg,#22c55e,#15803d)}
-.btn-azul{background:linear-gradient(135deg,#3b82f6,#1d4ed8)}
-.btn-vermelho{background:linear-gradient(135deg,#ef4444,#b91c1c)}
-.btn-roxo{background:linear-gradient(135deg,#a855f7,#7e22ce)}
-.btn-ouro{background:linear-gradient(135deg,#eab308,#b8860b);color:#000}
-.btn-cinza{background:#374151;cursor:not-allowed;opacity:0.7}
-.btn-acao:active{transform:scale(0.98)}
-.grupo-campo{margin:12px 0}
-.campo-form{width:100%;padding:13px 15px;border-radius:10px;border:1px solid #293653;background:#17213a;color:var(--texto);font-size:15px}
-.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.aviso-vazio{text-align:center;padding:40px 20px;color:var(--cinza)}
-.toast{position:fixed;top:20px;left:50%;transform:translateX(-50%);background:var(--verde);color:#fff;padding:12px 24px;border-radius:8px;font-weight:bold;z-index:9999;display:none;box-shadow:0 4px 12px rgba(0,0,0,0.3)}
-.sucesso-envio{background:rgba(52,211,153,0.15);border:2px solid var(--verde);padding:20px;border-radius:12px;text-align:center;display:none;margin-top:15px}
-.sucesso-envio.visivel{display:block}
-.botoes-acao{display:flex;gap:10px;margin-top:12px;flex-wrap:wrap}
-.modal-fundo{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.85);display:none;align-items:center;justify-content:center;z-index:9998;padding:20px}
-.modal-conteudo{background:var(--painel);border-radius:14px;padding:22px;max-width:480px;width:100%;max-height:90vh;overflow-y:auto;border:1px solid #293653}
-.cabecalho-modal{display:flex;justify-content:space-between;align-items:center;margin-bottom:15px}
-.botao-fechar{background:transparent;border:none;color:var(--cinza);font-size:22px;cursor:pointer;float:right;line-height:1}
 .cartao-plano{background:var(--painel2);border-radius:14px;padding:20px;margin-bottom:15px;border:2px solid #293653;transition:0.3s}
 .cartao-plano.destaque{border-color:var(--ouro);box-shadow:0 0 15px rgba(234,179,8,0.2)}
 .cartao-plano h3{font-size:20px;margin-bottom:5px}
@@ -58,19 +22,27 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
 .lista-beneficios li{padding:6px 0;border-bottom:1px solid #293653;font-size:14px;list-style:none}
 .lista-beneficios li:before{content:"✅ ";color:var(--verde)}
 .texto-pix{background:#0f172a;padding:12px;border-radius:8px;font-family:monospace;word-break:break-all;margin:10px 0;font-size:13px}
-.copiado{background:var(--verde);transform:scale(0.95);transition:all 0.2s}
+.btn-acao{width:100%;padding:13px;border-radius:10px;border:none;font-weight:bold;cursor:pointer;text-decoration:none;display:inline-block;text-align:center;color:#fff;font-size:15px;transition:0.2s}
+.btn-verde{background:linear-gradient(135deg,#22c55e,#15803d)}
+.btn-azul{background:linear-gradient(135deg,#3b82f6,#1d4ed8)}
+.btn-laranja{background:linear-gradient(135deg,#f97316,#c2410c)}
+.btn-roxo{background:linear-gradient(135deg,#a855f7,#7e22ce)}
+.btn-ouro{background:linear-gradient(135deg,#eab308,#b8860b);color:#000}
+.botoes-acao{display:flex;gap:10px;margin-top:12px;flex-wrap:wrap}
 .bloco-form-externo{background:var(--painel2);border-radius:14px;padding:20px;border:2px solid var(--roxo);margin-top:25px}
-.bloco-form-externo h3{color:var(--roxo);margin-bottom:10px;text-align:center}
-.bloco-form-externo p{color:var(--cinza);font-size:14px;margin-bottom:15px;text-align:center}
-.aviso-destaque{background:rgba(52,211,153,0.08);border:1px solid var(--verde);padding:12px;border-radius:10px;margin-bottom:15px}
-.verificacao-box{background:rgba(59,130,246,0.08);border:1px solid var(--azul);padding:20px;border-radius:12px;margin:20px 0}
+.bloco-form-externo h3{color:var(--roxo);margin-bottom:15px;text-align:center}
+.aviso-destaque{background:rgba(52,211,153,0.08);border:1px solid var(--verde);padding:15px;border-radius:10px;margin-bottom:20px}
+.grupo-campo{margin:15px 0}
+.campo-form{width:100%;padding:14px 15px;border-radius:10px;border:1px solid #293653;background:#17213a;color:var(--texto);font-size:16px}
 .status-box{padding:15px;border-radius:10px;margin-top:15px;display:none}
 .status-aprovado{background:rgba(34,197,94,0.1);border:1px solid var(--verde);color:var(--verde);display:block}
 .status-pendente{background:rgba(234,179,8,0.1);border:1px solid var(--ouro);color:var(--ouro);display:block}
-.status-recusado{background:rgba(239,68,68,0.1);border:1px solid var(--vermelho);color:var(--vermelho);display:block}
 .formulario-iframe{margin-top:20px;display:none}
 .formulario-iframe.visivel{display:block}
 iframe{border-radius:8px;border:1px solid #293653;background:#fff;width:100%}
+.toast{position:fixed;top:20px;left:50%;transform:translateX(-50%);background:var(--vermelho);color:#fff;padding:12px 24px;border-radius:8px;font-weight:bold;z-index:9999;display:none;box-shadow:0 4px 12px rgba(0,0,0,0.3)}
+.copiado{background:var(--verde);transform:scale(0.95);transition:all 0.2s}
+.aviso-instrucao{background:rgba(59,130,246,0.08);border:1px solid var(--azul);padding:12px;border-radius:10px;margin:15px 0;font-size:14px}
 </style>
 </head>
 <body>
@@ -81,323 +53,125 @@ iframe{border-radius:8px;border:1px solid #293653;background:#fff;width:100%}
 </div>
 
 <div class="cabecalho">
-  <h2>⚔️ PADRONIZA ASSESSORIA</h2>
-  <p>Batalhas entre agências — gratuitas e com assessoria premium</p>
+  <h2>💎 PARCERIA PAGA — ASSESSORIA COMPLETA</h2>
+  <p>A Padroniza cuida de tudo: arte, vídeo, música, agendamento e oponente! ⚔️</p>
 </div>
 
-<div class="aviso-gratuito">✅ ÁREA GRATUITA — Negocie batalhas direto com outras agências!</div>
+<h3 style="text-align:center;color:var(--ouro);margin-bottom:20px">ESCOLHA SEU PACOTE DE BATALHAS</h3>
 
-<div class="abas">
-  <span class="aba ativa" id="abaQuadro" onclick="trocarAba('quadro')">🏠 DESAFIOS ABERTOS</span>
-  <span class="aba inativa" id="abaCriar" onclick="trocarAba('criar')">➕ CRIAR DESAFIO</span>
-  <span class="aba inativa" id="abaMeus" onclick="trocarAba('meus')">📋 MEUS DESAFIOS</span>
-</div>
-
-<div class="conteudo-aba ativo" id="conteudoQuadro">
-  <button class="btn-acao btn-azul" style="margin-bottom:15px" onclick="carregarDesafios()">🔄 ATUALIZAR LISTA</button>
-  <div id="listaDesafios"><div class="aviso-vazio">🔄 Carregando desafios abertos...</div></div>
-</div>
-
-<div class="conteudo-aba" id="conteudoCriar">
-  <div class="grupo-campo"><label style="color:var(--laranja);font-weight:bold;display:block;margin-bottom:8px">🏢 Nome da Agência *</label><input type="text" class="campo-form" id="nomeAgencia" placeholder="Sua agência" required></div>
-  <div class="grupo-campo"><label style="color:var(--laranja);font-weight:bold;display:block;margin-bottom:8px">🎬 Nome do Streamer *</label><input type="text" class="campo-form" id="nomeStreamer" placeholder="Nome do streamer" required></div>
-  <div class="grupo-campo"><label style="color:var(--laranja);font-weight:bold;display:block;margin-bottom:8px">🔗 Link do Perfil *</label><input type="url" class="campo-form" id="linkPerfil" placeholder="TikTok / Kako" required></div>
-  <div class="grupo-campo"><label style="color:var(--laranja);font-weight:bold;display:block;margin-bottom:8px">💬 WhatsApp da Agência *</label><input type="tel" class="campo-form" id="whatsappAgencia" placeholder="(XX) XXXXX-XXXX" required></div>
-  <div class="form-grid">
-    <div class="grupo-campo"><label style="color:var(--laranja);font-weight:bold;display:block;margin-bottom:8px">📅 Data *</label><input type="date" class="campo-form" id="dataDesejada" required></div>
-    <div class="grupo-campo"><label style="color:var(--laranja);font-weight:bold;display:block;margin-bottom:8px">⏰ Horário *</label><input type="time" class="campo-form" id="horarioDesejado" required></div>
-  </div>
-  <div class="form-grid">
-    <div class="grupo-campo"><label style="color:var(--laranja);font-weight:bold;display:block;margin-bottom:8px">⚔️ Rodada *</label><input type="text" class="campo-form" id="rodada" placeholder="Ex: 3 rodadas" required></div>
-    <div class="grupo-campo"><label style="color:var(--laranja);font-weight:bold;display:block;margin-bottom:8px">💎 Meta *</label><input type="text" class="campo-form" id="metaDiamantes" placeholder="Ex: 10k" required></div>
-  </div>
-  <div class="grupo-campo"><label style="color:var(--laranja);font-weight:bold;display:block;margin-bottom:8px">📝 Observação</label><textarea class="campo-form" id="observacoes" rows="2" placeholder="Regras, premiação..."></textarea></div>
-  <button class="btn-acao btn-laranja" onclick="criarDesafio()">⚔️ PUBLICAR DESAFIO GRATUITO</button>
-  <div class="sucesso-envio" id="sucessoCriar"><h3>✅ PUBLICADO!</h3><p>Seu desafio já está visível pra todas as agências!</p></div>
-</div>
-
-<div class="conteudo-aba" id="conteudoMeus">
-  <div class="grupo-campo"><label style="color:var(--laranja);font-weight:bold;display:block;margin-bottom:8px">🔍 Digite o nome da sua agência</label><input type="text" class="campo-form" id="buscaMinhas" placeholder="Sua agência"></div>
-  <button class="btn-acao btn-azul" onclick="carregarMeusDesafios()">📋 VER MEUS DESAFIOS</button>
-  <div id="listaMeusDesafios" style="margin-top:20px"><div class="aviso-vazio">Digite o nome da sua agência.</div></div>
-</div>
-
-<div class="aviso-separador">
-  <h3>💎 PARCERIA PAGA — ASSESSORIA COMPLETA</h3>
-  <p style="color:var(--cinza);font-size:14px">A Padroniza faz tudo: arte, vídeo, música, agendamento e negociação! ✨</p>
-</div>
-
-<div>
-  <h3 style="text-align:center;color:var(--ouro);margin-bottom:20px">ESCOLHA SEU PACOTE DE BATALHAS</h3>
-
-  <div class="cartao-plano">
-    <h3 style="color:var(--verde)">🟢 PACOTE INICIAL</h3>
-    <div class="valor-plano" style="color:var(--verde)">R$ 149,90</div>
-    <p style="color:var(--cinza)">⚔️ 30 Batalhas — Sem prazo de validade</p>
-    <ul class="lista-beneficios">
-      <li>30 batalhas completas — use quando quiser</li>
-      <li>Vídeo curto de divulgação + foto por batalha</li>
-      <li>Destaque para o streamer da sua agência</li>
-      <li>2 músicas exclusivas — oficial + premiação</li>
-      <li>Suporte e histórico de batalhas</li>
-    </ul>
-    <p style="margin-top:12px;font-weight:bold">🔑 Chave Pix:</p>
-    <div class="texto-pix" id="pixInicial">7c0dfbc3-68e7-4b85-a0eb-eb037b738d9f</div>
-    <div class="botoes-acao">
-      <button class="btn-acao btn-verde" style="flex:1" onclick="copiarPix('pixInicial',this)">📋 COPIAR PIX</button>
-      <button class="btn-acao btn-azul" style="flex:1" onclick="enviarComprovante('Inicial','149,90')">📤 ENVIAR COMPROVANTE</button>
-    </div>
-  </div>
-
-  <div class="cartao-plano">
-    <h3 style="color:var(--azul)">🔵 PACOTE INTERMEDIÁRIO</h3>
-    <div class="valor-plano" style="color:var(--azul)">R$ 269,90</div>
-    <p style="color:var(--cinza)">⚔️ 60 Batalhas — Sem prazo de validade</p>
-    <ul class="lista-beneficios">
-      <li>Tudo do Pacote Inicial + MAIS:</li>
-      <li>60 batalhas — o dobro do pacote inicial</li>
-      <li>3 músicas exclusivas — oficial + premiação + sorteio</li>
-      <li>Suporte Prioritário ⚡</li>
-      <li>Histórico completo detalhado</li>
-    </ul>
-    <p style="margin-top:12px;font-weight:bold">🔑 Chave Pix:</p>
-    <div class="texto-pix" id="pixIntermediario">7c0dfbc3-68e7-4b85-a0eb-eb037b738d9f0220</div>
-    <div class="botoes-acao">
-      <button class="btn-acao btn-azul" style="flex:1" onclick="copiarPix('pixIntermediario',this)">📋 COPIAR PIX</button>
-      <button class="btn-acao btn-laranja" style="flex:1" onclick="enviarComprovante('Intermediário','269,90')">📤 ENVIAR COMPROVANTE</button>
-    </div>
-  </div>
-
-  <div class="cartao-plano destaque">
-    <h3 style="color:var(--ouro)">👑 PACOTE PREMIUM — MAIS ESCOLHIDO</h3>
-    <div class="valor-plano" style="color:var(--ouro)">R$ 399,90</div>
-    <p style="color:var(--cinza)">⚔️ 100 Batalhas — Sem prazo de validade</p>
-    <ul class="lista-beneficios">
-      <li>Tudo dos pacotes anteriores + MAIS:</li>
-      <li>100 batalhas — nosso maior pacote!</li>
-      <li>Vídeo PREMIUM + foto em alta resolução</li>
-      <li>5 músicas exclusivas — uso completo</li>
-      <li>Suporte VIP Dedicado ⚡</li>
-      <li>Sua agência em destaque nas redes 📢</li>
-      <li style="color:var(--ouro);font-weight:bold">🎁 BÔNUS: 1 batalha GRÁTIS por mês!</li>
-    </ul>
-    <p style="margin-top:12px;font-weight:bold">🔑 Chave Pix:</p>
-    <div class="texto-pix" id="pixPremium">7c0dfbc3-68e7-4b85-a0eb-eb037b738d9f0214</div>
-    <div class="botoes-acao">
-      <button class="btn-acao btn-ouro" style="flex:1" onclick="copiarPix('pixPremium',this)">📋 COPIAR PIX</button>
-      <button class="btn-acao btn-roxo" style="flex:1" onclick="enviarComprovante('Premium','399,90')">📤 ENVIAR COMPROVANTE</button>
-    </div>
-  </div>
-
-  <div class="bloco-form-externo">
-    <h3>📋 SOLICITAR ASSESSORIA DE BATALHA</h3>
-    <div class="aviso-destaque">
-      <p style="margin:0;color:var(--verde);font-size:14px"><strong>✅ Após confirmação do pagamento, preencha os dados do seu streamer.</strong><br>A Padroniza cuida de tudo: arte, vídeo, música, agendamento e negociação. Você só recebe o resultado! 🎨⚔️</p>
-    </div>
-
-    <div class="verificacao-box">
-      <div class="grupo-campo">
-        <label style="color:var(--azul);font-weight:bold;display:block;margin-bottom:8px">🏢 Digite o nome da sua Agência para verificação de acesso</label>
-        <input type="text" class="campo-form" id="nomeAgenciaVerifica" placeholder="Nome da sua agência">
-      </div>
-      <button class="btn-acao btn-azul" onclick="verificarAcesso()">🔍 VERIFICAR MEU ACESSO</button>
-
-      <div id="statusAcesso" class="status-box">
-        <h4 id="statusTitulo"></h4>
-        <p id="statusTexto"></p>
-      </div>
-    </div>
-
-    <div id="blocoFormulario" class="formulario-iframe">
-      <p style="color:var(--verde);font-weight:bold;text-align:center;margin-bottom:15px">✅ ACESSO LIBERADO! Preencha os dados abaixo:</p>
-      <iframe 
-        src="https://docs.google.com/forms/d/e/1FAIpQLSeB3rI-H-DQO2mWCRjGzAV2JTlkhabqAYKuF1Aq3M74Xq_gKA/viewform?embedded=true" 
-        width="100%" 
-        height="650" 
-        frameborder="0" 
-        marginheight="0" 
-        marginwidth="0">
-        Carregando formulário...
-      </iframe>
-      <p style="text-align:center;color:var(--cinza);font-size:12px;margin-top:10px">Se o formulário não carregar, <a href="https://docs.google.com/forms/d/e/1FAIpQLSeB3rI-H-DQO2mWCRjGzAV2JTlkhabqAYKuF1Aq3M74Xq_gKA/viewform" target="_blank" style="color:var(--roxo)">clique aqui para preencher</a></p>
-    </div>
-  </div>
-
-  <div style="background:rgba(168,85,247,0.1);border:1px solid var(--roxo);padding:15px;border-radius:10px;margin-top:25px;text-align:center">
-    <p style="color:var(--roxo);font-weight:bold">📱 Dúvidas? Fale direto com a Padroniza!</p>
-    <a href="https://wa.me/5569981478873" target="_blank" class="btn-acao btn-roxo" style="max-width:300px;margin:12px auto 0;display:block">💬 ABRIR WHATSAPP</a>
+<div class="cartao-plano">
+  <h3 style="color:var(--verde)">🟢 PACOTE INICIAL</h3>
+  <div class="valor-plano" style="color:var(--verde)">R$ 149,90</div>
+  <p style="color:var(--cinza)">⚔️ 30 Batalhas — Sem prazo de validade</p>
+  <ul class="lista-beneficios">
+    <li>30 batalhas completas — use quando quiser</li>
+    <li>Vídeo curto de divulgação + foto por batalha</li>
+    <li>Destaque para o streamer da sua agência</li>
+    <li>2 músicas exclusivas — oficial + premiação</li>
+    <li>Suporte e histórico de batalhas</li>
+  </ul>
+  <p style="margin-top:12px;font-weight:bold">🔑 Chave Pix:</p>
+  <div class="texto-pix" id="pixInicial">7c0dfbc3-68e7-4b85-a0eb-eb037b738d9f</div>
+  <div class="botoes-acao">
+    <button class="btn-acao btn-verde" style="flex:1" onclick="copiarPix('pixInicial',this)">📋 COPIAR PIX</button>
+    <button class="btn-acao btn-azul" style="flex:1" onclick="enviarComprovante('Inicial','149,90')">📤 ENVIAR COMPROVANTE</button>
   </div>
 </div>
 
+<div class="cartao-plano">
+  <h3 style="color:var(--azul)">🔵 PACOTE INTERMEDIÁRIO</h3>
+  <div class="valor-plano" style="color:var(--azul)">R$ 269,90</div>
+  <p style="color:var(--cinza)">⚔️ 60 Batalhas — Sem prazo de validade</p>
+  <ul class="lista-beneficios">
+    <li>Tudo do Pacote Inicial + MAIS:</li>
+    <li>60 batalhas — o dobro do pacote inicial</li>
+    <li>3 músicas exclusivas — oficial + premiação + sorteio</li>
+    <li>Suporte Prioritário ⚡</li>
+    <li>Histórico completo detalhado</li>
+  </ul>
+  <p style="margin-top:12px;font-weight:bold">🔑 Chave Pix:</p>
+  <div class="texto-pix" id="pixIntermediario">7c0dfbc3-68e7-4b85-a0eb-eb037b738d9f0220</div>
+  <div class="botoes-acao">
+    <button class="btn-acao btn-azul" style="flex:1" onclick="copiarPix('pixIntermediario',this)">📋 COPIAR PIX</button>
+    <button class="btn-acao btn-laranja" style="flex:1" onclick="enviarComprovante('Intermediário','269,90')">📤 ENVIAR COMPROVANTE</button>
+  </div>
 </div>
 
-<div class="modal-fundo" id="modalDesafiar">
-  <div class="modal-conteudo">
-    <div class="cabecalho-modal"><h3>⚔️ DESAFIAR ESSE STREAMER</h3><button class="botao-fechar" onclick="fecharModal()">&times;</button></div>
-    <div id="dadosDesafioAlvo" style="background:rgba(249,115,22,0.1);padding:12px;border-radius:8px;margin-bottom:15px"></div>
-    <p style="color:var(--cinza);font-size:14px;margin-bottom:15px">Preencha os dados do SEU streamer:</p>
-    <div class="grupo-campo"><label style="color:var(--verde);font-weight:bold;display:block;margin-bottom:8px">🎬 Nome do Seu Streamer *</label><input type="text" class="campo-form" id="meuStreamer" required></div>
-    <div class="grupo-campo"><label style="color:var(--verde);font-weight:bold;display:block;margin-bottom:8px">🔗 Link do Perfil *</label><input type="url" class="campo-form" id="meuLinkPerfil" required></div>
-    <div class="grupo-campo"><label style="color:var(--verde);font-weight:bold;display:block;margin-bottom:8px">💬 Seu WhatsApp *</label><input type="tel" class="campo-form" id="meuWhatsApp" required></div>
-    <button class="btn-acao btn-verde" onclick="enviarProposta()">📤 ENVIAR PROPOSTA POR WHATSAPP</button>
+<div class="cartao-plano destaque">
+  <h3 style="color:var(--ouro)">👑 PACOTE PREMIUM — MAIS ESCOLHIDO</h3>
+  <div class="valor-plano" style="color:var(--ouro)">R$ 399,90</div>
+  <p style="color:var(--cinza)">⚔️ 100 Batalhas — Sem prazo de validade</p>
+  <ul class="lista-beneficios">
+    <li>Tudo dos pacotes anteriores + MAIS:</li>
+    <li>100 batalhas — nosso maior pacote!</li>
+    <li>Vídeo PREMIUM + foto em alta resolução</li>
+    <li>5 músicas exclusivas — uso completo</li>
+    <li>Suporte VIP Dedicado ⚡</li>
+    <li>Sua agência em destaque nas redes 📢</li>
+    <li style="color:var(--ouro);font-weight:bold">🎁 BÔNUS: 1 batalha GRÁTIS por mês!</li>
+  </ul>
+  <p style="margin-top:12px;font-weight:bold">🔑 Chave Pix:</p>
+  <div class="texto-pix" id="pixPremium">7c0dfbc3-68e7-4b85-a0eb-eb037b738d9f0214</div>
+  <div class="botoes-acao">
+    <button class="btn-acao btn-ouro" style="flex:1" onclick="copiarPix('pixPremium',this)">📋 COPIAR PIX</button>
+    <button class="btn-acao btn-roxo" style="flex:1" onclick="enviarComprovante('Premium','399,90')">📤 ENVIAR COMPROVANTE</button>
   </div>
+</div>
+
+<div class="bloco-form-externo">
+  <h3>📋 SOLICITAR ASSESSORIA DE BATALHA</h3>
+  
+  <div class="aviso-destaque">
+    <p style="margin:0;color:var(--verde);font-size:14px"><strong>✅ Após confirmação do pagamento, preencha os dados do seu streamer.</strong><br>A Padroniza cuida de tudo: arte, vídeo, música, agendamento e oponente! 🎨⚔️</p>
+  </div>
+
+  <div class="aviso-instrucao">
+    <strong>📌 Como funciona a liberação:</strong><br>
+    1. Faça o pagamento e envie o comprovante pelo WhatsApp acima<br>
+    2. A Padroniza cadastra sua agência com status "APROVADO" na planilha<br>
+    3. Digite o nome da sua agência abaixo e clique em Verificar ✅
+  </div>
+
+  <div class="grupo-campo">
+    <label style="color:var(--azul);font-weight:bold;display:block;margin-bottom:8px">🏢 Digite o nome da sua Agência</label>
+    <input type="text" class="campo-form" id="nomeAgenciaVerifica" placeholder="Ex: Gw, Padroniza...">
+  </div>
+  <button class="btn-acao btn-azul" onclick="verificarAcesso()">🔍 VERIFICAR MEU ACESSO</button>
+
+  <div id="statusAcesso" class="status-box">
+    <h4 id="statusTitulo"></h4>
+    <p id="statusTexto"></p>
+  </div>
+
+  <div id="blocoFormulario" class="formulario-iframe">
+    <p style="color:var(--verde);font-weight:bold;text-align:center;margin-bottom:15px">✅ ACESSO LIBERADO! Preencha os dados do seu streamer:</p>
+    <iframe 
+      src="https://docs.google.com/forms/d/e/1FAIpQLSeB3rI-H-DQO2mWCRjGzAV2JTlkhabqAYKuF1Aq3M74Xq_gKA/viewform?embedded=true" 
+      width="100%" 
+      height="650" 
+      frameborder="0" 
+      marginheight="0" 
+      marginwidth="0">
+      Carregando formulário...
+    </iframe>
+    <p style="text-align:center;color:var(--cinza);font-size:12px;margin-top:10px">Se o formulário não carregar, <a href="https://docs.google.com/forms/d/e/1FAIpQLSeB3rI-H-DQO2mWCRjGzAV2JTlkhabqAYKuF1Aq3M74Xq_gKA/viewform" target="_blank" style="color:var(--roxo)">clique aqui</a></p>
+  </div>
+</div>
+
+<div style="background:rgba(168,85,247,0.1);border:1px solid var(--roxo);padding:15px;border-radius:10px;margin-top:25px;text-align:center">
+  <p style="color:var(--roxo);font-weight:bold">📱 Dúvidas? Fale direto com a Padroniza!</p>
+  <a href="https://wa.me/5569981478873" target="_blank" class="btn-acao btn-roxo" style="max-width:300px;margin:12px auto 0;display:block">💬 ABRIR WHATSAPP</a>
+</div>
+
 </div>
 
 <div class="toast" id="toast"></div>
 
 <script>
-const FORM_DESAFIOS_URL = "https://docs.google.com/forms/d/e/1FAIpQLSeoz827upf-eiIEeIfXQhnvFFJaEoSISYA408T4D_ucekcL8A/formResponse";
-const PLANILHA_DESAFIOS_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vR5kiIfjh3npL5icijBqXFa3nBczw1PLXrLhZHZB9ZvVygJMhU0GhF2cjXg6ruEtTzBKBsQh1ko8zEY/pub?output=csv";
-const CAMPOS_DESAFIOS = {
-  nomeAgencia: "entry.1080767887",
-  nomeStreamer: "entry.1553380318",
-  linkPerfil: "entry.349316719",
-  whatsappAgencia: "entry.1916631206",
-  dataDesejada: "entry.47060552",
-  horarioDesejado: "entry.1400908903",
-  rodada: "entry.1470712938",
-  metaDiamantes: "entry.2024340886",
-  observacoes: "entry.1151245897"
-};
-
-// ✅ LINK CORRIGIDO — O QUE FUNCIONOU NO NAVEGADOR!
-const PLANILHA_PAGOS_URL = "https://docs.google.com/spreadsheets/d/1uCFSxUzln9lPc3YtAf5UVUQEhNNw_WP3Y3iZwFS9Xrc/pub?output=csv";
-
 const SEU_WHATSAPP = "5569981478873";
-let desafioAlvo = null;
-
-function trocarAba(nomeAba){
-  document.querySelectorAll('.aba').forEach(el=>{el.classList.remove('ativa','inativa');el.classList.add(el.id.includes(nomeAba)?'ativa':'inativa')});
-  document.querySelectorAll('.conteudo-aba').forEach(el=>el.classList.remove('ativo'));
-  document.getElementById('conteudo'+nomeAba.charAt(0).toUpperCase()+nomeAba.slice(1)).classList.add('ativo');
-  if(nomeAba==='quadro') carregarDesafios();
-}
-
-async function criarDesafio(){
-  const dados = {
-    nomeAgencia: document.getElementById("nomeAgencia").value.trim(),
-    nomeStreamer: document.getElementById("nomeStreamer").value.trim(),
-    linkPerfil: document.getElementById("linkPerfil").value.trim(),
-    whatsappAgencia: document.getElementById("whatsappAgencia").value.trim(),
-    dataDesejada: document.getElementById("dataDesejada").value,
-    horarioDesejado: document.getElementById("horarioDesejado").value,
-    rodada: document.getElementById("rodada").value.trim(),
-    metaDiamantes: document.getElementById("metaDiamantes").value.trim(),
-    observacoes: document.getElementById("observacoes").value.trim()
-  };
-  if(!dados.nomeAgencia || !dados.nomeStreamer || !dados.linkPerfil || !dados.whatsappAgencia || !dados.dataDesejada || !dados.horarioDesejado || !dados.rodada || !dados.metaDiamantes){
-    mostrarToast("⚠️ Preencha todos os campos obrigatórios!"); return;
-  }
-  const formData = new FormData();
-  formData.append(CAMPOS_DESAFIOS.nomeAgencia, dados.nomeAgencia);
-  formData.append(CAMPOS_DESAFIOS.nomeStreamer, dados.nomeStreamer);
-  formData.append(CAMPOS_DESAFIOS.linkPerfil, dados.linkPerfil);
-  formData.append(CAMPOS_DESAFIOS.whatsappAgencia, dados.whatsappAgencia);
-  formData.append(CAMPOS_DESAFIOS.dataDesejada, dados.dataDesejada);
-  formData.append(CAMPOS_DESAFIOS.horarioDesejado, dados.horarioDesejado);
-  formData.append(CAMPOS_DESAFIOS.rodada, dados.rodada);
-  formData.append(CAMPOS_DESAFIOS.metaDiamantes, dados.metaDiamantes);
-  formData.append(CAMPOS_DESAFIOS.observacoes, dados.observacoes);
-  try{
-    await fetch(FORM_DESAFIOS_URL, {method:"POST", mode:"no-cors", body:formData});
-    Object.keys(dados).forEach(k=>{const el=document.getElementById(k);if(el)el.value=''});
-    document.getElementById("sucessoCriar").classList.add("visivel");
-    mostrarToast("✅ Desafio publicado!");
-    setTimeout(()=>{document.getElementById("sucessoCriar").classList.remove("visivel");carregarDesafios()},3000);
-  }catch(e){mostrarToast("⚠️ Erro ao publicar!")}
-}
-
-async function carregarDesafios(){
-  const lista = document.getElementById('listaDesafios');
-  lista.innerHTML = '<div class="aviso-vazio">🔄 Carregando...</div>';
-  try{
-    const res = await fetch(PLANILHA_DESAFIOS_URL);
-    const texto = await res.text();
-    const linhas = texto.split('\n').map(l=>l.split('","').map(c=>c.replace(/^"|"$/g,'')));
-    const dados = linhas.slice(1).filter(l=>l.length>10);
-    const pendentes = dados.filter(linha=>{
-      const status = (linha[10]||'Pendente').trim();
-      return !['Cancelada','Concluída','Concluida'].includes(status);
-    });
-    if(pendentes.length===0){
-      lista.innerHTML = '<div class="aviso-vazio">😅 Nenhum desafio aberto no momento. Seja o primeiro! ⚔️</div>'; return;
-    }
-    lista.innerHTML = pendentes.map((linha,i)=>`
-      <div class="cartao-desafio">
-        <h4>⚔️ ${linha[2]||'—'} <span style="font-size:13px;color:var(--cinza);font-weight:normal">· ${linha[1]||'—'}</span></h4>
-        <div class="dados-linha">
-          <span class="etiqueta-data">📅 ${formatarData(linha[5])} às ${linha[6]||'—'}</span>
-          <span class="etiqueta-meta">💎 ${linha[8]||'—'}</span>
-        </div>
-        <div class="dados-linha">
-          <span>⚔️ ${linha[7]||'—'}</span>
-          ${linha[9]?`<span>📝 ${linha[9]}</span>`:''}
-        </div>
-        <div class="botoes-acao">
-          <button class="btn-acao btn-verde" style="flex:1" onclick='abrirModalDesafiar(${JSON.stringify(linha)})'>👉 QUERO DESAFIAR!</button>
-          ${linha[3]?`<a href="${linha[3]}" target="_blank" class="btn-acao btn-azul" style="flex:0.3;text-decoration:none" title="Ver Perfil">👤</a>`:''}
-        </div>
-      </div>`).join('');
-  }catch(e){lista.innerHTML = '<div class="aviso-vazio">⚠️ Erro ao carregar. Atualize!</div>'}
-}
-
-async function carregarMeusDesafios(){
-  const nomeBusca = document.getElementById('buscaMinhas').value.trim().toLowerCase();
-  if(!nomeBusca){ mostrarToast("Digite o nome da sua agência!"); return; }
-  const lista = document.getElementById('listaMeusDesafios');
-  lista.innerHTML = '<div class="aviso-vazio">🔄 Buscando...</div>';
-  try{
-    const res = await fetch(PLANILHA_DESAFIOS_URL);
-    const texto = await res.text();
-    const linhas = texto.split('\n').map(l=>l.split('","').map(c=>c.replace(/^"|"$/g,'')));
-    const dados = linhas.slice(1).filter(l=>l.length>10);
-    const meus = dados.filter(l=>l[1]&&l[1].toLowerCase().includes(nomeBusca));
-    if(meus.length===0){lista.innerHTML='<div class="aviso-vazio">😅 Nenhum desafio encontrado.</div>';return}
-    lista.innerHTML = meus.map(linha=>{
-      const status = (linha[10]||'Pendente').trim();
-      let cor = 'var(--amarelo)';
-      if(status==='Cancelada') cor='var(--vermelho)';
-      if(status==='Concluída'||status==='Concluida') cor='var(--verde)';
-      return `<div class="cartao-desafio"><h4>🎬 ${linha[2]||'—'} <span style="font-size:13px;color:${cor};font-weight:normal">· ${status}</span></h4>
-        <div class="dados-linha"><span>📅 ${formatarData(linha[5])} às ${linha[6]||'—'}</span><span>💎 ${linha[8]||'—'}</span></div>
-        <div style="font-size:13px;color:var(--cinza);margin-top:8px">📌 Altere o Status na planilha para "Cancelada" ou "Concluída" para remover da lista</div>
-      </div>`;
-    }).join('');
-  }catch(e){lista.innerHTML='<div class="aviso-vazio">⚠️ Erro ao buscar.</div>'}
-}
-
-function formatarData(d){if(!d||d==='—')return'—';const p=d.split('-');return p.length===3?`${p[2]}/${p[1]}/${p[0]}`:d}
-
-function abrirModalDesafiar(linha){desafioAlvo=linha;document.getElementById('dadosDesafioAlvo').innerHTML=`<strong>Desafio de:</strong> ${linha[2]} (${linha[1]})<br>📅 ${formatarData(linha[5])} às ${linha[6]} · 💎 ${linha[8]} · ⚔️ ${linha[7]}`;document.getElementById('modalDesafiar').style.display='flex'}
-function fecharModal(){document.getElementById('modalDesafiar').style.display='none';desafioAlvo=null;['meuStreamer','meuLinkPerfil','meuWhatsApp'].forEach(id=>document.getElementById(id).value='')}
-function enviarProposta(){
-  if(!desafioAlvo)return;
-  const st=document.getElementById('meuStreamer').value.trim(),lk=document.getElementById('meuLinkPerfil').value.trim(),wp=document.getElementById('meuWhatsApp').value.trim();
-  if(!st||!lk||!wp){mostrarToast("Preencha todos os campos!");return}
-  const destino = desafioAlvo[4].replace(/\D/g,'');
-  const msg = `⚔️ PROPOSTA DE BATALHA!
-
-🏢 Olá, ${desafioAlvo[1]}!
-
-Quero desafiar o seu streamer ${desafioAlvo[2]}!
-
-📋 DADOS DA BATALHA:
-📅 Data: ${formatarData(desafioAlvo[5])} às ${desafioAlvo[6]}
-💎 Meta: ${desafioAlvo[8]}
-⚔️ Rodada: ${desafioAlvo[7]}
-
-🎬 MEU STREAMER: ${st}
-🔗 Perfil: ${lk}
-💬 Meu WhatsApp: ${wp}
-
-Podemos confirmar? 🤝`;
-  window.open(`https://wa.me/55${destino}?text=${encodeURIComponent(msg)}`,'_blank');
-  fecharModal();
-  mostrarToast("✅ WhatsApp aberto!")
-}
 
 async function verificarAcesso(){
-  const nomeAgencia = document.getElementById('nomeAgenciaVerifica').value.trim().toLowerCase();
+  const nomeAgencia = document.getElementById('nomeAgenciaVerifica').value.trim().toUpperCase();
   if(!nomeAgencia){ mostrarToast("Digite o nome da sua agência!"); return; }
 
   const statusBox = document.getElementById('statusAcesso');
@@ -410,54 +184,48 @@ async function verificarAcesso(){
 
   try{
     mostrarToast("🔍 Verificando...");
-    const res = await fetch(PLANILHA_PAGOS_URL);
-    const texto = await res.text();
-    const linhas = texto.split('\n').map(l=>l.split('","').map(c=>c.replace(/^"|"$/g,'')));
     
-    // Coluna B = índice 1, Coluna K = índice 10
-    const linhaEncontrada = linhas.find(linha=> 
-      linha[1] && linha[1].trim().toLowerCase() === nomeAgencia
+    const linkAppsScript = "https://script.google.com/macros/s/AKfycbxN1b9AJeEHkGm53K8CrfM855hkkIL43GpBG75CrlAO7mLXzH4TSv9f-VkH8jPiYmx0/exec";
+    
+    const res = await fetch(linkAppsScript);
+    const aprovadas = await res.json();
+    
+    const aprovada = aprovadas.some(nome => 
+      String(nome).trim().toUpperCase() === nomeAgencia
     );
 
-    if(!linhaEncontrada){
-      statusBox.className = 'status-box status-pendente';
-      statusTitulo.textContent = "⏳ Agência não encontrada";
-      statusTexto.textContent = "Envie o comprovante de pagamento acima e aguarde a confirmação da Padroniza! 💳";
-      statusBox.style.display = 'block';
-      return;
-    }
-
-    const status = (linhaEncontrada[10] || '').trim().toUpperCase();
-
-    if(status === 'APROVADO'){
+    if(aprovada){
       statusBox.className = 'status-box status-aprovado';
       statusTitulo.textContent = "✅ ACESSO LIBERADO!";
-      statusTexto.textContent = "Seu pagamento foi confirmado! Preencha os dados do seu streamer abaixo. 🎉";
+      statusTexto.textContent = "Pagamento confirmado! Preencha os dados do seu streamer abaixo. 🎉";
       statusBox.style.display = 'block';
       blocoFormulario.classList.add('visivel');
       mostrarToast("✅ Acesso liberado!");
-    } else if(status === 'RECUSADO'){
-      statusBox.className = 'status-box status-recusado';
-      statusTitulo.textContent = "❌ ACESSO ENCERRADO";
-      statusTexto.textContent = "Batalhas esgotadas ou pagamento não aprovado. Entre em contato para renovar! 💬";
-      statusBox.style.display = 'block';
     } else {
       statusBox.className = 'status-box status-pendente';
       statusTitulo.textContent = "⏳ AGUARDANDO APROVAÇÃO";
-      statusTexto.textContent = "Pagamento recebido e em análise. Aguarde a confirmação da Padroniza! 📋";
+      statusTexto.textContent = "Agência não aprovada ainda. Envie o comprovante e aguarde! 💳";
       statusBox.style.display = 'block';
     }
-
   }catch(e){
-    mostrarToast("⚠️ Erro ao verificar. Tente novamente!");
+    mostrarToast("⚠️ Erro! Tente novamente em instantes.");
     console.error(e);
   }
 }
 
 async function copiarPix(id,btn){
   const texto = document.getElementById(id).textContent;
-  try{await navigator.clipboard.writeText(texto);btn.classList.add('copiado');btn.textContent='✅ COPIADO!';setTimeout(()=>{btn.classList.remove('copiado');btn.textContent='📋 COPIAR PIX'},2500)}
-  catch(e){mostrarToast("Não foi possível copiar. Selecione e copie manualmente.")}
+  try{
+    await navigator.clipboard.writeText(texto);
+    btn.classList.add('copiado');
+    btn.textContent = '✅ COPIADO!';
+    setTimeout(()=>{
+      btn.classList.remove('copiado');
+      btn.textContent = '📋 COPIAR PIX';
+    }, 2500);
+  }catch(e){
+    mostrarToast("Não foi possível copiar. Selecione e copie manualmente.");
+  }
 }
 
 function enviarComprovante(plano,valor){
@@ -469,12 +237,15 @@ function enviarComprovante(plano,valor){
 ✅ Realizei o pagamento! Segue o comprovante.
 Por favor, libere meu acesso ao formulário de assessoria o mais rápido possível. 🙏`;
   window.open(`https://wa.me/${SEU_WHATSAPP}?text=${encodeURIComponent(msg)}`,'_blank');
-  mostrarToast("✅ WhatsApp aberto com mensagem pronta!")
+  mostrarToast("✅ WhatsApp aberto! Envie o comprovante!");
 }
 
-function mostrarToast(msg){const t=document.getElementById('toast');t.textContent=msg;t.style.display='block';setTimeout(()=>t.style.display='none',3500)}
-
-window.onload = carregarDesafios;
+function mostrarToast(msg){
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.style.display = 'block';
+  setTimeout(()=>t.style.display = 'none', 3500);
+}
 </script>
 </body>
 </html>
