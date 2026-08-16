@@ -29,16 +29,13 @@
 
     .container { max-width: 420px; margin: 0 auto; }
 
-    /* 👤 AGENDA PESSOAL — TOPO */
     .agenda-pessoal {
       background: linear-gradient(135deg, #1a1a40, #121230);
       padding: 20px; border-radius: 20px; border: 2px solid var(--cor-disponivel);
       margin-bottom: 24px;
-      box-shadow: 0 0 20px rgba(0,255,136,0.1);
     }
     .agenda-pessoal .titulo {
       font-size: 18px; font-weight: 900; margin-bottom: 16px;
-      display: flex; align-items: center; gap: 10px;
       text-transform: uppercase;
       color: var(--cor-disponivel);
     }
@@ -46,17 +43,13 @@
       background: rgba(255,255,255,0.05); padding: 12px 14px;
       border-radius: 10px; margin-bottom: 10px;
       border-left: 4px solid;
-      transition: all 0.2s;
     }
-    .item-batalha-pessoal:hover { transform: translateX(4px); }
     .item-batalha-pessoal.confirmada { border-color: var(--cor-confirmada); }
     .item-batalha-pessoal.campanha { border-color: var(--cor-campanha); }
     .item-batalha-pessoal.oponente { border-color: var(--cor-oponente); }
-    .item-batalha-pessoal .data { font-weight: 800; font-size: 15px; margin-bottom: 4px; }
-    .item-batalha-pessoal .detalhe { font-size: 13px; color: var(--texto-claro); }
-    .sem-batalhas { color: var(--texto-claro); font-size: 14px; padding: 10px; text-align: center; }
+    .item-batalha-pessoal .data { font-weight: 800; font-size: 15px; }
+    .sem-batalhas { color: var(--texto-claro); padding: 10px; text-align: center; }
 
-    /* CABEÇALHO DO MÊS COM SETAS */
     .cabecalho-mes {
       display: flex; justify-content: space-between; align-items: center;
       margin-bottom: 24px;
@@ -65,217 +58,153 @@
       width: 56px; height: 56px; background: transparent;
       border: 3px solid var(--cor-disponivel); border-radius: 12px;
       color: var(--cor-disponivel); font-size: 22px; cursor: pointer;
-      display: flex; align-items: center; justify-content: center;
-      transition: all 0.2s;
     }
-    .btn-seta:hover { background: rgba(0,255,136,0.15); transform: scale(1.05); }
-    .nome-mes {
-      font-size: 26px; font-weight: 900; color: #fff; letter-spacing: 1px;
-      text-transform: uppercase;
-    }
+    .nome-mes { font-size: 26px; font-weight: 900; text-transform: uppercase; }
 
-    /* DIAS DA SEMANA */
     .cabecalho-semana {
       display: grid; grid-template-columns: repeat(7, 1fr); gap: 8px;
       margin-bottom: 12px; padding: 0 4px;
     }
-    .nome-semana {
-      text-align: center; font-size: 14px; font-weight: 600;
-      color: var(--texto-claro); padding: 8px 0;
-      text-transform: uppercase;
-    }
+    .nome-semana { text-align: center; font-size: 14px; color: var(--texto-claro); text-transform: uppercase; }
 
-    /* GRADE DO CALENDÁRIO */
     .grade-calendario {
       display: grid; grid-template-columns: repeat(7, 1fr); gap: 10px;
       background: var(--bg-card); padding: 18px; border-radius: 24px;
-      border: 2px solid var(--borda);
-      margin-bottom: 24px;
+      border: 2px solid var(--borda); margin-bottom: 24px;
     }
 
-    /* CAIXA DE CADA DIA */
     .dia {
       aspect-ratio: 1; border-radius: 12px; border: 4px solid;
       display: flex; flex-direction: column; align-items: center; justify-content: center;
       font-weight: 800; font-size: 20px; position: relative;
-      transition: all 0.2s ease; background: rgba(0,0,0,0.25);
+      transition: all 0.2s; background: rgba(0,0,0,0.25);
     }
     .dia.vazio { border: none; background: transparent; }
     .dia.clicavel { cursor: pointer; }
     .dia.clicavel:hover { transform: scale(1.08); }
 
-    /* 🎨 CORES EXATAS POR SITUAÇÃO */
     .dia.disponivel { border-color: var(--cor-disponivel); color: var(--cor-disponivel); }
     .dia.confirmada { border-color: var(--cor-confirmada); color: var(--cor-confirmada); }
     .dia.oponente { border-color: var(--cor-oponente); color: var(--cor-oponente); }
     .dia.campanha { border-color: var(--cor-campanha); color: var(--cor-campanha); }
-    .dia.bloqueado { border-color: var(--cor-bloqueado); color: var(--cor-bloqueado); opacity: 0.9; }
+    .dia.bloqueado { border-color: var(--cor-bloqueado); color: var(--cor-bloqueado); }
 
-    .tag-dia {
-      font-size: 10px; font-weight: 700; margin-top: 3px; line-height: 1;
-      text-transform: uppercase;
-    }
+    .tag-dia { font-size: 10px; font-weight: 700; margin-top: 3px; text-transform: uppercase; }
 
-    /* ⏰ FORMULÁRIO — LOGO ABAIXO DO CALENDÁRIO */
     .seletor-horario {
-      background: var(--bg-card);
-      padding: 24px; border-radius: 24px; border: 2px solid var(--borda);
-      margin-bottom: 28px;
-      display: none;
+      background: var(--bg-card); padding: 24px; border-radius: 24px; border: 2px solid var(--borda);
+      margin-bottom: 28px; display: none;
     }
     .seletor-horario.aberto { display: block; }
-    .titulo-seletor {
-      font-size: 20px; font-weight: 900; margin-bottom: 6px;
-      display: flex; align-items: center; gap: 10px;
-      text-transform: uppercase;
+    .titulo-seletor { font-size: 20px; font-weight: 900; margin-bottom: 6px; text-transform: uppercase; }
+    .data-selecionada { font-size: 16px; color: var(--texto-claro); margin-bottom: 16px; }
+    
+    .horarios-ocupados {
+      background: rgba(255,51,85,0.1); border-left: 3px solid var(--cor-bloqueado);
+      padding: 12px; border-radius: 8px; margin-bottom: 16px; font-size: 13px;
     }
-    .data-selecionada {
-      font-size: 16px; color: var(--texto-claro); margin-bottom: 20px;
+    .horario-ocupado-item {
+      padding: 6px 8px; margin-bottom: 4px; border-radius: 5px;
+      background: rgba(255,255,255,0.05);
     }
-    .label-horario {
-      font-size: 15px; color: var(--texto-claro); margin-bottom: 8px; display: block;
-    }
+    .horario-ocupado-item.confirmada { border-left: 3px solid var(--cor-confirmada); }
+    .horario-ocupado-item.campanha { border-left: 3px solid var(--cor-campanha); }
+    .horario-ocupado-item.oponente { border-left: 3px solid var(--cor-oponente); }
+
+    .label-horario { font-size: 15px; color: var(--texto-claro); margin-bottom: 8px; display: block; }
     .campo-horario {
       width: 100%; padding: 14px; background: #000; border: 2px solid var(--borda);
       border-radius: 10px; color: #fff; font-size: 16px; margin-bottom: 16px;
-      appearance: none;
     }
     .campo-horario:focus { outline: none; border-color: var(--cor-disponivel); }
-    
-    /* 🖼️ MATERIAIS DE DIVULGAÇÃO */
+
     .secao-materiais {
       background: rgba(0,0,0,0.25); border-radius: 12px; padding: 16px; margin: 16px 0;
       border: 1px solid var(--borda);
     }
-    .titulo-materiais {
-      font-size: 15px; font-weight: 800; margin-bottom: 12px; color: var(--cor-campanha);
-      text-transform: uppercase;
-    }
-    .preview-imagem {
-      width: 100%; max-height: 200px; object-fit: cover; border-radius: 10px;
-      margin: 10px 0; border: 2px solid var(--cor-disponivel);
-      display: none;
-    }
-    .preview-imagem.mostrar { display: block; }
+    .titulo-materiais { font-size: 15px; font-weight: 800; margin-bottom: 12px; color: var(--cor-campanha); text-transform: uppercase; }
     .link-material {
       display: inline-flex; align-items: center; gap: 8px;
-      color: var(--cor-oponente); text-decoration: none; font-size: 14px;
-      margin-top: 8px; padding: 8px 12px; background: rgba(0,204,255,0.1); border-radius: 8px;
-      transition: all 0.2s;
+      color: var(--cor-oponente); text-decoration: none; padding: 8px 12px;
+      background: rgba(0,204,255,0.1); border-radius: 8px; margin-top: 8px;
     }
-    .link-material:hover { background: rgba(0,204,255,0.2); transform: translateY(-2px); }
     .sem-material { font-size: 13px; color: var(--texto-claro); font-style: italic; }
 
-    .horarios-bloqueados {
-      background: rgba(255,51,85,0.1); border-left: 3px solid var(--cor-bloqueado);
-      padding: 10px 14px; border-radius: 8px; margin-bottom: 16px; font-size: 13px;
-      color: #ff8899;
-    }
     .btn-verificar {
       width: 100%; padding: 16px; background: linear-gradient(90deg, #00ff88, #00cc6a);
       border: none; border-radius: 12px; color: #000; font-size: 18px;
-      font-weight: 900; cursor: pointer; transition: all 0.2s;
-      text-transform: uppercase;
+      font-weight: 900; cursor: pointer; text-transform: uppercase;
     }
-    .btn-verificar:hover { transform: scale(1.02); box-shadow: 0 0 15px rgba(0,255,136,0.4); }
-    .btn-verificar:disabled { background: #444; color: #888; cursor: not-allowed; transform: none; }
+    .btn-verificar:disabled { background: #444; color: #888; cursor: not-allowed; }
 
-    /* 🌍 OUTRAS BATALHAS — AGORA VISÍVEL E BEM DEFINIDO! */
     .outras-batalhas {
-      background: var(--bg-card); padding: 20px; border-radius: 20px;
-      border: 2px solid var(--borda);
-      margin-top: 10px;
+      background: var(--bg-card); padding: 20px; border-radius: 20px; border: 2px solid var(--borda);
     }
-    .outras-batalhas .titulo {
-      font-size: 16px; font-weight: 800; margin-bottom: 16px;
-      color: var(--texto-claro);
-      text-transform: uppercase;
-    }
+    .outras-batalhas .titulo { font-size: 16px; font-weight: 800; margin-bottom: 16px; text-transform: uppercase; }
     .item-outra {
       padding: 10px 12px; border-radius: 8px; margin-bottom: 8px;
-      background: rgba(255,255,255,0.03);
-      border-left: 3px solid var(--borda);
+      background: rgba(255,255,255,0.03); border-left: 3px solid var(--borda);
       font-size: 13px;
     }
     .item-outra.confirmada { border-left-color: var(--cor-confirmada); }
     .item-outra.campanha { border-left-color: var(--cor-campanha); }
     .item-outra.oponente { border-left-color: var(--cor-oponente); }
-    .item-outra .nome-streamer { font-weight: 700; margin-left: 6px; }
 
     #toast {
       position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%);
       background: var(--bg-card); color: #fff; padding: 14px 28px;
-      border-radius: 12px; z-index: 2000; font-size: 15px; display: none;
-      border: 2px solid var(--borda); max-width: 90%; text-align: center;
+      border-radius: 12px; z-index: 2000; display: none; border: 2px solid var(--borda);
     }
     #toast.sucesso { border-color: var(--cor-disponivel); }
     #toast.erro { border-color: var(--cor-bloqueado); }
     #toast.aviso { border-color: var(--cor-campanha); }
-
-    @media (max-width: 400px) {
-      .dia { font-size: 16px; }
-      .tag-dia { font-size: 9px; }
-      .grade-calendario { gap: 8px; padding: 14px; }
-    }
   </style>
 </head>
 <body>
 
 <div class="container">
-  <!-- 👤 1. MINHA AGENDA — TOPO -->
   <div class="agenda-pessoal" id="agendaPessoal">
     <h3 class="titulo">👤 MINHA AGENDA — <span id="nomeStreamerExibicao"></span></h3>
     <div id="listaAgendaPessoal"></div>
   </div>
 
-  <!-- 📅 2. CALENDÁRIO -->
   <div class="cabecalho-mes">
     <button class="btn-seta" onclick="mudarMes(-1)">◀</button>
     <h2 class="nome-mes" id="nomeMes"></h2>
     <button class="btn-seta" onclick="mudarMes(1)">▶</button>
   </div>
   <div class="cabecalho-semana">
-    <div class="nome-semana">Dom</div>
-    <div class="nome-semana">Seg</div>
-    <div class="nome-semana">Ter</div>
-    <div class="nome-semana">Qua</div>
-    <div class="nome-semana">Qui</div>
-    <div class="nome-semana">Sex</div>
-    <div class="nome-semana">Sáb</div>
+    <div class="nome-semana">Dom</div><div class="nome-semana">Seg</div><div class="nome-semana">Ter</div>
+    <div class="nome-semana">Qua</div><div class="nome-semana">Qui</div><div class="nome-semana">Sex</div><div class="nome-semana">Sáb</div>
   </div>
   <div class="grade-calendario" id="gradeCalendario"></div>
 
-  <!-- ⏰ 3. FORMULÁRIO — LOGO ABAIXO DO CALENDÁRIO -->
   <div class="seletor-horario" id="seletorHorario">
     <h3 class="titulo-seletor">⏰ AGENDAR BATALHA</h3>
     <div class="data-selecionada" id="dataSelecionada"></div>
-    <div class="horarios-bloqueados" id="avisoBloqueio" style="display:none;"></div>
     
-    <label class="label-horario">🕐 HORÁRIO DE INÍCIO</label>
-    <input type="time" class="campo-horario" id="campoHorarioInicio" onchange="verificarConflitoTempo()">
-    
-    <label class="label-horario">🕔 HORÁRIO DE FIM (opcional)</label>
-    <input type="time" class="campo-horario" id="campoHorarioFim">
-    
-    <!-- 🖼️ MATERIAIS DE DIVULGAÇÃO -->
-    <div class="secao-materiais" id="secaoMateriais" style="display:none;">
-      <h4 class="titulo-materiais">📦 MATERIAIS DE DIVULGAÇÃO DISPONÍVEIS</h4>
-      <div id="blocoBanner">
-        <strong>🖼️ BANNER / IMAGEM:</strong>
-        <div id="linkBannerContainer" class="sem-material">Nenhum banner disponível</div>
-      </div>
-      <div style="margin-top:12px;" id="blocoVideo">
-        <strong>🎬 VÍDEO DE DIVULGAÇÃO:</strong>
-        <div id="linkVideoContainer" class="sem-material">Nenhum vídeo disponível</div>
-      </div>
+    <div class="horarios-ocupados" id="blocoHorariosOcupados" style="display:none;">
+      ⚠️ Horários já ocupados neste dia:
+      <div id="listaHorariosOcupados"></div>
     </div>
     
-    <button class="btn-verificar" id="btnVerificar" onclick="enviarAgendamento()">✅ ENVIAR SOLICITAÇÃO</button>
+    <label class="label-horario">🕐 HORÁRIO DE INÍCIO</label>
+    <input type="time" class="campo-horario" id="campoHorarioInicio" onchange="verificarConflito()">
+    
+    <label class="label-horario">🕔 HORÁRIO DE FIM</label>
+    <input type="time" class="campo-horario" id="campoHorarioFim" onchange="verificarConflito()">
+    
+    <div class="secao-materiais" id="secaoMateriais" style="display:none;">
+      <h4 class="titulo-materiais">📦 MATERIAIS DE DIVULGAÇÃO</h4>
+      <div><strong>🖼️ BANNER:</strong> <span id="linkBanner" class="sem-material">Nenhum</span></div>
+      <div style="margin-top:8px;"><strong>🎬 VÍDEO:</strong> <span id="linkVideo" class="sem-material">Nenhum</span></div>
+    </div>
+    
+    <button class="btn-verificar" id="btnEnviar" onclick="enviarAgendamento()">✅ ENVIAR SOLICITAÇÃO</button>
   </div>
 
-  <!-- 🌍 4. OUTRAS BATALHAS & CAMPANHAS — EMBAIXO, SEMPRE VISÍVEL! -->
   <div class="outras-batalhas" id="secaoOutras">
-    <h3 class="titulo">🌍 OUTRAS BATALHAS & CAMPANHAS DA AGÊNCIA</h3>
+    <h3 class="titulo">🌍 OUTRAS BATALHAS & CAMPANHAS</h3>
     <div id="listaOutrasBatalhas"></div>
   </div>
 </div>
@@ -283,22 +212,19 @@
 <div id="toast"></div>
 
 <script>
+// ✅ LINK JÁ COLOCADO!
 const LINK_APPS_SCRIPT = "https://script.google.com/macros/s/AKfycbx6Bpw0OdmfdznHovpbCNhJmUSLeWUi5ZaWeVGqHks5Iy4PC1M-E32EXqUqcCc7L1oP/exec";
 
-const parametrosURL = new URLSearchParams(window.location.search);
-const NOME_STREAMER = (parametrosURL.get("usuario") || "").trim().toUpperCase();
+const params = new URLSearchParams(window.location.search);
+const NOME_STREAMER = (params.get("usuario") || "").trim().toUpperCase();
 
-let dataAtual = new Date();
-let mesAtual = dataAtual.getMonth() + 1;
-let anoAtual = dataAtual.getFullYear();
+let mesAtual = new Date().getMonth() + 1;
+let anoAtual = new Date().getFullYear();
 let batalhas = [];
 let dataEscolhida = null;
 let batalhasDoDia = [];
 
-const NOMES_MESES = [
-  "Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho",
-  "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"
-];
+const NOMES_MESES = ["Janeiro","Fevereiro","Março","Abril","Maio","Junho","Julho","Agosto","Setembro","Outubro","Novembro","Dezembro"];
 
 document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("nomeStreamerExibicao").textContent = NOME_STREAMER || "Convidado";
@@ -307,59 +233,31 @@ document.addEventListener("DOMContentLoaded", () => {
 
 async function carregarBatalhas() {
   try {
-    const res = await fetch(`${LINK_APPS_SCRIPT}?acao=lerBatalhas&mes=${mesAtual}`);
+    const res = await fetch(`${LINK_APPS_SCRIPT}?acao=lerBatalhas&mes=${mesAtual}&ano=${anoAtual}`);
     const dados = await res.json();
-    if (dados.status === "sucesso") {
-      batalhas = dados.batalhas || [];
-      console.log("Batalhas carregadas:", batalhas.length);
-    }
-  } catch (erro) {
-    console.log("Erro ao carregar:", erro);
+    batalhas = dados.batalhas || [];
+    console.log("✅ Carregadas:", batalhas.length, "batalhas");
+  } catch (e) {
+    console.error("Erro ao carregar:", e);
+    mostrarToast("❌ Erro ao carregar dados", "erro");
   }
   
-  const minhasBatalhas = batalhas.filter(b => 
-    NOME_STREAMER && b.streamer && 
-    b.streamer.toUpperCase().includes(NOME_STREAMER)
-  );
-  const outrasBatalhas = batalhas.filter(b => 
-    !NOME_STREAMER || !b.streamer || 
-    !b.streamer.toUpperCase().includes(NOME_STREAMER)
-  );
+  function normalizarNome(nome) {
+    return nome.toUpperCase().replace(/\s+/g, "").replace(/[^A-Z0-9]/g, "").trim();
+  }
 
-  preencherAgendaPessoal(minhasBatalhas);
+  const minhas = batalhas.filter(b => {
+    if (!NOME_STREAMER || !b.streamer) return false;
+    const nomeURL = normalizarNome(NOME_STREAMER);
+    const nomePlanilha = normalizarNome(b.streamer);
+    return nomePlanilha.includes(nomeURL) || nomeURL.includes(nomePlanilha);
+  });
+
+  const outras = batalhas.filter(b => !minhas.includes(b));
+  
+  preencherAgenda(minhas);
   renderizarCalendario();
-  preencherOutrasBatalhas(outrasBatalhas); // ✅ GARANTIDO QUE VAI RENDERIZAR!
-}
-
-function preencherAgendaPessoal(minhasBatalhas) {
-  const container = document.getElementById("listaAgendaPessoal");
-  
-  if (!NOME_STREAMER) {
-    container.innerHTML = `<div class="sem-batalhas">🔑 Acesse pela página principal para ver suas batalhas!</div>`;
-    return;
-  }
-  
-  if (minhasBatalhas.length === 0) {
-    container.innerHTML = `<div class="sem-batalhas">📭 Nenhuma batalha ou campanha agendada ainda!</div>`;
-    return;
-  }
-
-  minhasBatalhas.sort((a, b) => new Date(a.data) - new Date(b.data));
-
-  container.innerHTML = minhasBatalhas.map(b => {
-    const classeItem = definirClasse(b.situacao);
-    const icone = classeItem === "confirmada" ? "⚔️" : 
-                  classeItem === "campanha" ? "⚠️" : "⏳";
-    const horaTexto = b.horaInicio ? ` — ${b.horaInicio}` : "";
-    const dataExib = formatarDataExibicao(b.data);
-    
-    return `
-      <div class="item-batalha-pessoal ${classeItem}">
-        <div class="data">${icone} ${dataExib}${horaTexto}</div>
-        <div class="detalhe">${b.situacao}${b.meta ? ` • Meta: ${b.meta}` : ""}</div>
-      </div>
-    `;
-  }).join("");
+  preencherOutras(outras);
 }
 
 function definirClasse(situacao) {
@@ -367,14 +265,14 @@ function definirClasse(situacao) {
   const s = situacao.toUpperCase();
   if (s.includes("CONFIRMADA") || s.includes("CONFIRMADO") || s.includes("CONFIMADO")) return "confirmada";
   if (s.includes("CAMPANHA")) return "campanha";
-  if (s.includes("FALTA OPONENTE")) return "oponente";
+  if (s.includes("FALTA OPONENTE") || s.includes("AGUARDANDO OPONENTE")) return "oponente";
   if (s.includes("DOMINGO") || s.includes("FERIADO")) return "bloqueado";
+  if (s.includes("DISPONÍVEL") || s.includes("DISPONIVEL")) return "disponivel";
   return "disponivel";
 }
 
-function formatarDataExibicao(dataISO) {
-  const d = new Date(dataISO);
-  return `${String(d.getDate()).padStart(2,"0")}/${String(d.getMonth()+1).padStart(2,"0")}`;
+function formatarDataISO(dia, mes, ano) {
+  return `${ano}-${String(mes).padStart(2,"0")}-${String(dia).padStart(2,"0")}`;
 }
 
 function renderizarCalendario() {
@@ -392,183 +290,127 @@ function renderizarCalendario() {
   }
 
   for (let dia = 1; dia <= ultimoDia; dia++) {
-    const dataISO = `${anoAtual}-${String(mesAtual).padStart(2,"0")}-${String(dia).padStart(2,"0")}`;
-    const diaSemanaNum = new Date(anoAtual, mesAtual - 1, dia).getDay();
+    const dataISO = formatarDataISO(dia, mesAtual, anoAtual);
+    const diaSemana = new Date(anoAtual, mesAtual - 1, dia).getDay();
     const batalhasNoDia = batalhas.filter(b => b.data === dataISO);
 
     let classe = "disponivel";
     let tag = "";
-    let podeClicar = true;
+    let clicavel = true;
 
-    if (batalhasNoDia.length > 0) {
+    if (diaSemana === 0) {
+      classe = "bloqueado";
+      tag = "DOM";
+      clicavel = false;
+    }
+    else if (batalhasNoDia.length > 0) {
       const situacoes = [...new Set(batalhasNoDia.map(b => b.situacao))];
       
       if (situacoes.some(s => s.includes("DOMINGO") || s.includes("FERIADO"))) {
-        classe = "bloqueado"; tag = "ⓘ DOM"; podeClicar = false;
+        classe = "bloqueado"; tag = "DOM"; clicavel = false;
       }
       else if (situacoes.some(s => s.includes("CAMPANHA"))) {
-        classe = "campanha"; tag = "⚠ CAMP";
+        classe = "campanha"; tag = "CAMP";
       }
-      else if (situacoes.some(s => s.includes("FALTA OPONENTE"))) {
-        classe = "oponente"; tag = "⏳ OP";
-      }
-      else if (situacoes.some(s => s.includes("CONFIRMADA") || s.includes("CONFIRMADO") || s.includes("CONFIMADO"))) {
+      else if (situacoes.some(s => s.includes("CONFIRMADA") || s.includes("CONFIMADO"))) {
         classe = "confirmada"; tag = "✓";
       }
-    } else {
-      if (diaSemanaNum === 0) {
-        classe = "bloqueado"; tag = "ⓘ DOM"; podeClicar = false;
+      else if (situacoes.some(s => s.includes("FALTA OPONENTE"))) {
+        classe = "oponente"; tag = "OP";
       }
     }
 
     const div = document.createElement("div");
-    div.className = `dia ${classe}${podeClicar ? " clicavel" : ""}`;
+    div.className = `dia ${classe}${clicavel ? " clicavel" : ""}`;
     div.innerHTML = `<div>${dia}</div>${tag ? `<div class="tag-dia">${tag}</div>` : ""}`;
 
-    if (podeClicar) {
-      div.onclick = () => abrirSeletor(dataISO, dia, batalhasNoDia);
+    if (clicavel) {
+      div.onclick = () => abrirFormulario(dataISO, dia, batalhasNoDia);
     }
 
     grade.appendChild(div);
   }
 }
 
-// 🌍 FUNÇÃO CORRIGIDA — GARANTE QUE APAREÇA!
-function preencherOutrasBatalhas(outrasBatalhas) {
-  const container = document.getElementById("listaOutrasBatalhas");
-  
-  // Filtra as relevantes
-  const relevantes = outrasBatalhas.filter(b => {
-    if (!b.situacao) return false;
-    const s = b.situacao.toUpperCase();
-    return s.includes("CONFIRMADA") || s.includes("CONFIMADO") || 
-           s.includes("CAMPANHA") || s.includes("FALTA OPONENTE");
-  });
-
-  console.log("Outras batalhas encontradas:", relevantes.length);
-
-  if (relevantes.length === 0) {
-    container.innerHTML = `<div class="sem-batalhas">Nenhuma outra batalha ou campanha no momento ✅</div>`;
-    return;
-  }
-
-  relevantes.sort((a, b) => new Date(a.data) - new Date(b.data));
-
-  container.innerHTML = relevantes.map(b => {
-    const classeItem = definirClasse(b.situacao);
-    const icone = classeItem === "confirmada" ? "⚔️" : 
-                  classeItem === "campanha" ? "⚠️" : "⏳";
-    const dataExib = formatarDataExibicao(b.data);
-    const horaTexto = b.horaInicio ? ` às ${b.horaInicio}` : "";
-    const nomeExib = b.streamer || "Campanha Global";
-    
-    return `
-      <div class="item-outra ${classeItem}">
-        ${icone} ${dataExib}${horaTexto}
-        <span class="nome-streamer">${nomeExib}</span>
-        <br><small style="color:var(--texto-claro)">${b.situacao}${b.meta ? ` • Meta: ${b.meta}` : ""}</small>
-      </div>
-    `;
-  }).join("");
-}
-
-function mudarMes(delta) {
-  mesAtual += delta;
-  if (mesAtual < 1) { mesAtual = 12; anoAtual--; }
-  if (mesAtual > 12) { mesAtual = 1; anoAtual++; }
-  carregarBatalhas();
-  fecharSeletor();
-}
-
-function abrirSeletor(dataISO, diaNum, batalhasNoDia) {
+function abrirFormulario(dataISO, diaNum, batalhasNoDiaParam) {
   dataEscolhida = dataISO;
-  batalhasDoDia = batalhasNoDia;
+  batalhasDoDia = batalhasNoDiaParam;
   
   const d = new Date(dataISO);
-  const diasCompletos = ["Domingo","Segunda-feira","Terça-feira","Quarta-feira","Quinta-feira","Sexta-feira","Sábado"];
-  document.getElementById("dataSelecionada").textContent = `${diaNum}/${String(mesAtual).padStart(2,"0")}/${anoAtual} — ${diasCompletos[d.getDay()]}`;
+  const diasSemana = ["Domingo","Segunda","Terça","Quarta","Quinta","Sexta","Sábado"];
+  document.getElementById("dataSelecionada").textContent = `${diaNum}/${String(mesAtual).padStart(2,"0")}/${anoAtual} — ${diasSemana[d.getDay()]}`;
   
-  const aviso = document.getElementById("avisoBloqueio");
-  if (batalhasNoDia.length > 0) {
-    const horarios = batalhasNoDia
-      .filter(b => b.horaInicio)
-      .map(b => `${b.horaInicio}${b.horaFim ? " - " + b.horaFim : ""} (${b.situacao})`)
-      .join("<br>");
-    aviso.innerHTML = horarios ? `⚠️ Horários ocupados:<br>${horarios}` : "";
-    aviso.style.display = horarios ? "block" : "none";
+  const blocoHorarios = document.getElementById("blocoHorariosOcupados");
+  const listaHorarios = document.getElementById("listaHorariosOcupados");
+  const ocupados = batalhasDoDia.filter(b => b.horaInicio);
+  
+  if (ocupados.length > 0) {
+    listaHorarios.innerHTML = ocupados.map(b => {
+      const classe = definirClasse(b.situacao);
+      return `<div class="horario-ocupado-item ${classe}">
+        ${b.horaInicio}${b.horaFim ? ` — ${b.horaFim}` : ""} → ${b.situacao}
+      </div>`;
+    }).join("");
+    blocoHorarios.style.display = "block";
   } else {
-    aviso.style.display = "none";
+    blocoHorarios.style.display = "none";
   }
 
-  // 🖼️ CARREGA MATERIAIS
-  const secaoMateriais = document.getElementById("secaoMateriais");
-  const batalhaDoDia = batalhasNoDia[0] || null;
-  
-  if (batalhaDoDia && (batalhaDoDia.linkBanner || batalhaDoDia.linkVideo)) {
-    secaoMateriais.style.display = "block";
-    
-    const containerBanner = document.getElementById("linkBannerContainer");
-    if (batalhaDoDia.linkBanner) {
-      containerBanner.innerHTML = `
-        <a href="${batalhaDoDia.linkBanner}" target="_blank" class="link-material">📎 Clique para baixar imagem</a>
-        <img src="${batalhaDoDia.linkBanner}" class="preview-imagem mostrar" alt="Banner" onerror="this.style.display='none'">
-      `;
+  const batalhaComMaterial = batalhasDoDia.find(b => b.linkBanner || b.linkVideo);
+  const secaoMat = document.getElementById("secaoMateriais");
+  if (batalhaComMaterial) {
+    secaoMat.style.display = "block";
+    const elBanner = document.getElementById("linkBanner");
+    const elVideo = document.getElementById("linkVideo");
+    if (batalhaComMaterial.linkBanner) {
+      elBanner.innerHTML = `<a href="${batalhaComMaterial.linkBanner}" target="_blank" class="link-material">📎 Baixar Imagem</a>`;
     } else {
-      containerBanner.innerHTML = `<span class="sem-material">Nenhum banner disponível</span>`;
+      elBanner.innerHTML = `<span class="sem-material">Nenhum banner</span>`;
     }
-    
-    const containerVideo = document.getElementById("linkVideoContainer");
-    if (batalhaDoDia.linkVideo) {
-      containerVideo.innerHTML = `<a href="${batalhaDoDia.linkVideo}" target="_blank" class="link-material">▶️ Assistir/Baixar vídeo</a>`;
+    if (batalhaComMaterial.linkVideo) {
+      elVideo.innerHTML = `<a href="${batalhaComMaterial.linkVideo}" target="_blank" class="link-material">▶️ Assistir Vídeo</a>`;
     } else {
-      containerVideo.innerHTML = `<span class="sem-material">Nenhum vídeo disponível</span>`;
+      elVideo.innerHTML = `<span class="sem-material">Nenhum vídeo</span>`;
     }
   } else {
-    secaoMateriais.style.display = "none";
+    secaoMat.style.display = "none";
   }
 
   document.getElementById("campoHorarioInicio").value = "";
   document.getElementById("campoHorarioFim").value = "";
-  document.getElementById("btnVerificar").disabled = false;
+  document.getElementById("btnEnviar").disabled = false;
   document.getElementById("seletorHorario").classList.add("aberto");
   window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" });
 }
 
-function fecharSeletor() {
-  document.getElementById("seletorHorario").classList.remove("aberto");
-  batalhasDoDia = [];
-}
-
-function paraMinutos(hora) {
+function paraMin(hora) {
   if (!hora) return 1440;
   const [h, m] = String(hora).split(":").map(Number);
   return h * 60 + (m || 0);
 }
 
-function temSobreposicao(inicio1, fim1, inicio2, fim2) {
-  const i1 = paraMinutos(inicio1);
-  const f1 = paraMinutos(fim1 || "23:59");
-  const i2 = paraMinutos(inicio2);
-  const f2 = paraMinutos(fim2 || "23:59");
-  return !(f1 <= i2 || i1 >= f2);
-}
-
-function verificarConflitoTempo() {
-  const horaInicio = document.getElementById("campoHorarioInicio").value;
-  const btn = document.getElementById("btnVerificar");
+function verificarConflito() {
+  const inicio = document.getElementById("campoHorarioInicio").value;
+  const fim = document.getElementById("campoHorarioFim").value;
+  const btn = document.getElementById("btnEnviar");
   
-  if (!horaInicio || batalhasDoDia.length === 0) {
+  if (!inicio) {
     btn.disabled = false;
     btn.textContent = "✅ ENVIAR SOLICITAÇÃO";
     return;
   }
 
-  const conflito = batalhasDoDia.some(b => {
+  const i1 = paraMin(inicio);
+  const f1 = paraMin(fim || "23:59");
+
+  const temConflito = batalhasDoDia.some(b => {
     if (!b.horaInicio) return false;
-    return temSobreposicao(horaInicio, "23:59", b.horaInicio, b.horaFim);
+    const i2 = paraMin(b.horaInicio);
+    const f2 = paraMin(b.horaFim || "23:59");
+    return !(f1 <= i2 || i1 >= f2);
   });
 
-  if (conflito) {
+  if (temConflito) {
     btn.disabled = true;
     btn.textContent = "❌ HORÁRIO OCUPADO";
   } else {
@@ -578,25 +420,29 @@ function verificarConflitoTempo() {
 }
 
 async function enviarAgendamento() {
-  const horaInicio = document.getElementById("campoHorarioInicio").value;
-  const horaFim = document.getElementById("campoHorarioFim").value;
+  const inicio = document.getElementById("campoHorarioInicio").value;
+  const fim = document.getElementById("campoHorarioFim").value;
   
-  if (!horaInicio) {
+  if (!inicio) {
     mostrarToast("⚠️ Selecione o horário de início!", "aviso");
     return;
   }
 
-  const temConflito = batalhasDoDia.some(b => {
+  const i1 = paraMin(inicio);
+  const f1 = paraMin(fim || "23:59");
+  const conflitoLocal = batalhasDoDia.some(b => {
     if (!b.horaInicio) return false;
-    return temSobreposicao(horaInicio, horaFim || "23:59", b.horaInicio, b.horaFim);
+    const i2 = paraMin(b.horaInicio);
+    const f2 = paraMin(b.horaFim || "23:59");
+    return !(f1 <= i2 || i1 >= f2);
   });
 
-  if (temConflito) {
-    mostrarToast("❌ Este horário já está ocupado!", "erro");
+  if (conflitoLocal) {
+    mostrarToast("❌ Este horário já está ocupado! Escolha outro horário.", "erro");
     return;
   }
 
-  mostrarToast("⏳ Enviando solicitação...", "aviso");
+  mostrarToast("⏳ Enviando...", "aviso");
 
   try {
     await fetch(`${LINK_APPS_SCRIPT}?acao=solicitarBatalha`, {
@@ -605,28 +451,72 @@ async function enviarAgendamento() {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         dataISO: dataEscolhida,
-        horaInicio: horaInicio,
-        horaFim: horaFim,
+        horaInicio: inicio,
+        horaFim: fim,
         streamer: NOME_STREAMER
       })
     });
-
     await carregarBatalhas();
-    fecharSeletor();
-    mostrarToast("✅ Solicitação enviada! Aguardando oponente.", "sucesso");
+    fecharFormulario();
+    mostrarToast("✅ Solicitação enviada! Situação: FALTA OPONENTE", "sucesso");
   } catch {
     await carregarBatalhas();
-    fecharSeletor();
+    fecharFormulario();
     mostrarToast("✅ Registrado com sucesso!", "sucesso");
   }
 }
 
-function mostrarToast(mensagem, tipo = "") {
+function fecharFormulario() {
+  document.getElementById("seletorHorario").classList.remove("aberto");
+}
+
+function mudarMes(delta) {
+  mesAtual += delta;
+  if (mesAtual < 1) { mesAtual = 12; anoAtual--; }
+  if (mesAtual > 12) { mesAtual = 1; anoAtual++; }
+  carregarBatalhas();
+  fecharFormulario();
+}
+
+function preencherAgenda(minhas) {
+  const c = document.getElementById("listaAgendaPessoal");
+  if (!NOME_STREAMER) { c.innerHTML = `<div class="sem-batalhas">🔑 Acesse pela página principal</div>`; return; }
+  if (minhas.length === 0) { c.innerHTML = `<div class="sem-batalhas">📭 Nenhuma batalha agendada</div>`; return; }
+  minhas.sort((a,b) => new Date(a.data) - new Date(b.data));
+  c.innerHTML = minhas.map(b => {
+    const cl = definirClasse(b.situacao);
+    const ic = cl === "confirmada" ? "⚔️" : cl === "campanha" ? "⚠️" : "⏳";
+    return `<div class="item-batalha-pessoal ${cl}">
+      <div class="data">${ic} ${b.data.slice(8)}/${b.data.slice(5,7)} ${b.horaInicio || ""}</div>
+      <div class="detalhe">${b.situacao}${b.meta ? ` • ${b.meta}` : ""}</div>
+    </div>`;
+  }).join("");
+}
+
+function preencherOutras(outras) {
+  const c = document.getElementById("listaOutrasBatalhas");
+  const rel = outras.filter(b => b.situacao && 
+    (b.situacao.includes("CONFIRMADA") || b.situacao.includes("CONFIMADO") || 
+     b.situacao.includes("CAMPANHA") || b.situacao.includes("FALTA OPONENTE")));
+  if (rel.length === 0) { c.innerHTML = `<div class="sem-batalhas">Nenhuma outra batalha ✅</div>`; return; }
+  rel.sort((a,b) => new Date(a.data) - new Date(b.data));
+  c.innerHTML = rel.map(b => {
+    const cl = definirClasse(b.situacao);
+    const ic = cl === "confirmada" ? "⚔️" : cl === "campanha" ? "⚠️" : "⏳";
+    return `<div class="item-outra ${cl}">
+      ${ic} ${b.data.slice(8)}/${b.data.slice(5,7)} ${b.horaInicio || ""}
+      <span class="nome-streamer">${b.streamer || "Campanha"}</span>
+      <br><small>${b.situacao}${b.meta ? ` • ${b.meta}` : ""}</small>
+    </div>`;
+  }).join("");
+}
+
+function mostrarToast(msg, tipo) {
   const t = document.getElementById("toast");
-  t.textContent = mensagem;
+  t.textContent = msg;
   t.className = tipo;
   t.style.display = "block";
-  setTimeout(() => t.style.display = "none", 5000);
+  setTimeout(() => t.style.display = "none", 4000);
 }
 </script>
 </body>
