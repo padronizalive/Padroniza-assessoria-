@@ -5,68 +5,94 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Encontre Seu Oponente | Padroniza Assessoria</title>
 <style>
-:root{--fundo:#0b1020;--painel:#11182c;--painel2:#17213a;--verde:#34d399;--amarelo:#ffc857;--vermelho:#ef4444;--rosa:#ff3d81;--roxo:#7457ff;--azul:#3b82f6;--texto:#f7f9ff;--cinza:#a9b4cb}
+:root{--fundo:#0b1020;--painel:#11182c;--painel2:#17213a;--verde:#34d399;--amarelo:#ffc857;--vermelho:#ef4444;--rosa:#ff3d81;--roxo:#7457ff;--azul:#3b82f6;--texto:#f7f9ff;--cinza:#a9b4cb;--fechada:#6366f1;--padroniza-roxo:#7457ff;--padroniza-azul:#3b82f6;--padroniza-amarelo:#ffc857;--padroniza-vermelho:#ef4444}
 *{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
-body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:20px}
-.container{max-width:900px;margin:0 auto}
-header{text-align:center;margin-bottom:30px}
-header h1{font-size:1.8rem;margin-bottom:8px}
-header p{color:var(--cinza)}
+body{background:var(--fundo);color:var(--texto);min-height:100vh;padding-top:140px;padding-bottom:30px}
+.container{max-width:900px;margin:0 auto;padding:0 20px}
+
+/* ===== CABEÇALHO FIXO COM LOGO DA PADRONIZA ===== */
+.cabecalho-fixo{position:fixed;top:0;left:0;right:0;z-index:999;background:linear-gradient(180deg,rgba(11,16,32,.98),rgba(11,16,32,.95));border-bottom:1px solid rgba(116,87,255,.25);padding:15px 20px;backdrop-filter:blur(10px)}
+.cabecalho-conteudo{max-width:900px;margin:0 auto;display:flex;align-items:center;justify-content:center;gap:15px;flex-wrap:wrap}
+.logo-marca{width:70px;height:70px;border-radius:50%;background:linear-gradient(135deg,var(--padroniza-azul),var(--padroniza-roxo),var(--padroniza-amarelo));display:flex;align-items:center;justify-content:center;box-shadow:0 0 20px rgba(116,87,255,.4),0 0 40px rgba(59,130,246,.2);animation:brilho 3s ease-in-out infinite alternate}
+@keyframes brilho{from{box-shadow:0 0 20px rgba(116,87,255,.4),0 0 40px rgba(59,130,246,.2)}to{box-shadow:0 0 25px rgba(116,87,255,.6),0 0 50px rgba(59,130,246,.3),0 0 70px rgba(255,200,87,.15)}}
+.logo-letra{font-size:36px;font-weight:900;color:#fff;text-shadow:2px 2px 4px rgba(0,0,0,.3)}
+.texto-marca{text-align:center}
+.texto-marca h1{font-size:1.5rem;background:linear-gradient(90deg,#fff,var(--padroniza-azul));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1.2}
+.texto-marca .sub{font-size:.9rem;color:var(--padroniza-amarelo);font-weight:600;letter-spacing:1px}
+.selo-gratis{display:inline-block;margin-top:6px;padding:4px 12px;background:rgba(52,211,153,.15);border:1px solid var(--verde);border-radius:20px;color:var(--verde);font-size:.8rem;font-weight:bold}
+
 .tabs{display:flex;gap:10px;margin-bottom:25px;flex-wrap:wrap}
-.tab{flex:1;min-width:220px;padding:15px 20px;background:var(--painel);border:none;color:var(--texto);border-radius:12px;cursor:pointer;font-size:1rem;transition:all .3s;text-align:center}
-.tab.active{background:var(--verde);color:#000;font-weight:bold}
+.tab{flex:1;min-width:200px;padding:15px 20px;background:var(--painel);border:none;color:var(--texto);border-radius:12px;cursor:pointer;font-size:1rem;transition:all .3s;text-align:center}
+.tab.active{background:linear-gradient(90deg,var(--padroniza-roxo),var(--padroniza-azul));color:#fff;font-weight:bold;box-shadow:0 4px 15px rgba(116,87,255,.3)}
 .tab:hover{transform:translateY(-2px)}
 .tab-content{display:none}
 .tab-content.active{display:block}
-.card{background:var(--painel);padding:25px;border-radius:16px;margin-bottom:20px;box-shadow:0 4px 12px rgba(0,0,0,.2)}
-.card h2{font-size:1.4rem;margin-bottom:20px;color:var(--verde)}
+.card{background:var(--painel);padding:25px;border-radius:16px;margin-bottom:20px;box-shadow:0 4px 12px rgba(0,0,0,.2);border:1px solid rgba(116,87,255,.15);transition:border .3s}
+.card:hover{border-color:rgba(116,87,255,.3)}
+.card h2{font-size:1.4rem;margin-bottom:20px;color:var(--padroniza-roxo)}
 .form-group{margin-bottom:15px}
 .form-group label{display:block;margin-bottom:6px;color:var(--cinza);font-size:.95rem}
-.form-group input,.form-group select,.form-group textarea{width:100%;padding:12px;background:var(--painel2);border:1px solid transparent;border-radius:8px;color:var(--texto);font-size:1rem;outline:none;transition:border .2s}
-.form-group input:focus,.form-group select:focus,.form-group textarea:focus{border-color:var(--verde)}
-button.btn{width:100%;padding:14px;background:var(--verde);color:#000;border:none;border-radius:10px;font-size:1rem;font-weight:bold;cursor:pointer;transition:all .3s;margin-top:10px}
-button.btn:hover{transform:translateY(-2px);box-shadow:0 6px 15px rgba(52,211,153,.3)}
+.form-group input,.form-group select,.form-group textarea{width:100%;padding:12px;background:var(--painel2);border:1px solid transparent;border-radius:8px;color:var(--texto);font-size:1rem;outline:none;transition:all .2s}
+.form-group input:focus,.form-group select:focus,.form-group textarea:focus{border-color:var(--padroniza-roxo);box-shadow:0 0 0 3px rgba(116,87,255,.1)}
+button.btn{width:100%;padding:14px;background:linear-gradient(90deg,var(--padroniza-roxo),var(--padroniza-azul));color:#fff;border:none;border-radius:10px;font-size:1rem;font-weight:bold;cursor:pointer;transition:all .3s;margin-top:10px}
+button.btn:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(116,87,255,.3)}
 button.btn.azul{background:var(--azul)}
 button.btn.azul:hover{box-shadow:0 6px 15px rgba(59,130,246,.3)}
+button.btn.fechada{background:var(--fechada);color:#fff}
+button.btn.fechada:hover{box-shadow:0 6px 15px rgba(99,102,241,.3)}
 .lista-vazia{text-align:center;padding:40px;color:var(--cinza)}
-.solicitacao{background:var(--painel2);padding:18px;border-radius:12px;margin-bottom:12px;border-left:4px solid var(--azul)}
+.solicitacao{background:var(--painel2);padding:18px;border-radius:12px;margin-bottom:12px;border-left:4px solid var(--padroniza-roxo);transition:transform .2s}
+.solicitacao:hover{transform:translateX(5px)}
+.solicitacao.fechada{border-left-color:var(--fechada);opacity:.9}
 .solicitacao h3{font-size:1.1rem;margin-bottom:10px;color:var(--amarelo)}
 .solicitacao p{margin-bottom:6px;font-size:.95rem}
 .solicitacao p span{color:var(--cinza)}
 .erro{background:rgba(239,68,68,.1);border:1px solid var(--vermelho);padding:15px;border-radius:10px;color:var(--vermelho);text-align:center;margin-top:20px}
 .sucesso{background:rgba(52,211,153,.1);border:1px solid var(--verde);padding:15px;border-radius:10px;color:var(--verde);text-align:center;margin-top:20px}
-.voltar{display:inline-block;margin-bottom:20px;color:var(--azul);text-decoration:none;font-size:.95rem}
-.voltar:hover{text-decoration:underline}
+.voltar{display:inline-flex;align-items:center;gap:6px;margin-bottom:20px;color:var(--padroniza-azul);text-decoration:none;font-size:.95rem;padding:8px 12px;background:rgba(59,130,246,.1);border-radius:8px;transition:all .2s}
+.voltar:hover{background:rgba(59,130,246,.2);text-decoration:none}
+.mb-10{margin-bottom:10px}
+.destaque{background:rgba(116,87,255,.1);padding:15px;border-radius:10px;margin:15px 0;border:1px solid rgba(116,87,255,.2)}
+.rodape-marca{text-align:center;margin-top:40px;padding:20px;color:var(--cinza);font-size:.9rem;border-top:1px solid var(--painel)}
+.rodape-marca strong{color:var(--padroniza-roxo)}
 </style>
 </head>
 <body>
-<div class="container">
-<a href="../index.html" class="voltar">← Voltar ao Portal</a>
 
-<header>
-<h1>⚔️ Encontre Seu Oponente</h1>
-<p>Agendamento gratuito de batalhas entre agências — conecte e batalhe!</p>
-</header>
-
-<div class="tabs">
-<button class="tab active" data-tab="cadastrar">📝 Cadastrar Desafio</button>
-<button class="tab" data-tab="lista">🔍 Encontre Seu Oponente</button>
+<!-- ===== CABEÇALHO FIXO COM LOGO DA PADRONIZA ===== -->
+<div class="cabecalho-fixo">
+<div class="cabecalho-conteudo">
+<div class="logo-marca">
+<span class="logo-letra">P</span>
+</div>
+<div class="texto-marca">
+<h1>Padroniza Assessoria</h1>
+<p class="sub">+ Live Assessoria</p>
+<span class="selo-gratis">🎁 Plataforma Gratuita</span>
+</div>
+</div>
 </div>
 
-<!-- ABA CADASTRAR DESAFIO -->
+<div class="container">
+
+<!-- BOTÃO VOLTAR -->
+<a href="../index.html" class="voltar">← Voltar ao Portal</a>
+
+<div class="tabs">
+<button class="tab active" data-tab="cadastrar">📝 Solicitar Batalha</button>
+<button class="tab" data-tab="lista">🔍 Disponíveis</button>
+<button class="tab" data-tab="fechadas">✅ Batalhas Fechadas</button>
+</div>
+
+<!-- ABA 1 — CADASTRAR SOLICITAÇÃO -->
 <div class="tab-content active" id="cadastrar">
 <div class="card">
-<h2>Solicitar Batalha</h2>
+<h2>Quero Batalhar!</h2>
 <form id="formDesafio">
 
 <div class="form-group">
 <label>Nome da Sua Agência *</label>
-<input type="text" id="agencia" placeholder="Ex: Padroniza Assessoria" required>
-</div>
-
-<div class="form-group">
-<label>Nome do Streamer *</label>
-<input type="text" id="streamer" placeholder="Nome do streamer que vai batalhar" required>
+<input type="text" id="agencia" placeholder="Ex: Sua Agência LTDA" required>
 </div>
 
 <div class="form-group">
@@ -80,13 +106,13 @@ button.btn.azul:hover{box-shadow:0 6px 15px rgba(59,130,246,.3)}
 </div>
 
 <div class="form-group">
-<label>Meta de Diamantes</label>
-<input type="text" id="meta" placeholder="Ex: 10k, 50k, 100k">
+<label>Quantidade de Rodadas</label>
+<input type="text" id="rodada" placeholder="Ex: 1, 2, 3">
 </div>
 
 <div class="form-group">
-<label>Quantidade de Rodadas</label>
-<input type="text" id="rodada" placeholder="Ex: 1, 2, 3">
+<label>Meta de Diamantes</label>
+<input type="text" id="meta" placeholder="Ex: 10k, 50k, 100k">
 </div>
 
 <div class="form-group">
@@ -101,30 +127,49 @@ button.btn.azul:hover{box-shadow:0 6px 15px rgba(59,130,246,.3)}
 
 <div class="form-group">
 <label>Observação (opcional)</label>
-<textarea id="observacao" rows="3" placeholder="Informações adicionais..."></textarea>
+<textarea id="observacao" rows="2" placeholder="Informações adicionais..."></textarea>
 </div>
 
-<button type="submit" class="btn">📤 Enviar Solicitação</button>
+<button type="submit" class="btn">📤 Publicar Solicitação</button>
 <div id="mensagem"></div>
 </form>
 </div>
 </div>
 
-<!-- ABA ENCONTRE SEU OPONENTE -->
+<!-- ABA 2 — SOLICITAÇÕES DISPONÍVEIS -->
 <div class="tab-content" id="lista">
 <div class="card">
-<h2>🎯 Oponentes Disponíveis</h2>
-<button class="btn azul" id="btnAtualizar">🔄 Atualizar Lista</button>
+<h2>🎯 Encontre Sua Batalha</h2>
+<button class="btn azul mb-10" id="btnAtualizar">🔄 Atualizar Lista</button>
 <div id="listaDesafios">
-<div class="lista-vazia">Clique em "Atualizar Lista" para ver os oponentes disponíveis...</div>
+<div class="lista-vazia">Clique em "Atualizar" para ver as solicitações de batalha...</div>
 </div>
 </div>
+</div>
+
+<!-- ABA 3 — BATALHAS FECHADAS / CONFIRMADAS -->
+<div class="tab-content" id="fechadas">
+<div class="card">
+<h2>✅ Batalhas Confirmadas</h2>
+<p style="color:var(--cinza);margin-bottom:15px">Batalhas já combinadas entre agências — confira dia e horário! 📅</p>
+<button class="btn fechada mb-10" id="btnAtualizarFechadas">🔄 Atualizar Lista</button>
+<div id="listaFechadas">
+<div class="lista-vazia">Nenhuma batalha confirmada ainda...</div>
+</div>
+</div>
+</div>
+
+<!-- RODAPÉ COM MARCA -->
+<div class="rodape-marca">
+<p>⚔️ Plataforma <strong>Encontre Seu Oponente</strong> — oferecida pela <strong>Padroniza Assessoria</strong></p>
+<p style="margin-top:5px;font-size:.85rem">Conectando agências e fortalecendo streamers! 🚀</p>
 </div>
 
 </div>
 
 <script>
-const scriptUrl = "https://script.google.com/macros/s/AKfycbxQpjyk6IcrPTLvSzv70_0AHvoHWENX7MPEy1nIMVL8OgkPDtpln_IYo26oXGuquwOHug/exec";
+// ✅ LINK DO APPS SCRIPT — JÁ CONFIGURADO E CERTO!
+const scriptUrl = "https://script.google.com/macros/s/AKfycbwNtXL2A5ekc5TDy9FTBk4xSttqLRU4bLSSi5N2i4UUwJFpp3aYQUYNBCJt7QEbC0Ww/exec";
 
 // Tabs
 document.querySelectorAll('.tab').forEach(tab => {
@@ -136,7 +181,7 @@ document.getElementById(tab.dataset.tab).classList.add('active');
 });
 });
 
-// Enviar formulário
+// Enviar solicitação
 document.getElementById('formDesafio').addEventListener('submit', async e => {
 e.preventDefault();
 const mensagem = document.getElementById('mensagem');
@@ -144,14 +189,13 @@ mensagem.innerHTML = '';
 
 const dados = {
 agencia: document.getElementById('agencia').value.trim(),
-streamer: document.getElementById('streamer').value.trim(),
 perfil: document.getElementById('perfil').value.trim(),
 whatsapp: document.getElementById('whatsapp').value.trim(),
-meta: document.getElementById('meta').value.trim() || 'A combinar',
-rodada: document.getElementById('rodada').value.trim() || 'A combinar',
+rodada: document.getElementById('rodada').value.trim() || "A combinar",
+meta: document.getElementById('meta').value.trim() || "A combinar",
 data: document.getElementById('data').value,
 horario: document.getElementById('horario').value,
-observacao: document.getElementById('observacao').value.trim() || '—'
+observacao: document.getElementById('observacao').value.trim() || "—"
 };
 
 try {
@@ -161,51 +205,116 @@ mode: 'no-cors',
 headers: {'Content-Type': 'application/json'},
 body: JSON.stringify(dados)
 });
-mensagem.innerHTML = `<div class="sucesso">✅ Solicitação enviada! Agora é só esperar outra agência te encontrar e chamar! 🎉</div>`;
+mensagem.innerHTML = `<div class="sucesso">✅ Solicitação publicada com sucesso! Boa sorte na batalha! ⚔️</div>`;
 document.getElementById('formDesafio').reset();
 } catch(erro) {
-mensagem.innerHTML = `<div class="erro">❌ Erro ao enviar. Tente novamente.</div>`;
+mensagem.innerHTML = `<div class="erro">❌ Erro ao publicar. Tente novamente.</div>`;
 }
 });
 
-// Carregar lista
+// Carregar solicitações disponíveis
 document.getElementById('btnAtualizar').addEventListener('click', carregarLista);
 carregarLista();
 
 async function carregarLista() {
 const container = document.getElementById('listaDesafios');
-container.innerHTML = '<div class="lista-vazia">🔄 Carregando oponentes...</div>';
+container.innerHTML = '<div class="lista-vazia">🔄 Carregando solicitações...</div>';
 
 try {
 const res = await fetch(scriptUrl + "?acao=listar");
 const json = await res.json();
-const desafios = json.dados || [];
+const todos = json.dados || [];
+const disponiveis = todos.filter(d => d.status !== "FECHADA");
 
-if(desafios.length === 0) {
-container.innerHTML = '<div class="lista-vazia">📭 Nenhum oponente cadastrado ainda. Seja o primeiro a cadastrar! ⚔️</div>';
+if(disponiveis.length === 0) {
+container.innerHTML = '<div class="lista-vazia">📭 Nenhuma batalha disponível no momento. Seja o primeiro a publicar! ⚔️</div>';
 return;
 }
 
-container.innerHTML = desafios.map(d => `
+container.innerHTML = disponiveis.map((d, i) => `
 <div class="solicitacao">
-<h3>🎤 ${d.streamer}</h3>
-<p><span>Agência:</span> ${d.agencia}</p>
+<h3>🏢 ${d.agencia}</h3>
 <p><span>Perfil:</span> <a href="${d.perfil}" target="_blank" style="color:var(--azul)">🔗 Abrir perfil</a></p>
-<p><span>Chamar para batalhar:</span> <a href="https://wa.me/${d.whatsapp.replace(/\D/g,'')}" target="_blank" style="color:var(--verde);font-weight:bold">💬 WhatsApp da Agência</a></p>
 <p><span>Meta:</span> ${d.meta} | <span>Rodadas:</span> ${d.rodada}</p>
-<p><span>Disponível:</span> ${formatarData(d.data)} às ${d.horario}</p>
+<p><span>📅 Data:</span> ${formatarData(d.data)} às ${d.horario.substring(0,5)}</p>
 ${d.observacao !== '—' ? `<p><span>Obs:</span> ${d.observacao}</p>` : ''}
+
+<div class="destaque">
+<p style="margin-bottom:10px;font-weight:bold;color:var(--padroniza-roxo)">🤝 Tenho interesse — proponho meu streamer!</p>
+<div class="form-group" style="margin:5px 0">
+<input type="text" id="streamerB${i}" placeholder="Nome do streamer" style="width:100%">
+</div>
+<div class="form-group" style="margin:5px 0">
+<input type="url" id="perfilB${i}" placeholder="Link do perfil do streamer" style="width:100%">
+</div>
+<button class="btn" style="margin-top:10px" onclick="chamarAgencia('${d.whatsapp}','${d.agencia}','${formatarData(d.data)}','${d.horario.substring(0,5)}','${d.meta}','${d.rodada}',${i})">💬 Enviar Proposta via WhatsApp</button>
+</div>
 </div>
 `).join('');
 
 } catch(e) {
-container.innerHTML = `<div class="erro">⚠️ Não foi possível carregar. Tente novamente.</div>`;
+container.innerHTML = `<div class="erro">⚠️ Não foi possível carregar as solicitações.</div>`;
+}
+}
+
+// Abrir WhatsApp com mensagem pronta
+function chamarAgencia(wpp, agenciaA, data, hora, meta, rodada, indice) {
+const streamerB = document.getElementById(`streamerB${indice}`)?.value?.trim() || "Não informado";
+const perfilB = document.getElementById(`perfilB${indice}`)?.value?.trim() || "Não informado";
+
+const mensagem = encodeURIComponent(`⚔️ Olá ${agenciaA}! Vi sua solicitação no Encontre Seu Oponente — Plataforma da Padroniza Assessoria!
+
+📋 *Dados da sua solicitação:*
+📅 Data: ${data} às ${hora}
+💎 Meta: ${meta}
+🔄 Rodadas: ${rodada}
+
+🎤 *Meu streamer:* ${streamerB}
+🔗 Perfil: ${perfilB}
+
+Temos disponibilidade! Bora fechar essa batalha? 🤝`);
+
+window.open(`https://wa.me/${wpp}?text=${mensagem}`, '_blank');
+}
+
+// Carregar batalhas fechadas
+document.getElementById('btnAtualizarFechadas').addEventListener('click', carregarFechadas);
+carregarFechadas();
+
+async function carregarFechadas() {
+const container = document.getElementById('listaFechadas');
+container.innerHTML = '<div class="lista-vazia">🔄 Carregando batalhas confirmadas...</div>';
+
+try {
+const res = await fetch(scriptUrl + "?acao=listar");
+const json = await res.json();
+const fechadas = (json.dados || []).filter(d => d.status === "FECHADA");
+
+if(fechadas.length === 0) {
+container.innerHTML = '<div class="lista-vazia">📭 Nenhuma batalha confirmada ainda. Quando fecharem, aparecerão aqui!</div>';
+return;
+}
+
+container.innerHTML = fechadas.map(d => `
+<div class="solicitacao fechada">
+<h3>✅ ${d.agencia}</h3>
+<p><span>📅 Data:</span> ${formatarData(d.data)} às ${d.horario.substring(0,5)}</p>
+<p><span>💎 Meta:</span> ${d.meta} | <span>🔄 Rodadas:</span> ${d.rodada}</p>
+<p style="color:var(--verde);font-weight:bold;margin-top:8px">✅ BATALHA CONFIRMADA — NÃO ESQUEÇA! ⚔️</p>
+</div>
+`).join('');
+
+} catch(e) {
+container.innerHTML = `<div class="erro">⚠️ Erro ao carregar batalhas.</div>`;
 }
 }
 
 function formatarData(dataStr) {
 if(!dataStr) return "A combinar";
-const [ano,mes,dia] = dataStr.split('-');
+const data = new Date(dataStr);
+const dia = String(data.getDate()).padStart(2,'0');
+const mes = String(data.getMonth()+1).padStart(2,'0');
+const ano = data.getFullYear();
 return `${dia}/${mes}/${ano}`;
 }
 </script>
