@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Padroniza Assessoria | Portal Oficial</title>
 <style>
-:root{--fundo:#0b1020;--painel:#11182c;--painel2:#17213a;--verde:#34d399;--amarelo:#ffc857;--vermelho:#ef4444;--rosa:#ff3d81;--roxo:#7457ff;--azul:#3b82f6;--texto:#f7f9ff;--cinza:#a9b4cb}
+:root{--fundo:#0b1020;--painel:#11182c;--painel2:#17213a;--verde:#34d399;--amarelo:#ffc857;--amarelo-escuro:#e6a800;--vermelho:#ef4444;--rosa:#ff3d81;--roxo:#7457ff;--azul:#3b82f6;--texto:#f7f9ff;--cinza:#a9b4cb}
 *{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
 body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
 .container{max-width:650px;margin:0 auto}
@@ -17,11 +17,57 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
 .cabecalho p{font-size:18px;color:var(--cinza)}
 
 .botoes-principais{display:flex;flex-direction:column;gap:14px;margin-bottom:25px}
+
+/* ===== BOTÃO UNIFICADO — ESTILO PADRONIZA ===== */
+.btn-outra-agencia-unificado{
+  background:linear-gradient(135deg,#fbbf24,#f59e0b);
+  border-radius:12px;
+  padding:16px 20px;
+  border:none;
+  cursor:pointer;
+  text-decoration:none;
+  display:block;
+  width:100%;
+  transition:0.2s;
+  color:#000;
+}
+.btn-outra-agencia-unificado:active{transform:scale(0.98)}
+.btn-outra-agencia-unificado:hover{
+  transform:translateY(-2px);
+  box-shadow:0 6px 20px rgba(245,158,11,0.35);
+}
+.btn-outra-agencia-unificado .titulo-btn{
+  font-weight:bold;
+  font-size:18px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:10px;
+  margin-bottom:8px;
+}
+.etiqueta-gratuito{
+  display:inline-block;
+  background:rgba(52,211,153,0.15);
+  border:1px solid var(--verde);
+  color:var(--verde);
+  font-size:12px;
+  font-weight:bold;
+  padding:3px 10px;
+  border-radius:12px;
+  margin-bottom:6px;
+}
+.btn-outra-agencia-unificado .subtitulo-btn{
+  font-size:14px;
+  color:#5c4a00;
+  text-align:center;
+  font-weight:500;
+}
+/* ============================================== */
+
 .btn-principal{padding:18px;border-radius:12px;border:none;font-weight:bold;font-size:18px;cursor:pointer;text-align:center;color:#fff;transition:0.2s;text-decoration:none;display:block;width:100%}
 .btn-principal:active{transform:scale(0.98)}
 .btn-agenciado{background:linear-gradient(135deg,#22c55e,#15803d)}
 .btn-visitante{background:linear-gradient(135deg,#3b82f6,#1d4ed8)}
-.btn-outra-agencia{background:linear-gradient(135deg,#fbbf24,#f59e0b);color:#000}
 .btn-admin{background:linear-gradient(135deg,#8b5cf6,#6d28d9)}
 .btn-moedas{background:linear-gradient(135deg,#ec4899,#db2777)}
 
@@ -69,7 +115,6 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
 .olho-senha{position:absolute;right:16px;top:50%;transform:translateY(-50%);cursor:pointer;color:var(--cinza);font-size:20px;user-select:none}
 .toast{position:fixed;top:20px;left:50%;transform:translateX(-50%);background:var(--verde);color:#fff;padding:12px 24px;border-radius:8px;font-weight:bold;z-index:9999;display:none;box-shadow:0 4px 12px rgba(0,0,0,0.3)}
 
-/* BOTÃO DE AGENDAR BATALHA — COLORIDO */
 .btn-agendar-batalha{
   background:linear-gradient(135deg,#00ff9c,#00cc7d);
   color:#000;
@@ -112,7 +157,15 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
   <div class="botoes-principais">
     <button class="btn-principal btn-agenciado" onclick="abrir('agenciado')">✅ SOU AGENCIADO PADRONIZA</button>
     <button class="btn-principal btn-visitante" onclick="abrir('visitante')">👤 SOU VISITANTE / VER LIVES</button>
-    <a href="parcerias.html" target="_blank" class="btn-principal btn-outra-agencia">🤝 SOU OUTRA AGÊNCIA</a>
+    
+    <a href="encontre-oponente.html" class="btn-outra-agencia-unificado">
+      <div class="titulo-btn">🤝 SOU OUTRA AGÊNCIA</div>
+      <div style="text-align:center">
+        <span class="etiqueta-gratuito">🎁 Plataforma Gratuita</span>
+      </div>
+      <div class="subtitulo-btn">⚔️ Encontre seu oponente para batalha</div>
+    </a>
+    
     <button class="btn-principal btn-admin" onclick="abrir('admin')">🔐 ÁREA DA ADMINISTRAÇÃO</button>
     <a href="https://www.tiktok.com/coin?rc=7TGXGN69&rie=" target="_blank" class="btn-principal btn-moedas">💰 COMPRAR MOEDAS TIKTOK</a>
   </div>
@@ -183,8 +236,7 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
       <p><strong>Status:</strong> ✅ Aprovado</p>
     </div>
 
-    <!-- ⚔️ BOTÃO DE AGENDAR BATALHA — SEM CALENDÁRIO AQUI -->
-    <button class="btn-agendar-batalha" onclick="irParaAgendarBatalha()">
+    <button class="btn-agendar-batalha" onclick="window.location.href='encontre-oponente.html'">
       ⚔️ AGENDAR BATALHA OFICIAL
     </button>
 
@@ -256,7 +308,7 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
 <script>
 const LINK_PLANILHA_LIVES = "https://docs.google.com/spreadsheets/d/1R9eUsqF4kA0y22ryMUIsvGolBfk3-XwZ5R-RVpBiZA4/gviz/tq?tqx=out:json";
 const CAPA_PADRAO = "https://i.imgur.com/oxlyYsQ.png";
-const SENHA_ADMIN = "agência2026";
+const SENHA_ADMIN = "agencia2026";
 const EMAIL_ADMIN = "padronizaassessoria@gmail.com";
 
 let dadosPlanilha = [];
@@ -368,73 +420,55 @@ function verificarAdmin(){
 }
 function sairAdmin(){
   document.getElementById('painelAdmin').style.display = 'none';
-  document.getElementById('loginAdmin').style.display = 'block';
   document.getElementById('emailAdmin').value = '';
   document.getElementById('senhaAdmin').value = '';
+  document.getElementById('loginAdmin').style.display = 'block';
   voltar();
 }
-
 function verificarAcesso(){
   const usuario = document.getElementById('usuarioAcesso').value.trim().toLowerCase();
-  const encontrado = dadosPlanilha.find(s => s.usuario === usuario && s.status === "APROVADO");
-  if(!usuario){
-    document.getElementById('mensagemAcesso').textContent = "⚠️ Digite seu usuário!";
-    return;
+  const streamer = dadosPlanilha.find(s => s.usuario === usuario && s.status === "APROVADO");
+  if(streamer){
+    streamerLogado = streamer;
+    document.getElementById('mensagemAcesso').innerHTML = "";
+    document.getElementById('usuarioAcesso').style.display = 'none';
+    document.querySelector('#perfilStreamer').style.display = 'block';
+    document.getElementById('dadoUsuario').textContent = streamer.usuario;
+    document.getElementById('dadoTiktok').innerHTML = streamer.linkTiktok ? `<a href="${streamer.linkTiktok}" target="_blank" style="color:var(--azul)">Abrir perfil</a>` : "Não cadastrado";
+    document.getElementById('dadoKako').innerHTML = streamer.linkKako ? `<a href="${streamer.linkKako}" target="_blank" style="color:var(--azul)">Abrir perfil</a>` : "Não cadastrado";
+  }else{
+    document.getElementById('mensagemAcesso').innerHTML = '<span style="color:var(--vermelho)">❌ Usuário não encontrado ou não aprovado</span>';
   }
-  if(!encontrado){
-    document.getElementById('mensagemAcesso').textContent = "⚠️ Usuário não encontrado ou não aprovado!";
-    return;
-  }
-  streamerLogado = encontrado;
-  mostrarToast("✅ Acesso liberado!");
-  document.getElementById('mensagemAcesso').textContent = "";
-  document.getElementById('dadoUsuario').textContent = encontrado.usuario;
-  document.getElementById('dadoTiktok').innerHTML = encontrado.linkTiktok 
-    ? `<a href="${encontrado.linkTiktok}" target="_blank" style="color:var(--verde)">🔗 Abrir perfil</a>` : "Não cadastrado";
-  document.getElementById('dadoKako').innerHTML = encontrado.linkKako 
-    ? `<a href="${encontrado.linkKako}" target="_blank" style="color:var(--verde)">🔗 Abrir perfil</a>` : "Não cadastrado";
-  document.getElementById('perfilStreamer').style.display = 'block';
-}
-
-// ==========================================
-// 🔗 FUNÇÃO QUE LEVA PARA PÁGINA DE BATALHA
-// ==========================================
-function irParaAgendarBatalha(){
-  if(!streamerLogado){
-    mostrarToast("⚠️ Acesse seu perfil digitando seu usuário primeiro!");
-    return;
-  }
-  // Abre a página nova PASSANDO o usuário automaticamente na URL
-  window.open(`agendar-batalha.html?usuario=${encodeURIComponent(streamerLogado.usuario)}`, '_blank');
-}
-
-function copiarPix(id){
-  const texto = document.getElementById(id).textContent.trim();
-  navigator.clipboard.writeText(texto).then(() => mostrarToast("✅ Chave copiada!"))
-  .catch(() => {
-    const t = document.createElement('textarea'); t.value = texto; document.body.appendChild(t); t.select();
-    document.execCommand('copy'); document.body.removeChild(t); mostrarToast("✅ Chave copiada!");
-  });
 }
 
 function atualizarContadores(){
   document.getElementById('qtdAgenciados').textContent = dadosPlanilha.filter(s => s.status === "APROVADO").length;
-  document.getElementById('qtdLives').textContent = dadosPlanilha.filter(s => ["SIM","S","TRUE","VERDADEIRO"].includes((s.aoVivo||"").trim().toUpperCase())).length;
+  document.getElementById('qtdLives').textContent = dadosPlanilha.filter(s => {
+    const val = (s.aoVivo || "").trim().toUpperCase();
+    return ["SIM", "S", "TRUE", "VERDADEIRO"].includes(val);
+  }).length;
+  document.getElementById('qtdBatalhas').textContent = "0";
+  document.getElementById('qtdConquistas').textContent = "0";
+}
+
+function copiarPix(id){
+  const texto = document.getElementById(id).textContent;
+  navigator.clipboard.writeText(texto).then(() => mostrarToast("✅ Copiado!"));
 }
 
 function escaparHtml(texto){
+  if(!texto) return "";
   const div = document.createElement('div');
-  div.textContent = texto || "";
+  div.textContent = texto;
   return div.innerHTML;
 }
 
 function mostrarToast(mensagem){
-  const t = document.getElementById('toast');
-  t.textContent = mensagem;
-  t.style.display = 'block';
-  setTimeout(() => t.style.display = 'none', 3000);
+  const toast = document.getElementById('toast');
+  toast.textContent = mensagem;
+  toast.style.display = 'block';
+  setTimeout(() => toast.style.display = 'none', 3000);
 }
 </script>
-</div>
 </body>
 </html>
