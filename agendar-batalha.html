@@ -4,10 +4,10 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Agenda de Batalhas — Padroniza Assessoria</title>
-  <meta name="description" content="⚔️ Agenda oficial de batalhas da Padroniza Assessoria. Acompanhe suas batalhas confirmadas, campanhas e oponentes!">
-  <meta name="keywords" content="agenda de batalhas, Padroniza Assessoria, batalha confirmada, campanha, falta oponente, streamer">
+  <meta name="description" content="⚔️ Agenda oficial de batalhas da Padroniza Assessoria. Acompanhe suas batalhas confirmadas e campanhas!">
+  <meta name="keywords" content="agenda de batalhas, Padroniza Assessoria, batalha confirmada, campanha, streamer">
   <meta property="og:title" content="Agenda de Batalhas — Padroniza Assessoria">
-  <meta property="og:description" content="⚔️ Suas batalhas confirmadas, campanhas e oponentes! Siga seu oponente direto daqui!">
+  <meta property="og:description" content="⚔️ Suas batalhas confirmadas e campanhas oficiais!">
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
     :root {
@@ -184,7 +184,7 @@
     <div class="carregando">🔄 Carregando...</div>
   </div>
 
-  <!-- 👤 MINHAS BATALHAS — Confirmada + Campanha + Falta Oponente (só com nome dele) ✅ -->
+  <!-- 👤 MINHAS BATALHAS — SÓ CONFIRMADA E CAMPANHA COM NOME DELE ✅ -->
   <div class="agenda-pessoal">
     <h3>👤 Minhas Batalhas</h3>
     <div id="minhasBatalhas" class="sem-batalha">
@@ -192,7 +192,7 @@
     </div>
   </div>
 
-  <!-- 📋 TODAS AS BATALHAS — TODAS, BONITO COMO ESTÁ ✅ -->
+  <!-- 📋 TODAS AS BATALHAS — TODAS NORMALMENTE -->
   <div class="agenda-geral">
     <h3>📋 Todas as Batalhas</h3>
     <div class="contador" id="contadorGeral"></div>
@@ -260,10 +260,8 @@
 </div>
 
 <script>
-// 🔗 LINK DO APPS SCRIPT
 const LINK = "https://script.google.com/macros/s/AKfycbygvZq1vAaSRy-eBkrWe73Y7x1GX5c5nj1untYB5T-8ErAntowbMVLvqmTO7uZ9cujH4A/exec";
 
-// 👤 PEGA NOME DO USUÁRIO DA URL
 const params = new URLSearchParams(window.location.search);
 const NOME_USUARIO_RAW = params.get("usuario") || "";
 const NOME_USUARIO = NOME_USUARIO_RAW.trim().toLowerCase();
@@ -279,7 +277,6 @@ const NOMES_MESES = ["Janeiro","Fevereiro","Março","Abril","Maio","Junho",
                      "Julho","Agosto","Setembro","Outubro","Novembro","Dezembro"];
 const ABREV_SEMANA = ["Dom","Seg","Ter","Qua","Qui","Sex","Sáb"];
 
-// 📖 CARREGA BATALHAS
 async function carregarBatalhas() {
   document.getElementById("calendario").innerHTML = '<div class="carregando">🔄 Carregando...</div>';
   try {
@@ -295,7 +292,6 @@ async function carregarBatalhas() {
   renderizarAgendas();
 }
 
-// 🎨 CALENDÁRIO — TODAS AS CORES, IGUAL ESTAVA ✅
 function renderizarCalendario() {
   document.getElementById("nomeMes").textContent = `${NOMES_MESES[mesAtual-1].toUpperCase()} ${anoAtual}`;
   const cal = document.getElementById("calendario");
@@ -338,7 +334,7 @@ function normalizarNome(nome) {
     .replace(/\s+/g, "").replace(/[.,_-]/g, "");
 }
 
-// ✅ REGRA EXATA: NOME DELE + (CONFIRMADA OU CAMPANHA OU FALTA OPONENTE)
+// ✅ REGRA EXATA: NOME DELE + SITUAÇÃO = CONFIRMADA OU CAMPANHA
 function ehBatalhaDoUsuario(b) {
   const nomeNormalizado = normalizarNome(NOME_USUARIO);
   const streamerNorm = normalizarNome(b.streamer);
@@ -346,30 +342,22 @@ function ehBatalhaDoUsuario(b) {
   const pertence = streamerNorm === nomeNormalizado || oponenteNorm === nomeNormalizado;
   
   const sit = (b.situacao || "").toUpperCase().trim();
-  // ✅ INCLUI: Confirmada, Campanha, Falta Oponente
-  // ❌ EXCLUI: Disponível, Domingo, Feriado
-  const ehValida = 
-    sit.includes("CONFIRMADO") || 
-    sit.includes("CONFIRMADA") || 
-    sit.includes("CAMPANHA") ||
-    sit.includes("FALTA OPONENTE");
+  const ehValida = sit.includes("CONFIRMADO") || sit.includes("CONFIRMADA") || sit.includes("CAMPANHA");
   
   return pertence && ehValida;
 }
 
 function renderizarAgendas() {
-  // 👤 MINHAS BATALHAS — SÓ AS VALIDAS
   const minhas = batalhas.filter(ehBatalhaDoUsuario);
-  console.log(`🎯 Suas batalhas: ${minhas.length} (Confirmada/Campanha/Falta Oponente)`);
+  console.log(`🎯 Suas batalhas: ${minhas.length} (Confirmada/Campanha)`);
 
   const elMinhas = document.getElementById("minhasBatalhas");
   if (minhas.length === 0) {
-    elMinhas.innerHTML = '<div class="sem-batalha-pessoal">📭 Nenhuma batalha confirmada, campanha ou falta oponente encontrada com seu nome.<br><small>Quando a agência confirmar ou encontrar seu oponente, aparecerá aqui!</small></div>';
+    elMinhas.innerHTML = '<div class="sem-batalha-pessoal">📭 Nenhuma batalha confirmada ou campanha encontrada com seu nome.<br><small>Quando a agência confirmar, aparecerá aqui!</small></div>';
   } else {
     elMinhas.innerHTML = minhas.map(b => gerarItemBatalha(b, true)).join("");
   }
 
-  // 📋 TODAS AS BATALHAS — TODAS, SEM FILTRO
   document.getElementById("contadorGeral").textContent = `Total: ${batalhas.length} batalhas`;
   document.getElementById("todasBatalhas").innerHTML = batalhas.length === 0 
     ? '<div class="sem-batalha">Nenhuma batalha agendada.</div>'
@@ -396,7 +384,6 @@ function gerarItemBatalha(b, mostrarBotao) {
   if (b.meta) conteudo += ` · Meta: ${b.meta}`;
   conteudo += `</small>`;
 
-  // 🔗 BOTÃO SEGUIR OPONENTE — APARECE SEMPRE QUE TIVER LINK ✅
   let botao = "";
   if (mostrarBotao && b.linkOponente && b.linkOponente.trim().length > 5) {
     botao = `<a href="${b.linkOponente}" target="_blank" class="btn-oponente">🔗 Seguir Oponente</a>`;
