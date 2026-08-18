@@ -3,218 +3,107 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Agendar Batalha — Padroniza Assessoria</title>
+  <title>Agenda de Batalhas — Padroniza Assessoria</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
     :root {
       --verde: #00ff9c; --amarelo: #ffd700; --azul: #00a8ff; --branco: #f0f0f0;
-      --vermelho: #ff4444; --fundo: #0b1020; --painel: #11182c;
-      --borda: #2a3a5a; --texto: #e6efff; --cinza: #7a8ba8; --roxo: #7457ff;
+      --vermelho: #ff4444; --roxo: #a855f7; --fundo: #0b1020; --painel: #11182c;
+      --borda: #2a3a5a; --texto: #e6efff; --cinza: #7a8ba8;
       --verde-whats: #25d366;
     }
     body { background: var(--fundo); color: var(--texto); min-height: 100vh; padding: 20px 12px; }
     .container { max-width: 460px; margin: 0 auto; }
 
-    /* ✅ BOTÃO VOLTAR */
     .btn-voltar {
       display: inline-flex; align-items: center; gap: 6px;
       color: var(--amarelo); text-decoration: none; font-size: 15px;
       font-weight: 600; margin-bottom: 20px; padding: 8px 16px;
       border: 1px solid var(--amarelo); border-radius: 8px; transition: 0.2s;
     }
-    .btn-voltar:hover {
-      background: var(--amarelo); color: #000; transform: translateX(-3px);
-    }
+    .btn-voltar:hover { background: var(--amarelo); color: #000; transform: translateX(-3px); }
 
-    .login-box {
-      display: flex; flex-direction: column; align-items: center; justify-content: center;
-      min-height: 80vh; text-align: center; padding: 40px 20px;
-    }
-    .logo { font-size: 32px; font-weight: 800; color: var(--verde); margin-bottom: 12px; }
-    .login-box h2 { color: var(--amarelo); margin-bottom: 20px; font-size: 22px; }
-    .campo-form {
-      width: 100%; max-width: 360px; padding: 16px; border-radius: 10px;
-      border: 1px solid var(--borda); background: #17213a; color: var(--texto);
-      font-size: 16px; margin-bottom: 14px;
-    }
-    .btn-acao {
-      width: 100%; max-width: 360px; padding: 16px; border-radius: 10px;
-      border: none; font-weight: bold; cursor: pointer; font-size: 17px;
-      background: linear-gradient(90deg, #00c853, #00ff9c); color: #000;
-    }
-    .mensagem { margin-top: 16px; font-size: 15px; min-height: 24px; }
-    .erro { color: var(--vermelho); }
-    .sucesso { color: var(--verde); }
+    .login-box { display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 80vh; text-align: center; padding: 40px 20px; }
+    .logo { font-size: 48px; font-weight: 800; color: var(--verde); margin-bottom: 8px; }
+    .login-box h2 { color: var(--amarelo); margin-bottom: 8px; font-size: 22px; }
+    .subtitulo { color: var(--cinza); margin-bottom: 30px; font-size: 14px; }
+    .campo-form { width: 100%; max-width: 360px; padding: 16px; border-radius: 10px; border: 1px solid var(--borda); background: #17213a; color: var(--texto); font-size: 16px; margin-bottom: 14px; }
+    .btn-acao { width: 100%; max-width: 360px; padding: 16px; border-radius: 10px; border: none; font-weight: bold; cursor: pointer; font-size: 17px; background: linear-gradient(90deg, #00c853, #00ff9c); color: #000; transition: transform 0.2s; }
+    .btn-acao:hover { transform: scale(1.02); }
+    .mensagem { margin-top: 16px; font-size: 15px; min-height: 40px; padding: 10px; border-radius: 8px; }
+    .erro { color: var(--vermelho); background: rgba(255,68,68,0.1); border: 1px solid var(--vermelho); }
+    .sucesso { color: var(--verde); background: rgba(0,255,156,0.1); border: 1px solid var(--verde); }
 
-    .cal-topo {
-      display: flex; justify-content: space-between; align-items: center;
-      margin-bottom: 20px; padding: 16px; background: var(--painel);
-      border-radius: 12px; border: 1px solid var(--borda);
-    }
-    .btn-mes {
-      background: transparent; border: 2px solid var(--verde); color: var(--verde);
-      width: 44px; height: 44px; border-radius: 10px; font-size: 20px; cursor: pointer;
-      transition: all 0.25s;
-    }
+    .cal-topo { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; padding: 16px; background: var(--painel); border-radius: 12px; border: 1px solid var(--borda); }
+    .btn-mes { background: transparent; border: 2px solid var(--verde); color: var(--verde); width: 44px; height: 44px; border-radius: 10px; font-size: 20px; cursor: pointer; transition: all 0.25s; }
     .btn-mes:hover { background: var(--verde); color: #000; }
     .nome-mes { font-size: 20px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; }
 
-    .dias-semana {
-      display: grid; grid-template-columns: repeat(7, 1fr); gap: 6px; margin-bottom: 8px;
-    }
+    .dias-semana { display: grid; grid-template-columns: repeat(7, 1fr); gap: 6px; margin-bottom: 8px; }
     .cab-semana { text-align: center; font-size: 12px; font-weight: 600; color: var(--cinza); padding: 6px; text-transform: uppercase; }
 
-    .calendario {
-      display: grid; grid-template-columns: repeat(7, 1fr); gap: 6px; margin-bottom: 28px;
-    }
-    .dia {
-      aspect-ratio: 1; border-radius: 10px; border: 2px solid transparent;
-      display: flex; flex-direction: column; align-items: center; justify-content: center;
-      background: var(--painel); border-color: var(--borda); transition: all 0.2s;
-      font-size: 14px; font-weight: 600; cursor: pointer;
-    }
+    .calendario { display: grid; grid-template-columns: repeat(7, 1fr); gap: 6px; margin-bottom: 28px; }
+    .dia { aspect-ratio: 1; border-radius: 10px; border: 3px solid transparent; display: flex; flex-direction: column; align-items: center; justify-content: center; background: var(--painel); transition: all 0.2s; font-size: 14px; font-weight: 600; cursor: pointer; }
     .dia:hover { transform: scale(1.08); }
     .dia.vazio { background: transparent; border: none; cursor: default; }
     .dia.vazio:hover { transform: none; }
     .dia-num { font-size: 16px; font-weight: 700; line-height: 1; }
 
+    /* 🎨 CORES — EXATAMENTE COMO A PLANILHA DEFINE, SEM FIXA NO CÓDIGO */
     .disponivel { background: rgba(0,255,156,0.12); border-color: var(--verde); color: var(--verde); }
     .disponivel:hover { background: rgba(0,255,156,0.25); }
     .campanha { background: rgba(255,215,0,0.15); border-color: var(--amarelo); color: var(--amarelo); }
     .campanha:hover { background: rgba(255,215,0,0.25); }
-    .domingo, .feriado { background: rgba(255,68,68,0.15); border-color: var(--vermelho); color: var(--vermelho); opacity: 0.85; cursor: not-allowed; }
+    .confirmacao-pendente { background: rgba(168,85,247,0.15); border-color: var(--roxo); color: var(--roxo); }
+    .confirmacao-pendente:hover { background: rgba(168,85,247,0.25); }
+    .confirmado { background: rgba(240,240,240,0.12); border-color: var(--branco); color: var(--branco); }
+    .confirmado:hover { background: rgba(240,240,240,0.2); }
+    .falta_oponente { background: rgba(0,168,255,0.15); border-color: var(--azul); color: var(--azul); }
+    .falta_oponente:hover { background: rgba(0,168,255,0.25); }
+    .domingo, .feriado { background: rgba(255,68,68,0.15); border-color: var(--vermelho); color: var(--vermelho); opacity: 0.9; cursor: not-allowed; }
     .domingo:hover, .feriado:hover { background: rgba(255,68,68,0.25); transform: none; }
-    .falta-oponente { background: rgba(0,168,255,0.15); border-color: var(--azul); color: var(--azul); }
-    .falta-oponente:hover { background: rgba(0,168,255,0.25); }
-    .confirmado { background: rgba(240,240,240,0.12); border-color: var(--branco); color: var(--branco); cursor: not-allowed; }
-    .confirmado:hover { transform: none; }
 
-    .agenda-pessoal, .agenda-geral {
-      margin-bottom: 24px; padding: 16px; background: var(--painel);
-      border-radius: 12px; border: 1px solid var(--borda);
-    }
+    .agenda-pessoal, .agenda-geral { margin-bottom: 24px; padding: 16px; background: var(--painel); border-radius: 12px; border: 1px solid var(--borda); }
     .agenda-pessoal { border-color: var(--verde); border-width: 2px; }
     .agenda-pessoal h3 { color: var(--verde); margin-bottom: 12px; font-size: 16px; display: flex; align-items: center; gap: 8px; }
     .agenda-geral h3 { color: var(--azul); margin-bottom: 12px; font-size: 16px; display: flex; align-items: center; gap: 8px; }
 
-    /* ✅ CAIXINHA DA BATALHA — COM COR AUTOMÁTICA IGUAL A PLANILHA! */
-    .item-batalha {
-      padding: 16px; border-radius: 12px; margin-bottom: 14px;
-      border-left: 5px solid; /* Borda lateral colorida */
-      background: rgba(255,255,255,0.03);
-      transition: 0.25s;
-    }
+    .item-batalha { padding: 16px; border-radius: 12px; margin-bottom: 14px; border-left: 5px solid; background: rgba(255,255,255,0.03); transition: 0.25s; }
     .item-batalha strong { font-size: 16px; display: block; margin-bottom: 8px; }
     .item-batalha .vs { font-size: 15px; color: var(--cinza); margin-bottom: 10px; }
     
-    /* 🟡 CAMPANHA — FUNDO AMARELO SUAVE + BORDA AMARELA */
-    .item-batalha.campanha {
-      border-color: var(--amarelo);
-      background: rgba(255,215,0,0.1);
-      box-shadow: 0 0 0 1px rgba(255,215,0,0.2);
-    }
+    .item-batalha.campanha { border-color: var(--amarelo); background: rgba(255,215,0,0.1); }
     .item-batalha.campanha strong { color: var(--amarelo); }
-
-    /* 🔵 AGUARDANDO OPONENTE — FUNDO AZUL SUAVE + BORDA AZUL */
-    .item-batalha.falta-oponente {
-      border-color: var(--azul);
-      background: rgba(0,168,255,0.1);
-      box-shadow: 0 0 0 1px rgba(0,168,255,0.2);
-    }
-    .item-batalha.falta-oponente strong { color: var(--azul); }
-
-    /* ⚪ CONFIRMADO — FUNDO BRANCO SUAVE + BORDA BRANCA */
-    .item-batalha.confirmado {
-      border-color: var(--branco);
-      background: rgba(240,240,240,0.08);
-      box-shadow: 0 0 0 1px rgba(240,240,240,0.15);
-    }
+    .item-batalha.confirmacao-pendente { border-color: var(--roxo); background: rgba(168,85,247,0.1); }
+    .item-batalha.confirmacao-pendente strong { color: var(--roxo); }
+    .item-batalha.confirmado { border-color: var(--branco); background: rgba(240,240,240,0.08); }
     .item-batalha.confirmado strong { color: var(--branco); }
-
-    /* 🟢 DISPONÍVEL — FUNDO VERDE SUAVE + BORDA VERDE */
-    .item-batalha.disponivel {
-      border-color: var(--verde);
-      background: rgba(0,255,156,0.08);
-      box-shadow: 0 0 0 1px rgba(0,255,156,0.15);
-    }
+    .item-batalha.falta_oponente { border-color: var(--azul); background: rgba(0,168,255,0.1); }
+    .item-batalha.falta_oponente strong { color: var(--azul); }
+    .item-batalha.disponivel { border-color: var(--verde); background: rgba(0,255,156,0.08); }
     .item-batalha.disponivel strong { color: var(--verde); }
+    .item-batalha.domingo, .item-batalha.feriado { border-color: var(--vermelho); background: rgba(255,68,68,0.08); }
+    .item-batalha.domingo strong, .item-batalha.feriado strong { color: var(--vermelho); }
 
-    /* 🔴 BLOQUEADO — FUNDO VERMELHO SUAVE + BORDA VERMELHA */
-    .item-batalha.bloqueado {
-      border-color: var(--vermelho);
-      background: rgba(255,68,68,0.08);
-      box-shadow: 0 0 0 1px rgba(255,68,68,0.15);
-    }
-    .item-batalha.bloqueado strong { color: var(--vermelho); }
-
-    .bloco-oponente {
-      background: rgba(0,168,255,0.1);
-      border: 1px solid var(--azul);
-      padding: 12px;
-      border-radius: 10px;
-      margin: 10px 0;
-    }
-    .bloco-oponente h4 {
-      color: var(--azul);
-      font-size: 14px;
-      margin-bottom: 8px;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-    .btn-seguir-oponente {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      background: linear-gradient(90deg, #00a8ff, #0080cc);
-      color: #fff;
-      padding: 10px 16px;
-      border-radius: 8px;
-      text-decoration: none;
-      font-weight: bold;
-      font-size: 14px;
-      margin-top: 8px;
-      transition: 0.2s;
-    }
-    .btn-seguir-oponente:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 4px 12px rgba(0,168,255,0.3);
-    }
-    .aguardando-oponente {
-      color: var(--cinza);
-      font-style: italic;
-      padding: 8px 12px;
-      background: rgba(255,255,255,0.03);
-      border-radius: 6px;
-      margin-top: 6px;
-    }
+    .bloco-oponente { background: rgba(0,168,255,0.1); border: 1px solid var(--azul); padding: 12px; border-radius: 10px; margin: 10px 0; }
+    .bloco-oponente.confirmado { background: rgba(240,240,240,0.1); border-color: var(--branco); }
+    .bloco-oponente h4 { color: var(--azul); font-size: 14px; margin-bottom: 8px; display: flex; align-items: center; gap: 6px; }
+    .bloco-oponente.confirmado h4 { color: var(--branco); }
+    .btn-seguir-oponente { display: inline-flex; align-items: center; gap: 8px; background: linear-gradient(90deg, #00a8ff, #0080cc); color: #fff; padding: 10px 16px; border-radius: 8px; text-decoration: none; font-weight: bold; font-size: 14px; margin-top: 8px; transition: 0.2s; border: none; cursor: pointer; }
+    .btn-seguir-oponente.confirmado { background: linear-gradient(90deg, #e0e0e0, #f0f0f0); color: #000; }
+    .btn-seguir-oponente:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,168,255,0.3); }
+    .btn-seguir-oponente.confirmado:hover { box-shadow: 0 4px 12px rgba(240,240,240,0.3); }
+    .aguardando-oponente { color: var(--cinza); font-style: italic; padding: 8px 12px; background: rgba(255,255,255,0.03); border-radius: 6px; margin-top: 6px; }
 
     .materiais-area { margin-top: 10px; padding-top: 12px; border-top: 1px dashed var(--borda); }
-    .material-item {
-      display: flex; align-items: center; gap: 10px; padding: 12px 14px;
-      border-radius: 10px; font-size: 14px; font-weight: 500; margin-bottom: 10px;
-      transition: 0.2s;
-    }
-    .material-item.disponivel {
-      background: rgba(255,215,0,0.15); color: var(--amarelo); border: 1px solid var(--amarelo);
-      cursor: pointer; text-decoration: none;
-    }
+    .material-item { display: flex; align-items: center; gap: 10px; padding: 12px 14px; border-radius: 10px; font-size: 14px; font-weight: 500; margin-bottom: 10px; transition: 0.2s; }
+    .material-item.disponivel { background: rgba(255,215,0,0.15); color: var(--amarelo); border: 1px solid var(--amarelo); cursor: pointer; text-decoration: none; }
     .material-item.disponivel:hover { background: var(--amarelo); color: #000; }
-    .material-item.indisponivel {
-      background: rgba(255,255,255,0.03); color: var(--cinza); border: 1px dashed var(--cinza);
-    }
-    .material-item.video-disponivel {
-      background: rgba(116,87,255,0.15); color: var(--roxo); border: 1px solid var(--roxo);
-    }
+    .material-item.indisponivel { background: rgba(255,255,255,0.03); color: var(--cinza); border: 1px dashed var(--cinza); }
+    .material-item.video-disponivel { background: rgba(116,87,255,0.15); color: var(--roxo); border: 1px solid var(--roxo); }
     .material-item.video-disponivel:hover { background: var(--roxo); color: #fff; }
 
-    .btn-whats {
-      display: flex; align-items: center; justify-content: center; gap: 8px;
-      padding: 12px 16px; border-radius: 10px; font-size: 14px; font-weight: 600;
-      text-decoration: none; margin-top: 6px;
-      background: rgba(37,211,102,0.15); color: var(--verde-whats); 
-      border: 1px solid var(--verde-whats); transition: 0.2s;
-    }
+    .btn-whats { display: flex; align-items: center; justify-content: center; gap: 8px; padding: 12px 16px; border-radius: 10px; font-size: 14px; font-weight: 600; text-decoration: none; margin-top: 6px; background: rgba(37,211,102,0.15); color: var(--verde-whats); border: 1px solid var(--verde-whats); transition: 0.2s; }
     .btn-whats:hover { background: var(--verde-whats); color: #fff; }
 
     .sem-batalha { padding: 30px 20px; color: var(--cinza); font-size: 15px; text-align: center; line-height: 1.6; }
@@ -222,76 +111,39 @@
     .conteudo { display: none; }
     .conteudo.visivel { display: block; }
 
-    .modal-fundo {
-      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-      background: rgba(0,0,0,0.85); display: none; align-items: center; justify-content: center;
-      z-index: 9999; padding: 20px;
-    }
+    .modal-fundo { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); display: none; align-items: center; justify-content: center; z-index: 9999; padding: 20px; }
     .modal-fundo.aberto { display: flex; }
-    .modal-form {
-      background: var(--painel); padding: 24px; border-radius: 16px;
-      border: 2px solid var(--borda); width: 100%; max-width: 420px;
-      max-height: 90vh; overflow-y: auto;
-    }
+    .modal-form { background: var(--painel); padding: 24px; border-radius: 16px; border: 2px solid var(--borda); width: 100%; max-width: 420px; max-height: 90vh; overflow-y: auto; }
     .modal-titulo { font-size: 20px; font-weight: bold; color: var(--amarelo); margin-bottom: 20px; text-align: center; }
     .modal-data { text-align: center; font-size: 16px; margin-bottom: 20px; color: var(--verde); }
     .grupo-form { margin-bottom: 14px; }
     .grupo-form label { display: block; margin-bottom: 6px; font-size: 14px; color: var(--cinza); }
-    .campo-form-menor {
-      width: 100%; padding: 12px; border-radius: 8px; border: 1px solid var(--borda);
-      background: #17213a; color: var(--texto); font-size: 15px;
-    }
+    .campo-form-menor { width: 100%; padding: 12px; border-radius: 8px; border: 1px solid var(--borda); background: #17213a; color: var(--texto); font-size: 15px; }
     .campo-form-menor[readonly] { opacity: 0.8; background: rgba(0,255,156,0.05); cursor: not-allowed; }
     .linha-dupla { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-    .btn-fechar {
-      background: #2a3a5a; color: var(--texto); border: none; padding: 10px 16px;
-      border-radius: 8px; cursor: pointer; font-weight: bold; margin-top: 10px; width: 100%;
-    }
-    .btn-confirmar {
-      background: linear-gradient(90deg, #00c853, #00ff9c); color: #000; border: none;
-      padding: 14px; border-radius: 8px; cursor: pointer; font-weight: bold;
-      margin-top: 16px; width: 100%; font-size: 16px;
-    }
-    .aviso-bloqueio {
-      background: rgba(255,68,68,0.12); border: 1px solid var(--vermelho);
-      padding: 16px; border-radius: 10px; text-align: center; margin-bottom: 16px;
-    }
+    .btn-fechar { background: #2a3a5a; color: var(--texto); border: none; padding: 10px 16px; border-radius: 8px; cursor: pointer; font-weight: bold; margin-top: 10px; width: 100%; }
+    .btn-confirmar { background: linear-gradient(90deg, #00c853, #00ff9c); color: #000; border: none; padding: 14px; border-radius: 8px; cursor: pointer; font-weight: bold; margin-top: 16px; width: 100%; font-size: 16px; transition: 0.2s; }
+    .btn-confirmar:disabled { background: #444; cursor: not-allowed; opacity: 0.6; }
+    .aviso-bloqueio { background: rgba(255,68,68,0.12); border: 1px solid var(--vermelho); padding: 16px; border-radius: 10px; text-align: center; margin-bottom: 16px; }
     .aviso-bloqueio h4 { color: var(--vermelho); margin-bottom: 8px; font-size: 16px; }
     .aviso-bloqueio p { color: var(--cinza); font-size: 14px; margin-bottom: 12px; }
-    .horario-bloqueado {
-      background: rgba(255,215,0,0.1); border: 1px solid var(--amarelo);
-      padding: 10px; border-radius: 8px; margin-bottom: 12px; font-size: 14px; color: var(--amarelo);
-    }
-    .toast {
-      position: fixed; top: 20px; left: 50%; transform: translateX(-50%);
-      background: var(--verde); color: #000; padding: 12px 24px; border-radius: 8px;
-      font-weight: bold; z-index: 10000; display: none; box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-    }
-    .info-padrao {
-      background: rgba(0,255,156,0.08);
-      border: 1px solid rgba(0,255,156,0.3);
-      padding: 10px;
-      border-radius: 8px;
-      margin-bottom: 14px;
-      font-size: 14px;
-      color: var(--verde);
-    }
+    .info-padrao { background: rgba(0,255,156,0.08); border: 1px solid rgba(0,255,156,0.3); padding: 10px; border-radius: 8px; margin-bottom: 14px; font-size: 14px; color: var(--verde); }
   </style>
 </head>
 <body>
 <div class="container">
 
-  <!-- TELA DE LOGIN -->
+  <!-- 🔐 TELA DE LOGIN COM VALIDAÇÃO -->
   <div class="login-box" id="telaLogin">
     <a href="index.html" class="btn-voltar">← Voltar ao Site Principal</a>
-    <div class="logo">⚔️ Padroniza</div>
+    <div class="logo">⚔️</div>
     <h2>Agenda de Batalhas</h2>
+    <p class="subtitulo">Padroniza Assessoria — Área Restrita</p>
     <input type="text" class="campo-form" id="usuarioAcesso" placeholder="Digite seu nome de usuário">
-    <button class="btn-acao" onclick="verificarAcesso()">🔍 ACESSAR AGENDA</button>
+    <button class="btn-acao" onclick="validarUsuario()">🔑 ENTRAR</button>
     <div class="mensagem" id="mensagemAcesso"></div>
   </div>
 
-  <!-- AGENDA -->
   <div class="conteudo" id="conteudoAgenda">
     <a href="index.html" class="btn-voltar">← Voltar ao Site Principal</a>
     
@@ -328,19 +180,19 @@
     
     <div id="avisoBloqueio" style="display:none" class="aviso-bloqueio">
       <h4 id="tituloAviso">🚫 Indisponível</h4>
-      <p id="textoAviso">Este dia não está disponível para agendamento.</p>
+      <p id="textoAviso">Este dia não está disponível para agendamento. Se precisar, solicite uma exceção com a agência.</p>
       <a href="" target="_blank" class="btn-whats" id="btnWhatsAppExcecao" style="width:100%;justify-content:center">💬 Solicitar Exceção via WhatsApp</a>
     </div>
 
     <form id="formAgendamento" style="display:none">
-      <div class="info-padrao">
-        ✅ Seus dados já vieram preenchidos automaticamente
-      </div>
+      <div class="info-padrao">✅ Seus dados já vieram preenchidos automaticamente</div>
       
       <div class="grupo-form">
         <label>👤 Seu Nome / Streamer</label>
         <input type="text" class="campo-form-menor" id="formStreamer" readonly>
       </div>
+      
+      <div id="avisoHorariosDia" style="display:none; margin-bottom: 14px;"></div>
       
       <div class="linha-dupla">
         <div class="grupo-form">
@@ -349,12 +201,13 @@
         </div>
         <div class="grupo-form">
           <label>⏰ Horário Fim</label>
-          <input type="time" class="campo-form-menor" id="formHorarioFim" required>
+          <input type="time" class="campo-form-menor" id="formHorarioFim" required onchange="verificarHorarioBloqueado()">
         </div>
       </div>
 
-      <div id="avisoHorarioBloqueado" style="display:none" class="horario-bloqueado">
-        ⚠️ Horário indisponível — já existe batalha/campanha agendada nesse horário
+      <div id="avisoHorarioBloqueado" style="display:none" class="aviso-bloqueio">
+        ⚠️ Este horário está <strong>indisponível</strong> — já existe campanha, batalha confirmada ou oponente aguardando.<br>
+        Escolha outro horário.
       </div>
 
       <div class="grupo-form">
@@ -377,7 +230,7 @@
         <textarea class="campo-form-menor" id="formObs" rows="2" placeholder="Informações adicionais..."></textarea>
       </div>
 
-      <button type="submit" class="btn-confirmar">📤 ENVIAR SOLICITAÇÃO</button>
+      <button type="submit" class="btn-confirmar" id="btnConfirmar">📤 ENVIAR SOLICITAÇÃO</button>
       
       <a href="https://wa.me/5569981478873?text=Olá! Preciso de ajuda com agendamento de batalha! 💜" 
          target="_blank" class="btn-whats" style="width:100%;justify-content:center;margin-top:12px;">
@@ -392,48 +245,31 @@
 <div class="toast" id="toast"></div>
 
 <script>
-const LINK_PLANILHA_CONTROLE = "https://docs.google.com/spreadsheets/d/1R9eUsqF4kA0y22ryMUIsvGolBfk3-XwZ5R-RVpBiZA4/gviz/tq?tqx=out:json";
-const LINK_APPSCRIPT_BATALHAS = "https://script.google.com/macros/s/AKfycbygvZq1vAaSRy-eBkrWe73Y7x1GX5c5nj1untYB5T-8ErAntowbMVLvqmTO7uZ9cujH4A/exec";
+// ✅ LINK DO SEU APPS SCRIPT — ATUALIZADO COM VALIDAÇÃO DE USUÁRIO
+const LINK_APPSCRIPT = "https://script.google.com/macros/s/AKfycbygvZq1vAaSRy-eBkrWe73Y7x1GX5c5nj1untYB5T-8ErAntowbMVLvqmTO7uZ9cujH4A/exec";
 const WHATSAPP_AGENCIA = "5569981478873";
 
-let dadosControle = [];
 let usuarioLogado = null;
 let mesAtual = new Date().getMonth() + 1;
 let anoAtual = new Date().getFullYear();
 let batalhasMes = [];
 let diaSelecionado = null;
+let horarioEstaBloqueado = false;
 const NOMES_MESES = ["Janeiro","Fevereiro","Março","Abril","Maio","Junho","Julho","Agosto","Setembro","Outubro","Novembro","Dezembro"];
 
 window.onload = async function() {
-  await carregarPlanilhaControle();
+  // Pega usuário vindo do site principal (index.html)
   const params = new URLSearchParams(window.location.search);
-  const nomeDaUrl = (params.get("usuario") || "").trim().toLowerCase();
+  const nomeDaUrl = (params.get("usuario") || "").trim();
   if (nomeDaUrl) {
     document.getElementById("usuarioAcesso").value = nomeDaUrl;
-    verificarAcesso();
+    validarUsuario(); // Valida automaticamente se veio do site principal
   }
 };
 
-async function carregarPlanilhaControle(){
-  try{
-    const res = await fetch(LINK_PLANILHA_CONTROLE);
-    let txt = await res.text();
-    txt = txt.substring(47, txt.length - 2);
-    const json = JSON.parse(txt);
-    dadosControle = json.table.rows.slice(1).map(linha => {
-      const c = linha.c || [];
-      return {
-        usuario: ((c[0]||{}).v||"").toString().trim().toLowerCase(),
-        status: ((c[1]||{}).v||"").toString().trim().toUpperCase(),
-        linkPerfil: ((c[3]||{}).v||"").toString().trim(),
-        metaDiamantes: ((c[11]||{}).v||"").toString().trim()
-      };
-    });
-  }catch(e){console.error("Erro planilha controle:", e)}
-}
-
-async function verificarAcesso(){
-  const usuario = document.getElementById("usuarioAcesso").value.trim().toLowerCase();
+// 🔐 VALIDAÇÃO DE USUÁRIO — SÓ ACESSA SE ESTIVER NA PLANILHA DE CONTROLE
+async function validarUsuario() {
+  const usuario = document.getElementById("usuarioAcesso").value.trim();
   const msg = document.getElementById("mensagemAcesso");
   
   if (!usuario) {
@@ -441,17 +277,37 @@ async function verificarAcesso(){
     return;
   }
 
-  const streamer = dadosControle.find(s => s.usuario === usuario && s.status === "APROVADO");
+  msg.innerHTML = '<span class="sucesso">🔄 Verificando usuário...</span>';
   
-  if (streamer) {
-    usuarioLogado = streamer;
-    msg.innerHTML = '<span class="sucesso">✅ Aprovado! Carregando agenda...</span>';
-    document.getElementById("telaLogin").style.display = "none";
-    document.getElementById("conteudoAgenda").classList.add("visivel");
-    document.getElementById("nomeUsuarioExibicao").textContent = usuarioLogado.usuario;
-    await carregarBatalhas();
-  } else {
-    msg.innerHTML = '<span class="erro">❌ Usuário não encontrado ou não aprovado</span>';
+  try {
+    // Chama o Apps Script para validar na planilha de controle
+    const res = await fetch(`${LINK_APPSCRIPT}?acao=validarUsuario&usuario=${encodeURIComponent(usuario)}`);
+    const resposta = await res.json();
+    
+    if (!resposta.valido) {
+      msg.innerHTML = '<span class="erro">❌ Usuário não cadastrado. Acesso permitido apenas para streamers agenciados.</span>';
+      return;
+    }
+    
+    // ✅ Usuário válido — libera acesso
+    usuarioLogado = { 
+      usuario: usuario, 
+      metaDiamantes: resposta.meta || "", 
+      linkPerfil: resposta.link || "" 
+    };
+    
+    msg.innerHTML = '<span class="sucesso">✅ Acesso autorizado! Carregando agenda...</span>';
+    
+    setTimeout(() => {
+      document.getElementById("telaLogin").style.display = "none";
+      document.getElementById("conteudoAgenda").classList.add("visivel");
+      document.getElementById("nomeUsuarioExibicao").textContent = usuarioLogado.usuario;
+      carregarBatalhas();
+    }, 800);
+    
+  } catch (erro) {
+    msg.innerHTML = '<span class="erro">⚠️ Erro de conexão. Tente novamente.</span>';
+    console.error("Erro na validação:", erro);
   }
 }
 
@@ -463,19 +319,62 @@ function normalizarNome(nome) {
 }
 
 function ehMinhaBatalha(b) {
+  if (!usuarioLogado) return false;
   const eu = normalizarNome(usuarioLogado.usuario);
   const s = normalizarNome(b.streamer);
   const o = normalizarNome(b.oponente);
   return s === eu || o === eu;
 }
 
+// 🎨 SITUAÇÃO EXATA DA PLANILHA — SEMPRE!
+function getClasseSituacao(situacao) {
+  if (!situacao) return null;
+  const s = String(situacao).toUpperCase().trim();
+  
+  // Correspondência EXATA primeiro
+  if (s === "DISPONÍVEL") return "disponivel";
+  if (s === "CAMPANHA") return "campanha";
+  if (s === "CONFIRMAÇÃO PENDENTE") return "confirmacao-pendente";
+  if (s === "CONFIRMADO") return "confirmado";
+  if (s === "FALTA OPONENTE") return "falta_oponente";
+  if (s === "DOMINGO") return "domingo";
+  if (s === "FERIADO") return "feriado";
+  
+  // Busca parcial como garantia
+  if (s.includes("CONFIRMADO")) return "confirmado";
+  if (s.includes("CAMPANHA")) return "campanha";
+  if (s.includes("PENDENTE")) return "confirmacao-pendente";
+  if (s.includes("FALTA")) return "falta_oponente";
+  if (s.includes("DOMINGO")) return "domingo";
+  if (s.includes("FERIADO")) return "feriado";
+  
+  return null;
+}
+
+// 🔍 COMPARA DATA EXATA (AAAA-MM-DD)
+function datasIguais(dataBatalha, dia, mes, ano) {
+  if (!dataBatalha) return false;
+  const d = String(dataBatalha).trim();
+  const match = d.match(/^(\d{4})-(\d{1,2})-(\d{1,2})$/);
+  if (!match) return false;
+  
+  const bAno = parseInt(match[1]);
+  const bMes = parseInt(match[2]);
+  const bDia = parseInt(match[3]);
+  
+  return bDia === dia && bMes === mes && bAno === ano;
+}
+
 async function carregarBatalhas() {
   try {
-    const res = await fetch(`${LINK_APPSCRIPT_BATALHAS}?mes=${mesAtual}&ano=${anoAtual}`);
+    console.log(`🔄 Carregando: ${NOMES_MESES[mesAtual-1]} ${anoAtual}`);
+    const res = await fetch(`${LINK_APPSCRIPT}?acao=lerBatalhas&mes=${mesAtual}&ano=${anoAtual}`);
     const dados = await res.json();
     batalhasMes = dados.batalhas || [];
+    console.log(`✅ ${batalhasMes.length} batalhas carregadas`);
+    batalhasMes.forEach(b => console.log(`📅 ${b.data} → "${b.situacao}" → classe: ${getClasseSituacao(b.situacao)}`));
   } catch (e) {
-    console.error("Erro ao carregar batalhas:", e);
+    console.error("❌ Erro ao carregar:", e);
     batalhasMes = [];
   }
   renderizarCalendario();
@@ -493,27 +392,32 @@ function renderizarCalendario() {
   for (let i = 0; i < primeiroDia; i++) cal.innerHTML += `<div class="dia vazio"></div>`;
 
   for (let dia = 1; dia <= totalDias; dia++) {
-    const dataAlvo = `${anoAtual}-${String(mesAtual).padStart(2,"0")}-${String(dia).padStart(2,"0")}`;
-    const bd = batalhasMes.filter(b => b.data && b.data.substring(0,10) === dataAlvo);
+    const diaSemana = new Date(anoAtual, mesAtual-1, dia).getDay();
     
-    let classe = "disponivel";
-    let situacaoDia = "DISPONÍVEL";
-    if (bd.length > 0) {
-      const sts = bd.map(b => (b.situacao || "").toUpperCase());
-      if (sts.some(x => x.includes("DOMINGO") || x.includes("FERIADO"))) {
-        classe = "domingo"; situacaoDia = "DOMINGO_FERIADO";
-      }
-      else if (sts.some(x => x.includes("CAMPANHA"))) {
-        classe = "campanha"; situacaoDia = "CAMPANHA";
-      }
-      else if (sts.some(x => x.includes("FALTA OPONENTE"))) {
-        classe = "falta-oponente"; situacaoDia = "FALTA_OPONENTE";
-      }
-      else if (sts.some(x => x.includes("CONFIRMADO") || x.includes("CONFIRMADA"))) {
-        classe = "confirmado"; situacaoDia = "CONFIRMADO";
+    // 🔍 BUSCA EXATA NA PLANILHA
+    const bdDia = batalhasMes.find(b => datasIguais(b.data, dia, mesAtual, anoAtual));
+    
+    let classe = null;
+    let situacaoTexto = "DISPONÍVEL";
+    
+    if (bdDia) {
+      situacaoTexto = bdDia.situacao || "DISPONÍVEL";
+      classe = getClasseSituacao(situacaoTexto);
+      console.log(`📅 Dia ${dia}: "${situacaoTexto}" → classe: ${classe}`);
+    }
+    
+    // 🔴 DOMINGO — só se a planilha NÃO definiu nada diferente
+    if (classe === null) {
+      if (diaSemana === 0) {
+        classe = "domingo";
+        situacaoTexto = "DOMINGO";
+      } else {
+        classe = "disponivel";
+        situacaoTexto = "DISPONÍVEL";
       }
     }
-    cal.innerHTML += `<div class="dia ${classe}" onclick="abrirFormulario(${dia}, '${situacaoDia}', '${dataAlvo}')">
+
+    cal.innerHTML += `<div class="dia ${classe}" onclick="abrirFormulario(${dia}, '${situacaoTexto}', '${anoAtual}-${String(mesAtual).padStart(2,'0')}-${String(dia).padStart(2,'0')}')">
       <span class="dia-num">${dia}</span>
     </div>`;
   }
@@ -521,65 +425,121 @@ function renderizarCalendario() {
 
 function abrirFormulario(dia, situacao, dataAlvo) {
   diaSelecionado = { dia, situacao, data: dataAlvo };
+  horarioEstaBloqueado = false;
   const modal = document.getElementById("modalAgendamento");
   const dataFormatada = `${String(dia).padStart(2,"0")}/${String(mesAtual).padStart(2,"0")}/${anoAtual}`;
   document.getElementById("dataModal").textContent = `📅 ${dataFormatada}`;
   
-  document.getElementById("formStreamer").value = usuarioLogado.usuario || "";
-  document.getElementById("formMeta").value = usuarioLogado.metaDiamantes || "Não definida";
-  document.getElementById("formLinkPerfil").value = usuarioLogado.linkPerfil || "";
+  document.getElementById("formStreamer").value = usuarioLogado?.usuario || "";
+  document.getElementById("formMeta").value = usuarioLogado?.metaDiamantes || "Não definida";
+  document.getElementById("formLinkPerfil").value = usuarioLogado?.linkPerfil || "";
   
   document.getElementById("formAgendamento").style.display = "none";
   document.getElementById("avisoBloqueio").style.display = "none";
+  document.getElementById("avisoHorariosDia").style.display = "none";
+  document.getElementById("avisoHorarioBloqueado").style.display = "none";
+  document.getElementById("btnConfirmar").disabled = false;
   document.getElementById("formHorarioInicio").value = "";
   document.getElementById("formHorarioFim").value = "";
   document.getElementById("formRounds").value = "";
   document.getElementById("formObs").value = "";
-  document.getElementById("avisoHorarioBloqueado").style.display = "none";
   
-  if (situacao === "DOMINGO_FERIADO") {
-    document.getElementById("tituloAviso").textContent = "🚫 Dia Bloqueado";
-    document.getElementById("textoAviso").textContent = "Domingos e feriados não estão disponíveis para agendamento. Se precisar, solicite uma exceção com a agência.";
+  const classe = getClasseSituacao(situacao);
+  
+  // 🔴 BLOQUEADO: DOMINGO / FERIADO
+  if (classe === "domingo" || classe === "feriado") {
+    document.getElementById("tituloAviso").textContent = "🚫 Dia Fechado";
+    document.getElementById("textoAviso").innerHTML = "A agência não trabalha neste dia.<br>Se precisar de um horário especial, entre em contato com a Padroniza.";
     const msgWpp = encodeURIComponent(`Olá! Quero solicitar uma exceção de horário para o dia ${dataFormatada}. Podem me ajudar? 💜`);
     document.getElementById("btnWhatsAppExcecao").href = `https://wa.me/${WHATSAPP_AGENCIA}?text=${msgWpp}`;
     document.getElementById("avisoBloqueio").style.display = "block";
-  } else if (situacao === "CONFIRMADO") {
-    document.getElementById("tituloAviso").textContent = "✅ Já Confirmado";
-    document.getElementById("textoAviso").textContent = "Já existe uma batalha confirmada neste dia. Escolha outro horário ou dia disponível.";
-    document.getElementById("avisoBloqueio").style.display = "block";
-  } else {
-    document.getElementById("formAgendamento").style.display = "block";
-    if (situacao === "CAMPANHA") {
-      mostrarToast("⚠️ Dia com campanha — horários da campanha estarão bloqueados");
-    }
+    modal.classList.add("aberto");
+    return;
   }
+
+  // ⚪ BLOQUEADO: CONFIRMADO
+  if (classe === "confirmado") {
+    document.getElementById("tituloAviso").textContent = "✅ Batalha Confirmada";
+    document.getElementById("textoAviso").innerHTML = "Já existe uma batalha confirmada neste dia.<br>Escolha outro horário ou entre em contato com a agência.";
+    const msgWpp = encodeURIComponent(`Olá! Tenho uma dúvida sobre uma batalha confirmada no dia ${dataFormatada}. Podem me ajudar? 💜`);
+    document.getElementById("btnWhatsAppExcecao").href = `https://wa.me/${WHATSAPP_AGENCIA}?text=${msgWpp}`;
+    document.getElementById("avisoBloqueio").style.display = "block";
+    modal.classList.add("aberto");
+    return;
+  }
+
+  // 📋 Mostra horários ocupados
+  const bdDia = batalhasMes.filter(b => datasIguais(b.data, dia, mesAtual, anoAtual));
   
+  if (bdDia.length > 0) {
+    let htmlAviso = `<div style="background:rgba(255,215,0,0.08);border:1px solid var(--amarelo);padding:12px;border-radius:8px;margin-bottom:14px;">
+      <strong style="color:var(--amarelo);font-size:14px;">⚠️ Horários já ocupados neste dia:</strong><div style="margin-top:8px;">`;
+    bdDia.forEach(b => {
+      const hIni = (b.horaInicio || "--:--").substring(0,5);
+      const hFim = (b.horaFim || "--:--").substring(0,5);
+      htmlAviso += `<div style="padding:4px 0;font-size:13px;color:var(--texto);">
+        <strong>${hIni} às ${hFim}</strong> — ${b.situacao || ""}
+      </div>`;
+    });
+    htmlAviso += `</div><small style="color:var(--cinza);">Escolha um horário diferente.</small></div>`;
+    document.getElementById("avisoHorariosDia").innerHTML = htmlAviso;
+    document.getElementById("avisoHorariosDia").style.display = "block";
+  }
+
+  // ✅ LIBERA FORMULÁRIO
+  document.getElementById("formAgendamento").style.display = "block";
   modal.classList.add("aberto");
 }
 
 function fecharModal() {
   document.getElementById("modalAgendamento").classList.remove("aberto");
   diaSelecionado = null;
+  horarioEstaBloqueado = false;
 }
 
 function verificarHorarioBloqueado() {
   if (!diaSelecionado) return;
   const inicio = document.getElementById("formHorarioInicio").value;
-  if (!inicio) return;
+  const fim = document.getElementById("formHorarioFim").value;
   
-  const bdDia = batalhasMes.filter(b => b.data && b.data.substring(0,10) === diaSelecionado.data);
-  const horarioConflito = bdDia.some(b => {
-    const hInicio = (b.horarioInicio || "").substring(0,5);
-    const hFim = (b.horarioFim || "").substring(0,5);
-    if (!hInicio || !hFim) return false;
-    return inicio >= hInicio && inicio < hFim;
-  });
+  if (!inicio || !fim) {
+    document.getElementById("avisoHorarioBloqueado").style.display = "none";
+    document.getElementById("btnConfirmar").disabled = false;
+    horarioEstaBloqueado = false;
+    return;
+  }
   
-  document.getElementById("avisoHorarioBloqueado").style.display = horarioConflito ? "block" : "none";
+  const bdDia = batalhasMes.filter(b => datasIguais(b.data, diaSelecionado.dia, mesAtual, anoAtual));
+  
+  let conflito = false;
+  for (const b of bdDia) {
+    const hInicioExistente = (b.horaInicio || "").substring(0,5);
+    const hFimExistente = (b.horaFim || "").substring(0,5);
+    if (!hInicioExistente || !hFimExistente) continue;
+    if (inicio < hFimExistente && fim > hInicioExistente) {
+      conflito = true;
+      break;
+    }
+  }
+  
+  if (conflito) {
+    document.getElementById("avisoHorarioBloqueado").style.display = "block";
+    document.getElementById("btnConfirmar").disabled = true;
+    horarioEstaBloqueado = true;
+  } else {
+    document.getElementById("avisoHorarioBloqueado").style.display = "none";
+    document.getElementById("btnConfirmar").disabled = false;
+    horarioEstaBloqueado = false;
+  }
 }
 
 document.getElementById("formAgendamento").addEventListener("submit", async function(e) {
   e.preventDefault();
+  
+  if (horarioEstaBloqueado) {
+    mostrarToast("⚠️ Escolha um horário diferente — este já está ocupado!");
+    return;
+  }
   
   if (!diaSelecionado) return;
   
@@ -587,11 +547,11 @@ document.getElementById("formAgendamento").addEventListener("submit", async func
     acao: "agendar",
     data: diaSelecionado.data,
     streamer: document.getElementById("formStreamer").value,
-    horarioInicio: document.getElementById("formHorarioInicio").value,
-    horarioFim: document.getElementById("formHorarioFim").value,
-    rounds: document.getElementById("formRounds").value,
+    horaInicio: document.getElementById("formHorarioInicio").value,
+    horaFim: document.getElementById("formHorarioFim").value,
+    round: document.getElementById("formRounds").value,
     meta: document.getElementById("formMeta").value,
-    linkPerfil: document.getElementById("formLinkPerfil").value,
+    linkStreamer: document.getElementById("formLinkPerfil").value,
     observacao: document.getElementById("formObs").value,
     usuarioSolicitante: usuarioLogado.usuario
   };
@@ -600,11 +560,11 @@ document.getElementById("formAgendamento").addEventListener("submit", async func
 📥 *NOVA SOLICITAÇÃO DE BATALHA*
 
 👤 *Streamer:* ${dados.streamer}
-📅 *Data:* ${diaSelecionado.data.split("-").reverse().join("/")}
-⏰ *Horário:* ${dados.horarioInicio} às ${dados.horarioFim}
-⚔️ *Rounds:* ${dados.rounds}
+📅 *Data:* ${diaSelecionado.data}
+⏰ *Horário:* ${dados.horaInicio} às ${dados.horaFim}
+⚔️ *Rounds:* ${dados.round}
 💎 *Meta de Diamantes:* ${dados.meta || "Não definida"}
-🔗 *Perfil:* ${dados.linkPerfil}
+🔗 *Perfil:* ${dados.linkStreamer}
 📝 *Obs:* ${dados.observacao || "Nenhuma"}
 
 ---
@@ -612,7 +572,7 @@ Padroniza Assessoria — Sistema Automático
   `.trim());
   
   try {
-    await fetch(LINK_APPSCRIPT_BATALHAS, {
+    await fetch(LINK_APPSCRIPT, {
       method: "POST",
       mode: "no-cors",
       headers: { "Content-Type": "application/json" },
@@ -630,122 +590,61 @@ Padroniza Assessoria — Sistema Automático
 });
 
 function renderizarAgendas() {
+  // 👤 MINHAS BATALHAS — SOMENTE AS DELE
   const minhas = batalhasMes.filter(ehMinhaBatalha);
   
   document.getElementById("minhasBatalhas").innerHTML = minhas.length 
-    ? minhas.map(b => gerarItem(b, true)).join("")
+    ? minhas.map(b => gerarItemBatalha(b, true)).join("")
     : `<div class="sem-batalha">Nenhuma batalha encontrada para você.<br>Escolha um dia disponível para solicitar!</div>`;
 
+  // 📋 TODAS AS BATALHAS — MOSTRA TUDO
   document.getElementById("contadorGeral").textContent = `Total: ${batalhasMes.length} batalhas`;
   document.getElementById("todasBatalhas").innerHTML = batalhasMes.length
-    ? batalhasMes.map(b => gerarItem(b, false)).join("")
+    ? batalhasMes.map(b => gerarItemBatalha(b, false)).join("")
     : `<div class="sem-batalha">Nenhuma batalha agendada ainda.</div>`;
 }
 
-// ✅ FUNÇÃO ATUALIZADA — COR DA CAIXINHA AUTOMÁTICA PELA SITUAÇÃO!
-function gerarItem(b, ehMinha) {
-  const data = b.data ? b.data.split("-").reverse().join("/") : "Sem data";
-  const horario = b.horarioInicio ? ` ${b.horarioInicio.substring(0,5)} - ${b.horarioFim?.substring(0,5) || ""}` : "";
-  const s = (b.situacao || "").toUpperCase();
+function gerarItemBatalha(b, ehMinha) {
+  const data = b.data ? String(b.data).split("-").reverse().join("/") : "Sem data";
+  const horario = b.horaInicio ? ` ${b.horaInicio.substring(0,5)}` : "";
+  const situacao = b.situacao || "DISPONÍVEL";
+  const classe = getClasseSituacao(situacao);
   
-  // 🎯 Define a classe da caixinha conforme a situação da planilha
-  let classeCaixa = "";
   let icone = "📌";
-  
-  if (s.includes("CAMPANHA")) {
-    classeCaixa = "campanha";
-    icone = "📢";
-  }
-  else if (s.includes("FALTA OPONENTE") || s.includes("AGUARDANDO")) {
-    classeCaixa = "falta-oponente";
-    icone = "⏳";
-  }
-  else if (s.match(/CONFIRMADA?/)) {
-    classeCaixa = "confirmado";
-    icone = "✅";
-  }
-  else if (s.includes("DISPONÍVEL")) {
-    classeCaixa = "disponivel";
-    icone = "✅";
-  }
-  else if (s.includes("DOMINGO") || s.includes("FERIADO") || s.includes("BLOQUEADO")) {
-    classeCaixa = "bloqueado";
-    icone = "🚫";
-  }
+  if (classe === "campanha") icone = "📢";
+  else if (classe === "falta_oponente") icone = "⏳";
+  else if (classe === "confirmado") icone = "✅";
+  else if (classe === "confirmacao-pendente") icone = "⏳";
+  else if (classe === "domingo" || classe === "feriado") icone = "🚫";
+  else if (classe === "disponivel") icone = "✅";
 
   let blocoOponente = "";
-  if (ehMinha) {
-    if (b.oponente && b.linkOponente) {
-      blocoOponente = `
-        <div class="bloco-oponente">
-          <h4>🆔 Seu Oponente (Padroniza)</h4>
-          <strong>${b.oponente}</strong>
-          <a href="${b.linkOponente}" target="_blank" class="btn-seguir-oponente">
-            🔗 Seguir Oponente aqui
-          </a>
-        </div>
-      `;
-    } else if (s.includes("FALTA OPONENTE") || s.includes("AGUARDANDO") || s.includes("DISPONÍVEL")) {
-      blocoOponente = `
-        <div class="aguardando-oponente">
-          ⏳ Aguardando a Padroniza encontrar seu oponente...
-        </div>
-      `;
-    }
+  if (ehMinha && b.oponente) {
+    // 🔑 COR DO BOTÃO = COR DA SITUAÇÃO — BRANCO SE CONFIRMADO, AZUL SE FALTA OPONENTE
+    const classeBotao = classe === "confirmado" ? "confirmado" : "";
+    blocoOponente = `
+      <div class="bloco-oponente ${classeBotao}">
+        <h4>🆔 Seu Oponente</h4>
+        <strong>${b.oponente}</strong>
+        ${b.linkOponente ? `<a href="${b.linkOponente}" target="_blank" class="btn-seguir-oponente ${classeBotao}">🔗 Seguir Oponente</a>` : ""}
+      </div>`;
+  } else if (ehMinha && classe === "falta_oponente") {
+    blocoOponente = `<div class="aguardando-oponente">⏳ Aguardando oponente...</div>`;
   }
 
   const banner = (b.banner || "").trim();
   const temBanner = banner.length > 5;
   const video = (b.videoDivulgacao || "").trim();
   const temVideo = video.length > 5;
-
   const msgWpp = encodeURIComponent("Olá! Tenho uma dúvida sobre minha batalha. Podem me ajudar? 💜");
 
   let htmlMateriais = "";
   if (ehMinha) {
     htmlMateriais = `<div class="materiais-area">`;
-    
     htmlMateriais += temBanner
       ? `<a href="${banner}" target="_blank" class="material-item disponivel">🖼️ Ver Material Banner</a>`
-      : `<div class="material-item indisponivel">🖼️ Seu Material Banner aparecerá aqui</div>`;
-    
+      : `<div class="material-item indisponivel">🖼️ Material Banner</div>`;
     htmlMateriais += temVideo
       ? `<a href="${video}" target="_blank" class="material-item disponivel video-disponivel">🎥 Ver Material Vídeo Divulgação</a>`
-      : `<div class="material-item indisponivel">🎥 Seu Material Vídeo Divulgação aparecerá aqui</div>`;
-    
-    htmlMateriais += `<a href="https://wa.me/${WHATSAPP_AGENCIA}?text=${msgWpp}" target="_blank" class="btn-whats">💬 Dúvida? Fale com a Padroniza</a>`;
-    
-    htmlMateriais += `</div>`;
-  }
-
-  // ✅ A caixinha recebe a classe de cor automática!
-  return `<div class="item-batalha ${classeCaixa}">
-    <strong>${icone} ${data}${horario} — ${b.situacao || "Disponível"}</strong>
-    <div class="vs">${b.streamer || "-"} vs ${b.oponente || "Aguardando oponente..."}</div>
-    ${blocoOponente}
-    ${htmlMateriais}
-  </div>`;
-}
-
-document.getElementById("btnAnterior").onclick = () => {
-  mesAtual--; if (mesAtual < 1) { mesAtual = 12; anoAtual--; }
-  carregarBatalhas();
-};
-document.getElementById("btnProximo").onclick = () => {
-  mesAtual++; if (mesAtual > 12) { mesAtual = 1; anoAtual++; }
-  carregarBatalhas();
-};
-
-function mostrarToast(mensagem) {
-  const t = document.getElementById("toast");
-  t.textContent = mensagem;
-  t.style.display = "block";
-  setTimeout(() => t.style.display = "none", 3500);
-}
-
-document.getElementById("modalAgendamento").addEventListener("click", function(e) {
-  if (e.target === this) fecharModal();
-});
-</script>
-</body>
-</html>
+      : `<div class="material-item indisponivel">🎥 Material Vídeo Divulgação</div>`;
+    htmlMateriais += `<a href="https://wa.me/${WHATSAPP_AGENCIA}?text=${msgWpp}" target="_blank" class="btn-whats">💬 Dúvida? Fale com a
