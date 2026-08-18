@@ -29,6 +29,11 @@
       font-size: 15px;
     }
     .aviso-usuario strong { color: var(--verde); }
+    .aviso-teste { 
+      background: rgba(255,215,0,0.1); border: 1px solid var(--amarelo); 
+      padding: 8px 12px; border-radius: 8px; margin-bottom: 12px;
+      font-size: 13px; color: var(--amarelo);
+    }
     .carregando { text-align: center; padding: 60px 20px; color: var(--cinza); font-size: 16px; }
 
     .cal-topo { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; padding: 16px; background: var(--painel); border-radius: 12px; border: 1px solid var(--borda); }
@@ -128,11 +133,15 @@
 <body>
 <div class="container">
 
-  <!-- ✅ NOME DO ARQUIVO CORRIGIDO: agendar-batalha.html -->
+  <!-- ✅ NOME DO ARQUIVO CORRIGIDO -->
   <a href="index.html" class="btn-voltar">← Voltar ao Site Principal</a>
 
   <div id="avisoUsuario" class="aviso-usuario" style="display:none;">
     👤 Olá, <strong id="nomeUsuarioExibicao"></strong>! Seus dados já vieram preenchidos ✅
+  </div>
+
+  <div id="avisoTeste" class="aviso-teste" style="display:none;">
+    🧪 Modo Pré-visualização — Dados de exemplo carregados
   </div>
 
   <div id="carregando" class="carregando">
@@ -239,9 +248,14 @@
 <div class="toast" id="toast"></div>
 
 <script>
-// ✅ LINK DO SEU APPS SCRIPT — INTACTO, NÃO MEXEU!
+// ✅ LINK DO SEU APPS SCRIPT — INTACTO!
 const LINK_APPSCRIPT = "https://script.google.com/macros/s/AKfycbygvZq1vAaSRy-eBkrWe73Y7x1GX5c5nj1untYB5T-8ErAntowbMVLvqmTO7uZ9cujH4A/exec";
 const WHATSAPP_AGENCIA = "5569981478873";
+
+// 🧪 USUÁRIO DE TESTE — APARECE NA PRÉ-VISUALIZAÇÃO!
+const USUARIO_TESTE = "Igor Costa";
+const META_TESTE = "100.000 diamantes";
+const LINK_TESTE = "https://www.tiktok.com/@igorcosta";
 
 let usuarioLogado = null;
 let mesAtual = new Date().getMonth() + 1;
@@ -251,39 +265,37 @@ let diaSelecionado = null;
 let horarioEstaBloqueado = false;
 const NOMES_MESES = ["Janeiro","Fevereiro","Março","Abril","Maio","Junho","Julho","Agosto","Setembro","Outubro","Novembro","Dezembro"];
 
-// ✅ RECEBE DADOS DO INDEX.HTML PELA URL — EXATAMENTE COMO FUNCIONAVA ANTES!
+// ✅ RECEBE DADOS DO SITE PRINCIPAL OU USA TESTE PARA PRÉ-VISUALIZAÇÃO!
 window.onload = async function() {
   const params = new URLSearchParams(window.location.search);
   const nomeUsuario = (params.get("usuario") || "").trim();
   
-  if (!nomeUsuario) {
-    // ⚠️ Se vier direto, sem vir do site principal
-    document.getElementById("carregando").innerHTML = `
-      ⚠️ Acesse pelo site principal para entrar.<br><br>
-      <a href="index.html" style="color:var(--verde);text-decoration:none;font-weight:bold;">
-        ← Ir para a Página Principal
-      </a>
-    `;
-    return;
+  if (nomeUsuario) {
+    // ✅ VEM DO SITE PRINCIPAL — USA OS DADOS REAIS
+    usuarioLogado = { 
+      usuario: nomeUsuario, 
+      meta: params.get("meta") || "", 
+      linkPerfil: params.get("link") || "" 
+    };
+    document.getElementById("avisoUsuario").style.display = "block";
+  } else {
+    // 🧪 PRÉ-VISUALIZAÇÃO — USA USUÁRIO DE TESTE
+    usuarioLogado = { 
+      usuario: USUARIO_TESTE, 
+      meta: META_TESTE, 
+      linkPerfil: LINK_TESTE 
+    };
+    document.getElementById("avisoUsuario").style.display = "block";
+    document.getElementById("avisoTeste").style.display = "block";
   }
 
-  // ✅ Usuário identificado — carrega tudo!
-  usuarioLogado = { 
-    usuario: nomeUsuario, 
-    meta: params.get("meta") || "", 
-    linkPerfil: params.get("link") || "" 
-  };
-
-  // Mostra o nome do usuário
-  document.getElementById("nomeUsuarioExibicao").textContent = nomeUsuario;
-  document.getElementById("nomeUsuarioExibicao2").textContent = nomeUsuario;
-  document.getElementById("avisoUsuario").style.display = "block";
+  // ✅ PREENCHE E CARREGA TUDO — SEMPRE!
+  document.getElementById("nomeUsuarioExibicao").textContent = usuarioLogado.usuario;
+  document.getElementById("nomeUsuarioExibicao2").textContent = usuarioLogado.usuario;
   
-  // Esconde carregando, mostra agenda
   document.getElementById("carregando").style.display = "none";
   document.getElementById("conteudoAgenda").style.display = "block";
   
-  // Carrega as batalhas
   carregarBatalhas();
 };
 
@@ -358,288 +370,4 @@ function renderizarCalendario() {
   cal.innerHTML = "";
   
   const primeiroDia = new Date(anoAtual, mesAtual-1, 1).getDay();
-  const totalDias = new Date(anoAtual, mesAtual, 0).getDate();
-
-  for (let i = 0; i < primeiroDia; i++) cal.innerHTML += `<div class="dia vazio"></div>`;
-
-  for (let dia = 1; dia <= totalDias; dia++) {
-    const diaSemana = new Date(anoAtual, mesAtual-1, dia).getDay();
-    const bdDia = batalhasMes.find(b => datasIguais(b.data, dia, mesAtual, anoAtual));
-    
-    let classe = null;
-    let situacaoTexto = "DISPONÍVEL";
-    
-    if (bdDia) {
-      situacaoTexto = bdDia.situacao || "DISPONÍVEL";
-      classe = getClasseSituacao(situacaoTexto);
-    }
-    
-    if (classe === null) {
-      if (diaSemana === 0) {
-        classe = "domingo";
-        situacaoTexto = "DOMINGO";
-      } else {
-        classe = "disponivel";
-        situacaoTexto = "DISPONÍVEL";
-      }
-    }
-
-    cal.innerHTML += `<div class="dia ${classe}" onclick="abrirFormulario(${dia}, '${situacaoTexto}', '${anoAtual}-${String(mesAtual).padStart(2,'0')}-${String(dia).padStart(2,'0')}')">
-      <span class="dia-num">${dia}</span>
-    </div>`;
-  }
-}
-
-function abrirFormulario(dia, situacao, dataAlvo) {
-  diaSelecionado = { dia, situacao, data: dataAlvo };
-  horarioEstaBloqueado = false;
-  const modal = document.getElementById("modalAgendamento");
-  const dataFormatada = `${String(dia).padStart(2,"0")}/${String(mesAtual).padStart(2,"0")}/${anoAtual}`;
-  document.getElementById("dataModal").textContent = `📅 ${dataFormatada}`;
-  
-  // ✅ PREENCHE AUTOMATICAMENTE COM OS DADOS DO USUÁRIO
-  document.getElementById("formStreamer").value = usuarioLogado?.usuario || "";
-  document.getElementById("formMeta").value = usuarioLogado?.meta || "Não definida";
-  document.getElementById("formLinkPerfil").value = usuarioLogado?.linkPerfil || "";
-  
-  document.getElementById("formAgendamento").style.display = "none";
-  document.getElementById("avisoBloqueio").style.display = "none";
-  document.getElementById("avisoHorariosDia").style.display = "none";
-  document.getElementById("avisoHorarioBloqueado").style.display = "none";
-  document.getElementById("btnConfirmar").disabled = false;
-  document.getElementById("formHorarioInicio").value = "";
-  document.getElementById("formHorarioFim").value = "";
-  document.getElementById("formRounds").value = "";
-  document.getElementById("formObs").value = "";
-  
-  const classe = getClasseSituacao(situacao);
-  
-  if (classe === "domingo" || classe === "feriado") {
-    document.getElementById("tituloAviso").textContent = "🚫 Dia Fechado";
-    document.getElementById("textoAviso").innerHTML = "A agência não trabalha neste dia.<br>Se precisar de um horário especial, entre em contato com a Padroniza.";
-    const msgWpp = encodeURIComponent(`Olá! Quero solicitar uma exceção de horário para o dia ${dataFormatada}. Podem me ajudar? 💜`);
-    document.getElementById("btnWhatsAppExcecao").href = `https://wa.me/${WHATSAPP_AGENCIA}?text=${msgWpp}`;
-    document.getElementById("avisoBloqueio").style.display = "block";
-    modal.classList.add("aberto");
-    return;
-  }
-
-  if (classe === "confirmado") {
-    document.getElementById("tituloAviso").textContent = "✅ Batalha Confirmada";
-    document.getElementById("textoAviso").innerHTML = "Já existe uma batalha confirmada neste dia.<br>Escolha outro horário ou entre em contato com a agência.";
-    const msgWpp = encodeURIComponent(`Olá! Tenho uma dúvida sobre uma batalha confirmada no dia ${dataFormatada}. Podem me ajudar? 💜`);
-    document.getElementById("btnWhatsAppExcecao").href = `https://wa.me/${WHATSAPP_AGENCIA}?text=${msgWpp}`;
-    document.getElementById("avisoBloqueio").style.display = "block";
-    modal.classList.add("aberto");
-    return;
-  }
-
-  const bdDia = batalhasMes.filter(b => datasIguais(b.data, dia, mesAtual, anoAtual));
-  
-  if (bdDia.length > 0) {
-    let htmlAviso = `<div style="background:rgba(255,215,0,0.08);border:1px solid var(--amarelo);padding:12px;border-radius:8px;margin-bottom:14px;">
-      <strong style="color:var(--amarelo);font-size:14px;">⚠️ Horários já ocupados neste dia:</strong><div style="margin-top:8px;">`;
-    bdDia.forEach(b => {
-      const hIni = (b.horaInicio || "--:--").substring(0,5);
-      const hFim = (b.horaFim || "--:--").substring(0,5);
-      htmlAviso += `<div style="padding:4px 0;font-size:13px;color:var(--texto);">
-        <strong>${hIni} às ${hFim}</strong> — ${b.situacao || ""}
-      </div>`;
-    });
-    htmlAviso += `</div><small style="color:var(--cinza);">Escolha um horário diferente.</small></div>`;
-    document.getElementById("avisoHorariosDia").innerHTML = htmlAviso;
-    document.getElementById("avisoHorariosDia").style.display = "block";
-  }
-
-  document.getElementById("formAgendamento").style.display = "block";
-  modal.classList.add("aberto");
-}
-
-function fecharModal() {
-  document.getElementById("modalAgendamento").classList.remove("aberto");
-  diaSelecionado = null;
-  horarioEstaBloqueado = false;
-}
-
-function verificarHorarioBloqueado() {
-  if (!diaSelecionado) return;
-  const inicio = document.getElementById("formHorarioInicio").value;
-  const fim = document.getElementById("formHorarioFim").value;
-  
-  if (!inicio || !fim) {
-    document.getElementById("avisoHorarioBloqueado").style.display = "none";
-    document.getElementById("btnConfirmar").disabled = false;
-    horarioEstaBloqueado = false;
-    return;
-  }
-  
-  const bdDia = batalhasMes.filter(b => datasIguais(b.data, diaSelecionado.dia, mesAtual, anoAtual));
-  
-  let conflito = false;
-  for (const b of bdDia) {
-    const hInicioExistente = (b.horaInicio || "").substring(0,5);
-    const hFimExistente = (b.horaFim || "").substring(0,5);
-    if (!hInicioExistente || !hFimExistente) continue;
-    if (inicio < hFimExistente && fim > hInicioExistente) {
-      conflito = true;
-      break;
-    }
-  }
-  
-  if (conflito) {
-    document.getElementById("avisoHorarioBloqueado").style.display = "block";
-    document.getElementById("btnConfirmar").disabled = true;
-    horarioEstaBloqueado = true;
-  } else {
-    document.getElementById("avisoHorarioBloqueado").style.display = "none";
-    document.getElementById("btnConfirmar").disabled = false;
-    horarioEstaBloqueado = false;
-  }
-}
-
-document.getElementById("formAgendamento").addEventListener("submit", async function(e) {
-  e.preventDefault();
-  
-  if (horarioEstaBloqueado) {
-    mostrarToast("⚠️ Escolha um horário diferente — este já está ocupado!");
-    return;
-  }
-  
-  if (!diaSelecionado) return;
-  
-  const dados = {
-    acao: "agendar",
-    data: diaSelecionado.data,
-    streamer: document.getElementById("formStreamer").value,
-    horaInicio: document.getElementById("formHorarioInicio").value,
-    horaFim: document.getElementById("formHorarioFim").value,
-    round: document.getElementById("formRounds").value,
-    meta: document.getElementById("formMeta").value,
-    linkStreamer: document.getElementById("formLinkPerfil").value,
-    observacao: document.getElementById("formObs").value,
-    usuarioSolicitante: usuarioLogado.usuario
-  };
-  
-  const msgWhatsApp = encodeURIComponent(`
-📥 *NOVA SOLICITAÇÃO DE BATALHA*
-
-👤 *Streamer:* ${dados.streamer}
-📅 *Data:* ${diaSelecionado.data}
-⏰ *Horário:* ${dados.horaInicio} às ${dados.horaFim}
-⚔️ *Rounds:* ${dados.round}
-💎 *Meta de Diamantes:* ${dados.meta || "Não definida"}
-🔗 *Perfil:* ${dados.linkStreamer}
-📝 *Obs:* ${dados.observacao || "Nenhuma"}
-
----
-Padroniza Assessoria — Sistema Automático
-  `.trim());
-  
-  try {
-    await fetch(LINK_APPSCRIPT, {
-      method: "POST",
-      mode: "no-cors",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(dados)
-    });
-    
-    window.open(`https://wa.me/${WHATSAPP_AGENCIA}?text=${msgWhatsApp}`, "_blank");
-    mostrarToast("✅ Solicitação enviada! WhatsApp aberto!");
-    fecharModal();
-    setTimeout(carregarBatalhas, 1500);
-  } catch (erro) {
-    mostrarToast("⚠️ Erro ao enviar. Tente novamente.");
-    console.error(erro);
-  }
-});
-
-function renderizarAgendas() {
-  const minhas = batalhasMes.filter(ehMinhaBatalha);
-  
-  document.getElementById("minhasBatalhas").innerHTML = minhas.length 
-    ? minhas.map(b => gerarItemBatalha(b, true)).join("")
-    : `<div class="sem-batalha">Nenhuma batalha encontrada para você.<br>Escolha um dia disponível para solicitar!</div>`;
-
-  document.getElementById("contadorGeral").textContent = `Total: ${batalhasMes.length} batalhas`;
-  document.getElementById("todasBatalhas").innerHTML = batalhasMes.length
-    ? batalhasMes.map(b => gerarItemBatalha(b, false)).join("")
-    : `<div class="sem-batalha">Nenhuma batalha agendada ainda.</div>`;
-}
-
-function gerarItemBatalha(b, ehMinha) {
-  const data = b.data ? String(b.data).split("-").reverse().join("/") : "Sem data";
-  const horario = b.horaInicio ? ` ${b.horaInicio.substring(0,5)}` : "";
-  const situacao = b.situacao || "DISPONÍVEL";
-  const classe = getClasseSituacao(situacao);
-  
-  let icone = "📌";
-  if (classe === "campanha") icone = "📢";
-  else if (classe === "falta_oponente") icone = "⏳";
-  else if (classe === "confirmado") icone = "✅";
-  else if (classe === "confirmacao-pendente") icone = "⏳";
-  else if (classe === "domingo" || classe === "feriado") icone = "🚫";
-  else if (classe === "disponivel") icone = "✅";
-
-  let blocoOponente = "";
-  if (ehMinha && b.oponente) {
-    const classeBotao = classe === "confirmado" ? "confirmado" : "";
-    blocoOponente = `
-      <div class="bloco-oponente ${classeBotao}">
-        <h4>🆔 Seu Oponente</h4>
-        <strong>${b.oponente}</strong>
-        ${b.linkOponente ? `<a href="${b.linkOponente}" target="_blank" class="btn-seguir-oponente ${classeBotao}">🔗 Seguir Oponente</a>` : ""}
-      </div>`;
-  } else if (ehMinha && classe === "falta_oponente") {
-    blocoOponente = `<div class="aguardando-oponente">⏳ Aguardando oponente...</div>`;
-  }
-
-  const banner = (b.banner || "").trim();
-  const temBanner = banner.length > 5;
-  const video = (b.videoDivulgacao || "").trim();
-  const temVideo = video.length > 5;
-  const msgWpp = encodeURIComponent("Olá! Tenho uma dúvida sobre minha batalha. Podem me ajudar? 💜");
-
-  let htmlMateriais = "";
-  if (ehMinha) {
-    htmlMateriais = `<div class="materiais-area">`;
-    htmlMateriais += temBanner
-      ? `<a href="${banner}" target="_blank" class="material-item disponivel">🖼️ Ver Material Banner</a>`
-      : `<div class="material-item indisponivel">🖼️ Material Banner</div>`;
-    htmlMateriais += temVideo
-      ? `<a href="${video}" target="_blank" class="material-item disponivel video-disponivel">🎥 Ver Material Vídeo Divulgação</a>`
-      : `<div class="material-item indisponivel">🎥 Material Vídeo Divulgação</div>`;
-    htmlMateriais += `<a href="https://wa.me/${WHATSAPP_AGENCIA}?text=${msgWpp}" target="_blank" class="btn-whats">💬 Dúvida? Fale com a Padroniza</a>`;
-    htmlMateriais += `</div>`;
-  }
-
-  return `
-    <div class="item-batalha ${classe}">
-      <strong>${icone} ${data}${horario} — ${situacao}</strong>
-      <div class="vs">${b.streamer || "Streamer"} vs ${b.oponente || "A definir"}</div>
-      ${blocoOponente}
-      ${htmlMateriais}
-    </div>
-  `;
-}
-
-function mostrarToast(texto) {
-  const t = document.getElementById("toast");
-  t.textContent = texto;
-  t.style.display = "block";
-  setTimeout(() => t.style.display = "none", 3500);
-}
-
-document.getElementById("btnAnterior").addEventListener("click", () => {
-  mesAtual--;
-  if (mesAtual < 4) { mesAtual = 12; anoAtual--; }
-  carregarBatalhas();
-});
-
-document.getElementById("btnProximo").addEventListener("click", () => {
-  mesAtual++;
-  if (mesAtual > 12) { mesAtual = 4; anoAtual++; }
-  carregarBatalhas();
-});
-</script>
-</body>
-</html>
+  const totalDias = new Date(anoAt
