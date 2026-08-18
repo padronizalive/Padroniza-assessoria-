@@ -5,18 +5,18 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Padroniza Assessoria | Portal Oficial</title>
 <style>
-:root{--fundo:#0b1020;--painel:#11182c;--painel2:#17213a;--verde:#34d399;--amarelo:#ffc857;--vermelho:#ef4444;--rosa:#ff3d81;--roxo:#7457ff;--azul:#3b82f6;--texto:#f7f9ff;--cinza:#a9b4cb}
+:root{--fundo:#0b1020;--painel:#11182c;--painel2:#17213a;--verde:#34d399;--amarelo:#ffc857;--vermelho:#ef4444;--rosa:#ff3d81;--roxo:#7457ff;--azul:#3b82f6;--texto:#f7f9ff;--cinza:#a9b4cb;--whatsapp:#25D366;--telegram:#0088cc}
 *{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
 body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
 .container{max-width:650px;margin:0 auto}
 
 .logo-container{text-align:center;margin-bottom:20px}
 .logo-agencia{max-width:280px;width:100%;height:auto;border-radius:12px;border:3px solid var(--amarelo);box-shadow:0 0 20px rgba(255,200,87,0.3)}
-.cabecalho{text-align:center;margin-bottom:20px}
+.cabecalho{text-align:center;margin-bottom:25px}
 .cabecalho h2{font-size:34px;color:var(--amarelo);margin-bottom:5px}
 .cabecalho p{font-size:18px;color:var(--cinza)}
 
-.botoes-principais{display:flex;flex-direction:column;gap:14px;margin-bottom:25px}
+.botoes-principais{display:flex;flex-direction:column;gap:14px;margin-bottom:30px}
 
 .btn-outra-agencia-unificado{
   background:linear-gradient(135deg,#fbbf24,#f59e0b);
@@ -69,6 +69,31 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
 .btn-admin{background:linear-gradient(135deg,#8b5cf6,#6d28d9)}
 .btn-moedas{background:linear-gradient(135deg,#ec4899,#db2777)}
 
+/* 📱 REDES SOCIAIS — COMPLETA COM TODAS! */
+.secao-redes{margin:30px 0 20px 0;text-align:center}
+.titulo-redes{color:var(--amarelo);font-size:18px;margin-bottom:15px}
+.redes-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:8px}
+.btn-rede{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  padding:12px 6px;
+  border-radius:12px;
+  text-decoration:none;
+  transition:0.2s;
+  border:1px solid transparent;
+}
+.btn-rede:hover{transform:translateY(-3px)}
+.btn-rede span{font-size:24px;margin-bottom:3px}
+.btn-rede small{font-size:9px;color:inherit;opacity:0.9;line-height:1.2}
+.btn-instagram{background:linear-gradient(135deg,#833ab4,#fd1d1d,#fcb045);color:#fff}
+.btn-tiktok{background:linear-gradient(135deg,#000,#25F4EE,#FE2C55);color:#fff;border:1px solid #333}
+.btn-youtube{background:linear-gradient(135deg,#ff0000,#cc0000);color:#fff}
+.btn-facebook{background:linear-gradient(135deg,#1877f2,#0d65d9);color:#fff}
+.btn-whatsapp-canal{background:linear-gradient(135deg,#25D366,#128C7E);color:#fff}
+.btn-telegram{background:linear-gradient(135deg,#0088cc,#22a9e0);color:#fff}
+
 .abas-container{position:relative;overflow:hidden;border-radius:12px;background:var(--painel);margin-top:25px}
 .abas-cabecalho{display:flex;position:relative;border-bottom:2px solid #293653}
 .aba-btn{flex:1;padding:14px 10px;background:transparent;border:none;color:var(--cinza);font-weight:bold;font-size:15px;cursor:pointer;transition:0.2s}
@@ -88,10 +113,11 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
 .sem-lives,.sem-destaques{text-align:center;padding:30px;color:var(--cinza);font-size:16px}
 
 .galeria-destaques{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:15px}
-.cartao-destaque{background:var(--painel2);border-radius:10px;overflow:hidden;border:1px solid #293653}
-.cartao-destaque img{width:100%;height:180px;object-fit:cover}
+.cartao-destaque{background:var(--painel2);border-radius:10px;overflow:hidden;border:1px solid #293653;transition:0.2s}
+.cartao-destaque:hover{transform:translateY(-3px);box-shadow:0 6px 16px rgba(0,0,0,0.3)}
+.cartao-destaque img, .cartao-destaque video{width:100%;height:180px;object-fit:cover;display:block}
 .cartao-destaque .info{padding:12px}
-.cartao-destaque .nome{font-weight:bold;color:var(--amarelo);margin-bottom:5px}
+.cartao-destaque .nome{font-weight:bold;color:var(--amarelo);margin-bottom:5px;font-size:16px}
 .cartao-destaque .desc{font-size:14px;color:var(--cinza)}
 
 .conteudo{display:none;background:var(--painel);border-radius:12px;padding:20px;margin-bottom:20px}
@@ -171,6 +197,37 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
     <a href="https://www.tiktok.com/coin?rc=7TGXGN69&rie=" target="_blank" class="btn-principal btn-moedas">💰 COMPRAR MOEDAS TIKTOK</a>
   </div>
 
+  <!-- 📱 REDES SOCIAIS — TODAS INCLUÍDAS! -->
+  <div class="secao-redes">
+    <h3 class="titulo-redes">🌐 SIGA NOSSAS REDES</h3>
+    <div class="redes-grid">
+      <a href="https://www.instagram.com/gw.padronizaassessoria?igsh=MWllaDRnbWEzZ251Yg==&igsi=MWllaDRnbWEzZ251Yg==" target="_blank" class="btn-rede btn-instagram" rel="noopener">
+        <span>📸</span>
+        <small>Instagram</small>
+      </a>
+      <a href="https://www.tiktok.com/@padronizalive?_r=1&_t=ZS-98yZB24y4Zc" target="_blank" class="btn-rede btn-tiktok" rel="noopener">
+        <span>🎵</span>
+        <small>TikTok</small>
+      </a>
+      <a href="https://youtube.com/@agencygw?si=D94BQHaQaujEZyaM" target="_blank" class="btn-rede btn-youtube" rel="noopener">
+        <span>📺</span>
+        <small>YouTube</small>
+      </a>
+      <a href="https://www.facebook.com/share/1LZDi9B3Zt/" target="_blank" class="btn-rede btn-facebook" rel="noopener">
+        <span>📘</span>
+        <small>Facebook</small>
+      </a>
+      <a href="https://whatsapp.com/channel/0029VbCXIZ6HltYCuslcOo3U" target="_blank" class="btn-rede btn-whatsapp-canal" rel="noopener">
+        <span>💬</span>
+        <small>WhatsApp</small>
+      </a>
+      <a href="https://t.me/+F4FNDxnYYQ9lZWMx" target="_blank" class="btn-rede btn-telegram" rel="noopener">
+        <span>✈️</span>
+        <small>Telegram</small>
+      </a>
+    </div>
+  </div>
+
   <div class="abas-container">
     <div class="abas-cabecalho">
       <button class="aba-btn ativa" data-aba="0">🔴 LIVES AO VIVO</button>
@@ -184,8 +241,8 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
           <div id="listaLives"><p class="sem-lives">🔄 Carregando lives...</p></div>
         </div>
         <div class="aba-pagina">
-          <h3 class="titulo-aba">🌟 DESTAQUES DA PADRONIZA</h3>
-          <div id="listaDestaques"><p class="sem-destaques">✨ Nenhum destaque cadastrado ainda</p></div>
+          <h3 class="titulo-aba">🌟 DESTAQUES DO MÊS</h3>
+          <div id="listaDestaques"><p class="sem-destaques">🔄 Carregando destaques...</p></div>
         </div>
       </div>
     </div>
@@ -211,8 +268,8 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
     <div class="cards-admin">
       <div class="card-admin"><h4>Agenciados Ativos</h4><p id="qtdAgenciados">0</p></div>
       <div class="card-admin"><h4>Lives Ao Vivo</h4><p id="qtdLives">0</p></div>
-      <div class="card-admin"><h4>Batalhas</h4><p id="qtdBatalhas">0</p></div>
-      <div class="card-admin"><h4>Conquistas</h4><p id="qtdConquistas">0</p></div>
+      <div class="card-admin"><h4>Batalhas Cadastradas</h4><p id="qtdBatalhas">0</p></div>
+      <div class="card-admin"><h4>Destaques do Mês</h4><p id="qtdConquistas">0</p></div>
     </div>
     <button class="btn-acao btn-voltar" onclick="sairAdmin()">🚪 Sair</button>
   </div>
@@ -237,14 +294,13 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
       <p><strong>Status:</strong> ✅ Aprovado</p>
     </div>
 
-    <!-- ⚔️ BOTÃO AGENDAR BATALHA — APONTA PRA PÁGINA CERTA! ✅ -->
     <a href="agendar-batalha.html" class="btn-agendar-batalha">
       ⚔️ AGENDAR BATALHA OFICIAL
     </a>
 
     <div style="margin-top:30px">
       <h3 style="color:var(--amarelo);margin-bottom:15px;text-align:center">🌟 MEUS DESTAQUES</h3>
-      <p style="color:var(--cinza);text-align:center;padding:15px">Em breve — botão para adicionar destaque ✨</p>
+      <p style="color:var(--cinza);text-align:center;padding:15px">Em breve — destaque do mês ✨</p>
     </div>
   </div>
   <button class="btn-acao btn-voltar" onclick="voltar()">Voltar</button>
@@ -271,11 +327,6 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
     <h3 style="color:var(--amarelo);text-align:center">✅ PACOTE COMPLETO — R$ 39,99/mês</h3>
     <div class="pix-codigo" id="pixPacote">00020101021126760014br.gov.bcb.pix01367c0dfbc3-68e7-4b85-a0eb-eb037b738d9f0216PacoteCompleto520400005303986540539.995802BR591965 8 0 M G DA SILVA6007VILHENA62070503***630438A3</div>
     <button class="btn-acao btn-whatsapp" onclick="copiarPix('pixPacote')">📋 COPIAR CHAVE PIX</button>
-  </div>
-  <div style="background:var(--painel2);padding:15px;border-radius:10px;margin-bottom:15px">
-    <h3 style="color:var(--vermelho);text-align:center">⚔️ BATALHA OFICIAL — R$ 69,90/mês</h3>
-    <div class="pix-codigo" id="pixBatalha">00020101021126780014br.gov.bcb.pix01367c0dfbc3-68e7-4b85-a0eb-eb037b738d9f0217BatalhaOficial52040000530398654069.905802BR591965 8 0 M G DA SILVA6007VILHENA62070503***63047B9D</div>
-    <button class="btn-acao btn-whatsapp" onclick="copiarPix('pixBatalha')">📋 COPIAR CHAVE PIX</button>
   </div>
   <div style="background:var(--painel2);padding:15px;border-radius:10px;margin-bottom:15px">
     <h3 style="color:var(--rosa);text-align:center">🎨 ARTE VISUAL AVULSA — R$ 10,00</h3>
@@ -309,16 +360,18 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
 
 <script>
 const LINK_PLANILHA_LIVES = "https://docs.google.com/spreadsheets/d/1R9eUsqF4kA0y22ryMUIsvGolBfk3-XwZ5R-RVpBiZA4/gviz/tq?tqx=out:json";
-const CAPA_PADRAO = "https://i.imgur.com/oxlyYsQ.png";
+const LINK_PLANILHA_BATALHAS_BASE = "https://docs.google.com/spreadsheets/d/13jb0BmW7fazTFx4xCDIaWWbvfCKQEqW99zDeQ3AgXw8/gviz/tq?tqx=out:json&gid=";
 const SENHA_ADMIN = "agencia2026";
 const EMAIL_ADMIN = "padronizaassessoria@gmail.com";
 
 let dadosPlanilha = [];
+let totalBatalhas = 0;
 let streamerLogado = null;
 
 window.onload = async function(){
   initAbas();
   await carregarPlanilhaLives();
+  await carregarTotalBatalhas();
   renderizarLives();
   renderizarDestaques();
   atualizarContadores();
@@ -334,7 +387,7 @@ function initAbas(){
       abaAtual = indice;
       botoes.forEach(b => b.classList.remove('ativa'));
       botao.classList.add('ativa');
-      indicador.style.left = (abaAtual * 50) + '%';
+      indicador.style.left = (abaAtual * 100 / botoes.length) + '%';
       wrapper.style.transform = `translateX(-${abaAtual * 100}%)`;
     });
   });
@@ -349,16 +402,33 @@ async function carregarPlanilhaLives(){
     dadosPlanilha = json.table.rows.slice(1).map(linha => {
       const c = linha.c || [];
       return {
-        usuario: ((c[0]||{}).v||"").toString().trim().toLowerCase(),
-        status: ((c[1]||{}).v||"").toString().trim().toUpperCase(),
-        linkTiktok: ((c[3]||{}).v||"").toString().trim(),
-        linkKako: ((c[5]||{}).v||"").toString().trim(),
-        capa: ((c[7]||{}).v||"").toString().trim(),
-        aoVivo: ((c[8]||{}).v||"").toString().trim().toUpperCase()
+        usuario: (c[0]?.v || "").toString().trim().toLowerCase(),
+        status: (c[1]?.v || "").toString().trim().toUpperCase(),
+        linkTiktok: (c[3]?.v || "").toString().trim(),
+        linkKako: (c[5]?.v || "").toString().trim(),
+        capa: (c[7]?.v || "").toString().trim(),
+        aoVivo: (c[8]?.v || "").toString().trim().toUpperCase(),
+        destaqueMidia: (c[10]?.v || "").toString().trim(),
+        metaDiamantes: (c[11]?.v || "").toString().trim()
       };
     });
-    console.log("✅ Planilha carregada! Streamers:", dadosPlanilha.length);
-  }catch(e){console.error("❌ Erro planilha:", e)}
+    console.log("✅ Planilha de lives carregada!");
+  }catch(e){console.error("❌ Erro planilha lives:", e)}
+}
+
+async function carregarTotalBatalhas(){
+  totalBatalhas = 0;
+  try{
+    const res = await fetch(LINK_PLANILHA_BATALHAS_BASE + "0");
+    let txt = await res.text();
+    txt = txt.substring(47, txt.length - 2);
+    const json = JSON.parse(txt);
+    totalBatalhas = Math.max(0, json.table.rows.length - 2);
+    console.log("✅ Batalhas contadas:", totalBatalhas);
+  }catch(e){
+    console.error("❌ Erro ao contar batalhas:", e);
+    totalBatalhas = 0;
+  }
 }
 
 function renderizarLives(){
@@ -373,7 +443,7 @@ function renderizarLives(){
     return;
   }
   container.innerHTML = aoVivo.map(s => {
-    let capaUsar = CAPA_PADRAO;
+    let capaUsar = "https://i.imgur.com/oxlyYsQ.png";
     if(s.capa && s.capa.length > 10 && s.capa.startsWith('http')){
       capaUsar = s.capa;
     }
@@ -382,7 +452,7 @@ function renderizarLives(){
       <div class="nome-streamer">${escaparHtml(s.usuario)}</div>
       <div class="capa-live">
         <img src="${escaparHtml(capaUsar)}" alt="Capa da Live" 
-             onerror="this.src='${CAPA_PADRAO}'" loading="lazy">
+             onerror="this.src='https://i.imgur.com/oxlyYsQ.png'" loading="lazy">
       </div>
       <span class="status-ao-vivo">🔴 AO VIVO</span>
       <a href="${escaparHtml(link)}" target="_blank" class="btn-assistir">▶️ ASSISTIR LIVE</a>
@@ -391,7 +461,34 @@ function renderizarLives(){
 }
 
 function renderizarDestaques(){
-  document.getElementById('listaDestaques').innerHTML = '<p class="sem-destaques">✨ Nenhum destaque cadastrado ainda</p>';
+  const container = document.getElementById('listaDestaques');
+  const destaques = dadosPlanilha.filter(s => s.destaqueMidia && s.usuario);
+  
+  if(!destaques.length){
+    container.innerHTML = '<p class="sem-destaques">🌟 Nenhum destaque do mês cadastrado ainda!</p>';
+    return;
+  }
+
+  container.innerHTML = `<div class="galeria-destaques">` + destaques.map(s => {
+    const link = s.linkTiktok || "#";
+    const midia = s.destaqueMidia;
+    const ehVideo = /\.(mp4|webm|ogg)$/i.test(midia) || midia.includes('video') || midia.includes('tiktok.com');
+    
+    const conteudoMidia = ehVideo
+      ? `<video src="${escaparHtml(midia)}" autoplay loop muted playsinline loading="lazy"></video>`
+      : `<img src="${escaparHtml(midia)}" alt="${escaparHtml(s.usuario)}" onerror="this.src='https://i.imgur.com/oxlyYsQ.png'" loading="lazy">`;
+
+    return `
+      <div class="cartao-destaque">
+        <a href="${escaparHtml(link)}" target="_blank" style="text-decoration:none">
+          ${conteudoMidia}
+          <div class="info">
+            <div class="nome">⭐ ${escaparHtml(s.usuario)}</div>
+            <div class="desc">🏆 Destaque do Mês</div>
+          </div>
+        </a>
+      </div>`;
+  }).join('') + `</div>`;
 }
 
 function abrir(pagina){
@@ -455,8 +552,8 @@ function atualizarContadores(){
     const val = (s.aoVivo || "").trim().toUpperCase();
     return ["SIM", "S", "TRUE", "VERDADEIRO"].includes(val);
   }).length;
-  document.getElementById('qtdBatalhas').textContent = "0";
-  document.getElementById('qtdConquistas').textContent = "0";
+  document.getElementById('qtdBatalhas').textContent = totalBatalhas;
+  document.getElementById('qtdConquistas').textContent = dadosPlanilha.filter(s => s.destaqueMidia).length;
 }
 
 function copiarPix(id){
