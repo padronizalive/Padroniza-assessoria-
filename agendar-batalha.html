@@ -426,7 +426,7 @@ function renderizarCalendario() {
       else if (sts.some(x => x.includes("FALTA OPONENTE"))) {
         situacaoDia = "FALTA_OPONENTE";
       }
-      else if (sts.some(x => x.includes("CONFIRMADO") || x.includes("CONFIRMADA"))) {
+      else if (sts.some(x => x.includes("CONFIRMADO") || x.includes("CONFIRMADA") || x === "")) {
         situacaoDia = "CONFIRMADO";
       }
     }
@@ -490,7 +490,6 @@ function abrirFormulario(dia, situacao, dataAlvo) {
       conflitoDetectado = b;
     }
     document.getElementById("avisoConflito").style.display = "block";
-    // Não bloqueia o formulário — ele decide
   }
 
   // === CAMPANHA — AVISA E LIBERA ===
@@ -555,7 +554,7 @@ document.getElementById("formAgendamento").addEventListener("submit", async func
     linkPerfil: document.getElementById("formLinkPerfil").value,
     observacao: document.getElementById("formObs").value,
     usuarioSolicitante: usuarioLogado,
-    dataHoraSolicitacao: new Date().toISOString() // Para registrar quem foi primeiro
+    dataHoraSolicitacao: new Date().toISOString()
   };
   
   let avisoConflitoTexto = "";
@@ -612,13 +611,15 @@ function renderizarAgendas() {
 function gerarItemBatalha(b, ehMinha) {
   const data = b.data ? b.data.split("-").reverse().join("/") : "Sem data";
   const horario = b.horarioInicio ? ` ${b.horarioInicio}${b.horarioFim ? ' - ' + b.horarioFim : ''}` : "";
-  const situacao = (b.situacao || "DISPONÍVEL").toUpperCase();
+  const situacao = ((b.situacao || "").toString().trim().toUpperCase());
   
   let icone = "📌";
   let corBorda = "var(--verde)";
   if (situacao.includes("CAMPANHA")) { icone = "📢"; corBorda = "var(--amarelo)"; }
   else if (situacao.includes("FALTA OPONENTE")) { icone = "⏳"; corBorda = "var(--azul)"; }
-  else if (situacao.includes("CONFIRMADO")) { icone = "✅"; corBorda = "var(--branco)"; }
+  else if (situacao.includes("CONFIRMADO") || situacao.includes("CONFIRMADA") || situacao === "") { 
+    icone = "✅"; corBorda = "var(--branco)"; 
+  }
   else if (situacao.includes("DOMINGO") || situacao.includes("FERIADO")) { icone = "🚫"; corBorda = "var(--vermelho)"; }
 
   let blocoOponente = "";
@@ -630,32 +631,50 @@ function gerarItemBatalha(b, ehMinha) {
       prioridadeTag = '<div class="prioridade-tag">⭐ VOCÊ TEM PRIORIDADE GARANTIDA!</div>';
     }
 
-    if (b.oponente && situacao.includes("CONFIRMADO")) {
-      blocoOponente = `
-        <div class="bloco-oponente">
-          <h4>🆔 Seu Oponente</h4>
-          <strong>${b.oponente}</strong>
-          ${b.linkOponente ? `<a href="${b.linkOponente}" target="_blank" class="btn-seguir-oponente">🔗 Seguir Oponente</a>` : ""}
-        </div>`;
+    // === BLOCO DO OPONENTE — CORRIGIDO E MELHORADO ===
+    if (b.oponente && b.oponente.trim() !== "") {
+      // Aceita vários nomes de campo que o Apps Script pode enviar
+      const linkDoOponente = b.linkOponente || b.link_oponente || b.linkOponente || b['link oponente'] || "";
+      
+      // Verifica se o link é válido (não vazio e não apenas o domínio)
+      const linkValido = linkDoOponente && linkDoOponente.trim() !== "" && 
+                        linkDoOponente !== "https://www.tiktok.com" && 
+                        linkDoOponente !== "https://tiktok.com";
+      
+      if (linkValido) {
+        blocoOponente = `
+          <div class="bloco-oponente">
+            <h4>🆔 Seu Oponente</h4>
+            <strong>${b.oponente}</strong>
+            <a href="${linkDoOponente}" target="_blank" class="btn-seguir-oponente">🔗 Seguir Oponente</a>
+          </div>`;
+      } else {
+        blocoOponente = `
+          <div class="bloco-oponente">
+            <h4>🆔 Seu Oponente</h4>
+            <strong>${b.oponente}</strong>
+            <div style="color:var(--cinza);font-size:13px;margin-top:6px;">⏳ Link do oponente em breve</div>
+          </div>`;
+      }
     } else if (situacao.includes("FALTA OPONENTE")) {
       blocoOponente = `<div class="aguardando-oponente">⏳ Aguardando oponente...</div>`;
     }
+  }
 
-    // Materiais de divulgação — Coluna Q = Banner, Coluna R = Vídeo
-    if (b.banner || b.videoDivulgacao) {
-      materiais = `<div class="materiais-area"><h4 style="color:var(--amarelo);font-size:14px;margin-bottom:10px;">🎨 Seus Materiais de Divulgação</h4>`;
-      if (b.banner) {
-        materiais += `<a href="${b.banner}" target="_blank" class="material-item disponivel">🖼️ Banner de Divulgação</a>`;
-      } else {
-        materiais += `<div class="material-item indisponivel">🖼️ Banner de Divulgação — Em breve</div>`;
-      }
-      if (b.videoDivulgacao) {
-        materiais += `<a href="${b.videoDivulgacao}" target="_blank" class="material-item video-disponivel">🎬 Vídeo de Divulgação</a>`;
-      } else {
-        materiais += `<div class="material-item indisponivel">🎬 Vídeo de Divulgação — Em breve</div>`;
-      }
-      materiais += `</div>`;
+  // Materiais de divulgação — Coluna Q = Banner, Coluna R = Vídeo
+  if (ehMinha && (b.banner || b.videoDivulgacao)) {
+    materiais = `<div class="materiais-area"><h4 style="color:var(--amarelo);font-size:14px;margin-bottom:10px;">🎨 Seus Materiais de Divulgação</h4>`;
+    if (b.banner && b.banner.trim() !== "") {
+      materiais += `<a href="${b.banner}" target="_blank" class="material-item disponivel">🖼️ Banner de Divulgação</a>`;
+    } else {
+      materiais += `<div class="material-item indisponivel">🖼️ Banner de Divulgação — Em breve</div>`;
     }
+    if (b.videoDivulgacao && b.videoDivulgacao.trim() !== "") {
+      materiais += `<a href="${b.videoDivulgacao}" target="_blank" class="material-item video-disponivel">🎬 Vídeo de Divulgação</a>`;
+    } else {
+      materiais += `<div class="material-item indisponivel">🎬 Vídeo de Divulgação — Em breve</div>`;
+    }
+    materiais += `</div>`;
   }
 
   return `
