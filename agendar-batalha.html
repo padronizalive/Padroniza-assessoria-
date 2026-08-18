@@ -14,9 +14,15 @@
     body { background: var(--fundo); color: var(--texto); min-height: 100vh; padding: 20px 12px; }
     .container { max-width: 460px; margin: 0 auto; }
 
+    .diagnostico {
+      background: rgba(255,215,0,0.1); border: 1px solid var(--amarelo);
+      padding: 14px; border-radius: 10px; margin-bottom: 20px; font-size: 13px;
+      line-height: 1.8;
+    }
+
     .bloqueio {
       display: flex; flex-direction: column; align-items: center; justify-content: center;
-      min-height: 80vh; text-align: center; padding: 40px 20px;
+      min-height: 60vh; text-align: center; padding: 40px 20px;
     }
     .bloqueio h2 { color: var(--vermelho); margin-bottom: 16px; font-size: 22px; }
     .bloqueio p { color: var(--cinza); line-height: 1.8; font-size: 16px; }
@@ -83,7 +89,10 @@
 </head>
 <body>
 <div class="container">
-  <!-- 🔒 TELA DE BLOQUEIO — SEM NOME -->
+  <!-- 🔍 CAIXA DE DIAGNÓSTICO — MOSTRA TUDO QUE ESTÁ SENDO LIDO -->
+  <div class="diagnostico" id="caixaDiagnostico">🔄 Carregando...</div>
+
+  <!-- 🔒 TELA DE BLOQUEIO -->
   <div class="bloqueio" id="telaBloqueio">
     <div class="logo">⚔️ Padroniza</div>
     <h3>🔒 Acesso Restrito</h3>
@@ -91,7 +100,7 @@
     Acesse através do site oficial com seu nome de usuário.</p>
   </div>
 
-  <!-- ✅ CONTEÚDO — SÓ APARECE COM NOME VÁLIDO -->
+  <!-- ✅ CONTEÚDO LIBERADO -->
   <div class="conteudo" id="conteudo">
     <div class="cal-topo">
       <button class="btn-mes" id="btnAnterior">◀</button>
@@ -123,16 +132,19 @@
 // 🔗 LINK DO APPS SCRIPT
 const LINK = "https://script.google.com/macros/s/AKfycbygvZq1vAaSRy-eBkrWe73Y7x1GX5c5nj1untYB5T-8ErAntowbMVLvqmTO7uZ9cujH4A/exec";
 
-// 👤 VERIFICA NOME DE USUÁRIO
+// 👤 PEGA NOME DA URL
 const params = new URLSearchParams(window.location.search);
 const NOME_USUARIO = (params.get("usuario") || "").trim();
+const caixa = document.getElementById("caixaDiagnostico");
 
-// 🔒 BLOQUEIA SE NÃO TIVER NOME
+// 📋 MOSTRA O QUE ESTÁ SENDO LIDO — PRA COMPARAR!
+caixa.innerHTML = `🔍 <strong>Nome recebido:</strong> "${NOME_USUARIO}"<br>
+📏 <strong>Comprimento:</strong> ${NOME_USUARIO.length} caracteres<br>
+🔑 <strong>Para busca:</strong> "${NOME_USUARIO.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/\s+/g, "")}"`;
+
 if (!NOME_USUARIO) {
   document.getElementById("telaBloqueio").style.display = "flex";
-  document.getElementById("conteudo").style.display = "none";
 } else {
-  // ✅ TEM NOME — LIBERA CONTEÚDO
   document.getElementById("telaBloqueio").style.display = "none";
   document.getElementById("conteudo").style.display = "block";
 
@@ -153,7 +165,13 @@ if (!NOME_USUARIO) {
       const res = await fetch(`${LINK}?mes=${mesAtual}&ano=${anoAtual}`);
       const dados = await res.json();
       batalhasMes = dados.batalhas || [];
+      
+      // 🔍 MOSTRA OS NOMES DA PLANILHA PRA COMPARAR
+      const nomesStreamers = [...new Set(batalhasMes.map(b => b.streamer).filter(Boolean))].slice(0,8);
+      caixa.innerHTML += `<br>📋 <strong>Streamers na planilha:</strong><br>• ${nomesStreamers.join("<br>• ")}`;
+      
     } catch (e) {
+      caixa.innerHTML += `<br>❌ <strong>Erro:</strong> ${e}`;
       batalhasMes = [];
     }
     renderizarCalendario();
@@ -167,7 +185,6 @@ if (!NOME_USUARIO) {
       .replace(/\s+/g, "");
   }
 
-  // ✅ FUNCIONA COMO STREAMER OU OPONENTE
   function ehMinhaBatalha(b) {
     const s = normalizarNome(b.streamer);
     const o = normalizarNome(b.oponente);
@@ -214,7 +231,7 @@ if (!NOME_USUARIO) {
     
     document.getElementById("minhasBatalhas").innerHTML = minhas.length 
       ? minhas.map(b => gerarItem(b)).join("")
-      : `<div class="sem-batalha">Nenhuma batalha encontrada para você.</div>`;
+      : `<div class="sem-batalha">Nenhuma batalha encontrada para você.<br><small>Verifique o nome na caixinha acima!</small></div>`;
 
     document.getElementById("contadorGeral").textContent = `Total: ${batalhasMes.length} batalhas`;
     document.getElementById("todasBatalhas").innerHTML = batalhasMes.length
@@ -237,7 +254,6 @@ if (!NOME_USUARIO) {
     </div>`;
   }
 
-  // 📅 NAVEGAÇÃO
   document.getElementById("btnAnterior").onclick = () => {
     mesAtual--; if (mesAtual < 1) { mesAtual = 12; anoAtual--; }
     carregarBatalhas();
