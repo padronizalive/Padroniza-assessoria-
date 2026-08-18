@@ -4,10 +4,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Agenda de Batalhas — Padroniza Assessoria</title>
-  <meta name="description" content="⚔️ Agenda oficial de batalhas da Padroniza Assessoria. Acompanhe suas batalhas confirmadas e campanhas!">
-  <meta name="keywords" content="agenda de batalhas, Padroniza Assessoria, batalha confirmada, campanha, streamer">
-  <meta property="og:title" content="Agenda de Batalhas — Padroniza Assessoria">
-  <meta property="og:description" content="⚔️ Suas batalhas confirmadas e campanhas oficiais!">
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
     :root {
@@ -17,6 +13,14 @@
     }
     body { background: var(--fundo); color: var(--texto); min-height: 100vh; padding: 20px 12px; }
     .container { max-width: 460px; margin: 0 auto; }
+
+    .bloqueio {
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      min-height: 80vh; text-align: center; padding: 40px 20px;
+    }
+    .bloqueio h2 { color: var(--vermelho); margin-bottom: 16px; font-size: 22px; }
+    .bloqueio p { color: var(--cinza); line-height: 1.8; font-size: 16px; }
+    .logo { font-size: 28px; font-weight: 800; color: var(--verde); margin-bottom: 20px; }
 
     .cal-topo {
       display: flex; justify-content: space-between; align-items: center;
@@ -34,10 +38,7 @@
     .dias-semana {
       display: grid; grid-template-columns: repeat(7, 1fr); gap: 6px; margin-bottom: 8px;
     }
-    .cab-semana {
-      text-align: center; font-size: 12px; font-weight: 600; color: var(--cinza);
-      padding: 6px; text-transform: uppercase;
-    }
+    .cab-semana { text-align: center; font-size: 12px; font-weight: 600; color: var(--cinza); padding: 6px; text-transform: uppercase; }
 
     .calendario {
       display: grid; grid-template-columns: repeat(7, 1fr); gap: 6px; margin-bottom: 28px;
@@ -45,41 +46,22 @@
     .dia {
       aspect-ratio: 1; border-radius: 10px; border: 2px solid transparent;
       display: flex; flex-direction: column; align-items: center; justify-content: center;
-      padding: 4px; transition: all 0.2s; cursor: default;
-      background: var(--painel); border-color: var(--borda);
+      background: var(--painel); border-color: var(--borda); transition: all 0.2s;
     }
     .dia.vazio { background: transparent; border: none; }
-    .dia-num { font-size: 18px; font-weight: 800; line-height: 1; margin-bottom: 2px; }
-    .dia-nome { font-size: 9px; color: var(--cinza); text-transform: uppercase; line-height: 1; }
+    .dia-num { font-size: 18px; font-weight: 800; line-height: 1; }
+    .dia-nome { font-size: 9px; color: var(--cinza); text-transform: uppercase; line-height: 1; margin-top: 2px; }
 
-    .disponivel {
-      background: rgba(0,255,156,0.12); border-color: var(--verde); cursor: pointer;
-    }
+    .disponivel { background: rgba(0,255,156,0.12); border-color: var(--verde); }
     .disponivel .dia-num { color: var(--verde); }
-    .disponivel:hover { background: rgba(0,255,156,0.25); transform: scale(1.05); }
-
-    .campanha {
-      background: rgba(255,215,0,0.15); border-color: var(--amarelo); cursor: pointer;
-    }
+    .campanha { background: rgba(255,215,0,0.15); border-color: var(--amarelo); }
     .campanha .dia-num { color: var(--amarelo); }
-    .campanha:hover { background: rgba(255,215,0,0.25); transform: scale(1.05); }
-
-    .domingo, .feriado {
-      background: rgba(255,68,68,0.15); border-color: var(--vermelho); opacity: 0.85; cursor: not-allowed;
-    }
+    .domingo, .feriado { background: rgba(255,68,68,0.15); border-color: var(--vermelho); opacity: 0.85; }
     .domingo .dia-num, .feriado .dia-num { color: var(--vermelho); }
-
-    .falta-oponente {
-      background: rgba(0,168,255,0.15); border-color: var(--azul); cursor: pointer;
-    }
+    .falta-oponente { background: rgba(0,168,255,0.15); border-color: var(--azul); }
     .falta-oponente .dia-num { color: var(--azul); }
-    .falta-oponente:hover { background: rgba(0,168,255,0.25); transform: scale(1.05); }
-
-    .confirmado {
-      background: rgba(240,240,240,0.12); border-color: var(--branco); cursor: pointer;
-    }
+    .confirmado { background: rgba(240,240,240,0.12); border-color: var(--branco); }
     .confirmado .dia-num { color: var(--branco); }
-    .confirmado:hover { background: rgba(240,240,240,0.25); transform: scale(1.05); }
 
     .agenda-pessoal, .agenda-geral {
       margin-bottom: 24px; padding: 16px; background: var(--painel);
@@ -94,383 +76,179 @@
     }
     .item-batalha strong { font-size: 14px; }
     .item-batalha small { font-size: 12px; color: var(--cinza); }
-    .sem-batalha { padding: 20px; color: var(--cinza); font-size: 14px; text-align: center; }
+    .sem-batalha { padding: 20px; color: var(--cinza); font-size: 14px; text-align: center; line-height: 1.6; }
     .contador { font-size: 12px; color: var(--cinza); margin-bottom: 10px; }
-
-    .btn-oponente {
-      display: inline-flex; align-items: center; gap: 6px; margin-top: 10px; padding: 8px 14px;
-      background: linear-gradient(90deg, #8a2be2, #b040ff); color: white !important;
-      text-decoration: none; border-radius: 6px; font-size: 13px; font-weight: 600;
-      transition: transform 0.2s;
-    }
-    .btn-oponente:hover { transform: translateY(-2px); }
-
-    .aviso-horario {
-      background: rgba(255,68,68,0.1); border: 1px solid var(--vermelho);
-      padding: 10px; border-radius: 8px; font-size: 12px;
-      color: #ff9999; margin-bottom: 12px;
-    }
-    .horario-bloqueado {
-      background: rgba(255,68,68,0.15); color: #ff6666; padding: 6px 10px;
-      border-radius: 6px; font-size: 12px; margin-bottom: 6px;
-      display: inline-block; margin-right: 6px;
-    }
-
-    .modal-fundo {
-      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-      background: rgba(0,0,0,0.85); display: none; align-items: center; justify-content: center;
-      z-index: 9999; padding: 20px;
-    }
-    .modal-aberto { display: flex; }
-    .modal {
-      background: var(--painel); border: 2px solid var(--borda); border-radius: 16px;
-      padding: 24px; width: 100%; max-width: 420px; max-height: 90vh; overflow-y: auto;
-    }
-    .modal-cab {
-      display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;
-    }
-    .modal-titulo { font-size: 18px; font-weight: 700; color: var(--verde); }
-    .modal-fechar {
-      background: none; border: none; color: var(--cinza); font-size: 28px; cursor: pointer;
-      transition: color 0.2s;
-    }
-    .modal-fechar:hover { color: var(--vermelho); }
-    .grupo { margin-bottom: 16px; }
-    .label { display: block; margin-bottom: 6px; font-size: 13px; color: #ccc; }
-    .campo {
-      width: 100%; padding: 12px; background: rgba(255,255,255,0.05);
-      border: 1px solid var(--borda); border-radius: 8px; color: var(--texto); font-size: 15px;
-    }
-    .campo:focus { outline: none; border-color: var(--verde); }
-    .linha-dupla { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-    .btn-enviar {
-      width: 100%; padding: 14px; background: linear-gradient(90deg, var(--verde), #00cc7d);
-      border: none; border-radius: 8px; color: #000; font-weight: 700; font-size: 16px;
-      cursor: pointer; margin-top: 8px; transition: transform 0.2s;
-    }
-    .btn-enviar:hover { transform: translateY(-2px); }
-    .data-selecionada {
-      background: rgba(0,255,156,0.1); padding: 10px; border-radius: 8px;
-      text-align: center; font-weight: 600; color: var(--verde); margin-bottom: 16px;
-    }
-    .sucesso { color: var(--verde); text-align: center; padding: 20px; display: none; }
-    .aviso {
-      background: rgba(0,168,255,0.1); padding: 12px; border-radius: 8px;
-      font-size: 13px; color: #99ccff; margin-bottom: 16px; line-height: 1.5;
-    }
-    .carregando { text-align: center; padding: 40px; color: var(--cinza); }
-    .sem-batalha-pessoal { text-align: center; padding: 25px; color: var(--cinza); font-size: 14px; }
+    .conteudo { display: none; }
   </style>
 </head>
 <body>
 <div class="container">
-  <div class="cal-topo">
-    <button class="btn-mes" onclick="mudarMes(-1)">◀</button>
-    <h2 class="nome-mes" id="nomeMes"></h2>
-    <button class="btn-mes" onclick="mudarMes(1)">▶</button>
+  <!-- 🔒 TELA DE BLOQUEIO — SEM NOME -->
+  <div class="bloqueio" id="telaBloqueio">
+    <div class="logo">⚔️ Padroniza</div>
+    <h3>🔒 Acesso Restrito</h3>
+    <p>Esta é uma área exclusiva para streamers da Padroniza Assessoria.<br>
+    Acesse através do site oficial com seu nome de usuário.</p>
   </div>
 
-  <div class="dias-semana">
-    <div class="cab-semana">Dom</div>
-    <div class="cab-semana">Seg</div>
-    <div class="cab-semana">Ter</div>
-    <div class="cab-semana">Qua</div>
-    <div class="cab-semana">Qui</div>
-    <div class="cab-semana">Sex</div>
-    <div class="cab-semana">Sáb</div>
-  </div>
-
-  <div class="calendario" id="calendario">
-    <div class="carregando">🔄 Carregando...</div>
-  </div>
-
-  <!-- 👤 MINHAS BATALHAS — SÓ CONFIRMADA E CAMPANHA COM NOME DELE ✅ -->
-  <div class="agenda-pessoal">
-    <h3>👤 Minhas Batalhas</h3>
-    <div id="minhasBatalhas" class="sem-batalha">
-      <div class="carregando">🔄 Buscando suas batalhas...</div>
-    </div>
-  </div>
-
-  <!-- 📋 TODAS AS BATALHAS — TODAS NORMALMENTE -->
-  <div class="agenda-geral">
-    <h3>📋 Todas as Batalhas</h3>
-    <div class="contador" id="contadorGeral"></div>
-    <div id="todasBatalhas" class="sem-batalha">Nenhuma batalha agendada.</div>
-  </div>
-</div>
-
-<!-- MODAL DE SOLICITAÇÃO -->
-<div class="modal-fundo" id="modalFundo" onclick="fecharModalFora(event)">
-  <div class="modal" onclick="event.stopPropagation()">
-    <div class="modal-cab">
-      <h3 class="modal-titulo">📅 Solicitar Batalha</h3>
-      <button class="modal-fechar" onclick="fecharModal()">&times;</button>
+  <!-- ✅ CONTEÚDO — SÓ APARECE COM NOME VÁLIDO -->
+  <div class="conteudo" id="conteudo">
+    <div class="cal-topo">
+      <button class="btn-mes" id="btnAnterior">◀</button>
+      <h2 class="nome-mes" id="nomeMes"></h2>
+      <button class="btn-mes" id="btnProximo">▶</button>
     </div>
 
-    <form id="formBatalha" onsubmit="enviarSolicitacao(event)">
-      <div class="data-selecionada" id="dataSelecionada"></div>
-      <div class="aviso-horario" id="avisoHorarios" style="display:none;">
-        ⚠️ Horários já ocupados:
-        <div id="listaHorariosBloqueados"></div>
-        <small>Escolha outro horário.</small>
-      </div>
-      <div class="grupo">
-        <label class="label">Seu Nome (Streamer)</label>
-        <input type="text" class="campo" id="campoStreamer" disabled>
-      </div>
-      <div class="grupo">
-        <label class="label">Agência</label>
-        <input type="text" class="campo" id="campoAgencia" value="Padroniza" disabled>
-      </div>
-      <div class="linha-dupla">
-        <div class="grupo">
-          <label class="label">🕐 Hora Início</label>
-          <input type="time" class="campo" id="campoHoraInicio" required>
-        </div>
-        <div class="grupo">
-          <label class="label">🕐 Hora Fim</label>
-          <input type="time" class="campo" id="campoHoraFim" required>
-        </div>
-      </div>
-      <div class="grupo">
-        <label class="label">🔥 Hold (Quantidade)</label>
-        <input type="text" class="campo" id="campoHold" placeholder="Ex: 5k, 10k" required>
-      </div>
-      <div class="grupo">
-        <label class="label">🎯 Meta / Valor</label>
-        <input type="text" class="campo" id="campoMeta" placeholder="Ex: 5 a 10k">
-      </div>
-      <div class="grupo">
-        <label class="label">🔗 Link do Perfil</label>
-        <input type="url" class="campo" id="campoLink" placeholder="TikTok / Kako" required>
-      </div>
-      <div class="aviso">
-        💡 Após enviar, a agência buscará seu oponente. Quando encontrado, o link aparecerá aqui!
-      </div>
-      <button type="submit" class="btn-enviar" id="btnEnviar">📤 Solicitar Batalha</button>
-    </form>
-    <div class="sucesso" id="caixaSucesso">
-      ✅ Solicitação enviada!<br><br>
-      Situação: <strong style="color:#00a8ff">FALTA OPONENTE</strong><br>
-      Aguardando a agência encontrar seu oponente. 🎉
-      <button type="button" class="btn-enviar" style="margin-top:20px" onclick="fecharModal()">Entendido</button>
+    <div class="dias-semana">
+      <div class="cab-semana">Dom</div><div class="cab-semana">Seg</div><div class="cab-semana">Ter</div>
+      <div class="cab-semana">Qua</div><div class="cab-semana">Qui</div><div class="cab-semana">Sex</div><div class="cab-semana">Sáb</div>
+    </div>
+
+    <div class="calendario" id="calendario"></div>
+
+    <div class="agenda-pessoal">
+      <h3>👤 Minhas Batalhas</h3>
+      <div id="minhasBatalhas" class="sem-batalha">Carregando...</div>
+    </div>
+
+    <div class="agenda-geral">
+      <h3>📋 Todas as Batalhas</h3>
+      <div class="contador" id="contadorGeral"></div>
+      <div id="todasBatalhas" class="sem-batalha"></div>
     </div>
   </div>
 </div>
 
 <script>
+// 🔗 LINK DO APPS SCRIPT
 const LINK = "https://script.google.com/macros/s/AKfycbygvZq1vAaSRy-eBkrWe73Y7x1GX5c5nj1untYB5T-8ErAntowbMVLvqmTO7uZ9cujH4A/exec";
 
+// 👤 VERIFICA NOME DE USUÁRIO
 const params = new URLSearchParams(window.location.search);
-const NOME_USUARIO_RAW = params.get("usuario") || "";
-const NOME_USUARIO = NOME_USUARIO_RAW.trim().toLowerCase();
-const NOME_USUARIO_EXIBIR = NOME_USUARIO_RAW.trim() || "Streamer Padroniza";
+const NOME_USUARIO = (params.get("usuario") || "").trim();
 
-let mesAtual = new Date().getMonth() + 1;
-let anoAtual = new Date().getFullYear();
-let batalhas = [];
-let batalhasDoDiaAtual = [];
-let dataEscolhida = null;
+// 🔒 BLOQUEIA SE NÃO TIVER NOME
+if (!NOME_USUARIO) {
+  document.getElementById("telaBloqueio").style.display = "flex";
+  document.getElementById("conteudo").style.display = "none";
+} else {
+  // ✅ TEM NOME — LIBERA CONTEÚDO
+  document.getElementById("telaBloqueio").style.display = "none";
+  document.getElementById("conteudo").style.display = "block";
 
-const NOMES_MESES = ["Janeiro","Fevereiro","Março","Abril","Maio","Junho",
-                     "Julho","Agosto","Setembro","Outubro","Novembro","Dezembro"];
-const ABREV_SEMANA = ["Dom","Seg","Ter","Qua","Qui","Sex","Sáb"];
-
-async function carregarBatalhas() {
-  document.getElementById("calendario").innerHTML = '<div class="carregando">🔄 Carregando...</div>';
-  try {
-    const res = await fetch(`${LINK}?acao=lerBatalhas&mes=${mesAtual}&ano=${anoAtual}`);
-    const dados = await res.json();
-    batalhas = dados.batalhas || [];
-    console.log(`✅ ${batalhas.length} batalhas carregadas`);
-  } catch (e) {
-    console.error("Erro:", e);
-    batalhas = [];
-  }
-  renderizarCalendario();
-  renderizarAgendas();
-}
-
-function renderizarCalendario() {
-  document.getElementById("nomeMes").textContent = `${NOMES_MESES[mesAtual-1].toUpperCase()} ${anoAtual}`;
-  const cal = document.getElementById("calendario");
-  cal.innerHTML = "";
-  const primeiroDia = new Date(anoAtual, mesAtual-1, 1).getDay();
-  const totalDias = new Date(anoAtual, mesAtual, 0).getDate();
-
-  for (let i = 0; i < primeiroDia; i++) {
-    const div = document.createElement("div");
-    div.className = "dia vazio";
-    cal.appendChild(div);
-  }
-
-  for (let dia = 1; dia <= totalDias; dia++) {
-    const dataISO = `${anoAtual}-${String(mesAtual).padStart(2,"0")}-${String(dia).padStart(2,"0")}`;
-    const indiceSemana = new Date(anoAtual, mesAtual-1, dia).getDay();
-    const batalhasDoDia = batalhas.filter(b => b.data && String(b.data).substring(0,10) === dataISO);
-
-    let classe = "disponivel", temBloqueioTotal = false;
-    if (batalhasDoDia.length > 0) {
-      const situacoes = batalhasDoDia.map(b => (b.situacao || "").toUpperCase().trim());
-      if (situacoes.some(s => s.includes("DOMINGO") || s.includes("FERIADO"))) { classe = "domingo"; temBloqueioTotal = true; }
-      else if (situacoes.some(s => s.includes("CAMPANHA"))) classe = "campanha";
-      else if (situacoes.some(s => s.includes("FALTA OPONENTE"))) classe = "falta-oponente";
-      else if (situacoes.some(s => s.includes("CONFIRMADO") || s.includes("CONFIRMADA"))) classe = "confirmado";
-    }
-
-    const div = document.createElement("div");
-    div.className = `dia ${classe}`;
-    div.innerHTML = `<span class="dia-num">${dia}</span><span class="dia-nome">${ABREV_SEMANA[indiceSemana]}</span>`;
-    if (!temBloqueioTotal) div.onclick = () => abrirFormulario(dia, batalhasDoDia);
-    cal.appendChild(div);
-  }
-}
-
-function normalizarNome(nome) {
-  if (!nome) return "";
-  return nome.toString().trim().toLowerCase()
+  const NOME_BUSCA = NOME_USUARIO.toLowerCase()
     .normalize("NFD").replace(/[\u0300-\u036f]/g, "")
-    .replace(/\s+/g, "").replace(/[.,_-]/g, "");
-}
+    .replace(/\s+/g, "");
 
-// ✅ REGRA EXATA: NOME DELE + SITUAÇÃO = CONFIRMADA OU CAMPANHA
-function ehBatalhaDoUsuario(b) {
-  const nomeNormalizado = normalizarNome(NOME_USUARIO);
-  const streamerNorm = normalizarNome(b.streamer);
-  const oponenteNorm = normalizarNome(b.oponente);
-  const pertence = streamerNorm === nomeNormalizado || oponenteNorm === nomeNormalizado;
-  
-  const sit = (b.situacao || "").toUpperCase().trim();
-  const ehValida = sit.includes("CONFIRMADO") || sit.includes("CONFIRMADA") || sit.includes("CAMPANHA");
-  
-  return pertence && ehValida;
-}
+  let mesAtual = new Date().getMonth() + 1;
+  let anoAtual = new Date().getFullYear();
+  let batalhasMes = [];
 
-function renderizarAgendas() {
-  const minhas = batalhas.filter(ehBatalhaDoUsuario);
-  console.log(`🎯 Suas batalhas: ${minhas.length} (Confirmada/Campanha)`);
+  const NOMES_MESES = ["Janeiro","Fevereiro","Março","Abril","Maio","Junho","Julho","Agosto","Setembro","Outubro","Novembro","Dezembro"];
+  const ABREV_SEMANA = ["Dom","Seg","Ter","Qua","Qui","Sex","Sáb"];
 
-  const elMinhas = document.getElementById("minhasBatalhas");
-  if (minhas.length === 0) {
-    elMinhas.innerHTML = '<div class="sem-batalha-pessoal">📭 Nenhuma batalha confirmada ou campanha encontrada com seu nome.<br><small>Quando a agência confirmar, aparecerá aqui!</small></div>';
-  } else {
-    elMinhas.innerHTML = minhas.map(b => gerarItemBatalha(b, true)).join("");
+  // 📖 CARREGA BATALHAS
+  async function carregarBatalhas() {
+    try {
+      const res = await fetch(`${LINK}?mes=${mesAtual}&ano=${anoAtual}`);
+      const dados = await res.json();
+      batalhasMes = dados.batalhas || [];
+    } catch (e) {
+      batalhasMes = [];
+    }
+    renderizarCalendario();
+    renderizarAgendas();
   }
 
-  document.getElementById("contadorGeral").textContent = `Total: ${batalhas.length} batalhas`;
-  document.getElementById("todasBatalhas").innerHTML = batalhas.length === 0 
-    ? '<div class="sem-batalha">Nenhuma batalha agendada.</div>'
-    : batalhas.map(b => gerarItemBatalha(b, false)).join("");
-}
-
-function gerarItemBatalha(b, mostrarBotao) {
-  const dataFormatada = b.data ? b.data.split("-").reverse().join("/") : "Sem data";
-  let cor = "#7a8ba8", icone = "📌";
-  const sit = (b.situacao || "").toUpperCase().trim();
-  if (sit.includes("FALTA OPONENTE")) { cor = "#00a8ff"; icone = "⏳"; }
-  else if (sit.match(/CONFIRMADA?/)) { cor = "#f0f0f0"; icone = "✅"; }
-  else if (sit.includes("CAMPANHA")) { cor = "#ffd700"; icone = "📢"; }
-  else if (sit.match(/DOMINGO|FERIADO/)) { cor = "#ff4444"; icone = "🔴"; }
-  else if (sit.includes("DISPONÍVEL")) { cor = "#00ff9c"; icone = "✅"; }
-
-  let conteudo = `<strong>${icone} ${dataFormatada}</strong> — ${b.situacao || "Disponível"}`;
-  if (b.horaInicio) conteudo += ` · ${b.horaInicio}`;
-  conteudo += `<br>`;
-  if (b.streamer && b.oponente) conteudo += `<small>⚔️ ${b.streamer} vs ${b.oponente}`;
-  else if (b.streamer) conteudo += `<small>🎮 ${b.streamer}`;
-  else if (b.oponente) conteudo += `<small>⚔️ ${b.oponente}`;
-  if (b.hold) conteudo += ` · Hold: ${b.hold}`;
-  if (b.meta) conteudo += ` · Meta: ${b.meta}`;
-  conteudo += `</small>`;
-
-  let botao = "";
-  if (mostrarBotao && b.linkOponente && b.linkOponente.trim().length > 5) {
-    botao = `<a href="${b.linkOponente}" target="_blank" class="btn-oponente">🔗 Seguir Oponente</a>`;
-  }
-  return `<div class="item-batalha" style="border-color:${cor}">${conteudo}${botao}</div>`;
-}
-
-function abrirFormulario(dia, batalhasDoDia) {
-  dataEscolhida = `${anoAtual}-${String(mesAtual).padStart(2,"0")}-${String(dia).padStart(2,"0")}`;
-  batalhasDoDiaAtual = batalhasDoDia;
-  document.getElementById("dataSelecionada").textContent = `📅 ${dia}/${mesAtual}/${anoAtual}`;
-  document.getElementById("campoStreamer").value = NOME_USUARIO_EXIBIR;
-  document.getElementById("formBatalha").style.display = "block";
-  document.getElementById("caixaSucesso").style.display = "none";
-
-  const aviso = document.getElementById("avisoHorarios");
-  const lista = document.getElementById("listaHorariosBloqueados");
-  const ocupados = batalhasDoDia.filter(b => b.horaInicio && b.horaFim);
-  if (ocupados.length > 0) {
-    aviso.style.display = "block";
-    lista.innerHTML = ocupados.map(b => `<span class="horario-bloqueado">${b.horaInicio} — ${b.horaFim}</span>`).join("");
-  } else aviso.style.display = "none";
-  document.getElementById("modalFundo").classList.add("modal-aberto");
-}
-
-function temConflito(inicio, fim) {
-  for (const b of batalhasDoDiaAtual) {
-    if (!b.horaInicio || !b.horaFim) continue;
-    if (!(fim <= b.horaInicio || inicio >= b.horaFim)) return true;
-  }
-  return false;
-}
-
-function fecharModal() {
-  document.getElementById("modalFundo").classList.remove("modal-aberto");
-  document.getElementById("formBatalha").reset();
-  dataEscolhida = null; batalhasDoDiaAtual = [];
-}
-function fecharModalFora(e) { if (e.target.id === "modalFundo") fecharModal(); }
-
-async function enviarSolicitacao(e) {
-  e.preventDefault();
-  const btn = document.getElementById("btnEnviar");
-  const horaInicio = document.getElementById("campoHoraInicio").value;
-  const horaFim = document.getElementById("campoHoraFim").value;
-
-  if (temConflito(horaInicio, horaFim)) {
-    alert("⚠️ Esse horário já está ocupado!");
-    return;
+  function normalizarNome(nome) {
+    if (!nome) return "";
+    return nome.toString().trim().toLowerCase()
+      .normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+      .replace(/\s+/g, "");
   }
 
-  btn.disabled = true; btn.textContent = "Enviando...";
-  const dados = {
-    acao: "solicitarBatalha", data: dataEscolhida,
-    horaInicio, horaFim,
-    hold: document.getElementById("campoHold").value,
-    meta: document.getElementById("campoMeta").value || "",
-    linkStreamer: document.getElementById("campoLink").value,
-    streamer: NOME_USUARIO_EXIBIR, agencia: "Padroniza",
-    situacao: "Falta oponente"
+  // ✅ FUNCIONA COMO STREAMER OU OPONENTE
+  function ehMinhaBatalha(b) {
+    const s = normalizarNome(b.streamer);
+    const o = normalizarNome(b.oponente);
+    const eEu = s === NOME_BUSCA || o === NOME_BUSCA;
+    
+    const sit = (b.situacao || "").toUpperCase();
+    const ok = sit.includes("CONFIRMADO") || sit.includes("CONFIRMADA") ||
+               sit.includes("CAMPANHA") || sit.includes("FALTA OPONENTE");
+    return eEu && ok;
+  }
+
+  function renderizarCalendario() {
+    document.getElementById("nomeMes").textContent = `${NOMES_MESES[mesAtual-1].toUpperCase()} ${anoAtual}`;
+    const cal = document.getElementById("calendario");
+    cal.innerHTML = "";
+    
+    const primeiroDia = new Date(anoAtual, mesAtual-1, 1).getDay();
+    const totalDias = new Date(anoAtual, mesAtual, 0).getDate();
+
+    for (let i = 0; i < primeiroDia; i++) cal.innerHTML += `<div class="dia vazio"></div>`;
+
+    for (let dia = 1; dia <= totalDias; dia++) {
+      const dataAlvo = `${anoAtual}-${String(mesAtual).padStart(2,"0")}-${String(dia).padStart(2,"0")}`;
+      const bd = batalhasMes.filter(b => b.data && b.data.substring(0,10) === dataAlvo);
+      
+      let classe = "disponivel";
+      if (bd.length > 0) {
+        const sts = bd.map(b => (b.situacao || "").toUpperCase());
+        if (sts.some(x => x.includes("DOMINGO") || x.includes("FERIADO"))) classe = "domingo";
+        else if (sts.some(x => x.includes("CAMPANHA"))) classe = "campanha";
+        else if (sts.some(x => x.includes("FALTA OPONENTE"))) classe = "falta-oponente";
+        else if (sts.some(x => x.includes("CONFIRMADO") || x.includes("CONFIRMADA"))) classe = "confirmado";
+      }
+
+      cal.innerHTML += `<div class="dia ${classe}">
+        <span class="dia-num">${dia}</span>
+        <span class="dia-nome">${ABREV_SEMANA[new Date(anoAtual, mesAtual-1, dia).getDay()]}</span>
+      </div>`;
+    }
+  }
+
+  function renderizarAgendas() {
+    const minhas = batalhasMes.filter(ehMinhaBatalha);
+    
+    document.getElementById("minhasBatalhas").innerHTML = minhas.length 
+      ? minhas.map(b => gerarItem(b)).join("")
+      : `<div class="sem-batalha">Nenhuma batalha encontrada para você.</div>`;
+
+    document.getElementById("contadorGeral").textContent = `Total: ${batalhasMes.length} batalhas`;
+    document.getElementById("todasBatalhas").innerHTML = batalhasMes.length
+      ? batalhasMes.map(b => gerarItem(b)).join("")
+      : `<div class="sem-batalha">Nenhuma batalha agendada.</div>`;
+  }
+
+  function gerarItem(b) {
+    const data = b.data ? b.data.split("-").reverse().join("/") : "Sem data";
+    let cor = "#7a8ba8", icone = "📌";
+    const s = (b.situacao || "").toUpperCase();
+    if (s.includes("FALTA OPONENTE")) { cor = "#00a8ff"; icone = "⏳"; }
+    else if (s.match(/CONFIRMADA?/)) { cor = "#f0f0f0"; icone = "✅"; }
+    else if (s.includes("CAMPANHA")) { cor = "#ffd700"; icone = "📢"; }
+    else if (s.includes("DISPONÍVEL")) { cor = "#00ff9c"; icone = "✅"; }
+
+    return `<div class="item-batalha" style="border-color:${cor}">
+      <strong>${icone} ${data}</strong> — ${b.situacao || "Disponível"}<br>
+      <small>${b.streamer || "-"} vs ${b.oponente || "-"}${b.hold ? ` · Hold: ${b.hold}` : ""}</small>
+    </div>`;
+  }
+
+  // 📅 NAVEGAÇÃO
+  document.getElementById("btnAnterior").onclick = () => {
+    mesAtual--; if (mesAtual < 1) { mesAtual = 12; anoAtual--; }
+    carregarBatalhas();
+  };
+  document.getElementById("btnProximo").onclick = () => {
+    mesAtual++; if (mesAtual > 12) { mesAtual = 1; anoAtual++; }
+    carregarBatalhas();
   };
 
-  try {
-    await fetch(LINK, {
-      method: "POST", mode: "no-cors",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(dados)
-    });
-    document.getElementById("formBatalha").style.display = "none";
-    document.getElementById("caixaSucesso").style.display = "block";
-    carregarBatalhas();
-  } catch {
-    alert("✅ Solicitação enviada!");
-    fecharModal();
-    carregarBatalhas();
-  }
-  btn.disabled = false; btn.textContent = "📤 Solicitar Batalha";
+  window.onload = carregarBatalhas;
 }
-
-function mudarMes(delta) {
-  mesAtual += delta;
-  if (mesAtual < 1) { mesAtual = 12; anoAtual--; }
-  if (mesAtual > 12) { mesAtual = 1; anoAtual++; }
-  carregarBatalhas();
-}
-
-window.onload = carregarBatalhas;
 </script>
 </body>
 </html>
