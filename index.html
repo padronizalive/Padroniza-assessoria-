@@ -69,7 +69,6 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
 .btn-admin{background:linear-gradient(135deg,#8b5cf6,#6d28d9)}
 .btn-moedas{background:linear-gradient(135deg,#ec4899,#db2777)}
 
-/* 📱 REDES SOCIAIS — COMPLETA COM TODAS! */
 .secao-redes{margin:30px 0 20px 0;text-align:center}
 .titulo-redes{color:var(--amarelo);font-size:18px;margin-bottom:15px}
 .redes-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:8px}
@@ -132,7 +131,22 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
 .btn-whatsapp{background:linear-gradient(135deg,#25d366,#128c7e);margin-top:10px}
 .destaque-gratis{background:rgba(52,211,153,0.15);border:2px solid var(--verde);padding:16px;border-radius:10px;text-align:center;font-weight:bold;margin-bottom:18px}
 .pix-codigo{background:#00081a;padding:12px;border-radius:8px;border:1px solid var(--verde);word-break:break-all;font-size:13px;margin:10px 0;color:var(--verde)}
-.link-agenciamento{background:rgba(116,87,255,0.1);border:1px solid var(--roxo);padding:15px;border-radius:10px;margin-bottom:20px}
+.link-agenciamento{background:rgba(52,211,153,0.1);border:2px solid var(--verde);padding:20px;border-radius:12px;margin-bottom:20px;border-width:2px;box-shadow:0 0 20px rgba(52,211,153,0.2)}
+.bloco-download-kako{background:rgba(59,130,246,0.08);border:1px solid var(--azul);padding:18px;border-radius:10px;margin-top:12px;text-align:center}
+.bloco-download-kako h4{color:var(--azul);font-size:15px;margin-bottom:12px}
+.botoes-download{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-bottom:15px}
+.btn-download{display:inline-flex;align-items:center;gap:8px;padding:10px 14px;border-radius:8px;text-decoration:none;font-weight:bold;font-size:14px;transition:0.2s}
+.btn-download-android{background:#34a853;color:#fff}
+.btn-download-android:hover{background:#2d9349;transform:translateY(-2px)}
+.btn-download-ios{background:#007AFF;color:#fff}
+.btn-download-ios:hover{background:#0066dd;transform:translateY(-2px)}
+.passo-a-passo{text-align:left;background:rgba(116,87,255,0.08);border:1px solid var(--roxo);padding:14px;border-radius:8px;margin:15px 0}
+.passo-a-passo h5{color:var(--roxo);font-size:14px;margin-bottom:10px;text-align:center}
+.passo-a-passo ol{margin:0;padding-left:22px;line-height:1.8;color:var(--texto);font-size:14px}
+.passo-a-passo li{margin-bottom:4px}
+.bloco-video-kako{border-top:1px solid rgba(59,130,246,0.2);padding-top:12px;margin-top:10px}
+.bloco-video-kako a{color:var(--azul);text-decoration:none;font-weight:bold;display:inline-flex;align-items:center;gap:8px;transition:0.2s}
+.bloco-video-kako a:hover{color:#60a5fa;transform:scale(1.02)}
 
 .dados-perfil{background:var(--painel2);padding:15px;border-radius:10px;margin-bottom:20px;border:1px solid #293653}
 .dados-perfil p{margin:8px 0;font-size:15px}
@@ -197,7 +211,6 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
     <a href="https://www.tiktok.com/coin?rc=7TGXGN69&rie=" target="_blank" class="btn-principal btn-moedas">💰 COMPRAR MOEDAS TIKTOK</a>
   </div>
 
-  <!-- 📱 REDES SOCIAIS — TODAS INCLUÍDAS! -->
   <div class="secao-redes">
     <h3 class="titulo-redes">🌐 SIGA NOSSAS REDES</h3>
     <div class="redes-grid">
@@ -306,40 +319,100 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
   <button class="btn-acao btn-voltar" onclick="voltar()">Voltar</button>
 </div>
 
+<!-- ✅ ÁREA VISITANTE — COM PASSO A PASSO CORRIGIDO: CENTRO DE HOST -->
 <div class="conteudo" id="conteudoVisitante">
   <div class="logo-container">
     <img src="https://i.imgur.com/yaTLVi3.jpeg" alt="Padroniza Assessoria" class="logo-agencia" loading="lazy" onerror="this.style.display='none'">
   </div>
   <h2 class="titulo-secao">👤 BEM-VINDO(A)</h2>
+
   <div class="link-agenciamento">
-    <h3 style="color:var(--verde);text-align:center;margin-bottom:10px">✅ QUER SER AGENCIADO? É GRÁTIS!</h3>
-    <a href="https://www.tiktok.com/t/ZSHu6CFAM/" target="_blank" class="btn-acao btn-verde">🎵 SOLICITAR PELO TIKTOK</a>
-    <div style="background:#00081a;padding:15px;border-radius:8px;margin:15px 0;text-align:center">
-      <p style="color:var(--amarelo);font-weight:bold;margin-bottom:8px">📱 PELO KAKO LIVE</p>
-      <p>Central de Host → Minha Agência → ID: <strong style="color:var(--verde);font-size:20px">177766</strong></p>
+    <h3 style="color:var(--verde);text-align:center;margin-bottom:12px;font-size:20px;">
+      ✅ QUER SER AGENCIADO? É TOTALMENTE GRÁTIS! 🎁
+    </h3>
+    
+    <p style="text-align:center;color:var(--texto);margin-bottom:15px;line-height:1.6;font-size:16px;">
+      🚀 <strong>Junte-se à Padroniza Assessoria e leve suas lives para o próximo nível!</strong><br>
+      <span style="color:var(--amarelo);font-weight:500;">Sem mensalidade, sem taxas — é 100% GRÁTIS para você!</span>
+    </p>
+
+    <div style="background:rgba(52,211,153,0.1);padding:15px;border-radius:10px;margin-bottom:15px;">
+      <p style="color:var(--verde);font-weight:bold;margin-bottom:10px;text-align:center;font-size:17px;">🎉 AO ENTRAR, VOCÊ GANHA TUDO ISSO:</p>
+      <ul style="color:var(--texto);line-height:2;padding-left:20px;font-size:15px;">
+        <li>⚔️ Agendamento de Batalhas Oficiais <strong>GRÁTIS</strong></li>
+        <li>📢 Divulgação de suas lives no nosso site para todos verem</li>
+        <li>🎨 Arte visual e materiais profissionais</li>
+        <li>📚 Treinamentos e dicas exclusivas de crescimento</li>
+        <li>📊 Acesso ao Painel do Agenciado — acompanhe tudo</li>
+        <li>🔗 Vincule sua live e apareça em destaque no nosso site!</li>
+      </ul>
+    </div>
+
+    <p style="text-align:center;color:var(--amarelo);margin-bottom:10px;font-weight:bold;font-size:16px;">👇 CLIQUE NO BOTÃO ABAIXO PARA SOLICITAR SUA VAGA:</p>
+    <a href="https://www.tiktok.com/t/ZSHu6CFAM/" target="_blank" class="btn-acao btn-verde" style="font-size:19px;padding:18px;box-shadow:0 4px 15px rgba(52,211,153,0.3);">
+      🎵 CLIQUE AQUI — SOLICITAR PELO TIKTOK
+    </a>
+
+    <!-- 📱 BLOCO KAKO LIVE: DOWNLOAD + PASSO A PASSO CORRIGIDO + ID + VÍDEO -->
+    <div class="bloco-download-kako">
+      <h4>📱 BAIXAR O APLICATIVO KAKO LIVE</h4>
+      <div class="botoes-download">
+        <a href="https://play.google.com/store/apps/details?id=com.kako.live" target="_blank" rel="noopener" class="btn-download btn-download-android">
+          📲 Android
+        </a>
+        <a href="https://apps.apple.com/br/app/kako-live/id1559685672" target="_blank" rel="noopener" class="btn-download btn-download-ios">
+          🍎 iPhone
+        </a>
+      </div>
+      
+      <!-- 📋 PASSO A PASSO — CORRIGIDO PARA "CENTRO DE HOST"! -->
+      <div class="passo-a-passo">
+        <h5>📋 PASSO A PASSO PARA ENTRAR NA AGÊNCIA:</h5>
+        <ol>
+          <li>📲 Baixe o Kako Live e configure seu perfil</li>
+          <li>🔹 Vá em <strong>"Centro de Host"</strong></li>
+          <li>🏢 Clique em <strong>"Minha Agência"</strong></li>
+          <li>🔢 Digite o <strong>ID da Agência:</strong> <strong style="color:var(--verde);font-size:18px;">177766</strong></li>
+        </ol>
+      </div>
+      
+      <p style="color:var(--texto);margin:5px 0 10px 0;">Ou copie o ID e cole diretamente no aplicativo:</p>
+      <p style="color:var(--verde);font-size:30px;font-weight:bold;letter-spacing:3px;margin-bottom:10px;">177766</p>
+      
+      <div class="bloco-video-kako">
+        <p style="color:var(--azul);font-size:14px;margin-bottom:8px;">🎥 Conheça a plataforma Kako Live:</p>
+        <a href="https://vt.tiktok.com/ZSVhUfqVH/" target="_blank" rel="noopener">
+          ▶️ ASSISTA AO VÍDEO DE APRESENTAÇÃO
+        </a>
+      </div>
     </div>
   </div>
+
   <hr style="border-color:#293653;margin:25px 0">
   <h2 class="titulo-secao">💼 SERVIÇOS E VALORES</h2>
-  <p style="text-align:center;color:var(--cinza);margin-bottom:20px">Agenciado tem acesso GRÁTIS ✅</p>
+  <p style="text-align:center;color:var(--cinza);margin-bottom:20px;font-size:16px;">✨ Agenciado tem acesso <strong>GRÁTIS</strong> a TODOS os serviços abaixo ✨</p>
   
-  <div style="background:var(--painel2);padding:15px;border-radius:10px;margin-bottom:15px">
+  <div style="background:var(--painel2);padding:15px;border-radius:10px;margin-bottom:15px;">
     <h3 style="color:var(--amarelo);text-align:center">✅ PACOTE COMPLETO — R$ 39,99/mês</h3>
+    <p style="text-align:center;color:var(--verde);font-weight:bold;margin:8px 0;font-size:17px;">🆓 GRÁTIS para agenciados!</p>
     <div class="pix-codigo" id="pixPacote">00020101021126760014br.gov.bcb.pix01367c0dfbc3-68e7-4b85-a0eb-eb037b738d9f0216PacoteCompleto520400005303986540539.995802BR591965 8 0 M G DA SILVA6007VILHENA62070503***630438A3</div>
     <button class="btn-acao btn-whatsapp" onclick="copiarPix('pixPacote')">📋 COPIAR CHAVE PIX</button>
   </div>
-  <div style="background:var(--painel2);padding:15px;border-radius:10px;margin-bottom:15px">
+  <div style="background:var(--painel2);padding:15px;border-radius:10px;margin-bottom:15px;">
     <h3 style="color:var(--rosa);text-align:center">🎨 ARTE VISUAL AVULSA — R$ 10,00</h3>
+    <p style="text-align:center;color:var(--verde);font-weight:bold;margin:8px 0;font-size:17px;">🆓 GRÁTIS para agenciados!</p>
     <div class="pix-codigo" id="pixArte">00020101021126800014br.gov.bcb.pix01367c0dfbc3-68e7-4b85-a0eb-eb037b738d9f0218Arte visual Avulsa520400005303986540510.005802BR591965 8 0 M G DA SILVA6007VILHENA62070503***6304AD83</div>
     <button class="btn-acao btn-whatsapp" onclick="copiarPix('pixArte')">📋 COPIAR CHAVE PIX</button>
   </div>
-  <div style="background:var(--painel2);padding:15px;border-radius:10px;margin-bottom:15px">
+  <div style="background:var(--painel2);padding:15px;border-radius:10px;margin-bottom:15px;">
     <h3 style="color:var(--azul);text-align:center">🎵 MÚSICA PERSONALIZADA — R$ 20,00</h3>
+    <p style="text-align:center;color:var(--verde);font-weight:bold;margin:8px 0;font-size:17px;">🆓 GRÁTIS para agenciados!</p>
     <div class="pix-codigo" id="pixMusica">00020101021126750014br.gov.bcb.pix01367c0dfbc3-68e7-4b85-a0eb-eb037b738d9f0213Musica Avulsa520400005303986540520.005802BR591965 8 0 M G DA SILVA6007VILHENA62070503***63042FB2</div>
     <button class="btn-acao btn-whatsapp" onclick="copiarPix('pixMusica')">📋 COPIAR CHAVE PIX</button>
   </div>
-  <div style="background:var(--painel2);padding:15px;border-radius:10px;margin-bottom:15px">
+  <div style="background:var(--painel2);padding:15px;border-radius:10px;margin-bottom:15px;">
     <h3 style="color:var(--roxo);text-align:center">📚 TREINAMENTO VIP — R$ 9,99 (única)</h3>
+    <p style="text-align:center;color:var(--verde);font-weight:bold;margin:8px 0;font-size:17px;">🆓 GRÁTIS para agenciados!</p>
     <div class="pix-codigo" id="pixTreinamento">00020101021126770014br.gov.bcb.pix01367c0dfbc3-68e7-4b85-a0eb-eb037b738d9f0215treinamento vip52040000530398654049.995802BR591965 8 0 M G DA SILVA6007VILHENA62070503***63046CC1</div>
     <button class="btn-acao btn-whatsapp" onclick="copiarPix('pixTreinamento')">📋 COPIAR CHAVE PIX</button>
   </div>
