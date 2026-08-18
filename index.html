@@ -18,7 +18,6 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
 
 .botoes-principais{display:flex;flex-direction:column;gap:14px;margin-bottom:25px}
 
-/* ===== BOTÃO UNIFICADO — ESTILO PADRONIZA ===== */
 .btn-outra-agencia-unificado{
   background:linear-gradient(135deg,#fbbf24,#f59e0b);
   border-radius:12px;
@@ -62,7 +61,6 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
   text-align:center;
   font-weight:500;
 }
-/* ============================================== */
 
 .btn-principal{padding:18px;border-radius:12px;border:none;font-weight:bold;font-size:18px;cursor:pointer;text-align:center;color:#fff;transition:0.2s;text-decoration:none;display:block;width:100%}
 .btn-principal:active{transform:scale(0.98)}
@@ -408,16 +406,23 @@ function alternarSenha(){
   const el = document.getElementById('senhaAdmin');
   el.type = el.type === 'password' ? 'text' : 'password';
 }
+
 function verificarAdmin(){
   const email = document.getElementById('emailAdmin').value.trim().toLowerCase();
-  const senha = document.getElementById('senhaAdmin').value;
-  if(email === EMAIL_ADMIN && senha === SENHA_ADMIN){
+  const senha = document.getElementById('senhaAdmin').value.trim();
+  const emailCorreto = "padronizaassessoria@gmail.com".toLowerCase();
+  const senhaCorreta = "agencia2026";
+  
+  if(email === emailCorreto && senha === senhaCorreta){
     mostrarToast("✅ Acesso liberado!");
     document.getElementById('loginAdmin').style.display = 'none';
     document.getElementById('painelAdmin').style.display = 'block';
     atualizarContadores();
-  }else mostrarToast("❌ Dados incorretos!");
+  }else{
+    mostrarToast("❌ Dados incorretos!");
+  }
 }
+
 function sairAdmin(){
   document.getElementById('painelAdmin').style.display = 'none';
   document.getElementById('emailAdmin').value = '';
