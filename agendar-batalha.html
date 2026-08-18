@@ -128,11 +128,11 @@
 <body>
 <div class="container">
 
-  <!-- ✅ SEM TELA DE LOGIN — ENTRA DIRETO PELO SITE PRINCIPAL -->
+  <!-- ✅ NOME DO ARQUIVO CORRIGIDO: agendar-batalha.html -->
   <a href="index.html" class="btn-voltar">← Voltar ao Site Principal</a>
 
   <div id="avisoUsuario" class="aviso-usuario" style="display:none;">
-    👤 Olá, <strong id="nomeUsuarioExibicao"></strong>! Seus dados já estão carregados ✅
+    👤 Olá, <strong id="nomeUsuarioExibicao"></strong>! Seus dados já vieram preenchidos ✅
   </div>
 
   <div id="carregando" class="carregando">
@@ -239,7 +239,7 @@
 <div class="toast" id="toast"></div>
 
 <script>
-// ✅ LINK DO SEU APPS SCRIPT — NÃO MEXEU, CONTINUA CERTINHO!
+// ✅ LINK DO SEU APPS SCRIPT — INTACTO, NÃO MEXEU!
 const LINK_APPSCRIPT = "https://script.google.com/macros/s/AKfycbygvZq1vAaSRy-eBkrWe73Y7x1GX5c5nj1untYB5T-8ErAntowbMVLvqmTO7uZ9cujH4A/exec";
 const WHATSAPP_AGENCIA = "5569981478873";
 
@@ -251,13 +251,13 @@ let diaSelecionado = null;
 let horarioEstaBloqueado = false;
 const NOMES_MESES = ["Janeiro","Fevereiro","Março","Abril","Maio","Junho","Julho","Agosto","Setembro","Outubro","Novembro","Dezembro"];
 
-// ✅ CARREGA DIRETO — PEGA O USUÁRIO DA URL (como já funcionava antes!)
+// ✅ RECEBE DADOS DO INDEX.HTML PELA URL — EXATAMENTE COMO FUNCIONAVA ANTES!
 window.onload = async function() {
   const params = new URLSearchParams(window.location.search);
   const nomeUsuario = (params.get("usuario") || "").trim();
   
   if (!nomeUsuario) {
-    // ⚠️ Se vier direto, sem passar pelo site principal — avisa
+    // ⚠️ Se vier direto, sem vir do site principal
     document.getElementById("carregando").innerHTML = `
       ⚠️ Acesse pelo site principal para entrar.<br><br>
       <a href="index.html" style="color:var(--verde);text-decoration:none;font-weight:bold;">
@@ -267,7 +267,7 @@ window.onload = async function() {
     return;
   }
 
-  // ✅ Usuário encontrado — carrega tudo!
+  // ✅ Usuário identificado — carrega tudo!
   usuarioLogado = { 
     usuario: nomeUsuario, 
     meta: params.get("meta") || "", 
