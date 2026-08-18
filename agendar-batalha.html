@@ -49,7 +49,6 @@
     .dia.vazio:hover { transform: none; }
     .dia-num { font-size: 16px; font-weight: 700; line-height: 1; }
 
-    /* 🎨 CORES — EXATAMENTE COMO A PLANILHA DEFINE, SEM FIXA NO CÓDIGO */
     .disponivel { background: rgba(0,255,156,0.12); border-color: var(--verde); color: var(--verde); }
     .disponivel:hover { background: rgba(0,255,156,0.25); }
     .campanha { background: rgba(255,215,0,0.15); border-color: var(--amarelo); color: var(--amarelo); }
@@ -128,12 +127,13 @@
     .aviso-bloqueio h4 { color: var(--vermelho); margin-bottom: 8px; font-size: 16px; }
     .aviso-bloqueio p { color: var(--cinza); font-size: 14px; margin-bottom: 12px; }
     .info-padrao { background: rgba(0,255,156,0.08); border: 1px solid rgba(0,255,156,0.3); padding: 10px; border-radius: 8px; margin-bottom: 14px; font-size: 14px; color: var(--verde); }
+    .toast { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%); background: var(--painel); color: var(--texto); padding: 14px 24px; border-radius: 10px; border: 2px solid var(--verde); z-index: 10000; display: none; font-weight: 600; }
   </style>
 </head>
 <body>
 <div class="container">
 
-  <!-- 🔐 TELA DE LOGIN COM VALIDAÇÃO -->
+  <!-- 🔐 TELA DE LOGIN -->
   <div class="login-box" id="telaLogin">
     <a href="index.html" class="btn-voltar">← Voltar ao Site Principal</a>
     <div class="logo">⚔️</div>
@@ -245,7 +245,7 @@
 <div class="toast" id="toast"></div>
 
 <script>
-// ✅ LINK DO SEU APPS SCRIPT — ATUALIZADO COM VALIDAÇÃO DE USUÁRIO
+// ✅ LINK DO SEU APPS SCRIPT — COLOQUE O SEU AQUI!
 const LINK_APPSCRIPT = "https://script.google.com/macros/s/AKfycbygvZq1vAaSRy-eBkrWe73Y7x1GX5c5nj1untYB5T-8ErAntowbMVLvqmTO7uZ9cujH4A/exec";
 const WHATSAPP_AGENCIA = "5569981478873";
 
@@ -258,16 +258,15 @@ let horarioEstaBloqueado = false;
 const NOMES_MESES = ["Janeiro","Fevereiro","Março","Abril","Maio","Junho","Julho","Agosto","Setembro","Outubro","Novembro","Dezembro"];
 
 window.onload = async function() {
-  // Pega usuário vindo do site principal (index.html)
   const params = new URLSearchParams(window.location.search);
   const nomeDaUrl = (params.get("usuario") || "").trim();
   if (nomeDaUrl) {
     document.getElementById("usuarioAcesso").value = nomeDaUrl;
-    validarUsuario(); // Valida automaticamente se veio do site principal
+    validarUsuario();
   }
 };
 
-// 🔐 VALIDAÇÃO DE USUÁRIO — SÓ ACESSA SE ESTIVER NA PLANILHA DE CONTROLE
+// 🔐 VALIDAÇÃO COM DIAGNÓSTICO — FLEXÍVEL PRA SUA PLANILHA!
 async function validarUsuario() {
   const usuario = document.getElementById("usuarioAcesso").value.trim();
   const msg = document.getElementById("mensagemAcesso");
@@ -277,37 +276,59 @@ async function validarUsuario() {
     return;
   }
 
-  msg.innerHTML = '<span class="sucesso">🔄 Verificando usuário...</span>';
+  msg.innerHTML = '<span class="sucesso">🔄 Verificando: "' + usuario + '"...</span>';
   
   try {
-    // Chama o Apps Script para validar na planilha de controle
-    const res = await fetch(`${LINK_APPSCRIPT}?acao=validarUsuario&usuario=${encodeURIComponent(usuario)}`);
-    const resposta = await res.json();
+    const url = `${LINK_APPSCRIPT}?acao=validarUsuario&usuario=${encodeURIComponent(usuario)}`;
+    console.log("🌐 URL chamada:", url);
     
-    if (!resposta.valido) {
-      msg.innerHTML = '<span class="erro">❌ Usuário não cadastrado. Acesso permitido apenas para streamers agenciados.</span>';
+    const res = await fetch(url);
+    const textoResposta = await res.text();
+    console.log("📡 Resposta BRUTA do Apps Script:", textoResposta);
+    
+    let dados;
+    try {
+      dados = JSON.parse(textoResposta);
+    } catch {
+      msg.innerHTML = `<span class="erro">❌ Resposta inválida: ${textoResposta.substring(0,100)}</span>`;
       return;
     }
     
-    // ✅ Usuário válido — libera acesso
+    console.log("📊 Dados recebidos:", dados);
+    
+    // ✅ ACEITA QUALQUER FORMATO DE "SIM"
+    const valido = 
+      dados.valido === true || 
+      dados.valido === "true" || 
+      dados.valido === 1 ||
+      dados.valido === "1" ||
+      dados.success === true ||
+      dados.ok === true;
+    
+    if (!valido) {
+      msg.innerHTML = `<span class="erro">❌ Não encontrado. Resposta: ${JSON.stringify(dados)}</span>`;
+      return;
+    }
+    
+    // ✅ ENCONTROU — LIBERA ACESSO!
     usuarioLogado = { 
       usuario: usuario, 
-      metaDiamantes: resposta.meta || "", 
-      linkPerfil: resposta.link || "" 
+      meta: dados.meta || "", 
+      linkPerfil: dados.link || dados.kako_perfil || "" 
     };
     
-    msg.innerHTML = '<span class="sucesso">✅ Acesso autorizado! Carregando agenda...</span>';
+    msg.innerHTML = '<span class="sucesso">✅ Acesso autorizado! Entrando...</span>';
     
     setTimeout(() => {
       document.getElementById("telaLogin").style.display = "none";
       document.getElementById("conteudoAgenda").classList.add("visivel");
       document.getElementById("nomeUsuarioExibicao").textContent = usuarioLogado.usuario;
       carregarBatalhas();
-    }, 800);
+    }, 600);
     
   } catch (erro) {
-    msg.innerHTML = '<span class="erro">⚠️ Erro de conexão. Tente novamente.</span>';
-    console.error("Erro na validação:", erro);
+    console.error("❌ ERRO:", erro);
+    msg.innerHTML = `<span class="erro">⚠️ Erro: ${erro.message}</span>`;
   }
 }
 
@@ -326,12 +347,10 @@ function ehMinhaBatalha(b) {
   return s === eu || o === eu;
 }
 
-// 🎨 SITUAÇÃO EXATA DA PLANILHA — SEMPRE!
 function getClasseSituacao(situacao) {
   if (!situacao) return null;
   const s = String(situacao).toUpperCase().trim();
   
-  // Correspondência EXATA primeiro
   if (s === "DISPONÍVEL") return "disponivel";
   if (s === "CAMPANHA") return "campanha";
   if (s === "CONFIRMAÇÃO PENDENTE") return "confirmacao-pendente";
@@ -340,7 +359,6 @@ function getClasseSituacao(situacao) {
   if (s === "DOMINGO") return "domingo";
   if (s === "FERIADO") return "feriado";
   
-  // Busca parcial como garantia
   if (s.includes("CONFIRMADO")) return "confirmado";
   if (s.includes("CAMPANHA")) return "campanha";
   if (s.includes("PENDENTE")) return "confirmacao-pendente";
@@ -351,7 +369,6 @@ function getClasseSituacao(situacao) {
   return null;
 }
 
-// 🔍 COMPARA DATA EXATA (AAAA-MM-DD)
 function datasIguais(dataBatalha, dia, mes, ano) {
   if (!dataBatalha) return false;
   const d = String(dataBatalha).trim();
@@ -372,7 +389,6 @@ async function carregarBatalhas() {
     const dados = await res.json();
     batalhasMes = dados.batalhas || [];
     console.log(`✅ ${batalhasMes.length} batalhas carregadas`);
-    batalhasMes.forEach(b => console.log(`📅 ${b.data} → "${b.situacao}" → classe: ${getClasseSituacao(b.situacao)}`));
   } catch (e) {
     console.error("❌ Erro ao carregar:", e);
     batalhasMes = [];
@@ -393,8 +409,6 @@ function renderizarCalendario() {
 
   for (let dia = 1; dia <= totalDias; dia++) {
     const diaSemana = new Date(anoAtual, mesAtual-1, dia).getDay();
-    
-    // 🔍 BUSCA EXATA NA PLANILHA
     const bdDia = batalhasMes.find(b => datasIguais(b.data, dia, mesAtual, anoAtual));
     
     let classe = null;
@@ -403,10 +417,8 @@ function renderizarCalendario() {
     if (bdDia) {
       situacaoTexto = bdDia.situacao || "DISPONÍVEL";
       classe = getClasseSituacao(situacaoTexto);
-      console.log(`📅 Dia ${dia}: "${situacaoTexto}" → classe: ${classe}`);
     }
     
-    // 🔴 DOMINGO — só se a planilha NÃO definiu nada diferente
     if (classe === null) {
       if (diaSemana === 0) {
         classe = "domingo";
@@ -446,7 +458,6 @@ function abrirFormulario(dia, situacao, dataAlvo) {
   
   const classe = getClasseSituacao(situacao);
   
-  // 🔴 BLOQUEADO: DOMINGO / FERIADO
   if (classe === "domingo" || classe === "feriado") {
     document.getElementById("tituloAviso").textContent = "🚫 Dia Fechado";
     document.getElementById("textoAviso").innerHTML = "A agência não trabalha neste dia.<br>Se precisar de um horário especial, entre em contato com a Padroniza.";
@@ -457,7 +468,6 @@ function abrirFormulario(dia, situacao, dataAlvo) {
     return;
   }
 
-  // ⚪ BLOQUEADO: CONFIRMADO
   if (classe === "confirmado") {
     document.getElementById("tituloAviso").textContent = "✅ Batalha Confirmada";
     document.getElementById("textoAviso").innerHTML = "Já existe uma batalha confirmada neste dia.<br>Escolha outro horário ou entre em contato com a agência.";
@@ -468,7 +478,6 @@ function abrirFormulario(dia, situacao, dataAlvo) {
     return;
   }
 
-  // 📋 Mostra horários ocupados
   const bdDia = batalhasMes.filter(b => datasIguais(b.data, dia, mesAtual, anoAtual));
   
   if (bdDia.length > 0) {
@@ -486,7 +495,6 @@ function abrirFormulario(dia, situacao, dataAlvo) {
     document.getElementById("avisoHorariosDia").style.display = "block";
   }
 
-  // ✅ LIBERA FORMULÁRIO
   document.getElementById("formAgendamento").style.display = "block";
   modal.classList.add("aberto");
 }
@@ -590,14 +598,12 @@ Padroniza Assessoria — Sistema Automático
 });
 
 function renderizarAgendas() {
-  // 👤 MINHAS BATALHAS — SOMENTE AS DELE
   const minhas = batalhasMes.filter(ehMinhaBatalha);
   
   document.getElementById("minhasBatalhas").innerHTML = minhas.length 
     ? minhas.map(b => gerarItemBatalha(b, true)).join("")
     : `<div class="sem-batalha">Nenhuma batalha encontrada para você.<br>Escolha um dia disponível para solicitar!</div>`;
 
-  // 📋 TODAS AS BATALHAS — MOSTRA TUDO
   document.getElementById("contadorGeral").textContent = `Total: ${batalhasMes.length} batalhas`;
   document.getElementById("todasBatalhas").innerHTML = batalhasMes.length
     ? batalhasMes.map(b => gerarItemBatalha(b, false)).join("")
@@ -620,7 +626,6 @@ function gerarItemBatalha(b, ehMinha) {
 
   let blocoOponente = "";
   if (ehMinha && b.oponente) {
-    // 🔑 COR DO BOTÃO = COR DA SITUAÇÃO — BRANCO SE CONFIRMADO, AZUL SE FALTA OPONENTE
     const classeBotao = classe === "confirmado" ? "confirmado" : "";
     blocoOponente = `
       <div class="bloco-oponente ${classeBotao}">
@@ -647,4 +652,38 @@ function gerarItemBatalha(b, ehMinha) {
     htmlMateriais += temVideo
       ? `<a href="${video}" target="_blank" class="material-item disponivel video-disponivel">🎥 Ver Material Vídeo Divulgação</a>`
       : `<div class="material-item indisponivel">🎥 Material Vídeo Divulgação</div>`;
-    htmlMateriais += `<a href="https://wa.me/${WHATSAPP_AGENCIA}?text=${msgWpp}" target="_blank" class="btn-whats">💬 Dúvida? Fale com a
+    htmlMateriais += `<a href="https://wa.me/${WHATSAPP_AGENCIA}?text=${msgWpp}" target="_blank" class="btn-whats">💬 Dúvida? Fale com a Padroniza</a>`;
+    htmlMateriais += `</div>`;
+  }
+
+  return `
+    <div class="item-batalha ${classe}">
+      <strong>${icone} ${data}${horario} — ${situacao}</strong>
+      <div class="vs">${b.streamer || "Streamer"} vs ${b.oponente || "A definir"}</div>
+      ${blocoOponente}
+      ${htmlMateriais}
+    </div>
+  `;
+}
+
+function mostrarToast(texto) {
+  const t = document.getElementById("toast");
+  t.textContent = texto;
+  t.style.display = "block";
+  setTimeout(() => t.style.display = "none", 3500);
+}
+
+document.getElementById("btnAnterior").addEventListener("click", () => {
+  mesAtual--;
+  if (mesAtual < 4) { mesAtual = 12; anoAtual--; }
+  carregarBatalhas();
+});
+
+document.getElementById("btnProximo").addEventListener("click", () => {
+  mesAtual++;
+  if (mesAtual > 12) { mesAtual = 4; anoAtual++; }
+  carregarBatalhas();
+});
+</script>
+</body>
+</html>
