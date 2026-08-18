@@ -3,7 +3,18 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Encontre Seu Oponente | Padroniza Assessoria</title>
+
+<!-- ✅ SEO — APARECE NA PESQUISA E AO COMPARTILHAR 🔍 -->
+<title>Encontre Seu Oponente — Padroniza Assessoria | Plataforma Gratuita</title>
+<meta name="description" content="🎮 Plataforma gratuita de parcerias e batalhas entre agências. Encontre seu oponente oficial gratuitamente com a Padroniza Assessoria!">
+<meta name="keywords" content="encontre oponente, batalha oficial, parceria entre agências, Padroniza Assessoria, plataforma gratuita">
+<meta name="author" content="Padroniza Assessoria">
+<meta property="og:title" content="Encontre Seu Oponente — Padroniza Assessoria">
+<meta property="og:description" content="Plataforma gratuita de batalhas entre agências! 🎮⚔️">
+<meta property="og:type" content="website">
+<meta name="twitter:title" content="Encontre Seu Oponente — Padroniza Assessoria">
+<meta name="twitter:description" content="Plataforma gratuita de batalhas entre agências! 🎮⚔️">
+
 <style>
 :root{--fundo:#0b1020;--painel:#11182c;--painel2:#17213a;--verde:#34d399;--amarelo:#ffc857;--vermelho:#ef4444;--rosa:#ff3d81;--roxo:#7457ff;--azul:#3b82f6;--texto:#f7f9ff;--cinza:#a9b4cb}
 *{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
@@ -80,20 +91,18 @@ select.campo{appearance:none;background-image:url("data:image/svg+xml;charset=UT
 <body>
 <div class="container">
 
-  <!-- ✅ BOTÃO VOLTAR CORRIGIDO → index.html (sem ../) -->
   <a href="index.html" class="botao-voltar">← Voltar ao Portal</a>
 
   <div class="cabecalho">
     <img src="https://i.imgur.com/yaTLVi3.jpeg" alt="Padroniza Assessoria" class="logo-topo" loading="lazy">
     <h1>Encontre Seu Oponente</h1>
-    <p>Plataforma gratuita de parcerias entre agências 🤝</p>
+    <p>Padroniza Assessoria — Plataforma Gratuita de Batalhas 🤝⚔️</p>
   </div>
 
   <div class="aviso-topo">
     💡 <strong>Como funciona:</strong> Preencha os dados da sua solicitação. Outras agências verão e entrarão em contato pelo WhatsApp!
   </div>
 
-  <!-- FORMULÁRIO DE SOLICITAÇÃO -->
   <div class="form-card">
     <h2>📤 Solicitar Batalha</h2>
     <form id="formSolicitacao">
@@ -135,7 +144,6 @@ select.campo{appearance:none;background-image:url("data:image/svg+xml;charset=UT
     </form>
   </div>
 
-  <!-- LISTA DE SOLICITAÇÕES -->
   <div class="lista-solicitacoes">
     <h2>📋 Solicitações de Batalha</h2>
     <div id="listaSolicitacoes" class="carregando">🔄 Carregando solicitações...</div>
@@ -144,10 +152,8 @@ select.campo{appearance:none;background-image:url("data:image/svg+xml;charset=UT
 </div>
 
 <script>
-// 🔗 LINK DO APPS SCRIPT
 const LINK_APPSCRIPT = "https://script.google.com/macros/s/AKfycbwNtXL2A5ekc5TDy9FTBk4xSttqLRU4bLSSi5N2i4UUwJFpp3aYQUYNBCJt7QEbC0Ww/exec";
 
-// 📖 Carregar solicitações
 async function carregarSolicitacoes(){
   try{
     const res = await fetch(LINK_APPSCRIPT + "?acao=lerSolicitacoes");
@@ -203,7 +209,6 @@ async function carregarSolicitacoes(){
   }
 }
 
-// 📤 Enviar formulário
 document.getElementById("formSolicitacao").addEventListener("submit", async function(e){
   e.preventDefault();
   const btn = this.querySelector("button[type='submit']");
@@ -252,7 +257,6 @@ function escapar(texto){
   return div.innerHTML;
 }
 
-// Carregar ao abrir
 document.addEventListener("DOMContentLoaded", carregarSolicitacoes);
 </script>
 </body>
