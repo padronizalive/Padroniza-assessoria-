@@ -4,16 +4,20 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Encontre Seu Oponente — Padroniza Assessoria</title>
-<meta name="description" content="Plataforma oficial de encontro de oponentes e painel de controle de batalhas entre agências!">
+<meta name="description" content="Plataforma oficial e GRATUITA de encontro de oponentes e painel de controle de batalhas entre agências!">
 <style>
-:root{--fundo:#0b1020;--painel:#11182c;--painel2:#17213a;--verde:#34d399;--amarelo:#ffc857;--vermelho:#ef4444;--roxo:#7457ff;--azul:#3b82f6;--texto:#f7f9ff;--cinza:#a9b4cb;--whatsapp:#25D366}
+:root{--fundo:#0b1020;--painel:#11182c;--painel2:#17213a;--verde:#34d399;--amarelo:#ffc857;--vermelho:#ef4444;--roxo:#7457ff;--azul:#3b82f6;--cinza:#a9b4cb;--texto:#f7f9ff;--whatsapp:#25D366}
 *{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
 body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px;padding-bottom:100px}
 .container{max-width:680px;margin:0 auto}
-.cabecalho{text-align:center;margin-bottom:25px}
+.cabecalho{text-align:center;margin-bottom:20px}
 .logo-topo{width:120px;height:auto;margin-bottom:10px;border-radius:12px;border:2px solid var(--amarelo)}
 .cabecalho h1{font-size:26px;color:var(--amarelo);margin-bottom:5px}
 .cabecalho p{font-size:15px;color:var(--cinza)}
+/* ⭐ AVISO DE GRATUIDADE — BEM DESTACADO, SEM FALAR DE PREÇO! */
+.aviso-gratuito{background:linear-gradient(135deg,rgba(52,211,153,0.15),rgba(116,87,255,0.15));border:2px solid var(--verde);padding:15px;border-radius:12px;margin-bottom:20px;text-align:center}
+.aviso-gratuito strong{color:var(--verde);font-size:17px;display:block;margin-bottom:5px}
+.aviso-gratuito small{color:var(--texto);font-size:14px;line-height:1.5}
 .botao-voltar{display:inline-flex;align-items:center;gap:8px;background:var(--painel2);color:var(--texto);border:none;padding:10px 16px;border-radius:8px;cursor:pointer;text-decoration:none;font-size:15px;margin-bottom:20px;transition:0.2s;border:1px solid #293653}
 .botao-voltar:hover{background:var(--painel)}
 
@@ -27,7 +31,6 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px;pa
 
 .form-card{background:var(--painel);padding:25px;border-radius:14px;border:1px solid #293653;margin-bottom:25px}
 .form-card h2{color:var(--verde);margin-bottom:20px;font-size:20px;text-align:center}
-.form-card h3{color:var(--azul);margin:15px 0 10px;font-size:17px}
 .grupo-campo{margin-bottom:16px}
 .label{display:block;margin-bottom:8px;font-size:14px;color:#ccc}
 .campo{width:100%;padding:13px 15px;background:var(--painel2);border:1px solid #293653;border-radius:8px;color:var(--texto);font-size:15px}
@@ -37,10 +40,10 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px;pa
 .btn-responder-proposta{width:100%;padding:12px;background:linear-gradient(135deg,var(--azul),#2563eb);border:none;border-radius:8px;color:#fff;font-weight:bold;font-size:15px;cursor:pointer;transition:0.2s;margin-top:12px}
 .btn-responder-proposta:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(59,130,246,0.3)}
 
-/* 📋 LISTA E PAINEL */
+/* 📋 LISTA E CARDS */
 .lista-solicitacoes,.painel-batalhas{margin-top:30px}
 .lista-solicitacoes h2,.painel-batalhas h2{color:var(--azul);margin-bottom:15px;font-size:20px}
-.solicitacao-card,.batalha-card{background:var(--painel);border:1px solid #293653;border-radius:12px;padding:18px;margin-bottom:15px;transition:0.2s}
+.solicitacao-card,.batalha-card{background:var(--painel);border:1px solid #293653;border-radius:12px;padding:18px;margin-bottom:15px;transition:0.2s;position:relative}
 .solicitacao-card:hover,.batalha-card:hover{border-color:var(--azul)}
 .solicitacao-header,.batalha-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:12px;flex-wrap:wrap;gap:10px}
 .agencia-nome{font-weight:bold;font-size:17px;color:var(--amarelo)}
@@ -48,12 +51,22 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px;pa
 .status-pendente{background:rgba(255,200,87,0.15);color:var(--amarelo)}
 .status-respondida{background:rgba(59,130,246,0.15);color:var(--azul)}
 .status-confirmada{background:rgba(52,211,153,0.15);color:var(--verde)}
+.status-cancelada{background:rgba(169,180,203,0.15);color:var(--cinza)}
+.status-externa{background:rgba(168,85,247,0.15);color:var(--roxo)}
 .solicitacao-dados p,.batalha-dados p{margin:6px 0;font-size:14px;color:#ddd}
 .solicitacao-dados strong,.batalha-dados strong{color:var(--texto)}
 .sem-dados{text-align:center;padding:40px;color:var(--cinza);font-size:15px}
 .aviso-topo{background:rgba(116,87,255,0.1);border:1px solid var(--roxo);padding:14px;border-radius:10px;margin-bottom:20px;text-align:center}
 .aviso-topo strong{color:var(--roxo)}
-.aviso-resposta{background:rgba(59,130,246,0.1);border:1px solid var(--azul);padding:12px;border-radius:8px;margin:15px 0}
+
+/* ⋮ MENU DE AÇÕES — 3 PONTINHOS */
+.menu-acoes-btn{position:absolute;top:12px;right:12px;background:none;border:none;color:var(--cinza);font-size:20px;cursor:pointer;padding:2px 8px;border-radius:6px;transition:0.2s;line-height:1}
+.menu-acoes-btn:hover{background:var(--painel2);color:var(--texto)}
+.menu-acoes-dropdown{position:absolute;top:40px;right:12px;background:var(--painel2);border:1px solid #293653;border-radius:10px;padding:8px 0;min-width:220px;z-index:50;box-shadow:0 6px 20px rgba(0,0,0,0.4);display:none}
+.menu-acoes-dropdown.ativo{display:block}
+.menu-acoes-item{padding:10px 16px;cursor:pointer;font-size:14px;color:#ddd;transition:0.2s;display:flex;align-items:center;gap:8px}
+.menu-acoes-item:hover{background:rgba(116,87,255,0.1);color:var(--texto)}
+.menu-acoes-item.fechar{border-top:1px solid #293653;margin-top:4px;padding-top:10px;color:var(--vermelho)}
 
 /* 🔍 FILTRO DO PAINEL */
 .filtro-agencia{display:flex;gap:10px;margin-bottom:20px;flex-wrap:wrap}
@@ -69,35 +82,35 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px;pa
 .btn-ver-mais:hover{color:var(--verde)}
 
 /* 📱 MODAL */
-.modal-resposta{position:fixed;inset:0;background:rgba(0,0,0,0.85);display:none;align-items:center;justify-content:center;padding:20px;z-index:999}
-.modal-resposta.ativo{display:flex}
+.modal-resposta,.modal-status{position:fixed;inset:0;background:rgba(0,0,0,0.85);display:none;align-items:center;justify-content:center;padding:20px;z-index:999}
+.modal-resposta.ativo,.modal-status.ativo{display:flex}
 .modal-conteudo{background:var(--painel);padding:25px;border-radius:14px;border:1px solid #293653;max-width:500px;width:100%;max-height:90vh;overflow-y:auto}
 .modal-conteudo h3{color:var(--azul);margin-bottom:15px;text-align:center}
 .botoes-modal{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:20px}
 .btn-cancelar{padding:12px;background:var(--painel2);color:var(--texto);border:none;border-radius:8px;font-size:15px;cursor:pointer}
 .btn-confirmar{padding:12px;background:linear-gradient(135deg,var(--verde),#22c55e);color:#000;border:none;border-radius:8px;font-weight:bold;font-size:15px;cursor:pointer}
+.btn-status-externo{background:linear-gradient(135deg,var(--roxo),#9333ea);color:#fff}
+.btn-status-cancelar{background:var(--cinza);color:#000}
 .destaque-solicitacao{background:rgba(255,200,87,0.08);padding:12px;border-radius:8px;margin-bottom:15px;border-left:3px solid var(--amarelo)}
+.aviso-resposta{background:rgba(59,130,246,0.1);border:1px solid var(--azul);padding:12px;border-radius:8px;margin:15px 0}
 
-/* 🤫 BOTÃOZINHO + TEXTO — DISCRETO E CLARO! */
+/* 🤫 BOTÃOZINHO — DISCRETO! Sem chamar atenção! */
 .container-botao-padroniza{position:fixed;bottom:20px;right:20px;display:flex;align-items:center;gap:10px;z-index:100}
-.botao-padroniza{width:50px;height:50px;border-radius:50%;background:linear-gradient(135deg,var(--verde),var(--roxo));color:#fff;border:none;font-size:24px;cursor:pointer;box-shadow:0 4px 15px rgba(0,0,0,0.3);transition:0.3s ease;flex-shrink:0}
-.botao-padroniza:hover{transform:scale(1.15);box-shadow:0 6px 20px rgba(116,87,255,0.4)}
-.texto-botao-padroniza{font-size:12px;color:var(--cinza);white-space:nowrap;transition:0.3s ease;background:rgba(0,0,0,0.5);padding:4px 8px;border-radius:6px}
-.container-botao-padroniza:hover .texto-botao-padroniza{color:var(--amarelo);background:rgba(0,0,0,0.7)}
+.botao-padroniza{width:44px;height:44px;border-radius:50%;background:var(--painel2);color:var(--cinza);border:1px solid #293653;font-size:20px;cursor:pointer;transition:0.2s ease;flex-shrink:0}
+.botao-padroniza:hover{background:var(--painel);color:var(--texto);border-color:var(--roxo)}
+.texto-botao-padroniza{font-size:11px;color:var(--cinza);white-space:nowrap;opacity:0.7;transition:0.2s ease}
+.container-botao-padroniza:hover .texto-botao-padroniza{opacity:1;color:var(--texto)}
 
-/* 💬 CARD DE INFORMAÇÕES — DISCRETO COM PREÇO DESTACADO! */
-.card-padroniza{position:fixed;bottom:80px;right:20px;width:330px;background:var(--painel);border:2px solid var(--amarelo);border-radius:16px;padding:20px;z-index:101;box-shadow:0 8px 30px rgba(255,200,87,0.25);display:none;transform:translateY(10px);opacity:0;transition:0.3s ease}
+/* 💬 CARD — SÓ APARECE SE CLICAR, SEM PREÇO DESTAQUE! */
+.card-padroniza{position:fixed;bottom:75px;right:20px;width:300px;background:var(--painel);border:1px solid #293653;border-radius:12px;padding:16px;z-index:101;box-shadow:0 4px 20px rgba(0,0,0,0.3);display:none;transform:translateY(10px);opacity:0;transition:0.2s ease}
 .card-padroniza.ativo{display:block;transform:translateY(0);opacity:1}
-.preco-destaque{background:linear-gradient(135deg,var(--amarelo),#ffb700);color:#000;font-weight:bold;font-size:20px;padding:12px;border-radius:10px;text-align:center;margin-bottom:15px;box-shadow:0 4px 15px rgba(255,200,87,0.3);line-height:1.4}
-.preco-destaque small{font-size:12px;opacity:0.8;font-weight:normal}
-.card-padroniza h4{color:var(--amarelo);margin-bottom:10px;font-size:16px;text-align:center}
-.card-padroniza ul{list-style:none;margin:12px 0}
-.card-padroniza li{padding:5px 0;font-size:13px;color:#ddd;display:flex;align-items:flex-start;gap:8px;line-height:1.5}
-.card-padroniza li::before{content:"✅";flex-shrink:0;margin-top:1px}
-.card-padroniza .diferencial{font-size:12px;color:var(--cinza);text-align:center;margin:10px 0 5px}
-.btn-whatsapp-padroniza{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;padding:13px;background:var(--whatsapp);color:#fff;text-decoration:none;border-radius:10px;font-weight:bold;font-size:15px;margin-top:12px;transition:0.2s}
-.btn-whatsapp-padroniza:hover{transform:translateY(-2px);box-shadow:0 4px 15px rgba(37,211,102,0.35)}
-.fechar-card{position:absolute;top:10px;right:12px;background:none;border:none;color:var(--cinza);font-size:20px;cursor:pointer;padding:0;line-height:1}
+.card-padroniza h4{color:var(--amarelo);margin-bottom:10px;font-size:15px;text-align:center}
+.card-padroniza ul{list-style:none;margin:10px 0}
+.card-padroniza li{padding:4px 0;font-size:13px;color:#ccc;display:flex;align-items:flex-start;gap:8px;line-height:1.4}
+.card-padroniza li::before{content:"•";color:var(--amarelo);flex-shrink:0}
+.btn-whatsapp-padroniza{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;padding:10px;background:var(--whatsapp);color:#fff;text-decoration:none;border-radius:8px;font-weight:bold;font-size:14px;margin-top:12px;transition:0.2s}
+.btn-whatsapp-padroniza:hover{transform:translateY(-1px)}
+.fechar-card{position:absolute;top:8px;right:10px;background:none;border:none;color:var(--cinza);font-size:18px;cursor:pointer;padding:0;line-height:1}
 
 hr{border:none;border-top:1px solid #293653;margin:12px 0}
 </style>
@@ -111,6 +124,12 @@ hr{border:none;border-top:1px solid #293653;margin:12px 0}
     <p>Plataforma Oficial de Batalhas entre Agências ⚔️🤝</p>
   </div>
 
+  <!-- ⭐ SÓ O AVISO DE GRATUIDADE — BEM CLARO, SEM FALAR DE PREÇO! -->
+  <div class="aviso-gratuito">
+    <strong>🆓 PLATAFORMA 100% GRATUITA!</strong>
+    <small>Solicitar batalha, encontrar oponente e usar o painel → <strong>não paga nada!</strong></small>
+  </div>
+
   <!-- 📑 ABAS DE NAVEGAÇÃO -->
   <div class="abas">
     <button class="aba-btn ativa" onclick="trocarAba('solicitacoes')">📤 Solicitar Batalha</button>
@@ -120,7 +139,8 @@ hr{border:none;border-top:1px solid #293653;margin:12px 0}
   <!-- ⚔️ ABA 1: SOLICITAÇÕES -->
   <div id="abaSolicitacoes" class="conteudo-aba visivel">
     <div class="aviso-topo">
-      💡 <strong>Como funciona:</strong> Cadastre sua solicitação → outras agências veem → respondem com o oponente → confirmam por WhatsApp! ✅
+      💡 <strong>Como funciona:</strong> Cadastre sua solicitação → outras agências veem → respondem com o oponente → confirmam por WhatsApp! ✅<br>
+      ⚙️ <small>Para fechar por outro canal ou cancelar, clique nos <strong>três pontinhos ⋮</strong> da solicitação!</small>
     </div>
 
     <!-- 📤 FORMULÁRIO DE SOLICITAÇÃO -->
@@ -199,40 +219,24 @@ hr{border:none;border-top:1px solid #293653;margin:12px 0}
   </div>
 </div>
 
-<!-- 🤫 BOTÃOZINHO + TEXTO — DISCRETO E CLARO! -->
+<!-- 🤫 BOTÃOZINHO — DISCRETO! SÓ APARECE SE CLICAR! -->
 <div class="container-botao-padroniza" id="containerBotaoPadroniza">
   <span class="texto-botao-padroniza">Assessoria Padroniza</span>
   <button class="botao-padroniza" id="btnPadroniza" title="Conheça a Padroniza Assessoria">💬</button>
 </div>
 
-<!-- 💬 CARD — INFORMAÇÕES + PREÇO CHAMATIVO! -->
+<!-- 💬 CARD — SÓ APARECE SE CLICAR, SEM PREÇO DESTAQUE! -->
 <div class="card-padroniza" id="cardPadroniza">
   <button class="fechar-card" onclick="fecharCardPadroniza()">×</button>
-  
-  <!-- 💰 PREÇO DESTACADO — CHAMATIVO! -->
-  <div class="preco-destaque">
-    💰 PACOTES A PARTIR DE<br>
-    <strong>R$ 69,90</strong>/mês<br>
-    <small>Menos de R$ 2,33 por dia! 🤯</small>
-  </div>
-  
-  <h4>🚀 Cresça com a Padroniza Assessoria!</h4>
-  <p style="font-size:13px;color:#ccc;text-align:center;margin-bottom:10px;">Tudo que sua agência precisa em um só lugar:</p>
-  
+  <h4>🚀 Padroniza Assessoria</h4>
   <ul>
-    <li>Agendamento profissional de batalhas</li>
-    <li>Suporte completo e treinamento</li>
-    <li>Curso de Inglês e Espanhol incluso 🗣️</li>
-    <li>Aulas de TikTok — do básico ao avançado 📱</li>
-    <li>Configuração de lives, dicas e estratégias</li>
-    <li>Site exclusivo para exibir suas lives 🔴</li>
-    <li>Painel e planilha de controle de batalhas 📊</li>
+    <li>Assessoria e suporte completo para streamers</li>
+    <li>Treinamento e estratégias de crescimento</li>
+    <li>Site e ferramentas exclusivas</li>
+    <li>Material de divulgação e orientações</li>
   </ul>
-  
-  <p class="diferencial">✨ Do Básico ao Avançado — escolha o pacote ideal pra você!</p>
-  
-  <a href="https://wa.me/5569981478873?text=Olá! Vi a plataforma de batalhas e quero saber mais sobre os pacotes da Padroniza Assessoria! 💰 R$ 69,90/mês é perfeito pra mim! 🤝" target="_blank" class="btn-whatsapp-padroniza">
-    💬 Falar com a Padroniza — Quero saber mais!
+  <a href="https://wa.me/5569981478873?text=Olá! Gostaria de saber mais sobre a assessoria Padroniza!" target="_blank" class="btn-whatsapp-padroniza">
+    💬 Falar no WhatsApp
   </a>
 </div>
 
@@ -271,12 +275,28 @@ hr{border:none;border-top:1px solid #293653;margin:12px 0}
   </div>
 </div>
 
+<!-- 🔄 MODAL — ALTERAR STATUS -->
+<div class="modal-status" id="modalStatus">
+  <div class="modal-conteudo">
+    <h3>⚙️ Alterar Status da Solicitação</h3>
+    <p style="text-align:center;color:var(--cinza);margin-bottom:20px;">Escolha a nova situação dessa solicitação:</p>
+    <div class="botoes-modal" style="grid-template-columns:1fr;gap:10px">
+      <button type="button" class="btn-confirmar btn-status-externo" onclick="confirmarStatus('AGENDADA_EXTERNA')">🔵 Já agendei por OUTRO CANAL</button>
+      <button type="button" class="btn-confirmar" onclick="confirmarStatus('CONFIRMADA')">🟢 Batalha confirmada por aqui</button>
+      <button type="button" class="btn-cancelar btn-status-cancelar" onclick="confirmarStatus('CANCELADA')">⚪ Cancelar solicitação</button>
+      <button type="button" class="btn-cancelar" onclick="fecharModalStatus()">❌ Voltar</button>
+    </div>
+    <input type="hidden" id="indiceStatusAtual">
+  </div>
+</div>
+
 <script>
 // 🔗 LINKS
 const LINK_APPSCRIPT = "https://script.google.com/macros/s/AKfycbwNtXL2A5ekc5TDy9FTBk4xSttqLRU4bLSSi5N2i4UUwJFpp3aYQUYNBCJt7QEbC0Ww/exec";
 let solicitacoes = [];
+let indiceMenuAberto = null;
 
-// 🤫 BOTÃOZINHO + TEXTO — ABRIR/FECHAR CARD
+// 🤫 BOTÃOZINHO — ABRIR/FECHAR CARD
 const containerBotao = document.getElementById('containerBotaoPadroniza');
 const btnPadroniza = document.getElementById('btnPadroniza');
 const cardPadroniza = document.getElementById('cardPadroniza');
@@ -285,16 +305,9 @@ function toggleCardPadroniza(e) {
   e.stopPropagation();
   cardPadroniza.classList.toggle('ativo');
 }
-
 btnPadroniza.addEventListener('click', toggleCardPadroniza);
-// Também pode clicar no texto pra abrir!
 containerBotao.addEventListener('click', toggleCardPadroniza);
-
-function fecharCardPadroniza(){
-  cardPadroniza.classList.remove('ativo');
-}
-
-// Fecha se clicar fora
+function fecharCardPadroniza(){ cardPadroniza.classList.remove('ativo'); }
 document.addEventListener('click', (e) => {
   if(!cardPadroniza.contains(e.target) && e.target !== btnPadroniza && e.target !== containerBotao && !containerBotao.contains(e.target)){
     cardPadroniza.classList.remove('ativo');
@@ -307,13 +320,61 @@ function trocarAba(nomeAba){
   event.target.classList.add('ativa');
   document.querySelectorAll('.conteudo-aba').forEach(c => c.classList.remove('visivel'));
   document.getElementById('aba' + nomeAba.charAt(0).toUpperCase() + nomeAba.slice(1)).classList.add('visivel');
-  
   if(nomeAba === 'painel'){
     document.getElementById('listaBatalhas').innerHTML = '<div class="sem-dados">⬆️ Digite o nome da sua agência acima e clique em "Ver"!</div>';
   }
 }
 
-// 📋 CARREGAR LISTA DE SOLICITAÇÕES
+// ⋮ ABRIR/FECHAR MENU DE AÇÕES
+function toggleMenuAcoes(indice, e){
+  e.stopPropagation();
+  fecharTodosMenus();
+  indiceMenuAberto = indice;
+  const menu = document.getElementById(`menu-acoes-${indice}`);
+  if(menu) menu.classList.add('ativo');
+}
+function fecharTodosMenus(){
+  document.querySelectorAll('.menu-acoes-dropdown').forEach(m => m.classList.remove('ativo'));
+  indiceMenuAberto = null;
+}
+document.addEventListener('click', () => fecharTodosMenus());
+
+// 🔄 MODAL DE STATUS
+function abrirModalStatus(indice){
+  fecharTodosMenus();
+  document.getElementById('indiceStatusAtual').value = indice;
+  document.getElementById('modalStatus').classList.add('ativo');
+}
+function fecharModalStatus(){
+  document.getElementById('modalStatus').classList.remove('ativo');
+}
+async function confirmarStatus(novoStatus){
+  const indice = parseInt(document.getElementById('indiceStatusAtual').value);
+  const item = solicitacoes[indice];
+  
+  const dados = {
+    acao: "atualizarStatus",
+    idOriginal: item.id || "",
+    status: novoStatus
+  };
+
+  try{
+    await fetch(LINK_APPSCRIPT, {
+      method: "POST",
+      mode: "no-cors",
+      headers: {"Content-Type": "application/json"},
+      body: JSON.stringify(dados)
+    });
+    alert("✅ Status atualizado! A solicitação saiu da lista de disponíveis! 🎉");
+  }catch{
+    alert("✅ Status alterado com sucesso! Atualizando...");
+  }
+
+  fecharModalStatus();
+  carregarSolicitacoes();
+}
+
+// 📋 CARREGAR LISTA DE SOLICITAÇÕES — MOSTRA SÓ DISPONÍVEIS
 async function carregarSolicitacoes(){
   try{
     const res = await fetch(LINK_APPSCRIPT + "?acao=lerSolicitacoes");
@@ -321,44 +382,47 @@ async function carregarSolicitacoes(){
     solicitacoes = dados.dados || [];
     const lista = document.getElementById("listaSolicitacoes");
     
-    if(!solicitacoes.length){
-      lista.innerHTML = '<div class="sem-dados">📭 Nenhuma solicitação aberta. Seja o primeiro a propor! ⚔️</div>';
+    // 🔹 FILTRA SÓ AS DISPONÍVEIS
+    const disponiveis = solicitacoes.filter(item => {
+      const status = (item.status || "PENDENTE").trim().toUpperCase();
+      return ["PENDENTE", "DISPONÍVEL", "DISPONIVEL"].includes(status);
+    });
+    
+    if(!disponiveis.length){
+      lista.innerHTML = '<div class="sem-dados">📭 Nenhuma solicitação aberta no momento. Seja o primeiro a propor! ⚔️</div>';
       return;
     }
     
-    lista.innerHTML = solicitacoes.map((item, idx) => {
+    lista.innerHTML = disponiveis.map((item, idxOriginal) => {
+      const indiceReal = solicitacoes.indexOf(item);
       const status = (item.status || "PENDENTE").trim().toUpperCase();
       let classeStatus = "status-pendente";
-      if(status.includes("RESPONDIDA")) classeStatus = "status-respondida";
-      if(status.includes("CONFIRMADA")) classeStatus = "status-confirmada";
-      const dataFormatada = item.data ? new Date(item.data + "T00:00:00").toLocaleDateString('pt-BR') : "—";
+      let textoStatus = "DISPONÍVEL";
+      
+      const dataObj = item.data ? new Date(item.data + "T00:00:00") : null;
+      const dataValida = dataObj && !isNaN(dataObj.getTime());
+      const dataFormatada = dataValida ? dataObj.toLocaleDateString('pt-BR') : "—";
       
       return `
         <div class="solicitacao-card">
+          <!-- ⋮ MENU DE AÇÕES -->
+          <button class="menu-acoes-btn" onclick="toggleMenuAcoes(${indiceReal}, event)" title="Ações">⋮</button>
+          <div class="menu-acoes-dropdown" id="menu-acoes-${indiceReal}" onclick="event.stopPropagation()">
+            <div class="menu-acoes-item" onclick="abrirModalStatus(${indiceReal})">🔄 Alterar status da solicitação</div>
+            <div class="menu-acoes-item" onclick="fecharTodosMenus()">❌ Fechar</div>
+          </div>
+          
           <div class="solicitacao-header">
             <span class="agencia-nome">🏢 ${escapar(item.nomeAgencia || "Agência")}</span>
-            <span class="status-tag ${classeStatus}">${escapar(status)}</span>
+            <span class="status-tag ${classeStatus}">${textoStatus}</span>
           </div>
           <div class="solicitacao-dados">
             <p><strong>Streamer Solicitante:</strong> ${escapar(item.nomeStreamer || "-")}</p>
             <p><strong>Data:</strong> ${dataFormatada} · <strong>Horário:</strong> ${escapar(item.horario || "-")}</p>
             <p><strong>Round:</strong> ${escapar(item.round || "-")} · <strong>Meta:</strong> ${escapar(item.meta || "-")}</p>
             ${item.observacoes ? `<p><strong>Obs:</strong> ${escapar(item.observacoes)}</p>` : ""}
-            ${item.nomeAgenciaOponente ? `
-              <hr>
-              <p style="color:var(--azul)"><strong>🤝 OPONENTE:</strong></p>
-              <p><strong>Agência:</strong> ${escapar(item.nomeAgenciaOponente)}</p>
-              <p><strong>Streamer:</strong> ${escapar(item.streamerOponente)}</p>
-              <p><strong>Meta:</strong> ${escapar(item.metaOponente || "-")}</p>
-            ` : ""}
           </div>
-          ${status === "PENDENTE" ? `
-            <button class="btn-responder-proposta" onclick="abrirModalResposta(${idx})">⚔️ Propor Meu Streamer como Oponente</button>
-          ` : `
-            <a href="https://wa.me/${item.whatsapp || ""}?text=${encodeURIComponent(
-              `⚔️ BATALHA — ${item.nomeAgencia} ↔️ ${item.nomeAgenciaOponente || "Oponente"}\\nStreamer: ${item.nomeStreamer}\\nData: ${dataFormatada} ${item.horario || ""}`
-            )}" target="_blank" class="btn-responder-proposta" style="background:linear-gradient(135deg,var(--verde),#22c55e)">💬 Conversar</a>
-          `}
+          <button class="btn-responder-proposta" onclick="abrirModalResposta(${indiceReal})">⚔️ Propor Meu Streamer como Oponente</button>
         </div>
       `;
     }).join("");
@@ -393,30 +457,32 @@ function filtrarBatalhas(){
   lista.innerHTML = minhasBatalhas.map((item, idx) => {
     const status = (item.status || "PENDENTE").trim().toUpperCase();
     let classeStatus = "status-pendente";
-    if(status.includes("RESPONDIDA")) classeStatus = "status-respondida";
-    if(status.includes("CONFIRMADA")) classeStatus = "status-confirmada";
-    const dataFormatada = item.data ? new Date(item.data + "T00:00:00").toLocaleDateString('pt-BR') : "—";
+    let textoStatus = "PENDENTE";
+    if(status.includes("RESPONDIDA")) { classeStatus = "status-respondida"; textoStatus = "RESPONDIDA"; }
+    if(status.includes("CONFIRMADA")) { classeStatus = "status-confirmada"; textoStatus = "CONFIRMADA"; }
+    if(status.includes("CANCELADA")) { classeStatus = "status-cancelada"; textoStatus = "CANCELADA"; }
+    if(status.includes("AGENDADA_EXTERNA") || status.includes("EXTERNO")) { classeStatus = "status-externa"; textoStatus = "AGENDADA FORA"; }
+    
+    const dataObj = item.data ? new Date(item.data + "T00:00:00") : null;
+    const dataValida = dataObj && !isNaN(dataObj.getTime());
+    const dataFormatada = dataValida ? dataObj.toLocaleDateString('pt-BR') : "—";
     const idCard = `batalha-${idx}`;
     
     return `
       <div class="batalha-card">
         <div class="batalha-header">
           <span class="agencia-nome">⚔️ Batalha</span>
-          <span class="status-tag ${classeStatus}">${escapar(status)}</span>
+          <span class="status-tag ${classeStatus}">${textoStatus}</span>
         </div>
-        
-        <!-- 👁️ CONTEÚDO — VER MAIS / VER MENOS -->
         <div class="batalha-conteudo recuado" id="${idCard}">
           <div class="batalha-dados">
             <p><strong>📅 Data:</strong> ${dataFormatada} · <strong>🕐 Horário:</strong> ${escapar(item.horario || "-")}</p>
             <p><strong>🔥 Round:</strong> ${escapar(item.round || "-")} · <strong>💎 Meta:</strong> ${escapar(item.meta || "-")}</p>
-            
             <hr>
             <p style="color:var(--amarelo)"><strong>🟢 SOLICITANTE:</strong></p>
             <p><strong>Agência:</strong> ${escapar(item.nomeAgencia || "-")}</p>
             <p><strong>Streamer:</strong> ${escapar(item.nomeStreamer || "-")}</p>
             <p><strong>WhatsApp:</strong> ${escapar(item.whatsapp || "-")}</p>
-            
             ${item.nomeAgenciaOponente ? `
               <hr>
               <p style="color:var(--azul)"><strong>🔵 OPONENTE:</strong></p>
@@ -425,15 +491,10 @@ function filtrarBatalhas(){
               <p><strong>Meta/Hold:</strong> ${escapar(item.metaOponente || "-")}</p>
               <p><strong>WhatsApp:</strong> ${escapar(item.whatsappOponente || "-")}</p>
             ` : `<p style="color:var(--cinza);font-style:italic;margin-top:8px;">⏳ Aguardando oponente...</p>`}
-            
             ${item.observacoes ? `<hr><p><strong>📝 Observações:</strong> ${escapar(item.observacoes)}</p>` : ""}
           </div>
         </div>
-        
-        <!-- 👁️ BOTÃO VER MAIS / VER MENOS -->
-        <button class="btn-ver-mais" onclick="toggleVerMais('${idCard}', this)">
-          👁️ Ver Mais Detalhes
-        </button>
+        <button class="btn-ver-mais" onclick="toggleVerMais('${idCard}', this)">👁️ Ver Mais Detalhes</button>
       </div>
     `;
   }).join("");
@@ -481,7 +542,7 @@ document.getElementById("formSolicitacao").addEventListener("submit", async func
       headers: {"Content-Type": "application/json"},
       body: JSON.stringify(dados)
     });
-    alert("✅ Solicitação enviada! Aparecerá na lista e no painel em instantes! 🎉");
+    alert("✅ Solicitação enviada! Aparecerá na lista em instantes! 🎉");
     this.reset();
     carregarSolicitacoes();
   }catch{
@@ -500,10 +561,14 @@ function abrirModalResposta(indice){
   document.getElementById("idSolicitacaoAtual").value = indice;
   document.getElementById("whatsappSolicitante").value = item.whatsapp || "";
   
+  const dataObj = item.data ? new Date(item.data + "T00:00:00") : null;
+  const dataValida = dataObj && !isNaN(dataObj.getTime());
+  const dataFormatada = dataValida ? dataObj.toLocaleDateString('pt-BR') : "—";
+  
   document.getElementById("dadosSolicitacao").innerHTML = `
     <p><strong>🏢 Agência Solicitante:</strong> ${escapar(item.nomeAgencia || "-")}</p>
     <p><strong>👤 Streamer:</strong> ${escapar(item.nomeStreamer || "-")}</p>
-    <p><strong>📅 Data:</strong> ${item.data ? new Date(item.data + "T00:00:00").toLocaleDateString('pt-BR') : "-"} às ${escapar(item.horario || "-")}</p>
+    <p><strong>📅 Data:</strong> ${dataFormatada} às ${escapar(item.horario || "-")}</p>
     <p><strong>🔥 Round:</strong> ${escapar(item.round || "-")} · <strong>💎 Meta:</strong> ${escapar(item.meta || "-")}</p>
   `;
   
@@ -527,13 +592,16 @@ document.getElementById("formResposta").addEventListener("submit", async functio
   const metaOp = document.getElementById("metaOponente").value.trim();
   const whatsappOp = document.getElementById("whatsappOponente").value.replace(/\D/g, "");
   
-  // 📱 MENSAGEM COMPLETA
+  const dataObj = solicitante.data ? new Date(solicitante.data + "T00:00:00") : null;
+  const dataValida = dataObj && !isNaN(dataObj.getTime());
+  const dataFormatada = dataValida ? dataObj.toLocaleDateString('pt-BR') : "—";
+  
   const mensagemWhatsApp = encodeURIComponent(
     `⚔️ PROPOSTA DE BATALHA — OPONENTE ENCONTRADO! ✅\\n\\n` +
     `━━━━━━━━━━━━━━━━━━━━━━━━\\n` +
     `🟢 SOLICITANTE — ${solicitante.nomeAgencia}\\n` +
     `👤 Streamer: ${solicitante.nomeStreamer}\\n` +
-    `📅 Data: ${solicitante.data ? new Date(solicitante.data + "T00:00:00").toLocaleDateString('pt-BR') : "-"} às ${solicitante.horario}\\n` +
+    `📅 Data: ${dataFormatada} às ${solicitante.horario}\\n` +
     `🔥 Round: ${solicitante.round} | 💎 Meta: ${solicitante.meta}\\n` +
     `📱 WhatsApp: ${solicitante.whatsapp}\\n` +
     `━━━━━━━━━━━━━━━━━━━━━━━━\\n` +
@@ -542,10 +610,9 @@ document.getElementById("formResposta").addEventListener("submit", async functio
     `💎 Meta/Hold: ${metaOp}\\n` +
     `📱 WhatsApp: ${whatsappOp}\\n` +
     `━━━━━━━━━━━━━━━━━━━━━━━━\\n` +
-    `✅ Batalha registrada no painel! Entrem em acordo! 🎉`
+    `✅ Batalha registrada! Entrem em acordo! 🎉`
   );
 
-  // 📊 DADOS PARA PLANILHA
   const dadosParaPlanilha = {
     acao: "registrarOponente",
     idOriginal: solicitante.id || "",
@@ -571,12 +638,10 @@ document.getElementById("formResposta").addEventListener("submit", async functio
       headers: {"Content-Type": "application/json"},
       body: JSON.stringify(dadosParaPlanilha)
     });
-
     window.open(`https://wa.me/${solicitante.whatsapp}?text=${mensagemWhatsApp}`, "_blank");
-    alert("✅ Oponente registrado! WhatsApp aberto! 🎉\n📊 Batalha já aparece no Painel de Controle!");
+    alert("✅ Oponente registrado! WhatsApp aberto! 🎉");
     fecharModal();
     carregarSolicitacoes();
-    
   }catch{
     alert("✅ Sucesso! Abrindo WhatsApp...");
     window.open(`https://wa.me/${solicitante.whatsapp}?text=${mensagemWhatsApp}`, "_blank");
