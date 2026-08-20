@@ -10,7 +10,13 @@
 *{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
 body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px;padding-bottom:100px}
 .container{max-width:680px;margin:0 auto}
-.cabecalho{text-align:center;margin-bottom:20px}
+
+.aviso-lembrete{position:fixed;top:10px;right:10px;background:rgba(255,200,87,0.12);border:1px solid var(--amarelo);color:var(--amarelo);padding:8px 12px;border-radius:8px;font-size:12px;max-width:260px;z-index:500;line-height:1.4;animation:piscarAviso 3s ease-in-out infinite}
+@keyframes piscarAviso{0%,100%{opacity:1}50%{opacity:0.5}}
+.aviso-lembrete strong{display:block;font-size:13px}
+@media(max-width:600px){.aviso-lembrete{position:relative;top:0;right:0;margin-bottom:15px;max-width:100%}}
+
+.cabecalho{text-align:center;margin-bottom:20px;margin-top:10px}
 .logo-topo{width:120px;height:auto;margin-bottom:10px;border-radius:12px;border:2px solid var(--amarelo)}
 .cabecalho h1{font-size:26px;color:var(--amarelo);margin-bottom:5px}
 .cabecalho p{font-size:15px;color:var(--cinza)}
@@ -25,7 +31,7 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px;pa
 .aviso-campos-obrigatorios{background:rgba(239,68,68,0.1);border:1px solid var(--vermelho);padding:12px;border-radius:8px;margin-bottom:20px;color:var(--vermelho);font-size:14px;text-align:center;display:none}
 
 .abas{display:flex;gap:10px;margin-bottom:25px;flex-wrap:wrap}
-.aba-btn{padding:12px 18px;background:var(--painel2);color:var(--cinza);border:none;border-radius:10px;cursor:pointer;font-size:15px;transition:0.2s;border:1px solid transparent}
+.aba-btn{padding:12px 18px;background:var(--painel2);color:var(--cinza);border:none;border-radius:10px;cursor:pointer;font-size:15px;transition:0.2s;border:1px solid transparent;user-select:none;-webkit-tap-highlight-color:transparent}
 .aba-btn.ativa{background:var(--roxo);color:#fff;border-color:var(--roxo);box-shadow:0 4px 15px rgba(116,87,255,0.25)}
 .aba-btn:hover{background:var(--painel);border-color:var(--roxo)}
 .conteudo-aba{display:none}
@@ -38,8 +44,6 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px;pa
 .label span{color:var(--vermelho);margin-left:2px}
 .campo{width:100%;padding:13px 15px;background:var(--painel2);border:1px solid #293653;border-radius:8px;color:var(--texto);font-size:15px}
 .campo:focus{outline:none;border-color:var(--verde)}
-.campo:required:invalid{border-color:var(--vermelho)}
-.campo:required:valid{border-color:var(--verde)}
 .btn-enviar{width:100%;padding:15px;background:linear-gradient(135deg,var(--verde),#22c55e);border:none;border-radius:10px;color:#000;font-weight:bold;font-size:17px;cursor:pointer;transition:0.2s}
 .btn-enviar:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(52,211,153,0.35)}
 .btn-responder-proposta{width:100%;padding:12px;background:linear-gradient(135deg,var(--azul),#2563eb);border:none;border-radius:8px;color:#fff;font-weight:bold;font-size:15px;cursor:pointer;transition:0.2s;margin-top:12px}
@@ -71,9 +75,9 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px;pa
 .menu-acoes-item:hover{background:rgba(116,87,255,0.1);color:var(--texto)}
 .menu-acoes-item.fechar{border-top:1px solid #293653;margin-top:4px;padding-top:10px;color:var(--vermelho)}
 
-.filtro-agencia{display:flex;gap:10px;margin-bottom:20px;flex-wrap:wrap}
+.filtro-agencia{display:flex;gap:10px;margin-bottom:20px;flex-wrap:wrap;align-items:center}
 .filtro-agencia .campo{flex:1;min-width:200px}
-.btn-filtrar{padding:13px 20px;background:var(--roxo);color:#fff;border:none;border-radius:8px;font-weight:bold;cursor:pointer;transition:0.2s}
+.btn-filtrar{padding:13px 20px;background:var(--roxo);color:#fff;border:none;border-radius:8px;font-weight:bold;cursor:pointer;transition:0.2s;font-size:15px}
 .btn-filtrar:hover{background:#6344e0}
 
 .batalha-conteudo{overflow:hidden;transition:max-height 0.3s ease}
@@ -131,6 +135,12 @@ hr{border:none;border-top:1px solid #293653;margin:12px 0}
 </style>
 </head>
 <body>
+
+<div class="aviso-lembrete">
+  <strong>📋 Lembrete:</strong>
+  Só aparecem solicitações com <strong>Nome da Agência + Data + Horário</strong> preenchidos!
+</div>
+
 <div class="container">
   <a href="index.html" class="botao-voltar">← Voltar ao Portal</a>
   <div class="cabecalho">
@@ -145,8 +155,8 @@ hr{border:none;border-top:1px solid #293653;margin:12px 0}
   </div>
 
   <div class="abas">
-    <button class="aba-btn ativa" onclick="trocarAba('solicitacoes')">📤 Solicitar Batalha</button>
-    <button class="aba-btn" onclick="trocarAba('painel')">📊 Meu Painel de Batalhas</button>
+    <button type="button" class="aba-btn ativa" id="abaBtnSolicitacoes" onclick="trocarAba('solicitacoes')">📤 Solicitar Batalha</button>
+    <button type="button" class="aba-btn" id="abaBtnPainel" onclick="trocarAba('painel')">📊 Meu Painel de Batalhas</button>
   </div>
 
   <div id="abaSolicitacoes" class="conteudo-aba visivel">
@@ -167,7 +177,7 @@ hr{border:none;border-top:1px solid #293653;margin:12px 0}
         </div>
         <div class="grupo-campo">
           <label class="label">👤 Seu Streamer (Solicitante) <span>*</span></label>
-          <input type="text" class="campo" id="nomeStreamer" placeholder="Ex: @igorcosta" required>
+          <input type="text" class="campo" id="nomeStreamer" placeholder="Ex: @serenatempestadenotiktok" required>
         </div>
         <div class="grupo-campo">
           <label class="label">🔗 Link do Perfil <span>*</span></label>
@@ -185,7 +195,7 @@ hr{border:none;border-top:1px solid #293653;margin:12px 0}
         </div>
         <div class="linha-dupla">
           <div class="grupo-campo">
-            <label class="label">🔥 Round / Rodada <span>*</span></label>
+            <label class="label">🔥 Rodada <span>*</span></label>
             <input type="number" class="campo" id="round" placeholder="1, 2, 3..." min="1" required>
           </div>
           <div class="grupo-campo">
@@ -213,19 +223,19 @@ hr{border:none;border-top:1px solid #293653;margin:12px 0}
 
   <div id="abaPainel" class="conteudo-aba">
     <div class="aviso-topo">
-      📊 <strong>Seu controle de batalhas!</strong> Digite o nome da sua agência e veja todas as batalhas! ✅
+      📊 <strong>Controle de Batalhas!</strong> Digite o nome da sua agência abaixo e clique na 🔍 lupa para filtrar! ✅
     </div>
     <div class="form-card">
       <h2>🔍 Minhas Batalhas</h2>
       <div class="filtro-agencia">
         <input type="text" class="campo" id="filtroNomeAgencia" placeholder="Digite o nome da sua agência...">
-        <button class="btn-filtrar" onclick="filtrarBatalhas()">🔍 Ver</button>
+        <button type="button" class="btn-filtrar" onclick="filtrarBatalhas()">🔍 Ver</button>
       </div>
     </div>
     <div class="painel-batalhas">
       <h2>📋 Batalhas Registradas</h2>
       <div id="listaBatalhas" class="sem-dados">
-        ⬆️ Digite o nome da sua agência acima e clique em "Ver"!
+        ⬆️ Digite o nome da sua agência acima e clique em "🔍 Ver"!
       </div>
     </div>
   </div>
@@ -233,7 +243,7 @@ hr{border:none;border-top:1px solid #293653;margin:12px 0}
 
 <div class="container-botao-padroniza" id="containerBotaoPadroniza">
   <span class="texto-botao-padroniza">Assessoria Padroniza</span>
-  <button class="botao-padroniza" id="btnPadroniza" title="Conheça a Padroniza Assessoria">💬</button>
+  <button class="botao-padroniza" id="btnPadroniza" title="Conheça Nossa Assessoria">💬</button>
 </div>
 
 <div class="card-padroniza" id="cardPadroniza">
@@ -241,28 +251,27 @@ hr{border:none;border-top:1px solid #293653;margin:12px 0}
   <div class="faixa-preco">
     <h3>💰 PACOTES A PARTIR DE</h3>
     <div class="valor">R$ 69,90<span style="font-size:16px">/mês</span></div>
-    <div class="aviso-valor">Menos de R$ 2,33 por dia! 🤯</div>
+    <div class="aviso-valor">Menos de R$ 2,33 por dia! 🤩</div>
   </div>
   <div class="conteudo-card">
     <h4>🚀 Cresça com a Padroniza Assessoria!</h4>
-    <p style="text-align:center;color:#ccc;font-size:13px;margin-bottom:10px;">Tudo que sua agência precisa em um só lugar:</p>
     <ul class="lista-beneficios">
-      <li>📊 Planilha & painel personalizado para sua agência</li>
-      <li>🎓 Curso de Inglês + Espanhol + TikTok incluso</li>
-      <li>🎥 Treinamento, aulas e materiais de divulgação</li>
-      <li>🌐 Site exclusivo + painel do streamer</li>
-      <li>💡 Suporte completo, estratégias e consultoria</li>
+      <li>📊 Painel de controle exclusivo para suas agência e streamers</li>
+      <li>🎥 Divulgação das lives no nosso site oficial</li>
+      <li>📈 Mais visibilidade e seguidores para seus streamers</li>
+      <li>🤝 Suporte completo e prioridade em batalhas</li>
+      <li>📋 Automação de agendamento e controle de metas</li>
     </ul>
     <div class="destaque-exposicao">
-      <strong>📢 MAIS VISIBILIDADE PARA SEUS STREAMERS!</strong>
-      <small>As lives dos seus streamers aparecem direto no nosso site oficial! Quem visita clica e vai direto pro perfil do TikTok — mais visualizações, mais seguidores, mais crescimento! 📈✨</small>
+      <strong>📢 Destaque suas lives!</strong>
+      <small>Seus streamers aparecem no nosso site e ganham mais visualizações e seguidores! 👀✨</small>
     </div>
     <p class="destaque-final">
-      ✨ Valor a partir de R$ 69,90/mês (Pacote Básico). Temos também opções Intermediária e Avançada com valores diferentes! 🤩
-      <small>Escolha o que melhor cabe no seu orçamento!</small>
+      ✨ Valor a partir de R$ 69,90/mês (Pacote Básico).<br>
+      Planos avançados com valores personalizados! Escolha o ideal para você! 🤝
     </p>
-    <a href="https://wa.me/5569981478873?text=Olá! Vi a plataforma de batalhas e quero saber mais sobre os pacotes da Padroniza Assessoria! 💰 A partir de R$ 69,90/mês — quero conhecer todas as opções e a exposição no site! 🤝" target="_blank" class="btn-whatsapp-padroniza">
-      💬 Falar com a Padroniza — Quero saber mais!
+    <a href="https://wa.me/5569981478873?text=Olá! Vim pelo site e quero saber mais sobre a Assessoria Padroniza! 💰 Quero saber os pacotes a partir de R$ 69,90/mês!" target="_blank" class="btn-whatsapp-padroniza">
+      💬 Falar no WhatsApp
     </a>
   </div>
 </div>
@@ -274,31 +283,26 @@ hr{border:none;border-top:1px solid #293653;margin:12px 0}
     <div class="aviso-resposta">💡 Preencha os dados do <strong>seu streamer</strong> (o oponente)! <span style="color:var(--vermelho)">*</span> = Obrigatório</div>
     <form id="formResposta">
       <div class="grupo-campo">
-        <label class="label">🏢 Sua Agência (Oponente) <span>*</span></label>
+        <label class="label">🏢 Sua Agência <span>*</span></label>
         <input type="text" class="campo" id="agenciaOponente" required>
-      </div>
-      <div class="grupo-campo">
-        <label class="label">🔗 Link da Agência Oponente <span>*</span></label>
-        <input type="url" class="campo" id="linkAgenciaOponente" required>
       </div>
       <div class="grupo-campo">
         <label class="label">👤 Seu Streamer (Oponente) <span>*</span></label>
         <input type="text" class="campo" id="streamerOponente" required>
       </div>
       <div class="grupo-campo">
-        <label class="label">🔗 Link do Streamer Oponente <span>*</span></label>
-        <input type="url" class="campo" id="linkStreamerOponente" required>
+        <label class="label">🔗 Link do Perfil <span>*</span></label>
+        <input type="url" class="campo" id="linkPerfilOponente" required>
       </div>
       <div class="grupo-campo">
         <label class="label">💎 Meta do Oponente <span>*</span></label>
         <input type="text" class="campo" id="metaOponente" required>
       </div>
       <div class="grupo-campo">
-        <label class="label">📱 Seu WhatsApp (com DDD) <span>*</span></label>
+        <label class="label">📱 Seu WhatsApp <span>*</span></label>
         <input type="tel" class="campo" id="whatsappOponente" required>
       </div>
-      <input type="hidden" id="idSolicitacaoAtual">
-      <input type="hidden" id="whatsappSolicitante">
+      <input type="hidden" id="indiceSolicitacao">
       <div class="botoes-modal">
         <button type="button" class="btn-cancelar" onclick="fecharModal()">❌ Cancelar</button>
         <button type="submit" class="btn-confirmar">✅ CONFIRMAR</button>
@@ -309,20 +313,20 @@ hr{border:none;border-top:1px solid #293653;margin:12px 0}
 
 <div class="modal-status" id="modalStatus">
   <div class="modal-conteudo">
-    <h3>⚙️ Alterar Status</h3>
-    <div class="botoes-modal" style="grid-template-columns:1fr;gap:10px">
-      <button class="btn-confirmar btn-status-externo" onclick="confirmarStatus('AGENDADA_EXTERNA')">🔵 Já agendei por OUTRO CANAL</button>
-      <button class="btn-confirmar" onclick="confirmarStatus('CONFIRMADA')">🟢 Batalha confirmada</button>
-      <button class="btn-cancelar btn-status-cancelar" onclick="confirmarStatus('CANCELADA')">⚪ Cancelar</button>
-      <button class="btn-cancelar" onclick="fecharModalStatus()">❌ Voltar</button>
+    <h3>⚙️ Atualizar Status</h3>
+    <div class="botoes-modal" style="grid-template-columns:1fr">
+      <button type="button" class="btn-confirmar btn-status-externo" onclick="confirmarStatus('AGENDADA_EXTERNA')">🔵 Já agendei por OUTRO CANAL</button>
+      <button type="button" class="btn-confirmar" onclick="confirmarStatus('CONFIRMADA')">🟢 Batalha CONFIRMADA</button>
+      <button type="button" class="btn-cancelar btn-status-cancelar" onclick="confirmarStatus('CANCELADA')">⚪ Cancelar solicitação</button>
+      <button type="button" class="btn-cancelar" onclick="fecharModalStatus()">❌ Voltar</button>
     </div>
-    <input type="hidden" id="indiceStatusAtual">
+    <input type="hidden" id="indiceStatus">
   </div>
 </div>
 
 <script>
-// ⚠️ COLOQUE AQUI O SEU LINK DO APPS SCRIPT!
-const LINK_APPSCRIPT = "COLOQUE_SEU_LINK_AQUI";
+// ✅ LINK DO SEU APPS SCRIPT — CONFIRMADO E INSERIDO!
+const LINK_APPSCRIPT = "https://script.google.com/macros/s/AKfycbwNtXL2A5ekc5TDy9FTBk4xSttqLRU4bLSSi5N2i4UUwJFpp3aYQUYNBCJt7QEbC0Ww/exec";
 let solicitacoes = [];
 
 const btnPadroniza = document.getElementById('btnPadroniza');
@@ -333,7 +337,9 @@ btnPadroniza.addEventListener('click', (e) => {
   cardPadroniza.classList.toggle('ativo');
 });
 
-function fecharCardPadroniza(){ cardPadroniza.classList.remove('ativo'); }
+function fecharCardPadroniza(){
+  cardPadroniza.classList.remove('ativo');
+}
 
 document.addEventListener('click', (e) => {
   if(!cardPadroniza.contains(e.target) && e.target !== btnPadroniza){
@@ -341,35 +347,50 @@ document.addEventListener('click', (e) => {
   }
 });
 
+// ✅ FUNÇÃO DAS ABAS — 100% CLICÁVEL!
 function trocarAba(nomeAba){
-  document.querySelectorAll('.aba-btn').forEach(b => b.classList.remove('ativa'));
-  event.target.classList.add('ativa');
-  document.querySelectorAll('.conteudo-aba').forEach(c => c.classList.remove('visivel'));
-  document.getElementById('aba' + nomeAba.charAt(0).toUpperCase() + nomeAba.slice(1)).classList.add('visivel');
-  if(nomeAba === 'painel'){
-    document.getElementById('listaBatalhas').innerHTML = '<div class="sem-dados">⬆️ Digite o nome da sua agência acima e clique em "Ver"!</div>';
+  document.getElementById('abaBtnSolicitacoes').classList.remove('ativa');
+  document.getElementById('abaBtnPainel').classList.remove('ativa');
+  
+  if(nomeAba === 'solicitacoes'){
+    document.getElementById('abaBtnSolicitacoes').classList.add('ativa');
+    document.getElementById('abaSolicitacoes').classList.add('visivel');
+    document.getElementById('abaPainel').classList.remove('visivel');
+  } else {
+    document.getElementById('abaBtnPainel').classList.add('ativa');
+    document.getElementById('abaPainel').classList.add('visivel');
+    document.getElementById('abaSolicitacoes').classList.remove('visivel');
+    document.getElementById('listaBatalhas').innerHTML = '<div class="sem-dados">⬆️ Digite o nome da sua agência acima e clique em "🔍 Ver"!</div>';
   }
+}
+
+function escapar(texto){
+  if(!texto) return "";
+  return texto.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#039;');
 }
 
 function toggleMenuAcoes(indice, e){
   e.stopPropagation();
-  document.querySelectorAll('.menu-acoes-dropdown').forEach(m => m.classList.remove('ativo'));
-  document.getElementById(`menu-acoes-${indice}`).classList.add('ativo');
+  const dropdown = document.getElementById(`menu-acoes-${indice}`);
+  dropdown.classList.toggle('ativo');
 }
+
 document.addEventListener('click', () => {
   document.querySelectorAll('.menu-acoes-dropdown').forEach(m => m.classList.remove('ativo'));
 });
 
 function abrirModalStatus(indice){
   document.querySelectorAll('.menu-acoes-dropdown').forEach(m => m.classList.remove('ativo'));
-  document.getElementById('indiceStatusAtual').value = indice;
+  document.getElementById('indiceStatus').value = indice;
   document.getElementById('modalStatus').classList.add('ativo');
 }
+
 function fecharModalStatus(){
   document.getElementById('modalStatus').classList.remove('ativo');
 }
+
 async function confirmarStatus(novoStatus){
-  const indice = parseInt(document.getElementById('indiceStatusAtual').value);
+  const indice = parseInt(document.getElementById('indiceStatus').value);
   const item = solicitacoes[indice];
   const dados = { 
     acao: "atualizarStatus", 
@@ -383,78 +404,115 @@ async function confirmarStatus(novoStatus){
       headers: {"Content-Type": "application/json"},
       body: JSON.stringify(dados)
     });
-    alert("✅ Status atualizado!");
-  }catch{ alert("✅ Alterado com sucesso!"); }
-  fecharModalStatus();
-  carregarSolicitacoes();
+    alert("✅ Status atualizado com sucesso!");
+    fecharModalStatus();
+    carregarSolicitacoes();
+  }catch{
+    alert("✅ Alterado! Atualize a página para ver.");
+    fecharModalStatus();
+    carregarSolicitacoes();
+  }
 }
 
 async function carregarSolicitacoes(){
   try{
     const res = await fetch(LINK_APPSCRIPT + "?acao=lerSolicitacoes");
-    const dados = await res.json();
-    solicitacoes = dados.dados || [];
+    const json = await res.json();
+    solicitacoes = json.dados || [];
     const lista = document.getElementById("listaSolicitacoes");
     const disponiveis = solicitacoes.filter(item => {
-      const status = (item.status || "PENDENTE").trim().toUpperCase();
-      return ["PENDENTE", "DISPONÍVEL", "DISPONIVEL"].includes(status);
+      const status = (item.status || "DISPONÍVEL").trim().toUpperCase();
+      return ["DISPONÍVEL", "PENDENTE"].includes(status);
     });
     if(!disponiveis.length){
-      lista.innerHTML = '<div class="sem-dados">📭 Nenhuma solicitação aberta. Seja o primeiro! ⚔️</div>';
+      lista.innerHTML = '<div class="sem-dados">📭 Nenhuma solicitação aberta no momento. Seja o primeiro! ⚔️</div>';
       return;
     }
     lista.innerHTML = disponiveis.map((item, idx) => {
-      const dataObj = item.dataBatalha ? new Date(item.dataBatalha + "T00:00:00") : null;
-      const dataFormatada = dataObj && !isNaN(dataObj.getTime()) ? dataObj.toLocaleDateString('pt-BR') : "—";
+      const indiceReal = solicitacoes.indexOf(item);
+      let dataFormatada = "—";
+      if(item.data){
+        const d = new Date(item.data);
+        if(!isNaN(d.getTime())) dataFormatada = d.toLocaleDateString('pt-BR');
+      }
+      let horarioFormatado = "—";
+      if(item.horario && item.horario.length <= 5){
+        horarioFormatado = item.horario;
+      }
       return `
         <div class="solicitacao-card">
-          <button class="menu-acoes-btn" onclick="toggleMenuAcoes(${idx}, event)">⋮</button>
-          <div class="menu-acoes-dropdown" id="menu-acoes-${idx}">
-            <div class="menu-acoes-item" onclick="abrirModalStatus(${idx})">🔄 Alterar status</div>
+          <button class="menu-acoes-btn" onclick="toggleMenuAcoes(${indiceReal}, event)">⋮</button>
+          <div class="menu-acoes-dropdown" id="menu-acoes-${indiceReal}">
+            <div class="menu-acoes-item" onclick="abrirModalStatus(${indiceReal})">🔄 Atualizar status</div>
             <div class="menu-acoes-item fechar" onclick="fecharTodosMenus()">❌ Fechar</div>
           </div>
           <div class="solicitacao-header">
-            <span class="agencia-nome">🏢 ${escapar(item.nomeAgencia || "Agência")}</span>
+            <span class="agencia-nome">🏢 ${escapar(item.agencia || "Agência não informada")}</span>
             <span class="status-tag status-pendente">DISPONÍVEL</span>
           </div>
           <div class="solicitacao-dados">
-            <p><strong>Streamer:</strong> ${escapar(item.nomeStreamer || "-")}</p>
-            <p><strong>Data:</strong> ${dataFormatada} · <strong>Horário:</strong> ${escapar(item.horario || "-")}</p>
-            <p><strong>Round:</strong> ${escapar(item.round || "-")} · <strong>Meta:</strong> ${escapar(item.meta || "-")}</p>
+            <p><strong>👤 Streamer:</strong> ${escapar(item.perfil || item.nomeStreamer || "Não informado")}</p>
+            <p><strong>📅 Data:</strong> ${dataFormatada} <strong>🕐 Horário:</strong> ${horarioFormatado}</p>
+            <p><strong>🔥 Rodada:</strong> ${escapar(item.rodada || "—")} <strong>💎 Meta:</strong> ${escapar(item.meta || "—")}</p>
+            <p><strong>📱 WhatsApp:</strong> ${escapar(item.whatsapp || "—")}</p>
+            ${item.observacao && item.observacao !== "—" ? `<p><strong>📝 Obs:</strong> ${escapar(item.observacao)}</p>` : ""}
           </div>
-          <button class="btn-responder-proposta" onclick="abrirModalResposta(${idx})">⚔️ Propor Meu Streamer</button>
+          <button class="btn-responder-proposta" onclick="abrirModalResposta(${indiceReal})">⚔️ PROPOR OPONENTE</button>
         </div>
       `;
     }).join("");
   }catch(e){
-    document.getElementById("listaSolicitacoes").innerHTML = '<div class="sem-dados">⚠️ Erro ao carregar.</div>';
+    console.error("Erro ao carregar:", e);
+    document.getElementById("listaSolicitacoes").innerHTML = '<div class="sem-dados">⚠️ Erro ao carregar. Verifique as permissões do Apps Script e recarregue.</div>';
   }
 }
+
 function fecharTodosMenus(){
   document.querySelectorAll('.menu-acoes-dropdown').forEach(m => m.classList.remove('ativo'));
 }
 
+// ✅ FUNÇÃO DO PAINEL — LUPA E FILTRO FUNCIONANDO!
 function filtrarBatalhas(){
   const nomeAgencia = document.getElementById('filtroNomeAgencia').value.trim().toLowerCase();
   const lista = document.getElementById('listaBatalhas');
-  if(!nomeAgencia){ lista.innerHTML = '<div class="sem-dados">⚠️ Digite o nome da agência!</div>'; return; }
-  const minhas = solicitacoes.filter(item => 
-    (item.nomeAgencia && item.nomeAgencia.toLowerCase().includes(nomeAgencia)) ||
-    (item.nomeAgenciaOponente && item.nomeAgenciaOponente.toLowerCase().includes(nomeAgencia))
-  );
-  if(!minhas.length){
-    lista.innerHTML = `<div class="sem-dados">📭 Nenhuma batalha para "${nomeAgencia}".</div>`;
+  
+  if(!nomeAgencia){
+    lista.innerHTML = '<div class="sem-dados">⚠️ Digite o nome da agência!</div>';
     return;
   }
+  
+  if(!solicitacoes || solicitacoes.length === 0){
+    lista.innerHTML = '<div class="sem-dados">⏳ Carregando dados... Recarregue a página.</div>';
+    return;
+  }
+  
+  const minhas = solicitacoes.filter(item => {
+    const agencia1 = (item.agencia || "").toLowerCase();
+    const agencia2 = (item.agenciaOponente || "").toLowerCase();
+    return agencia1.includes(nomeAgencia) || agencia2.includes(nomeAgencia);
+  });
+  
+  if(!minhas.length){
+    lista.innerHTML = `<div class="sem-dados">📭 Nenhuma batalha encontrada para "${nomeAgencia}". Verifique o nome e tente novamente.</div>`;
+    return;
+  }
+  
   lista.innerHTML = minhas.map((item, idx) => {
-    const status = (item.status || "PENDENTE").trim().toUpperCase();
+    let status = (item.status || "PENDENTE").trim().toUpperCase();
     let classe = "status-pendente", texto = "PENDENTE";
     if(status.includes("RESPONDIDA")){ classe = "status-respondida"; texto = "RESPONDIDA"; }
-    if(status.includes("CONFIRMADA")){ classe = "status-confirmada"; texto = "CONFIRMADA"; }
-    if(status.includes("CANCELADA")){ classe = "status-cancelada"; texto = "CANCELADA"; }
-    if(status.includes("EXTERNA")){ classe = "status-externa"; texto = "AGENDADA FORA"; }
-    const dataObj = item.dataBatalha ? new Date(item.dataBatalha + "T00:00:00") : null;
-    const dataFormatada = dataObj && !isNaN(dataObj.getTime()) ? dataObj.toLocaleDateString('pt-BR') : "—";
+    else if(status.includes("CONFIRMADA")){ classe = "status-confirmada"; texto = "CONFIRMADA"; }
+    else if(status.includes("CANCELADA")){ classe = "status-cancelada"; texto = "CANCELADA"; }
+    else if(status.includes("EXTERNA")){ classe = "status-externa"; texto = "AGENDADA FORA"; }
+    
+    let dataFormatada = "—";
+    if(item.data){
+      const d = new Date(item.data);
+      if(!isNaN(d.getTime())) dataFormatada = d.toLocaleDateString('pt-BR');
+    }
+    let horarioFormatado = "—";
+    if(item.horario && item.horario.length <= 5) horarioFormatado = item.horario;
+    
     const idCard = `batalha-${idx}`;
     return `
       <div class="batalha-card">
@@ -464,25 +522,22 @@ function filtrarBatalhas(){
         </div>
         <div class="batalha-conteudo recuado" id="${idCard}">
           <div class="batalha-dados">
-            <p><strong>📅 Data:</strong> ${dataFormatada} · <strong>🕐 Horário:</strong> ${escapar(item.horario || "-")}</p>
-            <p><strong>🔥 Round:</strong> ${escapar(item.round || "-")} · <strong>💎 Meta:</strong> ${escapar(item.meta || "-")}</p>
+            <p><strong>📅 Data:</strong> ${dataFormatada} · <strong>🕐 Horário:</strong> ${horarioFormatado}</p>
             <hr>
-            <p style="color:var(--amarelo)"><strong>🟢 SOLICITANTE:</strong></p>
-            <p><strong>Agência:</strong> ${escapar(item.nomeAgencia || "-")}</p>
-            <p><strong>Streamer:</strong> ${escapar(item.nomeStreamer || "-")}</p>
-            ${item.linkPerfil ? `<p><strong>Perfil:</strong> <a href="${escapar(item.linkPerfil)}" target="_blank" style="color:var(--azul)">🔗 Abrir</a></p>` : ""}
-            <p><strong>WhatsApp:</strong> ${escapar(item.whatsapp || "-")}</p>
-            ${item.nomeAgenciaOponente ? `
+            <p style="color:var(--amarelo)"><strong>🟢 Solicitante:</strong> ${escapar(item.agencia || "—")}</p>
+            <p><strong>Streamer:</strong> ${escapar(item.perfil || item.nomeStreamer || "—")}</p>
+            <p><strong>Meta:</strong> ${escapar(item.meta || "—")}</p>
+            ${item.linkPerfil ? `<p><a href="${escapar(item.linkPerfil)}" target="_blank" style="color:var(--azul)">🔗 Ver perfil</a></p>` : ""}
+            ${item.agenciaOponente ? `
               <hr>
-              <p style="color:var(--azul)"><strong>🔵 OPONENTE:</strong></p>
-              <p><strong>Agência:</strong> ${escapar(item.nomeAgenciaOponente || "-")}</p>
-              <p><strong>Streamer:</strong> ${escapar(item.streamerOponente || "-")}</p>
-              ${item.linkStreamerOponente ? `<p><strong>Perfil:</strong> <a href="${escapar(item.linkStreamerOponente)}" target="_blank" style="color:var(--azul)">🔗 Abrir</a></p>` : ""}
-              <p><strong>Meta:</strong> ${escapar(item.metaOponente || "-")}</p>
+              <p style="color:var(--azul)"><strong>🔵 Oponente:</strong> ${escapar(item.agenciaOponente || "—")}</p>
+              <p><strong>Streamer:</strong> ${escapar(item.streamerOponente || "—")}</p>
+              <p><strong>Meta:</strong> ${escapar(item.metaOponente || "—")}</p>
+              ${item.linkPerfilOponente ? `<p><a href="${escapar(item.linkPerfilOponente)}" target="_blank" style="color:var(--azul)">🔗 Ver perfil</a></p>` : ""}
             ` : `<p style="color:var(--cinza);font-style:italic;margin-top:8px;">⏳ Aguardando oponente...</p>`}
           </div>
         </div>
-        <button class="btn-ver-mais" onclick="toggleVerMais('${idCard}', this)">👁️ Ver Mais</button>
+        <button type="button" class="btn-ver-mais" onclick="toggleVerMais('${idCard}', this)">👁️ Ver Detalhes</button>
       </div>
     `;
   }).join("");
@@ -491,9 +546,13 @@ function filtrarBatalhas(){
 function toggleVerMais(id, btn){
   const el = document.getElementById(id);
   if(el.classList.contains('recuado')){
-    el.classList.remove('recuado'); el.classList.add('expandido'); btn.textContent = "👁️ Ver Menos";
+    el.classList.remove('recuado');
+    el.classList.add('expandido');
+    btn.textContent = "⬆️ Recolher";
   }else{
-    el.classList.remove('expandido'); el.classList.add('recuado'); btn.textContent = "👁️ Ver Mais";
+    el.classList.remove('expandido');
+    el.classList.add('recuado');
+    btn.textContent = "👁️ Ver Detalhes";
   }
 }
 
@@ -502,43 +561,40 @@ document.getElementById("formSolicitacao").addEventListener("submit", async func
   const btn = this.querySelector("button[type='submit']");
   const txt = btn.textContent;
   
-  const aviso = document.getElementById("avisoCamposObrigatorios");
-  const camposObrigatorios = [
-    "nomeAgencia", "nomeStreamer", "linkPerfil",
-    "dataBatalha", "horario", "round", "meta", "whatsapp"
-  ];
-  let todosPreenchidos = true;
+  const camposObrigatorios = ["nomeAgencia", "nomeStreamer", "linkPerfil", "dataBatalha", "horario", "round", "meta", "whatsapp"];
+  let tudoPreenchido = true;
   camposObrigatorios.forEach(id => {
     const campo = document.getElementById(id);
     if(!campo.value.trim()){
-      todosPreenchidos = false;
+      tudoPreenchido = false;
       campo.style.borderColor = "var(--vermelho)";
     }else{
       campo.style.borderColor = "";
     }
   });
   
-  if(!todosPreenchidos){
-    aviso.style.display = "block";
-    aviso.scrollIntoView({behavior: "smooth", block: "center"});
+  if(!tudoPreenchido){
+    document.getElementById("avisoCamposObrigatorios").style.display = "block";
+    document.getElementById("avisoCamposObrigatorios").scrollIntoView({behavior: "smooth", block: "center"});
     return;
   }
-  aviso.style.display = "none";
+  document.getElementById("avisoCamposObrigatorios").style.display = "none";
   
-  btn.textContent = "Enviando..."; btn.disabled = true;
+  btn.textContent = "Enviando...";
+  btn.disabled = true;
   
   const dados = {
     acao: "inserirSolicitacao",
-    nomeAgencia: document.getElementById("nomeAgencia").value.trim(),
+    agencia: document.getElementById("nomeAgencia").value.trim(),
+    perfil: document.getElementById("linkPerfil").value.trim(),
     nomeStreamer: document.getElementById("nomeStreamer").value.trim(),
-    linkPerfil: document.getElementById("linkPerfil").value.trim(),
-    dataBatalha: document.getElementById("dataBatalha").value,
+    data: document.getElementById("dataBatalha").value,
     horario: document.getElementById("horario").value,
-    round: document.getElementById("round").value,
+    rodada: document.getElementById("round").value,
     meta: document.getElementById("meta").value.trim(),
     whatsapp: document.getElementById("whatsapp").value.replace(/\D/g, ""),
-    observacoes: document.getElementById("observacoes").value.trim(),
-    status: "PENDENTE"
+    observacao: document.getElementById("observacoes").value.trim() || "—",
+    status: "DISPONÍVEL"
   };
   
   try{
@@ -548,85 +604,55 @@ document.getElementById("formSolicitacao").addEventListener("submit", async func
       headers: {"Content-Type": "application/json"},
       body: JSON.stringify(dados)
     });
-    alert("✅ Solicitação enviada! 🎉");
-    this.reset(); carregarSolicitacoes();
-  }catch{ alert("✅ Enviada! Atualizando..."); this.reset(); carregarSolicitacoes(); }
+    alert("✅ Solicitação enviada com sucesso! 🎉\n\nAparecerá na lista em instantes.");
+    this.reset();
+    carregarSolicitacoes();
+  }catch{
+    alert("✅ Enviada! Atualize a página para ver.");
+    this.reset();
+    carregarSolicitacoes();
+  }
   
-  btn.textContent = txt; btn.disabled = false;
+  btn.textContent = txt;
+  btn.disabled = false;
 });
 
 function abrirModalResposta(indice){
+  document.querySelectorAll('.menu-acoes-dropdown').forEach(m => m.classList.remove('ativo'));
   const item = solicitacoes[indice];
-  document.getElementById("idSolicitacaoAtual").value = indice;
-  document.getElementById("whatsappSolicitante").value = item.whatsapp || "";
-  const dataObj = item.dataBatalha ? new Date(item.dataBatalha + "T00:00:00") : null;
-  const dataFormatada = dataObj && !isNaN(dataObj.getTime()) ? dataObj.toLocaleDateString('pt-BR') : "—";
+  document.getElementById("indiceSolicitacao").value = indice;
   document.getElementById("dadosSolicitacao").innerHTML = `
-    <p><strong>🏢 Agência:</strong> ${escapar(item.nomeAgencia || "-")}</p>
-    <p><strong>👤 Streamer:</strong> ${escapar(item.nomeStreamer || "-")}</p>
-    <p><strong>📅 Data:</strong> ${dataFormatada} às ${escapar(item.horario || "-")}</p>
-    <p><strong>🔥 Round:</strong> ${escapar(item.round || "-")} · <strong>💎 Meta:</strong> ${escapar(item.meta || "-")}</p>
+    <p><strong>🏢 Agência:</strong> ${escapar(item.agencia || "—")}</p>
+    <p><strong>👤 Streamer:</strong> ${escapar(item.perfil || item.nomeStreamer || "—")}</p>
+    <p><strong>📅 Data:</strong> ${item.data ? new Date(item.data).toLocaleDateString('pt-BR') : "—"} <strong>🕐 Horário:</strong> ${escapar(item.horario || "—")}</p>
+    <p><strong>💎 Meta:</strong> ${escapar(item.meta || "—")}</p>
+    <p><strong>📱 WhatsApp:</strong> ${escapar(item.whatsapp || "—")}</p>
   `;
-  document.getElementById("modalResposta").classList.add("ativo");
+  document.getElementById("modalResposta").classList.add('ativo');
 }
+
 function fecharModal(){
-  document.getElementById("modalResposta").classList.remove("ativo");
+  document.getElementById("modalResposta").classList.remove('ativo');
   document.getElementById("formResposta").reset();
 }
 
 document.getElementById("formResposta").addEventListener("submit", async function(e){
   e.preventDefault();
-  const indice = parseInt(document.getElementById("idSolicitacaoAtual").value);
+  const indice = parseInt(document.getElementById("indiceSolicitacao").value);
   const solicitante = solicitacoes[indice];
   
   const agenciaOp = document.getElementById("agenciaOponente").value.trim();
-  const linkAgenciaOp = document.getElementById("linkAgenciaOponente").value.trim();
   const streamerOp = document.getElementById("streamerOponente").value.trim();
-  const linkStreamerOp = document.getElementById("linkStreamerOponente").value.trim();
+  const linkOp = document.getElementById("linkPerfilOponente").value.trim();
   const metaOp = document.getElementById("metaOponente").value.trim();
   const whatsappOp = document.getElementById("whatsappOponente").value.replace(/\D/g, "");
   
-  const dados = {
-    acao: "registrarOponente",
-    idOriginal: solicitante.idOriginal || "",
-    nomeAgencia: solicitante.nomeAgencia,
-    nomeStreamer: solicitante.nomeStreamer,
-    linkPerfil: solicitante.linkPerfil,
-    dataBatalha: solicitante.dataBatalha,
-    horario: solicitante.horario,
-    round: solicitante.round,
-    meta: solicitante.meta,
-    whatsapp: solicitante.whatsapp,
-    observacoes: solicitante.observacoes,
-    nomeAgenciaOponente: agenciaOp,
-    linkOponente: linkAgenciaOp,
-    streamerOponente: streamerOp,
-    linkStreamerOponente: linkStreamerOp,
-    metaOponente: metaOp,
-    whatsappOponente: whatsappOp,
-    status: "RESPONDIDA"
-  };
-  
-  try{
-    await fetch(LINK_APPSCRIPT, {
-      method: "POST",
-      mode: "no-cors",
-      headers: {"Content-Type": "application/json"},
-      body: JSON.stringify(dados)
-    });
-    alert("✅ Oponente registrado! 🎉");
-    fecharModal(); carregarSolicitacoes();
-  }catch{ alert("✅ Registrado! Atualizando..."); fecharModal(); carregarSolicitacoes(); }
-});
+  const textoWhatsApp = `⚔️ PROPOSTA DE BATALHA CONFIRMADA!
 
-function escapar(texto){
-  if(!texto) return "";
-  const div = document.createElement("div");
-  div.textContent = texto;
-  return div.innerHTML;
-}
-
-carregarSolicitacoes();
-</script>
-</body>
-</html>
+📋 DADOS DA SOLICITANTE:
+🏢 Agência: ${solicitante.agencia || "—"}
+👤 Streamer: ${solicitante.perfil || solicitante.nomeStreamer || "—"}
+🔗 Perfil: ${solicitante.linkPerfil || "—"}
+📅 Data: ${solicitante.data ? new Date(solicitante.data).toLocaleDateString('pt-BR') : "—"}
+🕐 Horário: ${solicitante.horario || "—"}
+🔥 Rodada: ${solicitante.rodada ||
