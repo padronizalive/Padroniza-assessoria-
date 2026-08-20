@@ -371,6 +371,31 @@ async function confirmarStatus(novoStatus){
   carregarSolicitacoes();
 }
 
+// ✅ FUNÇÃO CORRIGIDA — FORMATA HORÁRIO CERTINHO
+function formatarHorario(horarioBruto) {
+  if (!horarioBruto || horarioBruto === "-") return "—";
+  // Se já veio como horário simples (ex: "21:00")
+  if (/^\d{1,2}:\d{2}$/.test(horarioBruto)) return horarioBruto;
+  // Tenta extrair horário de formato ISO ou de data completa
+  try {
+    const data = new Date(horarioBruto);
+    if (!isNaN(data.getTime())) {
+      const horas = String(data.getHours()).padStart(2, '0');
+      const minutos = String(data.getMinutes()).padStart(2, '0');
+      return `${horas}:${minutos}`;
+    }
+  } catch (e) {}
+  // Se falhar, tenta extrair por substring
+  if (horarioBruto.includes('T')) {
+    const horarioParte = horarioBruto.split('T')[1];
+    if (horarioParte && horarioParte.length >= 5) {
+      return horarioParte.substring(0, 5);
+    }
+  }
+  return horarioBruto;
+}
+
+// ✅ FUNÇÃO CORRIGIDA — CARREGAR SOLICITAÇÕES COM HORÁRIO FORMATADO
 async function carregarSolicitacoes(){
   try{
     const res = await fetch(LINK_APPSCRIPT + "?acao=lerSolicitacoes");
@@ -386,8 +411,29 @@ async function carregarSolicitacoes(){
       return;
     }
     lista.innerHTML = disponiveis.map((item, idx) => {
-      const dataObj = item.data ? new Date(item.data + "T00:00:00") : null;
-      const dataFormatada = dataObj && !isNaN(dataObj.getTime()) ? dataObj.toLocaleDateString('pt-BR') : "—";
+      // 📅 Formatar DATA corretamente
+      let dataFormatada = "—";
+      if (item.data) {
+        try {
+          // Se veio como ISO ou data completa
+          const dataObj = new Date(item.data);
+          if (!isNaN(dataObj.getTime())) {
+            dataFormatada = dataObj.toLocaleDateString('pt-BR');
+          } else if (/^\d{4}-\d{2}-\d{2}$/.test(item.data)) {
+            const [ano, mes, dia] = item.data.split('-');
+            dataFormatada = `${dia}/${mes}/${ano}`;
+          }
+        } catch {}
+      }
+      // 🕐 Formatar HORÁRIO corretamente
+      const horarioFormatado = formatarHorario(item.horario);
+      
+      // 🏢 Pegar os nomes — verifica ambos os formatos que o Apps Script pode retornar
+      const nomeAgencia = escapar(item.nomeAgencia || item.agencia || "Agência");
+      const nomeStreamer = escapar(item.nomeStreamer || item.perfil || "-");
+      const round = escapar(item.round || item.rodada || "-");
+      const meta = escapar(item.meta || "-");
+      
       return `
         <div class="solicitacao-card">
           <button class="menu-acoes-btn" onclick="toggleMenuAcoes(${idx}, event)">⋮</button>
@@ -396,19 +442,20 @@ async function carregarSolicitacoes(){
             <div class="menu-acoes-item" onclick="fecharTodosMenus()">❌ Fechar</div>
           </div>
           <div class="solicitacao-header">
-            <span class="agencia-nome">🏢 ${escapar(item.nomeAgencia || "Agência")}</span>
+            <span class="agencia-nome">🏢 ${nomeAgencia}</span>
             <span class="status-tag status-pendente">DISPONÍVEL</span>
           </div>
           <div class="solicitacao-dados">
-            <p><strong>Streamer:</strong> ${escapar(item.nomeStreamer || "-")}</p>
-            <p><strong>Data:</strong> ${dataFormatada} · <strong>Horário:</strong> ${escapar(item.horario || "-")}</p>
-            <p><strong>Round:</strong> ${escapar(item.round || "-")} · <strong>Meta:</strong> ${escapar(item.meta || "-")}</p>
+            <p><strong>Streamer:</strong> ${nomeStreamer}</p>
+            <p><strong>Data:</strong> ${dataFormatada} · <strong>Horário:</strong> ${horarioFormatado}</p>
+            <p><strong>Round:</strong> ${round} · <strong>Meta:</strong> ${meta}</p>
           </div>
           <button class="btn-responder-proposta" onclick="abrirModalResposta(${idx})">⚔️ Propor Meu Streamer</button>
         </div>
       `;
     }).join("");
   }catch(e){
+    console.error("Erro ao carregar:", e);
     document.getElementById("listaSolicitacoes").innerHTML = '<div class="sem-dados">⚠️ Erro ao carregar.</div>';
   }
 }
@@ -437,6 +484,7 @@ function filtrarBatalhas(){
     if(status.includes("EXTERNA")){ classe = "status-externa"; texto = "AGENDADA FORA"; }
     const dataObj = item.data ? new Date(item.data + "T00:00:00") : null;
     const dataFormatada = dataObj && !isNaN(dataObj.getTime()) ? dataObj.toLocaleDateString('pt-BR') : "—";
+    const horarioFormatado = formatarHorario(item.horario);
     const idCard = `batalha-${idx}`;
     return `
       <div class="batalha-card">
@@ -446,7 +494,7 @@ function filtrarBatalhas(){
         </div>
         <div class="batalha-conteudo recuado" id="${idCard}">
           <div class="batalha-dados">
-            <p><strong>📅 Data:</strong> ${dataFormatada} · <strong>🕐 Horário:</strong> ${escapar(item.horario || "-")}</p>
+            <p><strong>📅 Data:</strong> ${dataFormatada} · <strong>🕐 Horário:</strong> ${horarioFormatado}</p>
             <p><strong>🔥 Round:</strong> ${escapar(item.round || "-")} · <strong>💎 Meta:</strong> ${escapar(item.meta || "-")}</p>
             <hr>
             <p style="color:var(--amarelo)"><strong>🟢 SOLICITANTE:</strong></p>
@@ -514,10 +562,11 @@ function abrirModalResposta(indice){
   document.getElementById("whatsappSolicitante").value = item.whatsapp || "";
   const dataObj = item.data ? new Date(item.data + "T00:00:00") : null;
   const dataFormatada = dataObj && !isNaN(dataObj.getTime()) ? dataObj.toLocaleDateString('pt-BR') : "—";
+  const horarioFormatado = formatarHorario(item.horario);
   document.getElementById("dadosSolicitacao").innerHTML = `
     <p><strong>🏢 Agência:</strong> ${escapar(item.nomeAgencia || "-")}</p>
     <p><strong>👤 Streamer:</strong> ${escapar(item.nomeStreamer || "-")}</p>
-    <p><strong>📅 Data:</strong> ${dataFormatada} às ${escapar(item.horario || "-")}</p>
+    <p><strong>📅 Data:</strong> ${dataFormatada} às ${horarioFormatado}</p>
     <p><strong>🔥 Round:</strong> ${escapar(item.round || "-")} · <strong>💎 Meta:</strong> ${escapar(item.meta || "-")}</p>
   `;
   document.getElementById("modalResposta").classList.add("ativo");
