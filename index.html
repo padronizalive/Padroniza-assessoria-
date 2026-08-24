@@ -4,6 +4,17 @@
   <meta charset="UTF-8" />
   <title>Padroniza Live - Central de Lives</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- 📱 PWA — TRANSFORMA EM APLICATIVO NA TELA INICIAL -->
+  <link rel="manifest" href="manifest.json" />
+  <meta name="theme-color" content="#7b3fff" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="Padroniza Live" />
+  <link rel="apple-touch-icon" href="https://i.ibb.co/B23rwMHt/1787270369792.png" />
+  <meta name="description" content="Padroniza Live — Central de Lives TikTok & Kako | Gestão Profissional de Streamers" />
+  <link rel="icon" type="image/png" href="https://i.ibb.co/B23rwMHt/1787270369792.png" />
+
   <style>
     :root {
       --bg-gradient: radial-gradient(circle at top left, #5b2cff, #0b1020 40%, #02101f 70%, #c79b3b 100%);
@@ -118,7 +129,6 @@
       color: var(--text-muted);
     }
 
-    /* MAIN GRID */
     .main-grid {
       display: grid;
       grid-template-columns: minmax(0, 2fr) minmax(0, 1.4fr);
@@ -138,7 +148,6 @@
       }
     }
 
-    /* CARDS */
     .card {
       background: var(--card-bg);
       border-radius: 18px;
@@ -168,7 +177,6 @@
       color: var(--text-muted);
     }
 
-    /* BUTTONS AREA */
     .button-row {
       display: flex;
       flex-wrap: wrap;
@@ -205,7 +213,6 @@
       box-shadow: 0 8px 18px rgba(0, 0, 0, 0.6);
     }
 
-    /* Specific buttons */
     .btn-tiktok {
       background: linear-gradient(135deg, #00f2ea, #ff0050, #25f4ee);
       color: #050509;
@@ -231,7 +238,6 @@
       color: #050509;
     }
 
-    /* SOCIALS */
     .social-row {
       display: flex;
       flex-wrap: wrap;
@@ -260,7 +266,6 @@
       font-size: 1rem;
     }
 
-    /* CARROSSEL DE LIVES */
     .carousel-container {
       position: relative;
       overflow: hidden;
@@ -361,7 +366,6 @@
       color: #c79b3b;
     }
 
-    /* STREAMER ESTRELA (vertical scroll) */
     .estrela-container {
       position: relative;
       overflow: hidden;
@@ -376,12 +380,8 @@
     }
 
     @keyframes verticalScroll {
-      0% {
-        transform: translateY(0);
-      }
-      100% {
-        transform: translateY(-50%);
-      }
+      0% { transform: translateY(0); }
+      100% { transform: translateY(-50%); }
     }
 
     .estrela-card {
@@ -430,7 +430,6 @@
       letter-spacing: 0.08em;
     }
 
-    /* STATUS & MESSAGES */
     .status-bar {
       font-size: 0.8rem;
       color: var(--text-muted);
@@ -466,7 +465,6 @@
       color: var(--success);
     }
 
-    /* MODAL */
     .modal-backdrop {
       position: fixed;
       inset: 0;
@@ -544,7 +542,6 @@
       padding-inline: 14px;
     }
 
-    /* FOOTER */
     footer {
       margin-top: auto;
       padding: 12px 16px 18px;
@@ -556,6 +553,12 @@
     footer span {
       color: var(--primary-gold);
     }
+
+    @keyframes pulse {
+      0% { box-shadow: 0 0 0 0 rgba(123, 63, 255, 0.7); }
+      70% { box-shadow: 0 0 0 15px rgba(123, 63, 255, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(123, 63, 255, 0); }
+    }
   </style>
 </head>
 <body>
@@ -565,19 +568,16 @@
         <img src="https://i.ibb.co/B23rwMHt/1787270369792.png" alt="Logo Padroniza Live" />
         <div class="title-block">
           <h1>Padroniza Live</h1>
-          <span>Central de Lives • TikTok &amp; Kako • Gestão Profissional de Streamers</span>
+          <span>Central de Lives • TikTok & Kako • Gestão Profissional de Streamers</span>
         </div>
       </div>
       <div class="admin-link">
-        <button id="btnAdminArea">
-          🔒 Área Administrativa
-        </button>
+        <button id="btnAdminArea">🔒 Área Administrativa</button>
         <small>Uso exclusivo da equipe Padroniza</small>
       </div>
     </header>
 
     <main class="main-grid">
-      <!-- COLUNA ESQUERDA: Lives + Destaques -->
       <section class="card">
         <div class="card-header">
           <div>
@@ -585,38 +585,33 @@
             <span>Carrossel com streamers aprovados e ao vivo</span>
           </div>
           <div class="status-bar">
-            <div class="status-dot" id="liveStatusDot"></div>
+            <div class="status-dot offline" id="liveStatusDot"></div>
             <span id="liveStatusText">Carregando lives...</span>
           </div>
         </div>
 
         <div class="carousel-container">
-          <div class="carousel-track" id="liveCarousel">
-            <!-- Cards de lives serão inseridos via JavaScript -->
-          </div>
+          <div class="carousel-track" id="liveCarousel"></div>
         </div>
 
         <div class="card-header" style="margin-top: 12px;">
           <div>
-            <h2>Streamer estrela</h2>
+            <h2>Streamer Estrela</h2>
             <span>Destaques em rolagem contínua</span>
           </div>
         </div>
 
         <div class="estrela-container">
-          <div class="estrela-track" id="estrelaTrack">
-            <!-- Cards de streamer estrela via JavaScript -->
-          </div>
+          <div class="estrela-track" id="estrelaTrack"></div>
         </div>
 
         <p class="message" id="globalMessage"></p>
       </section>
 
-      <!-- COLUNA DIREITA: Ações, redes e moedas -->
       <section class="card">
         <div class="card-header">
           <div>
-            <h2>Acessos rápidos</h2>
+            <h2>Acessos Rápidos</h2>
             <span>Escolha sua opção para continuar</span>
           </div>
         </div>
@@ -626,17 +621,14 @@
             <span class="icon">🎵</span>
             <span>Agência TikTok</span>
           </button>
-
           <button class="btn btn-kako" id="btnKako">
             <span class="icon">💜</span>
             <span>Agência Kako</span>
           </button>
-
           <button class="btn btn-agenciado" id="btnAgenciado">
             <span class="icon">👤</span>
             <span>Sou Agenciado</span>
           </button>
-
           <button class="btn btn-outras" id="btnOutras">
             <span class="icon">🏢</span>
             <span>Outras Agências</span>
@@ -645,31 +637,26 @@
 
         <div class="card-header" style="margin-top: 10px;">
           <div>
-            <h2>Redes sociais</h2>
+            <h2>Redes Sociais</h2>
             <span>Conecte-se com a Padroniza Live</span>
           </div>
         </div>
 
         <div class="social-row">
-          <a class="social-pill" href="https://www.youtube.com" target="_blank" rel="noopener">
-            <span class="icon">▶️</span>
-            <span>YouTube</span>
+          <a class="social-pill" href="https://wa.me/5569981478873" target="_blank" rel="noopener">
+            <span class="icon">💬</span><span>WhatsApp</span>
           </a>
           <a class="social-pill" href="https://www.tiktok.com" target="_blank" rel="noopener">
-            <span class="icon">🎵</span>
-            <span>TikTok</span>
+            <span class="icon">🎵</span><span>TikTok</span>
           </a>
           <a class="social-pill" href="https://www.instagram.com" target="_blank" rel="noopener">
-            <span class="icon">📸</span>
-            <span>Instagram</span>
+            <span class="icon">📸</span><span>Instagram</span>
           </a>
-          <a class="social-pill" href="https://wa.me/5569981478873" target="_blank" rel="noopener">
-            <span class="icon">💬</span>
-            <span>WhatsApp</span>
+          <a class="social-pill" href="https://www.youtube.com" target="_blank" rel="noopener">
+            <span class="icon">▶️</span><span>YouTube</span>
           </a>
           <a class="social-pill" href="https://t.me" target="_blank" rel="noopener">
-            <span class="icon">📨</span>
-            <span>Telegram</span>
+            <span class="icon">📨</span><span>Telegram</span>
           </a>
         </div>
 
@@ -692,13 +679,13 @@
   <div class="modal-backdrop" id="modalAgenciadoBackdrop">
     <div class="modal">
       <div class="modal-header">
-        <h3>Sou agenciado</h3>
+        <h3>Sou Agenciado</h3>
         <button class="modal-close" data-close-modal="agenciado">&times;</button>
       </div>
       <div class="modal-body">
-        <p>Digite seu usuário exatamente como cadastrado na planilha para acessar seu painel.</p>
+        <p>Digite seu usuário exatamente como cadastrado para acessar seu painel.</p>
         <label for="inputUsuarioAgenciado">Usuário</label>
-        <input type="text" id="inputUsuarioAgenciado" placeholder="Ex: @SEUUSUARIO" />
+        <input type="text" id="inputUsuarioAgenciado" placeholder="Seu usuário da planilha" />
         <p class="message" id="agenciadoMessage"></p>
       </div>
       <div class="modal-footer">
@@ -712,7 +699,7 @@
   <div class="modal-backdrop" id="modalAdminBackdrop">
     <div class="modal">
       <div class="modal-header">
-        <h3>Área administrativa</h3>
+        <h3>Área Administrativa</h3>
         <button class="modal-close" data-close-modal="admin">&times;</button>
       </div>
       <div class="modal-body">
@@ -731,30 +718,52 @@
   </div>
 
   <footer>
-    Padroniza Live • Gestão profissional de streamers • <span>Status: somente usuários APROVADOS têm acesso</span>
+    Padroniza Live • Gestão Profissional de Streamers • <span>Status: somente usuários APROVADOS têm acesso</span>
   </footer>
 
+  <!-- 📲 BOTÃO DE INSTALAR APP PWA -->
   <script>
-    // CONFIGURAÇÕES
-    const APPS_SCRIPT_URL =
-      "https://script.google.com/macros/s/AKfycbzLk5Q3cGjOeSfIdQWdEM1v8ngjCpLu7hzwrU-ZZIH9dNgkJArZPhaJBVgYNvABGBkl/exec";
+    let deferredPrompt;
+    window.addEventListener('beforeinstallprompt', (e) => {
+      e.preventDefault();
+      deferredPrompt = e;
+      mostrarBotaoInstalar();
+    });
 
-    // Espera-se que o Apps Script retorne um JSON com um array de linhas:
-    // [
-    //   {
-    //     usuario: "USUARIO",
-    //     status: "APROVADO",
-    //     tiktokLive: "https://...",
-    //     kakoLive: "https://...",
-    //     capa: "https://...",
-    //     estaAoVivo: "TRUE" ou "FALSE",
-    //     streamerEstrela: "TRUE" ou "FALSE"
-    //   },
-    //   ...
-    // ]
-    //
-    // Aba: "Página1"
-    // Colunas: A=Usuário | B=Status | E=TikTok Live | G=Kako Live | H=Capa | I=Está ao vivo | K=Streamer Estrela
+    function mostrarBotaoInstalar() {
+      const botao = document.createElement('div');
+      botao.style = `
+        position: fixed;
+        bottom: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: linear-gradient(135deg, #7b3fff, #c79b3b);
+        color: #050509;
+        padding: 12px 24px;
+        border-radius: 999px;
+        font-weight: bold;
+        cursor: pointer;
+        z-index: 9999;
+        box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+        animation: pulse 2s infinite;
+      `;
+      botao.innerHTML = "📲 Instalar App Padroniza Live";
+      botao.addEventListener('click', async () => {
+        if (deferredPrompt) {
+          deferredPrompt.prompt();
+          const { outcome } = await deferredPrompt.userChoice;
+          if (outcome === 'accepted') botao.remove();
+          deferredPrompt = null;
+        }
+      });
+      document.body.appendChild(botao);
+    }
+  </script>
+
+  <!-- 🧠 SITE + APPS SCRIPT COMPLETO -->
+  <script>
+    // ✅ SEU APPS SCRIPT NOVO — LINK CORRETO!
+    const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyCbaWNSl1jUhct1tK6YyOUTbOyIWisklrB1LuAvO_SKWGqyHQz9_5L79Ex_wclTCgv/exec";
 
     const elements = {
       liveCarousel: document.getElementById("liveCarousel"),
@@ -771,21 +780,13 @@
       inputAdminPass: document.getElementById("inputAdminPass")
     };
 
-    // BOTÕES PRINCIPAIS
+    // ✅ LINKS CORRETOS
     document.getElementById("btnTikTok").addEventListener("click", () => {
-      window.open(
-        "https://1drv.ms/f/c/884f1b26d8daa748/IgCI5Cqu_c0lTokK1PAApLfVARVzFb6jEQMdTsvbD_Nucqo?e=CJc3ZD",
-        "_blank",
-        "noopener"
-      );
+      window.open("https://1drv.ms/f/c/884f1b26d8daa748/IgCI5Cqu_c0lTokK1PAApLfVARVzFb6jEQMdTsvbD_Nucqo?e=CJc3ZD", "_blank");
     });
 
     document.getElementById("btnKako").addEventListener("click", () => {
-      window.open(
-        "https://1drv.ms/f/c/884f1b26d8daa748/IgCH2cDy7-dkR5bU09e-fCubATT4f6EzWwx0fS9ete7cnYI?e=yOHuSs",
-        "_blank",
-        "noopener"
-      );
+      window.open("https://1drv.ms/f/c/884f1b26d8daa748/IgCH2cDy7-dkR5bU09e-fCubATT4f6EzWwx0fS9ete7cnYI?e=yOHuSs", "_blank");
     });
 
     document.getElementById("btnOutras").addEventListener("click", () => {
@@ -793,383 +794,162 @@
     });
 
     document.getElementById("btnCoins").addEventListener("click", () => {
-      window.open("https://coins.tiktok.com/pt-BR/", "_blank", "noopener");
-    });
-
-    document.getElementById("btnAgenciado").addEventListener("click", () => {
-      openModal("agenciado");
-    });
-
-    document.getElementById("btnAdminArea").addEventListener("click", () => {
-      openModal("admin");
+      window.open("https://coins.tiktok.com/pt-BR/", "_blank");
     });
 
     // MODAIS
-    function openModal(type) {
-      if (type === "agenciado") {
-        elements.modalAgenciadoBackdrop.style.display = "flex";
-        elements.agenciadoMessage.textContent = "";
-        elements.inputUsuarioAgenciado.value = "";
-        elements.inputUsuarioAgenciado.focus();
-      } else if (type === "admin") {
-        elements.modalAdminBackdrop.style.display = "flex";
-        elements.adminMessage.textContent = "";
-        elements.inputAdminUser.value = "";
-        elements.inputAdminPass.value = "";
-        elements.inputAdminUser.focus();
-      }
-    }
+    document.getElementById("btnAgenciado").addEventListener("click", () => {
+      elements.modalAgenciadoBackdrop.style.display = "flex";
+      elements.inputUsuarioAgenciado.value = "";
+      elements.agenciadoMessage.textContent = "";
+    });
 
-    function closeModal(type) {
-      if (type === "agenciado") {
-        elements.modalAgenciadoBackdrop.style.display = "none";
-      } else if (type === "admin") {
-        elements.modalAdminBackdrop.style.display = "none";
-      }
-    }
+    document.getElementById("btnAdminArea").addEventListener("click", () => {
+      elements.modalAdminBackdrop.style.display = "flex";
+      elements.inputAdminUser.value = "";
+      elements.inputAdminPass.value = "";
+      elements.adminMessage.textContent = "";
+    });
 
-    document.querySelectorAll(".modal-close").forEach((btn) => {
+    document.querySelectorAll("[data-close-modal]").forEach(btn => {
       btn.addEventListener("click", () => {
         const type = btn.getAttribute("data-close-modal");
-        closeModal(type);
+        if (type === "agenciado") elements.modalAgenciadoBackdrop.style.display = "none";
+        if (type === "admin") elements.modalAdminBackdrop.style.display = "none";
       });
     });
 
-    document.querySelectorAll("[data-close-modal]").forEach((btn) => {
-      btn.addEventListener("click", () => {
-        const type = btn.getAttribute("data-close-modal");
-        closeModal(type);
-      });
-    });
-
-    // VERIFICAÇÃO DE USUÁRIO AGENDIADO
+    // ✅ VERIFICAR USUÁRIO — COMPATÍVEL COM APPS SCRIPT
     document.getElementById("btnConfirmAgenciado").addEventListener("click", async () => {
-      const rawUsuario = elements.inputUsuarioAgenciado.value.trim();
-      if (!rawUsuario) {
-        elements.agenciadoMessage.textContent = "Por favor, digite seu usuário para continuar.";
+      const usuario = elements.inputUsuarioAgenciado.value.trim();
+      if (!usuario) {
+        elements.agenciadoMessage.textContent = "⚠️ Digite seu usuário";
         elements.agenciadoMessage.className = "message error";
         return;
       }
 
-      const usuarioUpper = rawUsuario.toUpperCase();
+      elements.agenciadoMessage.textContent = "🔄 Verificando...";
+      elements.agenciadoMessage.className = "message";
 
       try {
-        elements.agenciadoMessage.textContent = "Verificando seu cadastro, aguarde...";
-        elements.agenciadoMessage.className = "message";
+        const res = await fetch(`${APPS_SCRIPT_URL}?acao=verificarUsuario&usuario=${encodeURIComponent(usuario)}`);
+        const dados = await res.json();
 
-        const rows = await fetchRowsFromSheet();
-
-        if (!rows || !Array.isArray(rows) || rows.length === 0) {
-          elements.agenciadoMessage.textContent =
-            "Não foi possível localizar dados na planilha. Tente novamente em alguns minutos.";
-          elements.agenciadoMessage.className = "message error";
-          return;
-        }
-
-        const found = rows.find((row) => {
-          const rowUsuario = String(row.usuario || "").toUpperCase();
-          return rowUsuario === usuarioUpper;
-        });
-
-        if (!found) {
-          elements.agenciadoMessage.textContent =
-            "Usuário não encontrado. Verifique se digitou corretamente ou fale com a agência.";
-          elements.agenciadoMessage.className = "message error";
-          return;
-        }
-
-        const statusUpper = String(found.status || "").toUpperCase();
-
-        if (statusUpper === "APROVADO") {
-          elements.agenciadoMessage.textContent = "Usuário aprovado! Redirecionando para seu painel...";
+        if (dados.sucesso && dados.encontrado) {
+          elements.agenciadoMessage.textContent = "✅ Aprovado! Entrando...";
           elements.agenciadoMessage.className = "message success";
           setTimeout(() => {
-            window.location.href = "panel-agenciado.html";
-          }, 900);
-        } else if (statusUpper === "ADMIN") {
-          elements.agenciadoMessage.textContent =
-            "Usuário administrativo detectado. Redirecionando para painel de administração...";
-          elements.agenciadoMessage.className = "message success";
-          setTimeout(() => {
-            window.location.href = "panel-admin.html";
-          }, 900);
+            window.location.href = "painel-agenciado.html";
+          }, 800);
         } else {
-          elements.agenciadoMessage.textContent =
-            "Seu cadastro ainda não está aprovado. Fale com a agência para concluir o processo.";
+          elements.agenciadoMessage.textContent = "❌ Usuário não aprovado ou não encontrado.";
           elements.agenciadoMessage.className = "message error";
         }
-      } catch (error) {
-        console.error(error);
-        elements.agenciadoMessage.textContent =
-          "Ocorreu um erro ao verificar seu usuário. Tente novamente em alguns instantes.";
+      } catch (e) {
+        elements.agenciadoMessage.textContent = "❌ Erro de conexão. Tente novamente.";
         elements.agenciadoMessage.className = "message error";
       }
     });
 
-    // LOGIN ADMINISTRATIVO (fixo)
+    // 🔐 LOGIN ADMIN
     document.getElementById("btnConfirmAdmin").addEventListener("click", () => {
-      const user = elements.inputAdminUser.value.trim();
+      const user = elements.inputAdminUser.value.trim().toLowerCase();
       const pass = elements.inputAdminPass.value.trim();
 
-      const userUpper = user.toUpperCase();
-      const expectedUserUpper = "PADRONIZAASSESSORIA@GMAIL.COM";
-      const expectedPass = "988agencia";
-
-      if (!user || !pass) {
-        elements.adminMessage.textContent = "Digite usuário e senha para continuar.";
-        elements.adminMessage.className = "message error";
-        return;
-      }
-
-      if (userUpper === expectedUserUpper && pass === expectedPass) {
-        elements.adminMessage.textContent = "Login realizado com sucesso. Redirecionando...";
+      if (user === "padronizaassessoria@gmail.com" && pass === "988agencia") {
+        elements.adminMessage.textContent = "✅ Entrando...";
         elements.adminMessage.className = "message success";
         setTimeout(() => {
-          window.location.href = "panel-admin.html";
-        }, 900);
+          window.location.href = "painel-admin.html";
+        }, 800);
       } else {
-        elements.adminMessage.textContent =
-          "Usuário ou senha inválidos. Verifique os dados informados e tente novamente.";
+        elements.adminMessage.textContent = "❌ Usuário ou senha incorretos.";
         elements.adminMessage.className = "message error";
       }
     });
 
-    // CARREGAR LIVES E STREAMERS ESTRELA
-    async function initLives() {
+    // 🎬 CARREGAR LIVES
+    async function carregarLives() {
       try {
-        elements.liveStatusText.textContent = "Carregando dados da planilha...";
-        elements.liveStatusDot.classList.remove("offline");
+        elements.liveStatusText.textContent = "Carregando lives...";
+        const res = await fetch(`${APPS_SCRIPT_URL}?acao=listarLives`);
+        const dados = await res.json();
 
-        const rows = await fetchRowsFromSheet();
-
-        if (!rows || !Array.isArray(rows) || rows.length === 0) {
-          elements.liveStatusText.textContent = "Nenhuma live encontrada no momento.";
+        elements.liveCarousel.innerHTML = "";
+        if (!dados.sucesso || !dados.lives || dados.lives.length === 0) {
+          elements.liveStatusText.textContent = "Nenhuma live ao vivo";
           elements.liveStatusDot.classList.add("offline");
-          elements.globalMessage.textContent =
-            "Se você é streamer, confirme com a agência se sua live está cadastrada corretamente.";
-          elements.globalMessage.className = "message";
+          elements.liveCarousel.innerHTML = `<p style="padding:20px;text-align:center;color:#b3b3cc;">🎬 Nenhuma live no momento</p>`;
+          carregarEstrelas();
           return;
         }
 
-        const livesAoVivo = rows.filter((row) => {
-          const statusUpper = String(row.status || "").toUpperCase();
-          const liveUpper = String(row.estaAoVivo || "").toUpperCase();
-          return statusUpper === "APROVADO" && liveUpper === "TRUE";
-        });
+        elements.liveStatusText.textContent = `${dados.totalLives} lives ao vivo`;
+        elements.liveStatusDot.classList.remove("offline");
 
-        const estrelas = rows.filter((row) => {
-          const statusUpper = String(row.status || "").toUpperCase();
-          const estrelaUpper = String(row.streamerEstrela || "").toUpperCase();
-          return statusUpper === "APROVADO" && estrelaUpper === "TRUE";
-        });
+        elements.liveCarousel.innerHTML = dados.lives.map(live => {
+          const temCapa = live.capa && live.capa.trim() !== "";
+          const tagClass = live.plataforma === "kako" ? "tag-kako" : "tag-tiktok";
+          const tagText = live.plataforma === "kako" ? "💜 Kako" : "🎵 TikTok";
 
-        renderLivesCarousel(livesAoVivo);
-        renderEstrelas(estrelas);
+          return `
+            <a href="${live.link}" target="_blank" rel="noopener" class="live-card">
+              <div class="live-cover">
+                ${temCapa ? `<img src="${live.capa}" alt="${live.nome}" loading="lazy">` : "🎬"}
+              </div>
+              <div class="live-meta">
+                <strong>${live.nome || "Streamer"}</strong>
+                <div class="live-tags">
+                  <span class="tag ${tagClass}">${tagText}</span>
+                  <span class="tag">🔴 AO VIVO</span>
+                </div>
+              </div>
+            </a>
+          `;
+        }).join("");
 
-        if (livesAoVivo.length > 0) {
-          elements.liveStatusText.textContent = `${livesAoVivo.length} live(s) ao vivo agora`;
-          elements.liveStatusDot.classList.remove("offline");
-        } else {
-          elements.liveStatusText.textContent = "Nenhuma live ao vivo no momento";
-          elements.liveStatusDot.classList.add("offline");
-        }
-
-        if (estrelas.length === 0) {
-          elements.globalMessage.textContent =
-            "Nenhum streamer estrela definido ainda. Em breve novos destaques aparecerão aqui.";
-          elements.globalMessage.className = "message";
-        } else {
-          elements.globalMessage.textContent = "";
-        }
-      } catch (error) {
-        console.error(error);
-        elements.liveStatusText.textContent = "Erro ao carregar lives";
-        elements.liveStatusDot.classList.add("offline");
-        elements.globalMessage.textContent =
-          "Ocorreu um problema ao buscar as lives. Atualize a página em alguns instantes.";
+        carregarEstrelas();
+      } catch (e) {
+        console.error("Erro lives:", e);
+        elements.liveStatusText.textContent = "Erro ao carregar";
+        elements.globalMessage.textContent = "⚠️ Atualize a página.";
         elements.globalMessage.className = "message error";
       }
     }
 
-    async function fetchRowsFromSheet() {
-      const response = await fetch(APPS_SCRIPT_URL, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json"
+    // ⭐ CARREGAR ESTRELAS
+    async function carregarEstrelas() {
+      try {
+        const res = await fetch(`${APPS_SCRIPT_URL}?acao=listarDestaques`);
+        const dados = await res.json();
+
+        elements.estrelaTrack.innerHTML = "";
+
+        if (!dados.sucesso || !dados.streamersEstrela || dados.streamersEstrela.length === 0) {
+          elements.estrelaTrack.innerHTML = `<p style="padding:20px;text-align:center;color:#b3b3cc;">⭐ Nenhum destaque</p>`;
+          return;
         }
-      });
 
-      if (!response.ok) {
-        throw new Error("Falha ao consultar Apps Script");
-      }
+        const cards = dados.streamersEstrela.map(s => `
+          <div class="estrela-card">
+            <div class="estrela-avatar">
+              ${s.capa ? `<img src="${s.capa}" alt="${s.nome}">` : "⭐"}
+            </div>
+            <div class="estrela-info">
+              <strong>${s.nome || "Streamer"}</strong>
+              <span class="estrela-badge">🏆 Streamer Estrela</span>
+            </div>
+          </div>
+        `).join("");
 
-      const data = await response.json();
-
-      // Tenta detectar estrutura comum: data.rows ou data
-      if (Array.isArray(data)) {
-        return data;
+        elements.estrelaTrack.innerHTML = cards + cards;
+      } catch (e) {
+        console.error("Erro estrelas:", e);
+        elements.estrelaTrack.innerHTML = `<p style="padding:20px;text-align:center;color:#b3b3cc;">⚠️ Erro ao carregar</p>`;
       }
-      if (Array.isArray(data.rows)) {
-        return data.rows;
-      }
-      if (Array.isArray(data.dados)) {
-        return data.dados;
-      }
-
-      // Caso não seja nenhum dos formatos esperados
-      throw new Error("Formato de retorno inesperado do Apps Script");
     }
 
-    function renderLivesCarousel(lives) {
-      elements.liveCarousel.innerHTML = "";
-
-      if (!lives || lives.length === 0) {
-        const info = document.createElement("p");
-        info.textContent = "Nenhuma live ao vivo cadastrada no momento.";
-        info.className = "message";
-        elements.liveCarousel.appendChild(info);
-        return;
-      }
-
-      lives.forEach((row) => {
-        const card = document.createElement("div");
-        card.className = "live-card";
-
-        const cover = document.createElement("div");
-        cover.className = "live-cover";
-
-        const capaUrl = row.capa && String(row.capa).trim() ? String(row.capa).trim() : null;
-
-        if (capaUrl) {
-          const img = document.createElement("img");
-          img.src = capaUrl;
-          img.alt = "Capa da live";
-          img.onerror = () => {
-            cover.innerHTML = "📺";
-          };
-          cover.appendChild(img);
-        } else {
-          cover.textContent = "📺";
-        }
-
-        const meta = document.createElement("div");
-        meta.className = "live-meta";
-
-        const usuario = String(row.usuario || "").trim();
-        const tiktokLive = String(row.tiktokLive || "").trim();
-        const kakoLive = String(row.kakoLive || "").trim();
-
-        const title = document.createElement("strong");
-        title.textContent = usuario || "Streamer sem nome";
-
-        const platforms = document.createElement("span");
-        platforms.textContent =
-          (tiktokLive ? "TikTok" : "") + (tiktokLive && kakoLive ? " • " : "") + (kakoLive ? "Kako" : "");
-
-        const tags = document.createElement("div");
-        tags.className = "live-tags";
-
-        if (tiktokLive) {
-          const tagTik = document.createElement("span");
-          tagTik.className = "tag tag-tiktok";
-          tagTik.textContent = "TikTok Live";
-          tagTik.addEventListener("click", () => {
-            window.open(tiktokLive, "_blank", "noopener");
-          });
-          tags.appendChild(tagTik);
-        }
-
-        if (kakoLive) {
-          const tagKako = document.createElement("span");
-          tagKako.className = "tag tag-kako";
-          tagKako.textContent = "Kako Live";
-          tagKako.addEventListener("click", () => {
-            window.open(kakoLive, "_blank", "noopener");
-          });
-          tags.appendChild(tagKako);
-        }
-
-        const starUpper = String(row.streamerEstrela || "").toUpperCase();
-        if (starUpper === "TRUE") {
-          const tagStar = document.createElement("span");
-          tagStar.className = "tag tag-star";
-          tagStar.textContent = "Streamer Estrela";
-          tags.appendChild(tagStar);
-        }
-
-        meta.appendChild(title);
-        meta.appendChild(platforms);
-        meta.appendChild(tags);
-
-        card.appendChild(cover);
-        card.appendChild(meta);
-
-        elements.liveCarousel.appendChild(card);
-      });
-    }
-
-    function renderEstrelas(estrelas) {
-      elements.estrelaTrack.innerHTML = "";
-
-      if (!estrelas || estrelas.length === 0) {
-        const info = document.createElement("p");
-        info.textContent = "Nenhum streamer estrela definido no momento.";
-        info.className = "message";
-        elements.estrelaTrack.appendChild(info);
-        elements.estrelaTrack.style.animation = "none";
-        return;
-      }
-
-      // Para rolagem contínua, duplicamos a lista
-      const list = [...estrelas, ...estrelas];
-
-      list.forEach((row) => {
-        const card = document.createElement("div");
-        card.className = "estrela-card";
-
-        const avatar = document.createElement("div");
-        avatar.className = "estrela-avatar";
-
-        const capaUrl = row.capa && String(row.capa).trim() ? String(row.capa).trim() : null;
-        if (capaUrl) {
-          const img = document.createElement("img");
-          img.src = capaUrl;
-          img.alt = "Avatar do streamer estrela";
-          img.onerror = () => {
-            avatar.textContent = "⭐";
-          };
-          avatar.appendChild(img);
-        } else {
-          avatar.textContent = "⭐";
-        }
-
-        const info = document.createElement("div");
-        info.className = "estrela-info";
-
-        const usuario = String(row.usuario || "").trim();
-        const strong = document.createElement("strong");
-        strong.textContent = usuario || "Streamer estrela";
-
-        const badge = document.createElement("span");
-        badge.className = "estrela-badge";
-        badge.textContent = "Streamer estrela";
-
-        info.appendChild(strong);
-        info.appendChild(badge);
-
-        card.appendChild(avatar);
-        card.appendChild(info);
-
-        elements.estrelaTrack.appendChild(card);
-      });
-
-      elements.estrelaTrack.style.animation = "verticalScroll 18s linear infinite";
-    }
-
-    // Inicialização
-    document.addEventListener("DOMContentLoaded", () => {
-      initLives();
-    });
+    document.addEventListener("DOMContentLoaded", carregarLives);
   </script>
 </body>
 </html>
