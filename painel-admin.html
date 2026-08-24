@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Painel Administrativo | Padroniza Live</title>
+  <style>
+    :root {
+      --bg-gradient: radial-gradient(circle at top left, #5b2cff, #0b1020 40%, #02101f 70%, #c79b3b 100%);
+      --primary-purple: #7b3fff;
+      --primary-gold: #c79b3b;
+      --primary-blue: #1f7aff;
+      --text-light: #f5f5ff;
+      --text-muted: #b3b3cc;
+      --card-bg: rgba(10, 12, 24, 0.9);
+      --border-soft: rgba(255, 255, 255, 0.08);
+      --sucesso: #3ddc97;
+      --erro: #ff4d6a;
+      --alerta: #ffc107;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: var(--bg-gradient);
+      color: var(--text-light);
+      min-height: 100vh;
+      padding: 16px;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 16px;
+      border-radius: 16px;
+      background: linear-gradient(135deg, rgba(10, 12, 24, 0.9), rgba(40, 20, 80, 0.9));
+      border: 1px solid var(--border-soft);
+      margin-bottom: 24px;
+      flex-wrap: wrap;
+    }
+
+    .logo-area {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .logo {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid var(--primary-gold);
+    }
+
+    .voltar-btn {
+      padding: 8px 16px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid var(--border-soft);
+      color: var(--text-light);
+      cursor: pointer;
+      font-size: 0.85rem;
+      transition: all 0.2s;
+    }
+
+    .voltar-btn:hover {
+      background: rgba(123, 63, 255, 0.3);
+    }
+
+    h1 {
+      font-size: 1.4rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .subtitulo {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-top: 4px;
+    }
+
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 12px;
+      border-radius: 999px;
+      background: rgba(61, 220, 151, 0.15);
+      border: 1px solid var(--sucesso);
+      color: var(--sucesso);
+      font-size: 0.8rem;
+      font-weight: 600;
+    }
+
+    .dashboard-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+
+    .stat-card {
+      background: var(--card-bg);
+      border-radius: 16px;
+      padding: 20px;
+      border: 1px solid var(--border-soft);
+      box-shadow: 0 16px 32px rgba(0, 0, 0, 0.45);
+      transition: transform 0.2s ease;
+    }
+
+    .stat-card:hover {
+      transform: translateY(-4px);
+    }
+
+    .stat-icon {
+      font-size: 2rem;
+      margin-bottom: 8px;
+    }
+
+    .stat-number {
+      font-size: 2rem;
+      font-weight: bold;
+      color: var(--primary-gold);
+      margin-bottom: 4px;
+    }
+
+    .stat-label {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .card {
+      background: var(--card-bg);
+      border-radius: 18px;
+      padding: 20px;
+      border: 1px solid var(--border-soft);
+      margin-bottom: 20px;
+      box-shadow: 0 16px 32px rgba(0, 0, 0, 0.45);
+    }
+
+    .card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .card h2 {
+      font-size: 1.1rem;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn {
+      padding: 10px 16px;
+      border-radius: 12px;
+      border: none;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: transform 0.15s ease, filter 0.15s ease;
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+      filter: brightness(1.05);
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #7b3fff, #c79b3b);
+      color: #050509;
+    }
+
+    .btn-danger {
+      background: linear-gradient(135deg, #ff4d6a, #ff0050);
+      color: #fff;
+    }
+
+    .btn-blue {
+      background: linear-gradient(135deg, #1f7aff, #00b4ff);
+      color: #fff;
+    }
+
+    .tabela-container {
+      overflow-x: auto;
+      border-radius: 12px;
+      border: 1px solid var(--border-soft);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.85rem;
+    }
+
+    th, td {
+      padding: 12px 10px;
+      text-align: left;
+      border-bottom: 1px solid var(--border-soft);
+    }
+
+    th {
+      background: rgba(123, 63, 255, 0.15);
+      font-weight: 600;
+      color: var(--primary-gold);
+      text-transform: uppercase;
+      font-size: 0.75rem;
+      letter-spacing: 0.05em;
+    }
+
+    tr:hover {
+      background: rgba(255, 255, 255, 0.03);
+    }
+
+    .status-tag {
+      display: inline-block;
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-size: 0.75rem;
+      font-weight: 600;
+    }
+
+    .status-aprovado {
+      background: rgba(61, 220, 151, 0.15);
+      color: var(--sucesso);
+      border: 1px solid var(--sucesso);
+    }
+
+    .status-pendente {
+      background: rgba(255, 193, 7, 0.15);
+      color: var(--alerta);
+      border: 1px solid var(--alerta);
+    }
+
+    .status-reprovado {
+      background: rgba(255, 77, 106, 0.15);
+      color: var(--erro);
+      border: 1px solid var(--erro);
+    }
+
+    .filtro-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 16px;
+      align-items: center;
+    }
+
+    .filtro-bar input, .filtro-bar select {
+      padding: 8px 12px;
+      border-radius: 10px;
+      border: 1px solid var(--border-soft);
+      background: rgba(5, 5, 9, 0.9);
+      color: var(--text-light);
+      font-size: 0.85rem;
+    }
+
+    .divisor {
+      height: 1px;
+      background: linear-gradient(to right, transparent, rgba(255,255,255,0.2), transparent);
+      margin: 24px 0;
+    }
+
+    footer {
+      text-align: center;
+      margin-top: 40px;
+      padding: 20px;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    @media (max-width: 768px) {
+      .dashboard-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 480px) {
+      .dashboard-grid {
+        grid-template-columns: 1fr;
+      }
+      header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="logo-area">
+        <img src="https://i.ibb.co/B23rwMHt/1787270369792.png" alt="Logo" class="logo" />
+        <div>
+          <h1>Painel Administrativo</h1>
+          <p class="subtitulo">Padroniza Live • Controle Total da Agência</p>
+        </div>
+      </div>
+      <div style="display: flex; align-items: center; gap: 12px;">
+        <span class="status-badge">🔑 Administrador</span>
+        <button class="voltar-btn" onclick="window.location.href='index.html'">← Sair</button>
+      </div>
+    </header>
+
+    <!-- DASHBOARD — NÚMEROS GERAIS -->
+    <div class="dashboard-grid">
+      <div class="stat-card">
+        <div class="stat-icon">👥</div>
+        <div class="stat-number" id="totalUsuarios">--</div>
+        <div class="stat-label">Total Agenciados</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon">✅</div>
+        <div class="stat-number" id="aprovados">--</div>
+        <div class="stat-label">Aprovados</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon">⚔️</div>
+        <div class="stat-number" id="batalhasAgendadas">--</div>
+        <div class="stat-label">Batalhas Agendadas</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon">🎫</div>
+        <div class="stat-number" id="ticketsPendentes">--</div>
+        <div class="stat-label">Tickets Pendentes</div>
+      </div>
+    </div>
+
+    <!-- GERENCIAMENTO DE USUÁRIOS -->
+    <div class="card">
+      <div class="card-header">
+        <h2>📋 Gerenciar Agenciados</h2>
+        <button class="btn btn-primary">➕ Novo Usuário</button>
+      </div>
+
+      <div class="filtro-bar">
+        <input type="text" id="buscaUsuario" placeholder="🔍 Buscar usuário..." oninput="filtrarTabela()" />
+        <select id="filtroStatus" onchange="filtrarTabela()">
+          <option value="">Todos os status</option>
+          <option value="aprovado">✅ Aprovado</option>
+          <option value="pendente">⏳ Pendente</option>
+          <option value="reprovado">❌ Reprovado</option>
+        </select>
+        <select id="filtroPlataforma" onchange="filtrarTabela()">
+          <option value="">Todas as plataformas</option>
+          <option value="tiktok">🎵 TikTok</option>
+          <option value="kako">💜 Kako</option>
+        </select>
+      </div>
+
+      <div class="tabela-container">
+        <table id="tabelaUsuarios">
+          <thead>
+            <tr>
+              <th>Usuário</th>
+              <th>Plataforma</th>
+              <th>Status</th>
+              <th>Data</th>
+              <th>Ações</th>
+            </tr>
+          </thead>
+          <tbody id="corpoTabela">
+            <!-- Dados carregados via Apps Script -->
+            <tr>
+              <td colspan="5" style="text-align:center; color:var(--text-muted); padding:30px;">
+                🔄 Carregando dados...
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- GERENCIAR BATALHAS -->
+    <div class="card">
+      <div class="card-header">
+        <h2>⚔️ Batalhas Agendadas</h2>
+        <button class="btn btn-primary" onclick="window.open('agendar-batalha.html', '_blank')">➕ Agendar Batalha</button>
+      </div>
+      <p style="color:var(--text-muted); font-size:0.85rem; margin-bottom:16px;">
+        Visualize e gerencie todas as batalhas agendadas pelos streamers.
+      </p>
+      <div class="tabela-container">
+        <table>
+          <thead>
+            <tr>
+              <th>Streamer 1</th>
+              <th>Streamer 2</th>
+              <th>Plataforma</th>
+              <th>Data & Hora</th>
+              <th>Status</th>
+              <th>Ações</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td colspan="6" style="text-align:center; color:var(--text-muted); padding:30px;">
+                📅 Nenhuma batalha agendada no momento
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- TICKETS DE SUPORTE -->
+    <div class="card">
+      <div class="card-header">
+        <h2>🎫 Tickets de Suporte</h2>
+        <button class="btn btn-blue">🔄 Atualizar</button>
+      </div>
+      <p style="color:var(--text-muted); font-size:0.85rem; margin-bottom:16px;">
+        Mensagens e solicitações enviadas pelos agenciados.
+      </p>
+      <div class="tabela-container">
+        <table>
+          <thead>
+            <tr>
+              <th>Usuário</th>
+              <th>Assunto</th>
+              <th>Data</th>
+              <th>Status</th>
+              <th>Ações</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td colspan="5" style="text-align:center; color:var(--text-muted); padding:30px;">
+                ✅ Nenhum ticket pendente
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="divisor"></div>
+
+    <!-- LINKS RÁPIDOS -->
+    <div class="card">
+      <h2>🔗 Links Rápidos</h2>
+      <div style="display:flex; flex-wrap:wrap; gap:10px; margin-top:16px;">
+        <a href="https://padronizalive.github.io/Padroniza-assessoria-/encontre-oponente.html" target="_blank" class="btn btn-blue">🏢 Encontre Oponente</a>
+        <a href="agendar-batalha.html" target="_blank" class="btn btn-primary">⚔️ Agendar Batalha</a>
+        <a href="recrutamento.html" class="btn btn-danger">🔒 Área de Recrutamento</a>
+        <a href="https://wa.me/5569981239893" target="_blank" class="btn" style="background:linear-gradient(135deg, #25D366, #128C7E); color:#fff;">💬 WhatsApp Serena</a>
+      </div>
+    </div>
+
+    <footer>
+      Padroniza Live • Painel Administrativo • Acesso Restrito<br>
+      💜 TikTok & Kako Live • Todos os direitos reservados © 2026
+    </footer>
+  </div>
+
+  <script>
+    // ✅ SEU APPS SCRIPT — LINK CORRETO
+    const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyCbaWNSl1jUhct1tK6YyOUTbOyIWisklrB1LuAvO_SKWGqyHQz9_5L79Ex_wclTCgv/exec";
+
+    // Carregar dados do dashboard ao abrir a página
+    document.addEventListener("DOMContentLoaded", async () => {
+      await carregarDados();
+    });
+
+    async function carregarDados() {
+      try {
+        const res = await fetch(`${APPS_SCRIPT_URL}?acao=listarLives`);
+        const dados = await res.json();
+
+        // Simular números — futuramente puxar da planilha
+        document.getElementById('totalUsuarios').textContent = '32';
+        document.getElementById('aprovados').textContent = '28';
+        document.getElementById('batalhasAgendadas').textContent = '5';
+        document.getElementById('ticketsPendentes').textContent = '2';
+
+        // Carregar tabela de usuários
+        const corpoTabela = document.getElementById('corpoTabela');
+        corpoTabela.innerHTML = `
+          <tr>
+            <td>@usuario_tiktok</td>
+            <td>🎵 TikTok</td>
+            <td><span class="status-tag status-aprovado">Aprovado</span></td>
+            <td>2026-08-20</td>
+            <td>
+              <button class="btn btn-primary" style="padding:4px 8px; font-size:0.75rem;">Editar</button>
+              <button class="btn btn-danger" style="padding:4px 8px; font-size:0.75rem;">Suspender</button>
+            </td>
+          </tr>
+          <tr>
+            <td>@usuario_kako</td>
+            <td>💜 Kako</td>
+            <td><span class="status-tag status-aprovado">Aprovado</span></td>
+            <td>2026-08-19</td>
+            <td>
+              <button class="btn btn-primary" style="padding:4px 8px; font-size:0.75rem;">Editar</button>
+              <button class="btn btn-danger" style="padding:4px 8px; font-size:0.75rem;">Suspender</button>
+            </td>
+          </tr>
+          <tr>
+            <td>@novo_usuario</td>
+            <td>🎵 TikTok</td>
+            <td><span class="status-tag status-pendente">Pendente</span></td>
+            <td>2026-08-23</td>
+            <td>
+              <button class="btn btn-primary" style="padding:4px 8px; font-size:0.75rem;">Aprovar</button>
+              <button class="btn btn-danger" style="padding:4px 8px; font-size:0.75rem;">Recusar</button>
+            </td>
+          </tr>
+        `;
+      } catch (e) {
+        console.error("Erro ao carregar dados:", e);
+        document.getElementById('corpoTabela').innerHTML = `
+          <tr>
+            <td colspan="5" style="text-align:center; color:var(--erro); padding:30px;">
+              ⚠️ Erro ao carregar dados. Atualize a página.
+            </td>
+          </tr>
+        `;
+      }
+    }
+
+    // Filtro da tabela
+    function filtrarTabela() {
+      const busca = document.getElementById('buscaUsuario').value.toLowerCase();
+      const status = document.getElementById('filtroStatus').value;
+      const plataforma = document.getElementById('filtroPlataforma').value;
+      console.log('Filtrando:', { busca, status, plataforma });
+      // A lógica completa de filtro pode ser implementada futuramente
+    }
+  </script>
+</body>
+</html>
