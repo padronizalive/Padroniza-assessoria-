@@ -2,31 +2,30 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
-  <title>Padroniza Live - Central de Lives</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-  <!-- 📱 PWA — TRANSFORMA EM APLICATIVO NA TELA INICIAL -->
+  <title>Padroniza Live | Portal Oficial</title>
+  
+  <!-- ✅ PWA — INSTALÁVEL NO CELULAR -->
   <link rel="manifest" href="manifest.json" />
   <meta name="theme-color" content="#7b3fff" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-  <meta name="apple-mobile-web-app-title" content="Padroniza Live" />
-  <link rel="apple-touch-icon" href="https://i.ibb.co/B23rwMHt/1787270369792.png" />
-  <meta name="description" content="Padroniza Live — Central de Lives TikTok & Kako | Gestão Profissional de Streamers" />
-  <link rel="icon" type="image/png" href="https://i.ibb.co/B23rwMHt/1787270369792.png" />
-
+  <meta name="description" content="Central de Lives TikTok & Kako — Gestão Profissional de Streamers" />
+  
   <style>
     :root {
       --bg-gradient: radial-gradient(circle at top left, #5b2cff, #0b1020 40%, #02101f 70%, #c79b3b 100%);
       --primary-purple: #7b3fff;
-      --primary-blue: #1f7aff;
       --primary-gold: #c79b3b;
+      --tiktok-1: #00f2ea;
+      --tiktok-2: #ff0050;
+      --kako-purple: #9d4edd;
       --text-light: #f5f5ff;
       --text-muted: #b3b3cc;
-      --error: #ff4d6a;
-      --success: #3ddc97;
-      --card-bg: rgba(10, 12, 24, 0.9);
+      --card-bg: rgba(10, 12, 24, 0.85);
       --border-soft: rgba(255, 255, 255, 0.08);
+      --sucesso: #3ddc97;
+      --erro: #ff4d6a;
     }
 
     * {
@@ -40,916 +39,771 @@
       background: var(--bg-gradient);
       color: var(--text-light);
       min-height: 100vh;
-      display: flex;
-      flex-direction: column;
+      padding: 16px;
+      padding-bottom: 40px;
     }
 
-    a {
-      color: inherit;
-      text-decoration: none;
-    }
-
-    .page {
-      max-width: 1100px;
+    .container {
+      max-width: 1200px;
       margin: 0 auto;
-      padding: 16px 16px 32px;
-      display: flex;
-      flex-direction: column;
-      gap: 24px;
     }
 
+    /* ===== HEADER ===== */
     header {
       display: flex;
+      flex-direction: column;
       align-items: center;
-      justify-content: space-between;
       gap: 16px;
-      padding: 12px 16px;
-      border-radius: 16px;
-      background: linear-gradient(135deg, rgba(10, 12, 24, 0.9), rgba(40, 20, 80, 0.9));
+      padding: 20px;
+      border-radius: 20px;
+      background: linear-gradient(135deg, rgba(10, 12, 24, 0.9), rgba(40, 20, 80, 0.7));
       border: 1px solid var(--border-soft);
-      box-shadow: 0 18px 40px rgba(0, 0, 0, 0.45);
+      margin-bottom: 28px;
+      backdrop-filter: blur(10px);
     }
 
-    .logo-area {
+    .logo-container {
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 14px;
     }
 
-    .logo-area img {
-      width: 72px;
-      height: 72px;
+    .logo {
+      width: 64px;
+      height: 64px;
       border-radius: 50%;
       object-fit: cover;
-      border: 2px solid var(--primary-gold);
-      box-shadow: 0 0 18px rgba(199, 155, 59, 0.6);
+      border: 3px solid var(--primary-gold);
+      box-shadow: 0 0 20px rgba(199, 155, 59, 0.4);
     }
 
-    .title-block {
-      display: flex;
-      flex-direction: column;
-      gap: 4px;
-    }
-
-    .title-block h1 {
-      font-size: 1.4rem;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-    }
-
-    .title-block span {
-      font-size: 0.85rem;
-      color: var(--text-muted);
-    }
-
-    .admin-link {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .admin-link button {
-      padding: 8px 14px;
-      border-radius: 999px;
-      border: 1px solid rgba(199, 155, 59, 0.7);
-      background: linear-gradient(135deg, #c79b3b, #7b3fff);
-      color: #050509;
-      font-weight: 600;
-      font-size: 0.85rem;
-      cursor: pointer;
-      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.5);
-    }
-
-    .admin-link button:hover {
-      filter: brightness(1.05);
-    }
-
-    .admin-link small {
-      font-size: 0.7rem;
-      color: var(--text-muted);
-    }
-
-    .main-grid {
-      display: grid;
-      grid-template-columns: minmax(0, 2fr) minmax(0, 1.4fr);
-      gap: 20px;
-    }
-
-    @media (max-width: 900px) {
-      .main-grid {
-        grid-template-columns: minmax(0, 1fr);
-      }
-      header {
-        flex-direction: column;
-        align-items: flex-start;
-      }
-      .admin-link {
-        align-self: flex-end;
-      }
-    }
-
-    .card {
-      background: var(--card-bg);
-      border-radius: 18px;
-      padding: 16px 14px;
-      border: 1px solid var(--border-soft);
-      box-shadow: 0 16px 32px rgba(0, 0, 0, 0.45);
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-    }
-
-    .card-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 10px;
-    }
-
-    .card-header h2 {
-      font-size: 1rem;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-    }
-
-    .card-header span {
-      font-size: 0.75rem;
-      color: var(--text-muted);
-    }
-
-    .button-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-    }
-
-    .btn {
-      border-radius: 999px;
-      padding: 10px 16px;
-      font-size: 0.9rem;
-      font-weight: 600;
-      border: none;
-      cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      box-shadow: 0 12px 26px rgba(0, 0, 0, 0.5);
-      transition: transform 0.12s ease, box-shadow 0.12s ease, filter 0.12s ease;
-      white-space: nowrap;
-    }
-
-    .btn span.icon {
-      font-size: 1.1rem;
-    }
-
-    .btn:hover {
-      transform: translateY(-1px);
-      filter: brightness(1.05);
-      box-shadow: 0 16px 32px rgba(0, 0, 0, 0.6);
-    }
-
-    .btn:active {
-      transform: translateY(1px) scale(0.98);
-      box-shadow: 0 8px 18px rgba(0, 0, 0, 0.6);
-    }
-
-    .btn-tiktok {
-      background: linear-gradient(135deg, #00f2ea, #ff0050, #25f4ee);
-      color: #050509;
-    }
-
-    .btn-kako {
-      background: linear-gradient(135deg, #7b3fff, #b84dff);
-      color: #fdfdff;
-    }
-
-    .btn-agenciado {
-      background: linear-gradient(135deg, #7b3fff, #c79b3b);
-      color: #050509;
-    }
-
-    .btn-outras {
-      background: linear-gradient(135deg, #1f7aff, #00b4ff);
-      color: #050509;
-    }
-
-    .btn-coins {
-      background: linear-gradient(135deg, #ffcc00, #ff8800);
-      color: #050509;
-    }
-
-    .social-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-    }
-
-    .social-pill {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      padding: 8px 12px;
-      border-radius: 999px;
-      border: 1px solid rgba(255, 255, 255, 0.12);
-      background: rgba(10, 12, 24, 0.8);
-      font-size: 0.8rem;
-      cursor: pointer;
-      transition: background 0.12s ease, transform 0.12s ease;
-    }
-
-    .social-pill:hover {
-      background: rgba(40, 20, 80, 0.9);
-      transform: translateY(-1px);
-    }
-
-    .social-pill span.icon {
-      font-size: 1rem;
-    }
-
-    .carousel-container {
-      position: relative;
-      overflow: hidden;
-    }
-
-    .carousel-track {
-      display: flex;
-      gap: 12px;
-      overflow-x: auto;
-      scroll-snap-type: x mandatory;
-      padding-bottom: 6px;
-    }
-
-    .carousel-track::-webkit-scrollbar {
-      height: 4px;
-    }
-
-    .carousel-track::-webkit-scrollbar-track {
-      background: rgba(255, 255, 255, 0.05);
-    }
-
-    .carousel-track::-webkit-scrollbar-thumb {
-      background: rgba(255, 255, 255, 0.25);
-      border-radius: 999px;
-    }
-
-    .live-card {
-      min-width: 220px;
-      max-width: 260px;
-      background: radial-gradient(circle at top, rgba(123, 63, 255, 0.4), rgba(10, 12, 24, 0.95));
-      border-radius: 16px;
-      padding: 10px;
-      border: 1px solid rgba(255, 255, 255, 0.12);
-      scroll-snap-align: start;
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-    }
-
-    .live-cover {
-      width: 100%;
-      aspect-ratio: 16 / 9;
-      border-radius: 12px;
-      overflow: hidden;
-      background: radial-gradient(circle at center, #1f7aff, #050509);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: #fdfdff;
-      font-size: 2.2rem;
-    }
-
-    .live-cover img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-    }
-
-    .live-meta {
-      display: flex;
-      flex-direction: column;
-      gap: 4px;
-      font-size: 0.8rem;
-    }
-
-    .live-meta strong {
-      font-size: 0.9rem;
-    }
-
-    .live-tags {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
-      margin-top: 4px;
-    }
-
-    .tag {
-      font-size: 0.7rem;
-      padding: 4px 8px;
-      border-radius: 999px;
-      border: 1px solid rgba(255, 255, 255, 0.18);
-      background: rgba(5, 5, 9, 0.8);
-    }
-
-    .tag-tiktok {
-      border-color: #00f2ea;
-      color: #00f2ea;
-    }
-
-    .tag-kako {
-      border-color: #b84dff;
-      color: #b84dff;
-    }
-
-    .tag-star {
-      border-color: #c79b3b;
-      color: #c79b3b;
-    }
-
-    .estrela-container {
-      position: relative;
-      overflow: hidden;
-      height: 180px;
-    }
-
-    .estrela-track {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      animation: verticalScroll 18s linear infinite;
-    }
-
-    @keyframes verticalScroll {
-      0% { transform: translateY(0); }
-      100% { transform: translateY(-50%); }
-    }
-
-    .estrela-card {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      padding: 8px 10px;
-      border-radius: 12px;
-      background: linear-gradient(135deg, rgba(199, 155, 59, 0.2), rgba(10, 12, 24, 0.9));
-      border: 1px solid rgba(199, 155, 59, 0.6);
-      font-size: 0.85rem;
-    }
-
-    .estrela-avatar {
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-      overflow: hidden;
-      background: radial-gradient(circle at center, #c79b3b, #050509);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.4rem;
-    }
-
-    .estrela-avatar img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-
-    .estrela-info {
-      display: flex;
-      flex-direction: column;
-      gap: 2px;
-    }
-
-    .estrela-info strong {
-      font-size: 0.9rem;
-    }
-
-    .estrela-badge {
-      font-size: 0.7rem;
-      color: #c79b3b;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-    }
-
-    .status-bar {
-      font-size: 0.8rem;
-      color: var(--text-muted);
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      flex-wrap: wrap;
-    }
-
-    .status-dot {
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      background: var(--success);
-      box-shadow: 0 0 8px rgba(61, 220, 151, 0.8);
-    }
-
-    .status-dot.offline {
-      background: var(--error);
-      box-shadow: 0 0 8px rgba(255, 77, 106, 0.8);
-    }
-
-    .message {
-      font-size: 0.8rem;
-      margin-top: 4px;
-    }
-
-    .message.error {
-      color: var(--error);
-    }
-
-    .message.success {
-      color: var(--success);
-    }
-
-    .modal-backdrop {
-      position: fixed;
-      inset: 0;
-      background: rgba(0, 0, 0, 0.7);
-      display: none;
-      align-items: center;
-      justify-content: center;
-      z-index: 50;
-    }
-
-    .modal {
-      width: 100%;
-      max-width: 380px;
-      background: var(--card-bg);
-      border-radius: 18px;
-      padding: 18px 16px;
-      border: 1px solid var(--border-soft);
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.7);
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-    }
-
-    .modal-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .modal-header h3 {
-      font-size: 1rem;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-    }
-
-    .modal-close {
-      border: none;
-      background: transparent;
-      color: var(--text-muted);
-      font-size: 1.2rem;
-      cursor: pointer;
-    }
-
-    .modal-body {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      font-size: 0.85rem;
-    }
-
-    .modal-body label {
-      font-size: 0.8rem;
-      color: var(--text-muted);
-    }
-
-    .modal-body input {
-      width: 100%;
-      padding: 8px 10px;
-      border-radius: 999px;
-      border: 1px solid rgba(255, 255, 255, 0.18);
-      background: rgba(5, 5, 9, 0.9);
-      color: var(--text-light);
-      font-size: 0.85rem;
-    }
-
-    .modal-footer {
-      display: flex;
-      justify-content: flex-end;
-      gap: 8px;
-      margin-top: 4px;
-    }
-
-    .modal-footer .btn {
-      padding-inline: 14px;
-    }
-
-    footer {
-      margin-top: auto;
-      padding: 12px 16px 18px;
-      font-size: 0.75rem;
-      color: var(--text-muted);
+    .titulo-group {
       text-align: center;
     }
 
-    footer span {
+    h1 {
+      font-size: 1.5rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      background: linear-gradient(90deg, var(--primary-purple), var(--primary-gold));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .subtitulo {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-top: 4px;
+    }
+
+    /* ===== REDES SOCIAIS ===== */
+    .redes-bar {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin-top: 8px;
+    }
+
+    .redes-texto {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    .rede-btn {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 12px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid var(--border-soft);
+      color: var(--text-light);
+      text-decoration: none;
+      font-size: 0.8rem;
+      transition: all 0.2s;
+    }
+
+    .rede-btn:hover {
+      background: rgba(123, 63, 255, 0.2);
+      transform: translateY(-1px);
+    }
+
+    /* ===== BOTÕES PRINCIPAIS ===== */
+    .botoes-principais {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 12px;
+      width: 100%;
+      max-width: 700px;
+      margin-top: 10px;
+    }
+
+    .btn-principal {
+      padding: 16px 20px;
+      border-radius: 16px;
+      border: none;
+      font-size: 1rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      transition: all 0.2s ease;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .btn-principal:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+    }
+
+    .btn-agenciado {
+      background: linear-gradient(135deg, var(--primary-purple), #9d4edd);
+      color: #fff;
+    }
+
+    .btn-visitante {
+      background: linear-gradient(135deg, #2d3748, #4a5568);
+      color: #fff;
+    }
+
+    .btn-outras {
+      background: linear-gradient(135deg, var(--primary-gold), #ffb700);
+      color: #000;
+    }
+
+    .btn-admin {
+      background: linear-gradient(135deg, #1a1a2e, #16213e);
+      color: var(--text-muted);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      font-size: 0.85rem;
+      padding: 10px 16px;
+      max-width: 220px;
+      margin: 0 auto;
+      margin-top: 16px;
+    }
+
+    /* ===== LIVES CARROSSEL ===== */
+    .secao-titulo {
+      font-size: 1.1rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin: 32px 0 16px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
       color: var(--primary-gold);
     }
 
-    @keyframes pulse {
-      0% { box-shadow: 0 0 0 0 rgba(123, 63, 255, 0.7); }
-      70% { box-shadow: 0 0 0 15px rgba(123, 63, 255, 0); }
-      100% { box-shadow: 0 0 0 0 rgba(123, 63, 255, 0); }
+    .carrossel-container {
+      overflow: hidden;
+      position: relative;
+    }
+
+    .carrossel {
+      display: flex;
+      gap: 16px;
+      overflow-x: auto;
+      padding: 8px 4px 20px;
+      scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: thin;
+      scrollbar-color: var(--primary-purple) transparent;
+    }
+
+    .carrossel::-webkit-scrollbar {
+      height: 6px;
+    }
+
+    .carrossel::-webkit-scrollbar-thumb {
+      background: var(--primary-purple);
+      border-radius: 3px;
+    }
+
+    .live-card {
+      flex: 0 0 280px;
+      scroll-snap-align: start;
+      background: var(--card-bg);
+      border-radius: 16px;
+      overflow: hidden;
+      border: 1px solid var(--border-soft);
+      transition: transform 0.3s ease;
+      cursor: pointer;
+    }
+
+    .live-card:hover {
+      transform: scale(1.03);
+      border-color: var(--primary-purple);
+    }
+
+    .live-capa {
+      width: 100%;
+      height: 158px;
+      object-fit: cover;
+      background: linear-gradient(135deg, #2a2a4a, #1a1a2e);
+    }
+
+    .live-badge {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: var(--erro);
+      color: #fff;
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-size: 0.7rem;
+      font-weight: bold;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .live-badge::before {
+      content: "";
+      width: 6px;
+      height: 6px;
+      background: #fff;
+      border-radius: 50%;
+      animation: pulsar 1.5s infinite;
+    }
+
+    @keyframes pulsar {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.3; }
+    }
+
+    .live-info {
+      padding: 12px;
+    }
+
+    .live-plataforma {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 4px;
+    }
+
+    .live-nome {
+      font-weight: 600;
+      font-size: 0.9rem;
+      margin-bottom: 6px;
+    }
+
+    /* ===== STREAMER ESTRELA ===== */
+    .estrela-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+      gap: 16px;
+    }
+
+    .estrela-card {
+      background: var(--card-bg);
+      border-radius: 16px;
+      overflow: hidden;
+      border: 1px solid var(--border-soft);
+      transition: transform 0.3s ease;
+    }
+
+    .estrela-card:hover {
+      transform: translateY(-5px);
+      border-color: var(--primary-gold);
+      box-shadow: 0 10px 30px rgba(199, 155, 59, 0.2);
+    }
+
+    .estrela-img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+      background: linear-gradient(135deg, #3a2a5a, #2a1a4a);
+    }
+
+    .estrela-nome {
+      padding: 10px;
+      font-weight: 600;
+      font-size: 0.9rem;
+      text-align: center;
+    }
+
+    /* ===== MODAIS ===== */
+    .modal-fundo {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.9);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 999;
+      padding: 16px;
+      backdrop-filter: blur(8px);
+    }
+
+    .modal {
+      background: var(--card-bg);
+      border-radius: 20px;
+      padding: 28px;
+      border: 1px solid var(--border-soft);
+      width: 100%;
+      max-width: 420px;
+      max-height: 90vh;
+      overflow-y: auto;
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.5);
+    }
+
+    .modal h3 {
+      font-size: 1.2rem;
+      margin-bottom: 16px;
+      text-align: center;
+    }
+
+    .modal p {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      margin-bottom: 20px;
+      line-height: 1.6;
+    }
+
+    .modal label {
+      display: block;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin: 14px 0 6px;
+    }
+
+    .modal input {
+      width: 100%;
+      padding: 12px 14px;
+      border-radius: 10px;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      background: rgba(5, 5, 9, 0.9);
+      color: var(--text-light);
+      font-size: 0.95rem;
+    }
+
+    .modal-botoes {
+      display: flex;
+      gap: 12px;
+      margin-top: 24px;
+    }
+
+    .btn-modal-cancelar {
+      flex: 1;
+      padding: 12px;
+      border-radius: 10px;
+      border: none;
+      background: rgba(255, 255, 255, 0.1);
+      color: var(--text-light);
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .btn-modal-cancelar:hover {
+      background: rgba(255, 255, 255, 0.15);
+    }
+
+    .btn-modal-confirmar {
+      flex: 1;
+      padding: 12px;
+      border-radius: 10px;
+      border: none;
+      background: linear-gradient(135deg, var(--primary-purple), var(--primary-gold));
+      color: #000;
+      font-weight: bold;
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+
+    .btn-modal-confirmar:hover {
+      transform: scale(1.02);
+    }
+
+    .aviso-box {
+      background: rgba(123, 63, 255, 0.12);
+      border: 1px solid rgba(123, 63, 255, 0.3);
+      border-radius: 12px;
+      padding: 16px;
+      margin-bottom: 16px;
+    }
+
+    .aviso-box h4 {
+      color: var(--primary-gold);
+      margin-bottom: 10px;
+      font-size: 0.95rem;
+    }
+
+    .aviso-box p {
+      font-size: 0.85rem;
+      margin-bottom: 8px;
+    }
+
+    .aviso-box a {
+      color: var(--primary-purple);
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .passo-kako {
+      background: rgba(157, 78, 221, 0.1);
+      border-radius: 10px;
+      padding: 12px;
+      margin-top: 12px;
+      font-size: 0.85rem;
+      line-height: 1.8;
+    }
+
+    .codigo-destaque {
+      font-size: 1.3rem;
+      font-weight: bold;
+      color: var(--primary-gold);
+      background: rgba(199, 155, 59, 0.15);
+      padding: 6px 12px;
+      border-radius: 8px;
+      display: inline-block;
+      margin: 8px 0;
+    }
+
+    /* ===== FOOTER ===== */
+    footer {
+      text-align: center;
+      margin-top: 60px;
+      padding: 24px;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      border-top: 1px solid var(--border-soft);
+    }
+
+    /* ===== RESPONSIVO ===== */
+    @media (max-width: 600px) {
+      h1 { font-size: 1.2rem; }
+      .logo { width: 52px; height: 52px; }
+      .botoes-principais { grid-template-columns: 1fr; }
+      .live-card { flex: 0 0 240px; }
+      .estrela-grid { grid-template-columns: repeat(2, 1fr); }
     }
   </style>
 </head>
 <body>
-  <div class="page">
+  <div class="container">
+    <!-- ===== CABEÇALHO ===== -->
     <header>
-      <div class="logo-area">
-        <img src="https://i.ibb.co/B23rwMHt/1787270369792.png" alt="Logo Padroniza Live" />
-        <div class="title-block">
+      <div class="logo-container">
+        <img src="https://i.ibb.co/B23rwMHt/1787270369792.png" alt="Logo Padroniza Live" class="logo" />
+        <div class="titulo-group">
           <h1>Padroniza Live</h1>
-          <span>Central de Lives • TikTok & Kako • Gestão Profissional de Streamers</span>
+          <p class="subtitulo">Gestão Profissional de Streamers • TikTok & Kako Live</p>
         </div>
       </div>
-      <div class="admin-link">
-        <button id="btnAdminArea">🔒 Área Administrativa</button>
-        <small>Uso exclusivo da equipe Padroniza</small>
+
+      <!-- Redes Sociais -->
+      <div class="redes-bar">
+        <span class="redes-texto">Siga nossas redes:</span>
+        <a href="https://www.tiktok.com/@padronizalive" target="_blank" rel="noopener" class="rede-btn">🎵 TikTok</a>
+        <a href="https://www.youtube.com/@padronizalive" target="_blank" rel="noopener" class="rede-btn">▶️ YouTube</a>
+        <a href="https://wa.me/5569981478873" target="_blank" rel="noopener" class="rede-btn">💬 WhatsApp</a>
       </div>
+
+      <!-- Botões Principais -->
+      <div class="botoes-principais">
+        <button class="btn-principal btn-agenciado" onclick="abrirModalAgenciado()">
+          👤 Sou Agenciado
+        </button>
+        <button class="btn-principal btn-visitante" onclick="abrirModalVisitante()">
+          📋 Sou Visitante
+        </button>
+        <button class="btn-principal btn-outras" onclick="window.location.href='encontre-oponente.html'">
+          🏢 Outras Agências
+          <small style="font-size:0.65rem; opacity:0.8; margin-left:6px;">Grátis</small>
+        </button>
+      </div>
+
+      <button class="btn-principal btn-admin" onclick="abrirModalAdmin()">
+        🔒 Área Administrativa
+      </button>
     </header>
 
-    <main class="main-grid">
-      <section class="card">
-        <div class="card-header">
-          <div>
-            <h2>Lives ao vivo</h2>
-            <span>Carrossel com streamers aprovados e ao vivo</span>
-          </div>
-          <div class="status-bar">
-            <div class="status-dot offline" id="liveStatusDot"></div>
-            <span id="liveStatusText">Carregando lives...</span>
-          </div>
+    <!-- ===== LIVES AO VIVO ===== -->
+    <h2 class="secao-titulo">🔴 Lives ao Vivo</h2>
+    <div class="carrossel-container">
+      <div class="carrossel" id="carrosselLives">
+        <!-- Lives carregadas via Apps Script -->
+        <div style="flex:0 0 100%; text-align:center; padding:40px 20px; color:var(--text-muted);">
+          🔄 Carregando lives...
         </div>
+      </div>
+    </div>
 
-        <div class="carousel-container">
-          <div class="carousel-track" id="liveCarousel"></div>
-        </div>
+    <!-- ===== STREAMER ESTRELA ===== -->
+    <h2 class="secao-titulo">⭐ Streamer Estrela da Padroniza</h2>
+    <div class="estrela-grid" id="gridEstrelas">
+      <!-- Destaques carregados via Apps Script -->
+      <div style="grid-column:1/-1; text-align:center; padding:40px 20px; color:var(--text-muted);">
+        🔄 Carregando destaques...
+      </div>
+    </div>
 
-        <div class="card-header" style="margin-top: 12px;">
-          <div>
-            <h2>Streamer Estrela</h2>
-            <span>Destaques em rolagem contínua</span>
-          </div>
-        </div>
-
-        <div class="estrela-container">
-          <div class="estrela-track" id="estrelaTrack"></div>
-        </div>
-
-        <p class="message" id="globalMessage"></p>
-      </section>
-
-      <section class="card">
-        <div class="card-header">
-          <div>
-            <h2>Acessos Rápidos</h2>
-            <span>Escolha sua opção para continuar</span>
-          </div>
-        </div>
-
-        <div class="button-row">
-          <button class="btn btn-tiktok" id="btnTikTok">
-            <span class="icon">🎵</span>
-            <span>Agência TikTok</span>
-          </button>
-          <button class="btn btn-kako" id="btnKako">
-            <span class="icon">💜</span>
-            <span>Agência Kako</span>
-          </button>
-          <button class="btn btn-agenciado" id="btnAgenciado">
-            <span class="icon">👤</span>
-            <span>Sou Agenciado</span>
-          </button>
-          <button class="btn btn-outras" id="btnOutras">
-            <span class="icon">🏢</span>
-            <span>Outras Agências</span>
-          </button>
-        </div>
-
-        <div class="card-header" style="margin-top: 10px;">
-          <div>
-            <h2>Redes Sociais</h2>
-            <span>Conecte-se com a Padroniza Live</span>
-          </div>
-        </div>
-
-        <div class="social-row">
-          <a class="social-pill" href="https://wa.me/5569981478873" target="_blank" rel="noopener">
-            <span class="icon">💬</span><span>WhatsApp</span>
-          </a>
-          <a class="social-pill" href="https://www.tiktok.com" target="_blank" rel="noopener">
-            <span class="icon">🎵</span><span>TikTok</span>
-          </a>
-          <a class="social-pill" href="https://www.instagram.com" target="_blank" rel="noopener">
-            <span class="icon">📸</span><span>Instagram</span>
-          </a>
-          <a class="social-pill" href="https://www.youtube.com" target="_blank" rel="noopener">
-            <span class="icon">▶️</span><span>YouTube</span>
-          </a>
-          <a class="social-pill" href="https://t.me" target="_blank" rel="noopener">
-            <span class="icon">📨</span><span>Telegram</span>
-          </a>
-        </div>
-
-        <div class="card-header" style="margin-top: 10px;">
-          <div>
-            <h2>Moedas TikTok</h2>
-            <span>Compra oficial de coins para presentes em lives</span>
-          </div>
-        </div>
-
-        <button class="btn btn-coins" id="btnCoins">
-          <span class="icon">🪙</span>
-          <span>Comprar Moedas TikTok</span>
-        </button>
-      </section>
-    </main>
+    <!-- ===== RODAPÉ ===== -->
+    <footer>
+      <strong>Padroniza Live</strong> • Gestão Profissional de Streamers<br>
+      💜 TikTok & Kako Live • Todos os direitos reservados © 2026<br>
+      <span style="font-size:0.75rem; opacity:0.6;">Central de Suporte: <a href="https://wa.me/5569981478873" target="_blank" style="color:inherit;">(69) 98147-8873</a></span>
+    </footer>
   </div>
 
-  <!-- MODAL: Sou Agenciado -->
-  <div class="modal-backdrop" id="modalAgenciadoBackdrop">
+  <!-- ================================================== -->
+  <!-- 🔒 MODAL: SOU AGENCIADO -->
+  <!-- ================================================== -->
+  <div class="modal-fundo" id="modalAgenciado">
     <div class="modal">
-      <div class="modal-header">
-        <h3>Sou Agenciado</h3>
-        <button class="modal-close" data-close-modal="agenciado">&times;</button>
-      </div>
-      <div class="modal-body">
-        <p>Digite seu usuário exatamente como cadastrado para acessar seu painel.</p>
-        <label for="inputUsuarioAgenciado">Usuário</label>
-        <input type="text" id="inputUsuarioAgenciado" placeholder="Seu usuário da planilha" />
-        <p class="message" id="agenciadoMessage"></p>
-      </div>
-      <div class="modal-footer">
-        <button class="btn btn-outras" data-close-modal="agenciado">Cancelar</button>
-        <button class="btn btn-agenciado" id="btnConfirmAgenciado">Continuar</button>
+      <h3>🔐 Acesso do Agenciado</h3>
+      <p>Digite seu usuário cadastrado na agência para acessar seu painel exclusivo com treinamentos, materiais e ferramentas.</p>
+      
+      <label for="usuarioAgenciado">Seu usuário (cadastrado na planilha)</label>
+      <input type="text" id="usuarioAgenciado" placeholder="Ex: seu_perfil_tiktok" autocomplete="off" />
+      <p id="msgAgenciado" style="margin-top:10px; font-size:0.85rem;"></p>
+      
+      <div class="modal-botoes">
+        <button class="btn-modal-cancelar" onclick="fecharModal('modalAgenciado')">Cancelar</button>
+        <button class="btn-modal-confirmar" onclick="validarAgenciado()">Entrar →</button>
       </div>
     </div>
   </div>
 
-  <!-- MODAL: Área Administrativa -->
-  <div class="modal-backdrop" id="modalAdminBackdrop">
+  <!-- ================================================== -->
+  <!-- 📋 MODAL: SOU VISITANTE -->
+  <!-- ================================================== -->
+  <div class="modal-fundo" id="modalVisitante">
     <div class="modal">
-      <div class="modal-header">
-        <h3>Área Administrativa</h3>
-        <button class="modal-close" data-close-modal="admin">&times;</button>
+      <h3>🎯 Seja Bem-Vindo(a)!</h3>
+      
+      <div class="aviso-box">
+        <h4>✅ 100% Gratuito</h4>
+        <p>Entrar na agência é totalmente gratuito! Ao participar, você desbloqueia todos os benefícios e serviços da nossa plataforma.</p>
       </div>
-      <div class="modal-body">
-        <p>Login exclusivo da equipe Padroniza Live.</p>
-        <label for="inputAdminUser">Usuário</label>
-        <input type="email" id="inputAdminUser" placeholder="padronizaassessoria@gmail.com" />
-        <label for="inputAdminPass">Senha</label>
-        <input type="password" id="inputAdminPass" placeholder="••••••••" />
-        <p class="message" id="adminMessage"></p>
+
+      <p style="text-align:center; margin-bottom:20px;">Escolha a plataforma para solicitar seu ingresso:</p>
+      
+      <a href="https://www.tiktok.com/t/ZSHu6CFAM/" target="_blank" rel="noopener" style="display:block; text-align:center; padding:14px; background:linear-gradient(135deg, #00f2ea, #ff0050); color:#000; border-radius:12px; text-decoration:none; font-weight:bold; margin-bottom:12px;">
+        🎵 Solicitar entrada — TikTok
+      </a>
+      
+      <div style="background:rgba(157,78,221,0.1); border-radius:12px; padding:16px; text-align:center;">
+        <h4 style="color:var(--kako-purple); margin-bottom:10px;">💜 Kako Live</h4>
+        <p style="font-size:0.85rem; margin-bottom:8px;">Baixe o app e use o ID da agência:</p>
+        <div class="codigo-destaque">177766</div>
+        
+        <div class="passo-kako">
+          <strong>Passo a passo:</strong><br>
+          1️⃣ Baixe pela <a href="https://play.google.com/store/apps/details?id=live.kako.global" target="_blank">Play Store</a><br>
+          2️⃣ Configure seu perfil (nome + foto)<br>
+          3️⃣ Toque em <strong>Centro de Agência</strong> (ícone roxo)<br>
+          4️⃣ Clique em <strong>Agência</strong> (canto superior direito)<br>
+          5️⃣ Digite o ID: <strong>177766</strong> → Solicitar ✅
+        </div>
       </div>
-      <div class="modal-footer">
-        <button class="btn btn-outras" data-close-modal="admin">Cancelar</button>
-        <button class="btn btn-agenciado" id="btnConfirmAdmin">Entrar</button>
+      
+      <div class="modal-botoes">
+        <button class="btn-modal-cancelar" onclick="fecharModal('modalVisitante')">Voltar</button>
       </div>
     </div>
   </div>
 
-  <footer>
-    Padroniza Live • Gestão Profissional de Streamers • <span>Status: somente usuários APROVADOS têm acesso</span>
-  </footer>
+  <!-- ================================================== -->
+  <!-- 🔑 MODAL: ÁREA ADMINISTRATIVA -->
+  <!-- ================================================== -->
+  <div class="modal-fundo" id="modalAdmin">
+    <div class="modal">
+      <h3>🔐 Acesso Restrito</h3>
+      <p style="text-align:center; color:var(--text-muted); font-size:0.85rem;">Acesso exclusivo da administração Padroniza Live.</p>
+      
+      <label for="emailAdmin">E-mail da Agência</label>
+      <input type="email" id="emailAdmin" placeholder="padronizaassessoria@gmail.com" autocomplete="off" />
+      
+      <label for="senhaAdmin">Senha</label>
+      <input type="password" id="senhaAdmin" placeholder="••••••••" autocomplete="off" />
+      <p id="msgAdmin" style="margin-top:10px; font-size:0.85rem;"></p>
+      
+      <div class="modal-botoes">
+        <button class="btn-modal-cancelar" onclick="fecharModal('modalAdmin')">Cancelar</button>
+        <button class="btn-modal-confirmar" onclick="validarAdmin()">Entrar →</button>
+      </div>
+    </div>
+  </div>
 
-  <!-- 📲 BOTÃO DE INSTALAR APP PWA -->
+  <!-- ================================================== -->
+  <!-- ⚙️ SCRIPTS DE INTEGRAÇÃO -->
+  <!-- ================================================== -->
   <script>
-    let deferredPrompt;
-    window.addEventListener('beforeinstallprompt', (e) => {
-      e.preventDefault();
-      deferredPrompt = e;
-      mostrarBotaoInstalar();
-    });
+    // ✅ SEU APPS SCRIPT — LINK OFICIAL
+    const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzLk5Q3cGjOeSfIdQWdEM1v8ngjCpLu7hzwrU-ZZIH9dNgkJArZPhaJBVgYNvABGBkl/exec";
 
-    function mostrarBotaoInstalar() {
-      const botao = document.createElement('div');
-      botao.style = `
-        position: fixed;
-        bottom: 20px;
-        left: 50%;
-        transform: translateX(-50%);
-        background: linear-gradient(135deg, #7b3fff, #c79b3b);
-        color: #050509;
-        padding: 12px 24px;
-        border-radius: 999px;
-        font-weight: bold;
-        cursor: pointer;
-        z-index: 9999;
-        box-shadow: 0 8px 24px rgba(0,0,0,0.5);
-        animation: pulse 2s infinite;
-      `;
-      botao.innerHTML = "📲 Instalar App Padroniza Live";
-      botao.addEventListener('click', async () => {
-        if (deferredPrompt) {
-          deferredPrompt.prompt();
-          const { outcome } = await deferredPrompt.userChoice;
-          if (outcome === 'accepted') botao.remove();
-          deferredPrompt = null;
-        }
-      });
-      document.body.appendChild(botao);
+    // 📋 ABRIR E FECHAR MODAIS
+    function abrirModalAgenciado() {
+      document.getElementById('modalAgenciado').style.display = 'flex';
+      document.body.style.overflow = 'hidden';
+      document.getElementById('usuarioAgenciado').focus();
     }
-  </script>
 
-  <!-- 🧠 SITE + APPS SCRIPT COMPLETO -->
-  <script>
-    // ✅ SEU APPS SCRIPT NOVO — LINK CORRETO!
-    const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyCbaWNSl1jUhct1tK6YyOUTbOyIWisklrB1LuAvO_SKWGqyHQz9_5L79Ex_wclTCgv/exec";
+    function abrirModalVisitante() {
+      document.getElementById('modalVisitante').style.display = 'flex';
+      document.body.style.overflow = 'hidden';
+    }
 
-    const elements = {
-      liveCarousel: document.getElementById("liveCarousel"),
-      estrelaTrack: document.getElementById("estrelaTrack"),
-      liveStatusDot: document.getElementById("liveStatusDot"),
-      liveStatusText: document.getElementById("liveStatusText"),
-      globalMessage: document.getElementById("globalMessage"),
-      modalAgenciadoBackdrop: document.getElementById("modalAgenciadoBackdrop"),
-      modalAdminBackdrop: document.getElementById("modalAdminBackdrop"),
-      agenciadoMessage: document.getElementById("agenciadoMessage"),
-      adminMessage: document.getElementById("adminMessage"),
-      inputUsuarioAgenciado: document.getElementById("inputUsuarioAgenciado"),
-      inputAdminUser: document.getElementById("inputAdminUser"),
-      inputAdminPass: document.getElementById("inputAdminPass")
-    };
+    function abrirModalAdmin() {
+      document.getElementById('modalAdmin').style.display = 'flex';
+      document.body.style.overflow = 'hidden';
+      document.getElementById('emailAdmin').focus();
+    }
 
-    // ✅ LINKS CORRETOS
-    document.getElementById("btnTikTok").addEventListener("click", () => {
-      window.open("https://1drv.ms/f/c/884f1b26d8daa748/IgCI5Cqu_c0lTokK1PAApLfVARVzFb6jEQMdTsvbD_Nucqo?e=CJc3ZD", "_blank");
-    });
+    function fecharModal(idModal) {
+      document.getElementById(idModal).style.display = 'none';
+      document.body.style.overflow = 'auto';
+      // Limpar campos
+      if (idModal === 'modalAgenciado') {
+        document.getElementById('usuarioAgenciado').value = '';
+        document.getElementById('msgAgenciado').textContent = '';
+      }
+      if (idModal === 'modalAdmin') {
+        document.getElementById('emailAdmin').value = '';
+        document.getElementById('senhaAdmin').value = '';
+        document.getElementById('msgAdmin').textContent = '';
+      }
+    }
 
-    document.getElementById("btnKako").addEventListener("click", () => {
-      window.open("https://1drv.ms/f/c/884f1b26d8daa748/IgCH2cDy7-dkR5bU09e-fCubATT4f6EzWwx0fS9ete7cnYI?e=yOHuSs", "_blank");
-    });
+    // 🔐 VALIDAR AGENCIADO → redireciona para painel-agenciado.html
+    async function validarAgenciado() {
+      const usuario = document.getElementById('usuarioAgenciado').value.trim();
+      const msg = document.getElementById('msgAgenciado');
 
-    document.getElementById("btnOutras").addEventListener("click", () => {
-      window.location.href = "encontre-oponente.html";
-    });
-
-    document.getElementById("btnCoins").addEventListener("click", () => {
-      window.open("https://coins.tiktok.com/pt-BR/", "_blank");
-    });
-
-    // MODAIS
-    document.getElementById("btnAgenciado").addEventListener("click", () => {
-      elements.modalAgenciadoBackdrop.style.display = "flex";
-      elements.inputUsuarioAgenciado.value = "";
-      elements.agenciadoMessage.textContent = "";
-    });
-
-    document.getElementById("btnAdminArea").addEventListener("click", () => {
-      elements.modalAdminBackdrop.style.display = "flex";
-      elements.inputAdminUser.value = "";
-      elements.inputAdminPass.value = "";
-      elements.adminMessage.textContent = "";
-    });
-
-    document.querySelectorAll("[data-close-modal]").forEach(btn => {
-      btn.addEventListener("click", () => {
-        const type = btn.getAttribute("data-close-modal");
-        if (type === "agenciado") elements.modalAgenciadoBackdrop.style.display = "none";
-        if (type === "admin") elements.modalAdminBackdrop.style.display = "none";
-      });
-    });
-
-    // ✅ VERIFICAR USUÁRIO — COMPATÍVEL COM APPS SCRIPT
-    document.getElementById("btnConfirmAgenciado").addEventListener("click", async () => {
-      const usuario = elements.inputUsuarioAgenciado.value.trim();
       if (!usuario) {
-        elements.agenciadoMessage.textContent = "⚠️ Digite seu usuário";
-        elements.agenciadoMessage.className = "message error";
+        msg.textContent = "⚠️ Digite seu usuário";
+        msg.style.color = "var(--erro)";
         return;
       }
 
-      elements.agenciadoMessage.textContent = "🔄 Verificando...";
-      elements.agenciadoMessage.className = "message";
+      msg.textContent = "🔄 Verificando...";
+      msg.style.color = "var(--text-muted)";
 
       try {
         const res = await fetch(`${APPS_SCRIPT_URL}?acao=verificarUsuario&usuario=${encodeURIComponent(usuario)}`);
         const dados = await res.json();
 
-        if (dados.sucesso && dados.encontrado) {
-          elements.agenciadoMessage.textContent = "✅ Aprovado! Entrando...";
-          elements.agenciadoMessage.className = "message success";
+        if (dados.sucesso && dados.encontrado && dados.aprovado) {
+          // ✅ APROVADO — Salvar e redirecionar
+          localStorage.setItem('usuarioAgenciado', usuario);
+          msg.textContent = "✅ Usuário aprovado! Entrando...";
+          msg.style.color = "var(--sucesso)";
           setTimeout(() => {
             window.location.href = "painel-agenciado.html";
           }, 800);
         } else {
-          elements.agenciadoMessage.textContent = "❌ Usuário não aprovado ou não encontrado.";
-          elements.agenciadoMessage.className = "message error";
+          msg.textContent = "❌ Usuário não encontrado ou não aprovado.";
+          msg.style.color = "var(--erro)";
         }
-      } catch (e) {
-        elements.agenciadoMessage.textContent = "❌ Erro de conexão. Tente novamente.";
-        elements.agenciadoMessage.className = "message error";
+      } catch (erro) {
+        console.error(erro);
+        msg.textContent = "⚠️ Erro de conexão. Tente novamente.";
+        msg.style.color = "var(--erro)";
       }
-    });
+    }
 
-    // 🔐 LOGIN ADMIN
-    document.getElementById("btnConfirmAdmin").addEventListener("click", () => {
-      const user = elements.inputAdminUser.value.trim().toLowerCase();
-      const pass = elements.inputAdminPass.value.trim();
+    // 🔑 VALIDAR ADMIN → redireciona para painel-admin.html
+    function validarAdmin() {
+      const email = document.getElementById('emailAdmin').value.trim().toLowerCase();
+      const senha = document.getElementById('senhaAdmin').value.trim();
+      const msg = document.getElementById('msgAdmin');
 
-      if (user === "padronizaassessoria@gmail.com" && pass === "988agencia") {
-        elements.adminMessage.textContent = "✅ Entrando...";
-        elements.adminMessage.className = "message success";
+      const ADMIN_EMAIL = "padronizaassessoria@gmail.com";
+      const ADMIN_SENHA = "agencia988";
+
+      if (!email || !senha) {
+        msg.textContent = "⚠️ Preencha e-mail e senha";
+        msg.style.color = "var(--erro)";
+        return;
+      }
+
+      if (email === ADMIN_EMAIL && senha === ADMIN_SENHA) {
+        msg.textContent = "✅ Acesso liberado! Entrando...";
+        msg.style.color = "var(--sucesso)";
+        sessionStorage.setItem('adminLogado', 'sim');
         setTimeout(() => {
           window.location.href = "painel-admin.html";
         }, 800);
       } else {
-        elements.adminMessage.textContent = "❌ Usuário ou senha incorretos.";
-        elements.adminMessage.className = "message error";
+        msg.textContent = "❌ E-mail ou senha incorretos";
+        msg.style.color = "var(--erro)";
+      }
+    }
+
+    // 📡 CARREGAR LIVES E DESTAQUES DA PLANILHA
+    async function carregarDados() {
+      try {
+        // Carregar Lives
+        const resLives = await fetch(`${APPS_SCRIPT_URL}?acao=listarLives`);
+        const dadosLives = await resLives.json();
+        const carrossel = document.getElementById('carrosselLives');
+
+        if (dadosLives.sucesso && dadosLives.lives && dadosLives.lives.length > 0) {
+          carrossel.innerHTML = dadosLives.lives.map(live => `
+            <a href="${live.link}" target="_blank" rel="noopener" class="live-card" style="text-decoration:none; color:inherit;">
+              <div style="position:relative;">
+                <img src="${live.capa || 'https://i.ibb.co/60XqWxZ/placeholder-live.png'}" alt="${live.nome}" class="live-capa" />
+                ${live.aoVivo ? '<span class="live-badge">AO VIVO</span>' : ''}
+              </div>
+              <div class="live-info">
+                <span class="live-plataforma">${live.plataforma}</span>
+                <h3 class="live-nome">${live.nome}</h3>
+              </div>
+            </a>
+          `).join('');
+        } else {
+          carrossel.innerHTML = `<div style="flex:0 0 100%; text-align:center; padding:40px 20px; color:var(--text-muted);">📭 Nenhuma live no momento</div>`;
+        }
+
+        // Carregar Streamer Estrela
+        const resEstrelas = await fetch(`${APPS_SCRIPT_URL}?acao=listarEstrelas`);
+        const dadosEstrelas = await resEstrelas.json();
+        const grid = document.getElementById('gridEstrelas');
+
+        if (dadosEstrelas.sucesso && dadosEstrelas.estrelas && dadosEstrelas.estrelas.length > 0) {
+          grid.innerHTML = dadosEstrelas.estrelas.map(estrela => `
+            <div class="estrela-card">
+              <img src="${estrela.imagem}" alt="${estrela.nome}" class="estrela-img" loading="lazy" />
+              <h3 class="estrela-nome">${estrela.nome}</h3>
+            </div>
+          `).join('');
+        } else {
+          grid.innerHTML = `<div style="grid-column:1/-1; text-align:center; padding:40px 20px; color:var(--text-muted);">⭐ Destaques em breve...</div>`;
+        }
+      } catch (erro) {
+        console.error("Erro ao carregar dados:", erro);
+        document.getElementById('carrosselLives').innerHTML = `<div style="flex:0 0 100%; text-align:center; padding:40px 20px; color:var(--erro);">⚠️ Não foi possível carregar as lives</div>`;
+        document.getElementById('gridEstrelas').innerHTML = `<div style="grid-column:1/-1; text-align:center; padding:40px 20px; color:var(--erro);">⚠️ Não foi possível carregar os destaques</div>`;
+      }
+    }
+
+    // Fechar modal clicando fora
+    document.addEventListener('click', (e) => {
+      if (e.target.classList.contains('modal-fundo')) {
+        e.target.style.display = 'none';
+        document.body.style.overflow = 'auto';
       }
     });
 
-    // 🎬 CARREGAR LIVES
-    async function carregarLives() {
-      try {
-        elements.liveStatusText.textContent = "Carregando lives...";
-        const res = await fetch(`${APPS_SCRIPT_URL}?acao=listarLives`);
-        const dados = await res.json();
-
-        elements.liveCarousel.innerHTML = "";
-        if (!dados.sucesso || !dados.lives || dados.lives.length === 0) {
-          elements.liveStatusText.textContent = "Nenhuma live ao vivo";
-          elements.liveStatusDot.classList.add("offline");
-          elements.liveCarousel.innerHTML = `<p style="padding:20px;text-align:center;color:#b3b3cc;">🎬 Nenhuma live no momento</p>`;
-          carregarEstrelas();
-          return;
-        }
-
-        elements.liveStatusText.textContent = `${dados.totalLives} lives ao vivo`;
-        elements.liveStatusDot.classList.remove("offline");
-
-        elements.liveCarousel.innerHTML = dados.lives.map(live => {
-          const temCapa = live.capa && live.capa.trim() !== "";
-          const tagClass = live.plataforma === "kako" ? "tag-kako" : "tag-tiktok";
-          const tagText = live.plataforma === "kako" ? "💜 Kako" : "🎵 TikTok";
-
-          return `
-            <a href="${live.link}" target="_blank" rel="noopener" class="live-card">
-              <div class="live-cover">
-                ${temCapa ? `<img src="${live.capa}" alt="${live.nome}" loading="lazy">` : "🎬"}
-              </div>
-              <div class="live-meta">
-                <strong>${live.nome || "Streamer"}</strong>
-                <div class="live-tags">
-                  <span class="tag ${tagClass}">${tagText}</span>
-                  <span class="tag">🔴 AO VIVO</span>
-                </div>
-              </div>
-            </a>
-          `;
-        }).join("");
-
-        carregarEstrelas();
-      } catch (e) {
-        console.error("Erro lives:", e);
-        elements.liveStatusText.textContent = "Erro ao carregar";
-        elements.globalMessage.textContent = "⚠️ Atualize a página.";
-        elements.globalMessage.className = "message error";
+    // Enter para confirmar
+    document.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') {
+        if (document.getElementById('modalAgenciado').style.display === 'flex') validarAgenciado();
+        if (document.getElementById('modalAdmin').style.display === 'flex') validarAdmin();
       }
-    }
+    });
 
-    // ⭐ CARREGAR ESTRELAS
-    async function carregarEstrelas() {
-      try {
-        const res = await fetch(`${APPS_SCRIPT_URL}?acao=listarDestaques`);
-        const dados = await res.json();
-
-        elements.estrelaTrack.innerHTML = "";
-
-        if (!dados.sucesso || !dados.streamersEstrela || dados.streamersEstrela.length === 0) {
-          elements.estrelaTrack.innerHTML = `<p style="padding:20px;text-align:center;color:#b3b3cc;">⭐ Nenhum destaque</p>`;
-          return;
-        }
-
-        const cards = dados.streamersEstrela.map(s => `
-          <div class="estrela-card">
-            <div class="estrela-avatar">
-              ${s.capa ? `<img src="${s.capa}" alt="${s.nome}">` : "⭐"}
-            </div>
-            <div class="estrela-info">
-              <strong>${s.nome || "Streamer"}</strong>
-              <span class="estrela-badge">🏆 Streamer Estrela</span>
-            </div>
-          </div>
-        `).join("");
-
-        elements.estrelaTrack.innerHTML = cards + cards;
-      } catch (e) {
-        console.error("Erro estrelas:", e);
-        elements.estrelaTrack.innerHTML = `<p style="padding:20px;text-align:center;color:#b3b3cc;">⚠️ Erro ao carregar</p>`;
-      }
-    }
-
-    document.addEventListener("DOMContentLoaded", carregarLives);
+    // Inicializar ao carregar
+    document.addEventListener('DOMContentLoaded', carregarDados);
   </script>
 </body>
 </html>
