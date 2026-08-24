@@ -17,296 +17,113 @@
       --erro: #ff4d6a;
     }
 
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
+    * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-family: system-ui, sans-serif;
       background: var(--bg-gradient);
       color: var(--text-light);
       min-height: 100vh;
       padding: 16px;
     }
-
-    .container {
-      max-width: 900px;
-      margin: 0 auto;
-    }
-
+    .container { max-width: 900px; margin: 0 auto; }
     header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-      padding: 16px;
-      border-radius: 16px;
-      background: linear-gradient(135deg, rgba(10, 12, 24, 0.9), rgba(40, 20, 80, 0.9));
-      border: 1px solid var(--border-soft);
-      margin-bottom: 24px;
+      display: flex; align-items: center; justify-content: space-between; gap: 12px;
+      padding: 16px; border-radius: 16px;
+      background: linear-gradient(135deg, rgba(10,12,24,0.9), rgba(40,20,80,0.9));
+      border: 1px solid var(--border-soft); margin-bottom: 24px; flex-wrap: wrap;
     }
-
-    .logo {
-      width: 56px;
-      height: 56px;
-      border-radius: 50%;
-      object-fit: cover;
-      border: 2px solid var(--primary-gold);
-    }
-
+    .logo { width: 56px; height: 56px; border-radius: 50%; object-fit: cover; border: 2px solid var(--primary-gold); }
     .voltar-btn {
-      padding: 8px 16px;
-      border-radius: 999px;
-      background: rgba(255, 255, 255, 0.1);
-      border: 1px solid var(--border-soft);
-      color: var(--text-light);
-      cursor: pointer;
-      font-size: 0.85rem;
-      transition: all 0.2s;
+      padding: 8px 16px; border-radius: 999px;
+      background: rgba(255,255,255,0.1); border: 1px solid var(--border-soft);
+      color: var(--text-light); cursor: pointer; font-size: 0.85rem;
     }
-
-    .voltar-btn:hover {
-      background: rgba(123, 63, 255, 0.3);
-    }
-
-    h1 {
-      font-size: 1.4rem;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-    }
-
-    .subtitulo {
-      font-size: 0.85rem;
-      color: var(--text-muted);
-      margin-top: 4px;
-    }
-
+    .voltar-btn:hover { background: rgba(123,63,255,0.3); }
+    h1 { font-size: 1.4rem; text-transform: uppercase; letter-spacing: 0.05em; }
+    .subtitulo { font-size: 0.85rem; color: var(--text-muted); margin-top: 4px; }
     .card {
-      background: var(--card-bg);
-      border-radius: 18px;
-      padding: 20px;
-      border: 1px solid var(--border-soft);
-      margin-bottom: 20px;
-      box-shadow: 0 16px 32px rgba(0, 0, 0, 0.45);
+      background: var(--card-bg); border-radius: 18px; padding: 20px;
+      border: 1px solid var(--border-soft); margin-bottom: 20px;
+      box-shadow: 0 16px 32px rgba(0,0,0,0.45);
     }
-
-    .card h2 {
-      font-size: 1.1rem;
-      margin-bottom: 16px;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .btn-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 12px;
-    }
-
+    .card h2 { font-size: 1.1rem; margin-bottom: 16px; display: flex; align-items: center; gap: 8px; }
+    .btn-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 12px; }
     .btn {
-      padding: 14px 18px;
-      border-radius: 14px;
-      border: none;
-      font-size: 0.95rem;
-      font-weight: 600;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      transition: transform 0.15s ease, filter 0.15s ease;
-      text-align: left;
-      color: #050509;
+      padding: 14px 18px; border-radius: 14px; border: none;
+      font-size: 0.95rem; font-weight: 600; cursor: pointer;
+      display: flex; align-items: center; gap: 10px;
+      transition: transform 0.15s ease; text-align: left; color: #050509;
     }
-
-    .btn:hover {
-      transform: translateY(-2px);
-      filter: brightness(1.05);
-    }
-
-    .btn-tiktok {
-      background: linear-gradient(135deg, #00f2ea, #ff0050);
-    }
-
-    .btn-kako {
-      background: linear-gradient(135deg, #7b3fff, #b84dff);
-      color: #fdfdff;
-    }
-
-    .btn-batalha {
-      background: linear-gradient(135deg, #ffcc00, #ff8800);
-    }
-
-    .btn-ticket {
-      background: linear-gradient(135deg, #1f7aff, #00b4ff);
-      color: #050509;
-    }
-
-    .btn-whatsapp {
-      background: linear-gradient(135deg, #25D366, #128C7E);
-      color: #fff;
-    }
-
-    .btn-youtube {
-      background: linear-gradient(135deg, #ff0000, #cc0000);
-      color: #fff;
-    }
-
+    .btn:hover { transform: translateY(-2px); filter: brightness(1.05); }
+    .btn-tiktok { background: linear-gradient(135deg, #00f2ea, #ff0050); }
+    .btn-kako { background: linear-gradient(135deg, #7b3fff, #b84dff); color: #fdfdff; }
+    .btn-batalha { background: linear-gradient(135deg, #ffcc00, #ff8800); }
+    .btn-ticket { background: linear-gradient(135deg, #1f7aff, #00b4ff); color: #050509; }
+    .btn-whatsapp { background: linear-gradient(135deg, #25D366, #128C7E); color: #fff; }
+    .btn-youtube { background: linear-gradient(135deg, #ff0000, #cc0000); color: #fff; }
     .info-box {
-      background: rgba(123, 63, 255, 0.15);
-      border: 1px solid rgba(123, 63, 255, 0.4);
-      border-radius: 12px;
-      padding: 14px;
-      margin-bottom: 16px;
+      background: rgba(123,63,255,0.15); border: 1px solid rgba(123,63,255,0.4);
+      border-radius: 12px; padding: 14px; margin-bottom: 16px;
     }
-
-    .info-box p {
-      font-size: 0.9rem;
-      line-height: 1.6;
-    }
-
-    .info-box strong {
-      color: var(--primary-gold);
-    }
-
-    .divisor {
-      height: 1px;
-      background: linear-gradient(to right, transparent, rgba(255,255,255,0.2), transparent);
-      margin: 24px 0;
-    }
-
+    .info-box p { font-size: 0.9rem; line-height: 1.6; }
+    .info-box strong { color: var(--primary-gold); }
     .perfil-box {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-      margin-bottom: 20px;
-      padding: 12px;
-      background: rgba(199, 155, 59, 0.1);
-      border-radius: 12px;
-      border: 1px solid rgba(199, 155, 59, 0.3);
+      display: flex; align-items: center; gap: 14px; margin-bottom: 20px; padding: 12px;
+      background: rgba(199,155,59,0.1); border-radius: 12px; border: 1px solid rgba(199,155,59,0.3);
     }
-
     .perfil-avatar {
-      width: 48px;
-      height: 48px;
-      border-radius: 50%;
+      width: 48px; height: 48px; border-radius: 50%;
       background: linear-gradient(135deg, #7b3fff, #c79b3b);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.5rem;
+      display: flex; align-items: center; justify-content: center; font-size: 1.5rem;
     }
-
-    .perfil-info h3 {
-      font-size: 1rem;
+    .perfil-info h3 { font-size: 1rem; }
+    .perfil-info span { font-size: 0.8rem; color: var(--text-muted); }
+    .aviso-acesso {
+      background: rgba(255,77,106,0.1); border: 1px solid var(--erro);
+      color: var(--erro); padding: 20px; border-radius: 12px; text-align: center;
+      margin-top: 100px;
     }
-
-    .perfil-info span {
-      font-size: 0.8rem;
-      color: var(--text-muted);
-    }
-
     .modal-fundo {
-      position: fixed;
-      inset: 0;
-      background: rgba(0, 0, 0, 0.8);
-      display: none;
-      align-items: center;
-      justify-content: center;
-      z-index: 999;
-      padding: 16px;
+      position: fixed; inset: 0; background: rgba(0,0,0,0.9);
+      display: flex; align-items: center; justify-content: center; z-index: 999; padding: 16px;
     }
-
     .modal {
-      background: var(--card-bg);
-      border-radius: 18px;
-      padding: 24px;
-      border: 1px solid var(--border-soft);
-      width: 100%;
-      max-width: 420px;
-      max-height: 90vh;
-      overflow-y: auto;
+      background: var(--card-bg); border-radius: 18px; padding: 24px;
+      border: 1px solid var(--border-soft); width: 100%; max-width: 400px;
     }
-
-    .modal h3 {
-      margin-bottom: 16px;
-      font-size: 1.1rem;
+    .modal h3 { margin-bottom: 16px; }
+    .modal label { display: block; font-size: 0.85rem; color: var(--text-muted); margin: 12px 0 6px; }
+    .modal input {
+      width: 100%; padding: 10px 12px; border-radius: 10px;
+      border: 1px solid rgba(255,255,255,0.15);
+      background: rgba(5,5,9,0.9); color: var(--text-light); font-size: 0.9rem;
     }
-
-    .modal label {
-      display: block;
-      font-size: 0.85rem;
-      color: var(--text-muted);
-      margin-bottom: 6px;
-      margin-top: 12px;
-    }
-
-    .modal input, .modal textarea, .modal select {
-      width: 100%;
-      padding: 10px 12px;
-      border-radius: 10px;
-      border: 1px solid rgba(255, 255, 255, 0.15);
-      background: rgba(5, 5, 9, 0.9);
-      color: var(--text-light);
-      font-size: 0.9rem;
-    }
-
-    .modal textarea {
-      min-height: 100px;
-      resize: vertical;
-    }
-
-    .modal-botoes {
-      display: flex;
-      gap: 10px;
-      margin-top: 20px;
-      justify-content: flex-end;
-    }
-
-    .btn-cancelar {
-      background: rgba(255, 255, 255, 0.1);
-      color: var(--text-light);
-    }
-
-    .btn-enviar {
-      background: linear-gradient(135deg, #7b3fff, #c79b3b);
-      color: #050509;
-    }
-
-    .upload-area {
-      border: 2px dashed rgba(255, 255, 255, 0.2);
-      border-radius: 10px;
-      padding: 20px;
-      text-align: center;
-      margin-top: 8px;
-      cursor: pointer;
-      transition: all 0.2s;
-    }
-
-    .upload-area:hover {
-      border-color: var(--primary-purple);
-      background: rgba(123, 63, 255, 0.1);
-    }
-
-    footer {
-      text-align: center;
-      margin-top: 40px;
-      padding: 20px;
-      font-size: 0.8rem;
-      color: var(--text-muted);
-    }
-
-    @media (max-width: 600px) {
-      .btn-grid {
-        grid-template-columns: 1fr;
-      }
-    }
+    .modal-botoes { display: flex; gap: 10px; margin-top: 20px; justify-content: flex-end; }
+    .btn-cancelar { background: rgba(255,255,255,0.1); color: var(--text-light); }
+    .btn-entrar { background: linear-gradient(135deg, #7b3fff, #c79b3b); color: #050509; }
+    footer { text-align: center; margin-top: 40px; padding: 20px; font-size: 0.8rem; color: var(--text-muted); }
   </style>
 </head>
 <body>
-  <div class="container">
+  <!-- 🔒 MODAL DE LOGIN — OBRIGATÓRIO -->
+  <div class="modal-fundo" id="modalLogin">
+    <div class="modal">
+      <h3>🔐 Acesso ao Painel do Agenciado</h3>
+      <p style="font-size:0.85rem; color:var(--text-muted); margin-bottom:16px;">Digite seu usuário cadastrado na agência para acessar.</p>
+      
+      <label for="usuarioInput">Seu usuário (cadastrado na planilha)</label>
+      <input type="text" id="usuarioInput" placeholder="Ex: seu_nome_tiktok" autocomplete="off" />
+      <p id="loginMensagem" style="margin-top:12px; font-size:0.85rem;"></p>
+      
+      <div class="modal-botoes">
+        <button class="btn btn-cancelar" onclick="window.location.href='index.html'">Voltar</button>
+        <button class="btn btn-entrar" onclick="verificarUsuario()">Entrar →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 📋 CONTEÚDO — SÓ APARECE APÓS LOGIN APROVADO -->
+  <div class="container" id="conteudoPainel" style="display: none;">
     <header>
       <div style="display: flex; align-items: center; gap: 12px;">
         <img src="https://i.ibb.co/B23rwMHt/1787270369792.png" alt="Logo" class="logo" />
@@ -315,177 +132,124 @@
           <p class="subtitulo">Padroniza Live — Sua central de treinamentos e ferramentas</p>
         </div>
       </div>
-      <button class="voltar-btn" onclick="window.location.href='index.html'">← Voltar</button>
+      <button class="voltar-btn" onclick="sair()">Sair ←</button>
     </header>
 
-    <!-- Perfil do Usuário -->
     <div class="card">
       <div class="perfil-box">
         <div class="perfil-avatar">👤</div>
         <div class="perfil-info">
-          <h3 id="nomeUsuario">Carregando usuário...</h3>
+          <h3 id="nomeUsuario">Carregando...</h3>
           <span>✅ Aprovado • Acesso Liberado</span>
         </div>
       </div>
-
       <div class="info-box">
-        <p>👋 Bem-vindo(a)! Aqui você encontra todos os <strong>treinamentos, materiais exclusivos</strong> e ferramentas da Padroniza Live. Escolha a plataforma abaixo para acessar seu conteúdo:</p>
+        <p>👋 Bem-vindo(a)! Aqui você encontra todos os <strong>treinamentos, materiais exclusivos</strong> e ferramentas da Padroniza Live.</p>
       </div>
     </div>
 
-    <!-- Treinamentos -->
     <div class="card">
       <h2>📚 Treinamentos & Materiais</h2>
       <div class="btn-grid">
         <a href="https://1drv.ms/f/c/884f1b26d8daa748/IgCI5Cqu_c0lTokK1PAApLfVARVzFb6jEQMdTsvbD_Nucqo?e=CJc3ZD" target="_blank" rel="noopener" class="btn btn-tiktok">
-          <span>🎵</span>
-          <span>Treinamento TikTok</span>
+          <span>🎵</span><span>Treinamento TikTok</span>
         </a>
         <a href="https://1drv.ms/f/c/884f1b26d8daa748/IgCH2cDy7-dkR5bU09e-fCubATT4f6EzWwx0fS9ete7cnYI?e=yOHuSs" target="_blank" rel="noopener" class="btn btn-kako">
-          <span>💜</span>
-          <span>Treinamento Kako Live</span>
+          <span>💜</span><span>Treinamento Kako Live</span>
         </a>
         <a href="https://1drv.ms/f/c/884f1b26d8daa748/IgAPsfq4_Y-bR5uaX-iprDfNAepxseO3CvbfU4xlSA0Ygt4?e=w9Pmap" target="_blank" rel="noopener" class="btn btn-ticket">
-          <span>📖</span>
-          <span>E-book & Workshop</span>
+          <span>📖</span><span>E-book & Workshop</span>
         </a>
       </div>
     </div>
 
-    <!-- Ferramentas -->
     <div class="card">
-      <h2>🛠️ Ferramentas do Streamer</h2>
+      <h2>🛠️ Ferramentas</h2>
       <div class="btn-grid">
         <a href="agendar-batalha.html" class="btn btn-batalha">
-          <span>⚔️</span>
-          <span>Agendar Batalha</span>
+          <span>⚔️</span><span>Agendar Batalha</span>
         </a>
-        <button class="btn btn-ticket" onclick="abrirModalTicket()">
-          <span>🎫</span>
-          <span>Enviar Ticket / Suporte</span>
-        </button>
         <a href="https://wa.me/5569981239893" target="_blank" rel="noopener" class="btn btn-whatsapp">
-          <span>💬</span>
-          <span>Falar com Gerente</span>
+          <span>💬</span><span>Falar com Gerente</span>
           <small style="margin-left:auto; font-size:0.7rem;">Serena Tempestade</small>
         </a>
         <a href="https://wa.me/5569981478873" target="_blank" rel="noopener" class="btn btn-whatsapp" style="background: linear-gradient(135deg, #00c853, #00a844);">
-          <span>📞</span>
-          <span>Central de Suporte</span>
-        </a>
-        <a href="https://www.youtube.com" target="_blank" rel="noopener" class="btn btn-youtube">
-          <span>▶️</span>
-          <span>Canal YouTube</span>
+          <span>📞</span><span>Central de Suporte</span>
         </a>
       </div>
     </div>
 
-    <!-- Passo a Passo Kako -->
     <div class="card">
-      <h2>📱 Como entrar na Agência Kako</h2>
+      <h2>📱 Entrar na Agência Kako</h2>
       <div class="info-box">
         <p><strong>ID da Agência:</strong> 177766</p>
         <p style="margin-top: 8px;"><strong>Passo a passo:</strong><br>
         1️⃣ Baixe o app pela <a href="https://play.google.com/store/apps/details?id=live.kako.global" target="_blank" style="color:var(--primary-purple);">Play Store</a><br>
-        2️⃣ Configure seu perfil com nome e foto<br>
-        3️⃣ Clique em <strong>Centro de Agência</strong> (ícone roxo)<br>
-        4️⃣ Clique em <strong>Agência</strong> no canto superior direito<br>
-        5️⃣ Digite o ID: <strong>177766</strong> → clique em Solicitar ✅
+        2️⃣ Configure seu perfil<br>
+        3️⃣ Clique em <strong>Centro de Agência</strong><br>
+        4️⃣ Digite o ID: <strong>177766</strong> → Solicitar ✅
         </p>
       </div>
     </div>
 
-    <div class="divisor"></div>
-
     <footer>
       Padroniza Live • Gestão Profissional de Streamers<br>
-      💜 TikTok & Kako Live • Todos os direitos reservados © 2026
+      💜 TikTok & Kako Live • © 2026
     </footer>
   </div>
 
-  <!-- MODAL TICKET / SUPORTE -->
-  <div class="modal-fundo" id="modalTicket">
-    <div class="modal">
-      <h3>🎫 Enviar Ticket de Suporte</h3>
-      <p style="font-size:0.85rem; color:var(--text-muted); margin-bottom:12px;">Descreva sua dúvida, problema ou sugestão. Você pode enviar até 2 fotos.</p>
-      
-      <label for="assuntoTicket">Assunto</label>
-      <select id="assuntoTicket">
-        <option value="">Selecione...</option>
-        <option value="duvida">Dúvida sobre treinamento</option>
-        <option value="tecnico">Problema técnico / App</option>
-        <option value="restricao">Restrição / Penalidade</option>
-        <option value="batalha">Batalha / Pontuação</option>
-        <option value="sugestao">Sugestão</option>
-        <option value="outro">Outro assunto</option>
-      </select>
-
-      <label for="mensagemTicket">Sua mensagem *</label>
-      <textarea id="mensagemTicket" placeholder="Descreva detalhadamente o que está acontecendo..."></textarea>
-
-      <label>📷 Anexar fotos (opcional, máximo 2)</label>
-      <div class="upload-area" onclick="document.getElementById('foto1').click()">
-        <input type="file" id="foto1" accept="image/*" style="display:none;" onchange="atualizarNomeArquivo(this, 'nomeFoto1')" />
-        <span id="nomeFoto1">Clique para selecionar a 1ª foto</span>
-      </div>
-      <div class="upload-area" onclick="document.getElementById('foto2').click()" style="margin-top:8px;">
-        <input type="file" id="foto2" accept="image/*" style="display:none;" onchange="atualizarNomeArquivo(this, 'nomeFoto2')" />
-        <span id="nomeFoto2">Clique para selecionar a 2ª foto</span>
-      </div>
-
-      <div class="modal-botoes">
-        <button class="btn btn-cancelar" onclick="fecharModalTicket()">Cancelar</button>
-        <button class="btn btn-enviar" onclick="enviarTicket()">📤 Enviar Ticket</button>
-      </div>
-    </div>
-  </div>
-
   <script>
-    // Nome do usuário — pode ser salvo na sessão
-    const nomeSalvo = localStorage.getItem('usuarioAgenciado');
-    if (nomeSalvo) {
-      document.getElementById('nomeUsuario').textContent = nomeSalvo;
+    const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyCbaWNSl1jUhct1tK6YyOUTbOyIWisklrB1LuAvO_SKWGqyHQz9_5L79Ex_wclTCgv/exec";
+
+    // Verificar se já tem usuário salvo
+    const usuarioSalvo = localStorage.getItem('usuarioAgenciado');
+    if (usuarioSalvo) {
+      document.getElementById('nomeUsuario').textContent = usuarioSalvo;
+      document.getElementById('modalLogin').style.display = 'none';
+      document.getElementById('conteudoPainel').style.display = 'block';
     }
 
-    // MODAL TICKET
-    function abrirModalTicket() {
-      document.getElementById('modalTicket').style.display = 'flex';
-      document.body.style.overflow = 'hidden';
-    }
-
-    function fecharModalTicket() {
-      document.getElementById('modalTicket').style.display = 'none';
-      document.body.style.overflow = 'auto';
-      // Limpar campos
-      document.getElementById('assuntoTicket').value = '';
-      document.getElementById('mensagemTicket').value = '';
-      document.getElementById('nomeFoto1').textContent = 'Clique para selecionar a 1ª foto';
-      document.getElementById('nomeFoto2').textContent = 'Clique para selecionar a 2ª foto';
-    }
-
-    function atualizarNomeArquivo(input, idSpan) {
-      if (input.files.length > 0) {
-        document.getElementById(idSpan).textContent = '✅ ' + input.files[0].name;
-      }
-    }
-
-    function enviarTicket() {
-      const assunto = document.getElementById('assuntoTicket').value;
-      const mensagem = document.getElementById('mensagemTicket').value;
-
-      if (!assunto || !mensagem.trim()) {
-        alert('⚠️ Preencha o assunto e a mensagem!');
+    async function verificarUsuario() {
+      const usuario = document.getElementById('usuarioInput').value.trim();
+      const mensagem = document.getElementById('loginMensagem');
+      
+      if (!usuario) {
+        mensagem.textContent = "⚠️ Digite seu usuário";
+        mensagem.style.color = "var(--erro)";
         return;
       }
 
-      // Simula envio — futuramente integrar com planilha
-      alert('✅ Ticket enviado com sucesso!\n\nNós iremos analisar e responder em breve. Obrigado pelo feedback! 💜');
-      fecharModalTicket();
+      mensagem.textContent = "🔄 Verificando...";
+      mensagem.style.color = "var(--text-muted)";
+
+      try {
+        const res = await fetch(`${APPS_SCRIPT_URL}?acao=verificarUsuario&usuario=${encodeURIComponent(usuario)}`);
+        const dados = await res.json();
+
+        if (dados.sucesso && dados.encontrado && dados.aprovado) {
+          // ✅ APROVADO! Salvar e liberar
+          localStorage.setItem('usuarioAgenciado', usuario);
+          document.getElementById('nomeUsuario').textContent = usuario;
+          document.getElementById('modalLogin').style.display = 'none';
+          document.getElementById('conteudoPainel').style.display = 'block';
+        } else {
+          mensagem.textContent = "❌ Usuário não aprovado ou não encontrado.";
+          mensagem.style.color = "var(--erro)";
+        }
+      } catch (e) {
+        mensagem.textContent = "❌ Erro de conexão. Tente novamente.";
+        mensagem.style.color = "var(--erro)";
+      }
     }
 
-    // Fechar modal clicando fora
-    document.getElementById('modalTicket').addEventListener('click', function(e) {
-      if (e.target === this) fecharModalTicket();
+    function sair() {
+      localStorage.removeItem('usuarioAgenciado');
+      window.location.href = 'index.html';
+    }
+
+    // Enter para entrar
+    document.getElementById('usuarioInput').addEventListener('keypress', function(e) {
+      if (e.key === 'Enter') verificarUsuario();
     });
   </script>
 </body>
