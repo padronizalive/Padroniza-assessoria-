@@ -1,0 +1,22 @@
+{
+  "name": "Padroniza Live",
+  "short_name": "Padroniza",
+  "description": "Central de Lives TikTok & Kako — Gestão Profissional de Streamers",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0b1020",
+  "theme_color": "#7b3fff",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "https://i.ibb.co/B23rwMHt/1787270369792.png",
+      "sizes": "any",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "scope": "/",
+  "lang": "pt-BR",
+  "author": "Padroniza Assessoria",
+  "categories": ["entertainment", "social"]
+}
