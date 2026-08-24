@@ -5,7 +5,7 @@
   <title>Padroniza Live - Central de Lives</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <!-- 📱 PWA -->
+  <!-- 📱 PWA + ÍCONE DE INSTALAÇÃO -->
   <link rel="manifest" href="manifest.json" />
   <meta name="theme-color" content="#7b3fff" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -94,6 +94,13 @@
     .btn-agenciado { background: linear-gradient(135deg, #7b3fff, #c79b3b); color: #000; }
     .btn-outras { background: linear-gradient(135deg, #ffc107, #ff9800); color: #000; }
     .btn-coins { background: linear-gradient(135deg, #ffcc00, #ff8800); color: #000; }
+    /* 📲 BOTÃO BAIXAR APP */
+    .btn-app { 
+      background: linear-gradient(135deg, #34d399, #10b981); 
+      color: #000; 
+      box-shadow: 0 0 15px rgba(52, 211, 153, 0.4);
+      border: 2px solid rgba(255,255,255,0.2);
+    }
     .social-row { display: flex; flex-wrap: wrap; gap: 8px; }
     .social-pill {
       display: inline-flex; align-items: center; gap: 6px; padding: 8px 12px;
@@ -148,9 +155,59 @@
     }
     .modal-footer { display: flex; justify-content: flex-end; gap: 10px; }
     footer { margin-top: auto; padding: 12px 16px 18px; font-size: 0.75rem; color: var(--text-muted); text-align: center; }
+    
+    /* 📲 BANNER DE INSTALAÇÃO DO APP */
+    .install-banner {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: linear-gradient(90deg, #10b981, #34d399);
+      color: #000;
+      padding: 12px 16px;
+      display: none;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      z-index: 998;
+      box-shadow: 0 -4px 20px rgba(0,0,0,0.3);
+    }
+    .install-banner button {
+      background: #000;
+      color: #fff;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 999px;
+      font-weight: 700;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+    .install-banner .close-btn {
+      background: transparent;
+      color: #000;
+      font-size: 1.2rem;
+      padding: 0;
+      width: 30px;
+      height: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    @media (max-width: 900px) {
+      .install-banner { display: flex; }
+      body { padding-bottom: 70px; }
+    }
   </style>
 </head>
 <body>
+
+  <!-- 📲 BANNER DE INSTALAÇÃO DO APP (aparece no celular) -->
+  <div class="install-banner" id="installBanner">
+    <strong>📲 Instalar App Padroniza Live</strong>
+    <button onclick="instalarApp()">Instalar</button>
+    <button class="close-btn" onclick="fecharBanner()">×</button>
+  </div>
+
   <div class="page">
     <header>
       <div class="logo-area">
@@ -192,6 +249,8 @@
           <button class="btn btn-kako" id="btnKako">💜📚 Treinamento Kako Live </button>
           <button class="btn btn-agenciado" id="btnAgenciado">👤 Sou Agenciado Padroniza </button>
           <button class="btn btn-outras" id="btnOutras">🏢 Outras Agências<br><small>Encontre seu oponente — Gratuito</small></button>
+          <!-- 📲 BOTÃO BAIXAR APP NA TELA INICIAL -->
+          <button class="btn btn-app" id="btnBaixarApp">📲 Baixar App</button>
         </div>
 
         <div class="card-header" style="margin-top:16px;"><h2>Redes Sociais</h2></div>
@@ -253,14 +312,40 @@
   <footer>Padroniza Live • Gestão Profissional de Streamers • Somente usuários aprovados têm acesso</footer>
 
   <script>
-    // ✅ APPS SCRIPT — CORRIGIDO! Sem duplicação de https:
+    // ✅ APPS SCRIPT
     const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbx9JlL7g36JfEWHlQFZqb3XNbwO_IsIEjDYT21PB9eteevILbpTv8WnbfVJeo8vdQqr/exec";
 
-    // 📋 LINKS DAS PÁGINAS — TODOS VINCULADOS!
+    // 📋 TODOS OS LINKS — CORRIGIDOS ✅
     document.getElementById("btnTikTok").onclick = () => window.open("https://1drv.ms/f/c/884f1b26d8daa748/IgCI5Cqu_c0lTokK1PAApLfVARVzFb6jEQMdTsvbD_Nucqo?e=CJc3ZD", "_blank");
     document.getElementById("btnKako").onclick = () => window.open("https://1drv.ms/f/c/884f1b26d8daa748/IgCH2cDy7-dkR5bU09e-fCubATT4f6EzWwx0fS9ete7cnYI?e=yOHuSs", "_blank");
     document.getElementById("btnOutras").onclick = () => window.location.href = "encontre-oponente.html";
-    document.getElementById("btnCoins").onclick = () => window.open("https://coins.tiktok.com/pt-BR/", "_blank");
+    // ✅ LINK DE MOEDAS TIKTOK — CORRIGIDO 🪙
+    document.getElementById("btnCoins").onclick = () => window.open("https://www.tiktok.com/coin?rc=7TGXGN69&rie=", "_blank");
+    
+    // 📲 BOTÃO BAIXAR APP — Abre opção de instalar o site como aplicativo
+    let promptInstalacao;
+    window.addEventListener('beforeinstallprompt', (e) => {
+      e.preventDefault();
+      promptInstalacao = e;
+    });
+    
+    document.getElementById("btnBaixarApp").onclick = () => {
+      if (promptInstalacao) {
+        promptInstalacao.prompt();
+        promptInstalacao.userChoice.then((choiceResult) => {
+          promptInstalacao = null;
+        });
+      } else {
+        alert("✅ O app já está disponível!\n\nNo celular: toque em ⋮ (menu) → Adicionar à tela inicial\nNo iPhone: toque em compartilhar → Adicionar à tela inicial");
+      }
+    };
+    
+    function instalarApp() {
+      document.getElementById("btnBaixarApp").click();
+    }
+    function fecharBanner() {
+      document.getElementById("installBanner").style.display = "none";
+    }
 
     // 🗔 MODAIS
     document.getElementById("btnAgenciado").onclick = () => {
@@ -282,7 +367,7 @@
       if (e.target === m) m.style.display = "none";
     });
 
-    // 🔐 VALIDAR AGENCIADO — ao entrar, vai para a página de agendamento
+    // 🔐 VALIDAR AGENCIADO
     document.getElementById("btnEntrarAgenciado").onclick = async () => {
       const usuario = document.getElementById("inputUsuario").value.trim();
       const msg = document.getElementById("msgAgenciado");
@@ -293,7 +378,6 @@
         const dados = await res.json();
         if (dados.sucesso && dados.encontrado && dados.aprovado) {
           msg.textContent = "✅ Aprovado! Entrando..."; msg.className = "message success";
-          // ✅ Link da página do agenciado com agenda de batalhas
           setTimeout(() => window.location.href = "agendar-batalha.html", 800);
         } else {
           msg.textContent = "❌ Usuário não aprovado ou não encontrado."; msg.className = "message error";
@@ -316,7 +400,7 @@
       }
     };
 
-    // 📡 CARREGAR LIVES E DESTAQUES — EXATAMENTE COMO ESTAVA, MAS FUNCIONANDO!
+    // 📡 CARREGAR LIVES E DESTAQUES
     async function carregarTudo() {
       try {
         // LIVES
@@ -368,7 +452,7 @@
               </div>
             </div>
           `).join("");
-          track.innerHTML = cards + cards; // rolagem infinita
+          track.innerHTML = cards + cards;
         } else {
           track.innerHTML = `<p style="padding:20px;text-align:center;color:var(--text-muted);">⭐ Nenhum destaque</p>`;
         }
