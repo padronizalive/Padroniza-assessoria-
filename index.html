@@ -253,10 +253,10 @@
   <footer>Padroniza Live • Gestão Profissional de Streamers • Somente usuários aprovados têm acesso</footer>
 
   <script>
-    // ✅ SEU APPS SCRIPT — LINK ORIGINAL QUE FUNCIONAVA!
-    const APPS_SCRIPT_URL = https:https://script.google.com/macros/s/AKfycbx9JlL7g36JfEWHlQFZqb3XNbwO_IsIEjDYT21PB9eteevILbpTv8WnbfVJeo8vdQqr/exec
+    // ✅ APPS SCRIPT — CORRIGIDO! Sem duplicação de https:
+    const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbx9JlL7g36JfEWHlQFZqb3XNbwO_IsIEjDYT21PB9eteevILbpTv8WnbfVJeo8vdQqr/exec";
 
-    // 📋 LINKS DAS PÁGINAS
+    // 📋 LINKS DAS PÁGINAS — TODOS VINCULADOS!
     document.getElementById("btnTikTok").onclick = () => window.open("https://1drv.ms/f/c/884f1b26d8daa748/IgCI5Cqu_c0lTokK1PAApLfVARVzFb6jEQMdTsvbD_Nucqo?e=CJc3ZD", "_blank");
     document.getElementById("btnKako").onclick = () => window.open("https://1drv.ms/f/c/884f1b26d8daa748/IgCH2cDy7-dkR5bU09e-fCubATT4f6EzWwx0fS9ete7cnYI?e=yOHuSs", "_blank");
     document.getElementById("btnOutras").onclick = () => window.location.href = "encontre-oponente.html";
@@ -282,7 +282,7 @@
       if (e.target === m) m.style.display = "none";
     });
 
-    // 🔐 VALIDAR AGENCIADO
+    // 🔐 VALIDAR AGENCIADO — ao entrar, vai para a página de agendamento
     document.getElementById("btnEntrarAgenciado").onclick = async () => {
       const usuario = document.getElementById("inputUsuario").value.trim();
       const msg = document.getElementById("msgAgenciado");
@@ -293,7 +293,8 @@
         const dados = await res.json();
         if (dados.sucesso && dados.encontrado && dados.aprovado) {
           msg.textContent = "✅ Aprovado! Entrando..."; msg.className = "message success";
-          setTimeout(() => window.location.href = "painel-agenciado.html", 800);
+          // ✅ Link da página do agenciado com agenda de batalhas
+          setTimeout(() => window.location.href = "agendar-batalha.html", 800);
         } else {
           msg.textContent = "❌ Usuário não aprovado ou não encontrado."; msg.className = "message error";
         }
@@ -315,7 +316,7 @@
       }
     };
 
-    // 📡 CARREGAR LIVES — EXATAMENTE COMO ESTAVA FUNCIONANDO!
+    // 📡 CARREGAR LIVES E DESTAQUES — EXATAMENTE COMO ESTAVA, MAS FUNCIONANDO!
     async function carregarTudo() {
       try {
         // LIVES
@@ -350,7 +351,7 @@
           carousel.innerHTML = `<p style="padding:40px;text-align:center;color:var(--text-muted);">🎬 Nenhuma live no momento</p>`;
         }
 
-        // ESTRELAS
+        // ESTRELAS / DESTAQUES
         const resEstrelas = await fetch(`${APPS_SCRIPT_URL}?acao=listarDestaques`);
         const dadosEstrelas = await resEstrelas.json();
         const track = document.getElementById("estrelaTrack");
@@ -367,7 +368,7 @@
               </div>
             </div>
           `).join("");
-          track.innerHTML = cards + cards; // duplica para rolagem infinita
+          track.innerHTML = cards + cards; // rolagem infinita
         } else {
           track.innerHTML = `<p style="padding:20px;text-align:center;color:var(--text-muted);">⭐ Nenhum destaque</p>`;
         }
