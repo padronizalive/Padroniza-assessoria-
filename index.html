@@ -111,7 +111,7 @@
       background: rgba(10,12,24,0.8); font-size: 0.8rem; cursor: pointer;
     }
 
-    /* 🎬 CARROSSEL DE LIVES — PARADO */
+    /* 🎬 CARROSSEL DE LIVES */
     .carousel-wrapper { position: relative; overflow: hidden; }
     .carousel-track { 
       display: flex; gap: 12px; overflow-x: auto; overflow-y: hidden;
@@ -141,7 +141,7 @@
     }
     @keyframes blink { 0%,100% { opacity:1; } 50% { opacity:0.2; } }
 
-    /* 📹 CARD DA LIVE */
+    /* 📹 CARD DA LIVE — CAPA AJUSTADA ✨ */
     .live-card {
       min-width: 260px; max-width: 280px;
       background: radial-gradient(circle at top, rgba(123,63,255,0.4), rgba(10,12,24,0.95));
@@ -154,16 +154,33 @@
       transform: translateY(-4px); box-shadow: 0 8px 25px rgba(123, 63, 255, 0.35);
       border-color: rgba(123, 63, 255, 0.5);
     }
+
+    /* 🖼️ CONTAINER DA CAPA — PROPORÇÃO QUADRADA PERFEITA ✨ */
     .live-video-container {
-      width: 100%; aspect-ratio: 9/16; border-radius: 12px; overflow: hidden; position: relative;
+      width: 100%; 
+      aspect-ratio: 1 / 1; /* ⭐ QUADRADO — 700×700 ideal! */
+      border-radius: 12px; 
+      overflow: hidden; 
+      position: relative;
       background: linear-gradient(135deg, #2a1060, #0b1020, #1a1040);
-      display: flex; align-items: center; justify-content: center;
+      display: flex; 
+      align-items: center; 
+      justify-content: center;
     }
+
+    /* 🖼️ IMAGEM DA CAPA — CENTRADA, SEM CORTES IMPORTANTES ✨ */
     .live-capa-img {
-      width: 100%; height: 100%; object-fit: cover; position: absolute; top: 0; left: 0;
+      width: 100%; 
+      height: 100%; 
+      object-fit: cover; /* ⭐ ENCAIXA PERFEITO, CENTRADO */
+      object-position: center center; /* ⭐ SEMPRE CENTRADA! */
+      position: absolute; 
+      top: 0; 
+      left: 0;
       transition: transform 0.35s ease;
     }
-    .live-card:hover .live-capa-img { transform: scale(1.08); }
+    .live-card:hover .live-capa-img { transform: scale(1.05); }
+
     .play-icon {
       position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
       width: 60px; height: 60px; background: rgba(255,255,255,0.9);
@@ -208,13 +225,13 @@
     }
     .estrela-card:hover { transform: translateY(-2px); }
     .estrela-midia {
-      width: 100%; aspect-ratio: 16/9; border-radius: 12px; overflow: hidden;
+      width: 100%; aspect-ratio: 1/1; border-radius: 12px; overflow: hidden;
       background: radial-gradient(circle, #c79b3b, #050509);
       display: flex; align-items: center; justify-content: center;
       position: relative;
     }
     .estrela-midia img, .estrela-midia video {
-      width: 100%; height: 100%; object-fit: cover;
+      width: 100%; height: 100%; object-fit: cover; object-position: center;
       border-radius: 12px;
     }
     .estrela-nome {
@@ -562,7 +579,7 @@
     }
     setInterval(trocarDepoimento, 8000);
 
-    // 🎬 LIVES — PARADAS!
+    // 🎬 LIVES — CARREGAR
     let livesCarregadas = [];
     const carousel = document.getElementById("liveCarousel");
 
@@ -632,7 +649,7 @@
 
         if (dadosEstrelas.sucesso && dadosEstrelas.streamersEstrela && dadosEstrelas.streamersEstrela.length > 0) {
           const cards = dadosEstrelas.streamersEstrela.map(s => {
-            const midiaLink = s.midia || s.capa || ""; // midia = COLUNA K!
+            const midiaLink = s.midia || s.capa || "";
             const isVideo = ehVideo(midiaLink);
             
             let midiaHTML = "";
