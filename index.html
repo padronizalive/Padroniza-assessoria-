@@ -28,11 +28,6 @@
       --rosa: #ff3d81;
       --dourado: #ffc107;
       --vermelho-ao-vivo: #ff003c;
-      --verde: #00ff9c;
-      --amarelo: #ffd700;
-      --azul: #00a8ff;
-      --fundo: #0b1020;
-      --painel: #11182c;
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -109,12 +104,6 @@
       box-shadow: 0 0 15px rgba(52, 211, 153, 0.4);
       border: 2px solid rgba(255,255,255,0.2);
     }
-    .btn-visitante { 
-      background: linear-gradient(135deg, #7b3fff, #ff3d81); 
-      color: #fff; 
-      box-shadow: 0 0 15px rgba(123, 63, 255, 0.4);
-      border: 2px solid rgba(255,255,255,0.2);
-    }
     .social-row { display: flex; flex-wrap: wrap; gap: 8px; }
     .social-pill {
       display: inline-flex; align-items: center; gap: 6px; padding: 8px 12px;
@@ -122,7 +111,7 @@
       background: rgba(10,12,24,0.8); font-size: 0.8rem; cursor: pointer;
     }
 
-    /* 🎬 CARROSSEL DE LIVES — ORIGINAL INTACTO ✅ */
+    /* 🎬 CARROSSEL DE LIVES */
     .carousel-wrapper { position: relative; overflow: hidden; }
     .carousel-track { 
       display: flex; gap: 12px; overflow-x: auto; overflow-y: hidden;
@@ -131,7 +120,7 @@
     .carousel-track::-webkit-scrollbar { height: 6px; background: rgba(255,255,255,0.05); border-radius: 3px; }
     .carousel-track::-webkit-scrollbar-thumb { background: var(--primary-purple); border-radius: 3px; }
 
-    /* 🔴 ÍCONE "AO VIVO" PISCANDO — ORIGINAL INTACTO ✅ */
+    /* 🔴 ÍCONE "AO VIVO" PISCANDO */
     .tag-ao-vivo {
       position: absolute; top: 10px; left: 10px;
       background: var(--vermelho-ao-vivo); color: white;
@@ -152,7 +141,7 @@
     }
     @keyframes blink { 0%,100% { opacity:1; } 50% { opacity:0.2; } }
 
-    /* 📹 CARD DA LIVE — ORIGINAL INTACTO ✅ */
+    /* 📹 CARD DA LIVE — CAPA AJUSTADA ✨ */
     .live-card {
       min-width: 260px; max-width: 280px;
       background: radial-gradient(circle at top, rgba(123,63,255,0.4), rgba(10,12,24,0.95));
@@ -166,15 +155,28 @@
       border-color: rgba(123, 63, 255, 0.5);
     }
 
+    /* 🖼️ CONTAINER DA CAPA — PROPORÇÃO QUADRADA PERFEITA ✨ */
     .live-video-container {
-      width: 100%; aspect-ratio: 1 / 1;
-      border-radius: 12px; overflow: hidden; position: relative;
+      width: 100%; 
+      aspect-ratio: 1 / 1; /* ⭐ QUADRADO — 700×700 ideal! */
+      border-radius: 12px; 
+      overflow: hidden; 
+      position: relative;
       background: linear-gradient(135deg, #2a1060, #0b1020, #1a1040);
-      display: flex; align-items: center; justify-content: center;
+      display: flex; 
+      align-items: center; 
+      justify-content: center;
     }
+
+    /* 🖼️ IMAGEM DA CAPA — CENTRADA, SEM CORTES IMPORTANTES ✨ */
     .live-capa-img {
-      width: 100%; height: 100%; object-fit: cover;
-      object-position: center center; position: absolute; top: 0; left: 0;
+      width: 100%; 
+      height: 100%; 
+      object-fit: cover; /* ⭐ ENCAIXA PERFEITO, CENTRADO */
+      object-position: center center; /* ⭐ SEMPRE CENTRADA! */
+      position: absolute; 
+      top: 0; 
+      left: 0;
       transition: transform 0.35s ease;
     }
     .live-card:hover .live-capa-img { transform: scale(1.05); }
@@ -204,7 +206,7 @@
     .tag-tiktok { border-color: #00f2ea; color: #00f2ea; }
     .tag-kako { border-color: #b84dff; color: #b84dff; }
 
-    /* ⭐ STREAMER ESTRELA — ORIGINAL INTACTO ✅ */
+    /* ⭐ STREAMER ESTRELA — FOTO OU VÍDEO! 🎬🖼️ */
     .estrela-wrapper { overflow: hidden; height: 300px; position: relative; border-radius: 12px; }
     .estrela-track { 
       display: flex; flex-direction: column; gap: 16px;
@@ -263,25 +265,22 @@
     .modal-backdrop {
       position: fixed; inset: 0; background: rgba(0,0,0,0.85); display: none;
       align-items: center; justify-content: center; z-index: 999; padding: 16px;
-      overflow-y: auto;
     }
     .modal {
-      width: 100%; max-width: 420px; background: var(--card-bg); border-radius: 18px;
+      width: 100%; max-width: 380px; background: var(--card-bg); border-radius: 18px;
       padding: 24px 20px; border: 1px solid var(--border-soft);
       display: flex; flex-direction: column; gap: 16px;
-      max-height: 90vh; overflow-y: auto;
     }
     .modal-close { border: none; background: transparent; color: var(--text-muted); font-size: 1.5rem; cursor: pointer; }
-    .modal-body input, .modal-body textarea, .modal-body select {
+    .modal-body input {
       width: 100%; padding: 12px 14px; border-radius: 10px;
       border: 1px solid rgba(255,255,255,0.18);
       background: rgba(5,5,9,0.9); color: var(--text-light); font-size: 0.9rem;
-      margin-top: 6px;
     }
-    .modal-footer { display: flex; justify-content: flex-end; gap: 10px; flex-wrap: wrap; }
+    .modal-footer { display: flex; justify-content: flex-end; gap: 10px; }
     footer { margin-top: auto; padding: 12px 16px 18px; font-size: 0.75rem; color: var(--text-muted); text-align: center; }
     
-    /* ⭐ DEPOIMENTOS — ORIGINAL INTACTO ✅ */
+    /* ⭐ DEPOIMENTOS */
     .depoimentos-secao {
       background: var(--card-bg); border-radius: 18px; padding: 20px;
       border: 1px solid var(--border-soft); margin-top: 10px;
@@ -308,7 +307,7 @@
       font-size: 0.9rem; color: var(--rosa); font-weight: 600;
     }
     
-    /* 📲 BANNER DE INSTALAÇÃO DO APP — ORIGINAL INTACTO ✅ */
+    /* 📲 BANNER DE INSTALAÇÃO DO APP */
     .install-banner {
       position: fixed; bottom: 0; left: 0; right: 0;
       background: linear-gradient(90deg, #10b981, #34d399);
@@ -329,228 +328,6 @@
     @media (max-width: 900px) {
       .install-banner { display: flex; }
       body { padding-bottom: 70px; }
-    }
-
-    /* ================================================== */
-    /* 🟣 SEÇÃO SOU VISITANTE — NOVA, COMPLETA E FUNCIONAL ✅ */
-    /* ================================================== */
-    .sou-visitante-secao {
-      background: var(--card-bg); border-radius: 20px; padding: 28px 22px;
-      border: 2px solid rgba(123, 63, 255, 0.3);
-      margin-top: 10px;
-      display: none;
-    }
-    .fechar-visitante {
-      text-align: right; margin-bottom: 16px;
-    }
-    .fechar-visitante button {
-      background: transparent; border: none; color: var(--text-muted);
-      font-size: 1.5rem; cursor: pointer; padding: 0;
-    }
-
-    /* 💜 CONVITE GRATUITO — DESTAQUE TOTAL */
-    .convite-gratuito {
-      background: linear-gradient(135deg, #7457ff 0%, #ff3d81 50%, #ffc107 100%);
-      border-radius: 20px; padding: 32px 22px; text-align: center;
-      margin-bottom: 32px;
-      box-shadow: 0 0 30px rgba(116, 87, 255, 0.3), 0 0 60px rgba(255, 61, 129, 0.15);
-      animation: brilho-convite 3s ease-in-out infinite alternate;
-    }
-    @keyframes brilho-convite {
-      from { box-shadow: 0 0 30px rgba(116, 87, 255, 0.3), 0 0 60px rgba(255, 61, 129, 0.15); }
-      to { box-shadow: 0 0 40px rgba(116, 87, 255, 0.4), 0 0 80px rgba(255, 61, 129, 0.25); }
-    }
-    .convite-gratuito h2 {
-      color: #fff; font-size: 24px; margin-bottom: 14px;
-      text-shadow: 0 2px 10px rgba(0,0,0,0.2);
-    }
-    .texto-grande {
-      color: #fff; font-size: 16px; margin-bottom: 10px; line-height: 1.7;
-    }
-    .destaque-gratuito {
-      color: #fff; font-size: 18px; font-weight: bold; margin-bottom: 20px;
-      text-shadow: 0 2px 8px rgba(0,0,0,0.15);
-    }
-    .btn-principal-gratuito {
-      display: inline-block; background: #fff; color: #7457ff;
-      font-weight: bold; padding: 16px 32px; border-radius: 14px;
-      text-decoration: none; font-size: 18px; transition: 0.3s;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.15); border: none; cursor: pointer;
-    }
-    .btn-principal-gratuito:hover {
-      transform: scale(1.05); box-shadow: 0 6px 20px rgba(0,0,0,0.25);
-      background: #f8f8ff;
-    }
-    .info-gratuito {
-      color: #fff; font-size: 13px; margin-top: 14px; opacity: 0.95;
-    }
-
-    /* 🎯 GANCHO CHAMATIVO */
-    .gancho-section {
-      background: rgba(255,193,7,0.05); border-left: 4px solid #ffc107;
-      border-radius: 12px; padding: 22px 18px; margin-bottom: 32px;
-    }
-    .gancho-titulo { color: #ffc107; font-size: 20px; margin-bottom: 12px; }
-    .gancho-texto { color: var(--text-light); font-size: 15px; line-height: 1.7; margin-bottom: 12px; }
-    .gancho-destaque {
-      background: rgba(255,255,255,0.05); padding: 14px; border-radius: 10px;
-      margin-bottom: 12px; border-left: 3px solid #7457ff;
-    }
-    .gancho-chamada { color: var(--rosa); font-size: 15px; font-weight: 500; }
-
-    /* 👑 DESTAQUE MENSALIDADE PRO */
-    .pacote-pro-destaque {
-      background: linear-gradient(135deg, rgba(255,193,7,0.15), rgba(116,87,255,0.1));
-      border: 3px solid #ffc107; border-radius: 20px; padding: 28px 22px;
-      margin-bottom: 32px; box-shadow: 0 0 25px rgba(255,193,7,0.15);
-      position: relative;
-    }
-    .pro-selo {
-      position: absolute; top: -12px; right: 20px;
-      background: linear-gradient(90deg, #ffc107, #ff9500);
-      color: #000; font-weight: bold; font-size: 13px;
-      padding: 6px 16px; border-radius: 20px;
-      box-shadow: 0 2px 10px rgba(255,152,0,0.3);
-    }
-    .pro-titulo { color: #ffc107; font-size: 22px; text-align: center; margin-bottom: 12px; padding-top: 8px; }
-    .pro-descricao { color: var(--text-light); font-size: 15px; text-align: center; margin-bottom: 18px; line-height: 1.6; }
-    .pro-beneficios { list-style: none; padding: 0; margin-bottom: 20px; }
-    .pro-beneficios li {
-      color: var(--text-light); font-size: 14px; padding: 8px 0;
-      border-bottom: 1px solid rgba(255,193,7,0.15);
-    }
-    .pro-preco { text-align: center; margin-bottom: 20px; }
-    .preco-de { color: var(--text-muted); font-size: 15px; text-decoration: line-through; margin-right: 8px; }
-    .preco-atual { color: var(--verde); font-size: 32px; font-weight: bold; }
-    .preco-mes { color: var(--text-muted); font-size: 15px; }
-    .btn-pro-destaque {
-      display: block; width: 100%; padding: 16px; border-radius: 12px;
-      border: none; background: linear-gradient(90deg, #ffc107, #ff9500);
-      color: #000; font-weight: bold; font-size: 17px; cursor: pointer;
-      transition: 0.3s; box-shadow: 0 4px 15px rgba(255,152,0,0.3);
-    }
-    .btn-pro-destaque:hover {
-      transform: translateY(-3px); box-shadow: 0 6px 20px rgba(255,152,0,0.4);
-    }
-
-    /* 📱 PASSO A PASSO KAKO */
-    .kako-passo-section {
-      background: rgba(0,168,255,0.05); border: 2px solid rgba(0,168,255,0.3);
-      border-radius: 16px; padding: 22px 18px; margin-bottom: 32px;
-    }
-    .kako-passo-section h3 { color: var(--azul); font-size: 18px; text-align: center; margin-bottom: 16px; }
-    .btn-kako-download-principal {
-      display: block; background: linear-gradient(90deg, #00a8ff, #00c6ff);
-      color: #fff; font-weight: bold; text-align: center; padding: 14px 20px;
-      border-radius: 12px; text-decoration: none; margin-bottom: 20px; transition: 0.3s;
-    }
-    .btn-kako-download-principal:hover { transform: translateY(-2px); box-shadow: 0 4px 15px rgba(0,168,255,0.3); }
-    .passo-lista { list-style: none; padding: 0; margin: 0; }
-    .passo-lista li {
-      padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,0.08);
-      color: var(--text-light); font-size: 14px; line-height: 1.6;
-    }
-    .id-agencia-passo {
-      display: flex; align-items: center; gap: 10px; background: rgba(0,0,0,0.25);
-      padding: 10px 14px; border-radius: 8px; margin: 10px 0; flex-wrap: wrap;
-    }
-    .id-valor { font-size: 18px; font-weight: bold; color: var(--verde); font-family: monospace; }
-    .btn-copiar-id {
-      padding: 6px 12px; border-radius: 6px; border: none;
-      background: var(--primary-purple); color: #fff; cursor: pointer;
-      transition: 0.2s;
-    }
-    .btn-copiar-id:hover { background: #6a45e0; }
-
-    /* 🎁 PACOTES GRID */
-    .pacotes-section h3 { color: var(--text-light); font-size: 20px; text-align: center; margin-bottom: 8px; }
-    .subtitulo-pacotes { color: var(--text-muted); text-align: center; font-size: 14px; margin-bottom: 20px; }
-    .pacotes-grid {
-      display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 16px; margin-bottom: 32px;
-    }
-    .pacote-card {
-      background: var(--painel); border: 2px solid rgba(255,255,255,0.08);
-      border-radius: 14px; padding: 22px 18px; text-align: center;
-      transition: 0.3s;
-    }
-    .pacote-card:hover {
-      transform: translateY(-4px); border-color: var(--primary-purple);
-      box-shadow: 0 8px 20px rgba(123,63,255,0.15);
-    }
-    .pacote-icone { font-size: 32px; margin-bottom: 10px; }
-    .pacote-card h4 { font-size: 16px; margin-bottom: 8px; }
-    .pacote-card p { font-size: 13px; color: var(--text-muted); margin-bottom: 12px; }
-    .pacote-preco { font-size: 22px; font-weight: bold; color: var(--verde); margin-bottom: 14px; }
-    .pacote-preco small { font-size: 13px; color: var(--text-muted); font-weight: normal; }
-    .btn-pacote {
-      width: 100%; padding: 12px; border-radius: 10px; border: none;
-      background: linear-gradient(90deg, #7b3fff, #ff3d81); color: #fff;
-      font-weight: bold; font-size: 15px; cursor: pointer; transition: 0.2s;
-    }
-    .btn-pacote:hover { transform: scale(1.02); }
-
-    /* 💳 PIX BOXES */
-    .todas-pix-box { display: flex; flex-direction: column; gap: 20px; }
-    .todas-pix-box > h3 { color: var(--verde); font-size: 20px; margin-bottom: 8px; text-align: center; }
-    .pix-aviso-geral { color: var(--text-muted); text-align: center; margin-bottom: 16px; font-size: 14px; }
-    .pix-box {
-      background: rgba(0,255,156,0.05); border: 2px solid rgba(0,255,156,0.25);
-      border-radius: 14px; padding: 20px 16px; transition: 0.3s;
-    }
-    .pix-box.destaque-pix {
-      border-color: #ffc107; background: rgba(255,193,7,0.08);
-      box-shadow: 0 0 15px rgba(255,193,7,0.1);
-    }
-    .pix-box h4 { color: var(--verde); font-size: 15px; margin-bottom: 12px; }
-    .pix-chave-box {
-      display: flex; align-items: center; gap: 10px;
-      background: rgba(0,0,0,0.25); padding: 12px; border-radius: 10px;
-      margin-bottom: 8px; flex-wrap: wrap;
-    }
-    .pix-chave {
-      font-size: 13px; color: var(--text-light); font-family: monospace;
-      word-break: break-all; flex: 1; min-width: 200px;
-    }
-    .btn-copiar-pix {
-      padding: 8px 14px; border-radius: 8px; border: none;
-      background: var(--verde); color: #000; font-weight: bold;
-      cursor: pointer; font-size: 13px; transition: 0.2s; white-space: nowrap;
-    }
-    .btn-copiar-pix:hover { background: #00e089; transform: scale(1.05); }
-    .pix-dono { color: var(--text-muted); font-size: 12px; font-style: italic; }
-    .agradecimento-pix {
-      text-align: center; color: var(--dourado); font-size: 14px;
-      margin-top: 24px; padding-top: 16px;
-      border-top: 1px solid rgba(255,193,7,0.15);
-    }
-
-    .separador-grande {
-      text-align: center; margin: 30px 12px 20px; position: relative;
-      color: var(--text-muted); font-size: 14px; text-transform: uppercase; letter-spacing: 2px;
-    }
-    .separador-grande::before, .separador-grande::after {
-      content: ""; position: absolute; top: 50%; width: 30%; height: 1px;
-      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
-    }
-    .separador-grande::before { left: 0; }
-    .separador-grande::after { right: 0; }
-
-    /* 📷 UPLOAD DE FOTOS — NOVO ✅ */
-    .upload-area {
-      border: 2px dashed rgba(255,255,255,0.2); border-radius: 12px;
-      padding: 20px; text-align: center; margin-top: 10px; cursor: pointer;
-      transition: all 0.2s;
-    }
-    .upload-area:hover { border-color: var(--primary-purple); background: rgba(123,63,255,0.05); }
-    .preview-imagem { max-width: 100%; border-radius: 8px; margin-top: 10px; display: none; }
-
-    @media (max-width: 480px) {
-      .convite-gratuito h2 { font-size: 20px; }
-      .preco-atual { font-size: 28px; }
-      .pro-selo { position: relative; top: 0; right: 0; display: inline-block; margin-bottom: 12px; }
-      .pacotes-grid { grid-template-columns: 1fr; }
-      .pix-chave-box { flex-direction: column; align-items: stretch; }
     }
   </style>
 </head>
@@ -602,8 +379,6 @@
       <section class="card">
         <div class="card-header"><h2>Acessos Rápidos</h2></div>
         <div class="button-row">
-          <!-- 🟣 NOVO BOTÃO SOU VISITANTE ✅ -->
-          <button class="btn btn-visitante" id="btnVisitante">💜 Sou Visitante — Comece Aqui!</button>
           <button class="btn btn-tiktok" id="btnTikTok">🎵📚 Treinamento TikTok </button>
           <button class="btn btn-kako" id="btnKako">💜📚 Treinamento Kako Live </button>
           <button class="btn btn-agenciado" id="btnAgenciado">👤 Sou Agenciado Padroniza </button>
@@ -624,7 +399,7 @@
       </section>
     </main>
 
-    <!-- ⭐ SEÇÃO DEPOIMENTOS — ORIGINAL ✅ -->
+    <!-- ⭐ SEÇÃO DEPOIMENTOS -->
     <section class="depoimentos-secao">
       <h2 class="depoimentos-titulo">⭐ Depoimentos dos Agenciados</h2>
       <div class="depoimentos-rolagem">
@@ -634,53 +409,291 @@
         </div>
       </div>
     </section>
+  </div>
 
-    <!-- 🟣 SEÇÃO SOU VISITANTE — COMPLETA E FUNCIONAL ✅ -->
-    <section class="sou-visitante-secao" id="secaoVisitante">
-      <div class="fechar-visitante">
-        <button onclick="fecharSecaoVisitante()">×</button>
+  <!-- MODAL AGENCIADO -->
+  <div class="modal-backdrop" id="modalAgenciado">
+    <div class="modal">
+      <div style="display:flex;justify-content:space-between;align-items:center;">
+        <h3>Sou Agenciado</h3>
+        <button class="modal-close" onclick="fecharModal('agenciado')">&times;</button>
       </div>
-
-      <div class="convite-gratuito">
-        <h2>💜 SEJA AGENCIADO — TOTALMENTE GRÁTIS!</h2>
-        <p class="texto-grande">
-          Quer crescer nas lives, receber suporte profissional, campanhas exclusivas e 
-          <strong>acesso TOTAL E GRATUITO</strong> ao nosso portal, aplicativo e toda a assessoria?
-        </p>
-        <p class="destaque-gratuito">Sem pagar nada! Sem taxas! Sem pegadinhas! 💜</p>
-        <a href="agendar-batalha.html" class="btn-principal-gratuito">
-          🔗 QUERO SER AGENCIADO — GRÁTIS!
-        </a>
-        <p class="info-gratuito">✅ Análise rápida | ✅ Suporte completo | ✅ Sem custos</p>
+      <div>
+        <p>Digite seu usuário exatamente como cadastrado.</p>
+        <label style="font-size:0.85rem;color:var(--text-muted);">Usuário</label>
+        <input type="text" id="inputUsuario" placeholder="Seu usuário" />
+        <p class="message" id="msgAgenciado"></p>
       </div>
-
-      <div class="separador-grande">— Ou então —</div>
-
-      <div class="gancho-section">
-        <h3 class="gancho-titulo">🚀 Quer ir ALÉM e crescer AINDA MAIS?</h3>
-        <p class="gancho-texto">
-          Ser agenciado já te dá MUITO — e tudo de graça! 💜 Mas se você quer <strong>se destacar de verdade, 
-          ter materiais profissionais, aparecer em destaque e acelerar seu crescimento</strong>, 
-          preparamos condições especiais pra você!
-        </p>
-        <div class="gancho-destaque">
-          <p>💡 <strong>Por que investir em você?</strong> Quanto mais profissional sua live, mais o público confia, mais presentes você recebe e mais cresce! 💰</p>
-        </div>
-        <p class="gancho-chamada">
-          Escolha o que combina com seu momento. Comece simples ou comece completo — 
-          o importante é <strong>não parar de crescer!</strong> 💜
-        </p>
+      <div class="modal-footer">
+        <button class="btn btn-outras" onclick="fecharModal('agenciado')">Cancelar</button>
+        <button class="btn btn-agenciado" id="btnEntrarAgenciado">Continuar</button>
       </div>
+    </div>
+  </div>
 
-      <div class="pacote-pro-destaque">
-        <span class="pro-selo">MAIS ESCOLHIDO! ⭐</span>
-        <h3 class="pro-titulo">👑 PARCEIRO PRO — O FAVORITO DOS NOSSOS STREAMERS!</h3>
-        <p class="pro-descricao">
-          Tenha <strong>TUDO o que a agência oferece</strong> em um só lugar — assessoria completa, 
-          sua live em destaque no site, painel exclusivo e <strong>50% DE DESCONTO</strong> em músicas, artes e muito mais!
-        </p>
-        <ul class="pro-beneficios">
-          <li>✅ Assessoria completa da Padroniza</li>
-          <li>✅ Sua live em destaque no site da agência</li>
-          <li>✅ Painel exclusivo e personalizado</li>
-          <li>✅ 50% OFF em músicas personal
+  <!-- MODAL ADMIN -->
+  <div class="modal-backdrop" id="modalAdmin">
+    <div class="modal">
+      <div style="display:flex;justify-content:space-between;align-items:center;">
+        <h3>Área Administrativa</h3>
+        <button class="modal-close" onclick="fecharModal('admin')">&times;</button>
+      </div>
+      <div>
+        <p>Login exclusivo da equipe Padroniza Live.</p>
+        <label style="font-size:0.85rem;color:var(--text-muted);">E-mail</label>
+        <input type="email" id="inputAdminEmail" placeholder="seuemail@exemplo.com" />
+        <label style="font-size:0.85rem;color:var(--text-muted);margin-top:8px;">Senha</label>
+        <input type="password" id="inputAdminSenha" placeholder="••••••••" />
+        <p class="message" id="msgAdmin"></p>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-outras" onclick="fecharModal('admin')">Cancelar</button>
+        <button class="btn btn-agenciado" id="btnEntrarAdmin">Entrar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL INTERNA — PAINEL DO AGENCIADO -->
+  <div class="modal-backdrop" id="modalPainelAgenciado">
+    <div class="modal">
+      <div style="display:flex;justify-content:space-between;align-items:center;">
+        <h3>👤 Área do Agenciado</h3>
+        <button class="modal-close" onclick="fecharModal('painel')">&times;</button>
+      </div>
+      <p style="text-align:center; margin-bottom:20px;">Bem-vindo! Escolha o que deseja fazer:</p>
+      <div style="display:flex; flex-direction:column; gap:12px;">
+        <a href="agendar-batalha.html" class="btn btn-agenciado" style="justify-content:center; text-decoration:none;">⚔️ Agendar Batalha</a>
+        <a href="suporte.html" class="btn btn-suporte" style="justify-content:center; text-decoration:none;">💬 Falar com a Agência / Suporte</a>
+      </div>
+      <div class="modal-footer" style="margin-top:10px;">
+        <button class="btn btn-outras" onclick="fecharModal('painel')">Voltar</button>
+      </div>
+    </div>
+  </div>
+
+  <footer>Padroniza Live • Gestão Profissional de Streamers • Todos os direitos reservados</footer>
+
+  <script>
+    // ✅ APPS SCRIPT
+    const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyBl8HNCUKlQrqhnEhMP7lrkAPdzXSPoGzR8QACrf3KZdhYNmGdk347ehvlIz_k3w1B/exec"
+    const LOGO_URL = "https://i.ibb.co/B23rwMHt/1787270369792.png";
+
+    // 📋 TODOS OS LINKS
+    document.getElementById("btnTikTok").onclick = () => window.open("https://1drv.ms/f/c/884f1b26d8daa748/IgCI5Cqu_c0lTokK1PAApLfVARVzFb6jEQMdTsvbD_Nucqo?e=CJc3ZD", "_blank");
+    document.getElementById("btnKako").onclick = () => window.open("https://1drv.ms/f/c/884f1b26d8daa748/IgCH2cDy7-dkR5bU09e-fCubATT4f6EzWwx0fS9ete7cnYI?e=yOHuSs", "_blank");
+    document.getElementById("btnOutras").onclick = () => window.location.href = "encontre-oponente.html";
+    document.getElementById("btnCoins").onclick = () => window.open("https://www.tiktok.com/coin?rc=7TGXGN69&rie=", "_blank");
+    
+    // 📲 BOTÃO BAIXAR APP
+    let promptInstalacao;
+    window.addEventListener('beforeinstallprompt', (e) => {
+      e.preventDefault();
+      promptInstalacao = e;
+    });
+    document.getElementById("btnBaixarApp").onclick = () => {
+      if (promptInstalacao) {
+        promptInstalacao.prompt();
+        promptInstalacao.userChoice.then(() => { promptInstalacao = null; });
+      } else {
+        alert("✅ O app já está disponível!\n\nNo celular: toque em ⋮ → Adicionar à tela inicial\nNo iPhone: toque em compartilhar → Adicionar à tela inicial");
+      }
+    };
+    function instalarApp() { document.getElementById("btnBaixarApp").click(); }
+    function fecharBanner() { document.getElementById("installBanner").style.display = "none"; }
+
+    // 🗔 MODAIS
+    document.getElementById("btnAgenciado").onclick = () => {
+      document.getElementById("modalAgenciado").style.display = "flex";
+      document.getElementById("inputUsuario").value = "";
+      document.getElementById("msgAgenciado").textContent = "";
+    };
+    document.getElementById("btnAdminArea").onclick = () => {
+      document.getElementById("modalAdmin").style.display = "flex";
+      document.getElementById("inputAdminEmail").value = "";
+      document.getElementById("inputAdminSenha").value = "";
+      document.getElementById("msgAdmin").textContent = "";
+    };
+    function fecharModal(tipo) {
+      if (tipo === 'agenciado') document.getElementById("modalAgenciado").style.display = "none";
+      if (tipo === 'admin') document.getElementById("modalAdmin").style.display = "none";
+      if (tipo === 'painel') document.getElementById("modalPainelAgenciado").style.display = "none";
+    }
+    document.querySelectorAll(".modal-backdrop").forEach(m => m.onclick = e => {
+      if (e.target === m) m.style.display = "none";
+    });
+
+    // 🔐 VALIDAR AGENCIADO
+    document.getElementById("btnEntrarAgenciado").onclick = async () => {
+      const usuario = document.getElementById("inputUsuario").value.trim();
+      const msg = document.getElementById("msgAgenciado");
+      if (!usuario) { msg.textContent = "⚠️ Digite seu usuário"; msg.className = "message error"; return; }
+      msg.textContent = "🔄 Verificando..."; msg.className = "message";
+      try {
+        const res = await fetch(`${APPS_SCRIPT_URL}?acao=verificarUsuario&usuario=${encodeURIComponent(usuario)}`);
+        const dados = await res.json();
+        if (dados.sucesso && dados.encontrado && dados.aprovado) {
+          msg.textContent = "✅ Aprovado!"; msg.className = "message success";
+          setTimeout(() => {
+            fecharModal('agenciado');
+            document.getElementById("modalPainelAgenciado").style.display = "flex";
+          }, 600);
+        } else {
+          msg.textContent = "❌ Usuário não encontrado ou não aprovado."; msg.className = "message error";
+        }
+      } catch (e) {
+        msg.textContent = "❌ Erro de conexão."; msg.className = "message error";
+      }
+    };
+
+    // 🔐 VALIDAR ADMIN
+    document.getElementById("btnEntrarAdmin").onclick = () => {
+      const email = document.getElementById("inputAdminEmail").value.trim().toLowerCase();
+      const senha = document.getElementById("inputAdminSenha").value.trim();
+      const msg = document.getElementById("msgAdmin");
+      if (email === "padronizaassessoria@gmail.com" && senha === "agencia988") {
+        msg.textContent = "✅ Entrando..."; msg.className = "message success";
+        setTimeout(() => window.location.href = "painel-admin.html", 800);
+      } else {
+        msg.textContent = "❌ E-mail ou senha incorretos."; msg.className = "message error";
+      }
+    };
+
+    // ⭐ DEPOIMENTOS — TROCA AUTOMÁTICA
+    const depoimentos = [
+      { texto: "\"Não existe agência melhor que a Padroniza! Gratidão por tudo! 💜\"", nome: "@streamer_pedro 📱 💜 Kako Live" },
+      { texto: "\"Minhas lives cresceram muito com o suporte da agência! Obrigada! 💜\"", nome: "@streamer_ana 📱 🎵 TikTok" },
+      { texto: "\"Melhor agência de todas! Meta, campanhas, suporte sempre presente!\"", nome: "@streamer_lucas 📱 💜 Kako Live" },
+      { texto: "\"Desde que entrei, tudo melhorou! A família Padroniza é incrível!\"", nome: "@streamer_maria 📱 🎵 TikTok" },
+      { texto: "\"Crescendo a cada dia com vocês! O melhor lugar pra streamer! 💜\"", nome: "@streamer_julia 📱 💜 Kako Live" }
+    ];
+    let indiceDepoimento = 0;
+    function trocarDepoimento() {
+      const card = document.getElementById("depoimentoAtual");
+      card.classList.remove("ativo");
+      indiceDepoimento = (indiceDepoimento + 1) % depoimentos.length;
+      setTimeout(() => {
+        document.getElementById("textoDepoimento").textContent = depoimentos[indiceDepoimento].texto;
+        document.getElementById("nomeDepoimento").textContent = "— " + depoimentos[indiceDepoimento].nome;
+        card.classList.add("ativo");
+      }, 600);
+    }
+    setInterval(trocarDepoimento, 8000);
+
+    // 🎬 LIVES — CARREGAR
+    let livesCarregadas = [];
+    const carousel = document.getElementById("liveCarousel");
+
+    // 🔍 FUNÇÃO PARA DETECTAR SE É VÍDEO OU IMAGEM
+    function ehVideo(link) {
+      if (!link) return false;
+      const l = link.toLowerCase();
+      return l.endsWith('.mp4') || l.endsWith('.webm') || l.endsWith('.ogg') || 
+             l.includes('tiktok.com') || l.includes('youtu.be') || l.includes('youtube.com') ||
+             l.includes('kako.live') || l.includes('video');
+    }
+
+    // 📡 CARREGAR LIVES + ESTRELAS (FOTO OU VÍDEO!)
+    async function carregarTudo() {
+      try {
+        // 📺 CARREGAR LIVES
+        const resLives = await fetch(`${APPS_SCRIPT_URL}?acao=listarLives`);
+        const dadosLives = await resLives.json();
+        const dot = document.getElementById("liveDot");
+        const status = document.getElementById("liveStatus");
+
+        if (dadosLives.sucesso && dadosLives.lives && dadosLives.lives.length > 0) {
+          livesCarregadas = dadosLives.lives;
+          status.textContent = `${dadosLives.lives.length} lives ao vivo`;
+          dot.classList.remove("offline");
+          
+          const cardsHTML = dadosLives.lives.map((live) => {
+            const temCapa = live.capa && live.capa.trim() !== "";
+            const conteudoMidia = temCapa 
+              ? `<img src="${live.capa}" alt="${live.nome}" class="live-capa-img">`
+              : `<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#7b3fff,#0b1020);"><span style="font-size:48px;">🎬</span></div>`;
+            
+            return `
+              <a href="${live.link}" target="_blank" class="live-card">
+                <div class="live-video-container">
+                  ${conteudoMidia}
+                  <span class="tag-ao-vivo">🔴 AO VIVO</span>
+                  <div class="live-overlay"></div>
+                  <span class="play-icon">▶</span>
+                  <span class="watch-full">Clique para assistir →</span>
+                </div>
+                <div class="live-meta">
+                  <strong>${live.nome || "Streamer"}</strong>
+                  <div style="margin-top:6px;display:flex;gap:6px;align-items:center;flex-wrap:wrap;">
+                    <span class="tag ${live.plataforma === 'kako' ? 'tag-kako' : 'tag-tiktok'}">
+                      ${live.plataforma === 'kako' ? '💜 Kako Live' : '🎵 TikTok'}
+                    </span>
+                  </div>
+                </div>
+              </a>
+            `;
+          }).join("");
+          
+          carousel.innerHTML = cardsHTML;
+          
+        } else {
+          livesCarregadas = [];
+          status.textContent = "Nenhuma live ao vivo no momento";
+          dot.classList.add("offline");
+          carousel.innerHTML = `<p style="padding:60px 20px;text-align:center;color:var(--text-muted);">🎬 Em breve novas lives! Volte mais tarde.<br><small>Acompanhe nossas redes sociais!</small></p>`;
+        }
+
+        // 🏆 STREAMER ESTRELA — FOTO OU VÍDEO DA COLUNA K! 🎬🖼️
+        const resEstrelas = await fetch(`${APPS_SCRIPT_URL}?acao=listarDestaques`);
+        const dadosEstrelas = await resEstrelas.json();
+        const track = document.getElementById("estrelaTrack");
+
+        if (dadosEstrelas.sucesso && dadosEstrelas.streamersEstrela && dadosEstrelas.streamersEstrela.length > 0) {
+          const cards = dadosEstrelas.streamersEstrela.map(s => {
+            const midiaLink = s.midia || s.capa || "";
+            const isVideo = ehVideo(midiaLink);
+            
+            let midiaHTML = "";
+            if (isVideo) {
+              midiaHTML = `<video src="${midiaLink}" autoplay muted loop playsinline></video><span class="video-indicator">🎥 Vídeo</span>`;
+            } else if (midiaLink) {
+              midiaHTML = `<img src="${midiaLink}" alt="${s.nome || 'Destaque'}">`;
+            } else {
+              midiaHTML = `<span style="font-size:48px;">⭐</span>`;
+            }
+
+            return `
+              <div class="estrela-card">
+                <div class="estrela-midia">
+                  <span class="estrela-badge">🏆 DESTAQUE</span>
+                  ${midiaHTML}
+                </div>
+                <div class="estrela-nome">${s.nome || "Streamer Estrela"}</div>
+                <div class="estrela-titulo">Conquistas e Vitórias ✨</div>
+              </div>
+            `;
+          }).join("");
+          track.innerHTML = cards + cards;
+        } else {
+          track.innerHTML = `<p style="padding:40px;text-align:center;color:var(--text-muted);">⭐ Em breve nossos destaques!</p>`;
+        }
+      } catch (erro) {
+        console.error("Erro:", erro);
+        document.getElementById("msgGlobal").textContent = "";
+      }
+    }
+
+    // Enter para confirmar
+    document.addEventListener("keypress", e => {
+      if (e.key === "Enter") {
+        if (document.getElementById("modalAgenciado").style.display === "flex")
+          document.getElementById("btnEntrarAgenciado").click();
+        if (document.getElementById("modalAdmin").style.display === "flex")
+          document.getElementById("btnEntrarAdmin").click();
+      }
+    });
+
+    // INICIAR!
+    carregarTudo();
+  </script>
+</body>
+</html>
