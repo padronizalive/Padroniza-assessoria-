@@ -27,6 +27,7 @@
       --border-soft: rgba(255, 255, 255, 0.08);
       --rosa: #ff3d81;
       --dourado: #ffc107;
+      --vermelho-ao-vivo: #ff003c;
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -112,7 +113,7 @@
     .carousel-track { display: flex; gap: 12px; overflow-x: auto; scroll-snap-type: x mandatory; padding-bottom: 6px; }
     .carousel-track::-webkit-scrollbar { height: 4px; }
     
-    /* 🎬 LIVE CARD — COM PLACEHOLDER BONITO + EFEITO DE HOVER */
+    /* 🎬 LIVE CARD — COM LOGO BOLINHA NO PLACEHOLDER + ÍCONE VERMELHO AO VIVO! 💜🔴 */
     .live-card {
       min-width: 240px; 
       background: radial-gradient(circle at top, rgba(123,63,255,0.4), rgba(10,12,24,0.95));
@@ -125,6 +126,7 @@
       gap: 8px;
       transition: transform 0.2s ease, box-shadow 0.2s ease;
       cursor: pointer;
+      position: relative;
     }
     .live-card:hover {
       transform: translateY(-4px);
@@ -132,7 +134,7 @@
       border-color: rgba(123, 63, 255, 0.5);
     }
     
-    /* 🖼️ CAPA DA LIVE — COM PLACEHOLDER PERSONALIZADO */
+    /* 🖼️ CAPA DA LIVE — PLACEHOLDER COM O MESMO LOGO BOLINHA! 💜 */
     .live-cover { 
       width: 100%; 
       aspect-ratio: 16/9; 
@@ -144,27 +146,33 @@
       align-items: center;
       justify-content: center;
     }
-    /* ✅ PLACEHOLDER BONITO — SEM FUNDO AZUL VAZIO! */
+    /* ✅ PLACEHOLDER COM O MESMO LOGO BOLINHA DA PÁGINA! 💜 */
     .live-cover.sem-capa {
       flex-direction: column;
-      gap: 10px;
+      gap: 12px;
       border: 2px dashed rgba(123, 63, 255, 0.4);
     }
     .live-cover.sem-capa .placeholder-logo {
-      width: 50px;
-      height: 50px;
+      width: 80px;
+      height: 80px;
       border-radius: 50%;
+      border: 3px solid var(--primary-gold);
+      box-shadow: 0 0 20px rgba(199,155,59,0.5);
+      overflow: hidden;
       background: linear-gradient(135deg, #7b3fff, #c79b3b);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 24px;
+    }
+    .live-cover.sem-capa .placeholder-logo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
     }
     .live-cover.sem-capa .placeholder-text {
-      font-size: 0.8rem;
-      color: rgba(255,255,255,0.7);
+      font-size: 0.9rem;
+      color: rgba(255,255,255,0.9);
       text-align: center;
-      font-weight: 500;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
     }
     .live-cover img { 
       width: 100%; 
@@ -174,6 +182,38 @@
     }
     .live-card:hover .live-cover img {
       transform: scale(1.05);
+    }
+    
+    /* 🔴 ÍCONE VERMELHO "AO VIVO" — BEM DESTAQUE! */
+    .tag-ao-vivo {
+      background: var(--vermelho-ao-vivo);
+      color: white;
+      font-weight: 700;
+      font-size: 0.7rem;
+      padding: 5px 10px;
+      border-radius: 999px;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      box-shadow: 0 0 10px rgba(255, 0, 60, 0.5);
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0% { box-shadow: 0 0 10px rgba(255, 0, 60, 0.5); }
+      50% { box-shadow: 0 0 20px rgba(255, 0, 60, 0.8); }
+      100% { box-shadow: 0 0 10px rgba(255, 0, 60, 0.5); }
+    }
+    .tag-ao-vivo::before {
+      content: "";
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: white;
+      animation: blink 1s infinite;
+    }
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.3; }
     }
     
     /* ▶️ INDICADOR DE REPRODUÇÃO */
@@ -372,7 +412,7 @@
     <main class="main-grid">
       <section class="card">
         <div class="card-header">
-          <div><h2>🔴 Lives ao Vivo</h2><span>Toque ou passe o mouse para visualizar • Clique para assistir</span></div>
+          <div><h2>🔴 Lives ao Vivo</h2><span>Toque ou passe o mouse para visualizar • Clique para assistir e seguir</span></div>
           <div class="status-bar">
             <div class="status-dot" id="liveDot"></div>
             <span id="liveStatus">Carregando...</span>
@@ -490,6 +530,7 @@
   <script>
     // ✅ APPS SCRIPT
     const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbx9JlL7g36JfEWHlQFZqb3XNbwO_IsIEjDYT21PB9eteevILbpTv8WnbfVJeo8vdQqr/exec";
+    const LOGO_URL = "https://i.ibb.co/B23rwMHt/1787270369792.png";
 
     // 📋 TODOS OS LINKS
     document.getElementById("btnTikTok").onclick = () => window.open("https://1drv.ms/f/c/884f1b26d8daa748/IgCI5Cqu_c0lTokK1PAApLfVARVzFb6jEQMdTsvbD_Nucqo?e=CJc3ZD", "_blank");
@@ -604,10 +645,10 @@
     // Troca a cada 6 segundos
     setInterval(trocarDepoimento, 6000);
 
-    // 📡 CARREGAR LIVES E DESTAQUES — COM PLACEHOLDER BONITO! ✨
+    // 📡 CARREGAR LIVES — COM LOGO BOLINHA NO PLACEHOLDER + ÍCONE VERMELHO AO VIVO! 💜🔴
     async function carregarTudo() {
       try {
-        // LIVES — COM PLACEHOLDER PERSONALIZADO
+        // LIVES — PLACEHOLDER COM O MESMO LOGO DA PÁGINA! 💜
         const resLives = await fetch(`${APPS_SCRIPT_URL}?acao=listarLives`);
         const dadosLives = await resLives.json();
         const carousel = document.getElementById("liveCarousel");
@@ -618,11 +659,11 @@
           status.textContent = `${dadosLives.lives.length} lives ao vivo`;
           dot.classList.remove("offline");
           carousel.innerHTML = dadosLives.lives.map(live => {
-            // ✅ PLACEHOLDER BONITO QUANDO NÃO TEM CAPA
+            // ✅ PLACEHOLDER COM O MESMO LOGO BOLINHA DA PÁGINA!
             const temCapa = live.capa && live.capa.trim() !== "";
             const capaHTML = temCapa 
               ? `<img src="${live.capa}" alt="${live.nome || 'Streamer'}">`
-              : `<div class="placeholder-logo">💜</div><span class="placeholder-text">Padroniza<br>Live</span>`;
+              : `<div class="placeholder-logo"><img src="${LOGO_URL}" alt="Padroniza"></div><span class="placeholder-text">Padroniza Live</span>`;
             const classeCapa = temCapa ? "" : "sem-capa";
             
             return `
@@ -633,11 +674,11 @@
                 </div>
                 <div class="live-meta">
                   <strong>${live.nome || "Streamer"}</strong>
-                  <div style="margin-top:4px;display:flex;gap:6px;align-items:center;flex-wrap:wrap;">
+                  <div style="margin-top:6px;display:flex;gap:6px;align-items:center;flex-wrap:wrap;">
                     <span class="tag ${live.plataforma === 'kako' ? 'tag-kako' : 'tag-tiktok'}">
                       ${live.plataforma === 'kako' ? '💜 Kako' : '🎵 TikTok'}
                     </span>
-                    <span class="tag">🔴 AO VIVO</span>
+                    <span class="tag-ao-vivo">AO VIVO</span>
                   </div>
                 </div>
               </a>
