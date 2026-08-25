@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Suporte & Depoimentos — Padroniza Assessoria</title>
+  <title>Suporte • Avaliação • Depoimentos — Padroniza Assessoria</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
     :root {
@@ -20,9 +20,9 @@
       display: flex; flex-direction: column; align-items: center; justify-content: center;
       min-height: 80vh; text-align: center; padding: 40px 20px;
     }
-    .logo { font-size: 32px; font-weight: 800; color: var(--verde); margin-bottom: 8px; }
-    .subtitulo { color: var(--cinza); font-size: 14px; margin-bottom: 30px; }
-    .login-box h2 { color: var(--rosa); margin-bottom: 20px; font-size: 22px; }
+    .logo { font-size: 32px; font-weight: 800; color: var(--rosa); margin-bottom: 8px; }
+    .subtitulo { color: var(--cinza); font-size: 14px; margin-bottom: 30px; line-height: 1.5; }
+    .login-box h2 { color: var(--amarelo); margin-bottom: 20px; font-size: 22px; }
     .campo-form {
       width: 100%; max-width: 360px; padding: 16px; border-radius: 10px;
       border: 1px solid var(--borda); background: #17213a; color: var(--texto);
@@ -31,10 +31,10 @@
     .btn-acao {
       width: 100%; max-width: 360px; padding: 16px; border-radius: 10px;
       border: none; font-weight: bold; cursor: pointer; font-size: 17px;
-      background: linear-gradient(90deg, #ff3d81, #ff6b9d); color: #fff;
+      background: linear-gradient(90deg, #7457ff, #b84dff); color: #fff;
       transition: 0.2s;
     }
-    .btn-acao:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(255,61,129,0.3); }
+    .btn-acao:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(116,87,255,0.3); }
     .mensagem { margin-top: 16px; font-size: 15px; min-height: 24px; }
     .erro { color: var(--vermelho); }
     .sucesso { color: var(--verde); }
@@ -43,8 +43,9 @@
     .conteudo { display: none; }
     .conteudo.visivel { display: block; }
     
-    .cabecalho { text-align: center; margin-bottom: 24px; }
+    .cabecalho { text-align: center; margin-bottom: 28px; }
     .cabecalho h2 { font-size: 22px; color: var(--rosa); margin-bottom: 6px; }
+    .cabecalho p { color: var(--cinza); font-size: 14px; }
     .plataforma-tag {
       display: inline-flex; align-items: center; gap: 6px;
       background: rgba(0,168,255,0.15); border: 1px solid var(--azul);
@@ -52,24 +53,101 @@
       font-size: 14px; font-weight: 600; margin-top: 10px;
     }
     .plataforma-tag.tiktok { background: rgba(0,242,234,0.1); border-color: #00f2ea; color: #00f2ea; }
-    .plataforma-tag.kwai { background: rgba(255,170,0,0.1); border-color: #ffaa00; color: #ffaa00; }
+    .plataforma-tag.kako { background: rgba(184,77,255,0.1); border-color: #b84dff; color: #b84dff; }
 
     .card-form {
       background: var(--painel); padding: 24px; border-radius: 16px;
       border: 2px solid var(--borda); margin-bottom: 20px;
+      transition: border-color 0.3s;
     }
-    .card-titulo { font-size: 18px; font-weight: bold; color: var(--amarelo); margin-bottom: 16px; }
+    .card-form:hover { border-color: rgba(116,87,255,0.4); }
+    .card-titulo { 
+      font-size: 18px; font-weight: bold; color: var(--amarelo); 
+      margin-bottom: 16px; display: flex; align-items: center; gap: 8px;
+    }
     .grupo { margin-bottom: 16px; }
     .grupo label { display: block; margin-bottom: 8px; font-size: 14px; color: var(--cinza); font-weight: 500; }
     .campo {
       width: 100%; padding: 14px; border-radius: 10px; border: 1px solid var(--borda);
       background: #17213a; color: var(--texto); font-size: 15px;
+      transition: border-color 0.2s;
     }
+    .campo:focus { outline: none; border-color: var(--roxo); }
     .campo[readonly] { opacity: 0.7; border-color: var(--rosa); cursor: not-allowed; }
     select.campo { appearance: none; cursor: pointer; }
-    textarea.campo { min-height: 120px; resize: vertical; line-height: 1.5; }
+    textarea.campo { min-height: 110px; resize: vertical; line-height: 1.6; }
     
-    /* === ÁREA DE FOTOS — GALERIA === */
+    /* === ⭐ AVALIAÇÃO DA PADRONIZA LIVE — IGUAL AO MODELO QUE VOCÊ APROVOU! === */
+    .avaliacao-box { text-align: center; padding: 10px 0 20px; }
+    .avaliacao-pergunta { 
+      font-size: 15px; color: var(--cinza); margin-bottom: 12px; 
+      line-height: 1.8;
+    }
+    .avaliacao-destaque {
+      color: var(--dourado); font-weight: 700; font-size: 18px; display: block; margin: 4px 0;
+    }
+    .estrelas { display: flex; justify-content: center; gap: 8px; font-size: 42px; cursor: pointer; margin: 16px 0; }
+    .estrela { color: #333; transition: all 0.2s; filter: grayscale(1); }
+    .estrela.ativa, .estrela:hover { color: var(--dourado); filter: grayscale(0); transform: scale(1.2); }
+    .nota-texto { margin-top: 10px; font-size: 15px; color: var(--dourado); min-height: 24px; font-weight: 600; }
+    .avaliacao-extra {
+      margin-top: 20px; padding: 16px; background: rgba(255,193,7,0.05);
+      border-radius: 12px; border-left: 4px solid var(--dourado);
+    }
+    .avaliacao-extra label {
+      display: block; font-size: 14px; color: var(--dourado); margin-bottom: 10px; font-weight: 500;
+    }
+    .avaliacao-extra textarea {
+      min-height: 90px; font-size: 15px; background: #0f1629; border: 1px solid rgba(255,193,7,0.2);
+    }
+    .btn-avaliacao {
+      width: 100%; padding: 18px; border-radius: 12px; border: none;
+      font-size: 18px; font-weight: bold; cursor: pointer;
+      background: linear-gradient(90deg, #ffc107, #ff9800); color: #000;
+      margin-top: 12px; transition: 0.2s;
+    }
+    .btn-avaliacao:hover { transform: translateY(-2px); box-shadow: 0 4px 15px rgba(255,193,7,0.3); }
+
+    /* === 💜 DEPOIMENTO DESTAQUE — EXPLICANDO QUE VAI APARECER NA PÁGINA PRINCIPAL! === */
+    .depoimento-box {
+      border: 3px solid var(--dourado); background: linear-gradient(135deg, rgba(255,193,7,0.08), rgba(116,87,255,0.05));
+      box-shadow: 0 0 20px rgba(255,193,7,0.1);
+    }
+    .depoimento-destaque-badge {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: linear-gradient(90deg, #ffc107, #ff9800); color: #000;
+      padding: 6px 14px; border-radius: 20px; font-size: 13px; font-weight: bold;
+      margin-bottom: 14px;
+    }
+    .depoimento-texto-motivacional {
+      background: rgba(255,193,7,0.1); border-radius: 12px; padding: 18px;
+      margin-bottom: 18px; border-left: 4px solid var(--dourado);
+    }
+    .depoimento-texto-motivacional h4 {
+      color: var(--dourado); font-size: 16px; margin-bottom: 8px; display: flex; align-items: center; gap: 8px;
+    }
+    .depoimento-texto-motivacional p {
+      color: #ffe066; font-size: 14px; line-height: 1.8;
+    }
+    .depoimento-aviso {
+      background: rgba(116,87,255,0.1); border: 1px solid rgba(116,87,255,0.3);
+      border-radius: 10px; padding: 12px; margin-bottom: 16px;
+      font-size: 13px; color: #d4c5ff; line-height: 1.6;
+    }
+    .opcional-tag {
+      display: inline-block; font-size: 11px; color: var(--cinza); 
+      background: rgba(255,255,255,0.05); padding: 2px 8px; border-radius: 10px;
+      margin-left: 8px;
+    }
+    .btn-depoimento {
+      width: 100%; padding: 18px; border-radius: 12px; border: none;
+      font-size: 18px; font-weight: bold; cursor: pointer;
+      background: linear-gradient(90deg, #7457ff, #ff3d81); color: #fff;
+      margin-top: 8px; transition: 0.2s;
+    }
+    .btn-depoimento:hover { transform: translateY(-2px); box-shadow: 0 4px 15px rgba(116,87,255,0.35); }
+
+    /* === 📸 FOTOS === */
     .foto-upload-area {
       border: 2px dashed rgba(255,61,129,0.4); border-radius: 12px; padding: 20px;
       text-align: center; cursor: pointer; transition: 0.25s; margin-bottom: 12px;
@@ -83,16 +161,7 @@
       width: calc(50% - 5px); aspect-ratio: 1; object-fit: cover; border-radius: 10px;
       border: 2px solid var(--rosa); display: none;
     }
-    .aviso-fotos { font-size: 12px; color: var(--cinza); margin-top: 6px; }
-
-    /* === ÁREA DE DEPOIMENTO === */
-    .depoimento-aviso {
-      background: rgba(255,193,7,0.08); border: 1px solid var(--dourado);
-      padding: 14px; border-radius: 10px; margin-bottom: 16px; display: none;
-    }
-    .depoimento-aviso.mostrar { display: block; }
-    .depoimento-aviso h4 { color: var(--dourado); font-size: 15px; margin-bottom: 6px; }
-    .depoimento-aviso p { color: #e6c200; font-size: 13px; line-height: 1.5; }
+    .aviso-fotos { font-size: 12px; color: var(--cinza); margin-top: 6px; line-height: 1.5; }
 
     /* === BOTÕES === */
     .btn-enviar {
@@ -118,11 +187,13 @@
     .sucesso-box.mostrar { display: block; }
     .sucesso-icone { font-size: 60px; margin-bottom: 20px; }
     .sucesso-box h3 { color: var(--verde); font-size: 22px; margin-bottom: 12px; }
-    .sucesso-box p { color: var(--cinza); line-height: 1.6; margin-bottom: 24px; }
+    .sucesso-box p { color: var(--cinza); line-height: 1.8; margin-bottom: 24px; }
     .btn-voltar {
       padding: 12px 24px; border-radius: 8px; border: none;
-      background: var(--painel2); color: var(--texto); font-size: 15px; cursor: pointer;
+      background: var(--painel); color: var(--texto); font-size: 15px; cursor: pointer;
+      border: 1px solid var(--borda);
     }
+    .btn-voltar:hover { border-color: var(--roxo); }
 
     /* === TOAST === */
     .toast {
@@ -130,6 +201,16 @@
       background: var(--verde); color: #000; padding: 12px 24px; border-radius: 8px;
       font-weight: bold; z-index: 10000; display: none; box-shadow: 0 4px 12px rgba(0,0,0,0.3);
     }
+    .separador { 
+      text-align: center; margin: 35px 0; position: relative; 
+      color: var(--cinza); font-size: 13px; text-transform: uppercase; letter-spacing: 2px;
+    }
+    .separador::before, .separador::after {
+      content: ""; position: absolute; top: 50%; width: 35%; height: 1px;
+      background: linear-gradient(90deg, transparent, var(--borda), transparent);
+    }
+    .separador::before { left: 0; }
+    .separador::after { right: 0; }
   </style>
 </head>
 <body>
@@ -138,7 +219,7 @@
   <!-- === TELA DE LOGIN === -->
   <div class="login-box" id="telaLogin">
     <div class="logo">💬 Padroniza</div>
-    <h2>Suporte & Depoimentos</h2>
+    <h2>Suporte • Avaliação • Depoimentos</h2>
     <p class="subtitulo">Área exclusiva para agenciados — digite seu usuário para acessar</p>
     <input type="text" class="campo-form" id="usuarioAcesso" placeholder="Digite seu nome de usuário">
     <button class="btn-acao" onclick="verificarAcesso()">🔍 ACESSAR</button>
@@ -149,11 +230,15 @@
   <div class="conteudo" id="conteudoSuporte">
     <div class="cabecalho">
       <h2>👋 Bem-vindo, <span id="nomeUsuarioExibicao"></span>!</h2>
+      <p>Escolha o que deseja fazer abaixo 💜</p>
       <div class="plataforma-tag" id="plataformaTag">📱 Plataforma</div>
     </div>
 
+    <!-- ============================================== -->
+    <!-- 📌 ÁREA 1 — SUPORTE / TICKET                  -->
+    <!-- ============================================== -->
     <div class="card-form">
-      <h3 class="card-titulo">📝 Enviar Mensagem</h3>
+      <h3 class="card-titulo">🎫 Solicitar Suporte</h3>
       
       <div class="grupo">
         <label>👤 Seu Usuário</label>
@@ -167,62 +252,113 @@
 
       <div class="grupo">
         <label>📌 Assunto *</label>
-        <select class="campo" id="formAssunto" required onchange="verificarAssunto()">
+        <select class="campo" id="formAssunto" required>
           <option value="">Selecione o tipo de mensagem...</option>
           <option value="duvida">❓ Dúvida</option>
           <option value="problema">⚠️ Problema na Live / Restrição</option>
           <option value="reclamacao">📢 Reclamação</option>
-          <option value="depoimento">⭐ Elogio / Depoimento ✨</option>
           <option value="sugestao">💡 Sugestão</option>
           <option value="outro">📋 Outro</option>
         </select>
       </div>
 
-      <!-- AVISO ESPECIAL QUANDO ESCOLHER DEPOIMENTO -->
-      <div class="depoimento-aviso" id="avisoDepoimento">
-        <h4>✨ SEU DEPOIMENTO VAI APARECER NO SITE!</h4>
-        <p>Que incrível! 🥰 Seu depoimento vai aparecer automaticamente na página principal do site junto com os streamers destaque! Pode ser um texto, ou se preferir, envie o link do seu vídeo de depoimento que também vamos publicar! 💜</p>
-      </div>
-
       <div class="grupo">
         <label>💬 Sua Mensagem *</label>
-        <textarea class="campo" id="formMensagem" placeholder="Descreva com detalhes... Se for depoimento, escreva sua mensagem aqui ou cole o link do vídeo!" required></textarea>
+        <textarea class="campo" id="formMensagem" placeholder="Descreva com detalhes o que está acontecendo..." required></textarea>
       </div>
 
-      <!-- FOTOS — DIRETO DA GALERIA -->
+      <!-- 📸 FOTOS — DIRETO DA GALERIA -->
       <div class="grupo">
         <label>📸 Fotos (opcional — até 2 fotos da galeria)</label>
         <div class="foto-upload-area" onclick="document.getElementById('foto1').click()">
           <input type="file" id="foto1" accept="image/*" onchange="carregarFoto(1)">
           <div class="foto-icone">📷</div>
-          <div class="foto-texto">Clique para escolher a 1ª foto da galeria</div>
+          <div class="foto-texto">Clique para escolher a 1ª foto</div>
         </div>
         <div class="foto-upload-area" onclick="document.getElementById('foto2').click()">
           <input type="file" id="foto2" accept="image/*" onchange="carregarFoto(2)">
           <div class="foto-icone">📷</div>
-          <div class="foto-texto">Clique para escolher a 2ª foto da galeria</div>
+          <div class="foto-texto">Clique para escolher a 2ª foto</div>
         </div>
         <div class="foto-preview-container">
           <img id="preview1" class="foto-preview" alt="Pré-visualização 1">
           <img id="preview2" class="foto-preview" alt="Pré-visualização 2">
         </div>
-        <p class="aviso-fotos">Pode enviar print de restrição, tela de erro, aviso, etc. — tudo vai junto pra agência!</p>
+        <p class="aviso-fotos">Pode enviar print de restrição, tela de erro, aviso, etc. — tudo vai direto pra equipe da agência!</p>
       </div>
 
-      <button class="btn-enviar" onclick="enviarMensagem()">📤 ENVIAR MENSAGEM</button>
+      <button class="btn-enviar" onclick="enviarSuporte()">📤 ENVIAR TICKET DE SUPORTE</button>
       
       <a href="https://wa.me/5569981478873?text=Olá! Preciso de ajuda! 💜" target="_blank" class="btn-whats">
         💬 Falar direto pelo WhatsApp
       </a>
     </div>
+
+    <div class="separador">⭐ Sua Opinião Importa ⭐</div>
+
+    <!-- ============================================== -->
+    <!-- ⭐ ÁREA 2 — AVALIAÇÃO — EXATAMENTE COMO VOCÊ QUERIA! -->
+    <!-- ============================================== -->
+    <div class="card-form">
+      <h3 class="card-titulo">⭐ Avalie a Padroniza Live</h3>
+      
+      <div class="avaliacao-box">
+        <p class="avaliacao-pergunta">
+          Como você avalia a <span class="avaliacao-destaque">Padroniza Assessoria</span>?<br>
+          Seu atendimento, nossa assessoria, suporte e acompanhamento do seu crescimento!
+        </p>
+        <div class="estrelas" id="estrelasAvaliacao">
+          <span class="estrela" data-nota="1">★</span>
+          <span class="estrela" data-nota="2">★</span>
+          <span class="estrela" data-nota="3">★</span>
+          <span class="estrela" data-nota="4">★</span>
+          <span class="estrela" data-nota="5">★</span>
+        </div>
+        <p class="nota-texto" id="textoNota">Clique nas estrelas para avaliar nossa assessoria! ⭐</p>
+        
+        <div class="avaliacao-extra">
+          <label>💜 Deixe um comentário sobre o atendimento ou o que podemos melhorar (opcional):</label>
+          <textarea class="campo" id="avaliacaoComentario" placeholder="Fale sobre nosso atendimento, a assessoria, o suporte... sua opinião é muito importante!"></textarea>
+        </div>
+      </div>
+      
+      <button class="btn-avaliacao" onclick="enviarAvaliacao()">✨ ENVIAR AVALIAÇÃO DA ASSESSORIA</button>
+    </div>
+
+    <div class="separador">💜 Sua História 💜</div>
+
+    <!-- ============================================== -->
+    <!-- 💜 ÁREA 3 — DEPOIMENTO DESTAQUE — VAI APARECER NA PÁGINA PRINCIPAL! -->
+    <!-- ============================================== -->
+    <div class="card-form depoimento-box">
+      <span class="depoimento-destaque-badge">🌟 DESTAQUE — Aparece no site!</span>
+      <h3 class="card-titulo">💜 Deixe seu Depoimento <span class="opcional-tag">Opcional</span></h3>
+      
+      <div class="depoimento-texto-motivacional">
+        <h4>✨ Conte sua história com a Padroniza!</h4>
+        <p>O que mudou na sua vida depois que entrou pra Padroniza? Quantos seguidores conquistou? Qual meta você já bateu? Como a assessoria te ajudou a crescer?<br><br>💜 Sua história vai aparecer <strong>na página principal do site</strong>, em destaque, junto com os Streamers Estrela — inspirando outros streamers a crescer também! 🚀</p>
+      </div>
+
+      <div class="depoimento-aviso">
+        👀 <strong>Isso vai aparecer no site!</strong> Seu depoimento será exibido publicamente na página inicial da Padroniza Live, em destaque, para todos os visitantes verem. ✨
+      </div>
+
+      <div class="grupo">
+        <label>Escreva aqui seu depoimento ou cole o link do vídeo 🎬</label>
+        <textarea class="campo" id="formDepoimento" placeholder="Conte sua jornada... Como a Padroniza te ajudou a crescer? Qual foi sua melhor conquista até agora? O que mudou na sua vida? Fique à vontade para compartilhar! 💜"></textarea>
+      </div>
+      
+      <button class="btn-depoimento" onclick="enviarDepoimento()">💜 ENVIAR DEPOIMENTO PARA O SITE</button>
+    </div>
+
   </div>
 
   <!-- === TELA DE SUCESSO === -->
   <div class="sucesso-box" id="telaSucesso">
     <div class="sucesso-icone">✅</div>
-    <h3>Mensagem Enviada!</h3>
-    <p>Recebemos sua mensagem! 🎉<br>A equipe da Padroniza vai analisar e responder em breve pelo WhatsApp.<br><br>Se for um depoimento, logo vai aparecer no site! ✨💜</p>
-    <button class="btn-voltar" onclick="location.reload()">↩️ Enviar outra mensagem</button>
+    <h3 id="tituloSucesso">Enviado com Sucesso!</h3>
+    <p id="textoSucesso">Recebemos sua mensagem! 🎉<br>A equipe da Padroniza vai analisar e responder em breve pelo WhatsApp.<br><br>Obrigado por fazer parte da nossa família! 💜</p>
+    <button class="btn-voltar" onclick="location.reload()">↩️ Voltar ao Início</button>
   </div>
 
 </div>
@@ -232,12 +368,13 @@
 <script>
 // === LINKS DAS PLANILHAS ===
 const LINK_PLANILHA_CONTROLE = "https://docs.google.com/spreadsheets/d/1R9eUsqF4kA0y22ryMUIsvGolBfk3-XwZ5R-RVpBiZA4/gviz/tq?tqx=out:json";
-const LINK_APPSCRIPT_SUPORTE = "https://script.google.com/macros/s/AKfycbz.../exec"; // ← Colocar link do Apps Script
+const LINK_APPSCRIPT = "https://script.google.com/macros/s/AKfycbx9JlL7g36JfEWHlQFZqb3XNbwO_IsIEjDYT21PB9eteevILbpTv8WnbfVJeo8vdQqr/exec";
 const WHATSAPP_AGENCIA = "5569981478873";
 
 let dadosControle = [];
 let usuarioLogado = null;
 let plataformaUsuario = "";
+let notaAvaliacao = 0;
 let fotosBase64 = { foto1: "", foto2: "" };
 
 window.onload = async function() {
@@ -249,9 +386,10 @@ window.onload = async function() {
     document.getElementById("usuarioAcesso").value = nomeDaUrl;
     verificarAcesso();
   }
+
+  configurarEstrelas();
 };
 
-// === CARREGAR PLANILHA DE CONTROLE ===
 async function carregarPlanilhaControle(){
   try{
     const res = await fetch(LINK_PLANILHA_CONTROLE);
@@ -263,13 +401,12 @@ async function carregarPlanilhaControle(){
       return {
         usuario: ((c[0]||{}).v||"").toString().trim().toLowerCase(),
         status: ((c[1]||{}).v||"").toString().trim().toUpperCase(),
-        plataforma: ((c[5]||{}).v||"").toString().trim() // Coluna F = Plataforma (TikTok/Kwai)
+        plataforma: ((c[5]||{}).v||"").toString().trim()
       };
     });
   }catch(e){console.error("Erro planilha controle:", e)}
 }
 
-// === VERIFICAR ACESSO — SÓ APROVADOS ENTRAM! ===
 async function verificarAcesso(){
   const usuario = document.getElementById("usuarioAcesso").value.trim().toLowerCase();
   const msg = document.getElementById("mensagemAcesso");
@@ -285,38 +422,58 @@ async function verificarAcesso(){
     usuarioLogado = streamer.usuario;
     plataformaUsuario = (streamer.plataforma || "TikTok").toUpperCase();
     
-    // Login OK — mostra conteúdo
     msg.innerHTML = '<span class="sucesso">✅ Aprovado! Carregando...</span>';
     document.getElementById("telaLogin").style.display = "none";
     document.getElementById("conteudoSuporte").classList.add("visivel");
     
-    // Preencher dados automáticos
     document.getElementById("nomeUsuarioExibicao").textContent = usuarioLogado;
     document.getElementById("formUsuario").value = usuarioLogado;
     document.getElementById("formPlataforma").value = plataformaUsuario;
     
-    // Estilo da plataforma
     const tag = document.getElementById("plataformaTag");
     tag.textContent = "📱 " + (plataformaUsuario === "KWAI" || plataformaUsuario === "KAKO" ? "Kwai/Kako" : "TikTok");
-    tag.classList.add(plataformaUsuario.includes("KWAI") ? "kwai" : "tiktok");
+    tag.classList.add(plataformaUsuario.includes("KWAI") ? "kako" : "tiktok");
     
   } else {
     msg.innerHTML = '<span class="erro">❌ Usuário não encontrado ou não aprovado<br>Área exclusiva para agenciados Padroniza</span>';
   }
 }
 
-// === MOSTRAR AVISO QUANDO ESCOLHER DEPOIMENTO ===
-function verificarAssunto() {
-  const assunto = document.getElementById("formAssunto").value;
-  const aviso = document.getElementById("avisoDepoimento");
-  if (assunto === "depoimento") {
-    aviso.classList.add("mostrar");
-  } else {
-    aviso.classList.remove("mostrar");
-  }
+// === ⭐ AVALIAÇÃO — EXATAMENTE COMO VOCÊ QUERIA! ===
+function configurarEstrelas() {
+  const estrelas = document.querySelectorAll('.estrela');
+  const textosNota = [
+    "", 
+    "😔 Muito a melhorar — atendimento e suporte", 
+    "😔 Precisa melhorar — acompanhamento da assessoria", 
+    "😐 Regular — pode melhorar no atendimento", 
+    "😊 Bom — atenciosos e dedicados!", 
+    "🥰💜 Excelente! Melhor assessoria, atendimento 5 estrelas!"
+  ];
+  
+  estrelas.forEach(estrela => {
+    estrela.addEventListener('click', () => {
+      notaAvaliacao = parseInt(estrela.dataset.nota);
+      estrelas.forEach((e, i) => {
+        e.classList.toggle('ativa', i < notaAvaliacao);
+      });
+      document.getElementById('textoNota').textContent = textosNota[notaAvaliacao];
+    });
+    
+    estrela.addEventListener('mouseenter', () => {
+      const notaHover = parseInt(estrela.dataset.nota);
+      estrelas.forEach((e, i) => {
+        e.style.color = i < notaHover ? 'var(--dourado)' : '#333';
+      });
+    });
+    estrela.addEventListener('mouseleave', () => {
+      estrelas.forEach((e, i) => {
+        e.style.color = i < notaAvaliacao ? 'var(--dourado)' : '#333';
+      });
+    });
+  });
 }
 
-// === CARREGAR FOTO DA GALERIA ===
 function carregarFoto(numero) {
   const input = document.getElementById(`foto${numero}`);
   const preview = document.getElementById(`preview${numero}`);
@@ -333,42 +490,21 @@ function carregarFoto(numero) {
   leitor.readAsDataURL(arquivo);
 }
 
-// === ENVIAR MENSAGEM ===
-async function enviarMensagem() {
+// === 📤 ENVIAR SUPORTE ===
+async function enviarSuporte() {
   const assunto = document.getElementById("formAssunto").value;
   const mensagem = document.getElementById("formMensagem").value.trim();
   
   if (!assunto) { mostrarToast("⚠️ Escolha o assunto!"); return; }
   if (!mensagem) { mostrarToast("⚠️ Escreva sua mensagem!"); return; }
 
-  // Dados para o sistema
-  const dados = {
-    acao: "suporte",
-    usuario: usuarioLogado,
-    plataforma: plataformaUsuario,
-    assunto: assunto,
-    mensagem: mensagem,
-    foto1: fotosBase64.foto1.substring(0, 100) + "...", // Envia resumo (não o arquivo inteiro por limite)
-    foto2: fotosBase64.foto2.substring(0, 100) + "...",
-    dataHora: new Date().toISOString(),
-    tipo: assunto === "depoimento" ? "depoimento" : "suporte"
-  };
-
-  // Texto formatado pro WhatsApp
   const assuntoNome = {
-    duvida: "❓ Dúvida",
-    problema: "⚠️ Problema na Live",
-    reclamacao: "📢 Reclamação",
-    depoimento: "⭐ DEPOIMENTO",
-    sugestao: "💡 Sugestão",
-    outro: "📋 Outro"
+    duvida: "❓ Dúvida", problema: "⚠️ Problema na Live",
+    reclamacao: "📢 Reclamação", sugestao: "💡 Sugestão", outro: "📋 Outro"
   }[assunto];
 
-  const temFoto1 = fotosBase64.foto1 ? "✅ Sim" : "❌ Não";
-  const temFoto2 = fotosBase64.foto2 ? "✅ Sim" : "❌ Não";
-
   const msgWhatsApp = encodeURIComponent(`
-📩 *NOVA MENSAGEM DE SUPORTE*
+🎫 *NOVO TICKET DE SUPORTE*
 
 👤 *Usuário:* ${usuarioLogado}
 📱 *Plataforma:* ${plataformaUsuario}
@@ -377,31 +513,109 @@ async function enviarMensagem() {
 💬 *Mensagem:*
 ${mensagem}
 
-📸 *Fotos:* 1ª: ${temFoto1} | 2ª: ${temFoto2}
+📸 *Fotos:* 1ª: ${fotosBase64.foto1 ? "✅ Sim" : "❌ Não"} | 2ª: ${fotosBase64.foto2 ? "✅ Sim" : "❌ Não"}
 
 📅 *Data:* ${new Date().toLocaleString('pt-BR')}
 
 ---
-${assunto === "depoimento" ? "✨ *DEPOIMENTO PARA PUBLICAÇÃO NO SITE!* ✨" : "🔹 Padroniza Assessoria — Sistema de Suporte"}
+🔹 Padroniza Assessoria — Sistema de Suporte
   `.trim());
 
   try {
-    // Envia pra planilha via Apps Script
-    await fetch(LINK_APPSCRIPT_SUPORTE, {
+    await fetch(LINK_APPSCRIPT, {
       method: "POST",
       mode: "no-cors",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(dados)
+      body: JSON.stringify({
+        acao: "suporte", usuario: usuarioLogado, plataforma: plataformaUsuario,
+        assunto: assunto, mensagem: mensagem, data: new Date().toISOString()
+      })
     });
-  } catch(e) {
-    console.log("Apps Script ainda não configurado — mensagem vai por WhatsApp");
-  }
+  } catch(e) {}
 
-  // Abre WhatsApp com mensagem
+  window.open(`https://wa.me/${WHATSAPP_AGENCIA}?text=${msgWhatsApp}`, "_blank");
+  
+  document.getElementById("conteudoSuporte").style.display = "none";
+  document.getElementById("tituloSucesso").textContent = "Ticket Enviado! 🎫";
+  document.getElementById("textoSucesso").innerHTML = "Recebemos sua solicitação de suporte! 🎉<br>A equipe da Padroniza vai analisar e responder pelo WhatsApp em breve.<br><br>Obrigado pela paciência! 💜";
+  document.getElementById("telaSucesso").classList.add("mostrar");
+}
+
+// === ⭐ ENVIAR AVALIAÇÃO ===
+async function enviarAvaliacao() {
+  if (notaAvaliacao === 0) { mostrarToast("⚠️ Escolha uma nota nas estrelas!"); return; }
+  const comentario = document.getElementById("avaliacaoComentario").value.trim();
+
+  try {
+    await fetch(LINK_APPSCRIPT, {
+      method: "POST",
+      mode: "no-cors",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        acao: "avaliacao", usuario: usuarioLogado, plataforma: plataformaUsuario,
+        nota: notaAvaliacao, comentario: comentario, data: new Date().toISOString()
+      })
+    });
+  } catch(e) {}
+
+  const msgWhatsApp = encodeURIComponent(`
+⭐ *NOVA AVALIAÇÃO — PADRONIZA LIVE*
+
+👤 *Usuário:* ${usuarioLogado}
+📱 *Plataforma:* ${plataformaUsuario}
+⭐ *Nota:* ${notaAvaliacao} estrela${notaAvaliacao>1?'s':''}
+
+💬 *Comentário:*
+${comentario || "Sem comentário"}
+
+📅 *Data:* ${new Date().toLocaleString('pt-BR')}
+  `.trim());
   window.open(`https://wa.me/${WHATSAPP_AGENCIA}?text=${msgWhatsApp}`, "_blank");
 
-  // Mostra tela de sucesso
   document.getElementById("conteudoSuporte").style.display = "none";
+  document.getElementById("tituloSucesso").textContent = "Avaliação Recebida! ⭐";
+  document.getElementById("textoSucesso").innerHTML = `Você avaliou nossa assessoria com ${notaAvaliacao} estrela${notaAvaliacao>1?'s':''}! Obrigado! 🥰<br>Seu feedback sobre nosso atendimento é muito importante pra gente crescer sempre! 💜`;
+  document.getElementById("telaSucesso").classList.add("mostrar");
+}
+
+// === 💜 ENVIAR DEPOIMENTO — VAI PARA O SITE! ===
+async function enviarDepoimento() {
+  const depoimento = document.getElementById("formDepoimento").value.trim();
+  
+  if (!depoimento) { mostrarToast("💜 Escreva seu depoimento primeiro!"); return; }
+
+  try {
+    await fetch(LINK_APPSCRIPT, {
+      method: "POST",
+      mode: "no-cors",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        acao: "depoimento", usuario: usuarioLogado, plataforma: plataformaUsuario,
+        texto: depoimento, data: new Date().toISOString(), aprovado: "NAO"
+      })
+    });
+  } catch(e) {}
+
+  const msgWhatsApp = encodeURIComponent(`
+💜 *NOVO DEPOIMENTO PARA O SITE*
+
+👤 *Usuário:* ${usuarioLogado}
+📱 *Plataforma:* ${plataformaUsuario}
+
+💬 *Depoimento:*
+${depoimento}
+
+📅 *Data:* ${new Date().toLocaleString('pt-BR')}
+✅ *Status:* Aguardando aprovação para exibição no site!
+
+---
+🔹 Padroniza Live — Depoimentos
+  `.trim());
+  window.open(`https://wa.me/${WHATSAPP_AGENCIA}?text=${msgWhatsApp}`, "_blank");
+
+  document.getElementById("conteudoSuporte").style.display = "none";
+  document.getElementById("tituloSucesso").textContent = "Depoimento Enviado! 💜";
+  document.getElementById("textoSucesso").innerHTML = "Que incrível! 🥰 Obrigado por compartilhar sua história com a gente!<br>Após aprovação, seu depoimento vai aparecer <strong>na página principal do site</strong> em destaque! ✨🚀<br><br>Você é parte da família Padroniza! 💜";
   document.getElementById("telaSucesso").classList.add("mostrar");
 }
 
