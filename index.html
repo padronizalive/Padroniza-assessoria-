@@ -111,238 +111,132 @@
       background: rgba(10,12,24,0.8); font-size: 0.8rem; cursor: pointer;
     }
 
-    /* 🎬 CARROSSEL DE LIVES — RODA AUTOMÁTICA EM 3s! IGUAL FEED DO TIKTOK! 🎵 */
-    .carousel-wrapper {
-      position: relative;
-      overflow: hidden;
-    }
+    /* 🎬 CARROSSEL DE LIVES — PARADO */
+    .carousel-wrapper { position: relative; overflow: hidden; }
     .carousel-track { 
-      display: flex; 
-      gap: 12px; 
-      overflow-x: auto;
-      overflow-y: hidden;
-      padding-bottom: 6px; 
-      scroll-snap-type: x mandatory;
-      scroll-behavior: smooth;
+      display: flex; gap: 12px; overflow-x: auto; overflow-y: hidden;
+      padding-bottom: 6px; scroll-snap-type: x mandatory;
     }
-    .carousel-track::-webkit-scrollbar { 
-      height: 6px; 
-      background: rgba(255,255,255,0.05);
-      border-radius: 3px;
-    }
-    .carousel-track::-webkit-scrollbar-thumb {
-      background: var(--primary-purple);
-      border-radius: 3px;
-    }
+    .carousel-track::-webkit-scrollbar { height: 6px; background: rgba(255,255,255,0.05); border-radius: 3px; }
+    .carousel-track::-webkit-scrollbar-thumb { background: var(--primary-purple); border-radius: 3px; }
 
-    /* 🎬 CARD DA LIVE — COM VÍDEO AO VIVO RODANDO! 📹 */
-    .live-card {
-      min-width: 260px; /* ✅ MAIOR PRA VER O VÍDEO! */
-      max-width: 280px;
-      background: radial-gradient(circle at top, rgba(123,63,255,0.4), rgba(10,12,24,0.95));
-      border-radius: 16px; 
-      padding: 10px; 
-      border: 1px solid rgba(255,255,255,0.12);
-      scroll-snap-align: start;
-      display: flex; 
-      flex-direction: column; 
-      gap: 8px;
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
-      cursor: pointer;
-      position: relative;
-      flex-shrink: 0;
-      overflow: hidden;
-    }
-    .live-card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 8px 25px rgba(123, 63, 255, 0.35);
-      border-color: rgba(123, 63, 255, 0.5);
-    }
-    
-    /* 📹 ÁREA DO VÍDEO — RODA AO VIVO! */
-    .live-video-container {
-      width: 100%;
-      aspect-ratio: 9/16; /* ✅ FORMATO VERTICAL IGUAL TIKTOK! */
-      border-radius: 12px; 
-      overflow: hidden; 
-      position: relative;
-      background: linear-gradient(135deg, #2a1060, #0b1020, #1a1040);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    .live-video-container.sem-capa {
-      flex-direction: column;
-      gap: 8px;
-      border: 2px dashed rgba(123, 63, 255, 0.4);
-    }
-    .live-video-container.sem-capa .placeholder-logo {
-      width: 60px;
-      height: 60px;
-      border-radius: 50%;
-      border: 3px solid var(--primary-gold);
-      box-shadow: 0 0 15px rgba(199,155,59,0.5);
-      overflow: hidden;
-      background: linear-gradient(135deg, #7b3fff, #c79b3b);
-    }
-    .live-video-container.sem-capa .placeholder-logo img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-    .live-video-container.sem-capa .placeholder-text {
-      font-size: 0.8rem;
-      color: rgba(255,255,255,0.9);
-      text-align: center;
-      font-weight: 600;
-      letter-spacing: 0.05em;
-      text-transform: uppercase;
-    }
-    
-    /* 📹 O VÍDEO EM SI — TOCA SOZINHO MUDO! */
-    .live-video {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      position: absolute;
-      top: 0;
-      left: 0;
-    }
-    
-    /* 🔘 BOTÃO DE SOM */
-    .sound-btn {
-      position: absolute;
-      bottom: 10px;
-      right: 10px;
-      background: rgba(0,0,0,0.6);
-      border: none;
-      color: white;
-      width: 32px;
-      height: 32px;
-      border-radius: 50%;
-      font-size: 14px;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      z-index: 2;
-    }
-    
-    /* 🔴 ÍCONE VERMELHO "AO VIVO" — BEM DESTAQUE! */
+    /* 🔴 ÍCONE "AO VIVO" PISCANDO */
     .tag-ao-vivo {
-      position: absolute;
-      top: 10px;
-      left: 10px;
-      background: var(--vermelho-ao-vivo);
-      color: white;
-      font-weight: 700;
-      font-size: 0.7rem;
-      padding: 4px 8px;
-      border-radius: 999px;
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
-      box-shadow: 0 0 10px rgba(255, 0, 60, 0.5);
-      animation: pulse 2s infinite;
-      z-index: 2;
+      position: absolute; top: 10px; left: 10px;
+      background: var(--vermelho-ao-vivo); color: white;
+      font-weight: 700; font-size: 0.7rem;
+      padding: 5px 10px; border-radius: 999px;
+      display: inline-flex; align-items: center; gap: 5px;
+      box-shadow: 0 0 12px rgba(255, 0, 60, 0.6);
+      animation: pulse 2s infinite; z-index: 10;
     }
     @keyframes pulse {
       0% { box-shadow: 0 0 10px rgba(255, 0, 60, 0.5); }
-      50% { box-shadow: 0 0 20px rgba(255, 0, 60, 0.8); }
+      50% { box-shadow: 0 0 22px rgba(255, 0, 60, 0.9); }
       100% { box-shadow: 0 0 10px rgba(255, 0, 60, 0.5); }
     }
     .tag-ao-vivo::before {
-      content: "";
-      width: 6px;
-      height: 6px;
-      border-radius: 50%;
-      background: white;
-      animation: blink 1s infinite;
+      content: ""; width: 8px; height: 8px; border-radius: 50%;
+      background: white; animation: blink 1s infinite;
     }
-    @keyframes blink {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0.3; }
+    @keyframes blink { 0%,100% { opacity:1; } 50% { opacity:0.2; } }
+
+    /* 📹 CARD DA LIVE */
+    .live-card {
+      min-width: 260px; max-width: 280px;
+      background: radial-gradient(circle at top, rgba(123,63,255,0.4), rgba(10,12,24,0.95));
+      border-radius: 16px; padding: 10px; border: 1px solid rgba(255,255,255,0.12);
+      scroll-snap-align: start; display: flex; flex-direction: column; gap: 8px;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      cursor: pointer; position: relative; flex-shrink: 0; overflow: hidden;
     }
-    
-    /* ▶️ INDICADOR DE CLIQUE — ASSISTIR COMPLETO */
+    .live-card:hover {
+      transform: translateY(-4px); box-shadow: 0 8px 25px rgba(123, 63, 255, 0.35);
+      border-color: rgba(123, 63, 255, 0.5);
+    }
+    .live-video-container {
+      width: 100%; aspect-ratio: 9/16; border-radius: 12px; overflow: hidden; position: relative;
+      background: linear-gradient(135deg, #2a1060, #0b1020, #1a1040);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .live-capa-img {
+      width: 100%; height: 100%; object-fit: cover; position: absolute; top: 0; left: 0;
+      transition: transform 0.35s ease;
+    }
+    .live-card:hover .live-capa-img { transform: scale(1.08); }
+    .play-icon {
+      position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+      width: 60px; height: 60px; background: rgba(255,255,255,0.9);
+      border-radius: 50%; display: flex; align-items: center; justify-content: center;
+      font-size: 24px; color: #000; opacity: 0; transition: all 0.25s ease;
+      z-index: 5; box-shadow: 0 2px 15px rgba(0,0,0,0.3);
+    }
+    .live-card:hover .play-icon { opacity: 1; }
+    .live-overlay {
+      position: absolute; inset: 0; background: rgba(0,0,0,0.35);
+      opacity: 0; transition: opacity 0.25s ease; z-index: 4;
+    }
+    .live-card:hover .live-overlay { opacity: 1; }
     .watch-full {
-      position: absolute;
-      bottom: 10px;
-      left: 50%;
-      transform: translateX(-50%);
-      background: rgba(0,0,0,0.7);
-      color: white;
-      font-size: 0.7rem;
-      padding: 4px 10px;
-      border-radius: 999px;
-      opacity: 0;
-      transition: opacity 0.2s;
-      z-index: 2;
+      position: absolute; bottom: 10px; left: 50%; transform: translateX(-50%);
+      background: rgba(0,0,0,0.75); color: white; font-size: 0.7rem;
+      padding: 5px 12px; border-radius: 999px; opacity: 0; transition: opacity 0.25s; z-index: 6;
+      white-space: nowrap;
     }
     .live-card:hover .watch-full { opacity: 1; }
-    
     .live-meta { font-size: 0.8rem; margin-top: 8px; }
     .tag { font-size: 0.7rem; padding: 4px 8px; border-radius: 999px; border: 1px solid; }
     .tag-tiktok { border-color: #00f2ea; color: #00f2ea; }
     .tag-kako { border-color: #b84dff; color: #b84dff; }
 
-    /* ⭐ STREAMER ESTRELA — SOBE SOZINHO, BEM DEVAGAR! 50s! 🐢💜 */
-    .estrela-wrapper {
-      overflow: hidden;
-      height: 280px;
-      position: relative;
-    }
+    /* ⭐ STREAMER ESTRELA — FOTO OU VÍDEO! 🎬🖼️ */
+    .estrela-wrapper { overflow: hidden; height: 300px; position: relative; border-radius: 12px; }
     .estrela-track { 
-      display: flex; 
-      flex-direction: column; 
-      gap: 16px; 
-      animation: rolarEstrelas 50s linear infinite;
+      display: flex; flex-direction: column; gap: 16px;
+      animation: rolarEstrelas 40s linear infinite;
     }
-    .estrela-track:hover {
-      animation-play-state: paused;
-    }
+    .estrela-track:hover { animation-play-state: paused; }
     @keyframes rolarEstrelas {
       0% { transform: translateY(0); }
       100% { transform: translateY(-50%); }
     }
     .estrela-card {
-      display: flex; 
-      flex-direction: column; 
-      gap: 10px; 
-      padding: 12px; 
-      border-radius: 16px;
+      display: flex; flex-direction: column; gap: 10px; padding: 12px; border-radius: 16px;
       background: linear-gradient(135deg, rgba(199,155,59,0.25), rgba(10,12,24,0.95));
-      border: 2px solid rgba(199,155,59,0.6); 
-      min-height: 220px;
+      border: 2px solid rgba(199,155,59,0.6); min-height: 240px;
       transition: transform 0.2s ease;
     }
     .estrela-card:hover { transform: translateY(-2px); }
-    .estrela-avatar {
-      width: 100%; 
-      aspect-ratio: 16/9;
-      border-radius: 12px; 
-      overflow: hidden;
+    .estrela-midia {
+      width: 100%; aspect-ratio: 16/9; border-radius: 12px; overflow: hidden;
       background: radial-gradient(circle, #c79b3b, #050509);
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      display: flex; align-items: center; justify-content: center;
+      position: relative;
     }
-    .estrela-avatar img { 
-      width: 100%; 
-      height: 100%; 
-      object-fit: cover;
+    .estrela-midia img, .estrela-midia video {
+      width: 100%; height: 100%; object-fit: cover;
+      border-radius: 12px;
     }
     .estrela-nome {
-      font-size: 1rem;
-      font-weight: 700;
-      color: var(--text-light);
-      text-align: center;
+      font-size: 1rem; font-weight: 700; color: var(--text-light);
+      text-align: center; margin-top: 8px;
     }
     .estrela-titulo {
-      font-size: 0.85rem;
-      color: var(--primary-gold);
-      text-align: center;
-      font-weight: 600;
+      font-size: 0.85rem; color: var(--primary-gold);
+      text-align: center; font-weight: 600; margin-top: 4px;
+    }
+    .estrela-badge {
+      position: absolute; top: 8px; right: 8px;
+      background: linear-gradient(135deg, #ffc107, #ff9800);
+      color: #000; font-size: 0.65rem; font-weight: 700;
+      padding: 3px 8px; border-radius: 999px;
+      z-index: 2;
+    }
+    .video-indicator {
+      position: absolute; bottom: 8px; right: 8px;
+      background: rgba(0,0,0,0.7); color: white;
+      font-size: 0.65rem; padding: 2px 6px; border-radius: 4px;
+      z-index: 2;
     }
 
     .status-bar { font-size: 0.8rem; color: var(--text-muted); display: flex; align-items: center; gap: 8px; }
@@ -369,7 +263,7 @@
     .modal-footer { display: flex; justify-content: flex-end; gap: 10px; }
     footer { margin-top: auto; padding: 12px 16px 18px; font-size: 0.75rem; color: var(--text-muted); text-align: center; }
     
-    /* ⭐ DEPOIMENTOS — ROLAGEM SUAVE E LENTA! 💜 */
+    /* ⭐ DEPOIMENTOS */
     .depoimentos-secao {
       background: var(--card-bg); border-radius: 18px; padding: 20px;
       border: 1px solid var(--border-soft); margin-top: 10px;
@@ -398,40 +292,21 @@
     
     /* 📲 BANNER DE INSTALAÇÃO DO APP */
     .install-banner {
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      right: 0;
+      position: fixed; bottom: 0; left: 0; right: 0;
       background: linear-gradient(90deg, #10b981, #34d399);
-      color: #000;
-      padding: 12px 16px;
-      display: none;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-      z-index: 998;
-      box-shadow: 0 -4px 20px rgba(0,0,0,0.3);
+      color: #000; padding: 12px 16px; display: none;
+      align-items: center; justify-content: space-between; gap: 12px;
+      z-index: 998; box-shadow: 0 -4px 20px rgba(0,0,0,0.3);
     }
     .install-banner button {
-      background: #000;
-      color: #fff;
-      border: none;
-      padding: 8px 16px;
-      border-radius: 999px;
-      font-weight: 700;
-      cursor: pointer;
-      white-space: nowrap;
+      background: #000; color: #fff; border: none;
+      padding: 8px 16px; border-radius: 999px;
+      font-weight: 700; cursor: pointer; white-space: nowrap;
     }
     .install-banner .close-btn {
-      background: transparent;
-      color: #000;
-      font-size: 1.2rem;
-      padding: 0;
-      width: 30px;
-      height: 30px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      background: transparent; color: #000; font-size: 1.2rem;
+      padding: 0; width: 30px; height: 30px;
+      display: flex; align-items: center; justify-content: center;
     }
     @media (max-width: 900px) {
       .install-banner { display: flex; }
@@ -465,7 +340,7 @@
     <main class="main-grid">
       <section class="card">
         <div class="card-header">
-          <div><h2>🔴 Lives ao Vivo</h2><span>🎵 Toca automaticamente • mude de live em 3s • toque para assistir completo</span></div>
+          <div><h2>🔴 Lives ao Vivo</h2><span>Deslize para ver mais • toque para assistir</span></div>
           <div class="status-bar">
             <div class="status-dot" id="liveDot"></div>
             <span id="liveStatus">Carregando...</span>
@@ -476,7 +351,7 @@
         </div>
 
         <div class="card-header" style="margin-top:20px;">
-          <div><h2>🏆 Streamer Estrela</h2><span>Rolando suavemente • passe o mouse para parar</span></div>
+          <div><h2>🏆 Streamer Estrela</h2><span>Conquistas e Destaques da nossa comunidade ✨</span></div>
         </div>
         <div class="estrela-wrapper">
           <div class="estrela-track" id="estrelaTrack"></div>
@@ -507,7 +382,7 @@
       </section>
     </main>
 
-    <!-- ⭐ SEÇÃO DEPOIMENTOS — TROCA SUAVE E LENTA! 💜 -->
+    <!-- ⭐ SEÇÃO DEPOIMENTOS -->
     <section class="depoimentos-secao">
       <h2 class="depoimentos-titulo">⭐ Depoimentos dos Agenciados</h2>
       <div class="depoimentos-rolagem">
@@ -529,7 +404,7 @@
       <div>
         <p>Digite seu usuário exatamente como cadastrado.</p>
         <label style="font-size:0.85rem;color:var(--text-muted);">Usuário</label>
-        <input type="text" id="inputUsuario" placeholder="Seu usuário da planilha" />
+        <input type="text" id="inputUsuario" placeholder="Seu usuário" />
         <p class="message" id="msgAgenciado"></p>
       </div>
       <div class="modal-footer">
@@ -549,7 +424,7 @@
       <div>
         <p>Login exclusivo da equipe Padroniza Live.</p>
         <label style="font-size:0.85rem;color:var(--text-muted);">E-mail</label>
-        <input type="email" id="inputAdminEmail" placeholder="padronizaassessoria@gmail.com" />
+        <input type="email" id="inputAdminEmail" placeholder="seuemail@exemplo.com" />
         <label style="font-size:0.85rem;color:var(--text-muted);margin-top:8px;">Senha</label>
         <input type="password" id="inputAdminSenha" placeholder="••••••••" />
         <p class="message" id="msgAdmin"></p>
@@ -579,7 +454,7 @@
     </div>
   </div>
 
-  <footer>Padroniza Live • Gestão Profissional de Streamers • Somente usuários aprovados têm acesso</footer>
+  <footer>Padroniza Live • Gestão Profissional de Streamers • Todos os direitos reservados</footer>
 
   <script>
     // ✅ APPS SCRIPT
@@ -598,24 +473,16 @@
       e.preventDefault();
       promptInstalacao = e;
     });
-    
     document.getElementById("btnBaixarApp").onclick = () => {
       if (promptInstalacao) {
         promptInstalacao.prompt();
-        promptInstalacao.userChoice.then((choiceResult) => {
-          promptInstalacao = null;
-        });
+        promptInstalacao.userChoice.then(() => { promptInstalacao = null; });
       } else {
-        alert("✅ O app já está disponível!\n\nNo celular: toque em ⋮ (menu) → Adicionar à tela inicial\nNo iPhone: toque em compartilhar → Adicionar à tela inicial");
+        alert("✅ O app já está disponível!\n\nNo celular: toque em ⋮ → Adicionar à tela inicial\nNo iPhone: toque em compartilhar → Adicionar à tela inicial");
       }
     };
-    
-    function instalarApp() {
-      document.getElementById("btnBaixarApp").click();
-    }
-    function fecharBanner() {
-      document.getElementById("installBanner").style.display = "none";
-    }
+    function instalarApp() { document.getElementById("btnBaixarApp").click(); }
+    function fecharBanner() { document.getElementById("installBanner").style.display = "none"; }
 
     // 🗔 MODAIS
     document.getElementById("btnAgenciado").onclick = () => {
@@ -654,7 +521,7 @@
             document.getElementById("modalPainelAgenciado").style.display = "flex";
           }, 600);
         } else {
-          msg.textContent = "❌ Usuário não aprovado ou não encontrado."; msg.className = "message error";
+          msg.textContent = "❌ Usuário não encontrado ou não aprovado."; msg.className = "message error";
         }
       } catch (e) {
         msg.textContent = "❌ Erro de conexão."; msg.className = "message error";
@@ -674,7 +541,7 @@
       }
     };
 
-    // ⭐ DEPOIMENTOS — TROCA BEM DEVAGAR E SUAVE! 💜
+    // ⭐ DEPOIMENTOS — TROCA AUTOMÁTICA
     const depoimentos = [
       { texto: "\"Não existe agência melhor que a Padroniza! Gratidão por tudo! 💜\"", nome: "@streamer_pedro 📱 💜 Kako Live" },
       { texto: "\"Minhas lives cresceram muito com o suporte da agência! Obrigada! 💜\"", nome: "@streamer_ana 📱 🎵 TikTok" },
@@ -683,85 +550,35 @@
       { texto: "\"Crescendo a cada dia com vocês! O melhor lugar pra streamer! 💜\"", nome: "@streamer_julia 📱 💜 Kako Live" }
     ];
     let indiceDepoimento = 0;
-
     function trocarDepoimento() {
-      const cardAtual = document.getElementById("depoimentoAtual");
-      cardAtual.classList.remove("ativo");
-      
+      const card = document.getElementById("depoimentoAtual");
+      card.classList.remove("ativo");
       indiceDepoimento = (indiceDepoimento + 1) % depoimentos.length;
-      
       setTimeout(() => {
         document.getElementById("textoDepoimento").textContent = depoimentos[indiceDepoimento].texto;
         document.getElementById("nomeDepoimento").textContent = "— " + depoimentos[indiceDepoimento].nome;
-        cardAtual.classList.add("ativo");
+        card.classList.add("ativo");
       }, 600);
     }
     setInterval(trocarDepoimento, 8000);
 
-    // 🎬 LIVES — ROLA AUTOMÁTICA EM 3s + VÍDEO TOCA SOZINHO! 🎵🔴
-    let ultimoMovimento = Date.now();
-    let indiceAtualLive = 0;
+    // 🎬 LIVES — PARADAS!
     let livesCarregadas = [];
-    let videosTocando = new Map();
     const carousel = document.getElementById("liveCarousel");
 
-    // Detecta movimento → reseta tempo
-    carousel.addEventListener('touchstart', () => ultimoMovimento = Date.now());
-    carousel.addEventListener('scroll', () => ultimoMovimento = Date.now());
-    carousel.addEventListener('mousedown', () => ultimoMovimento = Date.now());
-
-    // ⏯️ TOCAR VÍDEO QUE ESTÁ VISÍVEL — PAUSA OS OUTROS!
-    function gerenciarVideosVisiveis() {
-      const cards = carousel.querySelectorAll('.live-card');
-      const carouselRect = carousel.getBoundingClientRect();
-      
-      cards.forEach((card, idx) => {
-        const cardRect = card.getBoundingClientRect();
-        const video = card.querySelector('.live-video');
-        if (!video) return;
-        
-        // Verifica se o card está visível na tela
-        const estaVisivel = cardRect.left < carouselRect.right && cardRect.right > carouselRect.left;
-        
-        if (estaVisivel) {
-          // ✅ Toca o vídeo que está visível — MUDO POR PADRÃO!
-          video.muted = true;
-          video.play().catch(() => {});
-          videosTocando.set(idx, true);
-        } else {
-          // ⏸️ Pausa os vídeos que não estão mais visíveis
-          video.pause();
-          videosTocando.delete(idx);
-        }
-      });
+    // 🔍 FUNÇÃO PARA DETECTAR SE É VÍDEO OU IMAGEM
+    function ehVideo(link) {
+      if (!link) return false;
+      const l = link.toLowerCase();
+      return l.endsWith('.mp4') || l.endsWith('.webm') || l.endsWith('.ogg') || 
+             l.includes('tiktok.com') || l.includes('youtu.be') || l.includes('youtube.com') ||
+             l.includes('kako.live') || l.includes('video');
     }
 
-    // 🔄 ROLA AUTOMÁTICA — a cada 3s parado! IGUAL TIKTOK!
-    setInterval(() => {
-      const tempoParado = Date.now() - ultimoMovimento;
-      if (tempoParado > 3000 && livesCarregadas.length > 0) {
-        indiceAtualLive = (indiceAtualLive + 1) % livesCarregadas.length;
-        const cards = carousel.querySelectorAll('.live-card');
-        if (cards[indiceAtualLive]) {
-          cards[indiceAtualLive].scrollIntoView({ behavior: 'smooth', inline: 'start' });
-        }
-      }
-      // Gerencia vídeos tocando a cada segundo
-      gerenciarVideosVisiveis();
-    }, 1000);
-
-    // 🔘 ALTERNAR SOM
-    window.alternarSom = function(btn, videoId) {
-      const video = document.getElementById(videoId);
-      if (video) {
-        video.muted = !video.muted;
-        btn.textContent = video.muted ? "🔇" : "🔊";
-      }
-    };
-
-    // 📡 CARREGAR LIVES + ESTRELAS
+    // 📡 CARREGAR LIVES + ESTRELAS (FOTO OU VÍDEO!)
     async function carregarTudo() {
       try {
+        // 📺 CARREGAR LIVES
         const resLives = await fetch(`${APPS_SCRIPT_URL}?acao=listarLives`);
         const dadosLives = await resLives.json();
         const dot = document.getElementById("liveDot");
@@ -772,33 +589,26 @@
           status.textContent = `${dadosLives.lives.length} lives ao vivo`;
           dot.classList.remove("offline");
           
-          const cardsHTML = dadosLives.lives.map((live, idx) => {
-            const temVideo = live.video && live.video.trim() !== "";
+          const cardsHTML = dadosLives.lives.map((live) => {
             const temCapa = live.capa && live.capa.trim() !== "";
-            const videoId = `live-video-${idx}`;
-            
-            // 📹 Se tiver link de vídeo → toca sozinho! Se não, mostra capa
-            const conteudoMidia = temVideo 
-              ? `<video id="${videoId}" class="live-video" autoplay muted loop playsinline src="${live.video}"></video>`
-              : (temCapa 
-                  ? `<img src="${live.capa}" alt="${live.nome || 'Streamer'}" style="width:100%;height:100%;object-fit:cover;">`
-                  : `<div class="placeholder-logo"><img src="${LOGO_URL}" alt="Padroniza"></div><span class="placeholder-text">Padroniza Live</span>`
-                );
-            const classeContainer = (temVideo || temCapa) ? "" : "sem-capa";
+            const conteudoMidia = temCapa 
+              ? `<img src="${live.capa}" alt="${live.nome}" class="live-capa-img">`
+              : `<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#7b3fff,#0b1020);"><span style="font-size:48px;">🎬</span></div>`;
             
             return `
               <a href="${live.link}" target="_blank" class="live-card">
-                <div class="live-video-container ${classeContainer}">
+                <div class="live-video-container">
                   ${conteudoMidia}
-                  <span class="tag-ao-vivo">AO VIVO</span>
-                  ${temVideo ? `<button class="sound-btn" onclick="event.preventDefault(); event.stopPropagation(); alternarSom(this, '${videoId}')">🔇</button>` : ''}
+                  <span class="tag-ao-vivo">🔴 AO VIVO</span>
+                  <div class="live-overlay"></div>
+                  <span class="play-icon">▶</span>
                   <span class="watch-full">Clique para assistir →</span>
                 </div>
                 <div class="live-meta">
                   <strong>${live.nome || "Streamer"}</strong>
                   <div style="margin-top:6px;display:flex;gap:6px;align-items:center;flex-wrap:wrap;">
                     <span class="tag ${live.plataforma === 'kako' ? 'tag-kako' : 'tag-tiktok'}">
-                      ${live.plataforma === 'kako' ? '💜 Kako' : '🎵 TikTok'}
+                      ${live.plataforma === 'kako' ? '💜 Kako Live' : '🎵 TikTok'}
                     </span>
                   </div>
                 </div>
@@ -810,34 +620,48 @@
           
         } else {
           livesCarregadas = [];
-          status.textContent = "Nenhuma live ao vivo";
+          status.textContent = "Nenhuma live ao vivo no momento";
           dot.classList.add("offline");
-          carousel.innerHTML = `<p style="padding:60px 20px;text-align:center;color:var(--text-muted);">🎬 Nenhuma live no momento<br><small>Quando houver lives, aparecerão aqui!</small></p>`;
+          carousel.innerHTML = `<p style="padding:60px 20px;text-align:center;color:var(--text-muted);">🎬 Em breve novas lives! Volte mais tarde.<br><small>Acompanhe nossas redes sociais!</small></p>`;
         }
 
-        // 🏆 STREAMER ESTRELA — DUPLICADO PARA LOOP CONTÍNUO!
+        // 🏆 STREAMER ESTRELA — FOTO OU VÍDEO DA COLUNA K! 🎬🖼️
         const resEstrelas = await fetch(`${APPS_SCRIPT_URL}?acao=listarDestaques`);
         const dadosEstrelas = await resEstrelas.json();
         const track = document.getElementById("estrelaTrack");
 
         if (dadosEstrelas.sucesso && dadosEstrelas.streamersEstrela && dadosEstrelas.streamersEstrela.length > 0) {
-          const cards = dadosEstrelas.streamersEstrela.map(s => `
-            <div class="estrela-card">
-              <div class="estrela-avatar">
-                ${s.capa ? `<img src="${s.capa}" alt="${s.nome || 'Streamer Estrela'}">` : `<span style="font-size:48px;">⭐</span>`}
+          const cards = dadosEstrelas.streamersEstrela.map(s => {
+            const midiaLink = s.midia || s.capa || ""; // midia = COLUNA K!
+            const isVideo = ehVideo(midiaLink);
+            
+            let midiaHTML = "";
+            if (isVideo) {
+              midiaHTML = `<video src="${midiaLink}" autoplay muted loop playsinline></video><span class="video-indicator">🎥 Vídeo</span>`;
+            } else if (midiaLink) {
+              midiaHTML = `<img src="${midiaLink}" alt="${s.nome || 'Destaque'}">`;
+            } else {
+              midiaHTML = `<span style="font-size:48px;">⭐</span>`;
+            }
+
+            return `
+              <div class="estrela-card">
+                <div class="estrela-midia">
+                  <span class="estrela-badge">🏆 DESTAQUE</span>
+                  ${midiaHTML}
+                </div>
+                <div class="estrela-nome">${s.nome || "Streamer Estrela"}</div>
+                <div class="estrela-titulo">Conquistas e Vitórias ✨</div>
               </div>
-              <div class="estrela-nome">${s.nome || "Streamer Estrela"}</div>
-              <div class="estrela-titulo">🏆 Reconhecimento Padroniza</div>
-            </div>
-          `).join("");
+            `;
+          }).join("");
           track.innerHTML = cards + cards;
         } else {
-          track.innerHTML = `<p style="padding:40px;text-align:center;color:var(--text-muted);">⭐ Nenhum destaque no momento</p>`;
+          track.innerHTML = `<p style="padding:40px;text-align:center;color:var(--text-muted);">⭐ Em breve nossos destaques!</p>`;
         }
       } catch (erro) {
         console.error("Erro:", erro);
-        document.getElementById("msgGlobal").textContent = "⚠️ Erro ao carregar dados. Atualize a página.";
-        document.getElementById("msgGlobal").className = "message error";
+        document.getElementById("msgGlobal").textContent = "";
       }
     }
 
@@ -851,7 +675,7 @@
       }
     });
 
-    // INICIAR
+    // INICIAR!
     carregarTudo();
   </script>
 </body>
