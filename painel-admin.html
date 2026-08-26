@@ -96,6 +96,9 @@
     tr.pendente-row { background: rgba(255,193,7,0.05); border-left: 3px solid var(--alerta); }
     tr.confirmado-row { background: rgba(61,220,151,0.03); border-left: 3px solid var(--sucesso); }
     tr.campanha-row { background: rgba(31,122,255,0.05); border-left: 3px solid var(--primary-blue); }
+    tr.disponivel-row { background: rgba(61,220,151,0.05); border-left: 3px solid var(--sucesso); }
+    tr.falta-oponente-row { background: rgba(77,171,247,0.05); border-left: 3px solid #4dabf7; }
+    tr.domingo-row, tr.feriado-row { background: rgba(255,77,106,0.05); border-left: 3px solid var(--erro); }
     .status-tag { display: inline-block; padding: 4px 10px; border-radius: 999px; font-size: 0.75rem; font-weight: 600; }
     .status-aprovado { background: rgba(61,220,151,0.15); color: var(--sucesso); border: 1px solid var(--sucesso); }
     .status-pendente { background: rgba(255,193,7,0.15); color: var(--alerta); border: 1px solid var(--alerta); }
@@ -129,7 +132,7 @@
     .login-btn:hover { transform: translateY(-2px); }
     .login-mensagem { margin-top: 16px; text-align: center; font-size: 0.85rem; }
 
-    /* 📩 MODAL DE TICKET */
+    /* 📩 MODAL — GERAL */
     .modal-fundo {
       position: fixed; inset: 0; background: rgba(0,0,0,0.9);
       display: none; align-items: center; justify-content: center; z-index: 998;
@@ -326,7 +329,7 @@
       </div>
     </div>
 
-    <!-- ⚔️ BATALHAS — CORRIGIDO PARA O SEU APPS SCRIPT ✅ -->
+    <!-- ⚔️ BATALHAS — COMPLETO COM OPONENTE + SITUAÇÕES EXATAS DA PLANILHA ✅ -->
     <div class="card" id="secaoBatalhas" style="display: none;">
       <div class="card-header">
         <h2>⚔️ Batalhas Agendadas</h2>
@@ -346,11 +349,11 @@
             </select>
           </div>
           <button class="btn btn-sm" style="background:rgba(255,255,255,0.1); color:var(--text-light);" onclick="carregarBatalhas()">🔄 Atualizar</button>
-          <button class="btn btn-primary" onclick="window.open('agendar-batalha.html', '_blank')">➕ Nova Solicitação</button>
+          <button class="btn btn-primary" onclick="window.open('agendar-batalha.html', '_blank')">➕ Nova Batalha</button>
         </div>
       </div>
       
-      <!-- 📋 LISTA DE BATALHAS -->
+      <!-- 📋 LISTA DE BATALHAS — COM OPONENTE VISÍVEL ✅ -->
       <div class="tabela-container">
         <table>
           <thead>
@@ -394,6 +397,17 @@
         <button class="modal-fechar" onclick="fecharModalTicket()">&times;</button>
       </div>
       <div id="conteudoTicket"></div>
+    </div>
+  </div>
+
+  <!-- ⚔️ MODAL — DETALHES DA BATALHA ✅ -->
+  <div class="modal-fundo" id="modalBatalha">
+    <div class="modal-conteudo">
+      <div class="modal-cabecalho">
+        <h2>⚔️ Detalhes da Batalha</h2>
+        <button class="modal-fechar" onclick="fecharModalBatalha()">&times;</button>
+      </div>
+      <div id="conteudoBatalha"></div>
     </div>
   </div>
 
@@ -598,11 +612,11 @@ Avisaremos você assim que recebermos a resposta. 💜
       }
     }
 
-    // ⚔️ BATALHAS — CORRIGIDO PARA O SEU APPS SCRIPT ✅
+    // ⚔️ BATALHAS — CARREGAR E RENDERIZAR COM SITUAÇÕES EXATAS ✅
     async function carregarBatalhas() {
       const mesNome = document.getElementById('filtroMes').value;
       
-      // 📋 Converte nome do mês para NÚMERO — exatamente como o Apps Script espera!
+      // 📋 Converte nome do mês para NÚMERO
       const mapaMeses = {
         "Abril": 4, "Maio": 5, "Junho": 6, "Julho": 7, "Agosto": 8,
         "Setembro": 9, "Outubro": 10, "Novembro": 11, "Dezembro": 12
@@ -614,7 +628,6 @@ Avisaremos você assim que recebermos a resposta. 💜
         `<tr><td colspan="6" class="vazio">⏳ Carregando ${mesNome}...</td></tr>`;
       
       try {
-        // ✅ CHAMANDO DO JEITO CERTO — acao=lerBatalhas&mes=8&ano=2026
         const url = `${APPS_SCRIPT_BATALHAS_URL}?acao=lerBatalhas&mes=${mesNumero}&ano=${ano}`;
         console.log("🔗 Buscando:", url);
         
@@ -638,7 +651,7 @@ Avisaremos você assim que recebermos a resposta. 💜
       }
     }
 
-    // 📋 EXIBIR BATALHAS — LENDO OS CAMPOS CERTOS ✅
+    // 📋 RENDERIZAR — SITUAÇÕES EXATAS DA PLANILHA + OPONENTE VISÍVEL ✅
     function renderizarBatalhas() {
       const lista = document.getElementById('listaBatalhas');
       
@@ -647,38 +660,70 @@ Avisaremos você assim que recebermos a resposta. 💜
         return;
       }
 
-      lista.innerHTML = batalhas.map(b => {
-        // 🎨 Cor do status
+      lista.innerHTML = batalhas.map((b, index) => {
+        // 🎨 SITUAÇÕES EXATAS — IGUALZINHO A PLANILHA ✅
         let statusClasse = 'status-pendente', linhaClasse = 'pendente-row', statusTexto = b.situacao;
-        if (b.situacao === 'CONFIRMADO') { statusClasse = 'status-aprovado'; linhaClasse = 'confirmado-row'; statusTexto = '✅ CONFIRMADO'; }
-        if (b.situacao === 'CAMPANHA') { statusClasse = 'status-campanha'; linhaClasse = 'campanha-row'; statusTexto = '📢 CAMPANHA'; }
-        if (b.situacao === 'DISPONÍVEL') { statusTexto = '⏳ DISPONÍVEL'; }
-        if (b.situacao === 'FALTA_OPONENTE') { statusTexto = '⚠️ Falta Oponente'; }
-        if (b.situacao === 'CONFIRMAÇÃO_PENDENTE') { statusTexto = '⏳ Confirmação Pendente'; }
+        
+        // 🟢 DISPONÍVEL — Verde
+        if (b.situacao === 'DISPONÍVEL') { 
+          statusClasse = 'status-aprovado'; linhaClasse = 'disponivel-row'; 
+          statusTexto = '🟢 DISPONÍVEL'; 
+        }
+        // ⚪ CONFIRMADO — Branco
+        else if (b.situacao === 'CONFIRMADO') { 
+          statusClasse = 'status-aprovado'; linhaClasse = 'confirmado-row'; 
+          statusTexto = '✅ CONFIRMADO'; 
+        }
+        // 🔵 FALTA OPONENTE — Azul
+        else if (b.situacao === 'FALTA OPONENTE') { 
+          statusClasse = 'status-campanha'; linhaClasse = 'falta-oponente-row'; 
+          statusTexto = '🔵 FALTA OPONENTE'; 
+        }
+        // 🔴 DOMINGO — Vermelho
+        else if (b.situacao === 'DOMINGO') { 
+          statusClasse = 'status-recusado'; linhaClasse = 'domingo-row'; 
+          statusTexto = '🔴 DOMINGO'; 
+        }
+        // 🔴 FERIADO — Vermelho
+        else if (b.situacao === 'FERIADO') { 
+          statusClasse = 'status-recusado'; linhaClasse = 'feriado-row'; 
+          statusTexto = '🔴 FERIADO'; 
+        }
+        // 🟡 CAMPANHA — Amarelo
+        else if (b.situacao === 'CAMPANHA') { 
+          statusClasse = 'status-campanha'; linhaClasse = 'campanha-row'; 
+          statusTexto = '🟡 CAMPANHA'; 
+        }
+
+        // 📌 Verifica se tem oponente
+        const temOponente = b.oponente && b.oponente.trim() !== '';
 
         return `<tr class="${linhaClasse}">
           <td><strong>${b.data || '—'}</strong><br><small>${b.horaInicio || '—'}</small></td>
+          
+          <!-- 🎯 STREAMER -->
           <td>
             <strong>${b.streamer || '—'}</strong>
             ${b.linkStreamer ? `<br><a href="${b.linkStreamer}" target="_blank" class="link-externo">🔗 Perfil</a>` : ''}
+            ${b.agencia ? `<br><small style="color:var(--text-muted);">🏢 ${b.agencia}</small>` : ''}
           </td>
+          
+          <!-- ⚔️ OPONENTE — APARECE DIRETO NA LISTA! ✅ -->
           <td>
-            ${b.oponente || '—'}
-            ${b.linkOponente ? `<br><a href="${b.linkOponente}" target="_blank" class="link-externo">🔗 Perfil</a>` : ''}
+            ${temOponente 
+              ? `<strong>${b.oponente}</strong>
+                 ${b.linkOponente ? `<br><a href="${b.linkOponente}" target="_blank" class="link-externo">🔗 Perfil</a>` : ''}
+                 ${b.agenciaOponente ? `<br><small style="color:var(--text-muted);">🏢 ${b.agenciaOponente}</small>` : ''}`
+              : `<em style="color:var(--text-muted);">Sem oponente</em>
+                 <br><button class="btn btn-sm btn-success" style="margin-top:4px; font-size:0.75rem; padding:2px 8px;" onclick="abrirModalEditarOponente(${index})">➕ Adicionar</button>`
+            }
           </td>
+          
           <td>${b.meta || '—'}</td>
+          
           <td><span class="status-tag ${statusClasse}">${statusTexto}</span></td>
+          
+          <!-- 🛠️ AÇÕES — VER DETALHES + EDITAR + BOTÕES DE SITUAÇÃO ✅ -->
           <td>
-            <button class="btn btn-primary btn-sm" onclick="window.open('agendar-batalha.html','_blank')">📋 Ver</button>
-          </td>
-        </tr>`;
-      }).join('');
-    }
-
-    // Mostrar seção por padrão
-    setTimeout(() => {
-      mostrarSecao('tickets');
-    }, 300);
-  </script>
-</body>
-</html>
+            <button class="btn btn-primary btn-sm" onclick="abrirModalBatalha(${index})">👁️ Ver</button>
+            <button class="btn btn-sm" style="background:rgba(255,193,
