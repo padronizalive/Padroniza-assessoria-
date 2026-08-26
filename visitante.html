@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Seja Agenciado — Padroniza Live</title>
+  <link rel="icon" type="image/png" href="https://i.ibb.co/B23rwMHt/1787270369792.png" />
+  <style>
+    :root {
+      --bg-gradient: radial-gradient(circle at top left, #5b2cff, #0b1020 40%, #02101f 70%, #c79b3b 100%);
+      --primary-purple: #7b3fff;
+      --primary-gold: #c79b3b;
+      --text-light: #f5f5ff;
+      --text-muted: #b3b3cc;
+      --verde: #00ff9c;
+      --amarelo: #ffd700;
+      --rosa: #ff3d81;
+      --azul: #00a8ff;
+      --fundo: #0b1020;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: var(--bg-gradient);
+      color: var(--text-light);
+      min-height: 100vh;
+      padding: 16px;
+    }
+    .voltar-btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      color: var(--text-light); text-decoration: none; font-size: 0.95rem;
+      padding: 10px 16px; border-radius: 999px; border: 1px solid rgba(255,255,255,0.15);
+      background: rgba(10,12,24,0.7); margin-bottom: 24px; transition: all 0.2s;
+    }
+    .voltar-btn:hover { background: rgba(123,63,255,0.2); border-color: var(--primary-purple); }
+    .page { max-width: 700px; margin: 0 auto; }
+    .logo-topo { text-align: center; margin-bottom: 24px; }
+    .logo-topo img {
+      width: 80px; height: 80px; border-radius: 50%; object-fit: cover;
+      border: 2px solid var(--primary-gold);
+      box-shadow: 0 0 20px rgba(199,155,59,0.5); margin-bottom: 12px;
+    }
+    .logo-topo h1 { font-size: 1.5rem; color: var(--text-light); }
+
+    /* 🎵 TIKTOK — GRATUITO — DESTAQUE NO TOPO */
+    .tiktok-gratuito {
+      background: linear-gradient(135deg, #00f2ea 0%, #ff0050 100%);
+      border-radius: 20px; padding: 28px 20px; text-align: center;
+      margin-bottom: 28px;
+      box-shadow: 0 0 30px rgba(0,242,234,0.35), 0 0 60px rgba(255,0,80,0.2);
+      animation: brilho-tiktok 3s ease-in-out infinite alternate;
+    }
+    @keyframes brilho-tiktok {
+      from { box-shadow: 0 0 30px rgba(0,242,234,0.35), 0 0 60px rgba(255,0,80,0.2); }
+      to { box-shadow: 0 0 45px rgba(0,242,234,0.5), 0 0 80px rgba(255,0,80,0.3); }
+    }
+    .tiktok-gratuito h2 {
+      color: #000; font-size: 22px; margin-bottom: 12px;
+      display: flex; align-items: center; justify-content: center; gap: 10px;
+      flex-wrap: wrap;
+    }
+    .tiktok-icon {
+      font-size: 28px;
+    }
+    .tiktok-gratuito p {
+      color: #000; font-size: 15px; line-height: 1.7; margin-bottom: 18px;
+    }
+    .etiqueta-gratis {
+      display: inline-block; background: #000; color: #fff;
+      font-weight: bold; padding: 6px 16px; border-radius: 20px;
+      font-size: 14px; margin-bottom: 16px;
+    }
+    .btn-tiktok-principal {
+      display: inline-block; background: #000; color: #fff;
+      font-weight: bold; padding: 16px 28px; border-radius: 14px;
+      text-decoration: none; font-size: 17px; transition: 0.3s;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+      border: 3px solid var(--amarelo);
+    }
+    .btn-tiktok-principal:hover {
+      transform: scale(1.05); box-shadow: 0 6px 20px rgba(0,0,0,0.4);
+    }
+
+    /* 📱 KAKO SECTION */
+    .kako-section {
+      background: rgba(0,168,255,0.08); border: 2px solid rgba(0,168,255,0.35);
+      border-radius: 18px; padding: 24px 20px; margin-bottom: 28px;
+    }
+    .kako-section h3 {
+      color: var(--azul); font-size: 20px; text-align: center; margin-bottom: 16px;
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+    }
+    .btn-kako-download {
+      display: block; background: linear-gradient(90deg, #00a8ff, #00c6ff);
+      color: #fff; font-weight: bold; text-align: center; padding: 14px 20px;
+      border-radius: 12px; text-decoration: none; margin-bottom: 20px; transition: 0.3s;
+      font-size: 16px;
+    }
+    .btn-kako-download:hover { transform: translateY(-2px); box-shadow: 0 4px 15px rgba(0,168,255,0.35); }
+    .passo-lista { list-style: none; padding: 0; margin: 0 0 16px; }
+    .passo-lista li {
+      padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,0.08);
+      color: var(--text-light); font-size: 14px; line-height: 1.6;
+    }
+    .id-agencia-box {
+      display: flex; align-items: center; gap: 10px; background: rgba(0,0,0,0.3);
+      padding: 12px 16px; border-radius: 10px; margin: 12px 0; flex-wrap: wrap;
+    }
+    .id-valor { font-size: 20px; font-weight: bold; color: var(--verde); font-family: monospace; }
+    .btn-copiar-id {
+      padding: 8px 14px; border-radius: 8px; border: none;
+      background: var(--primary-purple); color: #fff; cursor: pointer;
+      transition: 0.2s; font-size: 14px;
+    }
+    .btn-copiar-id:hover { background: #6a45e0; }
+
+    /* ✨ DIVISOR */
+    .divisor {
+      text-align: center; margin: 32px 0 24px; position: relative;
+      color: var(--text-muted); font-size: 15px; text-transform: uppercase; letter-spacing: 2px;
+    }
+    .divisor::before, .divisor::after {
+      content: ""; position: absolute; top: 50%; width: 35%; height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+    }
+    .divisor::before { left: 0; }
+    .divisor::after { right: 0; }
+
+    /* 💜 CONVITE — PARCEIRO OU SERVIÇOS AVULSOS */
+    .convite-pro {
+      background: linear-gradient(135deg, rgba(255,193,7,0.12), rgba(123,63,255,0.08));
+      border: 2px solid var(--amarelo); border-radius: 18px; padding: 24px 20px;
+      margin-bottom: 28px;
+    }
+    .convite-pro h3 {
+      color: var(--amarelo); font-size: 20px; margin-bottom: 14px; text-align: center;
+    }
+    .convite-pro p {
+      color: var(--text-light); font-size: 15px; line-height: 1.7; margin-bottom: 12px;
+    }
+    .destaque-texto {
+      background: rgba(255,255,255,0.05); padding: 14px; border-radius: 10px;
+      border-left: 3px solid var(--amarelo); margin-bottom: 16px;
+    }
+    .escolha-titulo {
+      text-align: center; font-size: 18px; color: var(--verde); margin-bottom: 20px;
+      font-weight: 600;
+    }
+
+    /* 👑 PARCEIRO PRO */
+    .parceiro-pro {
+      background: linear-gradient(135deg, rgba(255,193,7,0.18), rgba(123,63,255,0.12));
+      border: 3px solid var(--amarelo); border-radius: 20px; padding: 26px 20px;
+      margin-bottom: 24px; box-shadow: 0 0 20px rgba(255,193,7,0.15);
+      position: relative;
+    }
+    .selo-pro {
+      position: absolute; top: -12px; right: 20px;
+      background: linear-gradient(90deg, #ffc107, #ff9500);
+      color: #000; font-weight: bold; font-size: 13px;
+      padding: 6px 16px; border-radius: 20px;
+      box-shadow: 0 2px 10px rgba(255,152,0,0.3);
+    }
+    .parceiro-pro h4 {
+      color: var(--amarelo); font-size: 20px; text-align: center; margin-bottom: 10px; padding-top: 8px;
+    }
+    .preco-pro {
+      text-align: center; margin: 14px 0 18px;
+    }
+    .preco-valor { color: var(--verde); font-size: 30px; font-weight: bold; }
+    .preco-mes { color: var(--text-muted); font-size: 15px; }
+    .beneficios { list-style: none; padding: 0; margin-bottom: 18px; }
+    .beneficios li {
+      padding: 8px 0; border-bottom: 1px solid rgba(255,193,7,0.15);
+      color: var(--text-light); font-size: 14px;
+    }
+    .btn-pro {
+      display: block; width: 100%; padding: 14px; border-radius: 12px;
+      border: none; background: linear-gradient(90deg, #ffc107, #ff9500);
+      color: #000; font-weight: bold; font-size: 17px; cursor: pointer;
+      transition: 0.3s; box-shadow: 0 4px 15px rgba(255,152,0,0.3);
+    }
+    .btn-pro:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(255,152,0,0.4); }
+
+    /* 🛒 SERVIÇOS AVULSOS */
+    .avulsos-titulo {
+      text-align: center; font-size: 19px; color: var(--rosa); margin: 32px 0 20px;
+    }
+    .servico-card {
+      background: rgba(255,61,129,0.05); border: 2px solid rgba(255,61,129,0.2);
+      border-radius: 14px; padding: 18px 16px; margin-bottom: 14px; transition: 0.2s;
+    }
+    .servico-card:hover { border-color: var(--rosa); background: rgba(255,61,129,0.08); }
+    .servico-nome {
+      display: flex; justify-content: space-between; align-items: center;
+      margin-bottom: 10px; flex-wrap: wrap; gap: 8px;
+    }
+    .servico-nome h5 { font-size: 16px; color: var(--text-light); }
+    .servico-valor {
+      background: var(--rosa); color: #fff; padding: 4px 12px;
+      border-radius: 20px; font-weight: bold; font-size: 15px;
+    }
+    .pix-chave-area {
+      display: flex; align-items: center; gap: 10px;
+      background: rgba(0,0,0,0.25); padding: 10px; border-radius: 8px;
+      flex-wrap: wrap;
+    }
+    .pix-chave {
+      font-size: 10px; color: var(--text-muted); font-family: monospace;
+      word-break: break-all; flex: 1; min-width: 180px;
+    }
+    .btn-copiar {
+      padding: 6px 12px; border-radius: 6px; border: none;
+      background: var(--verde); color: #000; font-weight: bold;
+      cursor: pointer; font-size: 13px; transition: 0.2s; white-space: nowrap;
+    }
+    .btn-copiar:hover { background: #00e089; }
+    .titular { font-size: 12px; color: var(--text-muted); margin-top: 6px; font-style: italic; }
+
+    /* FOOTER */
+    .final-msg {
+      text-align: center; margin-top: 32px; padding-top: 20px;
+      border-top: 1px solid rgba(255,255,255,0.08);
+      color: var(--text-light); font-size: 14px; line-height: 1.6;
+    }
+    footer { text-align: center; margin-top: 30px; padding: 20px; color: var(--text-muted); font-size: 0.85rem; }
+
+    @media (max-width: 480px) {
+      .tiktok-gratuito h2 { font-size: 18px; }
+      .preco-valor { font-size: 26px; }
+      .pix-chave { font-size: 9px; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="page">
+  <!-- 🔙 BOTÃO VOLTAR -->
+  <a href="index.html" class="voltar-btn">← Ir para o Site Principal</a>
+
+  <!-- 🟣 LOGO TOPO -->
+  <div class="logo-topo">
+    <img src="https://i.ibb.co/B23rwMHt/1787270369792.png" alt="Padroniza Live" />
+    <h1>Padroniza Assessoria</h1>
+  </div>
+
+  <!-- ============================================== -->
+  <!-- 🎵 TIKTOK — NO TOPO, COM NOME E ÍCONE! -->
+  <!-- ============================================== -->
+  <div class="tiktok-gratuito">
+    <h2><span class="tiktok-icon">🎵</span> QUER TODOS NOSSOS SERVIÇOS DE GRAÇA NO <strong>TIKTOK</strong>?</h2>
+    <span class="etiqueta-gratis">✅ TOTALMENTE GRATUITO</span>
+    <p>
+      Seja nosso <strong>agenciado no TikTok</strong> e tenha <strong>acesso a TODOS os nossos serviços gratuitamente!</strong><br>
+      Basta solicitar uma análise da sua <strong>live do TikTok</strong> que nós avaliamos e, se aprovado, você entra sem pagar nada! 💜
+    </p>
+    <a href="https://www.tiktok.com/t/ZSHu6CFAM/" target="_blank" class="btn-tiktok-principal">
+      📋 SOLICITAR ANÁLISE DA LIVE DO <strong>TIKTOK</strong> — GRÁTIS!
+    </a>
+  </div>
+
+  <!-- ============================================== -->
+  <!-- 📱 KAKO LIVE — PASSO A PASSO -->
+  <!-- ============================================== -->
+  <div class="kako-section">
+    <h3>📱 FAZER PARTE PELO <strong>KAKO LIVE</strong></h3>
+    
+    <a class="btn-kako-download" href="https://play.google.com/store/apps/details?id=live.kako.global" target="_blank">
+      📲 BAIXAR O APLICATIVO KAKO LIVE
+    </a>
+
+    <ul class="passo-lista">
+      <li>1️⃣ Baixe o app Kako Live no link acima (gratuito)</li>
+      <li>2️⃣ Abra o aplicativo e crie sua conta / faça login</li>
+      <li>3️⃣ Configure seu perfil com foto e nome</li>
+      <li>4️⃣ Vá em <strong>Perfil → Minha Agência</strong> (ou Centro de Agência)</li>
+      <li>5️⃣ Digite o <strong>ID da nossa Agência</strong>:</li>
+    </ul>
+
+    <div class="id-agencia-box">
+      <span class="id-valor">177766</span>
+      <button class="btn-copiar-id" onclick="navigator.clipboard.writeText('177766'); this.textContent='✅ Copiado!'; setTimeout(()=>this.textContent='📋 Copiar', 2000)">📋 Copiar</button>
+    </div>
+
+    <ul class="passo-lista">
+      <li>6️⃣ Clique em <strong>"Solicitar Entrada"</strong> ou <strong>"Pedir para entrar"</strong></li>
+      <li>7️⃣ Pronto! Nós receberemos sua solicitação e analisaremos em breve! ✅</li>
+    </ul>
+  </div>
+
+  <!-- ============================================== -->
+  <!-- ✨ DIVISOR + CONVITE CHAMATIVO -->
+  <!-- ============================================== -->
+  <div class="divisor">— Ou então —</div>
+
+  <div class="convite-pro">
+    <h3>💜 QUER FAZER PARTE E CRESCER AINDA MAIS?</h3>
+    <p>
+      Ser agenciado já te dá MUITO — e tudo de graça! Mas sabemos que muitos streamers querem 
+      <strong>se destacar de verdade, acelerar o crescimento e ter materiais profissionais</strong> 
+      pra impulsionar ainda mais suas lives. 💡
+    </p>
+    <div class="destaque-texto">
+      <p>💬 <strong>Não quer ser agenciado, mas quer nossos serviços?</strong> Sem problema! 
+      Você pode ser um <strong>Parceiro PRO</strong> com assessoria completa, ou comprar 
+      <strong>serviços avulsos</strong> separadamente. A escolha é sua! 💜</p>
+    </div>
+    <p class="escolha-titulo">👇 Escolha a opção que combina com você:</p>
+  </div>
+
+  <!-- ============================================== -->
+  <!-- 👑 PARCEIRO PRO -->
+  <!-- ============================================== -->
+  <div class="parceiro-pro">
+    <span class="selo-pro">MAIS VANTAGENS! ⭐</span>
+    <h4>👑 PARCEIRO PRO</h4>
+    <ul class="beneficios">
+      <li>✅ Assessoria completa da Padroniza</li>
+      <li>✅ Sua live em destaque no site</li>
+      <li>✅ Painel exclusivo e personalizado</li>
+      <li>✅ 50% OFF em música personalizada</li>
+      <li>✅ 50% OFF em artes visuais</li>
+      <li>✅ Prioridade em batalhas e eventos</li>
+    </ul>
+    <div class="preco-pro">
+      <span class="preco-valor">R$ 9,90</span>
+      <span class="preco-mes">/mês</span>
+    </div>
+    <div class="pix-chave-area" style="margin-bottom: 12px;">
+      <span class="pix-chave">00020101021126770014br.gov.bcb.pix0136cb28ba3e-d5f2-4c9b-94c9-209726389efc0215mensalidade pro52040000530398654049.995802BR5917MARCOS G DA SILVA6007VILHENA62070503***63042FD7</span>
+      <button class="btn-copiar" onclick="navigator.clipboard.writeText('00020101021126770014br.gov.bcb.pix0136cb28ba3e-d5f2-4c9b-94c9-209726389efc0215mensalidade pro52040000530398654049.995802BR5917MARCOS G DA SILVA6007VILHENA62070503***63042FD7'); this.textContent='✅ Copiado!'; setTimeout(()=>this.textContent='📋 Copiar', 2000)">📋 Copiar</button>
+    </div>
+    <p class="titular">Titular: MARCOS G DA SILVA — VILHENA</p>
+    <button class="btn-pro" onclick="this.style.transform='scale(0.98)'; setTimeout(()=>this.style.transform='',150)">💜 QUERO SER PARCEIRO PRO</button>
+  </div>
+
+  <!-- ============================================== -->
+  <!-- 🛒 SERVIÇOS AVULSOS — COMPRA INDIVIDUAL -->
+  <!-- ============================================== -->
+  <h3 class="avulsos-titulo">🛒 Comprar Serviços Avulsos</h3>
+
+  <!-- 🏆 BANNER BATALHA -->
+  <div class="servico-card">
+    <div class="servico-nome">
+      <h5>🏆 Banner Batalha Oficial</h5>
+      <span class="servico-valor">R$ 10,00</span>
+    </div>
+    <p style="font-size:13px; color:#b3b3cc; margin-bottom:8px;">Unidade — Banner personalizado para batalha</p>
+    <div class="pix-chave-area">
+      <span class="pix-chave">00020101021126840014br.gov.bcb.pix0136cb28ba3e-d5f2-4c9b-94c9-209726389efc0222Banner Batalha oficial520400005303986540510.005802BR5917MARCOS G DA SILVA6007VILHENA62070503***63042431</span>
+      <button class="btn-copiar" onclick="navigator.clipboard.writeText('00020101021126840014br.gov.bcb.pix0136cb28ba3e-d5f2-4c9b-94c9-209726389efc0222Banner Batalha oficial520400005303986540510.005802BR5917MARCOS G DA SILVA6007VILHENA62070503***63042431'); this.textContent='✅'; setTimeout(()=>this.textContent='📋', 2000)">📋</button>
+    </div>
+    <p class="titular">MARCOS G DA SILVA — VILHENA</p>
+  </div>
+
+  <!-- 🎵 MÚSICA PERSONALIZADA -->
+  <div class="servico-card">
+    <div class="servico-nome">
+      <h5>🎵 Música Personalizada</h5>
+      <span class="servico-valor">R$ 25,00</span>
+    </div>
+    <p style="font-size:13px; color:#b3b3cc; margin-bottom:8px;">Exclusiva para sua live</p>
+    <div class="pix-chave-area">
+      <span class="pix-chave">00020101021126820014br.gov.bcb.pix0136cb28ba3e-d5f2-4c9b-94c9-209726389efc0220musica personalizada520400005303986540525.005802BR5917MARCOS G DA SILVA6007VILHENA62070503***6304F043</span>
+      <button class="btn-copiar" onclick="navigator.clipboard.writeText('00020101021126820014br.gov.bcb.pix0136cb28ba3e-d5f2-4c9b-94c9-209726389efc0220musica personalizada520400005303986540525.005802BR5917MARCOS G DA SILVA6007VILHENA62070503***6304F043'); this.textContent='✅'; setTimeout(()=>this.textContent='📋', 2000)">📋</button>
+    </div>
+    <p class="titular">MARCOS G DA SILVA — VILHENA</p>
+  </div>
+
+  <!-- 🎨 ARTE LIVE -->
+  <div class="servico-card">
+    <div class="servico-nome">
+      <h5>🎨 Arte Visual — Divulgar Live</h5>
+      <span class="servico-valor">R$ 30,00</span>
+    </div>
+    <p style="font-size:13px; color:#b3b3cc; margin-bottom:8px;">10 artes para divulgação</p>
+    <div class="pix-chave-area">
+      <span class="pix-chave">00020101021126930014br.gov.bcb.pix0136cb28ba3e-d5f2-4c9b-94c9-209726389efc0231arte visual para evento de live520400005303986540530.005802BR5917MARCOS G DA SILVA6007VILHENA62070503***6304E899</span>
+      <button class="btn-copiar" onclick="navigator.clipboard.writeText('00020101021126930014br.gov.bcb.pix0136cb28ba3e-d5f2-4c9b-94c9-209726389efc0231arte visual para evento de live520400005303986540530.005802BR5917MARCOS G DA SILVA6007VILHENA62070503***6304E899'); this.textContent='✅'; setTimeout(()=>this.textContent='📋', 2000)">📋</button>
+    </div>
+    <p class="titular">MARCOS G DA SILVA — VILHENA</p>
+  </div>
+
+  <!-- 🖼️ ARTE EVENTOS -->
+  <div class="servico-card">
+    <div class="servico-nome">
+      <h5>🖼️ Arte Visual — Eventos</h5>
+      <span class="servico-valor">R$ 55,90</span>
+    </div>
+    <p style="font-size:13px; color:#b3b3cc; margin-bottom:8px;">20 artes completas</p>
+    <div class="pix-chave-area">
+      <span class="pix-chave">00020101021126960014br.gov.bcb.pix0136cb28ba3e-d5f2-4c9b-94c9-209726389efc023420 imagens visual  para divulgacao520400005303986540555.905802BR5917MARCOS G DA SILVA6007VILHENA62070503***63041AF0</span>
+      <button class="btn-copiar" onclick="navigator.clipboard.writeText('00020101021126960014br.gov.bcb.pix0136cb28ba3e-d5f2-4c9b-94c9-209726389efc023420 imagens visual  para divulgacao520400005303986540555.905802BR5917MARCOS G DA SILVA6007VILHENA62070503***63041AF0'); this.textContent='✅'; setTimeout(()=>this.textContent='📋', 2000)">📋</button>
+    </div>
+    <p class="titular">MARCOS G DA SILVA — VILHENA</p>
+  </div>
+
+  <!-- ============================================== -->
+  <!-- 💜 AGRADECIMENTO FINAL -->
+  <!-- ============================================== -->
+  <div class="final-msg">
+    💜 <strong>Obrigada pela confiança!</strong><br>
+    Envie o comprovante para nosso WhatsApp e ativemos seu serviço em poucos minutos! ✨
+  </div>
+
+  <!-- 🔙 BOTÃO VOLTAR FINAL -->
+  <a href="index.html" class="voltar-btn" style="display:table; margin: 24px auto 0;">← Voltar ao Site Principal</a>
+
+  <footer>
+    Padroniza Assessoria © 2026 • Todos os direitos reservados • 💜
+  </footer>
+</div>
+
+</body>
+</html>
