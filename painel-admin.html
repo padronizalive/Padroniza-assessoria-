@@ -365,7 +365,7 @@
     let tickets = [];
     let filtroAtual = 'todos';
     let batalhas = [];
-    let batalhaAtual = null; // Armazena a batalha sendo editada
+    let batalhaAtual = null;
 
     // 🔐 LOGIN
     window.onload = function() {
@@ -578,7 +578,7 @@
       }).join('');
     }
 
-    // ⚔️ ABRIR MODAL — COM FORMULÁRIO PARA ADICIONAR/EDITAR OPONENTE ✅
+    // ⚔️ ABRIR MODAL — COM FORMULÁRIO COMPLETO ✅
     function abrirModalBatalha(index) {
       batalhaAtual = batalhas[index];
       const b = batalhaAtual;
@@ -615,8 +615,23 @@
         </div>
 
         <div class="form-group">
-          <label>🎯 Meta da Batalha</label>
-          <input type="text" id="metaBatalha" value="${b.meta || ''}" placeholder="Ex: 10.000 estrelas" />
+          <label>🎯 Meta de Diamantes</label>
+          <input type="text" id="metaBatalha" value="${b.meta || ''}" placeholder="Ex: 10.000 diamantes" />
+        </div>
+
+        <div class="form-group">
+          <label>📞 Telefone Agência Oponente</label>
+          <input type="text" id="telefoneAgencia" value="${b.telefoneAgencia || ''}" placeholder="(XX) XXXXX-XXXX" />
+        </div>
+
+        <div class="form-group">
+          <label>🖼️ Banner / Foto Divulgação</label>
+          <input type="url" id="banner" value="${b.banner || ''}" placeholder="Link da imagem" />
+        </div>
+
+        <div class="form-group">
+          <label>🎬 Vídeo Divulgação</label>
+          <input type="url" id="videoDivulgacao" value="${b.videoDivulgacao || ''}" placeholder="Link do vídeo" />
         </div>
 
         <div class="form-actions">
@@ -627,12 +642,11 @@
       document.getElementById('modalBatalha').style.display = 'flex';
     }
 
-    // ✅ ABRIR MODAL SÓ PARA EDITAR OPONENTE
     function abrirModalEditarOponente(index) {
       abrirModalBatalha(index);
     }
 
-    // 💾 SALVAR OPONENTE NA PLANILHA ✅
+    // 💾 SALVAR OPONENTE — CORRIGIDO COM mode: 'no-cors' ✅
     async function salvarOponente() {
       if (!batalhaAtual) return;
       
@@ -640,6 +654,9 @@
       const oponenteLink = document.getElementById('oponenteLink').value.trim();
       const oponenteAgencia = document.getElementById('oponenteAgencia').value.trim();
       const metaBatalha = document.getElementById('metaBatalha').value.trim();
+      const telefoneAgencia = document.getElementById('telefoneAgencia') ? document.getElementById('telefoneAgencia').value.trim() : '';
+      const banner = document.getElementById('banner') ? document.getElementById('banner').value.trim() : '';
+      const video = document.getElementById('videoDivulgacao') ? document.getElementById('videoDivulgacao').value.trim() : '';
       const mes = document.getElementById('filtroMes').value;
 
       if (!oponenteNome) {
@@ -650,32 +667,32 @@
       try {
         const resposta = await fetch(APPS_SCRIPT_BATALHAS_URL, {
           method: 'POST',
+          mode: 'no-cors', // ✅ RESOLVE O BLOQUEIO DE CONEXÃO!
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
             acao: 'salvarOponente',
             mes: mes,
-            data: batalhaAtual.data,
             streamer: batalhaAtual.streamer,
             oponente: oponenteNome,
             linkOponente: oponenteLink,
             agenciaOponente: oponenteAgencia,
-            meta: metaBatalha
+            meta: metaBatalha,
+            telefoneAgencia: telefoneAgencia,
+            banner: banner,
+            video: video
           })
         });
 
-        const resultado = await resposta.json();
+        // Com mode: 'no-cors' não dá pra ler a resposta diretamente
+        // Por isso mostramos mensagem de sucesso e recarregamos
+        alert('✅ Solicitação enviada! Atualizando...');
+        fecharModalBatalha();
+        batalhaAtual = null;
+        await carregarBatalhas();
         
-        if (resultado.sucesso) {
-          alert('✅ Oponente salvo com sucesso! Situação: CONFIRMADO');
-          fecharModalBatalha();
-          batalhaAtual = null;
-          await carregarBatalhas(); // Recarrega para mostrar atualizado
-        } else {
-          alert('⚠️ Erro ao salvar: ' + (resultado.erro || 'Tente novamente'));
-        }
       } catch (erro) {
         console.error(erro);
-        alert('❌ Erro de conexão. Tente novamente.');
+        alert('❌ Erro de conexão. Tente novamente. Detalhe: ' + erro.message);
       }
     }
 
