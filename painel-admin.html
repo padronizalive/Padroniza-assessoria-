@@ -326,7 +326,7 @@
       </div>
     </div>
 
-    <!-- ⚔️ BATALHAS — LENDO PLANILHA REAL ✅ -->
+    <!-- ⚔️ BATALHAS — CORRIGIDO PARA O SEU APPS SCRIPT ✅ -->
     <div class="card" id="secaoBatalhas" style="display: none;">
       <div class="card-header">
         <h2>⚔️ Batalhas Agendadas</h2>
@@ -334,7 +334,6 @@
           <div class="filtro-mes">
             <label style="font-size:0.85rem; color:var(--text-muted); margin-right:8px;">Mês:</label>
             <select id="filtroMes" onchange="carregarBatalhas()">
-              <option value="Março">Março</option>
               <option value="Abril">Abril</option>
               <option value="Maio">Maio</option>
               <option value="Junho">Junho</option>
@@ -599,65 +598,75 @@ Avisaremos você assim que recebermos a resposta. 💜
       }
     }
 
-    // ⚔️ BATALHAS — LENDO COLUNAS REAIS DA PLANILHA ✅
+    // ⚔️ BATALHAS — CORRIGIDO PARA O SEU APPS SCRIPT ✅
     async function carregarBatalhas() {
-      const mesSelecionado = document.getElementById('filtroMes').value;
-      document.getElementById('listaBatalhas').innerHTML = `<tr><td colspan="6" class="vazio">⏳ Carregando batalhas de ${mesSelecionado}...</td></tr>`;
+      const mesNome = document.getElementById('filtroMes').value;
+      
+      // 📋 Converte nome do mês para NÚMERO — exatamente como o Apps Script espera!
+      const mapaMeses = {
+        "Abril": 4, "Maio": 5, "Junho": 6, "Julho": 7, "Agosto": 8,
+        "Setembro": 9, "Outubro": 10, "Novembro": 11, "Dezembro": 12
+      };
+      const mesNumero = mapaMeses[mesNome] || 8;
+      const ano = 2026;
+
+      document.getElementById('listaBatalhas').innerHTML = 
+        `<tr><td colspan="6" class="vazio">⏳ Carregando ${mesNome}...</td></tr>`;
       
       try {
-        const res = await fetch(`${APPS_SCRIPT_BATALHAS_URL}?acao=listarBatalhas&mes=${encodeURIComponent(mesSelecionado)}`);
-        const dados = await res.json();
+        // ✅ CHAMANDO DO JEITO CERTO — acao=lerBatalhas&mes=8&ano=2026
+        const url = `${APPS_SCRIPT_BATALHAS_URL}?acao=lerBatalhas&mes=${mesNumero}&ano=${ano}`;
+        console.log("🔗 Buscando:", url);
         
-        if (!dados.sucesso || !dados.batalhas || !Array.isArray(dados.batalhas)) {
-          throw new Error('Formato inválido');
+        const resposta = await fetch(url);
+        const dados = await resposta.json();
+        console.log("📦 Resposta:", dados);
+
+        if (!dados.batalhas || !Array.isArray(dados.batalhas)) {
+          throw new Error("Nenhuma batalha encontrada");
         }
-        
-        batalhas = dados.batalhas.filter(linha => Array.isArray(linha) && linha.length >= 5);
+
+        batalhas = dados.batalhas;
         document.getElementById('contagemBatalhas').textContent = batalhas.length;
         renderizarBatalhas();
+        
       } catch (erro) {
-        console.error('Erro ao carregar batalhas:', erro);
-        document.getElementById('listaBatalhas').innerHTML = `<tr><td colspan="6" class="vazio"><span>⚔️</span>Não foi possível carregar as batalhas. Verifique o Apps Script.</td></tr>`;
+        console.error("❌ Erro:", erro);
+        document.getElementById('listaBatalhas').innerHTML = 
+          `<tr><td colspan="6" class="vazio"><span>⚔️</span>Não foi possível carregar.<br>Erro: ${erro.message}</td></tr>`;
         document.getElementById('contagemBatalhas').textContent = '0';
       }
     }
 
+    // 📋 EXIBIR BATALHAS — LENDO OS CAMPOS CERTOS ✅
     function renderizarBatalhas() {
       const lista = document.getElementById('listaBatalhas');
       
       if (!batalhas.length) {
-        lista.innerHTML = `<tr><td colspan="6" class="vazio"><span>⚔️</span>Nenhuma batalha encontrada para este mês!</td></tr>`;
+        lista.innerHTML = `<tr><td colspan="6" class="vazio"><span>⚔️</span>Nenhuma batalha encontrada!</td></tr>`;
         return;
       }
 
-      lista.innerHTML = batalhas.map((b, idx) => {
-        // Colunas conforme planilha: B=data, C=hora, E=streamerPadroniza, G=oponente, I=meta, J=situacao, L=linkStreamer, M=linkOponente
-        const data = b.B || b[1] || '—';
-        const hora = b.C || b[2] || '—';
-        const streamer = b.E || b[4] || '—';
-        const oponente = b.G || b[6] || '—';
-        const meta = b.I || b[8] || '—';
-        const situacao = (b.J || b[9] || 'DISPONÍVEL').toUpperCase();
-        const linkStreamer = b.L || b[11] || '';
-        const linkOponente = b.M || b[12] || '';
-        
-        // Define status visual
-        let statusClasse = 'status-pendente', linhaClasse = 'pendente-row', statusTexto = 'DISPONÍVEL';
-        if (situacao.includes('CONFIRMADO')) { statusClasse = 'status-aprovado'; linhaClasse = 'confirmado-row'; statusTexto = '✅ CONFIRMADO'; }
-        if (situacao.includes('CAMPANHA')) { statusClasse = 'status-campanha'; linhaClasse = 'campanha-row'; statusTexto = '📢 CAMPANHA'; }
-        if (situacao.includes('DISPONÍVEL')) { statusTexto = '⏳ DISPONÍVEL'; }
+      lista.innerHTML = batalhas.map(b => {
+        // 🎨 Cor do status
+        let statusClasse = 'status-pendente', linhaClasse = 'pendente-row', statusTexto = b.situacao;
+        if (b.situacao === 'CONFIRMADO') { statusClasse = 'status-aprovado'; linhaClasse = 'confirmado-row'; statusTexto = '✅ CONFIRMADO'; }
+        if (b.situacao === 'CAMPANHA') { statusClasse = 'status-campanha'; linhaClasse = 'campanha-row'; statusTexto = '📢 CAMPANHA'; }
+        if (b.situacao === 'DISPONÍVEL') { statusTexto = '⏳ DISPONÍVEL'; }
+        if (b.situacao === 'FALTA_OPONENTE') { statusTexto = '⚠️ Falta Oponente'; }
+        if (b.situacao === 'CONFIRMAÇÃO_PENDENTE') { statusTexto = '⏳ Confirmação Pendente'; }
 
         return `<tr class="${linhaClasse}">
-          <td><strong>${data}</strong><br><small>${hora}</small></td>
+          <td><strong>${b.data || '—'}</strong><br><small>${b.horaInicio || '—'}</small></td>
           <td>
-            <strong>${streamer}</strong>
-            ${linkStreamer ? `<br><a href="${linkStreamer}" target="_blank" class="link-externo">🔗 Perfil</a>` : ''}
+            <strong>${b.streamer || '—'}</strong>
+            ${b.linkStreamer ? `<br><a href="${b.linkStreamer}" target="_blank" class="link-externo">🔗 Perfil</a>` : ''}
           </td>
           <td>
-            ${oponente}
-            ${linkOponente ? `<br><a href="${linkOponente}" target="_blank" class="link-externo">🔗 Perfil</a>` : ''}
+            ${b.oponente || '—'}
+            ${b.linkOponente ? `<br><a href="${b.linkOponente}" target="_blank" class="link-externo">🔗 Perfil</a>` : ''}
           </td>
-          <td>${meta}</td>
+          <td>${b.meta || '—'}</td>
           <td><span class="status-tag ${statusClasse}">${statusTexto}</span></td>
           <td>
             <button class="btn btn-primary btn-sm" onclick="window.open('agendar-batalha.html','_blank')">📋 Ver</button>
