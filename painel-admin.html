@@ -282,7 +282,7 @@
           <button class="btn btn-sm" style="background:rgba(255,255,255,0.1); color:var(--text-light);" onclick="carregarTickets()">🔄 Atualizar</button>
           <button class="btn btn-sm btn-success" onclick="filtrarTickets('todos')">Todos</button>
           <button class="btn btn-sm btn-warning" onclick="filtrarTickets('pendente')">Pendentes</button>
-          <button class="btn btn-sm btn-urgente" onclick="filtrarTickets('urgente')">🚨 Urgentes</button>
+          <button class="btn btn-sm btn-danger" onclick="filtrarTickets('urgente')">🚨 Urgentes</button>
           <button class="btn btn-sm" style="background:rgba(255,255,255,0.1); color:var(--text-light);" onclick="filtrarTickets('resolvido')">Resolvidos</button>
         </div>
       </div>
@@ -573,10 +573,10 @@ Avisaremos você assim que recebermos a resposta. 💜
           <h3>📬 Responder Solicitação</h3>
           <p style="font-size:0.85rem;color:var(--text-muted);margin-bottom:10px;">Selecione uma opção:</p>
           <div class="opcoes-resposta">
-            <button class="btn-resposta aceito" onclick="alert('✅ Copie e cole a mensagem abaixo no WhatsApp:\n\n' + MENSAGENS.aceito)">✅ Aceito — Liberar live</button>
-            <button class="btn-resposta recusado" onclick="alert('❌ Copie e cole a mensagem abaixo no WhatsApp:\n\n' + MENSAGENS.recusado)">❌ Recusado — Diretrizes</button>
-            <button class="btn-resposta analise" onclick="alert('⏳ Copie e cole a mensagem abaixo no WhatsApp:\n\n' + MENSAGENS.analise)">⏳ Em Análise</button>
-            <button class="btn-resposta urgente" onclick="alert('🚨 Copie e cole a mensagem abaixo no WhatsApp:\n\n' + MENSAGENS.urgente)">🚨 Marcar Urgente</button>
+            <button class="btn-resposta aceito" onclick="alert('✅ Copie e cole a mensagem abaixo no WhatsApp:\\n\\n' + MENSAGENS.aceito)">✅ Aceito — Liberar live</button>
+            <button class="btn-resposta recusado" onclick="alert('❌ Copie e cole a mensagem abaixo no WhatsApp:\\n\\n' + MENSAGENS.recusado)">❌ Recusado — Diretrizes</button>
+            <button class="btn-resposta analise" onclick="alert('⏳ Copie e cole a mensagem abaixo no WhatsApp:\\n\\n' + MENSAGENS.analise)">⏳ Em Análise</button>
+            <button class="btn-resposta urgente" onclick="alert('🚨 Copie e cole a mensagem abaixo no WhatsApp:\\n\\n' + MENSAGENS.urgente)">🚨 Marcar Urgente</button>
           </div>
         </div>
         <div class="ticket-acoes">
@@ -616,7 +616,6 @@ Avisaremos você assim que recebermos a resposta. 💜
     async function carregarBatalhas() {
       const mesNome = document.getElementById('filtroMes').value;
       
-      // 📋 Converte nome do mês para NÚMERO
       const mapaMeses = {
         "Abril": 4, "Maio": 5, "Junho": 6, "Julho": 7, "Agosto": 8,
         "Setembro": 9, "Outubro": 10, "Novembro": 11, "Dezembro": 12
@@ -629,11 +628,8 @@ Avisaremos você assim que recebermos a resposta. 💜
       
       try {
         const url = `${APPS_SCRIPT_BATALHAS_URL}?acao=lerBatalhas&mes=${mesNumero}&ano=${ano}`;
-        console.log("🔗 Buscando:", url);
-        
         const resposta = await fetch(url);
         const dados = await resposta.json();
-        console.log("📦 Resposta:", dados);
 
         if (!dados.batalhas || !Array.isArray(dados.batalhas)) {
           throw new Error("Nenhuma batalha encontrada");
@@ -661,54 +657,42 @@ Avisaremos você assim que recebermos a resposta. 💜
       }
 
       lista.innerHTML = batalhas.map((b, index) => {
-        // 🎨 SITUAÇÕES EXATAS — IGUALZINHO A PLANILHA ✅
         let statusClasse = 'status-pendente', linhaClasse = 'pendente-row', statusTexto = b.situacao;
         
-        // 🟢 DISPONÍVEL — Verde
         if (b.situacao === 'DISPONÍVEL') { 
           statusClasse = 'status-aprovado'; linhaClasse = 'disponivel-row'; 
           statusTexto = '🟢 DISPONÍVEL'; 
         }
-        // ⚪ CONFIRMADO — Branco
         else if (b.situacao === 'CONFIRMADO') { 
           statusClasse = 'status-aprovado'; linhaClasse = 'confirmado-row'; 
           statusTexto = '✅ CONFIRMADO'; 
         }
-        // 🔵 FALTA OPONENTE — Azul
         else if (b.situacao === 'FALTA OPONENTE') { 
           statusClasse = 'status-campanha'; linhaClasse = 'falta-oponente-row'; 
           statusTexto = '🔵 FALTA OPONENTE'; 
         }
-        // 🔴 DOMINGO — Vermelho
         else if (b.situacao === 'DOMINGO') { 
           statusClasse = 'status-recusado'; linhaClasse = 'domingo-row'; 
           statusTexto = '🔴 DOMINGO'; 
         }
-        // 🔴 FERIADO — Vermelho
         else if (b.situacao === 'FERIADO') { 
           statusClasse = 'status-recusado'; linhaClasse = 'feriado-row'; 
           statusTexto = '🔴 FERIADO'; 
         }
-        // 🟡 CAMPANHA — Amarelo
         else if (b.situacao === 'CAMPANHA') { 
           statusClasse = 'status-campanha'; linhaClasse = 'campanha-row'; 
           statusTexto = '🟡 CAMPANHA'; 
         }
 
-        // 📌 Verifica se tem oponente
         const temOponente = b.oponente && b.oponente.trim() !== '';
 
         return `<tr class="${linhaClasse}">
           <td><strong>${b.data || '—'}</strong><br><small>${b.horaInicio || '—'}</small></td>
-          
-          <!-- 🎯 STREAMER -->
           <td>
             <strong>${b.streamer || '—'}</strong>
             ${b.linkStreamer ? `<br><a href="${b.linkStreamer}" target="_blank" class="link-externo">🔗 Perfil</a>` : ''}
             ${b.agencia ? `<br><small style="color:var(--text-muted);">🏢 ${b.agencia}</small>` : ''}
           </td>
-          
-          <!-- ⚔️ OPONENTE — APARECE DIRETO NA LISTA! ✅ -->
           <td>
             ${temOponente 
               ? `<strong>${b.oponente}</strong>
@@ -718,12 +702,11 @@ Avisaremos você assim que recebermos a resposta. 💜
                  <br><button class="btn btn-sm btn-success" style="margin-top:4px; font-size:0.75rem; padding:2px 8px;" onclick="abrirModalEditarOponente(${index})">➕ Adicionar</button>`
             }
           </td>
-          
           <td>${b.meta || '—'}</td>
-          
           <td><span class="status-tag ${statusClasse}">${statusTexto}</span></td>
-          
-          <!-- 🛠️ AÇÕES — VER DETALHES + EDITAR + BOTÕES DE SITUAÇÃO ✅ -->
           <td>
             <button class="btn btn-primary btn-sm" onclick="abrirModalBatalha(${index})">👁️ Ver</button>
-            <button class="btn btn-sm" style="background:rgba(255,193,
+            <button class="btn btn-sm" style="background:rgba(255,193,7,0.2); color:var(--alerta); border:1px solid var(--alerta);" onclick="abrirModalEditarOponente(${index})">✏️ Editar</button>
+            <div style="margin-top:4px; display:flex; gap:3px; flex-wrap:wrap;">
+              <button class="btn btn-sm" style="padding:2px 5px; font-size:0.65rem; background:rgba(61,220,151,0.15); color:var(--sucesso); border:1px solid var(--sucesso);" onclick="alterarSituacao(${index}, 'DISPONÍVEL')">🟢 Disp</button>
+              <button class
