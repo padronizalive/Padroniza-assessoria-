@@ -151,57 +151,24 @@
       background: transparent; border: none; color: var(--text-muted);
       font-size: 1.5rem; cursor: pointer; padding: 0; width: 32px; height: 32px;
     }
-    .ticket-detalhe { margin-bottom: 16px; }
-    .ticket-detalhe label { 
-      font-size: 0.8rem; color: var(--text-muted); text-transform: uppercase; 
-      letter-spacing: 0.05em; display: block; margin-bottom: 4px; 
+    .form-group { margin-bottom: 14px; }
+    .form-group label { 
+      display: block; font-size: 0.85rem; color: var(--text-muted); 
+      margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.05em; 
     }
-    .ticket-detalhe p, .ticket-detalhe pre { 
-      font-size: 0.95rem; line-height: 1.6; white-space: pre-wrap; 
-      word-break: break-word;
-    }
-    .fotos-anexadas { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 8px; }
-    .foto-ticket { 
-      width: 100px; height: 100px; border-radius: 8px; object-fit: cover; 
-      cursor: pointer; border: 2px solid transparent; transition: all 0.2s;
-    }
-    .foto-ticket:hover { border-color: var(--primary-purple); transform: scale(1.05); }
-    .tipo-solicitacao {
-      display: inline-block; padding: 6px 12px; border-radius: 999px;
-      font-size: 0.8rem; font-weight: 600; margin-bottom: 8px;
-    }
-    .tipo-suporte { background: rgba(255,61,129,0.15); color: var(--rosa); border: 1px solid var(--rosa); }
-    
-    /* 📬 ÁREA DE RESPOSTA AUTOMÁTICA */
-    .area-resposta {
-      background: rgba(123,63,255,0.08); border-radius: 12px; padding: 16px;
-      margin-top: 20px; border: 1px solid rgba(123,63,255,0.2);
-    }
-    .area-resposta h3 { font-size: 0.95rem; margin-bottom: 12px; color: var(--primary-gold); }
-    .opcoes-resposta { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 14px; }
-    .btn-resposta { font-size: 0.8rem; padding: 8px 12px; border-radius: 8px; border: none; cursor: pointer; font-weight: 600; }
-    .btn-resposta.aceito { background: rgba(61,220,151,0.2); color: var(--sucesso); border: 1px solid var(--sucesso); }
-    .btn-resposta.recusado { background: rgba(255,77,106,0.2); color: var(--erro); border: 1px solid var(--erro); }
-    .btn-resposta.analise { background: rgba(77,171,247,0.2); color: #4dabf7; border: 1px solid #4dabf7; }
-    .btn-resposta.urgente { background: rgba(255,107,0,0.2); color: var(--urgente); border: 1px solid var(--urgente); }
-    .ticket-acoes { display: flex; gap: 10px; margin-top: 20px; flex-wrap: wrap; }
-    .vazio { text-align: center; padding: 40px 20px; color: var(--text-muted); }
-    .vazio span { font-size: 3rem; display: block; margin-bottom: 12px; opacity: 0.5; }
-    
-    /* ⚔️ FILTRO DE MÊS — BATALHAS */
-    .filtro-mes { margin-bottom: 16px; display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
-    .filtro-mes select { padding: 8px 12px; border-radius: 8px; border: 1px solid var(--border-soft); background: var(--card-bg); color: var(--text-light); }
-    .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 16px; }
-    @media (max-width: 600px) { .form-grid { grid-template-columns: 1fr; } }
-    .form-group label { display: block; font-size: 0.8rem; color: var(--text-muted); margin-bottom: 4px; text-transform: uppercase; }
-    .form-group input, .form-group select, .form-group textarea {
+    .form-group input, .form-group select {
       width: 100%; padding: 10px 12px; border-radius: 8px;
       border: 1px solid rgba(255,255,255,0.15);
-      background: rgba(5,5,9,0.9); color: var(--text-light); font-size: 0.9rem;
+      background: rgba(5,5,9,0.9); color: var(--text-light); font-size: 0.95rem;
     }
     .form-actions { display: flex; gap: 10px; margin-top: 20px; flex-wrap: wrap; }
     .link-externo { color: var(--primary-blue); text-decoration: none; font-size: 0.8rem; }
     .link-externo:hover { text-decoration: underline; }
+    hr { border: none; border-top: 1px solid var(--border-soft); margin: 16px 0; }
+    
+    /* ⚔️ FILTRO DE MÊS — BATALHAS */
+    .filtro-mes { margin-bottom: 16px; display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+    .filtro-mes select { padding: 8px 12px; border-radius: 8px; border: 1px solid var(--border-soft); background: var(--card-bg); color: var(--text-light); }
   </style>
 </head>
 <body>
@@ -320,22 +287,22 @@
     </div>
 
     <!-- ⚔️ BATALHAS -->
-    <div class="card" id="secaoBatalhas" style="display: none;">
+    <div class="card" id="secaoBatalhas" style="display: block;">
       <div class="card-header">
         <h2>⚔️ Batalhas Agendadas</h2>
         <div style="display: flex; gap: 8px; flex-wrap: wrap; align-items: center;">
           <div class="filtro-mes">
             <label style="font-size:0.85rem; color:var(--text-muted); margin-right:8px;">Mês:</label>
             <select id="filtroMes" onchange="carregarBatalhas()">
-              <option value="Abril">Abril</option>
-              <option value="Maio">Maio</option>
-              <option value="Junho">Junho</option>
-              <option value="Julho">Julho</option>
-              <option value="Agosto" selected>Agosto</option>
-              <option value="Setembro">Setembro</option>
-              <option value="Outubro">Outubro</option>
-              <option value="Novembro">Novembro</option>
-              <option value="Dezembro">Dezembro</option>
+              <option value="4">Abril</option>
+              <option value="5">Maio</option>
+              <option value="6">Junho</option>
+              <option value="7">Julho</option>
+              <option value="8" selected>Agosto</option>
+              <option value="9">Setembro</option>
+              <option value="10">Outubro</option>
+              <option value="11">Novembro</option>
+              <option value="12">Dezembro</option>
             </select>
           </div>
           <button class="btn btn-sm" style="background:rgba(255,255,255,0.1); color:var(--text-light);" onclick="carregarBatalhas()">🔄 Atualizar</button>
@@ -377,18 +344,7 @@
     </footer>
   </div>
 
-  <!-- 📩 MODAL — ABRIR TICKET -->
-  <div class="modal-fundo" id="modalTicket">
-    <div class="modal-conteudo">
-      <div class="modal-cabecalho">
-        <h2>🎫 Detalhes do Ticket</h2>
-        <button class="modal-fechar" onclick="fecharModalTicket()">&times;</button>
-      </div>
-      <div id="conteudoTicket"></div>
-    </div>
-  </div>
-
-  <!-- ⚔️ MODAL — DETALHES DA BATALHA -->
+  <!-- ⚔️ MODAL — DETALHES E EDITAR OPONENTE DA BATALHA ✅ -->
   <div class="modal-fundo" id="modalBatalha">
     <div class="modal-conteudo">
       <div class="modal-cabecalho">
@@ -409,48 +365,7 @@
     let tickets = [];
     let filtroAtual = 'todos';
     let batalhas = [];
-
-    // ✅ MENSAGENS AUTOMÁTICAS
-    const MENSAGENS = {
-      aceito: `✅ *Sua solicitação foi ACEITA!* 🎉
-
-Olá! Temos o prazer de informar que seu recurso foi aceito pela plataforma. 🎊
-
-Aguarde que sua live será LIBERADA em até 24 horas! Tudo voltará ao normal em breve. 💜
-
-*Atenciosamente, Equipe Padroniza Assessoria* 💜`,
-
-      recusado: `❌ *Infelizmente NÃO foi aceito.* ⚠️
-
-Olá! Lamentamos informar que sua solicitação de recurso *não foi aceita* pela plataforma. 
-
-Motivo: Você infringiu as diretrizes da plataforma (TikTok/Kako). ⚠️
-
-*Importante:* As regras e decisões são da própria plataforma. A agência não tem autonomia para alterar ou recorrer dessa decisão. Pedimos desculpas. 💜
-
-*Atenciosamente, Equipe Padroniza Assessoria* 💜`,
-
-      analise: `⏳ *Solicitação em ANÁLISE!* 📋
-
-Olá! Seu recurso foi encaminhado e está em análise pela plataforma. 
-
-⏳ *Prazo normal:* até 48 horas para resposta.
-🚨 *Se for urgente:* priorizamos em até 24 horas! 
-
-Avisaremos assim que tivermos o retorno. Obrigado pela paciência! 💜
-
-*Atenciosamente, Equipe Padroniza Assessoria* 💜`,
-
-      urgente: `🚨 *URGENTE — Solicitação priorizada!* ⚡
-
-Olá! Marcamos sua solicitação como URGENTE! Estamos priorizando seu caso junto à plataforma. ⚡
-
-O prazo de resposta será reduzido — aguardamos retorno em até 24 horas! 
-
-Avisaremos você assim que recebermos a resposta. 💜
-
-*Atenciosamente, Equipe Padroniza Assessoria* 💜`
-    };
+    let batalhaAtual = null; // Armazena a batalha sendo editada
 
     // 🔐 LOGIN
     window.onload = function() {
@@ -538,45 +453,12 @@ Avisaremos você assim que recebermos a resposta. 💜
             <td><span class="tipo-solicitacao tipo-suporte">${(ticket.tipo || 'suporte').toUpperCase()}</span></td>
             <td><span class="status-tag ${statusClasse}">${statusTexto}</span></td>
             <td>${ticket.data || '—'}</td>
-            <td><button class="btn btn-primary btn-sm" onclick="abrirTicket(${ticket.id})">👁️ Ver & Responder</button></td>
+            <td><button class="btn btn-primary btn-sm">👁️ Ver & Responder</button></td>
           </tr>`;
         }).join('');
     }
 
     function filtrarTickets(f) { filtroAtual = f; renderizarTickets(); }
-
-    function abrirTicket(id) {
-      const ticket = tickets.find(t => t.id === id);
-      if (!ticket) return;
-      
-      let fotosHTML = ticket.fotos?.length ? `<div class="ticket-detalhe"><label>📸 Fotos (${ticket.fotos.length})</label><div class="fotos-anexadas">${ticket.fotos.map(f => `<img src="${f}" class="foto-ticket" onclick="window.open('${f}','_blank')">`).join('')}</div></div>` : '';
-      
-      document.getElementById('conteudoTicket').innerHTML = `
-        <div class="ticket-detalhe"><label>Usuário</label><p><strong>${ticket.usuario}</strong> • ${ticket.plataforma === 'TikTok' ? '🎵 TikTok' : '💜 Kako'}</p></div>
-        <div class="ticket-detalhe"><label>Tipo</label><span class="tipo-solicitacao tipo-suporte">${(ticket.tipo || 'suporte').toUpperCase()}</span>${ticket.urgente ? ' <span style="color:var(--urgente);font-weight:600;">🚨 URGENTE</span>' : ''}</div>
-        <div class="ticket-detalhe"><label>Mensagem</label><pre>${ticket.mensagem}</pre></div>
-        ${fotosHTML}
-        <div class="ticket-detalhe"><label>Data</label><p>${ticket.data}</p></div>
-        <div class="area-resposta">
-          <h3>📬 Responder Solicitação</h3>
-          <p style="font-size:0.85rem;color:var(--text-muted);margin-bottom:10px;">Selecione uma opção:</p>
-          <div class="opcoes-resposta">
-            <button class="btn-resposta aceito" onclick="alert('✅ Copie e cole a mensagem abaixo no WhatsApp:\\n\\n' + MENSAGENS.aceito)">✅ Aceito — Liberar live</button>
-            <button class="btn-resposta recusado" onclick="alert('❌ Copie e cole a mensagem abaixo no WhatsApp:\\n\\n' + MENSAGENS.recusado)">❌ Recusado — Diretrizes</button>
-            <button class="btn-resposta analise" onclick="alert('⏳ Copie e cole a mensagem abaixo no WhatsApp:\\n\\n' + MENSAGENS.analise)">⏳ Em Análise</button>
-            <button class="btn-resposta urgente" onclick="alert('🚨 Copie e cole a mensagem abaixo no WhatsApp:\\n\\n' + MENSAGENS.urgente)">🚨 Marcar Urgente</button>
-          </div>
-        </div>
-        <div class="ticket-acoes">
-          <button class="btn btn-primary" onclick="fecharModalTicket()">Fechar</button>
-        </div>
-      `;
-      document.getElementById('modalTicket').style.display = 'flex';
-    }
-
-    function fecharModalTicket() {
-      document.getElementById('modalTicket').style.display = 'none';
-    }
 
     // 👥 AGENCIADOS
     async function carregarAgenciados() {
@@ -602,20 +484,13 @@ Avisaremos você assim que recebermos a resposta. 💜
 
     // ⚔️ BATALHAS — CARREGAR
     async function carregarBatalhas() {
-      const mesNome = document.getElementById('filtroMes').value;
+      const mes = document.getElementById('filtroMes').value;
       
-      const mapaMeses = {
-        "Abril": 4, "Maio": 5, "Junho": 6, "Julho": 7, "Agosto": 8,
-        "Setembro": 9, "Outubro": 10, "Novembro": 11, "Dezembro": 12
-      };
-      const mesNumero = mapaMeses[mesNome] || 8;
-      const ano = 2026;
-
       document.getElementById('listaBatalhas').innerHTML = 
-        `<tr><td colspan="6" class="vazio">⏳ Carregando ${mesNome}...</td></tr>`;
+        `<tr><td colspan="6" class="vazio">⏳ Carregando...</td></tr>`;
       
       try {
-        const url = `${APPS_SCRIPT_BATALHAS_URL}?acao=lerBatalhas&mes=${mesNumero}&ano=${ano}`;
+        const url = `${APPS_SCRIPT_BATALHAS_URL}?acao=lerBatalhas&mes=${mes}&ano=2026`;
         const resposta = await fetch(url);
         const dados = await resposta.json();
 
@@ -630,12 +505,12 @@ Avisaremos você assim que recebermos a resposta. 💜
       } catch (erro) {
         console.error("❌ Erro:", erro);
         document.getElementById('listaBatalhas').innerHTML = 
-          `<tr><td colspan="6" class="vazio"><span>⚔️</span>Não foi possível carregar.<br>Erro: ${erro.message}</td></tr>`;
+          `<tr><td colspan="6" class="vazio"><span>⚔️</span>Não foi possível carregar batalhas.<br>Erro: ${erro.message}</td></tr>`;
         document.getElementById('contagemBatalhas').textContent = '0';
       }
     }
 
-    // 📋 RENDERIZAR BATALHAS — SITUAÇÕES EXATAS DA PLANILHA
+    // 📋 RENDERIZAR BATALHAS — COM BOTÃO EDITAR OPONENTE ✅
     function renderizarBatalhas() {
       const lista = document.getElementById('listaBatalhas');
       
@@ -655,7 +530,7 @@ Avisaremos você assim que recebermos a resposta. 💜
           statusClasse = 'status-aprovado'; linhaClasse = 'confirmado-row'; 
           statusTexto = '✅ CONFIRMADO'; 
         }
-        else if (b.situacao === 'FALTA OPONENTE') { 
+        else if (b.situacao === 'FALTA_OPONENTE') { 
           statusClasse = 'status-campanha'; linhaClasse = 'falta-oponente-row'; 
           statusTexto = '🔵 FALTA OPONENTE'; 
         }
@@ -670,6 +545,10 @@ Avisaremos você assim que recebermos a resposta. 💜
         else if (b.situacao === 'CAMPANHA') { 
           statusClasse = 'status-campanha'; linhaClasse = 'campanha-row'; 
           statusTexto = '🟡 CAMPANHA'; 
+        }
+        else if (b.situacao === 'CONFIRMAÇÃO_PENDENTE') {
+          statusClasse = 'status-pendente'; linhaClasse = 'pendente-row';
+          statusTexto = '⏳ CONFIRMAÇÃO PENDENTE';
         }
 
         const temOponente = b.oponente && b.oponente.trim() !== '';
@@ -693,28 +572,116 @@ Avisaremos você assim que recebermos a resposta. 💜
           <td><span class="status-tag ${statusClasse}">${statusTexto}</span></td>
           <td>
             <button class="btn btn-primary btn-sm" onclick="abrirModalBatalha(${index})">👁️ Ver</button>
+            <button class="btn btn-sm btn-success" style="margin-top:4px;" onclick="abrirModalEditarOponente(${index})">✏️ Editar Oponente</button>
           </td>
         </tr>`;
       }).join('');
     }
 
+    // ⚔️ ABRIR MODAL — COM FORMULÁRIO PARA ADICIONAR/EDITAR OPONENTE ✅
     function abrirModalBatalha(index) {
-      const b = batalhas[index];
+      batalhaAtual = batalhas[index];
+      const b = batalhaAtual;
+      const mesSelecionado = document.getElementById('filtroMes').value;
+
       document.getElementById('conteudoBatalha').innerHTML = `
-        <div class="ticket-detalhe"><label>Data / Hora</label><p><strong>${b.data || '—'}</strong> às ${b.horaInicio || '—'}</p></div>
-        <div class="ticket-detalhe"><label>Streamer Padroniza</label><p><strong>${b.streamer || '—'}</strong>${b.agencia ? ` — ${b.agencia}` : ''}</p></div>
-        <div class="ticket-detalhe"><label>Oponente</label><p>${b.oponente || '<em>Sem oponente</em>'}${b.agenciaOponente ? ` — ${b.agenciaOponente}` : ''}</p></div>
-        <div class="ticket-detalhe"><label>Meta</label><p>${b.meta || '—'}</p></div>
-        <div class="ticket-detalhe"><label>Status</label><p><strong>${b.situacao || '—'}</strong></p></div>
-        <div class="ticket-acoes">
+        <div class="form-group">
+          <label>📅 Data / Hora</label>
+          <input type="text" value="${b.data || ''} às ${b.horaInicio || ''}" readonly style="background:rgba(0,0,0,0.5); opacity:0.8;" />
+        </div>
+        
+        <div class="form-group">
+          <label>🎤 Streamer Padroniza</label>
+          <input type="text" value="${b.streamer || ''}" readonly style="background:rgba(0,0,0,0.5); opacity:0.8;" />
+        </div>
+
+        <hr />
+
+        <h3 style="font-size:1rem; margin-bottom:12px; color:var(--primary-gold);">⚔️ Adicionar / Editar Oponente</h3>
+        
+        <div class="form-group">
+          <label>Nome do Oponente *</label>
+          <input type="text" id="oponenteNome" value="${b.oponente || ''}" placeholder="Nome do streamer oponente" />
+        </div>
+
+        <div class="form-group">
+          <label>Link do Perfil do Oponente</label>
+          <input type="url" id="oponenteLink" value="${b.linkOponente || ''}" placeholder="https://..." />
+        </div>
+
+        <div class="form-group">
+          <label>Agência do Oponente</label>
+          <input type="text" id="oponenteAgencia" value="${b.agenciaOponente || ''}" placeholder="Nome da agência" />
+        </div>
+
+        <div class="form-group">
+          <label>🎯 Meta da Batalha</label>
+          <input type="text" id="metaBatalha" value="${b.meta || ''}" placeholder="Ex: 10.000 estrelas" />
+        </div>
+
+        <div class="form-actions">
+          <button class="btn btn-success" onclick="salvarOponente()">💾 Salvar Oponente</button>
           <button class="btn btn-primary" onclick="fecharModalBatalha()">Fechar</button>
         </div>
       `;
       document.getElementById('modalBatalha').style.display = 'flex';
     }
 
+    // ✅ ABRIR MODAL SÓ PARA EDITAR OPONENTE
+    function abrirModalEditarOponente(index) {
+      abrirModalBatalha(index);
+    }
+
+    // 💾 SALVAR OPONENTE NA PLANILHA ✅
+    async function salvarOponente() {
+      if (!batalhaAtual) return;
+      
+      const oponenteNome = document.getElementById('oponenteNome').value.trim();
+      const oponenteLink = document.getElementById('oponenteLink').value.trim();
+      const oponenteAgencia = document.getElementById('oponenteAgencia').value.trim();
+      const metaBatalha = document.getElementById('metaBatalha').value.trim();
+      const mes = document.getElementById('filtroMes').value;
+
+      if (!oponenteNome) {
+        alert('⚠️ Digite o nome do oponente!');
+        return;
+      }
+
+      try {
+        const resposta = await fetch(APPS_SCRIPT_BATALHAS_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            acao: 'salvarOponente',
+            mes: mes,
+            data: batalhaAtual.data,
+            streamer: batalhaAtual.streamer,
+            oponente: oponenteNome,
+            linkOponente: oponenteLink,
+            agenciaOponente: oponenteAgencia,
+            meta: metaBatalha
+          })
+        });
+
+        const resultado = await resposta.json();
+        
+        if (resultado.sucesso) {
+          alert('✅ Oponente salvo com sucesso! Situação: CONFIRMADO');
+          fecharModalBatalha();
+          batalhaAtual = null;
+          await carregarBatalhas(); // Recarrega para mostrar atualizado
+        } else {
+          alert('⚠️ Erro ao salvar: ' + (resultado.erro || 'Tente novamente'));
+        }
+      } catch (erro) {
+        console.error(erro);
+        alert('❌ Erro de conexão. Tente novamente.');
+      }
+    }
+
     function fecharModalBatalha() {
       document.getElementById('modalBatalha').style.display = 'none';
+      batalhaAtual = null;
     }
   </script>
 </body>
