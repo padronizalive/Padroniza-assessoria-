@@ -15,7 +15,7 @@
       --card-bg: rgba(10, 12, 24, 0.9);
       --border-soft: rgba(255, 255, 255, 0.08);
       --sucesso: #3ddc97;
-      --erro: #ff4d6a;
+      --erro: #ff4d6d;
       --alerta: #ffc107;
       --rosa: #ff3d81;
       --urgente: #ff6b00;
@@ -23,13 +23,13 @@
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
-      font-family: system-ui, sans-serif;
+      font-family: 'Segoe UI', system-ui, sans-serif;
       background: var(--bg-gradient);
       color: var(--text-light);
       min-height: 100vh;
       padding: 16px;
     }
-    .container { max-width: 1100px; margin: 0 auto; }
+    .container { max-width: 1200px; margin: 0 auto; }
     header {
       display: flex; align-items: center; justify-content: space-between; gap: 12px;
       padding: 16px; border-radius: 16px;
@@ -87,19 +87,20 @@
     .btn-blue { background: linear-gradient(135deg, #1f7aff, #00b4ff); color: #fff; }
     .btn-success { background: linear-gradient(135deg, #3ddc97, #10b981); color: #000; }
     .btn-warning { background: linear-gradient(135deg, #ffc107, #ff9800); color: #000; }
-    .btn-urgente { background: linear-gradient(135deg, #ff6b00, #ff3d00); color: #fff; }
     .btn-sm { padding: 6px 10px; font-size: 0.8rem; }
     .tabela-container { overflow-x: auto; border-radius: 12px; border: 1px solid var(--border-soft); }
     table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
     th, td { padding: 12px 10px; text-align: left; border-bottom: 1px solid var(--border-soft); vertical-align: top; }
     th { background: rgba(123,63,255,0.15); font-weight: 600; color: var(--primary-gold); text-transform: uppercase; font-size: 0.75rem; }
     tr:hover { background: rgba(255,255,255,0.03); }
+    tr.pendente-row { background: rgba(255,193,7,0.05); border-left: 3px solid var(--alerta); }
+    tr.confirmado-row { background: rgba(61,220,151,0.03); border-left: 3px solid var(--sucesso); }
+    tr.campanha-row { background: rgba(31,122,255,0.05); border-left: 3px solid var(--primary-blue); }
     .status-tag { display: inline-block; padding: 4px 10px; border-radius: 999px; font-size: 0.75rem; font-weight: 600; }
     .status-aprovado { background: rgba(61,220,151,0.15); color: var(--sucesso); border: 1px solid var(--sucesso); }
     .status-pendente { background: rgba(255,193,7,0.15); color: var(--alerta); border: 1px solid var(--alerta); }
-    .status-urgente { background: rgba(255,107,0,0.15); color: var(--urgente); border: 1px solid var(--urgente); }
     .status-recusado { background: rgba(255,77,106,0.15); color: var(--erro); border: 1px solid var(--erro); }
-    .status-analise { background: rgba(31,122,255,0.15); color: #4dabf7; border: 1px solid #4dabf7; }
+    .status-campanha { background: rgba(31,122,255,0.15); color: var(--primary-blue); border: 1px solid var(--primary-blue); }
     footer { text-align: center; margin-top: 40px; padding: 20px; font-size: 0.8rem; color: var(--text-muted); }
     
     /* 🔒 TELA DE LOGIN */
@@ -166,9 +167,6 @@
       display: inline-block; padding: 6px 12px; border-radius: 999px;
       font-size: 0.8rem; font-weight: 600; margin-bottom: 8px;
     }
-    .tipo-duvida { background: rgba(31,122,255,0.15); color: #4dabf7; border: 1px solid #4dabf7; }
-    .tipo-reclamacao { background: rgba(255,77,106,0.15); color: var(--erro); border: 1px solid var(--erro); }
-    .tipo-elogio { background: rgba(61,220,151,0.15); color: var(--sucesso); border: 1px solid var(--sucesso); }
     .tipo-suporte { background: rgba(255,61,129,0.15); color: var(--rosa); border: 1px solid var(--rosa); }
     
     /* 📬 ÁREA DE RESPOSTA AUTOMÁTICA */
@@ -196,6 +194,21 @@
       margin-top: 12px; border-left: 3px solid var(--sucesso);
     }
     .resposta-anterior label { color: var(--sucesso); font-size: 0.75rem; text-transform: uppercase; }
+    
+    /* ⚔️ FILTRO DE MÊS — BATALHAS */
+    .filtro-mes { margin-bottom: 16px; display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+    .filtro-mes select { padding: 8px 12px; border-radius: 8px; border: 1px solid var(--border-soft); background: var(--card-bg); color: var(--text-light); }
+    .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 16px; }
+    @media (max-width: 600px) { .form-grid { grid-template-columns: 1fr; } }
+    .form-group label { display: block; font-size: 0.8rem; color: var(--text-muted); margin-bottom: 4px; text-transform: uppercase; }
+    .form-group input, .form-group select, .form-group textarea {
+      width: 100%; padding: 10px 12px; border-radius: 8px;
+      border: 1px solid rgba(255,255,255,0.15);
+      background: rgba(5,5,9,0.9); color: var(--text-light); font-size: 0.9rem;
+    }
+    .form-actions { display: flex; gap: 10px; margin-top: 20px; flex-wrap: wrap; }
+    .link-externo { color: var(--primary-blue); text-decoration: none; font-size: 0.8rem; }
+    .link-externo:hover { text-decoration: underline; }
   </style>
 </head>
 <body>
@@ -313,20 +326,40 @@
       </div>
     </div>
 
-    <!-- ⚔️ BATALHAS -->
+    <!-- ⚔️ BATALHAS — LENDO PLANILHA REAL ✅ -->
     <div class="card" id="secaoBatalhas" style="display: none;">
       <div class="card-header">
         <h2>⚔️ Batalhas Agendadas</h2>
-        <button class="btn btn-primary" onclick="window.open('agendar-batalha.html', '_blank')">➕ Agendar Batalha</button>
+        <div style="display: flex; gap: 8px; flex-wrap: wrap; align-items: center;">
+          <div class="filtro-mes">
+            <label style="font-size:0.85rem; color:var(--text-muted); margin-right:8px;">Mês:</label>
+            <select id="filtroMes" onchange="carregarBatalhas()">
+              <option value="Março">Março</option>
+              <option value="Abril">Abril</option>
+              <option value="Maio">Maio</option>
+              <option value="Junho">Junho</option>
+              <option value="Julho">Julho</option>
+              <option value="Agosto" selected>Agosto</option>
+              <option value="Setembro">Setembro</option>
+              <option value="Outubro">Outubro</option>
+              <option value="Novembro">Novembro</option>
+              <option value="Dezembro">Dezembro</option>
+            </select>
+          </div>
+          <button class="btn btn-sm" style="background:rgba(255,255,255,0.1); color:var(--text-light);" onclick="carregarBatalhas()">🔄 Atualizar</button>
+          <button class="btn btn-primary" onclick="window.open('agendar-batalha.html', '_blank')">➕ Nova Solicitação</button>
+        </div>
       </div>
+      
+      <!-- 📋 LISTA DE BATALHAS -->
       <div class="tabela-container">
         <table>
           <thead>
             <tr>
-              <th>Streamer 1</th>
-              <th>Streamer 2</th>
-              <th>Plataforma</th>
-              <th>Data & Hora</th>
+              <th>Data / Hora</th>
+              <th>Streamer Padroniza</th>
+              <th>Oponente</th>
+              <th>Meta</th>
               <th>Status</th>
               <th>Ações</th>
             </tr>
@@ -366,14 +399,15 @@
   </div>
 
   <script>
-    // 🔐 DADOS DE ACESSO
+    // 🔐 DADOS DE ACESSO & LINKS — JÁ CONFIGURADOS ✅
     const ADMIN_EMAIL = "padronizaassessoria@gmail.com";
     const ADMIN_SENHA = "agencia988";
-    const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyBl8HNCUKlQrqhnEhMP7lrkAPdzXSPoGzR8QACrf3KZdhYNmGdk347ehvlIz_k3w1B/exec"
+    const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyBl8HNCUKlQrqhnEhMP7lrkAPdzXSPoGzR8QACrf3KZdhYNmGdk347ehvlIz_k3w1B/exec";
+    const APPS_SCRIPT_BATALHAS_URL = "https://script.google.com/macros/s/AKfycbygvZq1vAaSRy-eBkrWe73Y7x1GX5c5nj1untYB5T-8ErAntowbMVLvqmTO7uZ9cujH4A/exec";
+    
     let tickets = [];
     let filtroAtual = 'todos';
-    let ticketAtual = null;
-    let respostaSelecionada = null;
+    let batalhas = [];
 
     // ✅ MENSAGENS AUTOMÁTICAS
     const MENSAGENS = {
@@ -417,7 +451,7 @@ Avisaremos você assim que recebermos a resposta. 💜
 *Atenciosamente, Equipe Padroniza Assessoria* 💜`
     };
 
-    // 🔐 LOGIN — CARREGA DEPOIS DA PÁGINA
+    // 🔐 LOGIN
     window.onload = function() {
       if (sessionStorage.getItem('adminLogado') === 'sim') {
         document.getElementById('telaLogin').style.display = 'none';
@@ -436,7 +470,7 @@ Avisaremos você assim que recebermos a resposta. 💜
 
       if (!email || !senha) {
         msg.textContent = "⚠️ Preencha e-mail e senha";
-        msg.style.color = "var(--erro)";
+        msg.style.color = "var(--alerta)";
         return;
       }
 
@@ -460,18 +494,22 @@ Avisaremos você assim que recebermos a resposta. 💜
       window.location.href = 'index.html';
     }
 
+    function mostrarSecao(nome) {
+      document.getElementById('secaoTickets').style.display = nome === 'tickets' ? 'block' : 'none';
+      document.getElementById('secaoAgenciados').style.display = nome === 'agenciados' ? 'block' : 'none';
+      document.getElementById('secaoBatalhas').style.display = nome === 'batalhas' ? 'block' : 'none';
+    }
+
     async function carregarTudo() {
       await Promise.all([carregarTickets(), carregarAgenciados(), carregarBatalhas()]);
     }
 
+    // 📩 TICKETS
     async function carregarTickets() {
       try {
         const res = await fetch(`${APPS_SCRIPT_URL}?acao=listarTickets`);
         const dados = await res.json();
-        tickets = dados.sucesso && dados.tickets ? dados.tickets : [
-          { id: 1, usuario: "@isabellygoes3", plataforma: "TikTok", tipo: "recurso", mensagem: "Olá! Minha live foi bloqueada sem motivo. Poderiam me ajudar?", fotos: ["https://i.ibb.co/B23rwMHt/1787270369792.png"], data: "25/08/2026", status: "pendente", resposta: null, urgente: false },
-          { id: 2, usuario: "@gilbertorocha208", plataforma: "Kako", tipo: "suporte", mensagem: "Estou com problema para receber presentes na live.", fotos: [], data: "24/08/2026", status: "urgente", resposta: null, urgente: true }
-        ];
+        tickets = dados.sucesso && dados.tickets ? dados.tickets : [];
         document.getElementById('contagemTickets').textContent = tickets.filter(t => t.status === 'pendente' || t.status === 'urgente').length;
         renderizarTickets();
       } catch {
@@ -488,11 +526,11 @@ Avisaremos você assim que recebermos a resposta. 💜
       lista.innerHTML = filtrados.length === 0 ? `<tr><td colspan="6" class="vazio"><span>🎫</span>Nenhum ticket encontrado!</td></tr>` :
         filtrados.map(ticket => {
           let statusClasse = 'status-pendente', statusTexto = 'Pendente';
-          if (ticket.status === 'urgente') { statusClasse = 'status-urgente'; statusTexto = '🚨 Urgente'; }
+          if (ticket.status === 'urgente') { statusClasse = 'status-pendente'; statusTexto = '🚨 Urgente'; }
           if (ticket.status === 'aceito') { statusClasse = 'status-aprovado'; statusTexto = '✅ Aceito'; }
           if (ticket.status === 'recusado') { statusClasse = 'status-recusado'; statusTexto = '❌ Recusado'; }
           if (ticket.status === 'resolvido') { statusClasse = 'status-aprovado'; statusTexto = '✅ Resolvido'; }
-          if (ticket.status === 'analise') { statusClasse = 'status-analise'; statusTexto = '⏳ Em Análise'; }
+          if (ticket.status === 'analise') { statusClasse = 'status-pendente'; statusTexto = '⏳ Em Análise'; }
           return `<tr>
             <td><strong>${ticket.usuario || '—'}</strong></td>
             <td>${ticket.plataforma === 'TikTok' ? '🎵 TikTok' : '💜 Kako'}</td>
@@ -507,106 +545,131 @@ Avisaremos você assim que recebermos a resposta. 💜
     function filtrarTickets(f) { filtroAtual = f; renderizarTickets(); }
 
     function abrirTicket(id) {
-      ticketAtual = tickets.find(t => t.id === id);
-      if (!ticketAtual) return;
+      const ticket = tickets.find(t => t.id === id);
+      if (!ticket) return;
       
-      let fotosHTML = ticketAtual.fotos?.length ? `<div class="ticket-detalhe"><label>📸 Fotos (${ticketAtual.fotos.length})</label><div class="fotos-anexadas">${ticketAtual.fotos.map(f => `<img src="${f}" class="foto-ticket" onclick="window.open('${f}','_blank')">`).join('')}</div></div>` : '';
-      let respostaHTML = ticketAtual.resposta ? `<div class="resposta-anterior"><label>📬 Resposta enviada:</label><p style="white-space:pre-wrap;margin-top:4px;">${ticketAtual.resposta}</p></div>` : '';
+      let fotosHTML = ticket.fotos?.length ? `<div class="ticket-detalhe"><label>📸 Fotos (${ticket.fotos.length})</label><div class="fotos-anexadas">${ticket.fotos.map(f => `<img src="${f}" class="foto-ticket" onclick="window.open('${f}','_blank')">`).join('')}</div></div>` : '';
       
       document.getElementById('conteudoTicket').innerHTML = `
-        <div class="ticket-detalhe"><label>Usuário</label><p><strong>${ticketAtual.usuario}</strong> • ${ticketAtual.plataforma === 'TikTok' ? '🎵 TikTok' : '💜 Kako'}</p></div>
-        <div class="ticket-detalhe"><label>Tipo</label><span class="tipo-solicitacao tipo-suporte">${(ticketAtual.tipo || 'suporte').toUpperCase()}</span>${ticketAtual.urgente ? ' <span style="color:var(--urgente);font-weight:600;">🚨 URGENTE</span>' : ''}</div>
-        <div class="ticket-detalhe"><label>Mensagem</label><pre>${ticketAtual.mensagem}</pre></div>
+        <div class="ticket-detalhe"><label>Usuário</label><p><strong>${ticket.usuario}</strong> • ${ticket.plataforma === 'TikTok' ? '🎵 TikTok' : '💜 Kako'}</p></div>
+        <div class="ticket-detalhe"><label>Tipo</label><span class="tipo-solicitacao tipo-suporte">${(ticket.tipo || 'suporte').toUpperCase()}</span>${ticket.urgente ? ' <span style="color:var(--urgente);font-weight:600;">🚨 URGENTE</span>' : ''}</div>
+        <div class="ticket-detalhe"><label>Mensagem</label><pre>${ticket.mensagem}</pre></div>
         ${fotosHTML}
-        <div class="ticket-detalhe"><label>Data</label><p>${ticketAtual.data}</p></div>
-        ${respostaHTML}
-        ${!ticketAtual.resposta ? `
+        <div class="ticket-detalhe"><label>Data</label><p>${ticket.data}</p></div>
         <div class="area-resposta">
           <h3>📬 Responder Solicitação</h3>
           <p style="font-size:0.85rem;color:var(--text-muted);margin-bottom:10px;">Selecione uma opção:</p>
           <div class="opcoes-resposta">
-            <button class="btn-resposta aceito" onclick="selecionarResposta('aceito')">✅ Aceito — Liberar live</button>
-            <button class="btn-resposta recusado" onclick="selecionarResposta('recusado')">❌ Recusado — Diretrizes</button>
-            <button class="btn-resposta analise" onclick="selecionarResposta('analise')">⏳ Em Análise — Aguardando</button>
-            <button class="btn-resposta urgente" onclick="selecionarResposta('urgente')">🚨 Marcar Urgente</button>
+            <button class="btn-resposta aceito" onclick="alert('✅ Copie e cole a mensagem abaixo no WhatsApp:\n\n' + MENSAGENS.aceito)">✅ Aceito — Liberar live</button>
+            <button class="btn-resposta recusado" onclick="alert('❌ Copie e cole a mensagem abaixo no WhatsApp:\n\n' + MENSAGENS.recusado)">❌ Recusado — Diretrizes</button>
+            <button class="btn-resposta analise" onclick="alert('⏳ Copie e cole a mensagem abaixo no WhatsApp:\n\n' + MENSAGENS.analise)">⏳ Em Análise</button>
+            <button class="btn-resposta urgente" onclick="alert('🚨 Copie e cole a mensagem abaixo no WhatsApp:\n\n' + MENSAGENS.urgente)">🚨 Marcar Urgente</button>
           </div>
-          <div class="preview-mensagem" id="previewMensagem"><em>Selecione acima para ver a mensagem...</em></div>
-          <div class="ticket-acoes">
-            <button class="btn btn-success" id="btnEnviarResposta" onclick="enviarResposta()" style="display:none;">📤 Enviar Resposta</button>
-            <button class="btn btn-primary" onclick="fecharModalTicket()">Fechar</button>
-          </div>
-        </div>` : ''}
+        </div>
+        <div class="ticket-acoes">
+          <button class="btn btn-primary" onclick="fecharModalTicket()">Fechar</button>
+        </div>
       `;
       document.getElementById('modalTicket').style.display = 'flex';
     }
 
-    function selecionarResposta(tipo) {
-      respostaSelecionada = tipo;
-      document.getElementById('previewMensagem').innerHTML = `<strong>Mensagem:</strong><br><br>${MENSAGENS[tipo].replace(/\n/g,'<br>')}`;
-      document.getElementById('btnEnviarResposta').style.display = 'inline-flex';
-    }
-
-    function enviarResposta() {
-      if (!respostaSelecionada || !ticketAtual) return;
-      ticketAtual.status = respostaSelecionada;
-      ticketAtual.resposta = MENSAGENS[respostaSelecionada];
-      alert(`✅ Resposta enviada!\n\n💜 Copie e envie:\n\n${ticketAtual.resposta}`);
-      fecharModalTicket();
-      carregarTickets();
-    }
-
     function fecharModalTicket() {
       document.getElementById('modalTicket').style.display = 'none';
-      ticketAtual = respostaSelecionada = null;
     }
 
+    // 👥 AGENCIADOS
     async function carregarAgenciados() {
       try {
         const res = await fetch(`${APPS_SCRIPT_URL}?acao=listarAgenciados`);
         const dados = await res.json();
-        const agenciados = dados.sucesso && dados.agenciados ? dados.agenciados : [
-          { usuario: "@usuario_tiktok", plataforma: "TikTok", status: "aprovado", data: "2026-08-20" },
-          { usuario: "@usuario_kako", plataforma: "Kako", status: "aprovado", data: "2026-08-19" }
-        ];
+        const agenciados = dados.sucesso && dados.agenciados ? dados.agenciados : [];
         document.getElementById('contagemAgenciados').textContent = agenciados.length;
         document.getElementById('contagemAprovados').textContent = agenciados.filter(a => a.status === 'aprovado').length;
-        document.getElementById('listaAgenciados').innerHTML = agenciados.map(a => `<tr>
-          <td><strong>${a.usuario}</strong></td>
-          <td>${a.plataforma === 'TikTok' ? '🎵 TikTok' : '💜 Kako'}</td>
-          <td><span class="status-tag status-aprovado">${a.status === 'aprovado' ? 'Aprovado' : 'Pendente'}</span></td>
-          <td>${a.data}</td>
-          <td><button class="btn btn-primary btn-sm">Editar</button> <button class="btn btn-danger btn-sm">Suspender</button></td>
-        </tr>`).join('');
-      } catch {}
+        document.getElementById('listaAgenciados').innerHTML = agenciados.length === 0 
+          ? `<tr><td colspan="5" class="vazio"><span>👥</span>Nenhum agenciado encontrado!</td></tr>`
+          : agenciados.map(a => `<tr>
+            <td><strong>${a.usuario || '—'}</strong></td>
+            <td>${a.plataforma || '—'}</td>
+            <td><span class="status-tag ${a.status === 'aprovado' ? 'status-aprovado' : 'status-pendente'}">${a.status || 'Pendente'}</span></td>
+            <td>${a.data || '—'}</td>
+            <td><button class="btn btn-primary btn-sm">Editar</button> <button class="btn btn-danger btn-sm">Suspender</button></td>
+          </tr>`).join('');
+      } catch {
+        document.getElementById('listaAgenciados').innerHTML = `<tr><td colspan="5" class="vazio">❌ Erro ao carregar</td></tr>`;
+      }
     }
 
+    // ⚔️ BATALHAS — LENDO COLUNAS REAIS DA PLANILHA ✅
     async function carregarBatalhas() {
+      const mesSelecionado = document.getElementById('filtroMes').value;
+      document.getElementById('listaBatalhas').innerHTML = `<tr><td colspan="6" class="vazio">⏳ Carregando batalhas de ${mesSelecionado}...</td></tr>`;
+      
       try {
-        const res = await fetch(`${APPS_SCRIPT_URL}?acao=listarBatalhas`);
+        const res = await fetch(`${APPS_SCRIPT_BATALHAS_URL}?acao=listarBatalhas&mes=${encodeURIComponent(mesSelecionado)}`);
         const dados = await res.json();
-        const batalhas = dados.sucesso && dados.batalhas ? dados.batalhas : [
-          { s1: "@isabellygoes3", s2: "@oponente_tiktok", plataforma: "TikTok", data: "26/08 20:00", status: "confirmado" },
-          { s1: "@gilbertorocha208", s2: "@oponente_kako", plataforma: "Kako", data: "27/08 19:30", status: "pendente" }
-        ];
+        
+        if (!dados.sucesso || !dados.batalhas || !Array.isArray(dados.batalhas)) {
+          throw new Error('Formato inválido');
+        }
+        
+        batalhas = dados.batalhas.filter(linha => Array.isArray(linha) && linha.length >= 5);
         document.getElementById('contagemBatalhas').textContent = batalhas.length;
-        document.getElementById('listaBatalhas').innerHTML = batalhas.length ? batalhas.map(b => `<tr>
-          <td><strong>${b.s1}</strong></td><td>${b.s2}</td>
-          <td>${b.plataforma === 'TikTok' ? '🎵 TikTok' : '💜 Kako'}</td>
-          <td>${b.data}</td>
-          <td><span class="status-tag ${b.status === 'confirmado' ? 'status-aprovado' : 'status-pendente'}">${b.status === 'confirmado' ? 'Confirmado' : 'Pendente'}</span></td>
-          <td><button class="btn btn-primary btn-sm">Ver</button></td>
-        </tr>`).join('') : `<tr><td colspan="6" class="vazio"><span>⚔️</span>Nenhuma batalha agendada!</td></tr>`;
-      } catch {}
+        renderizarBatalhas();
+      } catch (erro) {
+        console.error('Erro ao carregar batalhas:', erro);
+        document.getElementById('listaBatalhas').innerHTML = `<tr><td colspan="6" class="vazio"><span>⚔️</span>Não foi possível carregar as batalhas. Verifique o Apps Script.</td></tr>`;
+        document.getElementById('contagemBatalhas').textContent = '0';
+      }
     }
 
-    function mostrarSecao(nome) {
-      document.getElementById('secaoTickets').style.display = nome === 'tickets' ? 'block' : 'none';
-      document.getElementById('secaoAgenciados').style.display = nome === 'agenciados' ? 'block' : 'none';
-      document.getElementById('secaoBatalhas').style.display = nome === 'batalhas' ? 'block' : 'none';
-      window.scrollTo({ top: 400, behavior: 'smooth' });
+    function renderizarBatalhas() {
+      const lista = document.getElementById('listaBatalhas');
+      
+      if (!batalhas.length) {
+        lista.innerHTML = `<tr><td colspan="6" class="vazio"><span>⚔️</span>Nenhuma batalha encontrada para este mês!</td></tr>`;
+        return;
+      }
+
+      lista.innerHTML = batalhas.map((b, idx) => {
+        // Colunas conforme planilha: B=data, C=hora, E=streamerPadroniza, G=oponente, I=meta, J=situacao, L=linkStreamer, M=linkOponente
+        const data = b.B || b[1] || '—';
+        const hora = b.C || b[2] || '—';
+        const streamer = b.E || b[4] || '—';
+        const oponente = b.G || b[6] || '—';
+        const meta = b.I || b[8] || '—';
+        const situacao = (b.J || b[9] || 'DISPONÍVEL').toUpperCase();
+        const linkStreamer = b.L || b[11] || '';
+        const linkOponente = b.M || b[12] || '';
+        
+        // Define status visual
+        let statusClasse = 'status-pendente', linhaClasse = 'pendente-row', statusTexto = 'DISPONÍVEL';
+        if (situacao.includes('CONFIRMADO')) { statusClasse = 'status-aprovado'; linhaClasse = 'confirmado-row'; statusTexto = '✅ CONFIRMADO'; }
+        if (situacao.includes('CAMPANHA')) { statusClasse = 'status-campanha'; linhaClasse = 'campanha-row'; statusTexto = '📢 CAMPANHA'; }
+        if (situacao.includes('DISPONÍVEL')) { statusTexto = '⏳ DISPONÍVEL'; }
+
+        return `<tr class="${linhaClasse}">
+          <td><strong>${data}</strong><br><small>${hora}</small></td>
+          <td>
+            <strong>${streamer}</strong>
+            ${linkStreamer ? `<br><a href="${linkStreamer}" target="_blank" class="link-externo">🔗 Perfil</a>` : ''}
+          </td>
+          <td>
+            ${oponente}
+            ${linkOponente ? `<br><a href="${linkOponente}" target="_blank" class="link-externo">🔗 Perfil</a>` : ''}
+          </td>
+          <td>${meta}</td>
+          <td><span class="status-tag ${statusClasse}">${statusTexto}</span></td>
+          <td>
+            <button class="btn btn-primary btn-sm" onclick="window.open('agendar-batalha.html','_blank')">📋 Ver</button>
+          </td>
+        </tr>`;
+      }).join('');
     }
 
-    document.getElementById('modalTicket').addEventListener('click', e => e.target.id === 'modalTicket' && fecharModalTicket());
+    // Mostrar seção por padrão
+    setTimeout(() => {
+      mostrarSecao('tickets');
+    }, 300);
   </script>
 </body>
-</html>"
+</html>
