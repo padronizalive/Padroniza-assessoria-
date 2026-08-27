@@ -93,14 +93,41 @@
     th, td { padding: 12px 10px; text-align: left; border-bottom: 1px solid var(--border-soft); vertical-align: top; }
     th { background: rgba(123,63,255,0.15); font-weight: 600; color: var(--primary-gold); text-transform: uppercase; font-size: 0.75rem; }
     tr:hover { background: rgba(255,255,255,0.03); }
-    tr.pendente-row { background: rgba(255,193,7,0.05); border-left: 3px solid var(--alerta); }
-    tr.confirmado-row { background: rgba(61,220,151,0.03); border-left: 3px solid var(--sucesso); }
-    tr.campanha-row { background: rgba(31,122,255,0.05); border-left: 3px solid var(--primary-blue); }
-    tr.disponivel-row { background: rgba(61,220,151,0.05); border-left: 3px solid var(--sucesso); }
-    tr.falta-oponente-row { background: rgba(77,171,247,0.05); border-left: 3px solid #4dabf7; }
-    tr.domingo-row, tr.feriado-row { background: rgba(255,77,106,0.05); border-left: 3px solid var(--erro); }
-    tr.aprovado-row { background: rgba(61,220,151,0.08); border-left: 3px solid var(--sucesso); }
-    tr.recusado-row { background: rgba(255,77,106,0.05); border-left: 3px solid var(--erro); }
+
+    /* ==============================================
+       🎨 CORES DAS LINHAS — DEFINITIVO ✅
+       ============================================== */
+    /* 🟢 DISPONÍVEL — Verde */
+    tr.disponivel-row { 
+      background-color: rgba(61, 220, 151, 0.08) !important; 
+      border-left: 3px solid #3ddc97 !important; 
+    }
+    /* 🟡 CAMPANHA — Amarelo */
+    tr.campanha-row { 
+      background-color: rgba(255, 193, 7, 0.08) !important; 
+      border-left: 3px solid #ffc107 !important; 
+    }
+    /* ⚪ CONFIRMADO — Branco */
+    tr.confirmado-row { 
+      background-color: rgba(255, 255, 255, 0.05) !important; 
+      border-left: 3px solid #ffffff !important; 
+    }
+    /* 🟣 CONFIRMAÇÃO PENDENTE — Lilás */
+    tr.pendente-row { 
+      background-color: rgba(179, 136, 255, 0.08) !important; 
+      border-left: 3px solid #b388ff !important; 
+    }
+    /* 🔵 FALTA OPONENTE — AZUL ✅ */
+    tr.falta-oponente-row { 
+      background-color: rgba(77, 171, 247, 0.08) !important; 
+      border-left: 3px solid #4dabf7 !important; 
+    }
+    /* 🔴 DOMINGO / FERIADO — Vermelho */
+    tr.domingo-row, tr.feriado-row { 
+      background-color: rgba(255, 77, 106, 0.08) !important; 
+      border-left: 3px solid #ff4d6a !important; 
+    }
+
     .status-tag { display: inline-block; padding: 4px 10px; border-radius: 999px; font-size: 0.75rem; font-weight: 600; }
     .status-aprovado { background: rgba(61,220,151,0.15); color: var(--sucesso); border: 1px solid var(--sucesso); }
     .status-pendente { background: rgba(255,193,7,0.15); color: var(--alerta); border: 1px solid var(--alerta); }
@@ -500,7 +527,7 @@
 
         lista.innerHTML = agenciados.map(a => {
           const status = (a.status || 'PENDENTE').toUpperCase();
-          const classeLinha = status === 'APROVADO' ? 'aprovado-row' : status === 'RECUSADO' ? 'recusado-row' : 'pendente-row';
+          const classeLinha = status === 'APROVADO' ? 'confirmado-row' : status === 'RECUSADO' ? 'pendente-row' : 'pendente-row';
           const classeTag = status === 'APROVADO' ? 'status-aprovado' : status === 'RECUSADO' ? 'status-recusado' : 'status-pendente';
           
           return `
@@ -530,7 +557,7 @@
         
         if (resposta.sucesso) {
           alert(`✅ ${usuario} APROVADO!\nPlanilha atualizada automaticamente!`);
-          await carregarAgenciados(); // Atualiza lista e contagem
+          await carregarAgenciados();
         } else {
           alert('⚠️ Erro: ' + (resposta.erro || 'Não foi possível aprovar'));
         }
@@ -549,7 +576,7 @@
         
         if (resposta.sucesso) {
           alert(`❌ ${usuario} RECUSADO!\nPlanilha atualizada automaticamente!`);
-          await carregarAgenciados(); // Atualiza lista e contagem
+          await carregarAgenciados();
         } else {
           alert('⚠️ Erro: ' + (resposta.erro || 'Não foi possível recusar'));
         }
@@ -559,7 +586,7 @@
       }
     }
 
-    // ⚔️ BATALHAS — CARREGAR E SALVAR OPONENTE ✅
+    // ⚔️ BATALHAS — CARREGAR COM CORES CORRIGIDAS ✅
     async function carregarBatalhas() {
       const mes = document.getElementById('filtroMes').value;
       const lista = document.getElementById('listaBatalhas');
@@ -578,12 +605,14 @@
 
         lista.innerHTML = batalhas.map(b => {
           let classeLinha = '';
+          
+          // ✅ ORDEM CORRIGIDA — CAMPANHA = AMARELO | FALTA OPONENTE = AZUL
           if (b.situacao === 'CONFIRMADO') classeLinha = 'confirmado-row';
-          else if (b.situacao === 'DISPONÍVEL') classeLinha = 'disponivel-row';
-          else if (b.situacao === 'FALTA OPONENTE') classeLinha = 'falta-oponente-row';
-          else if (b.situacao === 'CAMPANHA') classeLinha = 'campanha-row';
-          else if (b.situacao === 'DOMINGO') classeLinha = 'domingo-row';
-          else if (b.situacao === 'FERIADO') classeLinha = 'feriado-row';
+          else if (b.situacao === 'CAMPANHA') classeLinha = 'campanha-row';      // 🟡 AMARELO
+          else if (b.situacao === 'DISPONÍVEL') classeLinha = 'disponivel-row';   // 🟢 VERDE
+          else if (b.situacao === 'FALTA OPONENTE') classeLinha = 'falta-oponente-row'; // 🔵 AZUL ✅
+          else if (b.situacao === 'CONFIRMAÇÃO PENDENTE') classeLinha = 'pendente-row'; // 🟣 LILÁS
+          else if (b.situacao === 'DOMINGO' || b.situacao === 'FERIADO') classeLinha = 'domingo-row'; // 🔴 VERMELHO
 
           return `
             <tr class="${classeLinha}">
