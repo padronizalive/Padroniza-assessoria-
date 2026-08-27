@@ -99,6 +99,8 @@
     tr.disponivel-row { background: rgba(61,220,151,0.05); border-left: 3px solid var(--sucesso); }
     tr.falta-oponente-row { background: rgba(77,171,247,0.05); border-left: 3px solid #4dabf7; }
     tr.domingo-row, tr.feriado-row { background: rgba(255,77,106,0.05); border-left: 3px solid var(--erro); }
+    tr.aprovado-row { background: rgba(61,220,151,0.08); border-left: 3px solid var(--sucesso); }
+    tr.recusado-row { background: rgba(255,77,106,0.05); border-left: 3px solid var(--erro); }
     .status-tag { display: inline-block; padding: 4px 10px; border-radius: 999px; font-size: 0.75rem; font-weight: 600; }
     .status-aprovado { background: rgba(61,220,151,0.15); color: var(--sucesso); border: 1px solid var(--sucesso); }
     .status-pendente { background: rgba(255,193,7,0.15); color: var(--alerta); border: 1px solid var(--alerta); }
@@ -481,6 +483,7 @@
       } catch { alert('❌ Erro ao atualizar ticket'); }
     }
 
+    // 👥 AGENCIADOS — APROVAR DIRETO NA PLANILHA ✅
     async function carregarAgenciados() {
       try {
         const res = await fetch(`${APPS_SCRIPT_URL}?acao=listarAgenciados`);
@@ -488,27 +491,71 @@
         const lista = document.getElementById('listaAgenciados');
         const agenciados = dados.sucesso && dados.agenciados ? dados.agenciados : [];
         document.getElementById('contagemAgenciados').textContent = agenciados.length;
-        document.getElementById('contagemAprovados').textContent = agenciados.filter(a => a.status === 'aprovado').length;
+        document.getElementById('contagemAprovados').textContent = agenciados.filter(a => a.status === 'APROVADO' || a.status === 'aprovado').length;
         
         if (!agenciados.length) {
           lista.innerHTML = `<tr><td colspan="5" class="vazio">📭 Nenhum agenciado encontrado</td></tr>`;
           return;
         }
 
-        lista.innerHTML = agenciados.map(a => `
-          <tr>
+        lista.innerHTML = agenciados.map(a => {
+          const status = (a.status || 'PENDENTE').toUpperCase();
+          const classeLinha = status === 'APROVADO' ? 'aprovado-row' : status === 'RECUSADO' ? 'recusado-row' : 'pendente-row';
+          const classeTag = status === 'APROVADO' ? 'status-aprovado' : status === 'RECUSADO' ? 'status-recusado' : 'status-pendente';
+          
+          return `
+          <tr class="${classeLinha}">
             <td><strong>${a.usuario || '—'}</strong></td>
             <td>${a.plataforma || '—'}</td>
-            <td><span class="status-tag ${a.status === 'aprovado' ? 'status-aprovado' : 'status-pendente'}">${(a.status || 'Pendente').toUpperCase()}</span></td>
+            <td><span class="status-tag ${classeTag}">${status}</span></td>
             <td>${a.data || '—'}</td>
             <td>
-              ${a.status !== 'aprovado' ? `<button class="btn btn-sm btn-success" onclick="aprovarUsuario('${a.id}')">✅ Aprovar</button>` : ''}
-              <button class="btn btn-sm btn-danger" onclick="removerUsuario('${a.id}')">🗑️</button>
+              ${status !== 'APROVADO' ? `<button class="btn btn-sm btn-success" onclick="aprovarUsuario('${a.id || ''}', '${a.usuario || ''}')">✅ Aprovar</button>` : ''}
+              ${status !== 'RECUSADO' ? `<button class="btn btn-sm btn-danger" onclick="recusarUsuario('${a.id || ''}', '${a.usuario || ''}')">❌ Recusar</button>` : ''}
             </td>
           </tr>
-        `).join('');
+          `;
+        }).join('');
       } catch {
         document.getElementById('listaAgenciados').innerHTML = `<tr><td colspan="5" class="vazio">❌ Erro ao carregar</td></tr>`;
+      }
+    }
+
+    // ✅ APROVAR — SALVA DIRETO NA PLANILHA! Coluna B = APROVADO ✅
+    async function aprovarUsuario(id, usuario) {
+      if (!confirm(`✅ Aprovar ${usuario}?\nStatus será alterado para APROVADO na planilha.`)) return;
+      try {
+        const res = await fetch(`${APPS_SCRIPT_URL}?acao=aprovarUsuario&id=${encodeURIComponent(id)}&usuario=${encodeURIComponent(usuario)}`, { method: 'POST' });
+        const resposta = await res.json();
+        
+        if (resposta.sucesso) {
+          alert(`✅ ${usuario} APROVADO!\nPlanilha atualizada automaticamente!`);
+          await carregarAgenciados(); // Atualiza lista e contagem
+        } else {
+          alert('⚠️ Erro: ' + (resposta.erro || 'Não foi possível aprovar'));
+        }
+      } catch (erro) {
+        console.error(erro);
+        alert('❌ Erro de conexão. Tente novamente.');
+      }
+    }
+
+    // ❌ RECUSAR — SALVA DIRETO NA PLANILHA! Coluna B = RECUSADO ❌
+    async function recusarUsuario(id, usuario) {
+      if (!confirm(`❌ Recusar ${usuario}?\nStatus será alterado para RECUSADO na planilha.`)) return;
+      try {
+        const res = await fetch(`${APPS_SCRIPT_URL}?acao=recusarUsuario&id=${encodeURIComponent(id)}&usuario=${encodeURIComponent(usuario)}`, { method: 'POST' });
+        const resposta = await res.json();
+        
+        if (resposta.sucesso) {
+          alert(`❌ ${usuario} RECUSADO!\nPlanilha atualizada automaticamente!`);
+          await carregarAgenciados(); // Atualiza lista e contagem
+        } else {
+          alert('⚠️ Erro: ' + (resposta.erro || 'Não foi possível recusar'));
+        }
+      } catch (erro) {
+        console.error(erro);
+        alert('❌ Erro de conexão. Tente novamente.');
       }
     }
 
@@ -533,7 +580,7 @@
           let classeLinha = '';
           if (b.situacao === 'CONFIRMADO') classeLinha = 'confirmado-row';
           else if (b.situacao === 'DISPONÍVEL') classeLinha = 'disponivel-row';
-          else if (b.situacao === 'FALTA_OPONENTE') classeLinha = 'falta-oponente-row';
+          else if (b.situacao === 'FALTA OPONENTE') classeLinha = 'falta-oponente-row';
           else if (b.situacao === 'CAMPANHA') classeLinha = 'campanha-row';
           else if (b.situacao === 'DOMINGO') classeLinha = 'domingo-row';
           else if (b.situacao === 'FERIADO') classeLinha = 'feriado-row';
@@ -544,7 +591,7 @@
               <td><strong>${b.streamer || '—'}</strong><br><small>${b.agencia || ''}</small></td>
               <td>${b.oponente || '<em style="color:var(--text-muted)">Sem oponente</em>'}<br><small>${b.agenciaOponente || ''}</small></td>
               <td>${b.meta || '—'}</td>
-              <td><span class="status-tag ${b.situacao === 'CONFIRMADO' ? 'status-aprovado' : b.situacao === 'FALTA_OPONENTE' ? 'status-pendente' : ''}">${(b.situacao || 'DISPONÍVEL').replace('_', ' ')}</span></td>
+              <td><span class="status-tag ${b.situacao === 'CONFIRMADO' ? 'status-aprovado' : b.situacao === 'FALTA OPONENTE' ? 'status-pendente' : ''}">${(b.situacao || 'DISPONÍVEL').replace('_', ' ')}</span></td>
               <td><button class="btn btn-sm btn-primary" onclick="abrirModalBatalha(${b.numeroDia || 0}, '${b.data || ''}', '${b.streamer || ''}', '${b.oponente || ''}', '${b.agenciaOponente || ''}', '${b.meta || ''}', '${b.situacao || ''}', '${b.linkOponente || ''}', '${b.telefoneAgencia || ''}', '${b.banner || ''}', '${b.videoDivulgacao || ''}')">✏️ Editar</button></td>
             </tr>
           `;
@@ -594,15 +641,14 @@
         <div class="form-group">
           <label>📊 Situação</label>
           <select id="editarSituacao">
-            <select id="editarSituacao">
-  <option value="DISPONÍVEL" ${situacao === 'DISPONÍVEL' ? 'selected' : ''}>🟢 Disponível</option>
-  <option value="CAMPANHA" ${situacao === 'CAMPANHA' ? 'selected' : ''}>🟡 Campanha</option>
-  <option value="CONFIRMADO" ${situacao === 'CONFIRMADO' ? 'selected' : ''}>⚪ Confirmado</option>
-  <option value="CONFIRMAÇÃO PENDENTE" ${situacao === 'CONFIRMAÇÃO PENDENTE' ? 'selected' : ''}>🟣 Confirmação Pendente</option>
-  <option value="FALTA OPONENTE" ${situacao === 'FALTA OPONENTE' ? 'selected' : ''}>🔵 Falta Oponente</option>
-  <option value="DOMINGO" ${situacao === 'DOMINGO' ? 'selected' : ''}>🔴 Domingo</option>
-  <option value="FERIADO" ${situacao === 'FERIADO' ? 'selected' : ''}>🔴 Feriado</option>
-</select>
+            <option value="DISPONÍVEL" ${situacao === 'DISPONÍVEL' ? 'selected' : ''}>🟢 Disponível</option>
+            <option value="CAMPANHA" ${situacao === 'CAMPANHA' ? 'selected' : ''}>🟡 Campanha</option>
+            <option value="CONFIRMADO" ${situacao === 'CONFIRMADO' ? 'selected' : ''}>⚪ Confirmado</option>
+            <option value="CONFIRMAÇÃO PENDENTE" ${situacao === 'CONFIRMAÇÃO PENDENTE' ? 'selected' : ''}>🟣 Confirmação Pendente</option>
+            <option value="FALTA OPONENTE" ${situacao === 'FALTA OPONENTE' ? 'selected' : ''}>🔵 Falta Oponente</option>
+            <option value="DOMINGO" ${situacao === 'DOMINGO' ? 'selected' : ''}>🔴 Domingo</option>
+            <option value="FERIADO" ${situacao === 'FERIADO' ? 'selected' : ''}>🔴 Feriado</option>
+          </select>
         </div>
         <hr />
         <h3 style="font-size:1rem; margin-bottom:12px;">📸 Materiais de Divulgação</h3>
@@ -630,7 +676,7 @@
       batalhaAtual = null;
     }
 
-    // 💾 SALVAR OPONENTE — FUNÇÃO PRINCIPAL ✅ SEM mode: 'no-cors'!
+    // 💾 SALVAR OPONENTE — FUNÇÃO PRINCIPAL ✅
     async function salvarEdicaoBatalha() {
       if (!batalhaAtual) return;
       
@@ -662,7 +708,7 @@
         if (resposta.sucesso) {
           alert('✅ Salvo com sucesso! Planilha atualizada.');
           fecharModalBatalha();
-          await carregarBatalhas(); // Recarrega com os dados novos
+          await carregarBatalhas();
         } else {
           alert('⚠️ Erro: ' + (resposta.erro || 'Não foi possível salvar'));
         }
@@ -670,17 +716,6 @@
         console.error(erro);
         alert('❌ Erro de conexão. Tente novamente.');
       }
-    }
-
-    // Funções placeholder para agenciados
-    async function aprovarUsuario(id) {
-      alert('✅ Aprovado! (Função a ser implementada)');
-      await carregarAgenciados();
-    }
-    async function removerUsuario(id) {
-      if (!confirm('Remover este usuário?')) return;
-      alert('🗑️ Removido! (Função a ser implementada)');
-      await carregarAgenciados();
     }
 
     // Fecha modal ao clicar fora
