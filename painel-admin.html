@@ -157,7 +157,7 @@
       display: block; font-size: 0.85rem; color: var(--text-muted); 
       margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.05em; 
     }
-    .form-group input, .form-group select {
+    .form-group input, .form-group select, .form-group textarea {
       width: 100%; padding: 10px 12px; border-radius: 8px;
       border: 1px solid rgba(255,255,255,0.15);
       background: rgba(5,5,9,0.9); color: var(--text-light); font-size: 0.95rem;
@@ -436,287 +436,256 @@
 
     function renderizarTickets() {
       const lista = document.getElementById('listaTickets');
-      let filtrados = filtroAtual === 'pendente' ? tickets.filter(t => t.status === 'pendente') :
-                      filtroAtual === 'urgente' ? tickets.filter(t => t.status === 'urgente') :
-                      filtroAtual === 'resolvido' ? tickets.filter(t => ['resolvido','aceito','recusado'].includes(t.status)) : tickets;
+      const filtrados = filtroAtual === 'todos' ? tickets : tickets.filter(t => t.status === filtroAtual);
       
-      lista.innerHTML = filtrados.length === 0 
-        ? `<tr><td colspan="6" class="vazio">🎫 Nenhum ticket encontrado!</td></tr>`
-        : filtrados.map(ticket => {
-            let statusClasse = 'status-pendente', statusTexto = 'Pendente';
-            if (ticket.status === 'urgente') { statusClasse = 'status-pendente'; statusTexto = '🚨 Urgente'; }
-            if (ticket.status === 'aceito') { statusClasse = 'status-aprovado'; statusTexto = '✅ Aceito'; }
-            if (ticket.status === 'recusado') { statusClasse = 'status-recusado'; statusTexto = '❌ Recusado'; }
-            if (ticket.status === 'resolvido') { statusClasse = 'status-aprovado'; statusTexto = '✅ Resolvido'; }
-            if (ticket.status === 'analise') { statusClasse = 'status-pendente'; statusTexto = '⏳ Em Análise'; }
-            return `<tr>
-              <td><strong>${ticket.usuario || '—'}</strong></td>
-              <td>${ticket.plataforma === 'TikTok' ? '🎵 TikTok' : '💜 Kako'}</td>
-              <td><span style="text-transform:uppercase; font-size:0.8rem;">${(ticket.tipo || 'suporte')}</span></td>
-              <td><span class="status-tag ${statusClasse}">${statusTexto}</span></td>
-              <td>${ticket.data || '—'}</td>
-              <td><button class="btn btn-primary btn-sm">👁️ Ver & Responder</button></td>
-            </tr>`;
-          }).join('');
+      if (!filtrados.length) {
+        lista.innerHTML = `<tr><td colspan="6" class="vazio">📭 Nenhum ticket encontrado</td></tr>`;
+        return;
+      }
+
+      lista.innerHTML = filtrados.map(t => `
+        <tr class="${t.status === 'pendente' ? 'pendente-row' : t.status === 'resolvido' ? 'confirmado-row' : ''}">
+          <td><strong>${t.usuario || '—'}</strong></td>
+          <td>${t.plataforma || '—'}</td>
+          <td>${t.tipo || 'Suporte'}</td>
+          <td><span class="status-tag ${t.status === 'resolvido' ? 'status-aprovado' : t.status === 'recusado' ? 'status-recusado' : 'status-pendente'}">${(t.status || 'Pendente').toUpperCase()}</span></td>
+          <td>${t.data || '—'}</td>
+          <td>
+            ${t.status !== 'resolvido' ? `<button class="btn btn-sm btn-success" onclick="marcarResolvido('${t.id}')">✅ Resolvido</button>` : ''}
+            ${t.status !== 'recusado' ? `<button class="btn btn-sm btn-danger" onclick="marcarRecusado('${t.id}')">❌ Recusado</button>` : ''}
+          </td>
+        </tr>
+      `).join('');
     }
 
-    function filtrarTickets(f) { filtroAtual = f; renderizarTickets(); }
+    function filtrarTickets(filtro) {
+      filtroAtual = filtro;
+      renderizarTickets();
+    }
 
-    // 👥 AGENCIADOS
+    async function marcarResolvido(id) {
+      if (!confirm('Marcar como resolvido? O streamer receberá mensagem automática.')) return;
+      try {
+        await fetch(`${APPS_SCRIPT_URL}?acao=resolverTicket&id=${id}`, { method: 'POST' });
+        await carregarTickets();
+        alert('✅ Ticket resolvido! Mensagem enviada ao streamer.');
+      } catch { alert('❌ Erro ao atualizar ticket'); }
+    }
+
+    async function marcarRecusado(id) {
+      if (!confirm('Marcar como recusado? O streamer será notificado.')) return;
+      try {
+        await fetch(`${APPS_SCRIPT_URL}?acao=recusarTicket&id=${id}`, { method: 'POST' });
+        await carregarTickets();
+        alert('✅ Ticket recusado! Notificação enviada.');
+      } catch { alert('❌ Erro ao atualizar ticket'); }
+    }
+
     async function carregarAgenciados() {
       try {
         const res = await fetch(`${APPS_SCRIPT_URL}?acao=listarAgenciados`);
         const dados = await res.json();
+        const lista = document.getElementById('listaAgenciados');
         const agenciados = dados.sucesso && dados.agenciados ? dados.agenciados : [];
         document.getElementById('contagemAgenciados').textContent = agenciados.length;
         document.getElementById('contagemAprovados').textContent = agenciados.filter(a => a.status === 'aprovado').length;
-        document.getElementById('listaAgenciados').innerHTML = agenciados.length === 0 
-          ? `<tr><td colspan="5" class="vazio">👥 Nenhum agenciado encontrado!</td></tr>`
-          : agenciados.map(a => `<tr>
+        
+        if (!agenciados.length) {
+          lista.innerHTML = `<tr><td colspan="5" class="vazio">📭 Nenhum agenciado encontrado</td></tr>`;
+          return;
+        }
+
+        lista.innerHTML = agenciados.map(a => `
+          <tr>
             <td><strong>${a.usuario || '—'}</strong></td>
             <td>${a.plataforma || '—'}</td>
-            <td><span class="status-tag ${a.status === 'aprovado' ? 'status-aprovado' : 'status-pendente'}">${a.status || 'Pendente'}</span></td>
+            <td><span class="status-tag ${a.status === 'aprovado' ? 'status-aprovado' : 'status-pendente'}">${(a.status || 'Pendente').toUpperCase()}</span></td>
             <td>${a.data || '—'}</td>
-            <td><button class="btn btn-primary btn-sm">Editar</button> <button class="btn btn-danger btn-sm">Suspender</button></td>
-          </tr>`).join('');
+            <td>
+              ${a.status !== 'aprovado' ? `<button class="btn btn-sm btn-success" onclick="aprovarUsuario('${a.id}')">✅ Aprovar</button>` : ''}
+              <button class="btn btn-sm btn-danger" onclick="removerUsuario('${a.id}')">🗑️</button>
+            </td>
+          </tr>
+        `).join('');
       } catch {
         document.getElementById('listaAgenciados').innerHTML = `<tr><td colspan="5" class="vazio">❌ Erro ao carregar</td></tr>`;
       }
     }
 
-    // ⚔️ BATALHAS — CARREGAR
+    // ⚔️ BATALHAS — CARREGAR E SALVAR OPONENTE ✅
     async function carregarBatalhas() {
       const mes = document.getElementById('filtroMes').value;
-      
-      document.getElementById('listaBatalhas').innerHTML = 
-        `<tr><td colspan="6" class="vazio">⏳ Carregando...</td></tr>`;
-      
-      try {
-        const url = `${APPS_SCRIPT_BATALHAS_URL}?acao=lerBatalhas&mes=${mes}&ano=2026`;
-        const resposta = await fetch(url);
-        const dados = await resposta.json();
-
-        if (!dados.batalhas || !Array.isArray(dados.batalhas)) {
-          throw new Error("Nenhuma batalha encontrada");
-        }
-
-        batalhas = dados.batalhas;
-        document.getElementById('contagemBatalhas').textContent = batalhas.length;
-        renderizarBatalhas();
-        
-      } catch (erro) {
-        console.error("❌ Erro:", erro);
-        document.getElementById('listaBatalhas').innerHTML = 
-          `<tr><td colspan="6" class="vazio">⚔️ Não foi possível carregar batalhas.<br>Erro: ${erro.message}</td></tr>`;
-        document.getElementById('contagemBatalhas').textContent = '0';
-      }
-    }
-
-    // 📋 RENDERIZAR BATALHAS — COM BOTÃO EDITAR OPONENTE ✅
-    function renderizarBatalhas() {
       const lista = document.getElementById('listaBatalhas');
-      
-      if (!batalhas.length) {
-        lista.innerHTML = `<tr><td colspan="6" class="vazio">⚔️ Nenhuma batalha encontrada!</td></tr>`;
-        return;
-      }
-
-      lista.innerHTML = batalhas.map((b, index) => {
-        let statusClasse = 'status-pendente', linhaClasse = 'pendente-row', statusTexto = b.situacao || 'PENDENTE';
-        
-        if (b.situacao === 'DISPONÍVEL' || b.situacao === 'DISPONIVEL') { 
-          statusClasse = 'status-aprovado'; linhaClasse = 'disponivel-row'; 
-          statusTexto = '🟢 DISPONÍVEL'; 
-        }
-        else if (b.situacao === 'CONFIRMADO' || b.situacao === 'CONFIMADO') { 
-          statusClasse = 'status-disponivel'; linhaClasse = 'confirmado-row';
-          statusTexto = '⚪ CONFIRMADO'; 
-        }
-        else if (b.situacao === 'FALTA OPONENTE' || b.situacao === 'FALTA_OPONENTE') { 
-          statusClasse = 'status-campanha'; linhaClasse = 'falta-oponente-row'; 
-          statusTexto = '🔵 FALTA OPONENTE'; 
-        }
-        else if (b.situacao === 'DOMINGO') { 
-          statusClasse = 'status-recusado'; linhaClasse = 'domingo-row'; 
-          statusTexto = '🔴 DOMINGO'; 
-        }
-        else if (b.situacao === 'FERIADO') { 
-          statusClasse = 'status-recusado'; linhaClasse = 'feriado-row'; 
-          statusTexto = '🔴 FERIADO'; 
-        }
-        else if (b.situacao === 'CAMPANHA') { 
-          statusClasse = 'status-campanha'; linhaClasse = 'campanha-row'; 
-          statusTexto = '🟡 CAMPANHA'; 
-        }
-        else if (b.situacao === 'CONFIRMAÇÃO PENDENTE') {
-          statusClasse = 'status-pendente'; linhaClasse = 'pendente-row';
-          statusTexto = '⏳ CONFIRMAÇÃO PENDENTE';
-        }
-
-        const temOponente = b.oponente && b.oponente.trim() !== '';
-
-        return `<tr class="${linhaClasse}">
-          <td><strong>${b.data || '—'}</strong><br><small>${b.horaInicio || b.hora || '—'}</small></td>
-          <td>
-            <strong>${b.streamer || b.oponente1 || '—'}</strong>
-            ${b.linkStreamer ? `<br><a href="${b.linkStreamer}" target="_blank" class="link-externo">🔗 Perfil</a>` : ''}
-            ${b.agencia1 ? `<br><small style="color:var(--text-muted);">🏢 ${b.agencia1}</small>` : ''}
-          </td>
-          <td>
-            ${temOponente 
-              ? `<strong>${b.oponente || b.oponente2 || '—'}</strong>
-                 ${b.linkOponente ? `<br><a href="${b.linkOponente}" target="_blank" class="link-externo">🔗 Perfil</a>` : ''}
-                 ${b.agencia2 ? `<br><small style="color:var(--text-muted);">🏢 ${b.agencia2}</small>` : ''}`
-              : `<em style="color:var(--text-muted);">Sem oponente</em>`
-            }
-          </td>
-          <td>${b.meta || '—'}</td>
-          <td><span class="status-tag ${statusClasse}">${statusTexto}</span></td>
-          <td>
-            <button class="btn btn-primary btn-sm" onclick="abrirModalBatalha(${index})">👁️ Ver</button>
-            <button class="btn btn-sm btn-success" style="margin-top:4px;" onclick="abrirModalEditarOponente(${index})">✏️ Editar</button>
-          </td>
-        </tr>`;
-      }).join('');
-    }
-
-    // ⚔️ ABRIR MODAL — COM FORMULÁRIO COMPLETO + SITUAÇÃO ✅
-    function abrirModalBatalha(index) {
-      batalhaAtual = batalhas[index];
-      const b = batalhaAtual;
-      const mesSelecionado = document.getElementById('filtroMes').value;
-
-      document.getElementById('conteudoBatalha').innerHTML = `
-        <div class="form-group">
-          <label>📅 Data / Hora</label>
-          <input type="text" value="${b.data || ''} às ${b.horaInicio || b.hora || ''}" readonly style="background:rgba(0,0,0,0.5); opacity:0.8;" />
-        </div>
-        
-        <div class="form-group">
-          <label>🎤 Streamer Padroniza</label>
-          <input type="text" value="${b.streamer || b.oponente1 || ''}" readonly style="background:rgba(0,0,0,0.5); opacity:0.8;" />
-        </div>
-
-        <hr />
-
-        <h3 style="font-size:1rem; margin-bottom:12px; color:var(--primary-gold);">⚔️ Adicionar / Editar Oponente</h3>
-        
-        <div class="form-group">
-          <label>Nome do Oponente *</label>
-          <input type="text" id="oponenteNome" value="${b.oponente || b.oponente2 || ''}" placeholder="Nome do streamer oponente" />
-        </div>
-
-        <div class="form-group">
-          <label>Link do Perfil do Oponente</label>
-          <input type="url" id="oponenteLink" value="${b.linkOponente || ''}" placeholder="https://..." />
-        </div>
-
-        <div class="form-group">
-          <label>Agência do Oponente</label>
-          <input type="text" id="oponenteAgencia" value="${b.agencia2 || ''}" placeholder="Nome da agência" />
-        </div>
-
-        <div class="form-group">
-          <label>🎯 Meta de Diamantes</label>
-          <input type="text" id="metaBatalha" value="${b.meta || ''}" placeholder="Ex: 10.000 diamantes" />
-        </div>
-
-        <!-- ✅ CAMPO DE SITUAÇÃO ADICIONADO! -->
-        <div class="form-group">
-          <label>📌 Situação da Batalha</label>
-          <select id="situacaoBatalha">
-            <option value="CONFIRMADO" ${(b.situacao||'').includes('CONFIRM')?'selected':''}>⚪ CONFIRMADO</option>
-            <option value="FALTA OPONENTE" ${(b.situacao||'').includes('FALTA')?'selected':''}>🔵 FALTA OPONENTE</option>
-            <option value="DISPONÍVEL" ${(b.situacao||'').includes('DISPON')?'selected':''}>🟢 DISPONÍVEL</option>
-            <option value="CAMPANHA" ${(b.situacao||'').includes('CAMPANHA')?'selected':''}>🟡 CAMPANHA</option>
-            <option value="CONFIRMAÇÃO PENDENTE" ${(b.situacao||'').includes('PENDENTE')?'selected':''}>⏳ CONFIRMAÇÃO PENDENTE</option>
-            <option value="DOMINGO" ${(b.situacao||'').includes('DOMINGO')?'selected':''}>🔴 DOMINGO</option>
-            <option value="FERIADO" ${(b.situacao||'').includes('FERIADO')?'selected':''}>🔴 FERIADO</option>
-          </select>
-        </div>
-
-        <div class="form-group">
-          <label>📞 Telefone Agência Oponente</label>
-          <input type="text" id="telefoneAgencia" value="${b.telefone || ''}" placeholder="(XX) XXXXX-XXXX" />
-        </div>
-
-        <div class="form-group">
-          <label>🖼️ Banner / Foto Divulgação</label>
-          <input type="url" id="banner" value="${b.banner || ''}" placeholder="Link da imagem" />
-        </div>
-
-        <div class="form-group">
-          <label>🎬 Vídeo Divulgação</label>
-          <input type="url" id="videoDivulgacao" value="${b.video || ''}" placeholder="Link do vídeo" />
-        </div>
-
-        <div class="form-actions">
-          <button class="btn btn-success" onclick="salvarOponente()">💾 Salvar Alterações</button>
-          <button class="btn btn-primary" onclick="fecharModalBatalha()">Fechar</button>
-        </div>
-      `;
-      document.getElementById('modalBatalha').style.display = 'flex';
-    }
-
-    function abrirModalEditarOponente(index) {
-      abrirModalBatalha(index);
-    }
-
-    // 💾 SALVAR OPONENTE — COMPLETO COM TODOS OS CAMPOS ✅
-    async function salvarOponente() {
-      if (!batalhaAtual) return;
-      
-      const oponenteNome = document.getElementById('oponenteNome').value.trim();
-      const oponenteLink = document.getElementById('oponenteLink').value.trim();
-      const oponenteAgencia = document.getElementById('oponenteAgencia').value.trim();
-      const metaBatalha = document.getElementById('metaBatalha').value.trim();
-      const situacaoBatalha = document.getElementById('situacaoBatalha').value;
-      const telefoneAgencia = document.getElementById('telefoneAgencia') ? document.getElementById('telefoneAgencia').value.trim() : '';
-      const banner = document.getElementById('banner') ? document.getElementById('banner').value.trim() : '';
-      const video = document.getElementById('videoDivulgacao') ? document.getElementById('videoDivulgacao').value.trim() : '';
-      const mes = document.getElementById('filtroMes').value;
-
-      if (!oponenteNome) {
-        alert('⚠️ Digite o nome do oponente!');
-        return;
-      }
+      lista.innerHTML = `<tr><td colspan="6" class="vazio">⏳ Carregando batalhas...</td></tr>`;
 
       try {
-        const resposta = await fetch(APPS_SCRIPT_BATALHAS_URL, {
-          method: 'POST',
-          mode: 'no-cors',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            acao: 'salvarOponente',
-            mes: mes,
-            data: batalhaAtual.data,
-            streamer: batalhaAtual.streamer || batalhaAtual.oponente1,
-            oponente: oponenteNome,
-            linkOponente: oponenteLink,
-            agenciaOponente: oponenteAgencia,
-            meta: metaBatalha,
-            situacao: situacaoBatalha,
-            telefoneAgencia: telefoneAgencia,
-            banner: banner,
-            video: video
-          })
-        });
+        const res = await fetch(`${APPS_SCRIPT_BATALHAS_URL}?acao=lerBatalhas&mes=${mes}&ano=2026`);
+        const dados = await res.json();
+        batalhas = dados.batalhas || [];
+        document.getElementById('contagemBatalhas').textContent = batalhas.length;
 
-        alert('✅ Dados enviados com sucesso! Atualizando lista...');
-        fecharModalBatalha();
-        batalhaAtual = null;
-        await carregarBatalhas();
-        
+        if (!batalhas.length) {
+          lista.innerHTML = `<tr><td colspan="6" class="vazio">📭 Nenhuma batalha encontrada para este mês</td></tr>`;
+          return;
+        }
+
+        lista.innerHTML = batalhas.map(b => {
+          let classeLinha = '';
+          if (b.situacao === 'CONFIRMADO') classeLinha = 'confirmado-row';
+          else if (b.situacao === 'DISPONÍVEL') classeLinha = 'disponivel-row';
+          else if (b.situacao === 'FALTA_OPONENTE') classeLinha = 'falta-oponente-row';
+          else if (b.situacao === 'CAMPANHA') classeLinha = 'campanha-row';
+          else if (b.situacao === 'DOMINGO') classeLinha = 'domingo-row';
+          else if (b.situacao === 'FERIADO') classeLinha = 'feriado-row';
+
+          return `
+            <tr class="${classeLinha}">
+              <td><strong>${b.data || b.numeroDia || '—'}</strong><br><small>${b.horaInicio || ''}</small></td>
+              <td><strong>${b.streamer || '—'}</strong><br><small>${b.agencia || ''}</small></td>
+              <td>${b.oponente || '<em style="color:var(--text-muted)">Sem oponente</em>'}<br><small>${b.agenciaOponente || ''}</small></td>
+              <td>${b.meta || '—'}</td>
+              <td><span class="status-tag ${b.situacao === 'CONFIRMADO' ? 'status-aprovado' : b.situacao === 'FALTA_OPONENTE' ? 'status-pendente' : ''}">${(b.situacao || 'DISPONÍVEL').replace('_', ' ')}</span></td>
+              <td><button class="btn btn-sm btn-primary" onclick="abrirModalBatalha(${b.numeroDia || 0}, '${b.data || ''}', '${b.streamer || ''}', '${b.oponente || ''}', '${b.agenciaOponente || ''}', '${b.meta || ''}', '${b.situacao || ''}', '${b.linkOponente || ''}', '${b.telefoneAgencia || ''}', '${b.banner || ''}', '${b.videoDivulgacao || ''}')">✏️ Editar</button></td>
+            </tr>
+          `;
+        }).join('');
       } catch (erro) {
         console.error(erro);
-        alert('❌ Erro ao salvar: ' + erro.message + '. Tente novamente.');
+        lista.innerHTML = `<tr><td colspan="6" class="vazio">❌ Erro ao carregar batalhas</td></tr>`;
       }
+    }
+
+    // ⚔️ ABRIR MODAL — EDITAR OPONENTE ✅
+    function abrirModalBatalha(dia, data, streamer, oponente, agenciaOponente, meta, situacao, linkOponente, telefone, banner, video) {
+      batalhaAtual = { dia, data, streamer, oponente, agenciaOponente, meta, situacao, linkOponente, telefone, banner, video };
+      
+      document.getElementById('conteudoBatalha').innerHTML = `
+        <div class="form-group">
+          <label>📅 Data / Dia</label>
+          <input type="text" value="${data || dia}" readonly style="background:rgba(0,0,0,0.5); opacity:0.7;" />
+        </div>
+        <div class="form-group">
+          <label>🎙️ Streamer Padroniza</label>
+          <input type="text" value="${streamer}" readonly style="background:rgba(0,0,0,0.5); opacity:0.7;" />
+        </div>
+        <hr />
+        <h3 style="font-size:1rem; margin-bottom:12px;">👤 Dados do Oponente</h3>
+        <div class="form-group">
+          <label>Nome do Oponente</label>
+          <input type="text" id="editarOponente" value="${oponente || ''}" placeholder="Nome do oponente" />
+        </div>
+        <div class="form-group">
+          <label>Agência do Oponente</label>
+          <input type="text" id="editarAgenciaOponente" value="${agenciaOponente || ''}" placeholder="Agência" />
+        </div>
+        <div class="form-group">
+          <label>Link do Perfil do Oponente</label>
+          <input type="url" id="editarLinkOponente" value="${linkOponente || ''}" placeholder="https://..." />
+        </div>
+        <div class="form-group">
+          <label>Telefone da Agência</label>
+          <input type="text" id="editarTelefone" value="${telefone || ''}" placeholder="(XX) XXXXX-XXXX" />
+        </div>
+        <hr />
+        <div class="form-group">
+          <label>🎯 Meta</label>
+          <input type="text" id="editarMeta" value="${meta || ''}" placeholder="Ex: 5k" />
+        </div>
+        <div class="form-group">
+          <label>📊 Situação</label>
+          <select id="editarSituacao">
+            <option value="DISPONÍVEL" ${situacao === 'DISPONÍVEL' ? 'selected' : ''}>🟢 Disponível</option>
+            <option value="FALTA_OPONENTE" ${situacao === 'FALTA_OPONENTE' ? 'selected' : ''}>🟡 Falta Oponente</option>
+            <option value="CONFIRMADO" ${situacao === 'CONFIRMADO' ? 'selected' : ''}>✅ Confirmado</option>
+            <option value="CONFIRMAÇÃO_PENDENTE" ${situacao === 'CONFIRMAÇÃO_PENDENTE' ? 'selected' : ''}>⏳ Confirmação Pendente</option>
+            <option value="CAMPANHA" ${situacao === 'CAMPANHA' ? 'selected' : ''}>📢 Campanha</option>
+            <option value="DOMINGO" ${situacao === 'DOMINGO' ? 'selected' : ''}>🔴 Domingo</option>
+            <option value="FERIADO" ${situacao === 'FERIADO' ? 'selected' : ''}>🔴 Feriado</option>
+          </select>
+        </div>
+        <hr />
+        <h3 style="font-size:1rem; margin-bottom:12px;">📸 Materiais de Divulgação</h3>
+        <div class="form-group">
+          <label>🖼️ Banner / Imagem (Link)</label>
+          <input type="url" id="editarBanner" value="${banner || ''}" placeholder="https://i.ibb.co/..." />
+        </div>
+        <div class="form-group">
+          <label>🎬 Vídeo de Divulgação (Link)</label>
+          <input type="url" id="editarVideo" value="${video || ''}" placeholder="Link do vídeo" />
+        </div>
+        <div class="form-actions">
+          <button class="btn btn-success" onclick="salvarEdicaoBatalha()">💾 Salvar Alterações</button>
+          <button class="btn" style="background:rgba(255,255,255,0.1); color:var(--text-light);" onclick="fecharModalBatalha()">Cancelar</button>
+        </div>
+      `;
+      
+      document.getElementById('modalBatalha').style.display = 'flex';
+      document.body.style.overflow = 'hidden';
     }
 
     function fecharModalBatalha() {
       document.getElementById('modalBatalha').style.display = 'none';
+      document.body.style.overflow = 'auto';
       batalhaAtual = null;
     }
+
+    // 💾 SALVAR OPONENTE — FUNÇÃO PRINCIPAL ✅ SEM mode: 'no-cors'!
+    async function salvarEdicaoBatalha() {
+      if (!batalhaAtual) return;
+      
+      const mes = document.getElementById('filtroMes').value;
+      const dados = {
+        acao: 'salvarOponente',
+        mes: mes,
+        data: batalhaAtual.data,
+        streamer: batalhaAtual.streamer,
+        oponente: document.getElementById('editarOponente').value.trim(),
+        agenciaOponente: document.getElementById('editarAgenciaOponente').value.trim(),
+        meta: document.getElementById('editarMeta').value.trim(),
+        situacao: document.getElementById('editarSituacao').value,
+        linkOponente: document.getElementById('editarLinkOponente').value.trim(),
+        telefoneAgencia: document.getElementById('editarTelefone').value.trim(),
+        banner: document.getElementById('editarBanner').value.trim(),
+        video: document.getElementById('editarVideo').value.trim()
+      };
+
+      try {
+        const res = await fetch(APPS_SCRIPT_BATALHAS_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(dados)
+        });
+
+        const resposta = await res.json();
+        
+        if (resposta.sucesso) {
+          alert('✅ Salvo com sucesso! Planilha atualizada.');
+          fecharModalBatalha();
+          await carregarBatalhas(); // Recarrega com os dados novos
+        } else {
+          alert('⚠️ Erro: ' + (resposta.erro || 'Não foi possível salvar'));
+        }
+      } catch (erro) {
+        console.error(erro);
+        alert('❌ Erro de conexão. Tente novamente.');
+      }
+    }
+
+    // Funções placeholder para agenciados
+    async function aprovarUsuario(id) {
+      alert('✅ Aprovado! (Função a ser implementada)');
+      await carregarAgenciados();
+    }
+    async function removerUsuario(id) {
+      if (!confirm('Remover este usuário?')) return;
+      alert('🗑️ Removido! (Função a ser implementada)');
+      await carregarAgenciados();
+    }
+
+    // Fecha modal ao clicar fora
+    document.getElementById('modalBatalha').addEventListener('click', function(e) {
+      if (e.target === this) fecharModalBatalha();
+    });
   </script>
 </body>
 </html>
