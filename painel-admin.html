@@ -594,14 +594,15 @@
         <div class="form-group">
           <label>📊 Situação</label>
           <select id="editarSituacao">
-            <option value="DISPONÍVEL" ${situacao === 'DISPONÍVEL' ? 'selected' : ''}>🟢 Disponível</option>
-            <option value="FALTA_OPONENTE" ${situacao === 'FALTA_OPONENTE' ? 'selected' : ''}>🟡 Falta Oponente</option>
-            <option value="CONFIRMADO" ${situacao === 'CONFIRMADO' ? 'selected' : ''}>✅ Confirmado</option>
-            <option value="CONFIRMAÇÃO_PENDENTE" ${situacao === 'CONFIRMAÇÃO_PENDENTE' ? 'selected' : ''}>⏳ Confirmação Pendente</option>
-            <option value="CAMPANHA" ${situacao === 'CAMPANHA' ? 'selected' : ''}>📢 Campanha</option>
-            <option value="DOMINGO" ${situacao === 'DOMINGO' ? 'selected' : ''}>🔴 Domingo</option>
-            <option value="FERIADO" ${situacao === 'FERIADO' ? 'selected' : ''}>🔴 Feriado</option>
-          </select>
+            <select id="editarSituacao">
+  <option value="DISPONÍVEL" ${situacao === 'DISPONÍVEL' ? 'selected' : ''}>🟢 Disponível</option>
+  <option value="CAMPANHA" ${situacao === 'CAMPANHA' ? 'selected' : ''}>🟡 Campanha</option>
+  <option value="CONFIRMADO" ${situacao === 'CONFIRMADO' ? 'selected' : ''}>⚪ Confirmado</option>
+  <option value="CONFIRMAÇÃO PENDENTE" ${situacao === 'CONFIRMAÇÃO PENDENTE' ? 'selected' : ''}>🟣 Confirmação Pendente</option>
+  <option value="FALTA OPONENTE" ${situacao === 'FALTA OPONENTE' ? 'selected' : ''}>🔵 Falta Oponente</option>
+  <option value="DOMINGO" ${situacao === 'DOMINGO' ? 'selected' : ''}>🔴 Domingo</option>
+  <option value="FERIADO" ${situacao === 'FERIADO' ? 'selected' : ''}>🔴 Feriado</option>
+</select>
         </div>
         <hr />
         <h3 style="font-size:1rem; margin-bottom:12px;">📸 Materiais de Divulgação</h3>
