@@ -155,12 +155,16 @@ hr{border:none;border-top:1px solid #293653;margin:12px 0}
       <h2>📤 Solicitar Batalha</h2>
       <form id="formSolicitacao">
         <div class="grupo-campo">
-          <label class="label">🏢 Sua Agência *</label>
+          <label class="label">🏢 Nome da Agência *</label>
           <input type="text" class="campo" id="nomeAgencia" placeholder="Ex: Padroniza Assessoria" required>
         </div>
         <div class="grupo-campo">
-          <label class="label">👤 Seu Streamer (Solicitante) *</label>
+          <label class="label">👤 Nome do Streamer *</label>
           <input type="text" class="campo" id="nomeStreamer" placeholder="Ex: @igorcosta" required>
+        </div>
+        <div class="grupo-campo">
+          <label class="label">🔗 Link do Perfil *</label>
+          <input type="url" class="campo" id="linkPerfil" placeholder="https://www.tiktok.com/@seuusuario" required>
         </div>
         <div class="linha-dupla">
           <div class="grupo-campo">
@@ -168,26 +172,26 @@ hr{border:none;border-top:1px solid #293653;margin:12px 0}
             <input type="date" class="campo" id="dataBatalha" required>
           </div>
           <div class="grupo-campo">
-            <label class="label">🕐 Horário *</label>
+            <label class="label">🕐 Horário Desejado *</label>
             <input type="time" class="campo" id="horario" required>
           </div>
         </div>
         <div class="linha-dupla">
           <div class="grupo-campo">
-            <label class="label">🔥 Round *</label>
+            <label class="label">🔥 Round / Rodada *</label>
             <input type="number" class="campo" id="round" placeholder="1, 2, 3..." min="1" required>
           </div>
           <div class="grupo-campo">
-            <label class="label">💎 Meta / Hold *</label>
+            <label class="label">💎 Meta de Diamantes *</label>
             <input type="text" class="campo" id="meta" placeholder="Ex: 5k, 10k" required>
           </div>
         </div>
         <div class="grupo-campo">
-          <label class="label">📱 Seu WhatsApp (com DDD) *</label>
+          <label class="label">📱 WhatsApp da Agência (com DDD) *</label>
           <input type="tel" class="campo" id="whatsapp" placeholder="Ex: 69981478873" required>
         </div>
         <div class="grupo-campo">
-          <label class="label">📝 Observações</label>
+          <label class="label">📝 Observação</label>
           <textarea class="campo" id="observacoes" rows="2" placeholder="Batalha oficial, live especial..."></textarea>
         </div>
         <button type="submit" class="btn-enviar">📤 ENVIAR SOLICITAÇÃO</button>
@@ -269,19 +273,23 @@ hr{border:none;border-top:1px solid #293653;margin:12px 0}
     <form id="formResposta">
       <div class="aviso-resposta">💡 Preencha os dados do <strong>seu streamer</strong> (o oponente)!</div>
       <div class="grupo-campo">
-        <label class="label">🏢 Sua Agência (Oponente) *</label>
+        <label class="label">🏢 Agência Oponente *</label>
         <input type="text" class="campo" id="agenciaOponente" required>
       </div>
       <div class="grupo-campo">
-        <label class="label">👤 Seu Streamer (Oponente) *</label>
+        <label class="label">👤 Streamer Oponente *</label>
         <input type="text" class="campo" id="streamerOponente" required>
+      </div>
+      <div class="grupo-campo">
+        <label class="label">🔗 Link do Oponente *</label>
+        <input type="url" class="campo" id="linkOponente" placeholder="https://www.tiktok.com/@usuario" required>
       </div>
       <div class="grupo-campo">
         <label class="label">💎 Meta / Hold do Oponente *</label>
         <input type="text" class="campo" id="metaOponente" required>
       </div>
       <div class="grupo-campo">
-        <label class="label">📱 Seu WhatsApp (com DDD) *</label>
+        <label class="label">📱 WhatsApp da Agência Oponente *</label>
         <input type="tel" class="campo" id="whatsappOponente" required>
       </div>
       <input type="hidden" id="idSolicitacaoAtual">
@@ -371,18 +379,17 @@ async function confirmarStatus(novoStatus){
   carregarSolicitacoes();
 }
 
-// ✅ FUNÇÃO CORRIGIDA — Extrair nome do streamer do link do perfil
-function extrairNomeStreamer(perfil) {
+// ✅ FUNÇÃO — Extrair nome do streamer do link ou do campo
+function extrairNomeStreamer(perfil, nomeCampo) {
+  if (nomeCampo && nomeCampo.trim()) return nomeCampo.trim();
   if (!perfil || perfil === "-" || perfil === "") return "Streamer";
-  // Se já vier com @
   if (perfil.startsWith('@')) return perfil;
-  // Extrai o @ do link do TikTok
   const match = perfil.match(/@([a-zA-Z0-9._]+)/);
   if (match && match[1]) return "@" + match[1];
   return "Streamer";
 }
 
-// ✅ FUNÇÃO CORRIGIDA — FORMATA HORÁRIO CERTINHO
+// ✅ FUNÇÃO — Formatar horário
 function formatarHorario(horarioBruto) {
   if (!horarioBruto || horarioBruto === "-") return "—";
   if (/^\d{1,2}:\d{2}$/.test(horarioBruto)) return horarioBruto;
@@ -403,7 +410,7 @@ function formatarHorario(horarioBruto) {
   return horarioBruto;
 }
 
-// ✅ FUNÇÃO CORRIGIDA — CARREGAR SOLICITAÇÕES COM NOME DO STREAMER
+// ✅ FUNÇÃO — Carregar solicitações
 async function carregarSolicitacoes(){
   try{
     const res = await fetch(LINK_APPSCRIPT + "?acao=lerSolicitacoes");
@@ -419,7 +426,6 @@ async function carregarSolicitacoes(){
       return;
     }
     lista.innerHTML = disponiveis.map((item, idx) => {
-      // 📅 Formatar DATA corretamente
       let dataFormatada = "—";
       if (item.data) {
         try {
@@ -432,10 +438,7 @@ async function carregarSolicitacoes(){
           }
         } catch {}
       }
-      // 🕐 Formatar HORÁRIO corretamente
       const horarioFormatado = formatarHorario(item.horario);
-      
-      // 🏢 Pegar os nomes — CORRIGIDO: extrair nome do perfil
       const nomeAgencia = escapar(item.nomeAgencia || item.agencia || "Agência");
       const nomeStreamer = escapar(item.nomeStreamer || extrairNomeStreamer(item.perfil));
       const round = escapar(item.round || item.rodada || "-");
@@ -454,6 +457,7 @@ async function carregarSolicitacoes(){
           </div>
           <div class="solicitacao-dados">
             <p><strong>Streamer:</strong> ${nomeStreamer}</p>
+            <p><strong>Perfil:</strong> <a href="${escapar(item.perfil || "#")}" target="_blank" style="color:var(--azul)">🔗 Link</a></p>
             <p><strong>Data:</strong> ${dataFormatada} · <strong>Horário:</strong> ${horarioFormatado}</p>
             <p><strong>Round:</strong> ${round} · <strong>Meta:</strong> ${meta}</p>
           </div>
@@ -493,7 +497,6 @@ function filtrarBatalhas(){
     const dataFormatada = dataObj && !isNaN(dataObj.getTime()) ? dataObj.toLocaleDateString('pt-BR') : "—";
     const horarioFormatado = formatarHorario(item.horario);
     const idCard = `batalha-${idx}`;
-    // ✅ Extrair nome do streamer também no painel
     const nomeStreamerPainel = escapar(item.nomeStreamer || extrairNomeStreamer(item.perfil));
     return `
       <div class="batalha-card">
@@ -509,13 +512,16 @@ function filtrarBatalhas(){
             <p style="color:var(--amarelo)"><strong>🟢 SOLICITANTE:</strong></p>
             <p><strong>Agência:</strong> ${escapar(item.nomeAgencia || "-")}</p>
             <p><strong>Streamer:</strong> ${nomeStreamerPainel}</p>
+            <p><strong>Perfil:</strong> <a href="${escapar(item.perfil || "#")}" target="_blank" style="color:var(--azul)">🔗 Link</a></p>
             <p><strong>WhatsApp:</strong> ${escapar(item.whatsapp || "-")}</p>
             ${item.nomeAgenciaOponente ? `
               <hr>
               <p style="color:var(--azul)"><strong>🔵 OPONENTE:</strong></p>
               <p><strong>Agência:</strong> ${escapar(item.nomeAgenciaOponente)}</p>
-              <p><strong>Streamer:</strong> ${escapar(item.streamerOponente)}</p>
+              <p><strong>Streamer:</strong> ${escapar(item.streamerOponente || "-")}</p>
+              <p><strong>Perfil:</strong> <a href="${escapar(item.linkOponente || "#")}" target="_blank" style="color:var(--azul)">🔗 Link</a></p>
               <p><strong>Meta:</strong> ${escapar(item.metaOponente || "-")}</p>
+              <p><strong>WhatsApp:</strong> ${escapar(item.whatsappOponente || "-")}</p>
             ` : `<p style="color:var(--cinza);font-style:italic;margin-top:8px;">⏳ Aguardando oponente...</p>`}
           </div>
         </div>
@@ -543,6 +549,7 @@ document.getElementById("formSolicitacao").addEventListener("submit", async func
     acao: "inserirSolicitacao",
     nomeAgencia: document.getElementById("nomeAgencia").value.trim(),
     nomeStreamer: document.getElementById("nomeStreamer").value.trim(),
+    perfil: document.getElementById("linkPerfil").value.trim(),
     dataBatalha: document.getElementById("dataBatalha").value,
     horario: document.getElementById("horario").value,
     round: document.getElementById("round").value,
@@ -576,6 +583,7 @@ function abrirModalResposta(indice){
   document.getElementById("dadosSolicitacao").innerHTML = `
     <p><strong>🏢 Agência:</strong> ${escapar(item.nomeAgencia || "-")}</p>
     <p><strong>👤 Streamer:</strong> ${nomeStreamer}</p>
+    <p><strong>🔗 Perfil:</strong> <a href="${escapar(item.perfil || "#")}" target="_blank" style="color:var(--azul)">🔗 Link</a></p>
     <p><strong>📅 Data:</strong> ${dataFormatada} às ${horarioFormatado}</p>
     <p><strong>🔥 Round:</strong> ${escapar(item.round || "-")} · <strong>💎 Meta:</strong> ${escapar(item.meta || "-")}</p>
   `;
@@ -592,21 +600,15 @@ document.getElementById("formResposta").addEventListener("submit", async functio
   const solicitante = solicitacoes[indice];
   const agenciaOp = document.getElementById("agenciaOponente").value.trim();
   const streamerOp = document.getElementById("streamerOponente").value.trim();
+  const linkOp = document.getElementById("linkOponente").value.trim();
   const metaOp = document.getElementById("metaOponente").value.trim();
   const whatsappOp = document.getElementById("whatsappOponente").value.replace(/\D/g, "");
   const dados = {
     acao: "registrarOponente",
     idOriginal: solicitante.id || "",
-    nomeAgencia: solicitante.nomeAgencia,
-    nomeStreamer: solicitante.nomeStreamer,
-    dataBatalha: solicitante.data,
-    horario: solicitante.horario,
-    round: solicitante.round,
-    meta: solicitante.meta,
-    whatsapp: solicitante.whatsapp,
-    observacoes: solicitante.observacoes,
     nomeAgenciaOponente: agenciaOp,
     streamerOponente: streamerOp,
+    linkOponente: linkOp,
     metaOponente: metaOp,
     whatsappOponente: whatsappOp,
     status: "RESPONDIDA"
