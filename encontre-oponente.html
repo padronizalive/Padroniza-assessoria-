@@ -54,9 +54,72 @@
     label { display: block; margin-bottom: 6px; font-weight: 600; color: var(--text-muted); font-size: 0.9rem; }
     input, select, textarea { width: 100%; padding: 13px; border-radius: 10px; border: 1px solid var(--card-border); background: var(--card-bg); color: var(--text-light); font-size: 1rem; outline: none; }
     input:focus, select:focus { border-color: var(--primary-purple); }
-    .status-group { background: rgba(123,63,255,0.08); border: 1px solid rgba(123,63,255,0.3); border-radius: 12px; padding: 16px; margin-bottom: 20px; }
-    .status-group h3 { font-size: 1rem; margin-bottom: 12px; color: var(--primary-purple); }
-    .status-opcao { display: flex; align-items: center; gap: 10px; padding: 8px 0; cursor: pointer; }
+
+    /* ✅ ESTILO DOS QUADRADINHOS — EXATAMENTE COMO VOCÊ PEDIU! */
+    .status-group { 
+      background: rgba(123,63,255,0.08); 
+      border: 1px solid rgba(123,63,255,0.3); 
+      border-radius: 12px; 
+      padding: 20px; 
+      margin-bottom: 20px; 
+    }
+    .status-group h3 { 
+      font-size: 1rem; 
+      margin-bottom: 16px; 
+      color: var(--primary-purple); 
+    }
+    .status-opcao { 
+      display: flex; 
+      align-items: center; 
+      gap: 14px; 
+      padding: 14px 16px; 
+      margin: 8px 0;
+      border-radius: 10px;
+      background: rgba(255,255,255,0.03);
+      cursor: pointer; 
+      transition: all 0.25s ease;
+      border: 2px solid transparent;
+    }
+    .status-opcao:hover {
+      background: rgba(255,255,255,0.08);
+      transform: translateX(4px);
+    }
+    .status-opcao input { 
+      display: none; 
+    }
+    /* QUADRADINHO — BEM VISÍVEL! */
+    .quadradinho {
+      width: 26px;
+      height: 26px;
+      border: 2px solid var(--text-muted);
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: transparent;
+      font-weight: bold;
+      font-size: 16px;
+      flex-shrink: 0;
+      transition: all 0.2s ease;
+      background: transparent;
+    }
+    /* ✅ QUANDO SELECIONADO — FUNDO VERDE + VEZINHO BRANCO! */
+    .status-opcao input:checked + .quadradinho {
+      background: #22c55e;
+      border-color: #22c55e;
+      color: white;
+      box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.2);
+    }
+    .status-opcao:has(input:checked) {
+      background: rgba(34, 197, 94, 0.1);
+      border-color: #22c55e;
+    }
+    .status-texto {
+      color: var(--text-light);
+      font-size: 15px;
+      line-height: 1.4;
+    }
+
     .mensagem { padding: 12px 16px; border-radius: 10px; margin-bottom: 16px; display: none; }
     .mensagem.sucesso { background: rgba(34,197,94,0.1); border: 1px solid #22c55e; color: #86efac; display: block; }
     .mensagem.erro { background: rgba(239,68,68,0.1); border: 1px solid #ef4444; color: #fca5a5; display: block; }
@@ -91,7 +154,7 @@
   <div id="lista-batalhas"></div>
 </div>
 
-<!-- MODAL CADASTRAR -->
+<!-- MODAL CADASTRAR — QUADRADINHOS JÁ COLOCADOS! ✅ -->
 <div class="modal-overlay" id="modal-form">
   <div class="modal">
     <button class="fechar" onclick="fecharFormulario()">&times;</button>
@@ -106,13 +169,35 @@
       <div class="form-group"><label>🔥 Round / Rodada *</label><input type="text" id="rodada" name="rodada" required placeholder="Ex: 1, 2, 3..."></div>
       <div class="form-group"><label>💎 Meta de Diamantes *</label><input type="text" id="meta" name="meta" required placeholder="Ex: 80k a 150k"></div>
       <div class="form-group"><label>📝 Observação (opcional)</label><textarea id="observacao" name="observacao" placeholder="Regras, detalhes adicionais..."></textarea></div>
+      
       <div class="status-group">
         <h3>📊 SELECIONE O STATUS * — OBRIGATÓRIO!</h3>
-        <label class="status-opcao"><input type="radio" name="status" value="PENDENTE" checked> 🟢 <strong>PENDENTE</strong> → Aguardando oponente</label>
-        <label class="status-opcao"><input type="radio" name="status" value="ACEITA"> 🟡 <strong>ACEITA</strong> → Oponente encontrado</label>
-        <label class="status-opcao"><input type="radio" name="status" value="CONFIRMADA"> 🔵 <strong>CONFIRMADA</strong> → Tudo agendado</label>
-        <label class="status-opcao"><input type="radio" name="status" value="CANCELADA"> 🔴 <strong>CANCELADA</strong> → Não vai acontecer</label>
+        
+        <label class="status-opcao">
+          <input type="radio" name="status" value="PENDENTE" checked>
+          <span class="quadradinho">✓</span>
+          <span class="status-texto">🟢 PENDENTE — Aguardando oponente</span>
+        </label>
+        
+        <label class="status-opcao">
+          <input type="radio" name="status" value="ACEITA">
+          <span class="quadradinho">✓</span>
+          <span class="status-texto">🟡 ACEITA — Oponente encontrado</span>
+        </label>
+        
+        <label class="status-opcao">
+          <input type="radio" name="status" value="CONFIRMADA">
+          <span class="quadradinho">✓</span>
+          <span class="status-texto">🔵 CONFIRMADA — Tudo agendado</span>
+        </label>
+        
+        <label class="status-opcao">
+          <input type="radio" name="status" value="CANCELADA">
+          <span class="quadradinho">✓</span>
+          <span class="status-texto">🔴 CANCELADA — Não vai acontecer</span>
+        </label>
       </div>
+      
       <div class="acoes"><button type="button" class="btn btn-secondary" onclick="fecharFormulario()">Cancelar</button><button type="submit" class="btn btn-primary">✅ Enviar Solicitação</button></div>
     </form>
   </div>
@@ -135,7 +220,7 @@
   </div>
 </div>
 
-<!-- MODAL STATUS -->
+<!-- MODAL STATUS — TAMBÉM COM QUADRADINHOS! ✅ -->
 <div class="modal-overlay" id="modal-status">
   <div class="modal">
     <button class="fechar" onclick="fecharStatus()">&times;</button>
@@ -143,10 +228,26 @@
     <form id="form-status">
       <input type="hidden" id="linha-status">
       <div class="status-group">
-        <label class="status-opcao"><input type="radio" name="status-novo" value="PENDENTE"> 🟢 PENDENTE</label>
-        <label class="status-opcao"><input type="radio" name="status-novo" value="ACEITA"> 🟡 ACEITA</label>
-        <label class="status-opcao"><input type="radio" name="status-novo" value="CONFIRMADA"> 🔵 CONFIRMADA</label>
-        <label class="status-opcao"><input type="radio" name="status-novo" value="CANCELADA"> 🔴 CANCELADA</label>
+        <label class="status-opcao">
+          <input type="radio" name="status-novo" value="PENDENTE">
+          <span class="quadradinho">✓</span>
+          <span class="status-texto">🟢 PENDENTE</span>
+        </label>
+        <label class="status-opcao">
+          <input type="radio" name="status-novo" value="ACEITA">
+          <span class="quadradinho">✓</span>
+          <span class="status-texto">🟡 ACEITA</span>
+        </label>
+        <label class="status-opcao">
+          <input type="radio" name="status-novo" value="CONFIRMADA">
+          <span class="quadradinho">✓</span>
+          <span class="status-texto">🔵 CONFIRMADA</span>
+        </label>
+        <label class="status-opcao">
+          <input type="radio" name="status-novo" value="CANCELADA">
+          <span class="quadradinho">✓</span>
+          <span class="status-texto">🔴 CANCELADA</span>
+        </label>
       </div>
       <div class="acoes"><button type="button" class="btn btn-secondary" onclick="fecharStatus()">Cancelar</button><button type="submit" class="btn btn-primary">✅ Salvar Status</button></div>
     </form>
@@ -154,7 +255,7 @@
 </div>
 
 <script>
-// 🔗 LINK JÁ COLOCADO — NÃO PRECISA TROCAR NADA! ✅
+// 🔗 LINK DO APPS SCRIPT — MANTIDO EXATAMENTE COMO ESTÁ! ✅
 const LINK_APPSCRIPT = "https://script.google.com/macros/s/AKfycbxofxkZ_Wqz_MOOFnYbNq12wCd5Lt4HIIWVMGPkxE_pd7lnypMOnjsnYJW0EX3__Kdo/exec";
 
 let todasBatalhas = [];
