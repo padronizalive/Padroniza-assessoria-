@@ -52,6 +52,8 @@
 
     h1 { font-size: 2rem; margin-bottom: 8px; background: linear-gradient(90deg, #fff, var(--primary-gold)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
     .subtitulo { color: var(--text-muted); font-size: 1rem; }
+    .resumo { text-align: center; margin: 10px 0 20px; color: var(--text-muted); font-size: 0.95rem; }
+    .resumo span { color: var(--primary-green); font-weight: 700; }
 
     .botoes-topo {
       display: flex;
@@ -82,6 +84,7 @@
     .btn-perigo { background: linear-gradient(135deg, var(--primary-red), #dc2626); color: white; }
     .btn-whatsapp { background: linear-gradient(135deg, #25d366, #128c7e); color: white; font-size: 0.9rem; padding: 8px 14px; }
     .btn-whatsapp:hover { transform: scale(1.05); }
+    .btn-secundario { background: rgba(255,255,255,0.1); border: 1px solid var(--card-border); color: white; }
 
     .card {
       background: var(--card-bg);
@@ -103,12 +106,13 @@
       margin-bottom: 16px;
     }
     .status-disponivel { background: rgba(34,197,94,0.2); color: #22c55e; border: 1px solid #22c55e; }
-    .status-fechado { background: rgba(239,68,68,0.2); color: #ef4444; border: 1px solid #ef4444; }
     .status-pendente { background: rgba(251,191,36,0.2); color: #fbbf24; border: 1px solid #fbbf24; }
+    .status-respondida { background: rgba(251,146,60,0.2); color: #fb923c; border: 1px solid #fb923c; }
+    .status-fechado { background: rgba(239,68,68,0.2); color: #ef4444; border: 1px solid #ef4444; }
 
     .grid-dados {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
       gap: 16px;
       margin-bottom: 16px;
     }
@@ -117,6 +121,32 @@
     .campo span { font-size: 1rem; font-weight: 500; word-break: break-all; }
     .campo a { color: var(--primary-blue); text-decoration: none; }
     .campo a:hover { text-decoration: underline; }
+
+    /* ✅ AVISO DE STATUS DESTACADO */
+    .aviso-status {
+      background: rgba(239,68,68,0.08);
+      border-left: 3px solid var(--primary-red);
+      padding: 12px 16px;
+      border-radius: 8px;
+      margin-bottom: 16px;
+      font-size: 0.9rem;
+    }
+    .aviso-status h4 {
+      color: var(--primary-red);
+      margin-bottom: 8px;
+      font-size: 0.95rem;
+    }
+    .aviso-status ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    .aviso-status li {
+      padding: 4px 0;
+      font-size: 0.85rem;
+      color: var(--text-light);
+    }
+    .aviso-status li span { font-weight: 700; }
 
     .form-group { margin-bottom: 16px; }
     label { display: block; margin-bottom: 6px; font-weight: 600; color: var(--text-muted); font-size: 0.9rem; }
@@ -150,7 +180,7 @@
       border: 1px solid var(--card-border);
       border-radius: 20px;
       padding: 30px;
-      max-width: 500px;
+      max-width: 520px;
       width: 100%;
       max-height: 90vh;
       overflow-y: auto;
@@ -186,9 +216,10 @@
 
   <div class="botoes-topo">
     <button class="btn btn-primario" onclick="abrirFormulario()">📋 Nova Solicitação</button>
-    <button class="btn" style="background: rgba(255,255,255,0.1); border: 1px solid var(--card-border); color: white;" onclick="carregarBatalhas()">🔄 Atualizar</button>
+    <button class="btn btn-secundario" onclick="carregarBatalhas()">🔄 Atualizar</button>
   </div>
 
+  <div id="resumo" class="resumo"></div>
   <div id="mensagens"></div>
   <div id="lista-batalhas"></div>
 </div>
@@ -198,6 +229,17 @@
   <div class="modal">
     <button class="fechar-modal" onclick="fecharFormulario()">&times;</button>
     <h2 id="titulo-modal">📋 Nova Solicitação de Batalha</h2>
+    
+    <!-- ✅ AVISO COM EXPLICAÇÃO DE CADA STATUS -->
+    <div class="aviso-status">
+      <h4>⚠️ Selecione o status da sua batalha:</h4>
+      <ul>
+        <li>🟢 <span>DISPONÍVEL</span> — Aguardando oponente (padrão)</li>
+        <li>🟡 <span>PENDENTE</span> — Já encontrou alguém, em negociação</li>
+        <li>🟠 <span>RESPONDIDA</span> — Oponente já respondeu</li>
+        <li>🔴 <span>FECHADO</span> — Batalha confirmada e agendada</li>
+      </ul>
+    </div>
     
     <form id="form-solicitacao">
       <div class="form-group">
@@ -235,10 +277,13 @@
         <input type="time" id="horario" name="Horário desejado" required>
       </div>
 
+      <!-- ✅ STATUS — VISÍVEL, OBRIGATÓRIO, COM VALOR PADRÃO DISPONÍVEL -->
       <div class="form-group">
-        <label for="status">📊 Status</label>
-        <select id="status" name="Status">
-          <option value="DISPONÍVEL" selected>🟢 DISPONÍVEL — Aguardando oponente</option>
+        <label for="status">📊 Status da Batalha * <small style="color:var(--primary-red)">— Leia o aviso acima!</small></label>
+        <select id="status" name="Status" required>
+          <option value="DISPONÍVEL" selected>🟢 DISPONÍVEL — Aguardando oponente (padrão)</option>
+          <option value="PENDENTE">🟡 PENDENTE — Em negociação</option>
+          <option value="RESPONDIDA">🟠 RESPONDIDA — Oponente respondeu</option>
           <option value="FECHADO">🔴 FECHADO — Batalha agendada</option>
         </select>
       </div>
@@ -249,7 +294,7 @@
       </div>
 
       <div class="acoes">
-        <button type="button" class="btn" style="background: transparent; border: 1px solid var(--card-border); color: white;" onclick="fecharFormulario()">Cancelar</button>
+        <button type="button" class="btn btn-secundario" onclick="fecharFormulario()">Cancelar</button>
         <button type="submit" class="btn btn-primario">✅ Enviar Solicitação</button>
       </div>
     </form>
@@ -261,7 +306,7 @@
   <div class="modal">
     <button class="fechar-modal" onclick="fecharResposta()">&times;</button>
     <h2>🤝 Responder Solicitação</h2>
-    <p style="margin-bottom: 20px; color: var(--text-muted);">Preencha os dados da sua agência para fechar a batalha!</p>
+    <p style="margin-bottom: 20px; color: var(--text-muted);">Preencha os dados da sua agência para aceitar a batalha!</p>
     
     <form id="form-resposta">
       <input type="hidden" id="resposta-agencia">
@@ -288,7 +333,7 @@
       </div>
 
       <div class="acoes">
-        <button type="button" class="btn" style="background: transparent; border: 1px solid var(--card-border); color: white;" onclick="fecharResposta()">Cancelar</button>
+        <button type="button" class="btn btn-secundario" onclick="fecharResposta()">Cancelar</button>
         <button type="submit" class="btn btn-sucesso">✅ Confirmar Batalha</button>
       </div>
     </form>
@@ -301,6 +346,7 @@ const LINK_APPSCRIPT = "https://script.google.com/macros/s/AKfycbxofxkZ_Wqz_MOOF
 
 // 📱 FORMATAR WHATSAPP PARA LINK
 function formatarWhatsappLink(numero) {
+  if (!numero) return '#';
   let limpo = String(numero).replace(/\D/g, '');
   if (limpo.length === 11) limpo = '55' + limpo;
   return `https://wa.me/${limpo}`;
@@ -309,7 +355,9 @@ function formatarWhatsappLink(numero) {
 // 📋 CARREGAR LISTA DE BATALHAS
 async function carregarBatalhas() {
   const lista = document.getElementById('lista-batalhas');
+  const resumo = document.getElementById('resumo');
   lista.innerHTML = '<div class="loading">🔄 Carregando batalhas...</div>';
+  resumo.innerHTML = '';
 
   try {
     const res = await fetch(`${LINK_APPSCRIPT}?acao=lerBatalhas`);
@@ -320,7 +368,9 @@ async function carregarBatalhas() {
       return;
     }
 
-    if (dados.dados.length === 0) {
+    resumo.innerHTML = dados.mensagem || `✅ ${dados.total || 0} batalhas — ${dados.disponiveis || 0} DISPONÍVEIS!`;
+
+    if (!dados.dados || dados.dados.length === 0) {
       lista.innerHTML = `
         <div class="sem-batalhas">
           <h3>📭 Nenhuma batalha encontrada</h3>
@@ -330,17 +380,22 @@ async function carregarBatalhas() {
       return;
     }
 
-    // ✅ RENDERIZAR CADA CARDAO
     lista.innerHTML = dados.dados.map(b => {
-      const statusClass = b.status.includes('DISPONÍVEL') ? 'status-disponivel' : 
-                          b.status.includes('PENDENTE') ? 'status-pendente' : 'status-fechado';
+      let statusClass = 'status-pendente';
+      if (b.status) {
+        const s = b.status.toUpperCase();
+        if (s.includes('DISPONÍVEL')) statusClass = 'status-disponivel';
+        else if (s.includes('PENDENTE')) statusClass = 'status-pendente';
+        else if (s.includes('RESPONDIDA')) statusClass = 'status-respondida';
+        else if (s.includes('FECHADO') || s.includes('CONFIRMADA')) statusClass = 'status-fechado';
+      }
       
       const whatsappLink = formatarWhatsappLink(b.whatsapp);
-      const disponivel = b.status.includes('DISPONÍVEL');
+      const disponivel = b.status && b.status.toUpperCase().includes('DISPONÍVEL');
 
       return `
         <div class="card">
-          <span class="status-badge ${statusClass}">${b.status}</span>
+          <span class="status-badge ${statusClass}">${b.status || 'PENDENTE'}</span>
           
           <div class="grid-dados">
             <div class="campo">
@@ -365,11 +420,11 @@ async function carregarBatalhas() {
             </div>
             <div class="campo">
               <label>Perfil</label>
-              <a href="${b.perfil}" target="_blank">🔗 Abrir Perfil</a>
+              ${b.perfil ? `<a href="${b.perfil}" target="_blank">🔗 Abrir Perfil</a>` : '<span>-</span>'}
             </div>
             <div class="campo">
               <label>WhatsApp</label>
-              <a href="${whatsappLink}" target="_blank" class="btn btn-whatsapp">💬 ${b.whatsapp || '-'}</a>
+              ${b.whatsapp ? `<a href="${whatsappLink}" target="_blank" class="btn btn-whatsapp">💬 ${b.whatsapp}</a>` : '<span>-</span>'}
             </div>
           </div>
 
@@ -378,7 +433,7 @@ async function carregarBatalhas() {
           ${disponivel ? `
             <div class="divisor"></div>
             <div class="acoes">
-              <button class="btn btn-sucesso" onclick="abrirResponder('${b.agencia}', '${b.data}')">🤝 Aceitar / Responder Batalha</button>
+              <button class="btn btn-sucesso" onclick="abrirResponder('${(b.agencia || '').replace(/'/g, "\\'")}', '${(b.data || '').replace(/'/g, "\\'")}')">🤝 Aceitar / Responder Batalha</button>
             </div>
           ` : ''}
         </div>
@@ -390,18 +445,17 @@ async function carregarBatalhas() {
   }
 }
 
-// 📝 ABRIR FORMULÁRIO NOVA SOLICITAÇÃO
 function abrirFormulario() {
   document.getElementById('modal-form').classList.add('modal-aberto');
   document.getElementById('form-solicitacao').reset();
-  document.getElementById('titulo-modal').textContent = '📋 Nova Solicitação de Batalha';
+  // ✅ DISPONÍVEL JÁ VEM SELECIONADO POR PADRÃO!
+  document.getElementById('status').value = 'DISPONÍVEL';
 }
 
 function fecharFormulario() {
   document.getElementById('modal-form').classList.remove('modal-aberto');
 }
 
-// 🤝 ABRIR FORMULÁRIO DE RESPOSTA
 function abrirResponder(agencia, data) {
   document.getElementById('modal-resposta').classList.add('modal-aberto');
   document.getElementById('resposta-agencia').value = agencia;
@@ -415,7 +469,6 @@ function fecharResposta() {
   document.getElementById('modal-resposta').classList.remove('modal-aberto');
 }
 
-// ✅ ENVIAR NOVA SOLICITAÇÃO
 document.getElementById('form-solicitacao').addEventListener('submit', async e => {
   e.preventDefault();
   const form = e.target;
@@ -449,7 +502,6 @@ document.getElementById('form-solicitacao').addEventListener('submit', async e =
   btn.textContent = '✅ Enviar Solicitação';
 });
 
-// ✅ RESPONDER BATALHA
 document.getElementById('form-resposta').addEventListener('submit', async e => {
   e.preventDefault();
   const form = e.target;
@@ -479,7 +531,6 @@ document.getElementById('form-resposta').addEventListener('submit', async e => {
       document.getElementById('mensagens').innerHTML = `<div class="sucesso">✅ ${resultado.mensagem} — Redirecionando...</div>`;
       fecharResposta();
       carregarBatalhas();
-      // ➡️ REDIRECIONA PRO WHATSAPP DA AGÊNCIA QUE PEDIU
       setTimeout(() => window.open(whatsappLink, '_blank'), 1500);
       setTimeout(() => document.getElementById('mensagens').innerHTML = '', 8000);
     } else {
@@ -493,10 +544,8 @@ document.getElementById('form-resposta').addEventListener('submit', async e => {
   btn.textContent = '✅ Confirmar Batalha';
 });
 
-// 🔄 INICIAR AO CARREGAR
 document.addEventListener('DOMContentLoaded', carregarBatalhas);
 
-// ✅ FECHAR MODAL AO CLICAR FORA
 document.getElementById('modal-form').addEventListener('click', e => {
   if (e.target === e.currentTarget) fecharFormulario();
 });
