@@ -36,6 +36,8 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
 .agencia-nome{font-weight:bold;font-size:17px;color:var(--amarelo)}
 .status-tag{padding:4px 10px;border-radius:12px;font-size:12px;font-weight:bold}
 .status-disponivel{background:rgba(52,211,153,0.15);color:var(--verde)}
+.status-respondida{background:rgba(59,130,246,0.15);color:var(--azul)}
+.status-confirmada{background:rgba(116,87,255,0.15);color:var(--roxo)}
 .solicitacao-dados p{margin:6px 0;font-size:14px;color:#ddd}
 .sem-dados{text-align:center;padding:40px;color:var(--cinza);font-size:15px}
 .aviso-topo{background:rgba(59,130,246,0.1);border:1px solid var(--azul);padding:14px;border-radius:10px;margin-bottom:20px;text-align:center}
@@ -121,7 +123,7 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
     </div>
     <div class="lista-solicitacoes">
       <h2>⚔️ Batalhas Disponíveis</h2>
-      <div id="listaSolicitacoes">🔄 Carregando solicitações...</div>
+      <div id="listaSolicitacoes">🔄 Carregando...</div>
     </div>
   </div>
 </div>
@@ -158,35 +160,21 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
 </div>
 
 <script>
-// ✅ LINK CORRETO E COM ASPAS!
+// ✅ LINK CORRETO
 const LINK_APPSCRIPT = "https://script.google.com/macros/s/AKfycbwNtXL2A5ekc5TDy9FTBk4xSttqLRU4bLSSi5N2i4UUwJFpp3aYQUYNBCJt7QEbC0Ww/exec";
-
-// 🛠️ Formatar data para DD/MM/AAAA
-function formatarData(dataStr) {
-  if (!dataStr) return "—";
-  if (dataStr.includes("T")) {
-    const d = new Date(dataStr);
-    return d.toLocaleDateString('pt-BR', { timeZone: 'America/Porto_Velho' });
-  }
-  return dataStr;
-}
-
-// 🛠️ Extrair só a hora HH:MM
-function formatarHorario(horarioStr) {
-  if (!horarioStr) return "—";
-  if (horarioStr.includes("T")) {
-    const d = new Date(horarioStr);
-    return d.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit', timeZone: 'America/Porto_Velho' });
-  }
-  return horarioStr.substring(0, 5);
-}
 
 function trocarAba(nome) {
   document.querySelectorAll('.aba-btn').forEach(b => b.classList.remove('ativa'));
   document.querySelectorAll('.conteudo-aba').forEach(c => c.classList.remove('visivel'));
   event.target.classList.add('ativa');
-  document.getElementById(nome === 'solicitacoes' ? 'abaSolicitacoes' : 'abaPainel').classList.add('visivel');
-  if (nome === 'painel') carregarLista();
+  const alvo = nome === 'solicitacoes' ? 'abaSolicitacoes' : 'abaPainel';
+  document.getElementById(alvo).classList.add('visivel');
+  
+  // ✅ CHAMA A FUNÇÃO DIRETO AO ABRIR A ABA!
+  if (nome === 'painel') {
+    console.log("📋 Abrindo lista de batalhas...");
+    carregarLista();
+  }
 }
 
 document.getElementById('formSolicitacao').addEventListener('submit', async e => {
@@ -196,32 +184,40 @@ document.getElementById('formSolicitacao').addEventListener('submit', async e =>
     const res = await fetch(LINK_APPSCRIPT, { method: 'POST', body: formData });
     const json = await res.json();
     if (json.sucesso) {
-      alert('✅ Solicitação enviada! Aparece na lista em instantes!');
+      alert('✅ Solicitação enviada!');
       e.target.reset();
       carregarLista();
     } else alert('❌ Erro: ' + (json.erro || 'Tente novamente'));
-  } catch { alert('❌ Erro de conexão. Tente novamente.'); }
+  } catch { alert('❌ Erro de conexão.'); }
 });
 
 async function carregarLista() {
   const lista = document.getElementById('listaSolicitacoes');
-  lista.innerHTML = '🔄 Carregando...';
+  lista.innerHTML = '🔄 Buscando dados...';
+  
   try {
+    console.log("📡 Buscando:", LINK_APPSCRIPT + "?acao=lerBatalhas");
     const res = await fetch(LINK_APPSCRIPT + '?acao=lerBatalhas');
     const json = await res.json();
+    console.log("✅ Resposta recebida:", json);
     
-    console.log("✅ Dados recebidos:", json); // Debug no console
+    const dados = json.dados || [];
     
-    // ✅ AQUI ESTAVA O ERRO — VERIFICAÇÃO CORRIGIDA!
-    if (!json.dados || json.dados.length === 0) {
+    if (dados.length === 0) {
       lista.innerHTML = '<div class="sem-dados">📭 Nenhuma batalha aberta. Seja o primeiro a solicitar!</div>';
       return;
     }
     
-    lista.innerHTML = json.dados.map(b => {
-      const statusClass = b.status.includes('DISPONÍVEL') ? 'status-disponivel' : 'status-disponivel';
-      const dataFormatada = formatarData(b.data);
-      const horarioFormatado = formatarHorario(b.horario);
+    lista.innerHTML = dados.map(b => {
+      const statusClass = b.status.includes('DISPONÍVEL') ? 'status-disponivel' : 
+                          b.status.includes('RESPONDIDA') ? 'status-respondida' : 'status-confirmada';
+      
+      let data = b.data || '';
+      if (data.includes('T')) data = new Date(data).toLocaleDateString('pt-BR', {timeZone:'America/Porto_Velho'});
+      
+      let horario = b.horario || '';
+      if (horario.includes('T')) horario = new Date(horario).toLocaleTimeString('pt-BR', {hour:'2-digit', minute:'2-digit', timeZone:'America/Porto_Velho'});
+      else if (horario.length > 5) horario = horario.substring(0,5);
       
       return `
         <div class="solicitacao-card">
@@ -232,7 +228,7 @@ async function carregarLista() {
           <div class="solicitacao-dados">
             <p><strong>🔗 Perfil:</strong> <a href="${b.perfil}" target="_blank" style="color:var(--azul)">Abrir Perfil</a></p>
             <p><strong>📱 WhatsApp:</strong> <a href="https://wa.me/55${b.whatsapp}" target="_blank" style="color:var(--whatsapp)">${b.whatsapp}</a></p>
-            <p><strong>📅 Data:</strong> ${dataFormatada} às ${horarioFormatado}</p>
+            <p><strong>📅 Data:</strong> ${data} às ${horario}</p>
             <p><strong>🔥 Rodada:</strong> ${b.rodada} | <strong>💎 Meta:</strong> ${b.meta}</p>
             ${b.observacao && b.observacao !== '—' ? `<p><strong>📝 Obs:</strong> ${b.observacao}</p>` : ''}
             ${b.oponenteAgencia ? `<hr style="border:0;border-top:1px solid #293653;margin:10px 0;"><p style="color:var(--verde)"><strong>⚔️ Oponente:</strong> ${b.oponenteAgencia} — ${b.oponenteNome}</p>` : ''}
@@ -243,9 +239,10 @@ async function carregarLista() {
         </div>
       `;
     }).join('');
+    
   } catch (erro) {
-    console.error("❌ Erro ao carregar:", erro);
-    lista.innerHTML = '<div class="sem-dados">❌ Erro ao carregar. Atualize a página.</div>';
+    console.error("❌ Erro:", erro);
+    lista.innerHTML = `<div class="sem-dados">❌ Erro: ${erro.message}<br>Atualize e tente novamente.</div>`;
   }
 }
 
@@ -274,14 +271,16 @@ document.getElementById('formResponder').addEventListener('submit', async e => {
     const res = await fetch(LINK_APPSCRIPT, { method: 'PUT', body: new URLSearchParams(dados) });
     const json = await res.json();
     if (json.sucesso) {
-      alert('✅ Resposta enviada! Status atualizado!');
+      alert('✅ Resposta enviada!');
       fecharModal();
       carregarLista();
     } else alert('❌ Erro: ' + (json.erro || 'Tente novamente'));
-  } catch { alert('❌ Erro de conexão. Tente novamente.'); }
+  } catch { alert('❌ Erro de conexão.'); }
 });
 
-window.onload = carregarLista;
+window.onload = function() {
+  console.log("✅ Página carregada! Pronto para usar!");
+};
 </script>
 </body>
 </html>
