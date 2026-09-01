@@ -85,7 +85,7 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
           <input type="url" name="Link do Perfil" class="campo" placeholder="https://www.tiktok.com/@seuusuario" required>
         </div>
         <div class="grupo-campo">
-          <label class="label">📱 whatsApp da Agência (com DDD) *</label>
+          <label class="label">📱 WhatsApp da Agência (com DDD) *</label>
           <input type="tel" name="whatsApp da Agência" class="campo" placeholder="Ex: 69981478873" required>
         </div>
         <div class="linha-dupla">
@@ -109,8 +109,8 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
           </div>
         </div>
         <div class="grupo-campo">
-          <label class="label">📝 observação</label>
-          <textarea name="observação" class="campo" rows="2" placeholder="Batalha oficial..."></textarea>
+          <label class="label">📝 Observação</label>
+          <textarea name="Observação" class="campo" rows="2" placeholder="Batalha oficial..."></textarea>
         </div>
         <button type="submit" class="btn-enviar">📤 ENVIAR SOLICITAÇÃO</button>
       </form>
@@ -160,7 +160,7 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
 </div>
 
 <script>
-// ✅ LINK CORRETO
+// ✅ LINK DO APPS SCRIPT
 const LINK_APPSCRIPT = "https://script.google.com/macros/s/AKfycbwKe6iYWxWi5Cdr7TL13lDQ-hITwEZiNw1wzYWo6RFe-N0DWNJZKLELOI0Lz9YD7NX2/exec";
 
 function trocarAba(nome) {
@@ -170,7 +170,6 @@ function trocarAba(nome) {
   const alvo = nome === 'solicitacoes' ? 'abaSolicitacoes' : 'abaPainel';
   document.getElementById(alvo).classList.add('visivel');
   
-  // ✅ CHAMA A FUNÇÃO DIRETO AO ABRIR A ABA!
   if (nome === 'painel') {
     console.log("📋 Abrindo lista de batalhas...");
     carregarLista();
@@ -212,12 +211,18 @@ async function carregarLista() {
       const statusClass = b.status.includes('DISPONÍVEL') ? 'status-disponivel' : 
                           b.status.includes('RESPONDIDA') ? 'status-respondida' : 'status-confirmada';
       
+      // ✅ CORRIGIDO: Verifica o tipo antes de usar .includes()
       let data = b.data || '';
-      if (data.includes('T')) data = new Date(data).toLocaleDateString('pt-BR', {timeZone:'America/Porto_Velho'});
+      if (typeof data === 'string' && data.includes('T')) {
+        data = new Date(data).toLocaleDateString('pt-BR', {timeZone:'America/Porto_Velho'});
+      }
       
       let horario = b.horario || '';
-      if (horario.includes('T')) horario = new Date(horario).toLocaleTimeString('pt-BR', {hour:'2-digit', minute:'2-digit', timeZone:'America/Porto_Velho'});
-      else if (horario.length > 5) horario = horario.substring(0,5);
+      if (typeof horario === 'string' && horario.includes('T')) {
+        horario = new Date(horario).toLocaleTimeString('pt-BR', {hour:'2-digit', minute:'2-digit', timeZone:'America/Porto_Velho'});
+      } else if (typeof horario === 'string' && horario.length > 5) {
+        horario = horario.substring(0,5);
+      }
       
       return `
         <div class="solicitacao-card">
