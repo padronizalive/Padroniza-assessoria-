@@ -99,7 +99,7 @@ body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px;pa
 .card-padroniza{position:fixed;bottom:80px;right:20px;width:350px;background:linear-gradient(180deg,#1a1f35 0%,#0b1020 100%);border:3px solid var(--amarelo);border-radius:20px;padding:0;z-index:101;box-shadow:0 0 30px rgba(255,200,87,0.3),inset 0 0 20px rgba(255,200,87,0.1);display:none;transform:translateY(10px);opacity:0;transition:0.3s ease;overflow:hidden}
 .card-padroniza.ativo{display:block;transform:translateY(0);opacity:1}
 .fechar-card{position:absolute;top:12px;right:12px;background:rgba(0,0,0,0.4);border:none;color:#fff;font-size:22px;cursor:pointer;width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;z-index:10;transition:0.2s}
-.fechar-card:hover{background:rgba(255,255,255,0.2)}
+.fechar-card:hover{background:rgba(0,0,0,0.2)}
 
 .faixa-preco{background:linear-gradient(135deg,#ffc857,#ffb700);padding:18px 15px;text-align:center;position:relative}
 .faixa-preco h3{color:#000;font-size:18px;font-weight:bold;margin-bottom:5px;display:flex;align-items:center;justify-content:center;gap:8px}
@@ -371,12 +371,21 @@ async function confirmarStatus(novoStatus){
   carregarSolicitacoes();
 }
 
+// ✅ FUNÇÃO CORRIGIDA — Extrair nome do streamer do link do perfil
+function extrairNomeStreamer(perfil) {
+  if (!perfil || perfil === "-" || perfil === "") return "Streamer";
+  // Se já vier com @
+  if (perfil.startsWith('@')) return perfil;
+  // Extrai o @ do link do TikTok
+  const match = perfil.match(/@([a-zA-Z0-9._]+)/);
+  if (match && match[1]) return "@" + match[1];
+  return "Streamer";
+}
+
 // ✅ FUNÇÃO CORRIGIDA — FORMATA HORÁRIO CERTINHO
 function formatarHorario(horarioBruto) {
   if (!horarioBruto || horarioBruto === "-") return "—";
-  // Se já veio como horário simples (ex: "21:00")
   if (/^\d{1,2}:\d{2}$/.test(horarioBruto)) return horarioBruto;
-  // Tenta extrair horário de formato ISO ou de data completa
   try {
     const data = new Date(horarioBruto);
     if (!isNaN(data.getTime())) {
@@ -385,7 +394,6 @@ function formatarHorario(horarioBruto) {
       return `${horas}:${minutos}`;
     }
   } catch (e) {}
-  // Se falhar, tenta extrair por substring
   if (horarioBruto.includes('T')) {
     const horarioParte = horarioBruto.split('T')[1];
     if (horarioParte && horarioParte.length >= 5) {
@@ -395,7 +403,7 @@ function formatarHorario(horarioBruto) {
   return horarioBruto;
 }
 
-// ✅ FUNÇÃO CORRIGIDA — CARREGAR SOLICITAÇÕES COM HORÁRIO FORMATADO
+// ✅ FUNÇÃO CORRIGIDA — CARREGAR SOLICITAÇÕES COM NOME DO STREAMER
 async function carregarSolicitacoes(){
   try{
     const res = await fetch(LINK_APPSCRIPT + "?acao=lerSolicitacoes");
@@ -415,7 +423,6 @@ async function carregarSolicitacoes(){
       let dataFormatada = "—";
       if (item.data) {
         try {
-          // Se veio como ISO ou data completa
           const dataObj = new Date(item.data);
           if (!isNaN(dataObj.getTime())) {
             dataFormatada = dataObj.toLocaleDateString('pt-BR');
@@ -428,9 +435,9 @@ async function carregarSolicitacoes(){
       // 🕐 Formatar HORÁRIO corretamente
       const horarioFormatado = formatarHorario(item.horario);
       
-      // 🏢 Pegar os nomes — verifica ambos os formatos que o Apps Script pode retornar
+      // 🏢 Pegar os nomes — CORRIGIDO: extrair nome do perfil
       const nomeAgencia = escapar(item.nomeAgencia || item.agencia || "Agência");
-      const nomeStreamer = escapar(item.nomeStreamer || item.perfil || "-");
+      const nomeStreamer = escapar(item.nomeStreamer || extrairNomeStreamer(item.perfil));
       const round = escapar(item.round || item.rodada || "-");
       const meta = escapar(item.meta || "-");
       
@@ -486,6 +493,8 @@ function filtrarBatalhas(){
     const dataFormatada = dataObj && !isNaN(dataObj.getTime()) ? dataObj.toLocaleDateString('pt-BR') : "—";
     const horarioFormatado = formatarHorario(item.horario);
     const idCard = `batalha-${idx}`;
+    // ✅ Extrair nome do streamer também no painel
+    const nomeStreamerPainel = escapar(item.nomeStreamer || extrairNomeStreamer(item.perfil));
     return `
       <div class="batalha-card">
         <div class="batalha-header">
@@ -499,7 +508,7 @@ function filtrarBatalhas(){
             <hr>
             <p style="color:var(--amarelo)"><strong>🟢 SOLICITANTE:</strong></p>
             <p><strong>Agência:</strong> ${escapar(item.nomeAgencia || "-")}</p>
-            <p><strong>Streamer:</strong> ${escapar(item.nomeStreamer || "-")}</p>
+            <p><strong>Streamer:</strong> ${nomeStreamerPainel}</p>
             <p><strong>WhatsApp:</strong> ${escapar(item.whatsapp || "-")}</p>
             ${item.nomeAgenciaOponente ? `
               <hr>
@@ -563,9 +572,10 @@ function abrirModalResposta(indice){
   const dataObj = item.data ? new Date(item.data + "T00:00:00") : null;
   const dataFormatada = dataObj && !isNaN(dataObj.getTime()) ? dataObj.toLocaleDateString('pt-BR') : "—";
   const horarioFormatado = formatarHorario(item.horario);
+  const nomeStreamer = escapar(item.nomeStreamer || extrairNomeStreamer(item.perfil));
   document.getElementById("dadosSolicitacao").innerHTML = `
     <p><strong>🏢 Agência:</strong> ${escapar(item.nomeAgencia || "-")}</p>
-    <p><strong>👤 Streamer:</strong> ${escapar(item.nomeStreamer || "-")}</p>
+    <p><strong>👤 Streamer:</strong> ${nomeStreamer}</p>
     <p><strong>📅 Data:</strong> ${dataFormatada} às ${horarioFormatado}</p>
     <p><strong>🔥 Round:</strong> ${escapar(item.round || "-")} · <strong>💎 Meta:</strong> ${escapar(item.meta || "-")}</p>
   `;
