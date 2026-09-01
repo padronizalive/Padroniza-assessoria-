@@ -7,53 +7,29 @@
   <style>
     :root {
       --bg-gradient: radial-gradient(circle at top left, #5b2cff, #0b1020 40%, #02101f 70%, #c79b3b 100%);
-      --primary-purple: #7b3fff;
-      --primary-gold: #c79b3b;
-      --text-light: #f5f5ff;
-      --text-muted: #b3b3cc;
-      --card-bg: rgba(255,255,255,0.05);
-      --card-border: rgba(255,255,255,0.1);
-      --pendente: #22c55e;
-      --aceita: #f59e0b;
-      --confirmada: #3b82f6;
-      --cancelada: #ef4444;
+      --primary-purple: #7b3fff; --primary-gold: #c79b3b;
+      --text-light: #f5f5ff; --text-muted: #b3b3cc;
+      --card-bg: rgba(255,255,255,0.05); --card-border: rgba(255,255,255,0.1);
+      --pendente: #22c55e; --aceita: #f59e0b; --confirmada: #3b82f6; --cancelada: #ef4444;
     }
     * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
     body { background: var(--bg-gradient); min-height: 100vh; color: var(--text-light); padding: 16px; }
     .container { max-width: 900px; margin: 0 auto; }
-    
-    /* LOGO + CABEÇALHO */
     .header { text-align: center; margin-bottom: 20px; }
     .logo { max-width: 180px; margin-bottom: 12px; }
     h1 { font-size: 1.8rem; margin-bottom: 4px; background: linear-gradient(90deg, #fff, var(--primary-gold)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
     .subtitulo { color: var(--text-muted); font-size: 0.95rem; margin-bottom: 16px; }
-    
-    /* AVISO DESTACADO */
-    .aviso-topo { 
-      background: rgba(251, 191, 36, 0.1); 
-      border: 1px solid rgba(251, 191, 36, 0.4); 
-      border-radius: 10px; 
-      padding: 12px 16px; 
-      margin-bottom: 20px;
-      font-size: 0.9rem;
-      line-height: 1.5;
-    }
+    .aviso-topo { background: rgba(251,191,36,0.1); border: 1px solid rgba(251,191,36,0.4); border-radius: 10px; padding: 12px 16px; margin-bottom: 20px; font-size: 0.9rem; line-height: 1.5; }
     .aviso-topo strong { color: #fbbf24; }
-    
-    /* BUSCA */
     .busca { margin-bottom: 20px; display: flex; gap: 10px; flex-wrap: wrap; }
     .busca input { flex: 1; min-width: 220px; padding: 12px 16px; border-radius: 10px; border: 1px solid var(--card-border); background: var(--card-bg); color: white; font-size: 1rem; }
     .busca button { padding: 12px 20px; border-radius: 10px; border: none; background: var(--primary-purple); color: white; font-weight: 600; cursor: pointer; }
-    
-    /* BOTÕES */
     .botoes { display: flex; gap: 12px; margin-bottom: 24px; flex-wrap: wrap; }
     .btn { padding: 14px 22px; border-radius: 12px; border: none; font-size: 1rem; font-weight: 600; cursor: pointer; transition: all 0.3s; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; }
     .btn-primary { background: linear-gradient(135deg, var(--primary-purple), #6b2fef); color: white; box-shadow: 0 4px 15px rgba(123,63,255,0.3); }
     .btn-primary:hover { transform: translateY(-2px); }
     .btn-secondary { background: var(--card-bg); border: 1px solid var(--card-border); color: white; }
     .btn-success { background: linear-gradient(135deg, #22c55e, #16a34a); color: white; }
-    
-    /* CARTÕES */
     .card { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 16px; padding: 20px; margin-bottom: 16px; backdrop-filter: blur(10px); transition: all 0.3s; }
     .card:hover { border-color: var(--primary-purple); }
     .status { display: inline-block; padding: 6px 14px; border-radius: 20px; font-size: 0.85rem; font-weight: 700; margin-bottom: 14px; }
@@ -61,24 +37,19 @@
     .status-aceita { background: rgba(245,158,11,0.15); color: var(--aceita); border: 1px solid var(--aceita); }
     .status-confirmada { background: rgba(59,130,246,0.15); color: var(--confirmada); border: 1px solid var(--confirmada); }
     .status-cancelada { background: rgba(239,68,68,0.15); color: var(--cancelada); border: 1px solid var(--cancelada); }
-    
     .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; margin-bottom: 12px; }
     .campo { display: flex; flex-direction: column; gap: 3px; }
     .campo label { font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; font-weight: 600; }
     .campo span, .campo a { font-size: 0.95rem; word-break: break-word; }
     .campo a { color: #60a5fa; text-decoration: none; }
     .campo a:hover { text-decoration: underline; }
-    
     .divisor { height: 1px; background: var(--card-border); margin: 16px 0; }
     .acoes { display: flex; gap: 10px; margin-top: 14px; flex-wrap: wrap; }
-    
-    /* MODAL */
     .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.85); display: none; align-items: center; justify-content: center; z-index: 1000; padding: 20px; }
     .modal-aberto { display: flex; }
     .modal { background: #0f172a; border: 1px solid var(--card-border); border-radius: 20px; padding: 28px; max-width: 520px; width: 100%; max-height: 90vh; overflow-y: auto; }
     .modal h2 { margin-bottom: 20px; color: var(--primary-gold); font-size: 1.4rem; }
     .fechar { float: right; background: none; border: none; color: var(--text-muted); font-size: 1.5rem; cursor: pointer; margin-top: -8px; }
-    
     .form-group { margin-bottom: 16px; }
     label { display: block; margin-bottom: 6px; font-weight: 600; color: var(--text-muted); font-size: 0.9rem; }
     input, select, textarea { width: 100%; padding: 13px; border-radius: 10px; border: 1px solid var(--card-border); background: var(--card-bg); color: var(--text-light); font-size: 1rem; outline: none; }
@@ -86,7 +57,6 @@
     .status-group { background: rgba(123,63,255,0.08); border: 1px solid rgba(123,63,255,0.3); border-radius: 12px; padding: 16px; margin-bottom: 20px; }
     .status-group h3 { font-size: 1rem; margin-bottom: 12px; color: var(--primary-purple); }
     .status-opcao { display: flex; align-items: center; gap: 10px; padding: 8px 0; cursor: pointer; }
-    
     .mensagem { padding: 12px 16px; border-radius: 10px; margin-bottom: 16px; display: none; }
     .mensagem.sucesso { background: rgba(34,197,94,0.1); border: 1px solid #22c55e; color: #86efac; display: block; }
     .mensagem.erro { background: rgba(239,68,68,0.1); border: 1px solid #ef4444; color: #fca5a5; display: block; }
@@ -96,147 +66,77 @@
 </head>
 <body>
 <div class="container">
-  <!-- LOGO + CABEÇALHO -->
+  <!-- 🖼️ LOGO JÁ COLOCADA ✅ -->
   <div class="header">
-    <!-- 🖼️ TROQUE PELO LINK DO SEU LOGO -->
-    <img src="COLOQUE_AQUI_O_LINK_DO_SEU_LOGO" alt="Padroniza Live" class="logo" onerror="this.style.display='none'" />
+    <img src="https://i.ibb.co/B23rwMHt/1787270369792.png" alt="Padroniza Live" class="logo" onerror="this.style.display='none'" />
     <h1>⚔️ Encontre Seu Oponente</h1>
     <p class="subtitulo">Plataforma Gratuita — Padroniza Live</p>
   </div>
 
-  <!-- ⚠️ AVISO DESTACADO NO TOPO -->
   <div class="aviso-topo">
-    <strong>⚠️ IMPORTANTE:</strong> Sempre selecione o status correto da batalha. Quando a batalha for <strong>confirmada</strong>, 
-    volte aqui e altere o status para <strong>CONFIRMADA</strong> — assim ela deixa de aparecer como disponível e evita mensagens desnecessárias! 
-    Os dados ficam salvos para consulta e histórico.
+    <strong>⚠️ IMPORTANTE:</strong> Sempre selecione o status correto da batalha. Quando a batalha for <strong>confirmada</strong>, volte aqui e altere o status para <strong>CONFIRMADA</strong> — assim ela deixa de aparecer como disponível e evita mensagens desnecessárias! Os dados ficam salvos para consulta e histórico.
   </div>
 
-  <!-- 🔍 BUSCA POR AGÊNCIA -->
   <div class="busca">
     <input type="text" id="busca-agencia" placeholder="🔍 Digite o nome da sua Agência...">
     <button onclick="buscarBatalhas()">Buscar</button>
   </div>
 
-  <!-- BOTÕES -->
   <div class="botoes">
     <button class="btn btn-primary" onclick="abrirFormulario()">📋 Nova Batalha</button>
     <button class="btn btn-secondary" onclick="carregarBatalhas()">🔄 Atualizar Lista</button>
     <button class="btn btn-secondary" onclick="limparBusca()">📋 Ver Todas</button>
   </div>
 
-  <!-- MENSAGENS -->
   <div id="mensagens"></div>
-
-  <!-- LISTA DE BATALHAS -->
   <div id="lista-batalhas"></div>
 </div>
 
-<!-- 📋 MODAL — CADASTRAR BATALHA -->
+<!-- MODAL CADASTRAR -->
 <div class="modal-overlay" id="modal-form">
   <div class="modal">
     <button class="fechar" onclick="fecharFormulario()">&times;</button>
     <h2>📋 Nova Solicitação de Batalha</h2>
-    
     <form id="form-solicitacao">
-      <div class="form-group">
-        <label>🏢 Nome da Agência *</label>
-        <input type="text" id="agencia" name="agencia" required placeholder="Nome da sua agência">
-      </div>
-      <div class="form-group">
-        <label>👤 Nome do Streamer *</label>
-        <input type="text" id="streamer" name="streamer" required placeholder="Nome do streamer">
-      </div>
-      <div class="form-group">
-        <label>🔗 Link do Perfil *</label>
-        <input type="url" id="linkPerfil" name="linkPerfil" required placeholder="https://www.tiktok.com/@perfil">
-      </div>
-      <div class="form-group">
-        <label>📱 WhatsApp da Agência *</label>
-        <input type="tel" id="whatsapp" name="whatsapp" required placeholder="DDD + Número">
-      </div>
-      <div class="form-group">
-        <label>📅 Data desejada *</label>
-        <input type="date" id="data" name="data" required>
-      </div>
-      <div class="form-group">
-        <label>⏰ Horário desejado *</label>
-        <input type="time" id="horario" name="horario" required>
-      </div>
-      <div class="form-group">
-        <label>🔥 Round / Rodada *</label>
-        <input type="text" id="rodada" name="rodada" required placeholder="Ex: 1, 2, 3...">
-      </div>
-      <div class="form-group">
-        <label>💎 Meta de Diamantes *</label>
-        <input type="text" id="meta" name="meta" required placeholder="Ex: 80k a 150k">
-      </div>
-      <div class="form-group">
-        <label>📝 Observação (opcional)</label>
-        <textarea id="observacao" name="observacao" placeholder="Regras, detalhes adicionais..."></textarea>
-      </div>
-      
-      <!-- 🟢 STATUS — BEM DESTACADO E EXPLICADO -->
+      <div class="form-group"><label>🏢 Nome da Agência *</label><input type="text" id="agencia" name="agencia" required placeholder="Nome da sua agência"></div>
+      <div class="form-group"><label>👤 Nome do Streamer *</label><input type="text" id="streamer" name="streamer" required placeholder="Nome do streamer"></div>
+      <div class="form-group"><label>🔗 Link do Perfil *</label><input type="url" id="linkPerfil" name="linkPerfil" required placeholder="https://www.tiktok.com/@perfil"></div>
+      <div class="form-group"><label>📱 WhatsApp da Agência *</label><input type="tel" id="whatsapp" name="whatsapp" required placeholder="DDD + Número"></div>
+      <div class="form-group"><label>📅 Data desejada *</label><input type="date" id="data" name="data" required></div>
+      <div class="form-group"><label>⏰ Horário desejado *</label><input type="time" id="horario" name="horario" required></div>
+      <div class="form-group"><label>🔥 Round / Rodada *</label><input type="text" id="rodada" name="rodada" required placeholder="Ex: 1, 2, 3..."></div>
+      <div class="form-group"><label>💎 Meta de Diamantes *</label><input type="text" id="meta" name="meta" required placeholder="Ex: 80k a 150k"></div>
+      <div class="form-group"><label>📝 Observação (opcional)</label><textarea id="observacao" name="observacao" placeholder="Regras, detalhes adicionais..."></textarea></div>
       <div class="status-group">
         <h3>📊 SELECIONE O STATUS * — OBRIGATÓRIO!</h3>
-        <label class="status-opcao">
-          <input type="radio" name="status" value="PENDENTE" checked>
-          🟢 <strong>PENDENTE</strong> → Aguardando oponente — disponível para aceitar
-        </label>
-        <label class="status-opcao">
-          <input type="radio" name="status" value="ACEITA">
-          🟡 <strong>ACEITA</strong> → Oponente encontrado — combinar pelo WhatsApp
-        </label>
-        <label class="status-opcao">
-          <input type="radio" name="status" value="CONFIRMADA">
-          🔵 <strong>CONFIRMADA</strong> → Tudo fechado e agendado
-        </label>
-        <label class="status-opcao">
-          <input type="radio" name="status" value="CANCELADA">
-          🔴 <strong>CANCELADA</strong> → Não vai acontecer
-        </label>
+        <label class="status-opcao"><input type="radio" name="status" value="PENDENTE" checked> 🟢 <strong>PENDENTE</strong> → Aguardando oponente</label>
+        <label class="status-opcao"><input type="radio" name="status" value="ACEITA"> 🟡 <strong>ACEITA</strong> → Oponente encontrado</label>
+        <label class="status-opcao"><input type="radio" name="status" value="CONFIRMADA"> 🔵 <strong>CONFIRMADA</strong> → Tudo agendado</label>
+        <label class="status-opcao"><input type="radio" name="status" value="CANCELADA"> 🔴 <strong>CANCELADA</strong> → Não vai acontecer</label>
       </div>
-      
-      <div class="acoes">
-        <button type="button" class="btn btn-secondary" onclick="fecharFormulario()">Cancelar</button>
-        <button type="submit" class="btn btn-primary">✅ Enviar Solicitação</button>
-      </div>
+      <div class="acoes"><button type="button" class="btn btn-secondary" onclick="fecharFormulario()">Cancelar</button><button type="submit" class="btn btn-primary">✅ Enviar Solicitação</button></div>
     </form>
   </div>
 </div>
 
-<!-- 🤝 MODAL — ACEITAR BATALHA -->
+<!-- MODAL ACEITAR -->
 <div class="modal-overlay" id="modal-aceitar">
   <div class="modal">
     <button class="fechar" onclick="fecharAceitar()">&times;</button>
     <h2>🤝 Aceitar Batalha</h2>
-    <p style="margin-bottom: 16px; color: var(--text-muted);">Preencha os dados da sua agência:</p>
+    <p style="margin-bottom:16px;color:var(--text-muted)">Preencha os dados da sua agência:</p>
     <form id="form-aceitar">
       <input type="hidden" id="linha-batalha">
-      <div class="form-group">
-        <label>🏢 Sua Agência *</label>
-        <input type="text" id="agencia-oponente" required>
-      </div>
-      <div class="form-group">
-        <label>👤 Seu Streamer *</label>
-        <input type="text" id="streamer-oponente" required>
-      </div>
-      <div class="form-group">
-        <label>🔗 Link do Perfil *</label>
-        <input type="url" id="link-oponente" required>
-      </div>
-      <div class="form-group">
-        <label>📱 Seu WhatsApp *</label>
-        <input type="tel" id="whatsapp-oponente" required>
-      </div>
-      <div class="acoes">
-        <button type="button" class="btn btn-secondary" onclick="fecharAceitar()">Cancelar</button>
-        <button type="submit" class="btn btn-success">✅ Confirmar e Enviar</button>
-      </div>
+      <div class="form-group"><label>🏢 Sua Agência *</label><input type="text" id="agencia-oponente" required></div>
+      <div class="form-group"><label>👤 Seu Streamer *</label><input type="text" id="streamer-oponente" required></div>
+      <div class="form-group"><label>🔗 Link do Perfil *</label><input type="url" id="link-oponente" required></div>
+      <div class="form-group"><label>📱 Seu WhatsApp *</label><input type="tel" id="whatsapp-oponente" required></div>
+      <div class="acoes"><button type="button" class="btn btn-secondary" onclick="fecharAceitar()">Cancelar</button><button type="submit" class="btn btn-success">✅ Confirmar e Enviar</button></div>
     </form>
   </div>
 </div>
 
-<!-- 🔄 MODAL — ALTERAR STATUS -->
+<!-- MODAL STATUS -->
 <div class="modal-overlay" id="modal-status">
   <div class="modal">
     <button class="fechar" onclick="fecharStatus()">&times;</button>
@@ -244,34 +144,22 @@
     <form id="form-status">
       <input type="hidden" id="linha-status">
       <div class="status-group">
-        <label class="status-opcao">
-          <input type="radio" name="status-novo" value="PENDENTE"> 🟢 PENDENTE
-        </label>
-        <label class="status-opcao">
-          <input type="radio" name="status-novo" value="ACEITA"> 🟡 ACEITA
-        </label>
-        <label class="status-opcao">
-          <input type="radio" name="status-novo" value="CONFIRMADA"> 🔵 CONFIRMADA
-        </label>
-        <label class="status-opcao">
-          <input type="radio" name="status-novo" value="CANCELADA"> 🔴 CANCELADA
-        </label>
+        <label class="status-opcao"><input type="radio" name="status-novo" value="PENDENTE"> 🟢 PENDENTE</label>
+        <label class="status-opcao"><input type="radio" name="status-novo" value="ACEITA"> 🟡 ACEITA</label>
+        <label class="status-opcao"><input type="radio" name="status-novo" value="CONFIRMADA"> 🔵 CONFIRMADA</label>
+        <label class="status-opcao"><input type="radio" name="status-novo" value="CANCELADA"> 🔴 CANCELADA</label>
       </div>
-      <div class="acoes">
-        <button type="button" class="btn btn-secondary" onclick="fecharStatus()">Cancelar</button>
-        <button type="submit" class="btn btn-primary">✅ Salvar Status</button>
-      </div>
+      <div class="acoes"><button type="button" class="btn btn-secondary" onclick="fecharStatus()">Cancelar</button><button type="submit" class="btn btn-primary">✅ Salvar Status</button></div>
     </form>
   </div>
 </div>
 
 <script>
-// 🔗 TROQUE PELO SEU LINK DO APPS SCRIPT APÓS IMPLANTAR!
-const LINK_APPSCRIPT = "COLOCA_SEU_LINK_DO_APPSCRIPT_AQUI";
+// 🔗 LINK DO APPS SCRIPT JÁ COLOCADO ✅
+const LINK_APPSCRIPT = "https://script.google.com/macros/s/AKfycbxofxkZ_Wqz_MOOFnYbNq12wCd5Lt4HIIWVMGPkxE_pd7lnypMOnjsnYJW0EX3__Kdo/exec";
 
 let todasBatalhas = [];
 
-// --- UTILITÁRIOS ---
 function formatarWhatsapp(numero) {
   if (!numero) return "";
   let limpo = String(numero).replace(/\D/g, "");
@@ -285,14 +173,12 @@ function mensagem(texto, tipo = "sucesso") {
   setTimeout(() => el.innerHTML = "", 6000);
 }
 
-// --- CARREGAR E RENDERIZAR ---
 async function carregarBatalhas() {
   document.getElementById("lista-batalhas").innerHTML = '<div class="loading">🔄 Carregando...</div>';
   try {
     const res = await fetch(`${LINK_APPSCRIPT}?acao=lerBatalhas`);
     const json = await res.json();
     if (!json.sucesso) throw new Error(json.erro);
-    
     todasBatalhas = json.dados || [];
     renderizarBatalhas(todasBatalhas);
   } catch (e) {
@@ -302,21 +188,15 @@ async function carregarBatalhas() {
 
 function renderizarBatalhas(lista) {
   const alvo = document.getElementById("lista-batalhas");
-  if (!lista.length) {
-    alvo.innerHTML = '<div class="sem-dados">📭 Nenhuma batalha encontrada</div>';
-    return;
-  }
-
+  if (!lista.length) { alvo.innerHTML = '<div class="sem-dados">📭 Nenhuma batalha encontrada</div>'; return; }
   alvo.innerHTML = lista.map(b => {
     const statusClass = `status-${b.status.toLowerCase()}`;
     const whatsappLink = formatarWhatsapp(b.whatsapp);
     const whatsappOpLink = formatarWhatsapp(b.whatsappOponente);
     const disponivel = b.status === "PENDENTE";
-
     return `
       <div class="card">
         <span class="status ${statusClass}">${b.status}</span>
-        
         <div class="grid">
           <div class="campo"><label>Agência</label><span>${b.agencia || "-"}</span></div>
           <div class="campo"><label>Streamer</label><span>${b.streamer || "-"}</span></div>
@@ -327,9 +207,7 @@ function renderizarBatalhas(lista) {
           <div class="campo"><label>Rodada</label><span>${b.rodada || "-"}</span></div>
           <div class="campo"><label>Meta</label><span>${b.meta || "-"}</span></div>
         </div>
-        
         ${b.observacao ? `<div class="campo"><label>Observação</label><span>${b.observacao}</span></div>` : ""}
-        
         ${b.agenciaOponente ? `
           <div class="divisor"></div>
           <div class="grid">
@@ -339,7 +217,6 @@ function renderizarBatalhas(lista) {
             <div class="campo"><label>WhatsApp Oponente</label>${whatsappOpLink ? `<a href="${whatsappOpLink}" target="_blank">📱 Conversar</a>` : "<span>-</span>"}</div>
           </div>
         ` : ""}
-        
         <div class="acoes">
           ${disponivel ? `<button class="btn btn-success" onclick="abrirAceitar(${b.linha})">🤝 Aceitar Batalha</button>` : ""}
           <button class="btn btn-secondary" onclick="abrirStatus(${b.linha})">🔄 Alterar Status</button>
@@ -349,156 +226,84 @@ function renderizarBatalhas(lista) {
   }).join("");
 }
 
-// --- BUSCA ---
 async function buscarBatalhas() {
   const nome = document.getElementById("busca-agencia").value.trim();
   if (!nome) { renderizarBatalhas(todasBatalhas); return; }
-  
   try {
     const res = await fetch(`${LINK_APPSCRIPT}?acao=buscar&nome=${encodeURIComponent(nome)}`);
     const json = await res.json();
     renderizarBatalhas(json.dados || []);
-  } catch (e) {
-    mensagem("Erro na busca: " + e.message, "erro");
-  }
+  } catch (e) { mensagem("Erro na busca: " + e.message, "erro"); }
 }
 
-function limparBusca() {
-  document.getElementById("busca-agencia").value = "";
-  renderizarBatalhas(todasBatalhas);
-}
-
-// --- MODAIS ---
+function limparBusca() { document.getElementById("busca-agencia").value = ""; renderizarBatalhas(todasBatalhas); }
 function abrirFormulario() { document.getElementById("modal-form").classList.add("modal-aberto"); }
 function fecharFormulario() { document.getElementById("modal-form").classList.remove("modal-aberto"); document.getElementById("form-solicitacao").reset(); }
 function abrirAceitar(linha) { document.getElementById("modal-aceitar").classList.add("modal-aberto"); document.getElementById("linha-batalha").value = linha; }
-function fecharAceitar() { document.getElementById("modal-aceitar").classList.remove("modal-aceitar"); document.getElementById("form-aceitar").reset(); }
+function fecharAceitar() { document.getElementById("modal-aceitar").classList.remove("modal-aberto"); document.getElementById("form-aceitar").reset(); }
 function abrirStatus(linha) { document.getElementById("modal-status").classList.add("modal-aberto"); document.getElementById("linha-status").value = linha; }
 function fecharStatus() { document.getElementById("modal-status").classList.remove("modal-aberto"); }
 
-// --- ENVIAR FORMULÁRIO ---
 document.getElementById("form-solicitacao").addEventListener("submit", async e => {
   e.preventDefault();
   const btn = e.target.querySelector('button[type="submit"]');
   btn.disabled = true; btn.textContent = "⏳ Enviando...";
-  
-  const formData = new FormData();
-  formData.append("agencia", document.getElementById("agencia").value);
-  formData.append("streamer", document.getElementById("streamer").value);
-  formData.append("linkPerfil", document.getElementById("linkPerfil").value);
-  formData.append("whatsapp", document.getElementById("whatsapp").value);
-  formData.append("data", document.getElementById("data").value);
-  formData.append("horario", document.getElementById("horario").value);
-  formData.append("rodada", document.getElementById("rodada").value);
-  formData.append("meta", document.getElementById("meta").value);
-  formData.append("observacao", document.getElementById("observacao").value);
-  formData.append("status", document.querySelector('input[name="status"]:checked').value);
-
+  const formData = new FormData(e.target);
   try {
     const res = await fetch(LINK_APPSCRIPT, { method: "POST", body: formData });
     const json = await res.json();
-    if (json.sucesso) {
-      mensagem("✅ " + json.mensagem, "sucesso");
-      fecharFormulario();
-      carregarBatalhas();
-    } else {
-      mensagem("❌ " + json.erro, "erro");
-    }
-  } catch {
-    mensagem("❌ Erro de conexão!", "erro");
-  }
+    if (json.sucesso) { mensagem("✅ " + json.mensagem, "sucesso"); fecharFormulario(); carregarBatalhas(); }
+    else mensagem("❌ " + json.erro, "erro");
+  } catch { mensagem("❌ Erro de conexão!", "erro"); }
   btn.disabled = false; btn.textContent = "✅ Enviar Solicitação";
 });
 
-// --- ACEITAR BATALHA + MENSAGEM NO WHATSAPP ---
 document.getElementById("form-aceitar").addEventListener("submit", async e => {
   e.preventDefault();
   const btn = e.target.querySelector('button[type="submit"]');
   btn.disabled = true; btn.textContent = "⏳ Salvando...";
   const linha = document.getElementById("linha-batalha").value;
-
   const params = new URLSearchParams({
-    acao: "aceitar",
-    linha,
+    acao: "aceitar", linha,
     agenciaOponente: document.getElementById("agencia-oponente").value,
     streamerOponente: document.getElementById("streamer-oponente").value,
     linkOponente: document.getElementById("link-oponente").value,
     whatsappOponente: document.getElementById("whatsapp-oponente").value
   });
-
   try {
     const res = await fetch(`${LINK_APPSCRIPT}?${params}`, { method: "PUT" });
     const json = await res.json();
-    
     if (json.sucesso) {
       mensagem("✅ Batalha aceita! Abrindo WhatsApp...", "sucesso");
       fecharAceitar();
       carregarBatalhas();
-      
-      // 💬 MENSAGEM PRONTA NO WHATSAPP
       const d = json.dados;
       const texto = encodeURIComponent(
-        `⚔️ BATALHA ACEITA — PADRONIZA LIVE!\n\n` +
-        `📋 DADOS DA SOLICITAÇÃO:\n` +
-        `🏢 Agência: ${d.agencia}\n` +
-        `👤 Streamer: ${d.streamer}\n` +
-        `🔗 Perfil: ${d.linkPerfil}\n` +
-        `📅 Data: ${d.data}\n` +
-        `⏰ Horário: ${d.horario}\n` +
-        `🔥 Rodada: ${d.rodada}\n` +
-        `💎 Meta: ${d.meta}\n` +
-        `${d.observacao ? `📝 Observação: ${d.observacao}\n` : ""}` +
-        `\n🤝 DADOS DO OPONENTE:\n` +
-        `🏢 Agência: ${d.agenciaOponente}\n` +
-        `👤 Streamer: ${d.streamerOponente}\n` +
-        `🔗 Perfil: ${d.linkOponente}\n` +
-        `📱 WhatsApp: ${d.whatsappOponente}\n\n` +
-        `──────────────────────────────\n` +
-        `✅ Olá! Aceitamos a batalha! Por favor, confirma se está tudo certo?`
+        `⚔️ BATALHA ACEITA — PADRONIZA LIVE!\n\n📋 DADOS DA SOLICITAÇÃO:\n🏢 Agência: ${d.agencia}\n👤 Streamer: ${d.streamer}\n🔗 Perfil: ${d.linkPerfil}\n📅 Data: ${d.data}\n⏰ Horário: ${d.horario}\n🔥 Rodada: ${d.rodada}\n💎 Meta: ${d.meta}\n${d.observacao ? `📝 Observação: ${d.observacao}\n` : ""}\n🤝 DADOS DO OPONENTE:\n🏢 Agência: ${d.agenciaOponente}\n👤 Streamer: ${d.streamerOponente}\n🔗 Perfil: ${d.linkOponente}\n📱 WhatsApp: ${d.whatsappOponente}\n\n──────────────────────────────\n✅ Olá! Aceitamos a batalha! Por favor, confirma se está tudo certo?`
       );
       const wppLink = formatarWhatsapp(d.whatsapp);
       if (wppLink) window.open(`${wppLink}?text=${texto}`, "_blank");
-    } else {
-      mensagem("❌ " + json.erro, "erro");
-    }
-  } catch {
-    mensagem("❌ Erro de conexão!", "erro");
-  }
+    } else mensagem("❌ " + json.erro, "erro");
+  } catch { mensagem("❌ Erro de conexão!", "erro"); }
   btn.disabled = false; btn.textContent = "✅ Confirmar e Enviar";
 });
 
-// --- ALTERAR STATUS ---
 document.getElementById("form-status").addEventListener("submit", async e => {
   e.preventDefault();
   const linha = document.getElementById("linha-status").value;
   const status = document.querySelector('input[name="status-novo"]:checked')?.value;
   if (!status) return;
-
   const params = new URLSearchParams({ acao: "atualizarStatus", linha, status });
   try {
     const res = await fetch(`${LINK_APPSCRIPT}?${params}`, { method: "PUT" });
     const json = await res.json();
-    if (json.sucesso) {
-      mensagem("✅ Status alterado!", "sucesso");
-      fecharStatus();
-      carregarBatalhas();
-    } else {
-      mensagem("❌ " + json.erro, "erro");
-    }
-  } catch {
-    mensagem("❌ Erro de conexão!", "erro");
-  }
+    if (json.sucesso) { mensagem("✅ Status alterado!", "sucesso"); fecharStatus(); carregarBatalhas(); }
+    else mensagem("❌ " + json.erro, "erro");
+  } catch { mensagem("❌ Erro de conexão!", "erro"); }
 });
 
-// FECHAR MODAIS AO CLICAR FORA
-document.querySelectorAll(".modal-overlay").forEach(m => {
-  m.addEventListener("click", e => { if (e.target === m) m.classList.remove("modal-aberto"); });
-});
-
-// BUSCA COM ENTER
+document.querySelectorAll(".modal-overlay").forEach(m => m.addEventListener("click", e => { if (e.target === m) m.classList.remove("modal-aberto"); }));
 document.getElementById("busca-agencia").addEventListener("keydown", e => { if (e.key === "Enter") buscarBatalhas(); });
-
-// INICIALIZAR
 document.addEventListener("DOMContentLoaded", carregarBatalhas);
 </script>
 </body>
