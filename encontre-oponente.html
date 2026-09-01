@@ -56,7 +56,6 @@
     input, select, textarea { width: 100%; padding: 13px; border-radius: 10px; border: 1px solid var(--card-border); background: var(--card-bg); color: var(--text-light); font-size: 1rem; outline: none; }
     input:focus, select:focus { border-color: var(--primary-purple); }
 
-    /* ✅ QUADRADINHOS — EXATAMENTE COMO VOCÊ PEDIU! */
     .status-group { 
       background: rgba(123,63,255,0.08); 
       border: 1px solid rgba(123,63,255,0.3); 
@@ -137,7 +136,7 @@
   </div>
 
   <div class="busca">
-    <input type="text" id="busca-agencia" placeholder="🔍 Digite o nome da sua Agência...">
+    <input type="text" id="busca-agencia" placeholder="🔍 Buscar por Agência, Streamer ou WhatsApp...">
     <button onclick="buscarBatalhas()">Buscar</button>
   </div>
 
@@ -196,7 +195,7 @@
   </div>
 </div>
 
-<!-- MODAL ACEITAR BATALHA — FECHAR CORRIGIDO! ✅ -->
+<!-- MODAL ACEITAR BATALHA -->
 <div class="modal-overlay" id="modal-aceitar" onclick="fecharFora(event)">
   <div class="modal">
     <button class="fechar" onclick="fecharAceitar(); event.stopPropagation();">&times;</button>
@@ -217,7 +216,7 @@
   </div>
 </div>
 
-<!-- MODAL ALTERAR STATUS — FECHAR CORRIGIDO! ✅ -->
+<!-- MODAL ALTERAR STATUS -->
 <div class="modal-overlay" id="modal-status" onclick="fecharFora(event)">
   <div class="modal">
     <button class="fechar" onclick="fecharStatus(); event.stopPropagation();">&times;</button>
@@ -253,13 +252,13 @@
 </div>
 
 <script>
-// 🔗 LINK DO APPS SCRIPT — MANTIDO EXATAMENTE COMO ESTÁ! ✅
+// 🔗 LINK DO APPS SCRIPT — MANTIDO IGUAL! ✅
 const LINK_APPSCRIPT = "https://script.google.com/macros/s/AKfycbxofxkZ_Wqz_MOOFnYbNq12wCd5Lt4HIIWVMGPkxE_pd7lnypMOnjsnYJW0EX3__Kdo/exec";
 
 let todasBatalhas = [];
 let batalhaAceitaDados = null;
 
-// ✅ FECHAR CLICANDO FORA DO FORMULÁRIO — CORRIGIDO!
+// ✅ FECHAR CLICANDO FORA
 function fecharFora(event) {
   if (event.target.classList.contains("modal-overlay")) {
     event.target.classList.remove("modal-aberto");
@@ -267,7 +266,7 @@ function fecharFora(event) {
   }
 }
 
-// ✅ FUNÇÕES DE FECHAR — GARANTIDAS E FUNCIONANDO!
+// ✅ FUNÇÕES DE FECHAR
 function fecharFormulario() {
   document.getElementById("modal-form").classList.remove("modal-aberto");
   document.getElementById("form-solicitacao").reset();
@@ -281,7 +280,7 @@ function fecharStatus() {
   document.getElementById("form-status").reset();
 }
 
-// ✅ FORMATAR WHATSAPP — CORRIGIDO!
+// ✅ FORMATAR WHATSAPP
 function formatarWhatsapp(numero) {
   if (!numero) return "";
   let limpo = String(numero).replace(/\D/g, "");
@@ -309,34 +308,61 @@ async function carregarBatalhas() {
   }
 }
 
+// ✅ FUNÇÃO AUXILIAR — PEGA O VALOR DE QUALQUER CAMPO (ACEITA VÁRIOS NOMES)
+function pegarValor(objeto, ...nomes) {
+  for (const nome of nomes) {
+    if (objeto[nome] !== undefined && objeto[nome] !== null && objeto[nome] !== "") {
+      return objeto[nome];
+    }
+  }
+  return "-";
+}
+
 function renderizarBatalhas(lista) {
   const alvo = document.getElementById("lista-batalhas");
   if (!lista.length) { alvo.innerHTML = '<div class="sem-dados">📭 Nenhuma batalha encontrada</div>'; return; }
   alvo.innerHTML = lista.map(b => {
-    const statusClass = `status-${b.status.toLowerCase()}`;
-    const whatsappLink = formatarWhatsapp(b.whatsapp);
-    const whatsappOpLink = formatarWhatsapp(b.whatsappOponente);
-    const disponivel = b.status === "PENDENTE";
+    const status = pegarValor(b, "status", "Status", "Situacao", "situacao");
+    const statusClass = `status-${String(status).toLowerCase()}`;
+    const agencia = pegarValor(b, "agencia", "Agencia", "Agência", "agenciaPadroniza");
+    const streamer = pegarValor(b, "streamer", "Streamer", "streamerPadroniza");
+    const linkPerfil = pegarValor(b, "linkPerfil", "link", "LinkPerfil", "linkPerfilPadroniza");
+    const whatsapp = pegarValor(b, "whatsapp", "WhatsApp", "telefoneAgencia", "Telefone");
+    const data = pegarValor(b, "data", "Data", "dataBatalha");
+    const horario = pegarValor(b, "horario", "Horario", "horarioInicio");
+    const rodada = pegarValor(b, "rodada", "Rodada", "road", "Road");
+    const meta = pegarValor(b, "meta", "Meta", "MetaDiamantes");
+    const observacao = pegarValor(b, "observacao", "Observacao", "observação");
+    
+    const agenciaOponente = pegarValor(b, "agenciaOponente", "agenciaOponente", "AgenciaOponente");
+    const streamerOponente = pegarValor(b, "streamerOponente", "streamerOponente", "StreamerOponente");
+    const linkOponente = pegarValor(b, "linkOponente", "linkOponente", "LinkOponente");
+    const whatsappOponente = pegarValor(b, "whatsappOponente", "whatsappOponente", "WhatsAppOponente");
+    
+    const whatsappLink = formatarWhatsapp(whatsapp);
+    const whatsappOpLink = formatarWhatsapp(whatsappOponente);
+    const disponivel = String(status).toUpperCase() === "PENDENTE";
+    
     return `
       <div class="card">
-        <span class="status ${statusClass}">${b.status}</span>
+        <span class="status ${statusClass}">${status}</span>
         <div class="grid">
-          <div class="campo"><label>Agência</label><span>${b.agencia || "-"}</span></div>
-          <div class="campo"><label>Streamer</label><span>${b.streamer || "-"}</span></div>
-          <div class="campo"><label>Perfil</label>${b.linkPerfil ? `<a href="${b.linkPerfil}" target="_blank">🔗 Abrir</a>` : "<span>-</span>"}</div>
+          <div class="campo"><label>Agência</label><span>${agencia}</span></div>
+          <div class="campo"><label>Streamer</label><span>${streamer}</span></div>
+          <div class="campo"><label>Perfil</label>${linkPerfil !== "-" ? `<a href="${linkPerfil}" target="_blank">🔗 Abrir</a>` : "<span>-</span>"}</div>
           <div class="campo"><label>WhatsApp</label>${whatsappLink ? `<a href="${whatsappLink}" target="_blank">📱 Conversar</a>` : "<span>-</span>"}</div>
-          <div class="campo"><label>Data</label><span>${b.data || "-"}</span></div>
-          <div class="campo"><label>Horário</label><span>${b.horario || "-"}</span></div>
-          <div class="campo"><label>Rodada</label><span>${b.rodada || "-"}</span></div>
-          <div class="campo"><label>Meta</label><span>${b.meta || "-"}</span></div>
+          <div class="campo"><label>Data</label><span>${data}</span></div>
+          <div class="campo"><label>Horário</label><span>${horario}</span></div>
+          <div class="campo"><label>Rodada</label><span>${rodada}</span></div>
+          <div class="campo"><label>Meta</label><span>${meta}</span></div>
         </div>
-        ${b.observacao ? `<div class="campo"><label>Observação</label><span>${b.observacao}</span></div>` : ""}
-        ${b.agenciaOponente ? `
+        ${observacao !== "-" ? `<div class="campo"><label>Observação</label><span>${observacao}</span></div>` : ""}
+        ${agenciaOponente !== "-" ? `
           <div class="divisor"></div>
           <div class="grid">
-            <div class="campo"><label>Agência Oponente</label><span>${b.agenciaOponente}</span></div>
-            <div class="campo"><label>Streamer Oponente</label><span>${b.streamerOponente || "-"}</span></div>
-            <div class="campo"><label>Perfil Oponente</label>${b.linkOponente ? `<a href="${b.linkOponente}" target="_blank">🔗 Abrir</a>` : "<span>-</span>"}</div>
+            <div class="campo"><label>Agência Oponente</label><span>${agenciaOponente}</span></div>
+            <div class="campo"><label>Streamer Oponente</label><span>${streamerOponente}</span></div>
+            <div class="campo"><label>Perfil Oponente</label>${linkOponente !== "-" ? `<a href="${linkOponente}" target="_blank">🔗 Abrir</a>` : "<span>-</span>"}</div>
             <div class="campo"><label>WhatsApp Oponente</label>${whatsappOpLink ? `<a href="${whatsappOpLink}" target="_blank">📱 Conversar</a>` : "<span>-</span>"}</div>
           </div>
         ` : ""}
@@ -349,17 +375,34 @@ function renderizarBatalhas(lista) {
   }).join("");
 }
 
+// ✅ BUSCA CORRIGIDA — AGORA FUNCIONA DE VERDADE! 🔍
 async function buscarBatalhas() {
-  const nome = document.getElementById("busca-agencia").value.trim();
-  if (!nome) { renderizarBatalhas(todasBatalhas); return; }
-  try {
-    const res = await fetch(`${LINK_APPSCRIPT}?acao=buscar&nome=${encodeURIComponent(nome)}`);
-    const json = await res.json();
-    renderizarBatalhas(json.dados || []);
-  } catch (e) { mensagem("Erro na busca: " + e.message, "erro"); }
+  const termo = document.getElementById("busca-agencia").value.trim();
+  if (!termo) { renderizarBatalhas(todasBatalhas); return; }
+  
+  const termoMin = termo.toLowerCase();
+  const filtradas = todasBatalhas.filter(b => {
+    const agencia = String(pegarValor(b, "agencia", "Agencia", "Agência", "agenciaPadroniza")).toLowerCase();
+    const streamer = String(pegarValor(b, "streamer", "Streamer", "streamerPadroniza")).toLowerCase();
+    const whatsapp = String(pegarValor(b, "whatsapp", "WhatsApp", "telefoneAgencia")).toLowerCase();
+    const agenciaOp = String(pegarValor(b, "agenciaOponente", "AgenciaOponente")).toLowerCase();
+    const streamerOp = String(pegarValor(b, "streamerOponente", "StreamerOponente")).toLowerCase();
+    
+    return agencia.includes(termoMin) || 
+           streamer.includes(termoMin) || 
+           whatsapp.includes(termo) ||
+           agenciaOp.includes(termoMin) ||
+           streamerOp.includes(termoMin);
+  });
+  
+  renderizarBatalhas(filtradas);
 }
 
-function limparBusca() { document.getElementById("busca-agencia").value = ""; renderizarBatalhas(todasBatalhas); }
+function limparBusca() { 
+  document.getElementById("busca-agencia").value = ""; 
+  renderizarBatalhas(todasBatalhas); 
+}
+
 function abrirFormulario() { document.getElementById("modal-form").classList.add("modal-aberto"); }
 function abrirAceitar(linha) { 
   document.getElementById("modal-aceitar").classList.add("modal-aberto"); 
@@ -383,7 +426,7 @@ document.getElementById("form-solicitacao").addEventListener("submit", async e =
   btn.disabled = false; btn.textContent = "✅ Enviar Solicitação";
 });
 
-// ✅ ACEITAR BATALHA — CORRIGIDO E FUNCIONANDO!
+// ✅ ACEITAR BATALHA
 document.getElementById("form-aceitar").addEventListener("submit", async e => {
   e.preventDefault();
   const btn = e.target.querySelector('button[type="submit"]');
@@ -395,7 +438,7 @@ document.getElementById("form-aceitar").addEventListener("submit", async e => {
     const json = await res.json();
     
     if (json.sucesso) {
-      mensagem("✅ Batalha aceita! Abrindo WhatsApp...", "sucesso");
+      mensagem("✅ Batalha aceita! Atualizando lista...", "sucesso");
       fecharAceitar();
       carregarBatalhas();
       
