@@ -224,4 +224,327 @@
 </div>
 
 <div class="modal-overlay" id="modal-form">
-  <div class
+  <div class="modal">
+    <button class="fechar-modal" onclick="fecharFormulario()">&times;</button>
+    <h2 id="titulo-modal">📋 Nova Solicitação de Batalha</h2>
+    
+    <div class="aviso-status">
+      <h4>⚠️ Selecione o status da sua batalha:</h4>
+      <ul>
+        <li>🟢 <span>DISPONÍVEL</span> — Aguardando oponente (padrão)</li>
+        <li>🟡 <span>PENDENTE</span> — Já encontrou alguém, em negociação</li>
+        <li>🟠 <span>RESPONDIDA</span> — Oponente já respondeu</li>
+        <li>🔴 <span>FECHADO</span> — Batalha confirmada e agendada</li>
+      </ul>
+    </div>
+    
+    <form id="form-solicitacao">
+      <div class="form-group">
+        <label for="agencia">🏢 Nome da sua Agência *</label>
+        <input type="text" id="agencia" name="Nome da sua Agência" required placeholder="Digite o nome da sua agência">
+      </div>
+
+      <div class="form-group">
+        <label for="perfil">🔗 Link do Perfil do Streamer *</label>
+        <input type="url" id="perfil" name="Link do Perfil" required placeholder="https://www.tiktok.com/@seu_perfil">
+      </div>
+
+      <div class="form-group">
+        <label for="whatsapp">📱 WhatsApp da Agência *</label>
+        <input type="tel" id="whatsapp" name="whatsApp da Agência" required placeholder="DDD + Número — ex: 69999999999">
+      </div>
+
+      <div class="form-group">
+        <label for="rodada">🔥 Round / Rodada *</label>
+        <input type="text" id="rodada" name="Round / Rodada" required placeholder="Ex: 1, 2, 3...">
+      </div>
+
+      <div class="form-group">
+        <label for="meta">💎 Meta de Diamantes *</label>
+        <input type="text" id="meta" name="Meta de Diamantes" required placeholder="Ex: 150k, 2000...">
+      </div>
+
+      <div class="form-group">
+        <label for="data">📅 Data desejada *</label>
+        <input type="date" id="data" name="Data desejada" required>
+      </div>
+
+      <div class="form-group">
+        <label for="horario">🕐 Horário desejado *</label>
+        <input type="time" id="horario" name="Horário desejado" required>
+      </div>
+
+      <div class="form-group">
+        <label for="status">📊 Status da Batalha * <small style="color:var(--primary-red)">— Leia o aviso acima!</small></label>
+        <select id="status" name="Status" required>
+          <option value="DISPONÍVEL" selected>🟢 DISPONÍVEL — Aguardando oponente (padrão)</option>
+          <option value="PENDENTE">🟡 PENDENTE — Em negociação</option>
+          <option value="RESPONDIDA">🟠 RESPONDIDA — Oponente respondeu</option>
+          <option value="FECHADO">🔴 FECHADO — Batalha agendada</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="observacao">📝 Observação (opcional)</label>
+        <textarea id="observacao" name="observação" placeholder="Informações adicionais..."></textarea>
+      </div>
+
+      <div class="acoes">
+        <button type="button" class="btn btn-secundario" onclick="fecharFormulario()">Cancelar</button>
+        <button type="submit" class="btn btn-primario">✅ Enviar Solicitação</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div class="modal-overlay" id="modal-resposta">
+  <div class="modal">
+    <button class="fechar-modal" onclick="fecharResposta()">&times;</button>
+    <h2>🤝 Responder Solicitação</h2>
+    <p style="margin-bottom: 20px; color: var(--text-muted);">Preencha os dados da sua agência para aceitar a batalha!</p>
+    
+    <form id="form-resposta">
+      <input type="hidden" id="resposta-agencia">
+      <input type="hidden" id="resposta-data">
+      
+      <div class="form-group">
+        <label>🏢 Sua Agência *</label>
+        <input type="text" id="agencia-oponente" required placeholder="Nome da sua agência">
+      </div>
+
+      <div class="form-group">
+        <label>👤 Nome do Streamer *</label>
+        <input type="text" id="nome-oponente" required placeholder="Nome do streamer">
+      </div>
+
+      <div class="form-group">
+        <label>🔗 Link do Perfil *</label>
+        <input type="url" id="link-oponente" required placeholder="https://www.tiktok.com/@seu_perfil">
+      </div>
+
+      <div class="form-group">
+        <label>📱 WhatsApp *</label>
+        <input type="tel" id="whatsapp-oponente" required placeholder="DDD + Número">
+      </div>
+
+      <div class="acoes">
+        <button type="button" class="btn btn-secundario" onclick="fecharResposta()">Cancelar</button>
+        <button type="submit" class="btn btn-sucesso">✅ Confirmar Batalha</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script>
+// ✅ LINK DO SEU APPS SCRIPT — JÁ COLOCADO!
+const LINK_APPSCRIPT = "https://script.google.com/macros/s/AKfycbxofxkZ_Wqz_MOOFnYbNq12wCd5Lt4HIIWVMGPkxE_pd7lnypMOnjsnYJW0EX3__Kdo/exec";
+
+function formatarWhatsappLink(numero) {
+  if (!numero) return '#';
+  let limpo = String(numero).replace(/\D/g, '');
+  if (limpo.length === 11) limpo = '55' + limpo;
+  return `https://wa.me/${limpo}`;
+}
+
+async function carregarBatalhas() {
+  const lista = document.getElementById('lista-batalhas');
+  const resumo = document.getElementById('resumo');
+  lista.innerHTML = '<div class="loading">🔄 Carregando batalhas...</div>';
+  resumo.innerHTML = '';
+
+  try {
+    const res = await fetch(`${LINK_APPSCRIPT}?acao=lerBatalhas`);
+    const dados = await res.json();
+
+    if (!dados.sucesso) {
+      lista.innerHTML = `<div class="erro">❌ Erro: ${dados.erro}</div>`;
+      return;
+    }
+
+    resumo.innerHTML = dados.mensagem || `✅ ${dados.total || 0} batalhas — ${dados.disponiveis || 0} DISPONÍVEIS!`;
+
+    if (!dados.dados || dados.dados.length === 0) {
+      lista.innerHTML = `
+        <div class="sem-batalhas">
+          <h3>📭 Nenhuma batalha encontrada</h3>
+          <p>Clique em "Nova Solicitação" para criar a primeira!</p>
+        </div>
+      `;
+      return;
+    }
+
+    lista.innerHTML = dados.dados.map(b => {
+      let statusClass = 'status-pendente';
+      if (b.status) {
+        const s = b.status.toUpperCase();
+        if (s.includes('DISPONÍVEL')) statusClass = 'status-disponivel';
+        else if (s.includes('PENDENTE')) statusClass = 'status-pendente';
+        else if (s.includes('RESPONDIDA')) statusClass = 'status-respondida';
+        else if (s.includes('FECHADO') || s.includes('CONFIRMADA')) statusClass = 'status-fechado';
+      }
+      
+      const whatsappLink = formatarWhatsappLink(b.whatsapp);
+      const disponivel = b.status && b.status.toUpperCase().includes('DISPONÍVEL');
+
+      return `
+        <div class="card">
+          <span class="status-badge ${statusClass}">${b.status || 'PENDENTE'}</span>
+          
+          <div class="grid-dados">
+            <div class="campo">
+              <label>Agência</label>
+              <span>${b.agencia || '-'}</span>
+            </div>
+            <div class="campo">
+              <label>Round / Rodada</label>
+              <span>${b.rodada || '-'}</span>
+            </div>
+            <div class="campo">
+              <label>Meta de Diamantes</label>
+              <span>${b.meta || '-'}</span>
+            </div>
+            <div class="campo">
+              <label>Data</label>
+              <span>${b.data || '-'}</span>
+            </div>
+            <div class="campo">
+              <label>Horário</label>
+              <span>${b.horario || '-'}</span>
+            </div>
+            <div class="campo">
+              <label>Perfil</label>
+              ${b.perfil ? `<a href="${b.perfil}" target="_blank">🔗 Abrir Perfil</a>` : '<span>-</span>'}
+            </div>
+            <div class="campo">
+              <label>WhatsApp</label>
+              ${b.whatsapp ? `<a href="${whatsappLink}" target="_blank" class="btn btn-whatsapp">💬 ${b.whatsapp}</a>` : '<span>-</span>'}
+            </div>
+          </div>
+
+          ${b.observacao ? `<div class="campo"><label>Observação</label><span>${b.observacao}</span></div>` : ''}
+
+          ${disponivel ? `
+            <div class="divisor"></div>
+            <div class="acoes">
+              <button class="btn btn-sucesso" onclick="abrirResponder('${(b.agencia || '').replace(/'/g, "\\'")}', '${(b.data || '').replace(/'/g, "\\'")}')">🤝 Aceitar / Responder Batalha</button>
+            </div>
+          ` : ''}
+        </div>
+      `;
+    }).join('');
+
+  } catch (erro) {
+    lista.innerHTML = `<div class="erro">❌ Erro ao carregar: ${erro.message}</div>`;
+  }
+}
+
+function abrirFormulario() {
+  document.getElementById('modal-form').classList.add('modal-aberto');
+  document.getElementById('form-solicitacao').reset();
+  document.getElementById('status').value = 'DISPONÍVEL';
+}
+
+function fecharFormulario() {
+  document.getElementById('modal-form').classList.remove('modal-aberto');
+}
+
+function abrirResponder(agencia, data) {
+  document.getElementById('modal-resposta').classList.add('modal-aberto');
+  document.getElementById('resposta-agencia').value = agencia;
+  document.getElementById('resposta-data').value = data;
+  document.getElementById('form-resposta').reset();
+  document.getElementById('resposta-agencia').value = agencia;
+  document.getElementById('resposta-data').value = data;
+}
+
+function fecharResposta() {
+  document.getElementById('modal-resposta').classList.remove('modal-aberto');
+}
+
+document.getElementById('form-solicitacao').addEventListener('submit', async e => {
+  e.preventDefault();
+  const form = e.target;
+  const btn = form.querySelector('button[type="submit"]');
+  btn.disabled = true;
+  btn.textContent = '⏳ Enviando...';
+
+  const formData = new FormData(form);
+
+  try {
+    const res = await fetch(LINK_APPSCRIPT, {
+      method: 'POST',
+      body: formData
+    });
+    const resultado = await res.json();
+
+    if (resultado.sucesso) {
+      document.getElementById('mensagens').innerHTML = `<div class="sucesso">✅ ${resultado.mensagem}</div>`;
+      fecharFormulario();
+      form.reset();
+      carregarBatalhas();
+      setTimeout(() => document.getElementById('mensagens').innerHTML = '', 5000);
+    } else {
+      document.getElementById('mensagens').innerHTML = `<div class="erro">❌ ${resultado.erro}</div>`;
+    }
+  } catch (erro) {
+    document.getElementById('mensagens').innerHTML = `<div class="erro">❌ Erro de conexão! Tente novamente.</div>`;
+  }
+
+  btn.disabled = false;
+  btn.textContent = '✅ Enviar Solicitação';
+});
+
+document.getElementById('form-resposta').addEventListener('submit', async e => {
+  e.preventDefault();
+  const form = e.target;
+  const btn = form.querySelector('button[type="submit"]');
+  btn.disabled = true;
+  btn.textContent = '⏳ Salvando...';
+
+  const dados = {
+    acao: 'responder',
+    agencia: document.getElementById('resposta-agencia').value,
+    data: document.getElementById('resposta-data').value,
+    agenciaOponente: document.getElementById('agencia-oponente').value,
+    nomeOponente: document.getElementById('nome-oponente').value,
+    linkOponente: document.getElementById('link-oponente').value,
+    whatsappOponente: document.getElementById('whatsapp-oponente').value
+  };
+
+  try {
+    const params = new URLSearchParams(dados);
+    const res = await fetch(`${LINK_APPSCRIPT}?${params.toString()}`, {
+      method: 'PUT'
+    });
+    const resultado = await res.json();
+
+    if (resultado.sucesso) {
+      const whatsappLink = formatarWhatsappLink(dados.whatsappOponente);
+      document.getElementById('mensagens').innerHTML = `<div class="sucesso">✅ ${resultado.mensagem} — Redirecionando...</div>`;
+      fecharResposta();
+      carregarBatalhas();
+      setTimeout(() => window.open(whatsappLink, '_blank'), 1500);
+      setTimeout(() => document.getElementById('mensagens').innerHTML = '', 8000);
+    } else {
+      document.getElementById('mensagens').innerHTML = `<div class="erro">❌ ${resultado.erro}</div>`;
+    }
+  } catch (erro) {
+    document.getElementById('mensagens').innerHTML = `<div class="erro">❌ Erro de conexão! Tente novamente.</div>`;
+  }
+
+  btn.disabled = false;
+  btn.textContent = '✅ Confirmar Batalha';
+});
+
+document.addEventListener('DOMContentLoaded', carregarBatalhas);
+
+document.getElementById('modal-form').addEventListener('click', e => {
+  if (e.target === e.currentTarget) fecharFormulario();
+});
+document.getElementById('modal-resposta').addEventListener('click', e => {
+  if (e.target === e.currentTarget) fecharResposta();
+});
+</script>
+
+</body>
+</html>
