@@ -122,7 +122,6 @@
     .campo a { color: var(--primary-blue); text-decoration: none; }
     .campo a:hover { text-decoration: underline; }
 
-    /* ✅ AVISO DE STATUS DESTACADO */
     .aviso-status {
       background: rgba(239,68,68,0.08);
       border-left: 3px solid var(--primary-red);
@@ -224,13 +223,11 @@
   <div id="lista-batalhas"></div>
 </div>
 
-<!-- MODAL — FORMULÁRIO NOVA SOLICITAÇÃO -->
 <div class="modal-overlay" id="modal-form">
   <div class="modal">
     <button class="fechar-modal" onclick="fecharFormulario()">&times;</button>
     <h2 id="titulo-modal">📋 Nova Solicitação de Batalha</h2>
     
-    <!-- ✅ AVISO COM EXPLICAÇÃO DE CADA STATUS -->
     <div class="aviso-status">
       <h4>⚠️ Selecione o status da sua batalha:</h4>
       <ul>
@@ -277,7 +274,6 @@
         <input type="time" id="horario" name="Horário desejado" required>
       </div>
 
-      <!-- ✅ STATUS — VISÍVEL, OBRIGATÓRIO, COM VALOR PADRÃO DISPONÍVEL -->
       <div class="form-group">
         <label for="status">📊 Status da Batalha * <small style="color:var(--primary-red)">— Leia o aviso acima!</small></label>
         <select id="status" name="Status" required>
@@ -301,7 +297,6 @@
   </div>
 </div>
 
-<!-- MODAL — RESPONDER BATALHA -->
 <div class="modal-overlay" id="modal-resposta">
   <div class="modal">
     <button class="fechar-modal" onclick="fecharResposta()">&times;</button>
@@ -341,10 +336,8 @@
 </div>
 
 <script>
-// 🔗 COLOQUE AQUI O LINK DO SEU APPS SCRIPT!
 const LINK_APPSCRIPT = "https://script.google.com/macros/s/AKfycbxofxkZ_Wqz_MOOFnYbNq12wCd5Lt4HIIWVMGPkxE_pd7lnypMOnjsnYJW0EX3__Kdo/exec";
 
-// 📱 FORMATAR WHATSAPP PARA LINK
 function formatarWhatsappLink(numero) {
   if (!numero) return '#';
   let limpo = String(numero).replace(/\D/g, '');
@@ -352,7 +345,6 @@ function formatarWhatsappLink(numero) {
   return `https://wa.me/${limpo}`;
 }
 
-// 📋 CARREGAR LISTA DE BATALHAS
 async function carregarBatalhas() {
   const lista = document.getElementById('lista-batalhas');
   const resumo = document.getElementById('resumo');
@@ -448,7 +440,6 @@ async function carregarBatalhas() {
 function abrirFormulario() {
   document.getElementById('modal-form').classList.add('modal-aberto');
   document.getElementById('form-solicitacao').reset();
-  // ✅ DISPONÍVEL JÁ VEM SELECIONADO POR PADRÃO!
   document.getElementById('status').value = 'DISPONÍVEL';
 }
 
