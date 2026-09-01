@@ -66,7 +66,6 @@
 </head>
 <body>
 <div class="container">
-  <!-- 🖼️ LOGO JÁ COLOCADA ✅ -->
   <div class="header">
     <img src="https://i.ibb.co/B23rwMHt/1787270369792.png" alt="Padroniza Live" class="logo" onerror="this.style.display='none'" />
     <h1>⚔️ Encontre Seu Oponente</h1>
@@ -155,7 +154,7 @@
 </div>
 
 <script>
-// 🔗 LINK DO APPS SCRIPT JÁ COLOCADO ✅
+// 🔗 LINK JÁ COLOCADO — NÃO PRECISA TROCAR NADA! ✅
 const LINK_APPSCRIPT = "https://script.google.com/macros/s/AKfycbxofxkZ_Wqz_MOOFnYbNq12wCd5Lt4HIIWVMGPkxE_pd7lnypMOnjsnYJW0EX3__Kdo/exec";
 
 let todasBatalhas = [];
@@ -240,7 +239,7 @@ function limparBusca() { document.getElementById("busca-agencia").value = ""; re
 function abrirFormulario() { document.getElementById("modal-form").classList.add("modal-aberto"); }
 function fecharFormulario() { document.getElementById("modal-form").classList.remove("modal-aberto"); document.getElementById("form-solicitacao").reset(); }
 function abrirAceitar(linha) { document.getElementById("modal-aceitar").classList.add("modal-aberto"); document.getElementById("linha-batalha").value = linha; }
-function fecharAceitar() { document.getElementById("modal-aceitar").classList.remove("modal-aberto"); document.getElementById("form-aceitar").reset(); }
+function fecharAceitar() { document.getElementById("modal-aceitar").classList.remove("modal-aceitar"); document.getElementById("form-aceitar").reset(); }
 function abrirStatus(linha) { document.getElementById("modal-status").classList.add("modal-aberto"); document.getElementById("linha-status").value = linha; }
 function fecharStatus() { document.getElementById("modal-status").classList.remove("modal-aberto"); }
 
