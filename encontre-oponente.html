@@ -1,291 +1,509 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Encontre Seu Oponente — Padroniza Assessoria</title>
-<style>
-:root{--fundo:#0b1020;--painel:#11182c;--painel2:#17213a;--verde:#34d399;--amarelo:#ffc857;--azul:#3b82f6;--cinza:#a9b4cb;--texto:#f7f9ff;--whatsapp:#25D366}
-*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
-body{background:var(--fundo);color:var(--texto);min-height:100vh;padding:15px}
-.container{max-width:680px;margin:0 auto}
-.cabecalho{text-align:center;margin-bottom:20px}
-.cabecalho h1{font-size:26px;color:var(--amarelo);margin-bottom:5px}
-.cabecalho p{font-size:15px;color:var(--cinza)}
-.aviso-gratuito{background:linear-gradient(135deg,rgba(52,211,153,0.15),rgba(116,87,255,0.15));border:2px solid var(--verde);padding:15px;border-radius:12px;margin-bottom:20px;text-align:center}
-.aviso-gratuito strong{color:var(--verde);font-size:17px;display:block;margin-bottom:5px}
-.botao-voltar{display:inline-flex;align-items:center;gap:8px;background:var(--painel2);color:var(--texto);border:none;padding:10px 16px;border-radius:8px;cursor:pointer;text-decoration:none;font-size:15px;margin-bottom:20px;border:1px solid #293653}
-.botao-voltar:hover{background:var(--painel)}
-.abas{display:flex;gap:10px;margin-bottom:25px;flex-wrap:wrap}
-.aba-btn{padding:12px 18px;background:var(--painel2);color:var(--cinza);border:none;border-radius:10px;cursor:pointer;font-size:15px}
-.aba-btn.ativa{background:var(--verde);color:#fff}
-.aba-btn:hover{background:var(--painel)}
-.conteudo-aba{display:none}
-.conteudo-aba.visivel{display:block}
-.form-card{background:var(--painel);padding:25px;border-radius:14px;border:1px solid #293653;margin-bottom:25px}
-.form-card h2{color:var(--verde);margin-bottom:20px;font-size:20px;text-align:center}
-.grupo-campo{margin-bottom:16px}
-.label{display:block;margin-bottom:8px;font-size:14px;color:#ccc}
-.campo{width:100%;padding:13px 15px;background:var(--painel2);border:1px solid #293653;border-radius:8px;color:var(--texto);font-size:15px}
-.btn-enviar{width:100%;padding:15px;background:linear-gradient(135deg,var(--verde),#22c55e);border:none;border-radius:10px;color:#000;font-weight:bold;font-size:17px;cursor:pointer}
-.btn-enviar:hover{transform:translateY(-2px)}
-.btn-responder{width:100%;padding:12px;background:linear-gradient(135deg,var(--azul),#2563eb);border:none;border-radius:8px;color:#fff;font-weight:bold;font-size:15px;cursor:pointer;margin-top:12px}
-.lista-solicitacoes h2{color:var(--azul);margin-bottom:15px;font-size:20px}
-.solicitacao-card{background:var(--painel);border:1px solid #293653;border-radius:12px;padding:18px;margin-bottom:15px}
-.solicitacao-card:hover{border-color:var(--azul)}
-.agencia-nome{font-weight:bold;font-size:17px;color:var(--amarelo)}
-.status-tag{padding:4px 10px;border-radius:12px;font-size:12px;font-weight:bold}
-.status-disponivel{background:rgba(52,211,153,0.15);color:var(--verde)}
-.status-respondida{background:rgba(59,130,246,0.15);color:var(--azul)}
-.status-confirmada{background:rgba(116,87,255,0.15);color:var(--roxo)}
-.solicitacao-dados p{margin:6px 0;font-size:14px;color:#ddd}
-.sem-dados{text-align:center;padding:40px;color:var(--cinza);font-size:15px}
-.aviso-topo{background:rgba(59,130,246,0.1);border:1px solid var(--azul);padding:14px;border-radius:10px;margin-bottom:20px;text-align:center}
-.linha-dupla{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.modal{position:fixed;inset:0;background:rgba(0,0,0,0.85);display:none;align-items:center;justify-content:center;padding:20px;z-index:999}
-.modal.ativo{display:flex}
-.modal-conteudo{background:var(--painel);padding:25px;border-radius:14px;border:1px solid #293653;max-width:500px;width:100%}
-.modal-conteudo h3{color:var(--azul);margin-bottom:15px;text-align:center}
-.botoes-modal{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:20px}
-.btn-cancelar{padding:12px;background:var(--painel2);color:var(--texto);border:none;border-radius:8px;font-size:15px;cursor:pointer}
-.btn-confirmar{padding:12px;background:linear-gradient(135deg,var(--verde),#22c55e);color:#000;border:none;border-radius:8px;font-weight:bold;font-size:15px;cursor:pointer}
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Encontre Seu Oponente — Padroniza Live</title>
+  <style>
+    :root {
+      --bg-gradient: radial-gradient(circle at top left, #5b2cff, #0b1020 40%, #02101f 70%, #c79b3b 100%);
+      --primary-purple: #7b3fff;
+      --primary-gold: #c79b3b;
+      --primary-blue: #1f7aff;
+      --primary-green: #22c55e;
+      --primary-red: #ef4444;
+      --text-light: #f5f5ff;
+      --text-muted: #b3b3cc;
+      --card-bg: rgba(255,255,255,0.05);
+      --card-border: rgba(255,255,255,0.1);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
+    body {
+      background: var(--bg-gradient);
+      min-height: 100vh;
+      color: var(--text-light);
+      padding: 20px;
+    }
+
+    .container { max-width: 900px; margin: 0 auto; }
+    
+    .header {
+      text-align: center;
+      margin-bottom: 30px;
+      position: relative;
+    }
+
+    .btn-voltar {
+      position: absolute;
+      left: 0;
+      top: 0;
+      background: rgba(255,255,255,0.1);
+      border: 1px solid var(--card-border);
+      color: var(--text-light);
+      padding: 10px 16px;
+      border-radius: 10px;
+      cursor: pointer;
+      text-decoration: none;
+      font-size: 14px;
+      transition: all 0.3s;
+    }
+    .btn-voltar:hover { background: rgba(123,63,255,0.3); }
+
+    h1 { font-size: 2rem; margin-bottom: 8px; background: linear-gradient(90deg, #fff, var(--primary-gold)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    .subtitulo { color: var(--text-muted); font-size: 1rem; }
+
+    .botoes-topo {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      margin-bottom: 30px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      padding: 14px 24px;
+      border-radius: 12px;
+      border: none;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .btn-primario { background: linear-gradient(135deg, var(--primary-purple), #6b2fef); color: white; box-shadow: 0 4px 15px rgba(123,63,255,0.3); }
+    .btn-primario:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(123,63,255,0.4); }
+    .btn-sucesso { background: linear-gradient(135deg, var(--primary-green), #16a34a); color: white; }
+    .btn-perigo { background: linear-gradient(135deg, var(--primary-red), #dc2626); color: white; }
+    .btn-whatsapp { background: linear-gradient(135deg, #25d366, #128c7e); color: white; font-size: 0.9rem; padding: 8px 14px; }
+    .btn-whatsapp:hover { transform: scale(1.05); }
+
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+      padding: 24px;
+      margin-bottom: 20px;
+      backdrop-filter: blur(10px);
+      transition: all 0.3s;
+    }
+    .card:hover { border-color: var(--primary-purple); transform: translateY(-3px); }
+
+    .status-badge {
+      display: inline-block;
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      margin-bottom: 16px;
+    }
+    .status-disponivel { background: rgba(34,197,94,0.2); color: #22c55e; border: 1px solid #22c55e; }
+    .status-fechado { background: rgba(239,68,68,0.2); color: #ef4444; border: 1px solid #ef4444; }
+    .status-pendente { background: rgba(251,191,36,0.2); color: #fbbf24; border: 1px solid #fbbf24; }
+
+    .grid-dados {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+    .campo { display: flex; flex-direction: column; gap: 4px; }
+    .campo label { font-size: 0.8rem; color: var(--text-muted); text-transform: uppercase; font-weight: 600; }
+    .campo span { font-size: 1rem; font-weight: 500; word-break: break-all; }
+    .campo a { color: var(--primary-blue); text-decoration: none; }
+    .campo a:hover { text-decoration: underline; }
+
+    .form-group { margin-bottom: 16px; }
+    label { display: block; margin-bottom: 6px; font-weight: 600; color: var(--text-muted); font-size: 0.9rem; }
+    input, select, textarea {
+      width: 100%;
+      padding: 14px;
+      border-radius: 10px;
+      border: 1px solid var(--card-border);
+      background: rgba(255,255,255,0.05);
+      color: var(--text-light);
+      font-size: 1rem;
+      outline: none;
+      transition: border 0.3s;
+    }
+    input:focus, select:focus, textarea:focus { border-color: var(--primary-purple); }
+    textarea { resize: vertical; min-height: 80px; }
+
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.8);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      padding: 20px;
+    }
+    .modal-aberto { display: flex; }
+    .modal {
+      background: #0f172a;
+      border: 1px solid var(--card-border);
+      border-radius: 20px;
+      padding: 30px;
+      max-width: 500px;
+      width: 100%;
+      max-height: 90vh;
+      overflow-y: auto;
+    }
+    .modal h2 { margin-bottom: 20px; color: var(--primary-gold); }
+    .fechar-modal {
+      float: right;
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      font-size: 1.5rem;
+      cursor: pointer;
+      margin-top: -10px;
+    }
+
+    .acoes { display: flex; gap: 10px; margin-top: 20px; flex-wrap: wrap; }
+    .sem-batalhas { text-align: center; padding: 60px 20px; color: var(--text-muted); }
+    .loading { text-align: center; padding: 40px; }
+    .erro { background: rgba(239,68,68,0.1); border: 1px solid #ef4444; color: #fca5a5; padding: 12px; border-radius: 8px; margin-bottom: 20px; }
+    .sucesso { background: rgba(34,197,94,0.1); border: 1px solid #22c55e; color: #86efac; padding: 12px; border-radius: 8px; margin-bottom: 20px; }
+
+    .divisor { height: 1px; background: var(--card-border); margin: 20px 0; }
+  </style>
 </head>
 <body>
+
 <div class="container">
-  <a href="index.html" class="botao-voltar">← Voltar ao Portal</a>
-  <div class="cabecalho">
+  <div class="header">
+    <a href="/" class="btn-voltar">← Voltar ao Site</a>
     <h1>⚔️ Encontre Seu Oponente</h1>
-    <p>Plataforma Oficial de Batalhas entre Agências</p>
+    <p class="subtitulo">Padroniza Live — Sistema de Batalhas</p>
   </div>
 
-  <div class="aviso-gratuito">
-    <strong>🆓 100% GRATUITA E AUTOMÁTICA!</strong>
-    <small>Solicite → Veja → Responda → Confirme → Tudo sozinho!</small>
+  <div class="botoes-topo">
+    <button class="btn btn-primario" onclick="abrirFormulario()">📋 Nova Solicitação</button>
+    <button class="btn" style="background: rgba(255,255,255,0.1); border: 1px solid var(--card-border); color: white;" onclick="carregarBatalhas()">🔄 Atualizar</button>
   </div>
 
-  <div class="abas">
-    <button class="aba-btn ativa" onclick="trocarAba('solicitacoes')">📤 Solicitar Batalha</button>
-    <button class="aba-btn" onclick="trocarAba('painel')">📊 Batalhas Abertas</button>
-  </div>
+  <div id="mensagens"></div>
+  <div id="lista-batalhas"></div>
+</div>
 
-  <div id="abaSolicitacoes" class="conteudo-aba visivel">
-    <div class="aviso-topo">
-      💡 <strong>Como funciona:</strong> Preencha → Envie → Aparece na lista → Outra agência responde! ✅
-    </div>
-    <div class="form-card">
-      <h2>📤 Solicitar Batalha</h2>
-      <form id="formSolicitacao">
-        <div class="grupo-campo">
-          <label class="label">🏢 Nome da sua Agência *</label>
-          <input type="text" name="Nome da sua Agência" class="campo" placeholder="Ex: Padroniza Assessoria" required>
-        </div>
-        <div class="grupo-campo">
-          <label class="label">🔗 Link do Perfil *</label>
-          <input type="url" name="Link do Perfil" class="campo" placeholder="https://www.tiktok.com/@seuusuario" required>
-        </div>
-        <div class="grupo-campo">
-          <label class="label">📱 WhatsApp da Agência (com DDD) *</label>
-          <input type="tel" name="whatsApp da Agência" class="campo" placeholder="Ex: 69981478873" required>
-        </div>
-        <div class="linha-dupla">
-          <div class="grupo-campo">
-            <label class="label">🔥 Round / Rodada *</label>
-            <input type="number" name="Round / Rodada" class="campo" placeholder="1, 2, 3..." min="1" required>
-          </div>
-          <div class="grupo-campo">
-            <label class="label">💎 Meta de Diamantes *</label>
-            <input type="text" name="Meta de Diamantes" class="campo" placeholder="Ex: 5k, 10k" required>
-          </div>
-        </div>
-        <div class="linha-dupla">
-          <div class="grupo-campo">
-            <label class="label">📅 Data desejada *</label>
-            <input type="date" name="Data desejada" class="campo" required>
-          </div>
-          <div class="grupo-campo">
-            <label class="label">🕐 Horário desejado *</label>
-            <input type="time" name="Horário desejado" class="campo" required>
-          </div>
-        </div>
-        <div class="grupo-campo">
-          <label class="label">📝 Observação</label>
-          <textarea name="Observação" class="campo" rows="2" placeholder="Batalha oficial..."></textarea>
-        </div>
-        <button type="submit" class="btn-enviar">📤 ENVIAR SOLICITAÇÃO</button>
-      </form>
-    </div>
-  </div>
+<!-- MODAL — FORMULÁRIO NOVA SOLICITAÇÃO -->
+<div class="modal-overlay" id="modal-form">
+  <div class="modal">
+    <button class="fechar-modal" onclick="fecharFormulario()">&times;</button>
+    <h2 id="titulo-modal">📋 Nova Solicitação de Batalha</h2>
+    
+    <form id="form-solicitacao">
+      <div class="form-group">
+        <label for="agencia">🏢 Nome da sua Agência *</label>
+        <input type="text" id="agencia" name="Nome da sua Agência" required placeholder="Digite o nome da sua agência">
+      </div>
 
-  <div id="abaPainel" class="conteudo-aba">
-    <div class="aviso-topo">
-      📋 <strong>Todas as batalhas abertas!</strong> Clique em "Responder" para preencher os dados do oponente! ✅
-    </div>
-    <div class="lista-solicitacoes">
-      <h2>⚔️ Batalhas Disponíveis</h2>
-      <div id="listaSolicitacoes">🔄 Carregando...</div>
-    </div>
+      <div class="form-group">
+        <label for="perfil">🔗 Link do Perfil do Streamer *</label>
+        <input type="url" id="perfil" name="Link do Perfil" required placeholder="https://www.tiktok.com/@seu_perfil">
+      </div>
+
+      <div class="form-group">
+        <label for="whatsapp">📱 WhatsApp da Agência *</label>
+        <input type="tel" id="whatsapp" name="whatsApp da Agência" required placeholder="DDD + Número — ex: 69999999999">
+      </div>
+
+      <div class="form-group">
+        <label for="rodada">🔥 Round / Rodada *</label>
+        <input type="text" id="rodada" name="Round / Rodada" required placeholder="Ex: 1, 2, 3...">
+      </div>
+
+      <div class="form-group">
+        <label for="meta">💎 Meta de Diamantes *</label>
+        <input type="text" id="meta" name="Meta de Diamantes" required placeholder="Ex: 150k, 2000...">
+      </div>
+
+      <div class="form-group">
+        <label for="data">📅 Data desejada *</label>
+        <input type="date" id="data" name="Data desejada" required>
+      </div>
+
+      <div class="form-group">
+        <label for="horario">🕐 Horário desejado *</label>
+        <input type="time" id="horario" name="Horário desejado" required>
+      </div>
+
+      <div class="form-group">
+        <label for="status">📊 Status</label>
+        <select id="status" name="Status">
+          <option value="DISPONÍVEL" selected>🟢 DISPONÍVEL — Aguardando oponente</option>
+          <option value="FECHADO">🔴 FECHADO — Batalha agendada</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="observacao">📝 Observação (opcional)</label>
+        <textarea id="observacao" name="observação" placeholder="Informações adicionais..."></textarea>
+      </div>
+
+      <div class="acoes">
+        <button type="button" class="btn" style="background: transparent; border: 1px solid var(--card-border); color: white;" onclick="fecharFormulario()">Cancelar</button>
+        <button type="submit" class="btn btn-primario">✅ Enviar Solicitação</button>
+      </div>
+    </form>
   </div>
 </div>
 
-<!-- Modal Responder -->
-<div class="modal" id="modalResponder">
-  <div class="modal-conteudo">
-    <h3>⚔️ Responder Solicitação</h3>
-    <form id="formResponder">
-      <div class="grupo-campo">
-        <label class="label">🏢 Sua Agência (Oponente) *</label>
-        <input type="text" id="agenciaOponente" class="campo" required>
+<!-- MODAL — RESPONDER BATALHA -->
+<div class="modal-overlay" id="modal-resposta">
+  <div class="modal">
+    <button class="fechar-modal" onclick="fecharResposta()">&times;</button>
+    <h2>🤝 Responder Solicitação</h2>
+    <p style="margin-bottom: 20px; color: var(--text-muted);">Preencha os dados da sua agência para fechar a batalha!</p>
+    
+    <form id="form-resposta">
+      <input type="hidden" id="resposta-agencia">
+      <input type="hidden" id="resposta-data">
+      
+      <div class="form-group">
+        <label>🏢 Sua Agência *</label>
+        <input type="text" id="agencia-oponente" required placeholder="Nome da sua agência">
       </div>
-      <div class="grupo-campo">
-        <label class="label">👤 Streamer Oponente *</label>
-        <input type="text" id="nomeOponente" class="campo" required>
+
+      <div class="form-group">
+        <label>👤 Nome do Streamer *</label>
+        <input type="text" id="nome-oponente" required placeholder="Nome do streamer">
       </div>
-      <div class="grupo-campo">
-        <label class="label">🔗 Link do Perfil do Oponente *</label>
-        <input type="url" id="linkOponente" class="campo" required>
+
+      <div class="form-group">
+        <label>🔗 Link do Perfil *</label>
+        <input type="url" id="link-oponente" required placeholder="https://www.tiktok.com/@seu_perfil">
       </div>
-      <div class="grupo-campo">
-        <label class="label">📱 WhatsApp da Agência Oponente *</label>
-        <input type="tel" id="whatsappOponente" class="campo" required>
+
+      <div class="form-group">
+        <label>📱 WhatsApp *</label>
+        <input type="tel" id="whatsapp-oponente" required placeholder="DDD + Número">
       </div>
-      <input type="hidden" id="agenciaAlvo">
-      <input type="hidden" id="dataAlvo">
-      <div class="botoes-modal">
-        <button type="button" class="btn-cancelar" onclick="fecharModal()">❌ Cancelar</button>
-        <button type="submit" class="btn-confirmar">✅ ENVIAR RESPOSTA</button>
+
+      <div class="acoes">
+        <button type="button" class="btn" style="background: transparent; border: 1px solid var(--card-border); color: white;" onclick="fecharResposta()">Cancelar</button>
+        <button type="submit" class="btn btn-sucesso">✅ Confirmar Batalha</button>
       </div>
     </form>
   </div>
 </div>
 
 <script>
-// ✅ LINK DO APPS SCRIPT
-const LINK_APPSCRIPT = "https://script.google.com/macros/s/AKfycbwKe6iYWxWi5Cdr7TL13lDQ-hITwEZiNw1wzYWo6RFe-N0DWNJZKLELOI0Lz9YD7NX2/exec";
+// 🔗 COLOQUE AQUI O LINK DO SEU APPS SCRIPT!
+const LINK_APPSCRIPT = "https://script.google.com/macros/s/AKfycbxQnYcv-dT_IoXUm2P9OGFgPlYEUHQo3Zci8sl3w8I2_rb8rkShU5oyJRNXdBVYDo82/exec";
 
-function trocarAba(nome) {
-  document.querySelectorAll('.aba-btn').forEach(b => b.classList.remove('ativa'));
-  document.querySelectorAll('.conteudo-aba').forEach(c => c.classList.remove('visivel'));
-  event.target.classList.add('ativa');
-  const alvo = nome === 'solicitacoes' ? 'abaSolicitacoes' : 'abaPainel';
-  document.getElementById(alvo).classList.add('visivel');
-  
-  if (nome === 'painel') {
-    console.log("📋 Abrindo lista de batalhas...");
-    carregarLista();
-  }
+// 📱 FORMATAR WHATSAPP PARA LINK
+function formatarWhatsappLink(numero) {
+  let limpo = String(numero).replace(/\D/g, '');
+  if (limpo.length === 11) limpo = '55' + limpo;
+  return `https://wa.me/${limpo}`;
 }
 
-document.getElementById('formSolicitacao').addEventListener('submit', async e => {
-  e.preventDefault();
-  const formData = new FormData(e.target);
-  try {
-    const res = await fetch(LINK_APPSCRIPT, { method: 'POST', body: formData });
-    const json = await res.json();
-    if (json.sucesso) {
-      alert('✅ Solicitação enviada!');
-      e.target.reset();
-      carregarLista();
-    } else alert('❌ Erro: ' + (json.erro || 'Tente novamente'));
-  } catch { alert('❌ Erro de conexão.'); }
-});
+// 📋 CARREGAR LISTA DE BATALHAS
+async function carregarBatalhas() {
+  const lista = document.getElementById('lista-batalhas');
+  lista.innerHTML = '<div class="loading">🔄 Carregando batalhas...</div>';
 
-async function carregarLista() {
-  const lista = document.getElementById('listaSolicitacoes');
-  lista.innerHTML = '🔄 Buscando dados...';
-  
   try {
-    console.log("📡 Buscando:", LINK_APPSCRIPT + "?acao=lerBatalhas");
-    const res = await fetch(LINK_APPSCRIPT + '?acao=lerBatalhas');
-    const json = await res.json();
-    console.log("✅ Resposta recebida:", json);
-    
-    const dados = json.dados || [];
-    
-    if (dados.length === 0) {
-      lista.innerHTML = '<div class="sem-dados">📭 Nenhuma batalha aberta. Seja o primeiro a solicitar!</div>';
+    const res = await fetch(`${LINK_APPSCRIPT}?acao=lerBatalhas`);
+    const dados = await res.json();
+
+    if (!dados.sucesso) {
+      lista.innerHTML = `<div class="erro">❌ Erro: ${dados.erro}</div>`;
       return;
     }
-    
-    lista.innerHTML = dados.map(b => {
+
+    if (dados.dados.length === 0) {
+      lista.innerHTML = `
+        <div class="sem-batalhas">
+          <h3>📭 Nenhuma batalha encontrada</h3>
+          <p>Clique em "Nova Solicitação" para criar a primeira!</p>
+        </div>
+      `;
+      return;
+    }
+
+    // ✅ RENDERIZAR CADA CARDAO
+    lista.innerHTML = dados.dados.map(b => {
       const statusClass = b.status.includes('DISPONÍVEL') ? 'status-disponivel' : 
-                          b.status.includes('RESPONDIDA') ? 'status-respondida' : 'status-confirmada';
+                          b.status.includes('PENDENTE') ? 'status-pendente' : 'status-fechado';
       
-      // ✅ CORRIGIDO: Verifica o tipo antes de usar .includes()
-      let data = b.data || '';
-      if (typeof data === 'string' && data.includes('T')) {
-        data = new Date(data).toLocaleDateString('pt-BR', {timeZone:'America/Porto_Velho'});
-      }
-      
-      let horario = b.horario || '';
-      if (typeof horario === 'string' && horario.includes('T')) {
-        horario = new Date(horario).toLocaleTimeString('pt-BR', {hour:'2-digit', minute:'2-digit', timeZone:'America/Porto_Velho'});
-      } else if (typeof horario === 'string' && horario.length > 5) {
-        horario = horario.substring(0,5);
-      }
-      
+      const whatsappLink = formatarWhatsappLink(b.whatsapp);
+      const disponivel = b.status.includes('DISPONÍVEL');
+
       return `
-        <div class="solicitacao-card">
-          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
-            <span class="agencia-nome">🏢 ${b.agencia}</span>
-            <span class="status-tag ${statusClass}">${b.status}</span>
+        <div class="card">
+          <span class="status-badge ${statusClass}">${b.status}</span>
+          
+          <div class="grid-dados">
+            <div class="campo">
+              <label>Agência</label>
+              <span>${b.agencia || '-'}</span>
+            </div>
+            <div class="campo">
+              <label>Round / Rodada</label>
+              <span>${b.rodada || '-'}</span>
+            </div>
+            <div class="campo">
+              <label>Meta de Diamantes</label>
+              <span>${b.meta || '-'}</span>
+            </div>
+            <div class="campo">
+              <label>Data</label>
+              <span>${b.data || '-'}</span>
+            </div>
+            <div class="campo">
+              <label>Horário</label>
+              <span>${b.horario || '-'}</span>
+            </div>
+            <div class="campo">
+              <label>Perfil</label>
+              <a href="${b.perfil}" target="_blank">🔗 Abrir Perfil</a>
+            </div>
+            <div class="campo">
+              <label>WhatsApp</label>
+              <a href="${whatsappLink}" target="_blank" class="btn btn-whatsapp">💬 ${b.whatsapp || '-'}</a>
+            </div>
           </div>
-          <div class="solicitacao-dados">
-            <p><strong>🔗 Perfil:</strong> <a href="${b.perfil}" target="_blank" style="color:var(--azul)">Abrir Perfil</a></p>
-            <p><strong>📱 WhatsApp:</strong> <a href="https://wa.me/55${b.whatsapp}" target="_blank" style="color:var(--whatsapp)">${b.whatsapp}</a></p>
-            <p><strong>📅 Data:</strong> ${data} às ${horario}</p>
-            <p><strong>🔥 Rodada:</strong> ${b.rodada} | <strong>💎 Meta:</strong> ${b.meta}</p>
-            ${b.observacao && b.observacao !== '—' ? `<p><strong>📝 Obs:</strong> ${b.observacao}</p>` : ''}
-            ${b.oponenteAgencia ? `<hr style="border:0;border-top:1px solid #293653;margin:10px 0;"><p style="color:var(--verde)"><strong>⚔️ Oponente:</strong> ${b.oponenteAgencia} — ${b.oponenteNome}</p>` : ''}
-          </div>
-          ${b.status.includes('DISPONÍVEL') ? 
-            `<button class="btn-responder" onclick="abrirModal('${b.agencia}','${b.data}')">⚔️ RESPONDER COM OPONENTE</button>` : 
-            ''}
+
+          ${b.observacao ? `<div class="campo"><label>Observação</label><span>${b.observacao}</span></div>` : ''}
+
+          ${disponivel ? `
+            <div class="divisor"></div>
+            <div class="acoes">
+              <button class="btn btn-sucesso" onclick="abrirResponder('${b.agencia}', '${b.data}')">🤝 Aceitar / Responder Batalha</button>
+            </div>
+          ` : ''}
         </div>
       `;
     }).join('');
-    
+
   } catch (erro) {
-    console.error("❌ Erro:", erro);
-    lista.innerHTML = `<div class="sem-dados">❌ Erro: ${erro.message}<br>Atualize e tente novamente.</div>`;
+    lista.innerHTML = `<div class="erro">❌ Erro ao carregar: ${erro.message}</div>`;
   }
 }
 
-function abrirModal(agencia, data) {
-  document.getElementById('agenciaAlvo').value = agencia;
-  document.getElementById('dataAlvo').value = data;
-  document.getElementById('modalResponder').classList.add('ativo');
+// 📝 ABRIR FORMULÁRIO NOVA SOLICITAÇÃO
+function abrirFormulario() {
+  document.getElementById('modal-form').classList.add('modal-aberto');
+  document.getElementById('form-solicitacao').reset();
+  document.getElementById('titulo-modal').textContent = '📋 Nova Solicitação de Batalha';
 }
 
-function fecharModal() {
-  document.getElementById('modalResponder').classList.remove('ativo');
-  document.getElementById('formResponder').reset();
+function fecharFormulario() {
+  document.getElementById('modal-form').classList.remove('modal-aberto');
 }
 
-document.getElementById('formResponder').addEventListener('submit', async e => {
+// 🤝 ABRIR FORMULÁRIO DE RESPOSTA
+function abrirResponder(agencia, data) {
+  document.getElementById('modal-resposta').classList.add('modal-aberto');
+  document.getElementById('resposta-agencia').value = agencia;
+  document.getElementById('resposta-data').value = data;
+  document.getElementById('form-resposta').reset();
+  document.getElementById('resposta-agencia').value = agencia;
+  document.getElementById('resposta-data').value = data;
+}
+
+function fecharResposta() {
+  document.getElementById('modal-resposta').classList.remove('modal-aberto');
+}
+
+// ✅ ENVIAR NOVA SOLICITAÇÃO
+document.getElementById('form-solicitacao').addEventListener('submit', async e => {
   e.preventDefault();
-  const dados = {
-    agencia: document.getElementById('agenciaAlvo').value,
-    data: document.getElementById('dataAlvo').value,
-    agenciaOponente: document.getElementById('agenciaOponente').value,
-    nomeOponente: document.getElementById('nomeOponente').value,
-    linkOponente: document.getElementById('linkOponente').value,
-    whatsappOponente: document.getElementById('whatsappOponente').value
-  };
+  const form = e.target;
+  const btn = form.querySelector('button[type="submit"]');
+  btn.disabled = true;
+  btn.textContent = '⏳ Enviando...';
+
+  const formData = new FormData(form);
+
   try {
-    const res = await fetch(LINK_APPSCRIPT, { method: 'PUT', body: new URLSearchParams(dados) });
-    const json = await res.json();
-    if (json.sucesso) {
-      alert('✅ Resposta enviada!');
-      fecharModal();
-      carregarLista();
-    } else alert('❌ Erro: ' + (json.erro || 'Tente novamente'));
-  } catch { alert('❌ Erro de conexão.'); }
+    const res = await fetch(LINK_APPSCRIPT, {
+      method: 'POST',
+      body: formData
+    });
+    const resultado = await res.json();
+
+    if (resultado.sucesso) {
+      document.getElementById('mensagens').innerHTML = `<div class="sucesso">✅ ${resultado.mensagem}</div>`;
+      fecharFormulario();
+      form.reset();
+      carregarBatalhas();
+      setTimeout(() => document.getElementById('mensagens').innerHTML = '', 5000);
+    } else {
+      document.getElementById('mensagens').innerHTML = `<div class="erro">❌ ${resultado.erro}</div>`;
+    }
+  } catch (erro) {
+    document.getElementById('mensagens').innerHTML = `<div class="erro">❌ Erro de conexão! Tente novamente.</div>`;
+  }
+
+  btn.disabled = false;
+  btn.textContent = '✅ Enviar Solicitação';
 });
 
-window.onload = function() {
-  console.log("✅ Página carregada! Pronto para usar!");
-};
+// ✅ RESPONDER BATALHA
+document.getElementById('form-resposta').addEventListener('submit', async e => {
+  e.preventDefault();
+  const form = e.target;
+  const btn = form.querySelector('button[type="submit"]');
+  btn.disabled = true;
+  btn.textContent = '⏳ Salvando...';
+
+  const dados = {
+    acao: 'responder',
+    agencia: document.getElementById('resposta-agencia').value,
+    data: document.getElementById('resposta-data').value,
+    agenciaOponente: document.getElementById('agencia-oponente').value,
+    nomeOponente: document.getElementById('nome-oponente').value,
+    linkOponente: document.getElementById('link-oponente').value,
+    whatsappOponente: document.getElementById('whatsapp-oponente').value
+  };
+
+  try {
+    const params = new URLSearchParams(dados);
+    const res = await fetch(`${LINK_APPSCRIPT}?${params.toString()}`, {
+      method: 'PUT'
+    });
+    const resultado = await res.json();
+
+    if (resultado.sucesso) {
+      const whatsappLink = formatarWhatsappLink(dados.whatsappOponente);
+      document.getElementById('mensagens').innerHTML = `<div class="sucesso">✅ ${resultado.mensagem} — Redirecionando...</div>`;
+      fecharResposta();
+      carregarBatalhas();
+      // ➡️ REDIRECIONA PRO WHATSAPP DA AGÊNCIA QUE PEDIU
+      setTimeout(() => window.open(whatsappLink, '_blank'), 1500);
+      setTimeout(() => document.getElementById('mensagens').innerHTML = '', 8000);
+    } else {
+      document.getElementById('mensagens').innerHTML = `<div class="erro">❌ ${resultado.erro}</div>`;
+    }
+  } catch (erro) {
+    document.getElementById('mensagens').innerHTML = `<div class="erro">❌ Erro de conexão! Tente novamente.</div>`;
+  }
+
+  btn.disabled = false;
+  btn.textContent = '✅ Confirmar Batalha';
+});
+
+// 🔄 INICIAR AO CARREGAR
+document.addEventListener('DOMContentLoaded', carregarBatalhas);
+
+// ✅ FECHAR MODAL AO CLICAR FORA
+document.getElementById('modal-form').addEventListener('click', e => {
+  if (e.target === e.currentTarget) fecharFormulario();
+});
+document.getElementById('modal-resposta').addEventListener('click', e => {
+  if (e.target === e.currentTarget) fecharResposta();
+});
 </script>
+
 </body>
 </html>
