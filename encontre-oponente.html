@@ -49,7 +49,8 @@
     .modal-aberto { display: flex; }
     .modal { background: #0f172a; border: 1px solid var(--card-border); border-radius: 20px; padding: 28px; max-width: 520px; width: 100%; max-height: 90vh; overflow-y: auto; }
     .modal h2 { margin-bottom: 20px; color: var(--primary-gold); font-size: 1.4rem; }
-    .fechar { float: right; background: none; border: none; color: var(--text-muted); font-size: 1.5rem; cursor: pointer; margin-top: -8px; }
+    .fechar { float: right; background: none; border: none; color: var(--text-muted); font-size: 1.8rem; cursor: pointer; margin-top: -8px; transition: color 0.2s; }
+    .fechar:hover { color: #fff; }
     .form-group { margin-bottom: 16px; }
     label { display: block; margin-bottom: 6px; font-weight: 600; color: var(--text-muted); font-size: 0.9rem; }
     input, select, textarea { width: 100%; padding: 13px; border-radius: 10px; border: 1px solid var(--card-border); background: var(--card-bg); color: var(--text-light); font-size: 1rem; outline: none; }
@@ -151,9 +152,9 @@
 </div>
 
 <!-- MODAL CADASTRAR -->
-<div class="modal-overlay" id="modal-form">
+<div class="modal-overlay" id="modal-form" onclick="fecharFora(event)">
   <div class="modal">
-    <button class="fechar" onclick="fecharFormulario()">&times;</button>
+    <button class="fechar" onclick="fecharFormulario(); event.stopPropagation();">&times;</button>
     <h2>📋 Nova Solicitação de Batalha</h2>
     <form id="form-solicitacao">
       <div class="form-group"><label>🏢 Nome da Agência *</label><input type="text" id="agencia" name="agencia" required placeholder="Nome da sua agência"></div>
@@ -190,15 +191,15 @@
         </label>
       </div>
       
-      <div class="acoes"><button type="button" class="btn btn-secondary" onclick="fecharFormulario()">Cancelar</button><button type="submit" class="btn btn-primary">✅ Enviar Solicitação</button></div>
+      <div class="acoes"><button type="button" class="btn btn-secondary" onclick="fecharFormulario(); event.stopPropagation();">Cancelar</button><button type="submit" class="btn btn-primary">✅ Enviar Solicitação</button></div>
     </form>
   </div>
 </div>
 
-<!-- MODAL ACEITAR BATALHA — CORRIGIDO! ✅ -->
-<div class="modal-overlay" id="modal-aceitar">
+<!-- MODAL ACEITAR BATALHA — FECHAR CORRIGIDO! ✅ -->
+<div class="modal-overlay" id="modal-aceitar" onclick="fecharFora(event)">
   <div class="modal">
-    <button class="fechar" onclick="fecharAceitar()">&times;</button>
+    <button class="fechar" onclick="fecharAceitar(); event.stopPropagation();">&times;</button>
     <h2>🤝 Aceitar Batalha</h2>
     <p style="margin-bottom:16px;color:var(--text-muted)">Preencha os dados da sua agência:</p>
     <form id="form-aceitar">
@@ -208,15 +209,18 @@
       <div class="form-group"><label>👤 Seu Streamer *</label><input type="text" id="streamer-oponente" name="streamerOponente" required></div>
       <div class="form-group"><label>🔗 Link do Perfil *</label><input type="url" id="link-oponente" name="linkOponente" required></div>
       <div class="form-group"><label>📱 Seu WhatsApp *</label><input type="tel" id="whatsapp-oponente" name="whatsappOponente" required placeholder="DDD + Número"></div>
-      <div class="acoes"><button type="button" class="btn btn-secondary" onclick="fecharAceitar()">Cancelar</button><button type="submit" class="btn btn-success">✅ Confirmar e Enviar</button></div>
+      <div class="acoes">
+        <button type="button" class="btn btn-secondary" onclick="fecharAceitar(); event.stopPropagation();">❌ Cancelar</button>
+        <button type="submit" class="btn btn-success">✅ Confirmar e Enviar</button>
+      </div>
     </form>
   </div>
 </div>
 
-<!-- MODAL ALTERAR STATUS -->
-<div class="modal-overlay" id="modal-status">
+<!-- MODAL ALTERAR STATUS — FECHAR CORRIGIDO! ✅ -->
+<div class="modal-overlay" id="modal-status" onclick="fecharFora(event)">
   <div class="modal">
-    <button class="fechar" onclick="fecharStatus()">&times;</button>
+    <button class="fechar" onclick="fecharStatus(); event.stopPropagation();">&times;</button>
     <h2>🔄 Alterar Status da Batalha</h2>
     <form id="form-status">
       <input type="hidden" id="linha-status" name="linha">
@@ -243,7 +247,7 @@
           <span class="status-texto">🔴 CANCELADA</span>
         </label>
       </div>
-      <div class="acoes"><button type="button" class="btn btn-secondary" onclick="fecharStatus()">Cancelar</button><button type="submit" class="btn btn-primary">✅ Salvar Status</button></div>
+      <div class="acoes"><button type="button" class="btn btn-secondary" onclick="fecharStatus(); event.stopPropagation();">Cancelar</button><button type="submit" class="btn btn-primary">✅ Salvar Status</button></div>
     </form>
   </div>
 </div>
@@ -253,22 +257,36 @@
 const LINK_APPSCRIPT = "https://script.google.com/macros/s/AKfycbxofxkZ_Wqz_MOOFnYbNq12wCd5Lt4HIIWVMGPkxE_pd7lnypMOnjsnYJW0EX3__Kdo/exec";
 
 let todasBatalhas = [];
-let batalhaAceitaDados = null; // GUARDA OS DADOS PARA ABRIR WHATSAPP DEPOIS
+let batalhaAceitaDados = null;
 
-// ✅ FUNÇÃO CORRIGIDA DE FORMATAR WHATSAPP
+// ✅ FECHAR CLICANDO FORA DO FORMULÁRIO — CORRIGIDO!
+function fecharFora(event) {
+  if (event.target.classList.contains("modal-overlay")) {
+    event.target.classList.remove("modal-aberto");
+    event.target.querySelector("form")?.reset();
+  }
+}
+
+// ✅ FUNÇÕES DE FECHAR — GARANTIDAS E FUNCIONANDO!
+function fecharFormulario() {
+  document.getElementById("modal-form").classList.remove("modal-aberto");
+  document.getElementById("form-solicitacao").reset();
+}
+function fecharAceitar() {
+  document.getElementById("modal-aceitar").classList.remove("modal-aberto");
+  document.getElementById("form-aceitar").reset();
+}
+function fecharStatus() {
+  document.getElementById("modal-status").classList.remove("modal-aberto");
+  document.getElementById("form-status").reset();
+}
+
+// ✅ FORMATAR WHATSAPP — CORRIGIDO!
 function formatarWhatsapp(numero) {
   if (!numero) return "";
   let limpo = String(numero).replace(/\D/g, "");
-  if (limpo.length === 11) {
-    // 11 dígitos = Brasil → adiciona 55
-    limpo = "55" + limpo;
-  } else if (limpo.length === 10) {
-    // 10 dígitos = fixo → adiciona 55
-    limpo = "55" + limpo;
-  }
-  if (limpo.length >= 12) {
-    return `https://wa.me/${limpo}`;
-  }
+  if (limpo.length === 11 || limpo.length === 10) limpo = "55" + limpo;
+  if (limpo.length >= 12) return `https://wa.me/${limpo}`;
   return "";
 }
 
@@ -343,18 +361,14 @@ async function buscarBatalhas() {
 
 function limparBusca() { document.getElementById("busca-agencia").value = ""; renderizarBatalhas(todasBatalhas); }
 function abrirFormulario() { document.getElementById("modal-form").classList.add("modal-aberto"); }
-function fecharFormulario() { document.getElementById("modal-form").classList.remove("modal-aberto"); document.getElementById("form-solicitacao").reset(); }
 function abrirAceitar(linha) { 
   document.getElementById("modal-aceitar").classList.add("modal-aberto"); 
   document.getElementById("linha-batalha").value = linha; 
-  // GUARDA OS DADOS DA BATALHA PRA USAR DEPOIS NO WHATSAPP
   batalhaAceitaDados = todasBatalhas.find(b => b.linha === linha);
 }
-function fecharAceitar() { document.getElementById("modal-aceitar").classList.remove("modal-aceitar"); document.getElementById("form-aceitar").reset(); }
 function abrirStatus(linha) { document.getElementById("modal-status").classList.add("modal-aberto"); document.getElementById("linha-status").value = linha; }
-function fecharStatus() { document.getElementById("modal-status").classList.remove("modal-aberto"); }
 
-// ✅ FORMULÁRIO — CADASTRAR NOVA BATALHA
+// ✅ CADASTRAR NOVA BATALHA
 document.getElementById("form-solicitacao").addEventListener("submit", async e => {
   e.preventDefault();
   const btn = e.target.querySelector('button[type="submit"]');
@@ -365,16 +379,15 @@ document.getElementById("form-solicitacao").addEventListener("submit", async e =
     const json = await res.json();
     if (json.sucesso) { mensagem("✅ " + json.mensagem, "sucesso"); fecharFormulario(); carregarBatalhas(); }
     else mensagem("❌ " + json.erro, "erro");
-  } catch (erro) { mensagem("❌ Erro de conexão! Tente novamente.", "erro"); }
+  } catch { mensagem("❌ Erro de conexão! Tente novamente.", "erro"); }
   btn.disabled = false; btn.textContent = "✅ Enviar Solicitação";
 });
 
-// ✅ FORMULÁRIO — ACEITAR BATALHA — CORRIGIDO! ✅
+// ✅ ACEITAR BATALHA — CORRIGIDO E FUNCIONANDO!
 document.getElementById("form-aceitar").addEventListener("submit", async e => {
   e.preventDefault();
   const btn = e.target.querySelector('button[type="submit"]');
   btn.disabled = true; btn.textContent = "⏳ Salvando...";
-  
   const formData = new FormData(e.target);
   
   try {
@@ -386,7 +399,6 @@ document.getElementById("form-aceitar").addEventListener("submit", async e => {
       fecharAceitar();
       carregarBatalhas();
       
-      // ✅ ABRE O WHATSAPP DA AGÊNCIA SOLICITANTE
       const dados = json.dados || batalhaAceitaDados;
       if (dados && dados.whatsapp) {
         const wppLink = formatarWhatsapp(dados.whatsapp);
@@ -400,20 +412,18 @@ document.getElementById("form-aceitar").addEventListener("submit", async e => {
     } else {
       mensagem("❌ " + (json.erro || "Erro ao salvar"), "erro");
     }
-  } catch (erro) {
+  } catch {
     mensagem("❌ Erro de conexão! Tente novamente.", "erro");
-    console.error(erro);
   }
   
   btn.disabled = false; btn.textContent = "✅ Confirmar e Enviar";
 });
 
-// ✅ FORMULÁRIO — ALTERAR STATUS
+// ✅ ALTERAR STATUS
 document.getElementById("form-status").addEventListener("submit", async e => {
   e.preventDefault();
   const btn = e.target.querySelector('button[type="submit"]');
   btn.disabled = true; btn.textContent = "⏳ Salvando...";
-  
   const formData = new FormData(e.target);
   
   try {
@@ -427,14 +437,13 @@ document.getElementById("form-status").addEventListener("submit", async e => {
     } else {
       mensagem("❌ " + (json.erro || "Erro ao salvar"), "erro");
     }
-  } catch (erro) {
+  } catch {
     mensagem("❌ Erro de conexão! Tente novamente.", "erro");
   }
   
   btn.disabled = false; btn.textContent = "✅ Salvar Status";
 });
 
-document.querySelectorAll(".modal-overlay").forEach(m => m.addEventListener("click", e => { if (e.target === m) m.classList.remove("modal-aberto"); }));
 document.getElementById("busca-agencia").addEventListener("keydown", e => { if (e.key === "Enter") buscarBatalhas(); });
 document.addEventListener("DOMContentLoaded", carregarBatalhas);
 </script>
