@@ -94,16 +94,16 @@
     </div>
 
     <div class="aviso-topo">
-      💡 <strong>Bem-vindo(a)!</strong> Digite seu nome/arroba exatamente como cadastrado na coluna "Nome do criador" para ver todos os seus dados. Aqui você acompanha seu crescimento, metas e quanto está evoluindo mês a mês! 📈
+      💡 <strong>Bem-vindo(a)!</strong> Digite seu nome de usuário do TikTok — exatamente igual ao seu perfil — para ver suas metas, acompanhar seu desempenho e ver tudo que preparamos pra você! 📊✨
     </div>
 
     <div id="area-login" class="card">
       <h2 class="card-titulo">🔐 Acesso Exclusivo do Criador</h2>
       <div class="input-grupo">
-        <label for="usuario">Seu Nome / Arroba (igual à coluna "Nome do criador")</label>
+        <label for="usuario">Seu usuário do TikTok / @</label>
         <input type="text" id="usuario" placeholder="Ex: @seu_usuario ou Seu Nome" autocomplete="off" />
       </div>
-      <button class="btn-principal" onclick="validarAcesso()">Ver Meu Relatório →</button>
+      <button class="btn-principal" onclick="validarAcesso()">📊 Ver Meu Relatório →</button>
       
       <div class="video-container">
         <button class="btn-video" onclick="abrirVideo()">📺 Assista o vídeo explicativo — Como funciona esta página</button>
@@ -428,12 +428,12 @@
 
   <script>
     // ==================================================
-    // 🔗 LINK DO APPS SCRIPT — JÁ COLOCADO! ✅
+    // 🔗 LINK DO APPS SCRIPT — JÁ VINCULADO! ✅
     // ==================================================
     const LINK_APPS_SCRIPT = "https://script.google.com/macros/s/AKfycbw2uDYdkFPBOly-_ZQNkvbznS_4s8HuTgh_SoPC2yTPc-ku7Rv8beZMPy_YlWGvGTn95w/exec";
 
-    // 🎬 LINK DO VÍDEO — COLOQUE SEU LINK DO YOUTUBE AQUI DEPOIS!
-    const LINK_VIDEO = ""; // Ex: "https://youtu.be/xxxxxx" — Vídeo NÃO LISTADO, perfeito!
+    // 🎬 LINK DO VÍDEO — COLOQUE SEU LINK DO YOUTUBE AQUI!
+    const LINK_VIDEO = "";
 
     let graficoDiamantes, graficoComparativo;
     let nivelAtualUsuario = 0;
@@ -446,24 +446,31 @@
       el.classList.toggle('visivel');
     }
 
+    // ==================================================
+    // ✅ FUNÇÃO PRINCIPAL — BOTÃO "Ver Meu Relatório"
+    // ==================================================
     async function validarAcesso() {
       const usuario = document.getElementById('usuario').value.trim();
+      
       if (!usuario) {
-        alert('⚠️ Digite seu nome/arroba!');
+        alert('⚠️ Digite seu usuário do TikTok!');
         return;
       }
 
+      // Mostra tela de carregamento
       mostrarArea('carregando');
 
       try {
+        // Busca no Apps Script
         const res = await fetch(`${LINK_APPS_SCRIPT}?acao=buscar&usuario=${encodeURIComponent(usuario)}`);
         const resposta = await res.json();
 
         if (!resposta.encontrado) {
-          mostrarErro(`❌ ${resposta.erro || 'Usuário não encontrado. Verifique se digitou igualzinho à coluna "Nome do criador"!'}`);
+          mostrarErro(`❌ Não encontramos "${usuario}". Verifique se digitou exatamente igual ao seu perfil do TikTok e tente novamente!`);
           return;
         }
 
+        // Preenche os dados na tela
         preencherDados(resposta);
         mostrarArea('dados');
 
@@ -473,24 +480,180 @@
       }
     }
 
+    // ==================================================
+    // 📊 PREENCHER TODOS OS DADOS NA TELA
+    // ==================================================
     function preencherDados(d) {
+      // Dados básicos
       document.getElementById('nome-criador').textContent = d.nomeCriador || '-';
       document.getElementById('periodo').textContent = d.periodo || '-';
       document.getElementById('dia-entrada').textContent = d.diaEntrada || '-';
       document.getElementById('horario-ingresso').textContent = d.horarioIngresso || '-';
       document.getElementById('grupo-exibicao').textContent = d.grupo || 'Padroniza — Matriz (Central)';
       
+      // Status
       const badge = document.getElementById('status-badge');
       badge.textContent = d.status || 'Ativo';
       badge.className = (String(d.status).toLowerCase().includes('ativo') || !d.status) 
         ? 'status-badge status-ativo' 
         : 'status-badge status-inativo';
 
+      // Nível
       const nivelTexto = String(d.statusNivel || d.statusGraduacao || '-');
       document.getElementById('nivel').textContent = nivelTexto;
       document.getElementById('r-graduacao').textContent = d.statusGraduacao || '-';
       document.getElementById('r-nivel').textContent = nivelTexto;
       
+      // Define nível atual
       if (nivelTexto.includes('5')) nivelAtualUsuario = 5;
       else if (nivelTexto.includes('4')) nivelAtualUsuario = 4;
-      else if (nivelTexto.includes('3'))
+      else if (nivelTexto.includes('3')) nivelAtualUsuario = 3;
+      else if (nivelTexto.includes('2')) nivelAtualUsuario = 2;
+      else if (nivelTexto.includes('1')) nivelAtualUsuario = 1;
+      else nivelAtualUsuario = 0;
+
+      // Métricas principais
+      document.getElementById('diamantes-mes').textContent = d.diamantesMes || 0;
+      document.getElementById('horas-live').textContent = (d.horasLive || 0) + 'h';
+      document.getElementById('seguidores').textContent = d.novosSeguidores || 0;
+      document.getElementById('lives').textContent = d.quantidadeLives || 0;
+
+      // Porcentagem da meta
+      const pctDiamantes = d.metaDiamantes ? Math.round((d.diamantesMes || 0) / d.metaDiamantes * 100) : 0;
+      document.getElementById('pct-diamantes').textContent = pctDiamantes + '%';
+      document.getElementById('barra-progresso').style.width = Math.min(pctDiamantes, 100) + '%';
+      document.getElementById('barra-progresso').textContent = Math.min(pctDiamantes, 100) + '%';
+
+      // Restante dos dados
+      document.getElementById('r-diamantes-mes').textContent = d.diamantesMes || 0;
+      document.getElementById('r-diamantes-passado').textContent = d.diamantesMesPassado || 0;
+      document.getElementById('r-var-diamantes').textContent = (d.varDiamantes || 0) + '%';
+      document.getElementById('r-pct-diamantes').textContent = pctDiamantes + '%';
+      document.getElementById('r-total-diamantes').textContent = d.totalDiamantes || 0;
+      document.getElementById('r-convite').textContent = d.bonusConvite || 0;
+
+      document.getElementById('r-horas-mes').textContent = (d.horasLive || 0) + 'h';
+      document.getElementById('r-horas-passado').textContent = (d.horasMesPassado || 0) + 'h';
+      document.getElementById('r-var-horas').textContent = (d.varHoras || 0) + '%';
+      document.getElementById('r-dias-live').textContent = d.diasLive || 0;
+      document.getElementById('r-lives').textContent = d.quantidadeLives || 0;
+      document.getElementById('r-pct-horas').textContent = (d.pctHoras || 0) + '%';
+
+      document.getElementById('r-seg-mes').textContent = d.novosSeguidores || 0;
+      document.getElementById('r-seg-passado').textContent = d.seguidoresPassado || 0;
+      document.getElementById('r-var-seg').textContent = (d.varSeguidores || 0) + '%';
+      document.getElementById('r-pct-seg').textContent = (d.pctSeguidores || 0) + '%';
+      document.getElementById('r-seg-por-live').textContent = d.segPorLive || 0;
+      document.getElementById('r-fas-ativos').textContent = d.fasAtivos || 0;
+      document.getElementById('r-total-fas').textContent = d.totalFas || 0;
+
+      document.getElementById('r-novos-fas').textContent = d.novosFas || 0;
+      document.getElementById('r-pct-fas').textContent = (d.pctContribuicao || 0) + '%';
+      document.getElementById('r-batalhas').textContent = d.batalhas || 0;
+      document.getElementById('r-novos-criadores').textContent = d.novosCriadores || 0;
+      document.getElementById('r-status').textContent = d.situacao || '-';
+
+      // Destaca linha do nível atual na tabela
+      for (let i = 0; i <= 5; i++) {
+        const linha = document.getElementById(`linha-n${i}`);
+        if (linha) linha.classList.remove('nivel-atual-row');
+      }
+      const linhaAtual = document.getElementById(`linha-n${nivelAtualUsuario}`);
+      if (linhaAtual) linhaAtual.classList.add('nivel-atual-row');
+
+      // Inicializa gráficos
+      inicializarGraficos(d);
+    }
+
+    // ==================================================
+    // 📊 INICIALIZAR GRÁFICOS
+    // ==================================================
+    function inicializarGraficos(d) {
+      // Gráfico de Diamantes
+      const ctx1 = document.getElementById('graficoDiamantes').getContext('2d');
+      if (graficoDiamantes) graficoDiamantes.destroy();
+      graficoDiamantes = new Chart(ctx1, {
+        type: 'bar',
+        data: {
+          labels: ['Mês Passado', 'Este Mês'],
+          datasets: [{
+            label: 'Diamantes',
+            data: [d.diamantesMesPassado || 0, d.diamantesMes || 0],
+            backgroundColor: ['#b3b3cc', '#22c55e'],
+            borderRadius: 8
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: { legend: { display: false } },
+          scales: {
+            y: { beginAtZero: true, grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#b3b3cc' } },
+            x: { grid: { display: false }, ticks: { color: '#b3b3cc' } }
+          }
+        }
+      });
+
+      // Gráfico Comparativo
+      const ctx2 = document.getElementById('graficoComparativo').getContext('2d');
+      if (graficoComparativo) graficoComparativo.destroy();
+      graficoComparativo = new Chart(ctx2, {
+        type: 'line',
+        data: {
+          labels: ['Diamantes', 'Horas', 'Seguidores', 'Lives'],
+          datasets: [
+            { label: 'Este Mês', data: [d.diamantesMes || 0, d.horasLive || 0, d.novosSeguidores || 0, d.quantidadeLives || 0], borderColor: '#7b3fff', backgroundColor: 'rgba(123,63,255,0.2)', fill: true, tension: 0.4 },
+            { label: 'Mês Passado', data: [d.diamantesMesPassado || 0, d.horasMesPassado || 0, d.seguidoresPassado || 0, d.quantidadeLivesPassado || 0], borderColor: '#b3b3cc', backgroundColor: 'rgba(179,179,204,0.1)', fill: true, tension: 0.4 }
+          ]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: { legend: { labels: { color: '#f5f5ff' } } },
+          scales: {
+            y: { beginAtZero: true, grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#b3b3cc' } },
+            x: { grid: { display: false }, ticks: { color: '#b3b3cc' } }
+          }
+        }
+      });
+    }
+
+    // ==================================================
+    // 🔄 ALTERNAR ÁREAS DA TELA
+    // ==================================================
+    function mostrarArea(nome) {
+      document.getElementById('area-login').classList.add('oculto');
+      document.getElementById('area-carregando').classList.add('oculto');
+      document.getElementById('area-dados').classList.add('oculto');
+      document.getElementById('area-erro').classList.add('oculto');
+      
+      if (nome === 'login') document.getElementById('area-login').classList.remove('oculto');
+      if (nome === 'carregando') document.getElementById('area-carregando').classList.remove('oculto');
+      if (nome === 'dados') document.getElementById('area-dados').classList.remove('oculto');
+      if (nome === 'erro') document.getElementById('area-erro').classList.remove('oculto');
+    }
+
+    function mostrarErro(texto) {
+      document.getElementById('texto-erro').textContent = texto;
+      mostrarArea('erro');
+    }
+
+    function voltarLogin() {
+      document.getElementById('usuario').value = '';
+      mostrarArea('login');
+    }
+
+    function alternarTabela() {
+      document.getElementById('tabela-bonificacao').classList.toggle('oculto');
+    }
+
+    function abrirVideo() {
+      if (LINK_VIDEO) {
+        window.open(LINK_VIDEO, '_blank');
+      } else {
+        alert('🎬 O vídeo explicativo será adicionado em breve! Em caso de dúvidas, fale com sua agência. 💜');
+      }
+    }
+  </script>
+</body>
+</html>
