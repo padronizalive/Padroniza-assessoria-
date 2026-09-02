@@ -94,9 +94,9 @@
 </div>
 
 <script>
-// 🔗 LINK DO APPS SCRIPT — JÁ PRONTO! ATUALIZE APÓS REIMPLANTAR SE PRECISAR:
-const LINK_APPSCRIPT = "https://script.google.com/macros/s/AKfycbxofxkZ_Wqz_MOOFnYbNq12wCd5Lt4HIIWVMGPkxE_pd7lnypMOnjsnYJW0EX3__Kdo/exec";
-const LINK_VIDEO = ""; // ← COLA AQUI O LINK DO SEU VÍDEO QUANDO FICAR PRONTO!
+// ✅ LINK DO APPS SCRIPT — JÁ COLOCADO COMPLETAMENTE! NÃO MEXE NEL!
+const LINK_APPSCRIPT = "https://script.google.com/macros/s/AKfycbytwO_vXyJSzDdwMGHHC-g43sNHm4-aSKAiZY4FCaXklUdeJll7B40gujlXPw3oTPocmQ/exec";
+const LINK_VIDEO = ""; // ← COLA O LINK DO SEU VÍDEO AQUI SÓ QUANDO TIVER PRONTO — O RESTO JÁ ESTÁ PRONTO!
 let graficoLinha;
 
 function valor(v){ return v === '-' || v === '' ? '-' : v; }
@@ -105,7 +105,7 @@ function barraMeta(textoPct){
   if(!textoPct || textoPct === '-') return '';
   const n = parseFloat(String(textoPct).replace('%','').replace(',','.'))||0;
   const p = Math.min(100,Math.max(0,n));
-  const cor = p>=100?'linear-gradient(90deg,#22c55e,#34d399)':p>=70?'linear-gradient(90deg,#f59e0b,#ffc857)':'linear-gradient((90deg,#dc2626,#ef4444)';
+  const cor = p>=100?'linear-gradient(90deg,#22c55e,#34d399)':p>=70?'linear-gradient(90deg,#f59e0b,#ffc857)':'linear-gradient(90deg,#dc2626,#ef4444)';
   return `<div class="barra-fundo"><div class="barra-pct" style="width:${p}%;background:${cor}"></div></div>`;
 }
 function gerarMensagem(d){
