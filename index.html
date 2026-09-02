@@ -46,13 +46,13 @@
       padding: 16px 16px 32px;
       display: flex;
       flex-direction: column;
-      gap: 24px;
+      gap: 20px;
     }
     header {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 16px;
+      gap: 12px;
       padding: 12px 16px;
       border-radius: 16px;
       background: linear-gradient(135deg, rgba(10,12,24,0.9), rgba(40,20,80,0.9));
@@ -61,23 +61,70 @@
     }
     .logo-area { display: flex; align-items: center; gap: 12px; }
     .logo-area img {
-      width: 72px; height: 72px; border-radius: 50%; object-fit: cover;
+      width: 64px; height: 64px; border-radius: 50%; object-fit: cover;
       border: 2px solid var(--primary-gold);
       box-shadow: 0 0 18px rgba(199,155,59,0.6);
     }
-    .title-block { display: flex; flex-direction: column; gap: 4px; }
-    .title-block h1 { font-size: 1.4rem; letter-spacing: 0.06em; text-transform: uppercase; }
-    .title-block span { font-size: 0.85rem; color: var(--text-muted); }
+    .title-block { display: flex; flex-direction: column; gap: 2px; }
+    .title-block h1 { font-size: 1.2rem; letter-spacing: 0.06em; text-transform: uppercase; }
+    .title-block span { font-size: 0.8rem; color: var(--text-muted); }
     .admin-link button {
       padding: 8px 14px; border-radius: 999px; border: 1px solid rgba(199,155,59,0.7);
       background: linear-gradient(135deg, #c79b3b, #7b3fff); color: #050509;
       font-weight: 600; font-size: 0.85rem; cursor: pointer;
     }
-    .main-grid { display: grid; grid-template-columns: minmax(0, 2fr) minmax(0, 1.4fr); gap: 20px; }
-    @media (max-width: 900px) {
-      .main-grid { grid-template-columns: minmax(0, 1fr); }
-      header { flex-direction: column; align-items: flex-start; }
+
+    /* ==============================================
+       🎯 SEÇÃO BOTÕES PRINCIPAIS — NO TOPO, DESTAQUE!
+       ============================================== */
+    .botoes-principais {
+      background: var(--card-bg);
+      border-radius: 18px;
+      padding: 20px 16px;
+      border: 1px solid var(--border-soft);
+      box-shadow: 0 4px 20px rgba(123, 63, 255, 0.15);
     }
+    .botoes-titulo {
+      font-size: 0.95rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--primary-gold);
+      margin-bottom: 14px;
+      text-align: center;
+    }
+    .button-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: center;
+    }
+    .btn {
+      border-radius: 999px; padding: 12px 18px; font-size: 0.9rem; font-weight: 600;
+      border: none; cursor: pointer; display: inline-flex; align-items: center; gap: 8px;
+      transition: all 0.2s ease; white-space: nowrap;
+      text-decoration: none; justify-content: center; flex: 1; min-width: 180px;
+    }
+    .btn:hover { transform: translateY(-2px); box-shadow: 0 4px 15px rgba(0,0,0,0.3); }
+    .btn-visitante { background: linear-gradient(135deg, #7b3fff, #9560ff); color: #fff; }
+    .btn-agenciado { background: linear-gradient(135deg, #7b3fff, #c79b3b); color: #000; }
+    .btn-outras { background: linear-gradient(135deg, #ffc107, #ff9800); color: #000; }
+    .btn-app { 
+      background: linear-gradient(135deg, #34d399, #10b981); 
+      color: #000; 
+      box-shadow: 0 0 15px rgba(52, 211, 153, 0.4);
+      border: 2px solid rgba(255,255,255,0.2);
+    }
+    .btn-coins { background: linear-gradient(135deg, #ffcc00, #ff8800); color: #000; }
+
+    .main-grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: 20px; }
+    @media (min-width: 900px) {
+      .main-grid { grid-template-columns: minmax(0, 2fr) minmax(0, 1.4fr); }
+    }
+    @media (max-width: 900px) {
+      header { flex-direction: column; align-items: flex-start; }
+      .btn { min-width: 140px; padding: 10px 14px; font-size: 0.85rem; }
+    }
+
     .card {
       background: var(--card-bg); border-radius: 18px; padding: 16px 14px;
       border: 1px solid var(--border-soft); display: flex; flex-direction: column; gap: 12px;
@@ -85,31 +132,15 @@
     .card-header { display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap; }
     .card-header h2 { font-size: 1rem; text-transform: uppercase; letter-spacing: 0.08em; }
     .card-header span { font-size: 0.75rem; color: var(--text-muted); }
-    .button-row { display: flex; flex-wrap: wrap; gap: 10px; }
-    .btn {
-      border-radius: 999px; padding: 10px 16px; font-size: 0.9rem; font-weight: 600;
-      border: none; cursor: pointer; display: inline-flex; align-items: center; gap: 8px;
-      transition: transform 0.12s ease; white-space: nowrap;
-    }
-    .btn:hover { transform: translateY(-1px); }
-    .btn-tiktok { background: linear-gradient(135deg, #00f2ea, #ff0050); color: #000; }
-    .btn-kako { background: linear-gradient(135deg, #7b3fff, #b84dff); color: #fff; }
-    .btn-agenciado { background: linear-gradient(135deg, #7b3fff, #c79b3b); color: #000; }
-    .btn-outras { background: linear-gradient(135deg, #ffc107, #ff9800); color: #000; }
-    .btn-coins { background: linear-gradient(135deg, #ffcc00, #ff8800); color: #000; }
-    .btn-suporte { background: linear-gradient(135deg, #ff3d81, #ff6b9d); color: #fff; }
-    .btn-app { 
-      background: linear-gradient(135deg, #34d399, #10b981); 
-      color: #000; 
-      box-shadow: 0 0 15px rgba(52, 211, 153, 0.4);
-      border: 2px solid rgba(255,255,255,0.2);
-    }
-    .social-row { display: flex; flex-wrap: wrap; gap: 8px; }
+
+    .social-row { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
     .social-pill {
       display: inline-flex; align-items: center; gap: 6px; padding: 8px 12px;
       border-radius: 999px; border: 1px solid rgba(255,255,255,0.12);
       background: rgba(10,12,24,0.8); font-size: 0.8rem; cursor: pointer;
+      text-decoration: none; color: inherit; transition: all 0.2s ease;
     }
+    .social-pill:hover { background: rgba(255,255,255,0.1); }
 
     /* 🎬 CARROSSEL DE LIVES */
     .carousel-wrapper { position: relative; overflow: hidden; }
@@ -141,7 +172,7 @@
     }
     @keyframes blink { 0%,100% { opacity:1; } 50% { opacity:0.2; } }
 
-    /* 📹 CARD DA LIVE — CAPA AJUSTADA ✨ */
+    /* 📹 CARD DA LIVE */
     .live-card {
       min-width: 260px; max-width: 280px;
       background: radial-gradient(circle at top, rgba(123,63,255,0.4), rgba(10,12,24,0.95));
@@ -149,35 +180,21 @@
       scroll-snap-align: start; display: flex; flex-direction: column; gap: 8px;
       transition: transform 0.2s ease, box-shadow 0.2s ease;
       cursor: pointer; position: relative; flex-shrink: 0; overflow: hidden;
+      text-decoration: none; color: inherit;
     }
     .live-card:hover {
       transform: translateY(-4px); box-shadow: 0 8px 25px rgba(123, 63, 255, 0.35);
       border-color: rgba(123, 63, 255, 0.5);
     }
 
-    /* 🖼️ CONTAINER DA CAPA — PROPORÇÃO QUADRADA PERFEITA ✨ */
     .live-video-container {
-      width: 100%; 
-      aspect-ratio: 1 / 1; /* ⭐ QUADRADO — 700×700 ideal! */
-      border-radius: 12px; 
-      overflow: hidden; 
-      position: relative;
+      width: 100%; aspect-ratio: 1 / 1; border-radius: 12px; overflow: hidden; position: relative;
       background: linear-gradient(135deg, #2a1060, #0b1020, #1a1040);
-      display: flex; 
-      align-items: center; 
-      justify-content: center;
+      display: flex; align-items: center; justify-content: center;
     }
-
-    /* 🖼️ IMAGEM DA CAPA — CENTRADA, SEM CORTES IMPORTANTES ✨ */
     .live-capa-img {
-      width: 100%; 
-      height: 100%; 
-      object-fit: cover; /* ⭐ ENCAIXA PERFEITO, CENTRADO */
-      object-position: center center; /* ⭐ SEMPRE CENTRADA! */
-      position: absolute; 
-      top: 0; 
-      left: 0;
-      transition: transform 0.35s ease;
+      width: 100%; height: 100%; object-fit: cover; object-position: center;
+      position: absolute; top: 0; left: 0; transition: transform 0.35s ease;
     }
     .live-card:hover .live-capa-img { transform: scale(1.05); }
 
@@ -206,7 +223,7 @@
     .tag-tiktok { border-color: #00f2ea; color: #00f2ea; }
     .tag-kako { border-color: #b84dff; color: #b84dff; }
 
-    /* ⭐ STREAMER ESTRELA — FOTO OU VÍDEO! 🎬🖼️ */
+    /* ⭐ STREAMER ESTRELA */
     .estrela-wrapper { overflow: hidden; height: 300px; position: relative; border-radius: 12px; }
     .estrela-track { 
       display: flex; flex-direction: column; gap: 16px;
@@ -267,7 +284,7 @@
       align-items: center; justify-content: center; z-index: 999; padding: 16px;
     }
     .modal {
-      width: 100%; max-width: 380px; background: var(--card-bg); border-radius: 18px;
+      width: 100%; max-width: 420px; background: var(--card-bg); border-radius: 18px;
       padding: 24px 20px; border: 1px solid var(--border-soft);
       display: flex; flex-direction: column; gap: 16px;
     }
@@ -277,8 +294,8 @@
       border: 1px solid rgba(255,255,255,0.18);
       background: rgba(5,5,9,0.9); color: var(--text-light); font-size: 0.9rem;
     }
-    .modal-footer { display: flex; justify-content: flex-end; gap: 10px; }
-    footer { margin-top: auto; padding: 12px 16px 18px; font-size: 0.75rem; color: var(--text-muted); text-align: center; }
+    .modal-footer { display: flex; justify-content: flex-end; gap: 10px; flex-wrap: wrap; }
+    footer { margin-top: auto; padding: 16px; font-size: 0.75rem; color: var(--text-muted); text-align: center; border-top: 1px solid var(--border-soft); }
     
     /* ⭐ DEPOIMENTOS */
     .depoimentos-secao {
@@ -346,13 +363,27 @@
         <img src="https://i.ibb.co/B23rwMHt/1787270369792.png" alt="Logo Padroniza Live" />
         <div class="title-block">
           <h1>Padroniza Live</h1>
-          <span>Central de Lives • TikTok & Kako • Gestão Profissional de Streamers</span>
+          <span>Central de Lives • TikTok & Kako</span>
         </div>
       </div>
       <div class="admin-link">
-        <button id="btnAdminArea">🔒 Área Administrativa</button>
+        <button id="btnAdminArea">🔒 Área Admin</button>
       </div>
     </header>
+
+    <!-- ==============================================
+         🎯 BOTÕES PRINCIPAIS — NO TOPO, BEM DESTAQUE!
+         ============================================== -->
+    <section class="botoes-principais">
+      <h2 class="botoes-titulo">✨ Acesse Agora</h2>
+      <div class="button-row">
+        <a href="visitante.html" class="btn btn-visitante">💜 Sou Visitante</a>
+        <button class="btn btn-agenciado" id="btnAgenciado">👤 Sou Agenciado</button>
+        <a href="encontre-oponente.html" class="btn btn-outras">🏢 Outras Agências</a>
+        <button class="btn btn-app" id="btnBaixarApp">📲 Baixar App</button>
+        <a href="https://www.tiktok.com/coin?rc=7TGXGN69&rie=" target="_blank" class="btn btn-coins">🪙 Moedas TikTok</a>
+      </div>
+    </section>
 
     <main class="main-grid">
       <section class="card">
@@ -368,7 +399,7 @@
         </div>
 
         <div class="card-header" style="margin-top:20px;">
-          <div><h2>🏆 Streamer Estrela</h2><span>Conquistas e Destaques da nossa comunidade ✨</span></div>
+          <div><h2>🏆 Streamer Estrela</h2><span>Destaques da nossa comunidade ✨</span></div>
         </div>
         <div class="estrela-wrapper">
           <div class="estrela-track" id="estrelaTrack"></div>
@@ -377,29 +408,17 @@
       </section>
 
       <section class="card">
-        <div class="card-header"><h2>Acessos Rápidos</h2></div>
-        <div class="button-row"> <button class="btn btn-visitante" id="btnVisitante" onclick="window.location.href='visitante.html'">💜 Sou Visitante — Comece Aqui!</button>
-          <button class="btn btn-tiktok" id="btnTikTok">🎵📚 Treinamento TikTok </button>
-          <button class="btn btn-kako" id="btnKako">💜📚 Treinamento Kako Live </button>
-          <button class="btn btn-agenciado" id="btnAgenciado">👤 Sou Agenciado Padroniza </button>
-          <button class="btn btn-outras" id="btnOutras">🏢 Outras Agências<br><small>Encontre seu oponente — Gratuito</small></button>
-          <button class="btn btn-app" id="btnBaixarApp">📲 Baixar App</button>
-        </div>
-
-        <div class="card-header" style="margin-top:16px;"><h2>Redes Sociais</h2></div>
+        <div class="card-header"><h2>Redes Sociais</h2></div>
         <div class="social-row">
           <a class="social-pill" href="https://wa.me/5569981478873" target="_blank">💬 WhatsApp</a>
           <a class="social-pill" href="https://www.tiktok.com/@padronizalive" target="_blank">🎵 TikTok</a>
           <a class="social-pill" href="https://www.instagram.com/padronizalive" target="_blank">📸 Instagram</a>
           <a class="social-pill" href="https://www.youtube.com/@padronizalive" target="_blank">▶️ YouTube</a>
         </div>
-
-        <div class="card-header" style="margin-top:16px;"><h2>Moedas TikTok</h2></div>
-        <button class="btn btn-coins" id="btnCoins">🪙 Comprar Moedas TikTok</button>
       </section>
     </main>
 
-    <!-- ⭐ SEÇÃO DEPOIMENTOS -->
+    <!-- ⭐ DEPOIMENTOS -->
     <section class="depoimentos-secao">
       <h2 class="depoimentos-titulo">⭐ Depoimentos dos Agenciados</h2>
       <div class="depoimentos-rolagem">
@@ -464,6 +483,9 @@
       <div style="display:flex; flex-direction:column; gap:12px;">
         <a href="agendar-batalha.html" class="btn btn-agenciado" style="justify-content:center; text-decoration:none;">⚔️ Agendar Batalha</a>
         <a href="suporte.html" class="btn btn-suporte" style="justify-content:center; text-decoration:none;">💬 Falar com a Agência / Suporte</a>
+        <a href="relatorio-metricas.html" class="btn btn-relatorio" style="justify-content:center; text-decoration:none; background:linear-gradient(135deg, #34d399, #10b981); color:#000;">📊 Minhas Metas & Relatório</a>
+        <a href="https://1drv.ms/f/c/884f1b26d8daa748/IgCI5Cqu_c0lTokK1PAApLfVARVzFb6jEQMdTsvbD_Nucqo?e=CJc3ZD" target="_blank" class="btn btn-tiktok" style="justify-content:center; text-decoration:none; background:linear-gradient(135deg, #00f2ea, #ff0050); color:#000;">🎵📚 Treinamento TikTok</a>
+        <a href="https://1drv.ms/f/c/884f1b26d8daa748/IgCH2cDy7-dkR5bU09e-fCubATT4f6EzWwx0fS9ete7cnYI?e=yOHuSs" target="_blank" class="btn btn-kako" style="justify-content:center; text-decoration:none; background:linear-gradient(135deg, #7b3fff, #b84dff); color:#fff;">💜📚 Treinamento Kako Live</a>
       </div>
       <div class="modal-footer" style="margin-top:10px;">
         <button class="btn btn-outras" onclick="fecharModal('painel')">Voltar</button>
@@ -478,12 +500,6 @@
     const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyBl8HNCUKlQrqhnEhMP7lrkAPdzXSPoGzR8QACrf3KZdhYNmGdk347ehvlIz_k3w1B/exec"
     const LOGO_URL = "https://i.ibb.co/B23rwMHt/1787270369792.png";
 
-    // 📋 TODOS OS LINKS
-    document.getElementById("btnTikTok").onclick = () => window.open("https://1drv.ms/f/c/884f1b26d8daa748/IgCI5Cqu_c0lTokK1PAApLfVARVzFb6jEQMdTsvbD_Nucqo?e=CJc3ZD", "_blank");
-    document.getElementById("btnKako").onclick = () => window.open("https://1drv.ms/f/c/884f1b26d8daa748/IgCH2cDy7-dkR5bU09e-fCubATT4f6EzWwx0fS9ete7cnYI?e=yOHuSs", "_blank");
-    document.getElementById("btnOutras").onclick = () => window.location.href = "encontre-oponente.html";
-    document.getElementById("btnCoins").onclick = () => window.open("https://www.tiktok.com/coin?rc=7TGXGN69&rie=", "_blank");
-    
     // 📲 BOTÃO BAIXAR APP
     let promptInstalacao;
     window.addEventListener('beforeinstallprompt', (e) => {
@@ -592,7 +608,7 @@
              l.includes('kako.live') || l.includes('video');
     }
 
-    // 📡 CARREGAR LIVES + ESTRELAS (FOTO OU VÍDEO!)
+    // 📡 CARREGAR LIVES + ESTRELAS
     async function carregarTudo() {
       try {
         // 📺 CARREGAR LIVES
@@ -642,7 +658,7 @@
           carousel.innerHTML = `<p style="padding:60px 20px;text-align:center;color:var(--text-muted);">🎬 Em breve novas lives! Volte mais tarde.<br><small>Acompanhe nossas redes sociais!</small></p>`;
         }
 
-        // 🏆 STREAMER ESTRELA — FOTO OU VÍDEO DA COLUNA K! 🎬🖼️
+        // 🏆 STREAMER ESTRELA
         const resEstrelas = await fetch(`${APPS_SCRIPT_URL}?acao=listarDestaques`);
         const dadosEstrelas = await resEstrelas.json();
         const track = document.getElementById("estrelaTrack");
@@ -678,7 +694,6 @@
         }
       } catch (erro) {
         console.error("Erro:", erro);
-        document.getElementById("msgGlobal").textContent = "";
       }
     }
 
