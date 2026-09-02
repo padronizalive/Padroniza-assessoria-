@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Minhas Metas & Relatório — Padroniza Live</title>
+  <link rel="icon" href="data:,">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.8/dist/chart.umd.min.js"></script>
+  <style>
+    :root {
+      --fundo: #0b1020; --painel: #11182c; --painel2: #17213a;
+      --roxo: #7b3fff; --roxo-claro: #9560ff; --dourado: #c79b3b; --dourado-claro: #e0b040;
+      --verde: #22c55e; --verde-claro: #4ade80; --vermelho: #ef4444; --vermelho-claro: #f87171;
+      --azul: #3b82f6; --azul-claro: #60a5fa; --texto: #f5f5ff; --cinza: #b3b3cc;
+      --borda: rgba(123,63,255,0.15); --sombra: 0 4px 20px rgba(123,63,255,0.15);
+    }
+    * { margin:0; padding:0; box-sizing:border-box; font-family:'Segoe UI', Arial, sans-serif; }
+    body { background:linear-gradient(135deg, var(--fundo) 0%, #02101f 100%); color:var(--texto); min-height:100vh; padding:20px; }
+    .container { max-width:1000px; margin:0 auto; }
+    .botao-voltar { display:inline-flex; align-items:center; gap:8px; color:var(--roxo); text-decoration:none; font-weight:600; margin-bottom:20px; transition:color 0.2s; }
+    .botao-voltar:hover { color:var(--dourado); }
+    .cabecalho { text-align:center; margin-bottom:35px; }
+    .logo { max-width:180px; margin-bottom:15px; border-radius:12px; box-shadow:0 0 25px rgba(123,63,255,0.3); }
+    h1 { font-size:1.8rem; color:var(--dourado); margin-bottom:5px; }
+    .subtitulo { color:var(--cinza); font-size:1rem; }
+    .aviso-topo { background:rgba(123,63,255,0.08); border-left:3px solid var(--roxo); padding:15px; border-radius:0 10px 10px 0; margin-bottom:25px; font-size:0.95rem; line-height:1.6; }
+    .card { background:var(--painel); border-radius:16px; padding:25px; margin-bottom:20px; box-shadow:var(--sombra); border:1px solid var(--borda); transition:transform 0.2s, box-shadow 0.2s; }
+    .card:hover { box-shadow:0 6px 25px rgba(123,63,255,0.2); }
+    .card-titulo { font-size:1.25rem; color:var(--dourado); margin-bottom:20px; display:flex; align-items:center; justify-content:space-between; gap:10px; padding-bottom:10px; border-bottom:1px solid var(--borda); }
+    .btn-detalhes { background:transparent; border:1px solid var(--cinza); color:var(--cinza); width:auto; padding:4px 12px; font-size:0.8rem; border-radius:20px; cursor:pointer; transition:all 0.2s; }
+    .btn-detalhes:hover { border-color:var(--roxo); color:var(--roxo); }
+    .detalhes-conteudo { background:rgba(123,63,255,0.05); border-radius:10px; padding:15px; margin-top:15px; font-size:0.9rem; line-height:1.7; color:var(--cinza); display:none; }
+    .detalhes-conteudo.visivel { display:block; }
+    .input-grupo { margin-bottom:20px; }
+    label { display:block; margin-bottom:8px; color:var(--cinza); font-weight:500; }
+    input { width:100%; padding:14px 16px; border-radius:10px; border:2px solid var(--painel2); background:var(--fundo); color:var(--texto); font-size:1rem; transition:border-color 0.3s; }
+    input:focus { outline:none; border-color:var(--roxo); }
+    button { width:100%; padding:14px; border-radius:10px; border:none; font-size:1rem; font-weight:600; cursor:pointer; transition:all 0.3s; }
+    .btn-principal { background:linear-gradient(90deg, var(--roxo), var(--roxo-claro)); color:white; }
+    .btn-principal:hover { transform:translateY(-2px); box-shadow:0 6px 20px rgba(123,63,255,0.3); }
+    .btn-dourado { background:linear-gradient(90deg, var(--dourado), var(--dourado-claro)); color:#000; margin-top:10px; }
+    .btn-video { background:linear-gradient(90deg, #ef4444, #f87171); color:white; margin-top:10px; }
+    .grade-metricas { display:grid; grid-template-columns:repeat(auto-fit, minmax(200px,1fr)); gap:15px; margin-bottom:25px; }
+    .metricas-card { background:var(--painel2); padding:18px; border-radius:12px; transition:transform 0.2s; }
+    .metricas-card:hover { transform:translateY(-3px); }
+    .metrica-label { font-size:0.85rem; color:var(--cinza); margin-bottom:8px; }
+    .metrica-valor { font-size:1.4rem; font-weight:700; }
+    .destaque { color:var(--dourado); }
+    .verde { color:var(--verde); }
+    .vermelho { color:var(--vermelho); }
+    .roxo { color:var(--roxo); }
+    .azul { color:var(--azul); }
+    .barra-progresso { width:100%; height:14px; background:var(--painel2); border-radius:7px; overflow:hidden; margin-top:10px; }
+    .progresso { height:100%; background:linear-gradient(90deg, var(--verde), var(--verde-claro)); border-radius:7px; display:flex; align-items:center; justify-content:center; font-size:0.75rem; font-weight:700; color:white; transition:width 1s ease-out; }
+    .tabela-bonificacao { width:100%; border-collapse:collapse; margin-top:15px; }
+    .tabela-bonificacao th, .tabela-bonificacao td { padding:12px; text-align:left; border-bottom:1px solid rgba(255,255,255,0.05); }
+    .tabela-bonificacao th { color:var(--dourado); background:rgba(199,155,59,0.1); }
+    .tabela-bonificacao tr:hover { background:rgba(123,63,255,0.05); }
+    .nivel-atual-row { background:rgba(34,197,94,0.1) !important; border-left:3px solid var(--verde); }
+    .oculto { display:none !important; }
+    .carregando { text-align:center; padding:50px; color:var(--cinza); }
+    .erro { background:rgba(239,68,68,0.1); border:1px solid var(--vermelho); color:var(--vermelho); padding:20px; border-radius:10px; text-align:center; line-height:1.6; }
+    .status-badge { display:inline-block; padding:8px 18px; border-radius:20px; font-size:0.9rem; font-weight:600; margin-bottom:15px; }
+    .status-ativo { background:rgba(34,197,94,0.15); color:var(--verde-claro); }
+    .status-inativo { background:rgba(239,68,68,0.15); color:var(--vermelho-claro); }
+    .grafico-container { position:relative; height:300px; width:100%; margin:20px 0; background:var(--painel2); border-radius:12px; padding:15px; }
+    .secao-titulo { font-size:1.1rem; color:var(--roxo); margin:30px 0 15px; padding-bottom:8px; border-bottom:1px solid var(--borda); display:flex; align-items:center; justify-content:space-between; gap:8px; }
+    .linha-dados { display:flex; justify-content:space-between; padding:12px 0; border-bottom:1px solid rgba(255,255,255,0.05); align-items:center; }
+    .dado-label { color:var(--cinza); font-size:0.95rem; }
+    .dado-valor { font-weight:600; font-size:0.95rem; }
+    .variacao { font-size:0.8rem; font-weight:700; padding:3px 10px; border-radius:12px; margin-left:10px; white-space:nowrap; }
+    .variacao.subiu { background:rgba(34,197,94,0.15); color:var(--verde-claro); }
+    .variacao.caiu { background:rgba(239,68,68,0.15); color:var(--vermelho-claro); }
+    .grupo-badge { display:inline-block; background:rgba(123,63,255,0.15); color:var(--roxo-claro); padding:6px 14px; border-radius:20px; font-weight:600; margin-top:5px; font-size:0.9rem; }
+    .video-container { margin-top:15px; }
+    @media (max-width:768px) {
+      .grade-metricas { grid-template-columns:1fr; }
+      h1 { font-size:1.4rem; }
+      .card { padding:18px; }
+      .grafico-container { height:250px; }
+      .linha-dados { flex-direction:column; align-items:flex-start; gap:4px; }
+      .variacao { margin-left:0; margin-top:4px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <a href="index.html" class="botao-voltar">← Voltar ao Início</a>
+
+    <div class="cabecalho">
+      <img src="https://i.ibb.co/B23rwMHt/1787270369792.png" alt="Padroniza Live" class="logo" />
+      <h1>📊 Minhas Metas & Relatório Completo</h1>
+      <p class="subtitulo">Seu desempenho — Padroniza Live</p>
+    </div>
+
+    <div class="aviso-topo">
+      💡 <strong>Bem-vindo(a)!</strong> Digite seu nome/arroba exatamente como cadastrado na coluna "Nome do criador" para ver todos os seus dados. Aqui você acompanha seu crescimento, metas e quanto está evoluindo mês a mês! 📈
+    </div>
+
+    <div id="area-login" class="card">
+      <h2 class="card-titulo">🔐 Acesso Exclusivo do Criador</h2>
+      <div class="input-grupo">
+        <label for="usuario">Seu Nome / Arroba (igual à coluna "Nome do criador")</label>
+        <input type="text" id="usuario" placeholder="Ex: @seu_usuario ou Seu Nome" autocomplete="off" />
+      </div>
+      <button class="btn-principal" onclick="validarAcesso()">Ver Meu Relatório →</button>
+      
+      <div class="video-container">
+        <button class="btn-video" onclick="abrirVideo()">📺 Assista o vídeo explicativo — Como funciona esta página</button>
+        <p style="color:var(--cinza); font-size:0.85rem; margin-top:8px;">Não sabe como usar? Assista o vídeo antes de começar! 👇</p>
+      </div>
+    </div>
+
+    <div id="area-carregando" class="card oculto">
+      <div class="carregando">🔄 Carregando seus dados completos...</div>
+    </div>
+
+    <div id="area-dados" class="oculto">
+      <div class="card">
+        <h2 class="card-titulo">👋 Olá, <span id="nome-criador"></span>!</h2>
+        <span id="status-badge" class="status-badge status-ativo"></span>
+        
+        <div style="margin-top:10px;">
+          <strong>🏢 Grupo / Agência:</strong>
+          <div id="grupo-exibicao" class="grupo-badge"></div>
+        </div>
+        
+        <p style="color:var(--cinza); font-size:0.9rem; margin-top:15px; line-height:1.8;">
+          📅 Período dos dados: <span id="periodo"></span><br>
+          📆 Entrou para a rede em: <span id="dia-entrada"></span> às <span id="horario-ingresso"></span>
+        </p>
+      </div>
+
+      <div class="card">
+        <h2 class="card-titulo">
+          💎 Evolução de Diamantes
+          <button class="btn-detalhes" onclick="alternarDetalhes('detalhes-diamantes')">ℹ️ Detalhes</button>
+        </h2>
+        <div id="detalhes-diamantes" class="detalhes-conteudo">
+          <strong>💎 O que são Diamantes?</strong><br>
+          São a principal moeda da plataforma! Quanto mais diamantes você conquista, maior sua bonificação e seu nível. Cada diamante representa um valor real em dinheiro! 💰<br><br>
+          <strong>📈 Como ler o gráfico:</strong><br>
+          • <span class="verde">Barra verde</span> — cresceu em relação ao mês anterior 📈<br>
+          • <span class="cinza">Barra cinza</span> — comparação com o mês passado<br>
+          • <span class="vermelho">Barra vermelha</span> — diminuiu em relação ao mês anterior 📉<br>
+          • <strong>Quanto mais alto, melhores seus ganhos!</strong>
+        </div>
+        <div class="grafico-container">
+          <canvas id="graficoDiamantes"></canvas>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2 class="card-titulo">
+          📊 Comparativo Geral — Este Mês × Mês Passado
+          <button class="btn-detalhes" onclick="alternarDetalhes('detalhes-comparativo')">ℹ️ Detalhes</button>
+        </h2>
+        <div id="detalhes-comparativo" class="detalhes-conteudo">
+          <strong>📊 O que este gráfico mostra:</strong><br>
+          Compara 4 métricas principais lado a lado: Diamantes, Horas de Live, Novos Seguidores e Quantidade de Lives.<br><br>
+          • <span style="color:#7b3fff">Linha roxa</span> = Este mês (seu desempenho atual)<br>
+          • <span style="color:#b3b3cc">Linha cinza</span> = Mês passado (sua base de comparação)<br><br>
+          <strong>💡 Dica:</strong> Quando a linha roxa estiver ACIMA da cinza = você cresceu! 🎉
+        </div>
+        <div class="grafico-container">
+          <canvas id="graficoComparativo"></canvas>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2 class="card-titulo">
+          🎯 Resumo do Desempenho
+          <button class="btn-detalhes" onclick="alternarDetalhes('detalhes-resumo')">ℹ️ Detalhes</button>
+        </h2>
+        <div id="detalhes-resumo" class="detalhes-conteudo">
+          <strong>🎯 Suas metas de cada mês:</strong><br>
+          Cada número aqui representa o quanto você evoluiu. A barra de progresso mostra o quanto você alcançou da meta de diamantes — quanto mais perto de 100%, maior sua premiação! 🎁<br><br>
+          • <strong>Meta de Diamantes:</strong> Principal objetivo do mês — define sua bonificação<br>
+          • <strong>Horas de Live:</strong> Mais horas = mais alcance e mais fãs<br>
+          • <strong>Novos Seguidores:</strong> Crescer sua audiência é fundamental<br>
+          • <strong>Transmissões:</strong> Frequência = algoritmo te favorece!
+        </div>
+        <div class="grade-metricas">
+          <div class="metricas-card">
+            <div class="metrica-label">💎 Diamantes do Mês</div>
+            <div class="metrica-valor destaque" id="diamantes-mes">0</div>
+          </div>
+          <div class="metricas-card">
+            <div class="metrica-label">🎯 Meta de Diamantes</div>
+            <div class="metrica-valor roxo" id="pct-diamantes">0%</div>
+          </div>
+          <div class="metricas-card">
+            <div class="metrica-label">⏱️ Horas de Live</div>
+            <div class="metrica-valor azul" id="horas-live">0h</div>
+          </div>
+          <div class="metricas-card">
+            <div class="metrica-label">👥 Novos Seguidores</div>
+            <div class="metrica-valor verde" id="seguidores">0</div>
+          </div>
+          <div class="metricas-card">
+            <div class="metrica-label">📡 Transmissões</div>
+            <div class="metrica-valor" id="lives">0</div>
+          </div>
+          <div class="metricas-card">
+            <div class="metrica-label">🏆 Nível Atual</div>
+            <div class="metrica-valor verde" id="nivel">-</div>
+          </div>
+        </div>
+
+        <div style="margin-top:25px;">
+          <h3 style="margin-bottom:10px; color:var(--cinza); font-size:1rem;">🎯 Progresso da Meta de Diamantes</h3>
+          <div class="barra-progresso">
+            <div class="progresso" id="barra-progresso" style="width:0%;">0%</div>
+          </div>
+          <p style="color:var(--cinza); font-size:0.85rem; margin-top:8px;">Quanto maior a porcentagem, maior sua bonificação! 🎁</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3 class="secao-titulo">
+          💎 Ganhos de Diamantes
+          <button class="btn-detalhes" onclick="alternarDetalhes('detalhes-diamantes2')">ℹ️ Detalhes</button>
+        </h3>
+        <div id="detalhes-diamantes2" class="detalhes-conteudo">
+          <strong>💰 Como funcionam os ganhos:</strong><br>
+          • <strong>Diamantes de Live:</strong> Doações e presentes durante suas transmissões<br>
+          • <strong>Diamantes de Convite:</strong> Bônus por indicar novos criadores para a plataforma<br>
+          • <strong>Total Acumulado:</strong> Soma de tudo — define seu nível e premiação<br><br>
+          <strong>📈 Variação:</strong> Compara com o mês anterior. Cresceu? 🎉 Caiu? É hora de ajustar! 💪
+        </div>
+        
+        <div class="linha-dados">
+          <span class="dado-label">💎 Diamantes — Este Mês</span>
+          <span class="dado-valor destaque" id="r-diamantes-mes">0</span>
+        </div>
+        <div class="linha-dados">
+          <span class="dado-label">💎 Diamantes — Mês Passado</span>
+          <span class="dado-valor" id="r-diamantes-passado">0</span>
+        </div>
+        <div class="linha-dados">
+          <span class="dado-label">📈 Variação vs Mês Passado</span>
+          <span class="dado-valor" id="r-var-diamantes">0</span>
+        </div>
+        <div class="linha-dados">
+          <span class="dado-label">🎯 % Meta Alcançada</span>
+          <span class="dado-valor roxo" id="r-pct-diamantes">0%</span>
+        </div>
+        <div class="linha-dados">
+          <span class="dado-label">🏆 Total Acumulado</span>
+          <span class="dado-valor destaque" id="r-total-diamantes">0</span>
+        </div>
+        <div class="linha-dados">
+          <span class="dado-label">💰 Bônus de Convite</span>
+          <span class="dado-valor verde" id="r-convite">0</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3 class="secao-titulo">
+          ⏱️ Frequência e Duração de Lives
+          <button class="btn-detalhes" onclick="alternarDetalhes('detalhes-lives')">ℹ️ Detalhes</button>
+        </h3>
+        <div id="detalhes-lives" class="detalhes-conteudo">
+          <strong>📺 Por que isso importa tanto?</strong><br>
+          • Mais horas ao vivo = mais tempo pra ganhar presentes e fãs ❤️<br>
+          • Mais dias de live = algoritmo te recomenda mais = mais visualizações 📈<br>
+          • Frequência constante = fãs sabem quando te encontrar = comunidade cresce!<br><br>
+          <strong>💡 Meta ideal:</strong> Pelo menos 20h/mês e 15 dias de live = máximo alcance e premiação! 🚀
+        </div>
+        
+        <div class="linha-dados">
+          <span class="dado-label">⏱️ Horas — Este Mês</span>
+          <span class="dado-valor" id="r-horas-mes">0h</span>
+        </div>
+        <div class="linha-dados">
+          <span class="dado-label">⏱️ Horas — Mês Passado</span>
+          <span class="dado-valor" id="r-horas-passado">0h</span>
+        </div>
+        <div class="linha-dados">
+          <span class="dado-label">📈 Variação de Horas</span>
+          <span class="dado-valor" id="r-var-horas">0</span>
+        </div>
+        <div class="linha-dados">
+          <span class="dado-label">📅 Dias Válidos de Live</span>
+          <span class="dado-valor" id="r-dias-live">0</span>
+        </div>
+        <div class="linha-dados">
+          <span class="dado-label">📡 Quantidade de Lives</span>
+          <span class="dado-valor" id="r-lives">0</span>
+        </div>
+        <div class="linha-dados">
+          <span class="dado-label">🎯 % Meta de Horas</span>
+          <span class="dado-valor roxo" id="r-pct-horas">0%</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3 class="secao-titulo">
+          👥 Crescimento de Público
+          <button class="btn-detalhes" onclick="alternarDetalhes('detalhes-publico')">ℹ️ Detalhes</button>
+        </h3>
+        <div id="detalhes-publico" class="detalhes-conteudo">
+          <strong>👥 Seu público = seu maior patrimônio!</strong><br>
+          • <strong>Novos Seguidores:</strong> Cada novo seguidor = mais pessoas vendo suas lives<br>
+          • <strong>Fãs Ativos:</strong> Fãs que interagem, presenteiam e compartilham — são os que mais importam! ❤️<br>
+          • <strong>Seguidores por Live:</strong> Eficiência — quantos novos seguidores você conquista a cada transmissão<br><br>
+          <strong>💡 Estratégia:</strong> Mais lives + conteúdo envolvente = mais seguidores = mais diamantes! 🌀
+        </div>
+        
+        <div class="linha-dados">
+          <span class="dado-label">👥 Novos Seguidores — Este Mês</span>
+          <span class="dado-valor verde" id="r-seg-mes">0</span>
+        </div>
+        <div class="linha-dados">
+          <span class="dado-label">👥 Seguidores — Mês Passado</span>
+          <span class="dado-valor" id="r-seg-passado">0</span>
+        </div>
+        <div class="linha-dados">
+          <span class="dado-label">📈 Variação de Seguidores</span>
+          <span class="dado-valor" id="r-var-seg">0</span>
+        </div>
+        <div class="linha-dados">
+          <span class="dado-label">🎯 % Meta de Seguidores</span>
+          <span class="dado-valor roxo" id="r-pct-seg">0%</span>
+        </div>
+        <div class="linha-dados">
+          <span class="dado-label">👤 Seguidores por Live</span>
+          <span class="dado-valor" id="r-seg-por-live">0</span>
+        </div>
+        <div class="linha-dados">
+          <span class="dado-label">❤️ Fãs Ativos</span>
+          <span class="dado-valor vermelho" id="r-fas-ativos">0</span>
+        </div>
+        <div class="linha-dados">
+          <span class="dado-label">👥 Total de Fãs</span>
+          <span class="dado-valor" id="r-total-fas">0</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3 class="secao-titulo">
+          🏆 Nível, Status e Conquistas
+          <button class="btn-detalhes" onclick="alternarDetalhes('detalhes-nivel')">ℹ️ Detalhes</button>
+        </h3>
+        <div id="detalhes-nivel" class="detalhes-conteudo">
+          <strong>🏆 Como funcionam os níveis:</strong><br>
+          Cada nível é alcançado ao bater metas de diamantes. Quanto mais alto o nível, melhores os benefícios: premiações em dinheiro, cupons, destaque no site, brindes exclusivos e até placas enviadas pra sua casa! 🏠🎁<br><br>
+          • Nível 1 → 25.000+ diamantes<br>
+          • Nível 5 → 150.000+ diamantes = premiação máxima! 👑
+        </div>
+        
+        <div class="linha-dados">
+          <span class="dado-label">📖 Status de Graduação</span>
+          <span class="dado-valor verde" id="r-graduacao">-</span>
+        </div>
+        <div class="linha-dados">
+          <span class="dado-label">⭐ Nível Atual</span>
+          <span class="dado-valor verde" id="r-nivel">-</span>
+        </div>
+        <div class="linha-dados">
+          <span class="dado-label">🏅 Novos Fãs Conquistados</span>
+          <span class="dado-valor" id="r-novos-fas">0</span>
+        </div>
+        <div class="linha-dados">
+          <span class="dado-label">📊 % de Contribuição de Fãs</span>
+          <span class="dado-valor roxo" id="r-pct-fas">0%</span>
+        </div>
+        <div class="linha-dados">
+          <span class="dado-label">⚔️ Batalhas Participadas</span>
+          <span class="dado-valor" id="r-batalhas">0</span>
+        </div>
+        <div class="linha-dados">
+          <span class="dado-label">👤 Novos Criadores Indicados</span>
+          <span class="dado-valor" id="r-novos-criadores">0</span>
+        </div>
+        <div class="linha-dados">
+          <span class="dado-label">📋 Situação Atual</span>
+          <span class="dado-valor" id="r-status">-</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <button class="btn-dourado" onclick="alternarTabela()">💎 Tabela de Bonificação — Veja suas premiações por nível</button>
+        <div id="tabela-bonificacao" class="oculto">
+          <p style="color:var(--cinza); font-size:0.9rem; margin:15px 0;">Quanto mais diamantes, maior seu nível e melhores os prêmios! 🎁</p>
+          <table class="tabela-bonificacao">
+            <thead>
+              <tr>
+                <th>Nível</th>
+                <th>Meta de Diamantes</th>
+                <th>Bonificação / Benefício</th>
+              </tr>
+            </thead>
+            <tbody id="corpo-tabela">
+              <tr id="linha-n0"><td>Sem nível</td><td>0 a 24.999</td><td>—</td></tr>
+              <tr id="linha-n1"><td>🏅 Nível 1</td><td>25.000+</td><td>Cupom $5 + Destaque no site</td></tr>
+              <tr id="linha-n2"><td>⭐ Nível 2</td><td>40.000+</td><td>$1 + Cupom $5 + Streamer Estrela</td></tr>
+              <tr id="linha-n3"><td>🔥 Nível 3</td><td>80.000+</td><td>$5 + Cupom $8 + Streamer Estrela</td></tr>
+              <tr id="linha-n4"><td>👑 Nível 4</td><td>100.000+</td><td>$6 + Cupom $8 + Música personalizada + Destaque</td></tr>
+              <tr id="linha-n5"><td>🏆 Nível 5</td><td>150.000+</td><td>$10 + Cupom $10 + Placa enviada pra casa!</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="card">
+        <button class="btn-video" onclick="abrirVideo()">📺 Assista o vídeo explicativo — Como funciona tudo</button>
+        <p style="color:var(--cinza); font-size:0.85rem; margin-top:10px;">Tem dúvidas? Assista o vídeo com o passo a passo de cada seção! 🎬</p>
+      </div>
+
+      <div style="background:rgba(123,63,255,0.05); border-radius:12px; padding:20px; text-align:center; margin-top:30px;">
+        <p style="color:var(--cinza); font-size:0.9rem; line-height:1.7;">
+          💜 <strong>Padroniza Live</strong> — Seu crescimento é nossa prioridade.<br>
+          Dados atualizados conforme a plataforma. Qualquer dúvida, fale com sua agência! 🤝
+        </p>
+      </div>
+
+      <div style="text-align:center; margin-top:30px;">
+        <a href="index.html" style="color:var(--roxo); text-decoration:none; font-weight:600;">← Voltar ao Início</a>
+      </div>
+    </div>
+
+    <div id="area-erro" class="card oculto">
+      <div class="erro" id="texto-erro"></div>
+      <button class="btn-principal" style="margin-top:20px;" onclick="voltarLogin()">Tentar novamente</button>
+    </div>
+  </div>
+
+  <script>
+    // ==================================================
+    // 🔗 LINK DO APPS SCRIPT — JÁ COLOCADO! ✅
+    // ==================================================
+    const LINK_APPS_SCRIPT = "https://script.google.com/macros/s/AKfycbw2uDYdkFPBOly-_ZQNkvbznS_4s8HuTgh_SoPC2yTPc-ku7Rv8beZMPy_YlWGvGTn95w/exec";
+
+    // 🎬 LINK DO VÍDEO — COLOQUE SEU LINK DO YOUTUBE AQUI DEPOIS!
+    const LINK_VIDEO = ""; // Ex: "https://youtu.be/xxxxxx" — Vídeo NÃO LISTADO, perfeito!
+
+    let graficoDiamantes, graficoComparativo;
+    let nivelAtualUsuario = 0;
+
+    // ==================================================
+    // 🔄 ALTERNAR DETALHES — BOTÃO "ℹ️ Detalhes"
+    // ==================================================
+    function alternarDetalhes(id) {
+      const el = document.getElementById(id);
+      el.classList.toggle('visivel');
+    }
+
+    async function validarAcesso() {
+      const usuario = document.getElementById('usuario').value.trim();
+      if (!usuario) {
+        alert('⚠️ Digite seu nome/arroba!');
+        return;
+      }
+
+      mostrarArea('carregando');
+
+      try {
+        const res = await fetch(`${LINK_APPS_SCRIPT}?acao=buscar&usuario=${encodeURIComponent(usuario)}`);
+        const resposta = await res.json();
+
+        if (!resposta.encontrado) {
+          mostrarErro(`❌ ${resposta.erro || 'Usuário não encontrado. Verifique se digitou igualzinho à coluna "Nome do criador"!'}`);
+          return;
+        }
+
+        preencherDados(resposta);
+        mostrarArea('dados');
+
+      } catch (erro) {
+        console.error('Erro:', erro);
+        mostrarErro('❌ Erro de conexão. Verifique sua internet e tente novamente em instantes. Se persistir, avise a agência!');
+      }
+    }
+
+    function preencherDados(d) {
+      document.getElementById('nome-criador').textContent = d.nomeCriador || '-';
+      document.getElementById('periodo').textContent = d.periodo || '-';
+      document.getElementById('dia-entrada').textContent = d.diaEntrada || '-';
+      document.getElementById('horario-ingresso').textContent = d.horarioIngresso || '-';
+      document.getElementById('grupo-exibicao').textContent = d.grupo || 'Padroniza — Matriz (Central)';
+      
+      const badge = document.getElementById('status-badge');
+      badge.textContent = d.status || 'Ativo';
+      badge.className = (String(d.status).toLowerCase().includes('ativo') || !d.status) 
+        ? 'status-badge status-ativo' 
+        : 'status-badge status-inativo';
+
+      const nivelTexto = String(d.statusNivel || d.statusGraduacao || '-');
+      document.getElementById('nivel').textContent = nivelTexto;
+      document.getElementById('r-graduacao').textContent = d.statusGraduacao || '-';
+      document.getElementById('r-nivel').textContent = nivelTexto;
+      
+      if (nivelTexto.includes('5')) nivelAtualUsuario = 5;
+      else if (nivelTexto.includes('4')) nivelAtualUsuario = 4;
+      else if (nivelTexto.includes('3'))
