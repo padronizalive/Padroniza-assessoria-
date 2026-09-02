@@ -32,11 +32,11 @@
     @keyframes brilho{0%{background-position:0 center}50%{background-position:100% center}100%{background-position:0 center}}
     button:hover{transform:translateY(-2px);box-shadow:0 10px 30px rgba(116,87,255,.3)}
     .dados{background:var(--painel);border-radius:20px;padding:30px;box-shadow:0 10px 40px rgba(0,0,0,.4);border:1px solid rgba(116,87,255,.15)}
-    .mensagem-status{border-radius:16px;padding:20px 24px;margin:25px 0;font-size:17px;line-height:1.7;text-align:center}
-    .parabens{background:linear-gradient(135deg,rgba(255,200,87,.25),rgba(52,211,153,.2));border:2px solid var(--dourado);color:#fff}
-    .crescendo{background:rgba(52,211,153,.15);border:2px solid var(--verde);color:#fff}
-    .atencao{background:rgba(255,200,87,.18);border:2px solid var(--dourado);color:#fff}
-    .alerta{background:rgba(239,68,68,.18);border:2px solid var(--vermelho);color:#fff}
+    .mensagem-status{border-radius:16px;padding:22px 24px;margin:25px 0;font-size:17px;line-height:1.7;text-align:center;border-width:2px;border-style:solid}
+    .subiu{background:linear-gradient(135deg,rgba(255,200,87,.25),rgba(52,211,153,.2));border-color:var(--dourado)}
+    .manteve{background:rgba(59,130,246,.12);border-color:var(--azul)}
+    .caiu{background:rgba(239,68,68,.15);border-color:var(--vermelho)}
+    .cresceu{background:rgba(52,211,153,.15);border-color:var(--verde)}
     .destaque{background:linear-gradient(135deg,rgba(52,211,153,.18),rgba(116,87,255,.12),rgba(255,200,87,.08));border-radius:18px;padding:28px;margin-bottom:30px;text-align:center;border:2px solid transparent;border-image:linear-gradient(90deg,var(--verde),var(--roxo),var(--dourado)) 1}
     .destaque h2{font-size:30px;margin-bottom:5px;color:var(--verde)}
     .linha{display:flex;justify-content:space-between;align-items:center;padding:14px 8px;border-bottom:1px solid rgba(42,58,95,.5);gap:8px;flex-wrap:wrap}
@@ -46,10 +46,16 @@
     .secao h3{font-size:20px;color:var(--dourado);margin-bottom:18px;padding-bottom:8px;border-bottom:2px solid rgba(255,200,87,.2);display:flex;align-items:center;gap:10px}
     .grafico-bloco{background:var(--painel2);border-radius:18px;padding:25px;margin:20px 0;border:1px solid rgba(116,87,255,.15)}
     canvas{max-height:280px;width:100%!important}
-    .dica{position:relative;display:inline-flex;align-items:center}
-    .btn-detalhes{background:linear-gradient(135deg,var(--azul),var(--roxo));color:#fff;border:none;border-radius:8px;padding:4px 10px;font-size:13px;cursor:help;margin-left:8px}
-    .dica-texto{display:none;position:absolute;right:0;top:36px;background:var(--painel3);border:1px solid var(--roxo);border-radius:12px;padding:14px 16px;font-size:14px;min-width:280px;z-index:100;box-shadow:0 10px 30px rgba(0,0,0,.5)}
-    .dica:hover .dica-texto, .dica:focus-within .dica-texto{display:block}
+    .dica{position:relative;display:inline-flex;align-items:center;z-index:10}
+    .btn-detalhes{background:linear-gradient(135deg,var(--azul),var(--roxo));color:#fff;border:none;border-radius:8px;padding:5px 14px;font-size:14px;cursor:pointer;margin-left:8px;white-space:nowrap}
+    .dica-texto{
+      display:none;
+      position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);
+      background:var(--painel3);border:2px solid var(--roxo);border-radius:20px;
+      padding:24px 20px;font-size:15px;line-height:1.6;width:90%;max-width:340px;
+      z-index:99999;box-shadow:0 0 50px rgba(0,0,0,.6),0 0 0 100vw rgba(0,0,0,.5)
+    }
+    .dica:hover .dica-texto,.dica:focus-within .dica-texto{display:block}
     .barra-fundo{width:100%;height:14px;background:#2a3a5f;border-radius:12px;overflow:hidden;margin-top:5px}
     .barra-pct{height:100%;border-radius:12px;transition:width .8s ease}
     .video-area{text-align:center;margin-top:40px;padding:30px;background:linear-gradient(135deg,rgba(59,130,246,.15),rgba(116,87,255,.1));border-radius:20px;border:1px solid rgba(59,130,246,.3)}
@@ -59,7 +65,6 @@
 </head>
 <body>
 <div class="container">
-  <!-- 🏠 BOTÃO VOLTAR — JÁ PRONTO! COLOCA O LINK DO SEU INDEX.HTML ONDE PEDIR! -->
   <div class="voltar-topo">
     <a class="btn-voltar" href="index.html">← Voltar ao Site Principal</a>
   </div>
@@ -69,11 +74,11 @@
     <h1>📊 SEU RELATÓRIO COMPLETO</h1>
     
     <div class="motivacional">
-      <p>✨ <strong>Você é o dono do seu resultado!</strong> Cada live, cada esforço, cada minuto dedicado te aproxima mais da sua conquista. Não compare seu caminho com o de ninguém — faça o seu melhor, evolua um pouco a cada dia e brilhe! Você tem potencial muito grande — acredite no seu trabalho! 🚀💎</p>
+      <p>✨ <strong>Você é o dono do seu resultado!</strong> Cada live, cada esforço, cada minuto dedicado te aproxima mais da sua conquista. Não compare seu caminho com o de ninguém — faça o seu melhor, evolua um pouco a cada dia e brilhe! 🚀💎</p>
     </div>
 
     <div class="aviso">
-      📢 <strong>ATUALIZAÇÃO:</strong> Todas as métricas são lançadas e atualizadas SEMANALMENTE — toda <strong>SEGUNDA-FEIRA</strong>!<br>
+      📢 <strong>ATUALIZAÇÃO:</strong> Dados sempre em <strong>Horário de Brasília (UTC‑3)</strong> — lançados toda <strong>SEGUNDA‑FEIRA</strong>!<br>
       📌 Período disponível: Março → Dezembro | Dados de Agosto já liberados ✅
     </div>
   </header>
@@ -101,9 +106,9 @@
 </div>
 
 <script>
-// ✅ LINK DO APPS SCRIPT — JÁ CERTO E COLOCADO! NÃO MEXE!
+// ✅ LINK DO APPS SCRIPT — JÁ COLOCADO! NÃO MEXE!
 const LINK_APPSCRIPT = "https://script.google.com/macros/s/AKfycbytwO_vXyJSzDdwMGHHC-g43sNHm4-aSKAiZY4FCaXklUdeJll7B40gujlXPw3oTPocmQ/exec";
-const LINK_VIDEO = ""; // ← COLA O LINK DO VÍDEO AQUI QUANDO TIVER PRONTO
+const LINK_VIDEO = "";
 let graficoLinha;
 
 function valor(v){ return v === '-' || v === '' ? '-' : v; }
@@ -121,27 +126,46 @@ function barraMeta(textoPct){
   const cor = p>=100?'linear-gradient(90deg,#22c55e,#34d399)':p>=70?'linear-gradient(90deg,#f59e0b,#ffc857)':'linear-gradient(90deg,#dc2626,#ef4444)';
   return `<div class="barra-fundo"><div class="barra-pct" style="width:${p}%;background:${cor}"></div></div>`;
 }
+
+// 📋 REGRAS DE MENSAGEM — EXATAMENTE COMO PEDIU!
 function gerarMensagem(d){
+  const grad = String(d.graduacao||'').trim().toLowerCase();
+  const evoluiuPatamar = grad.includes('subiu') || grad.includes('novo patamar') || grad.includes('evoluiu');
+  const mantevePatamar = grad.includes('mantido') || grad.includes('mesmo') || grad.includes('permaneceu');
+  const caiuPatamar = grad.includes('desceu') || grad.includes('caiu') || grad.includes('abaixou');
+
   const di = Number(String(d.vsDiamantes||'0').replace('%','').replace(',','.'))||0;
   const du = Number(String(d.vsDuracao||'0').replace('%','').replace(',','.'))||0;
   const dl = Number(String(d.vsDiasLive||'0').replace('%','').replace(',','.'))||0;
   const total = di + du + dl;
-  if(d.graduacao && String(d.graduacao).trim().length>5){
-    return `<div class="mensagem-status parabens">🏆 PARABÉNS, CAMPEÃO! 🎉 Você evoluiu e subiu de patamar! Seu esforço valeu muito a pena — continue voando alto, você está fazendo história! 💎🚀</div>`;
+
+  // 🎓 1º — Mudança de patamar tem prioridade
+  if(evoluiuPatamar){
+    return `<div class="mensagem-status subiu">🏆 PARABÉNS, CAMPEÃO! 🎉 Você evoluiu e subiu de patamar! Seu esforço valeu muito a pena — continue voando alto, você está fazendo história! 💎🚀</div>`;
   }
-  if(total >= 30) return `<div class="mensagem-status parabens">🌟 INCRÍVEL! 🚀 Você está crescendo MUITO forte! Continue nesse ritmo — você vai longe demais! Merece todo esse sucesso! 💎👏</div>`;
-  if(total >= 10) return `<div class="mensagem-status crescendo">📈 EVOLUINDO BEM! 💜 Você está no caminho certo! Cada detalhe melhora, cada live conta — mantenha o foco que o crescimento vem! Você consegue! 💪</div>`;
-  if(total <= -20) return `<div class="mensagem-status alerta">⚠️ FICA DE OLHO, CAMARADA! 🛑 Os números estão caindo forte — reveja horários, frequência e conteúdo. Ajusta o rumo que você volta a crescer! A gente te ajuda, não desiste! 💜🙏</div>`;
-  if(total < 0) return `<div class="mensagem-status atencao">📊 ATENÇÃO: Houve leve queda — não se preocupe! Um mês pode ter surpresas. Volta com força total, mantém constância que recupera rápido! Você é capaz! 💜</div>`;
-  return `<div class="mensagem-status crescendo">⚖️ MANTER ELEVAR! Tudo estável — agora é hora de subir! Aumenta um pouco mais, melhora detalhes e vai pra cima! Você tem potencial! 💎🚀</div>`;
+  if(caiuPatamar){
+    return `<div class="mensagem-status caiu">📉 Eita, sentimos muito ver isso — mas calma, isso é só uma fase! 🛑 Não se desanime, todo mundo tem momentos assim. Reorganize, ajuste o ritmo e volte com tudo — você tem potencial pra recuperar tudo e muito mais! Estamos com você! 💜🙏</div>`;
+  }
+  if(mantevePatamar){
+    return `<div class="mensagem-status manteve">⭐ Ótimo! Você se manteve firme no seu nível! Isso mostra constância e dedicação! 💪 Agora é só dar mais um passo — vem preparado que você pode evoluir e chegar ao próximo patamar no próximo mês! Você consegue! 💜🚀</div>`;
+  }
+
+  // 📊 2º — Sem troca de patamar: avança pelos números
+  if(total >= 15){
+    return `<div class="mensagem-status cresceu">📈 Evoluindo bem! 💜 Os números estão subindo — mantenha esse ritmo que logo vem a evolução maior! Cada detalhe conta, cada esforço soma! Vai que vai! 💎🚀</div>`;
+  }
+  if(total >= -5){
+    return `<div class="mensagem-status manteve">⚖️ Mantendo firme! Você está estável — excelente base pra crescer! 💪 Foca em melhorar um pouco cada ponto e logo ultrapassa as metas! 💜🚀</div>`;
+  }
+  return `<div class="mensagem-status caiu">📉 Houve uma leve queda — não desanime! 🛑 Ajusta o que precisa e volta com foco: você sabe fazer dar certo! Estamos aqui juntos nessa caminhada! 💜🙏</div>`;
 }
 
 async function carregarDados(){
   const mes = document.getElementById('mes').value;
   const nome = document.getElementById('busca').value.trim();
-  if(!nome) return alert('⚠️ Digite seu nome primeiro!');
+  if(!nome) return alert('⚠️ Digite seu nome primeiro — igual aparece na Coluna C da planilha!');
   const div = document.getElementById('resultado');
-  div.innerHTML = `<div style="text-align:center;padding:40px;color:var(--azul)">⏳ Lendo seus dados direto da planilha...</div>`;
+  div.innerHTML = `<div style="text-align:center;padding:40px;color:var(--azul)">⏳ Buscando direto da planilha... aguarde um instante</div>`;
   try{
     const res = await fetch(`${LINK_APPSCRIPT}?acao=buscar&mes=${encodeURIComponent(mes)}&usuario=${encodeURIComponent(nome)}`);
     const dados = await res.json();
@@ -159,56 +183,54 @@ async function carregarDados(){
       ${gerarMensagem(dados)}
 
       <div class="secao"><h3>📋 SEUS DADOS GERAIS</h3>
-        <div class="linha"><span class="rotulo">📅 Ingresso na rede<div class="dica"><button class="btn-detalhes">🔍 Ver detalhes</button><span class="dica-texto">Quando você entrou oficialmente na Padroniza Live e na plataforma TikTok — Horário de Brasília</span></div></span><span class="valor">${valor(dados.ingresso)}</span></div>
-        <div class="linha"><span class="rotulo">⏳ Tempo de casa<div class="dica"><button class="btn-detalhes">🔍 Ver detalhes</button><span class="dica-texto">Quantos dias completos você faz parte da agência até hoje</span></div></span><span class="valor">${valor(dados.diasRede)} dias</span></div>
+        <div class="linha"><span class="rotulo">📅 Ingresso na rede<div class="dica"><button class="btn-detalhes">🔍 Ver detalhes</button><span class="dica-texto">Data oficial de entrada — Horário de Brasília (UTC‑3)<small>São Paulo / Brasília — mesmo usado na sua planilha</small></span></div></span><span class="valor">${valor(dados.ingresso)}</span></div>
+        <div class="linha"><span class="rotulo">⏳ Tempo de casa<div class="dica"><button class="btn-detalhes">🔍 Ver detalhes</button><span class="dica-texto">Total de dias completos desde a entrada</span></div></span><span class="valor">${valor(dados.diasRede)} dias</span></div>
       </div><hr class="separador">
 
       <div class="secao"><h3>🎯 PROGRESSO DAS SUAS METAS</h3>
-        <div class="linha"><span class="rotulo">💎 Diamantes — quanto já bateu da meta<div class="dica"><button class="btn-detalhes">🔍 Ver detalhes</button><span class="dica-texto">Porcentagem da meta mensal alcançada. 100% = bateu a meta! Mais que isso = ultrapassou!</span></div></span><span class="valor">${porcenta(dados.pctDiamantes)}</span></div>${barraMeta(dados.pctDiamantes)}
-        <div class="linha"><span class="rotulo">⏱️ Duração — tempo de live<div class="dica"><button class="btn-detalhes">🔍 Ver detalhes</button><span class="dica-texto">Quantidade de horas/minutos de transmissão feitos esse mês em relação ao combinado</span></div></span><span class="valor">${porcenta(dados.pctDuracao)}</span></div>${barraMeta(dados.pctDuracao)}
-        <div class="linha"><span class="rotulo">📅 Dias com live — frequência<div class="dica"><button class="btn-detalhes">🔍 Ver detalhes</button><span class="dica-texto">Dias que ligou a câmera. Quanto mais regular, mais chance de crescer!</span></div></span><span class="valor">${porcenta(dados.pctDiasLive)}</span></div>${barraMeta(dados.pctDiasLive)}
-        <div class="linha"><span class="rotulo">👤 Seguidores — ganhos novos<div class="dica"><button class="btn-detalhes">🔍 Ver detalhes</button><span class="dica-texto">Novos seguidores conquistados esse mês comparado com a meta</span></div></span><span class="valor">${porcenta(dados.pctSeguidores)}</span></div>${barraMeta(dados.pctSeguidores)}
-        <div class="linha"><span class="rotulo">📹 Transmissões — quantidade<div class="dica"><button class="btn-detalhes>🔍 Ver detalhes</button><span class="dica-texto">Quantas lives diferentes você fez no mês todo</span></div></span><span class="valor">${porcenta(dados.pctTransmissoes)}</span></div>${barraMeta(dados.pctTransmissoes)}
+        <div class="linha"><span class="rotulo">💎 Diamantes — quanto já bateu da meta<div class="dica"><button class="btn-detalhes">🔍 Ver detalhes</button><span class="dica-texto">100% = bateu a meta<br>Acima = ultrapassou<br>Abaixo = falta chegar</span></div></span><span class="valor">${porcenta(dados.pctDiamantes)}</span></div>${barraMeta(dados.pctDiamantes)}
+        <div class="linha"><span class="rotulo">⏱️ Duração — tempo de live<div class="dica"><button class="btn-detalhes">🔍 Ver detalhes</button><span class="dica-texto">Horas/minutos transmitidos vs combinado</span></div></span><span class="valor">${porcenta(dados.pctDuracao)}</span></div>${barraMeta(dados.pctDuracao)}
+        <div class="linha"><span class="rotulo">📅 Dias com live — frequência<div class="dica"><button class="btn-detalhes">🔍 Ver detalhes</button><span class="dica-texto">Mais dias = mais constância e crescimento</span></div></span><span class="valor">${porcenta(dados.pctDiasLive)}</span></div>${barraMeta(dados.pctDiasLive)}
+        <div class="linha"><span class="rotulo">👤 Seguidores — ganhos novos<div class="dica"><button class="btn-detalhes">🔍 Ver detalhes</button><span class="dica-texto">Novos seguidores conquistados no mês</span></div></span><span class="valor">${porcenta(dados.pctSeguidores)}</span></div>${barraMeta(dados.pctSeguidores)}
+        <div class="linha"><span class="rotulo">📹 Transmissões — quantidade<div class="dica"><button class="btn-detalhes">🔍 Ver detalhes</button><span class="dica-texto">Quantas lives diferentes você fez</span></div></span><span class="valor">${porcenta(dados.pctTransmissoes)}</span></div>${barraMeta(dados.pctTransmissoes)}
       </div><hr class="separador">
 
-      <div class="secao"><h3>📈 SEUS NÚMEROS — ESSE MÊS vs MÊS PASSADO</h3>
-        <div class="grafico-bloco">
-          <canvas id="graficoEvolucao"></canvas>
-        </div>
+      <div class="secao"><h3>📈 COMPARAÇÃO — ESSE MÊS vs MÊS PASSADO</h3>
+        <div class="grafico-bloco"><canvas id="graficoEvolucao"></canvas></div>
         <div class="linha"><span class="rotulo">💎 Diamantes esse mês</span><span class="valor">${valor(dados.diamantes)}</span></div>
         <div class="linha"><span class="rotulo">📆 Mês passado</span><span class="valor">${valor(dados.diamantesAnt)}</span></div>
-        <div class="linha"><span class="rotulo">📉 Diferença em porcentagem<div class="dica"><button class="btn-detalhes">🔍 Ver detalhes</button><span class="dica-texto">Acima de 0 = cresceu! Abaixo = caiu. Compara direto com o mês anterior</span></div></span><span class="valor">${porcenta(dados.vsDiamantes)}</span></div>
+        <div class="linha"><span class="rotulo">📉 Diferença<div class="dica"><button class="btn-detalhes">🔍 Ver detalhes</button><span class="dica-texto">Acima de 0 = cresceu<br>Abaixo = caiu<br>Base para a mensagem de desempenho</span></div></span><span class="valor">${porcenta(dados.vsDiamantes)}</span></div>
         <div class="linha"><span class="rotulo">📅 Dias com live esse mês</span><span class="valor">${valor(dados.diasLive)}</span></div>
         <div class="linha"><span class="rotulo">📆 Mês passado</span><span class="valor">${valor(dados.diasLiveAnt)}</span></div>
-        <div class="linha"><span class="rotulo">📉 Comparado com antes</span><span class="valor">${porcenta(dados.vsDiasLive)}</span></div>
+        <div class="linha"><span class="rotulo">📉 Comparado</span><span class="valor">${porcenta(dados.vsDiasLive)}</span></div>
         <div class="linha"><span class="rotulo">👤 Seguidores esse mês</span><span class="valor">${valor(dados.seguidores)}</span></div>
         <div class="linha"><span class="rotulo">📆 Mês passado</span><span class="valor">${valor(dados.seguidoresAnt)}</span></div>
-        <div class="linha"><span class="rotulo">📉 Comparado com antes</span><span class="valor">${porcenta(dados.vsSeguidores)}</span></div>
+        <div class="linha"><span class="rotulo">📉 Comparado</span><span class="valor">${porcenta(dados.vsSeguidores)}</span></div>
       </div><hr class="separador">
 
-      <div class="secao"><h3>🎖️ BATALHAS E DESAFIOS</h3>
-        <div class="linha"><span class="rotulo">⚔️ Quantas batalhas participou</span><span class="valor">${valor(dados.batalhas)}</span></div>
-        <div class="linha"><span class="rotulo">💎 Diamantes ganhos em batalhas</span><span class="valor">${valor(dados.diamantesBatalha)}</span></div>
+      <div class="secao"><h3>🎖️ Batalhas e desafios</h3>
+        <div class="linha"><span class="rotulo">⚔️ Participações</span><span class="valor">${valor(dados.batalhas)}</span></div>
+        <div class="linha"><span class="rotulo">💎 Ganhos em batalhas</span><span class="valor">${valor(dados.diamantesBatalha)}</span></div>
       </div><hr class="separador">
 
-      <div class="secao"><h3>🤝 INDICAÇÕES E CONVITES</h3>
-        <div class="linha"><span class="rotulo">👤 Novos criadores indicados</span><span class="valor">${valor(dados.novosCriadores)}</span></div>
-        <div class="linha"><span class="rotulo">🎤 Apresentado como convidado</span><span class="valor">${valor(dados.convidadoApresentador)}</span></div>
-        <div class="linha"><span class="rotulo">🎙️ Convidou outras pessoas pra live</span><span class="valor">${valor(dados.convidadoConvidado)}</span></div>
+      <div class="secao"><h3>🤝 Indicações e convites</h3>
+        <div class="linha"><span class="rotulo">👤 Indicados por você</span><span class="valor">${valor(dados.novosCriadores)}</span></div>
+        <div class="linha"><span class="rotulo">🎤 Convidado(a) em lives</span><span class="valor">${valor(dados.convidadoApresentador)}</span></div>
+        <div class="linha"><span class="rotulo">🎙️ Convidou outras pessoas</span><span class="valor">${valor(dados.convidadoConvidado)}</span></div>
       </div><hr class="separador">
 
-      <div class="secao"><h3>❤️‍🔥 SEU FÃ-CLUBE</h3>
-        <div class="linha"><span class="rotulo">❤️‍🔥 Novos fãs conquistados</span><span class="valor">${valor(dados.novosFas)}</span></div>
-        <div class="linha"><span class="rotulo">💎 Total de diamantes do clube</span><span class="valor">${valor(dados.totalDiamantesFasClube)}</span></div>
-        <div class="linha"><span class="rotulo">📌 Participação % do clube<div class="dica"><button class="btn-detalhes">🔍 Ver detalhes</button><span class="dica-texto">Quanto você contribui para o total — já calculado em porcentagem</span></div></span><span class="valor">${porcenta(dados.pctContribuicao)}</span></div>
-        <div class="linha"><span class="rotulo">👥 Total de membros do clube</span><span class="valor">${valor(dados.totalFas)}</span></div>
-        <div class="linha"><span class="rotulo">✅ Fãs ativos do clube</span><span class="valor">${valor(dados.fasAtivos)}</span></div>
+      <div class="secao"><h3>❤️‍🔥 Fã‑Clube</h3>
+        <div class="linha"><span class="rotulo">❤️‍🔥 Novos fãs</span><span class="valor">${valor(dados.novosFas)}</span></div>
+        <div class="linha"><span class="rotulo">💎 Total do clube</span><span class="valor">${valor(dados.totalDiamantesFasClube)}</span></div>
+        <div class="linha"><span class="rotulo">📌 Sua participação<div class="dica"><button class="btn-detalhes">🔍 Ver detalhes</button><span class="dica-texto">Contribuição calculada do total</span></div></span><span class="valor">${porcenta(dados.pctContribuicao)}</span></div>
+        <div class="linha"><span class="rotulo">👥 Membros totais</span><span class="valor">${valor(dados.totalFas)}</span></div>
+        <div class="linha"><span class="rotulo">✅ Ativos</span><span class="valor">${valor(dados.fasAtivos)}</span></div>
       </div>
 
       <div class="video-area">
-        <h3 style="color:var(--azul);margin-bottom:10px">📺 Precisa de ajuda pra entender tudo?</h3>
-        <p>Assista ao vídeo explicativo completo — mostra cada detalhe, cada número e cada campo!</p>
-        ${LINK_VIDEO?`<a class="video-btn" href="${LINK_VIDEO}" target="_blank">▶️ ABRIR VÍDEO EXPLICATIVO</a>`:`<div style="padding:10px;color:var(--cinza)">🔒 Em breve: vídeo explicativo completo — fique ligado!</div>`}
+        <h3 style="color:var(--azul);margin-bottom:10px">📺 Precisa de ajuda?</h3>
+        <p>Explicação completa de cada campo e número!</p>
+        ${LINK_VIDEO?`<a class="video-btn" href="${LINK_VIDEO}" target="_blank">▶️ ABRIR EXPLICAÇÃO</a>`:`<div style="padding:10px;color:var(--cinza)">🔒 Em breve: vídeo com tudo explicado</div>`}
       </div>
     </div>`;
 
