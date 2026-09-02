@@ -44,12 +44,14 @@
     .metricas-card { background:var(--painel2); padding:18px; border-radius:12px; transition:transform 0.2s; }
     .metricas-card:hover { transform:translateY(-3px); }
     .metrica-label { font-size:0.85rem; color:var(--cinza); margin-bottom:8px; }
-    .metrica-valor { font-size:1.4rem; font-weight:700; }
+    .metrica-valor { font-size:1.4rem; font-weight:700; display:flex; align-items:center; gap:8px; }
     .destaque { color:var(--dourado); }
     .verde { color:var(--verde); }
     .vermelho { color:var(--vermelho); }
     .roxo { color:var(--roxo); }
     .azul { color:var(--azul); }
+    .seta-subiu { color:var(--verde); font-size:1rem; }
+    .seta-caiu { color:var(--vermelho); font-size:1rem; }
     .barra-progresso { width:100%; height:14px; background:var(--painel2); border-radius:7px; overflow:hidden; margin-top:10px; }
     .progresso { height:100%; background:linear-gradient(90deg, var(--verde), var(--verde-claro)); border-radius:7px; display:flex; align-items:center; justify-content:center; font-size:0.75rem; font-weight:700; color:white; transition:width 1s ease-out; }
     .tabela-bonificacao { width:100%; border-collapse:collapse; margin-top:15px; }
@@ -65,10 +67,10 @@
     .status-inativo { background:rgba(239,68,68,0.15); color:var(--vermelho-claro); }
     .grafico-container { position:relative; height:300px; width:100%; margin:20px 0; background:var(--painel2); border-radius:12px; padding:15px; }
     .secao-titulo { font-size:1.1rem; color:var(--roxo); margin:30px 0 15px; padding-bottom:8px; border-bottom:1px solid var(--borda); display:flex; align-items:center; justify-content:space-between; gap:8px; }
-    .linha-dados { display:flex; justify-content:space-between; padding:12px 0; border-bottom:1px solid rgba(255,255,255,0.05); align-items:center; }
+    .linha-dados { display:flex; justify-content:space-between; padding:12px 0; border-bottom:1px solid rgba(255,255,255,0.05); align-items:center; flex-wrap:wrap; }
     .dado-label { color:var(--cinza); font-size:0.95rem; }
-    .dado-valor { font-weight:600; font-size:0.95rem; }
-    .variacao { font-size:0.8rem; font-weight:700; padding:3px 10px; border-radius:12px; margin-left:10px; white-space:nowrap; }
+    .dado-valor { font-weight:600; font-size:0.95rem; display:flex; align-items:center; gap:6px; }
+    .variacao { font-size:0.8rem; font-weight:700; padding:3px 10px; border-radius:12px; white-space:nowrap; }
     .variacao.subiu { background:rgba(34,197,94,0.15); color:var(--verde-claro); }
     .variacao.caiu { background:rgba(239,68,68,0.15); color:var(--vermelho-claro); }
     .grupo-badge { display:inline-block; background:rgba(123,63,255,0.15); color:var(--roxo-claro); padding:6px 14px; border-radius:20px; font-weight:600; margin-top:5px; font-size:0.9rem; }
@@ -94,7 +96,7 @@
     </div>
 
     <div class="aviso-topo">
-      💡 <strong>Bem-vindo(a)!</strong> Digite seu nome de usuário do TikTok — exatamente igual ao seu perfil — para ver suas metas, acompanhar seu desempenho e ver tudo que preparamos pra você! 📊✨
+      💡 <strong>Bem-vindo(a)!</strong> Digite seu usuário do TikTok — exatamente igual ao seu perfil — para ver suas metas, acompanhar seu desempenho e ver tudo que preparamos pra você! 📊✨
     </div>
 
     <div id="area-login" class="card">
@@ -134,7 +136,7 @@
       <div class="card">
         <h2 class="card-titulo">
           💎 Evolução de Diamantes
-          <button class="btn-detalhes" onclick="alternarDetalhes('detalhes-diamantes')">ℹ️ Detalhes</button>
+          <button class="btn-detalhes" onclick="alternarDetalhes('detalhes-diamantes')">ℹ️ O que é isso?</button>
         </h2>
         <div id="detalhes-diamantes" class="detalhes-conteudo">
           <strong>💎 O que são Diamantes?</strong><br>
@@ -153,7 +155,7 @@
       <div class="card">
         <h2 class="card-titulo">
           📊 Comparativo Geral — Este Mês × Mês Passado
-          <button class="btn-detalhes" onclick="alternarDetalhes('detalhes-comparativo')">ℹ️ Detalhes</button>
+          <button class="btn-detalhes" onclick="alternarDetalhes('detalhes-comparativo')">ℹ️ Entenda</button>
         </h2>
         <div id="detalhes-comparativo" class="detalhes-conteudo">
           <strong>📊 O que este gráfico mostra:</strong><br>
@@ -170,7 +172,7 @@
       <div class="card">
         <h2 class="card-titulo">
           🎯 Resumo do Desempenho
-          <button class="btn-detalhes" onclick="alternarDetalhes('detalhes-resumo')">ℹ️ Detalhes</button>
+          <button class="btn-detalhes" onclick="alternarDetalhes('detalhes-resumo')">ℹ️ Entenda</button>
         </h2>
         <div id="detalhes-resumo" class="detalhes-conteudo">
           <strong>🎯 Suas metas de cada mês:</strong><br>
@@ -219,7 +221,7 @@
       <div class="card">
         <h3 class="secao-titulo">
           💎 Ganhos de Diamantes
-          <button class="btn-detalhes" onclick="alternarDetalhes('detalhes-diamantes2')">ℹ️ Detalhes</button>
+          <button class="btn-detalhes" onclick="alternarDetalhes('detalhes-diamantes2')">ℹ️ Entenda</button>
         </h3>
         <div id="detalhes-diamantes2" class="detalhes-conteudo">
           <strong>💰 Como funcionam os ganhos:</strong><br>
@@ -258,7 +260,7 @@
       <div class="card">
         <h3 class="secao-titulo">
           ⏱️ Frequência e Duração de Lives
-          <button class="btn-detalhes" onclick="alternarDetalhes('detalhes-lives')">ℹ️ Detalhes</button>
+          <button class="btn-detalhes" onclick="alternarDetalhes('detalhes-lives')">ℹ️ Entenda</button>
         </h3>
         <div id="detalhes-lives" class="detalhes-conteudo">
           <strong>📺 Por que isso importa tanto?</strong><br>
@@ -297,7 +299,7 @@
       <div class="card">
         <h3 class="secao-titulo">
           👥 Crescimento de Público
-          <button class="btn-detalhes" onclick="alternarDetalhes('detalhes-publico')">ℹ️ Detalhes</button>
+          <button class="btn-detalhes" onclick="alternarDetalhes('detalhes-publico')">ℹ️ Entenda</button>
         </h3>
         <div id="detalhes-publico" class="detalhes-conteudo">
           <strong>👥 Seu público = seu maior patrimônio!</strong><br>
@@ -340,7 +342,7 @@
       <div class="card">
         <h3 class="secao-titulo">
           🏆 Nível, Status e Conquistas
-          <button class="btn-detalhes" onclick="alternarDetalhes('detalhes-nivel')">ℹ️ Detalhes</button>
+          <button class="btn-detalhes" onclick="alternarDetalhes('detalhes-nivel')">ℹ️ Entenda</button>
         </h3>
         <div id="detalhes-nivel" class="detalhes-conteudo">
           <strong>🏆 Como funcionam os níveis:</strong><br>
@@ -430,16 +432,16 @@
     // ==================================================
     // 🔗 LINK DO APPS SCRIPT — JÁ VINCULADO! ✅
     // ==================================================
-    const LINK_APPS_SCRIPT = "https://script.google.com/macros/s/AKfycbw2uDYdkFPBOly-_ZQNkvbznS_4s8HuTgh_SoPC2yTPc-ku7Rv8beZMPy_YlWGvGTn95w/exec";
+    const LINK_APPS_SCRIPT = "https://script.google.com/macros/s/AKfycbwKe6iYWxWi5Cdr7TL13lDQ-hITwEZiNw1wzYWo6RFe-N0DWNJZKLELOI0Lz9YD7NX2/exec";
 
-    // 🎬 LINK DO VÍDEO — COLOQUE SEU LINK DO YOUTUBE AQUI!
+    // 🎬 LINK DO VÍDEO DO YOUTUBE — COLOQUE SEU LINK AQUI!
     const LINK_VIDEO = "";
 
     let graficoDiamantes, graficoComparativo;
     let nivelAtualUsuario = 0;
 
     // ==================================================
-    // 🔄 ALTERNAR DETALHES — BOTÃO "ℹ️ Detalhes"
+    // 🔄 ALTERNAR EXPLICAÇÕES DAS MÉTRICAS
     // ==================================================
     function alternarDetalhes(id) {
       const el = document.getElementById(id);
@@ -461,13 +463,18 @@
       mostrarArea('carregando');
 
       try {
-        // Busca no Apps Script
+        // Busca no Apps Script pela COLUNA C (@ do TikTok)
         const res = await fetch(`${LINK_APPS_SCRIPT}?acao=buscar&usuario=${encodeURIComponent(usuario)}`);
         const resposta = await res.json();
 
         if (!resposta.encontrado) {
           mostrarErro(`❌ Não encontramos "${usuario}". Verifique se digitou exatamente igual ao seu perfil do TikTok e tente novamente!`);
           return;
+        }
+
+        // ✅ REGRA DA COLUNA D: Se "Não está em nenhum grupo" → Padroniza — Matriz (Central)
+        if (resposta.grupo === "Não está em nenhum grupo" || !resposta.grupo) {
+          resposta.grupo = "Padroniza — Matriz (Central)";
         }
 
         // Preenche os dados na tela
@@ -481,15 +488,21 @@
     }
 
     // ==================================================
-    // 📊 PREENCHER TODOS OS DADOS NA TELA
+    // 📊 PREENCHER TODOS OS DADOS COM SETAS DE VARIAÇÃO
     // ==================================================
     function preencherDados(d) {
-      // Dados básicos
+      // Dados básicos — COLUNA D com regra automática
       document.getElementById('nome-criador').textContent = d.nomeCriador || '-';
       document.getElementById('periodo').textContent = d.periodo || '-';
       document.getElementById('dia-entrada').textContent = d.diaEntrada || '-';
       document.getElementById('horario-ingresso').textContent = d.horarioIngresso || '-';
-      document.getElementById('grupo-exibicao').textContent = d.grupo || 'Padroniza — Matriz (Central)';
+      
+      // ✅ COLUNA D — Grupo / Subagência com regra automática
+      let grupoExibicao = d.grupo || 'Padroniza — Matriz (Central)';
+      if (grupoExibicao === "Não está em nenhum grupo") {
+        grupoExibicao = "Padroniza — Matriz (Central)";
+      }
+      document.getElementById('grupo-exibicao').textContent = grupoExibicao;
       
       // Status
       const badge = document.getElementById('status-badge');
@@ -512,10 +525,11 @@
       else if (nivelTexto.includes('1')) nivelAtualUsuario = 1;
       else nivelAtualUsuario = 0;
 
-      // Métricas principais
-      document.getElementById('diamantes-mes').textContent = d.diamantesMes || 0;
+      // Métricas principais com setas
+      const varDiam = calcularVariacao(d.diamantesMes, d.diamantesMesPassado);
+      document.getElementById('diamantes-mes').innerHTML = `${d.diamantesMes || 0} ${varDiam.seta}`;
       document.getElementById('horas-live').textContent = (d.horasLive || 0) + 'h';
-      document.getElementById('seguidores').textContent = d.novosSeguidores || 0;
+      document.getElementById('seguidores').innerHTML = `${d.novosSeguidores || 0} ${calcularVariacao(d.novosSeguidores, d.seguidoresPassado).seta}`;
       document.getElementById('lives').textContent = d.quantidadeLives || 0;
 
       // Porcentagem da meta
@@ -524,24 +538,24 @@
       document.getElementById('barra-progresso').style.width = Math.min(pctDiamantes, 100) + '%';
       document.getElementById('barra-progresso').textContent = Math.min(pctDiamantes, 100) + '%';
 
-      // Restante dos dados
+      // Restante dos dados com variação
       document.getElementById('r-diamantes-mes').textContent = d.diamantesMes || 0;
       document.getElementById('r-diamantes-passado').textContent = d.diamantesMesPassado || 0;
-      document.getElementById('r-var-diamantes').textContent = (d.varDiamantes || 0) + '%';
+      document.getElementById('r-var-diamantes').innerHTML = varDiam.texto;
       document.getElementById('r-pct-diamantes').textContent = pctDiamantes + '%';
       document.getElementById('r-total-diamantes').textContent = d.totalDiamantes || 0;
       document.getElementById('r-convite').textContent = d.bonusConvite || 0;
 
       document.getElementById('r-horas-mes').textContent = (d.horasLive || 0) + 'h';
       document.getElementById('r-horas-passado').textContent = (d.horasMesPassado || 0) + 'h';
-      document.getElementById('r-var-horas').textContent = (d.varHoras || 0) + '%';
+      document.getElementById('r-var-horas').innerHTML = calcularVariacao(d.horasLive, d.horasMesPassado).texto;
       document.getElementById('r-dias-live').textContent = d.diasLive || 0;
       document.getElementById('r-lives').textContent = d.quantidadeLives || 0;
       document.getElementById('r-pct-horas').textContent = (d.pctHoras || 0) + '%';
 
       document.getElementById('r-seg-mes').textContent = d.novosSeguidores || 0;
       document.getElementById('r-seg-passado').textContent = d.seguidoresPassado || 0;
-      document.getElementById('r-var-seg').textContent = (d.varSeguidores || 0) + '%';
+      document.getElementById('r-var-seg').innerHTML = calcularVariacao(d.novosSeguidores, d.seguidoresPassado).texto;
       document.getElementById('r-pct-seg').textContent = (d.pctSeguidores || 0) + '%';
       document.getElementById('r-seg-por-live').textContent = d.segPorLive || 0;
       document.getElementById('r-fas-ativos').textContent = d.fasAtivos || 0;
@@ -563,6 +577,19 @@
 
       // Inicializa gráficos
       inicializarGraficos(d);
+    }
+
+    // ==================================================
+    // 📈 FUNÇÃO DE CÁLCULO DE VARIAÇÃO — SETAS ↑ ↓
+    // ==================================================
+    function calcularVariacao(atual, anterior) {
+      atual = Number(atual) || 0;
+      anterior = Number(anterior) || 0;
+      if (anterior === 0) return { seta: '', texto: '—', classe: '' };
+      const pct = Math.round(((atual - anterior) / anterior) * 100);
+      if (pct > 0) return { seta: `<span class="seta-subiu">↑</span> +${pct}%`, texto: `<span class="variacao subiu">↑ +${pct}%</span>`, classe: 'subiu' };
+      if (pct < 0) return { seta: `<span class="seta-caiu">↓</span> ${pct}%`, texto: `<span class="variacao caiu">↓ ${pct}%</span>`, classe: 'caiu' };
+      return { seta: '', texto: '<span class="variacao">— 0%</span>', classe: '' };
     }
 
     // ==================================================
@@ -629,31 +656,4 @@
       
       if (nome === 'login') document.getElementById('area-login').classList.remove('oculto');
       if (nome === 'carregando') document.getElementById('area-carregando').classList.remove('oculto');
-      if (nome === 'dados') document.getElementById('area-dados').classList.remove('oculto');
-      if (nome === 'erro') document.getElementById('area-erro').classList.remove('oculto');
-    }
-
-    function mostrarErro(texto) {
-      document.getElementById('texto-erro').textContent = texto;
-      mostrarArea('erro');
-    }
-
-    function voltarLogin() {
-      document.getElementById('usuario').value = '';
-      mostrarArea('login');
-    }
-
-    function alternarTabela() {
-      document.getElementById('tabela-bonificacao').classList.toggle('oculto');
-    }
-
-    function abrirVideo() {
-      if (LINK_VIDEO) {
-        window.open(LINK_VIDEO, '_blank');
-      } else {
-        alert('🎬 O vídeo explicativo será adicionado em breve! Em caso de dúvidas, fale com sua agência. 💜');
-      }
-    }
-  </script>
-</body>
-</html>
+      if (nome === 'dados') document.getElementById('area-dados').classList.remove('
