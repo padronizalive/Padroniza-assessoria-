@@ -47,10 +47,6 @@
     ul, ol { padding-left:26px; margin-bottom:12px; }
     li { margin-bottom:10px; }
 
-    /* === BOTÃO OUTRAS MODALIDADES === */
-    .botao-outros { display:block; text-align:center; padding:20px 28px; background:linear-gradient(135deg, rgba(199,155,59,.15), rgba(123,63,255,.15)); border:2px solid var(--dourado); border-radius:20px; color:var(--dourado); font-size:1.05rem; font-weight:700; cursor:pointer; transition:all .3s; margin:32px 0; }
-    .botao-outros:hover { background:var(--dourado); color:#000; transform:translateY(-2px); box-shadow:0 6px 20px rgba(199,155,59,.3); }
-
     /* === GRID DE MODALIDADES === */
     .grid-nichos { display:grid; gap:20px; margin-top:20px; grid-template-columns:1fr; }
     @media (min-width:640px) { .grid-nichos { grid-template-columns:1fr 1fr; } }
@@ -66,7 +62,7 @@
     .botao-roteiro { display:inline-flex; align-items:center; gap:6px; padding:10px 18px; background:linear-gradient(135deg, rgba(199,155,59,.15), rgba(123,63,255,.15)); color:var(--dourado); border:1px solid var(--dourado); border-radius:999px; text-decoration:none; font-weight:600; font-size:.9rem; cursor:pointer; transition:all .2s; }
     .botao-roteiro:hover { background:var(--dourado); color:#000; }
 
-    /* === MODAL === */
+    /* === MODAL DO ROTEIRO === */
     .modal-fundo { position:fixed; inset:0; background:rgba(0,0,0,.85); display:none; align-items:center; justify-content:center; z-index:9999; padding:20px; }
     .modal-fundo.aberto { display:flex; }
     .modal-conteudo { background:var(--painel); border:2px solid var(--roxo); border-radius:24px; max-width:650px; width:100%; max-height:85vh; overflow-y:auto; padding:26px; position:relative; box-shadow:0 0 40px rgba(123,63,255,.4); }
@@ -74,13 +70,10 @@
     .modal-fechar:hover { color:var(--dourado); }
     .modal-aviso { background:rgba(199,155,59,.1); border-left:4px solid var(--dourado); padding:12px 16px; border-radius:12px; margin-bottom:20px; font-size:.9rem; }
     .modal-conteudo h3 { color:var(--dourado); margin-bottom:16px; font-size:1.25rem; }
-    .modal-conteudo h4 { color:var(--roxo-claro); margin:20px 0 10px; font-size:1.05rem; }
     .roteiro-bloco { margin-bottom:18px; }
     .roteiro-tempo { display:inline-block; background:var(--roxo); color:#fff; padding:4px 10px; border-radius:999px; font-size:.8rem; font-weight:600; margin-right:8px; margin-bottom:8px; }
     .falas { background:rgba(255,255,255,.03); border-radius:12px; padding:14px; border-left:3px solid var(--roxo-claro); }
     .falas p { margin-bottom:8px; }
-    .dica-bloco { background:rgba(255,255,255,.03); border-radius:12px; padding:16px; margin-bottom:16px; border-left:3px solid var(--dourado); }
-    .exemplo-fala { font-style:italic; color:var(--sucesso); margin:8px 0; padding-left:12px; border-left:2px solid var(--sucesso); }
 
     .botao-voltar { display:inline-block; margin-top:10px; padding:14px 32px; background:linear-gradient(135deg, var(--roxo), var(--dourado)); color:#000; border-radius:999px; text-decoration:none; font-weight:800; border:none; cursor:pointer; transition:transform .2s, box-shadow .2s; font-size:1rem; }
     .botao-voltar:hover { transform:translateY(-3px); box-shadow:0 8px 20px rgba(123,63,255,.35); color:#000; }
@@ -259,11 +252,6 @@
         </div>
 
       </div>
-
-      <!-- 📚 BOTÃO OUTRAS MODALIDADES -->
-      <button class="botao-outros" onclick="abrirRoteiro('outros')">
-        📚 Clique aqui para ver OUTRAS MODALIDADES e dicas rápidas! 💡
-      </button>
     </div>
 
     <!-- BRINCADEIRAS EXTRAS -->
@@ -342,7 +330,7 @@
   </div>
 
   <script>
-    // ROTEIROS COMPLETOS + OUTRAS MODALIDADES
+    // ROTEIROS COMPLETOS DENTRO DO CÓDIGO
     const roteiros = {
       karaoke: {
         titulo: "🎤 Roteiro Completo — Karaokê (≈60 min)",
@@ -411,25 +399,42 @@
           { tempo: "35:00 — 50:00", titulo: "LOTE 3 — ESPECIAL", falas: [`"Terceiro lote — o especial! 🏆 Desafio: mandar uma mensagem de carinho pra alguém que você ama! ❤️ Quem participa? VENDIDO! 🔨 Fala com o coração... Que lindo! 🥹 Emocionou a todos nós!"`] },
           { tempo: "50:00 — 60:00", titulo: "ENCERRAMENTO", falas: [`"Leilão encerrado, pessoal! 🔨 Que live incrível! Todos foram generosos e divertidos! Obrigado por cada lance, cada sorriso! Vocês são demais! Até o próximo leilão! Fiquem com Deus! 💎💜"`] }
         ]
-      },
-      outros: {
-        titulo: "📚 Outras Modalidades & Dicas Rápidas",
-        aviso: "💡 Ideias extras com exemplos de fala — adapte do seu jeito!",
-        blocos: [
-          { tempo: "", titulo: "😂 1. COMÉDIA & PIADAS — Riso garantido!", falas: [], dicas: [
-            "💬 Exemplo de fala: \"Bem-vindos! Hoje é dia de rir muito! Cada um vai contar uma piada ou história engraçada! E vocês também mandam nos comentários! Vamos soltar a risada! 😄\"",
-            "✅ Comece leve, sem ofensas, leia as piadas do público! Duração: 40–60 min"
-          ]},
-          { tempo: "", titulo: "❓ 2. PERGUNTAS & RESPOSTAS — Conheça melhor!", falas: [], dicas: [
-            "💬 Exemplo de fala: \"Hoje vamos nos conhecer melhor! Eu e os convidados respondemos — mandem suas perguntas nos comentários! Tudo leve e respeitoso! 💜\"",
-            "✅ Prepare 5 perguntas leves, deixe o público participar, respeite quem não quiser responder!"
-          ]},
-          { tempo: "", titulo: "🎤 3. TALK SHOW — Bate-papo descontraído!", falas: [], dicas: [
-            "💬 Exemplo de fala: \"Bem-vindos! Hoje temos um bate-papo super especial com nossos convidados! Cada um vai contar um pouquinho de si, suas histórias, seus sonhos! Sentem-se em casa! ❤️\"",
-            "✅ Um tema leve por dia, dê espaço pra cada um falar, valorize as histórias!"
-          ]},
-          { tempo: "", titulo: "🎮 4. JOGOS & DESAFIOS — Muita animação!", falas: [], dicas: [
-            "💬 Exemplo de fala: \"Hoje tem brincadeira! Vamos ter Verdade ou Mentira, Adivinha a Música e muito mais! Tudo grátis, todo mundo participa! Vamos agitar! 🎮🔥\"",
-            "✅ Brincadeiras simples e grátis: Verdade ou Mentira, Palavra Proibida, Adivinha a música! Sem presentes — só diversão!"
-          ]},
-          { tempo: "", titulo: "🗣️ 5. DEBATE LEVE — Troca de ideias com respeito!", falas: [], dicas: 
+      }
+    };
+
+    function abrirRoteiro(chave) {
+      const r = roteiros[chave];
+      if (!r) return;
+      
+      let html = `<h3>${r.titulo}</h3>`;
+      html += `<div class="modal-aviso">${r.aviso}</div>`;
+      
+      r.blocos.forEach(bloco => {
+        html += `<div class="roteiro-bloco">`;
+        html += `<span class="roteiro-tempo">${bloco.tempo}</span> <strong>${bloco.titulo}</strong>`;
+        html += `<div class="falas">`;
+        bloco.falas.forEach(f => html += `<p>${f}</p>`);
+        html += `</div></div>`;
+      });
+      
+      document.getElementById('conteudoRoteiro').innerHTML = html;
+      document.getElementById('modalRoteiro').classList.add('aberto');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function fecharRoteiro() {
+      document.getElementById('modalRoteiro').classList.remove('aberto');
+      document.body.style.overflow = '';
+    }
+
+    function fecharModalCliqueFora(e) {
+      if (e.target.id === 'modalRoteiro') fecharRoteiro();
+    }
+
+    // ESC fecha o modal
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') fecharRoteiro();
+    });
+  </script>
+</body>
+</html>
