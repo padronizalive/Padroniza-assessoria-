@@ -115,6 +115,16 @@
       border: 2px solid rgba(255,255,255,0.2);
     }
     .btn-coins { background: linear-gradient(135deg, #ffcc00, #ff8800); color: #000; }
+    .btn-relatorio { background: linear-gradient(135deg, #34d399, #10b981); color:#000; }
+    .btn-suporte { background: linear-gradient(135deg, #60a5fa, #3b82f6); color:#fff; }
+    .btn-tiktok { background: linear-gradient(135deg, #00f2ea, #ff0050); color:#000; }
+    .btn-kako { background: linear-gradient(135deg, #7b3fff, #b84dff); color:#fff; }
+    .btn-gaming { 
+      background: linear-gradient(135deg, #facc15, #eab308); 
+      color:#000; 
+      box-shadow: 0 0 15px rgba(250,204,21,0.35);
+      border: 2px solid rgba(255,255,255,0.2);
+    }
 
     .main-grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: 20px; }
     @media (min-width: 900px) {
@@ -461,7 +471,7 @@
         <p>Login exclusivo da equipe Padroniza Live.</p>
         <label style="font-size:0.85rem;color:var(--text-muted);">E-mail</label>
         <input type="email" id="inputAdminEmail" placeholder="seuemail@exemplo.com" />
-        <label style="font-size:0.85rem;color:var(--text-muted);margin-top:8px;">Senha</label>
+        <label style="font-size:0.85rem;color:var(--text-muted);">Senha</label>
         <input type="password" id="inputAdminSenha" placeholder="••••••••" />
         <p class="message" id="msgAdmin"></p>
       </div>
@@ -472,7 +482,7 @@
     </div>
   </div>
 
-  <!-- MODAL INTERNA — PAINEL DO AGENCIADO -->
+  <!-- MODAL INTERNA — PAINEL DO AGENCIADO ✅ COM O BOTÃO NOVO! -->
   <div class="modal-backdrop" id="modalPainelAgenciado">
     <div class="modal">
       <div style="display:flex;justify-content:space-between;align-items:center;">
@@ -483,9 +493,10 @@
       <div style="display:flex; flex-direction:column; gap:12px;">
         <a href="agendar-batalha.html" class="btn btn-agenciado" style="justify-content:center; text-decoration:none;">⚔️ Agendar Batalha</a>
         <a href="suporte.html" class="btn btn-suporte" style="justify-content:center; text-decoration:none;">💬 Falar com a Agência / Suporte</a>
-        <a href="relatorio-metricas.html" class="btn btn-relatorio" style="justify-content:center; text-decoration:none; background:linear-gradient(135deg, #34d399, #10b981); color:#000;">📊 Minhas Metas & Relatório</a>
-        <a href="https://1drv.ms/f/c/884f1b26d8daa748/IgCI5Cqu_c0lTokK1PAApLfVARVzFb6jEQMdTsvbD_Nucqo?e=CJc3ZD" target="_blank" class="btn btn-tiktok" style="justify-content:center; text-decoration:none; background:linear-gradient(135deg, #00f2ea, #ff0050); color:#000;">🎵📚 Treinamento TikTok</a>
-        <a href="https://1drv.ms/f/c/884f1b26d8daa748/IgCH2cDy7-dkR5bU09e-fCubATT4f6EzWwx0fS9ete7cnYI?e=yOHuSs" target="_blank" class="btn btn-kako" style="justify-content:center; text-decoration:none; background:linear-gradient(135deg, #7b3fff, #b84dff); color:#fff;">💜📚 Treinamento Kako Live</a>
+        <a href="relatorio-metricas.html" class="btn btn-relatorio" style="justify-content:center; text-decoration:none;">📊 Minhas Metas & Relatório</a>
+        <a href="area-gaming.html" class="btn btn-gaming" style="justify-content:center; text-decoration:none;">🎮 ÁREA GAMING</a>
+        <a href="https://1drv.ms/f/c/884f1b26d8daa748/IgCI5Cqu_c0lTokK1PAApLfVARVzFb6jEQMdTsvbD_Nucqo?e=CJc3ZD" target="_blank" class="btn btn-tiktok" style="justify-content:center; text-decoration:none;">🎵📚 Treinamento TikTok</a>
+        <a href="https://1drv.ms/f/c/884f1b26d8daa748/IgCH2cDy7-dkR5bU09e-fCubATT4f6EzWwx0fS9ete7cnYI?e=yOHuSs" target="_blank" class="btn btn-kako" style="justify-content:center; text-decoration:none;">💜📚 Treinamento Kako Live</a>
       </div>
       <div class="modal-footer" style="margin-top:10px;">
         <button class="btn btn-outras" onclick="fecharModal('painel')">Voltar</button>
