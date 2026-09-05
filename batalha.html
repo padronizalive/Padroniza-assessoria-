@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>⚔️ Batalha — Padroniza Live</title>
+  <link rel="icon" type="image/png" href="https://i.ibb.co/B23rwMHt/1787270369792.png" />
+  <style>
+    :root {
+      --fundo: #0b1020; --painel: #11182c; --painel2: #17213a;
+      --roxo: #7b3fff; --roxo-claro: #9560ff; --dourado: #facc15;
+      --sucesso: #22c55e; --perigo: #ef4444; --alerta: #f97316;
+      --texto: #f0f4ff; --claro: #cbd5e1;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif; }
+    body { background: radial-gradient(circle at top right, #7b3fff20, var(--fundo) 55%); color: var(--texto); min-height: 100vh; line-height: 1.8; padding-bottom: 50px; }
+    .pagina { max-width: 900px; margin: 0 auto; padding: 20px 16px; }
+    
+    .voltar { display: inline-flex; align-items: center; gap: 8px; color: var(--roxo-claro); text-decoration: none; margin-bottom: 24px; font-weight: 600; transition: color .2s; }
+    .voltar:hover { color: var(--dourado); }
+    
+    .banner { width: 100%; border-radius: 16px; overflow: hidden; margin-bottom: 32px; border: 2px solid var(--dourado); box-shadow: 0 0 30px rgba(250,204,21,.25); }
+    .banner img { width: 100%; height: auto; display: block; }
+    
+    .cabecalho { text-align: center; margin-bottom: 36px; }
+    .cabecalho h1 { font-size: 2rem; background: linear-gradient(90deg, var(--roxo-claro), var(--dourado)); -webkit-background-clip: text; background-clip: text; color: transparent; margin-bottom: 8px; }
+    .cabecalho p { color: var(--claro); font-size: 1.05rem; max-width: 600px; margin: 0 auto; }
+    
+    .card { background: var(--painel); border: 1px solid rgba(123,63,255,.2); border-radius: 20px; padding: 28px; margin-bottom: 24px; box-shadow: 0 8px 30px rgba(0,0,0,.3); }
+    .card-titulo { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; font-size: 1.3rem; flex-wrap: wrap; }
+    .icone { font-size: 1.8rem; }
+    .verde { color: var(--sucesso); }
+    .vermelho { color: var(--perigo); }
+    .laranja { color: var(--alerta); }
+    .roxo { color: var(--roxo-claro); }
+    .dourado { color: var(--dourado); }
+    
+    .destaque-premio { background: linear-gradient(135deg, rgba(250,204,21,.15), rgba(123,63,255,.1)); border: 2px solid var(--dourado); border-radius: 20px; padding: 24px; margin-bottom: 28px; text-align: center; box-shadow: 0 0 25px rgba(250,204,21,.15); }
+    .destaque-premio h3 { color: var(--dourado); font-size: 1.4rem; margin-bottom: 12px; }
+    
+    details { background: var(--painel2); border-radius: 14px; margin: 14px 0; border: 1px solid rgba(255,255,255,.05); overflow: hidden; }
+    summary { padding: 18px 22px; cursor: pointer; font-weight: 600; list-style: none; display: flex; align-items: center; gap: 10px; color: var(--roxo-claro); transition: background .2s; }
+    summary:hover { background: rgba(123,63,255,.08); }
+    summary::-webkit-details-marker { display: none; }
+    details[open] summary { border-bottom: 1px solid rgba(255,255,255,.05); }
+    .detalhe-conteudo { padding: 22px 24px; color: var(--claro); }
+    .detalhe-conteudo h4 { color: var(--texto); margin: 18px 0 10px 0; font-size: 1.05rem; }
+    .detalhe-conteudo ul, .detalhe-conteudo ol { margin-left: 20px; margin-bottom: 16px; }
+    .detalhe-conteudo li { margin-bottom: 8px; }
+    
+    .frase-exemplo { background: rgba(255,255,255,.03); border-radius: 12px; padding: 16px 20px; margin: 12px 0; border-left: 3px solid var(--dourado); font-style: italic; }
+    .frase-exemplo strong { color: var(--dourado); font-style: normal; }
+    .reacao { background: rgba(34,197,94,.08); border-radius: 10px; padding: 12px 16px; margin: 8px 0 16px 0; font-size: .95rem; }
+    .reacao strong { color: var(--sucesso); }
+    
+    .regra { padding: 16px 20px; border-radius: 14px; margin-bottom: 12px; }
+    .sim { background: rgba(34,197,94,.08); border-left: 5px solid var(--sucesso); }
+    .nao { background: rgba(239,68,68,.08); border-left: 5px solid var(--perigo); }
+    
+    .aviso-final { background: linear-gradient(135deg, rgba(34,197,94,.1), rgba(123,63,255,.08)); border: 2px solid var(--sucesso); border-radius: 20px; padding: 26px; text-align: center; margin-top: 30px; }
+    .aviso-final h3 { color: var(--dourado); margin-bottom: 12px; font-size: 1.3rem; }
+    
+    .botao-voltar { display: inline-block; margin-top: 20px; padding: 14px 32px; background: linear-gradient(135deg, var(--roxo), var(--dourado)); color: #000; border-radius: 999px; text-decoration: none; font-weight: 800; border: none; cursor: pointer; transition: transform .2s; font-size: 1rem; width: 100%; text-align: center; }
+    .botao-voltar:hover { transform: translateY(-3px); box-shadow: 0 8px 20px rgba(123,63,255,.3); color: #000; }
+    
+    .destaque-importante { background: rgba(249,115,22,.1); border: 1px solid rgba(249,115,22,.3); border-radius: 12px; padding: 16px; margin: 16px 0; }
+    .destaque-importante h4 { color: var(--alerta); margin-bottom: 8px; }
+  </style>
+</head>
+<body>
+  <div class="pagina">
+    <a href="javascript:history.back()" class="voltar">← Voltar para o Painel do Agenciado</a>
+
+    <!-- 🖼️ CAPA DA PÁGINA -->
+    <div class="banner">
+      <img src="https://i.ibb.co/zHTcr35j/1788648756175.png" alt="⚔️ Batalha — Padroniza Live" />
+    </div>
+
+    <div class="cabecalho">
+      <h1>⚔️ BATALHA</h1>
+      <p>Aprenda a crescer com respeito, diversão e estratégia — sem pedir, sem forçar, sem violar regras! 💜✨</p>
+    </div>
+
+    <!-- 🏆 DESTAQUE: CAMPANHAS DIÁRIAS + PREMIAÇÃO -->
+    <div class="destaque-premio">
+      <h3>🏆 CAMPANHAS OFICIAIS DA AGÊNCIA — TODOS OS DIAS!</h3>
+      <p style="font-size: 1.05rem; line-height: 1.8;">
+        <strong>A Padroniza prepara batalhas automáticas TODOS OS DIAS pra você!</strong><br>
+        O sistema do TikTok troca o oponente a cada <strong>10 minutos automaticamente</strong>. Se o oponente não entrar, o sistema troca sozinho! É só olhar o <strong>banner de campanha que aparece na sua live</strong> e participar! 📱⚔️<br><br>
+        <strong style="font-size: 1.1rem;">🎁 PARTICIPE E PODE GANHAR PREMIAÇÃO NO FINAL DO MÊS!</strong><br>
+        Quem participa mais, se dedica e segue as regras tem <strong>MAIS CHANCES DE RECEBER PREMIAÇÃO ESPECIAL DA AGÊNCIA!</strong> Não fique de fora — cada participação conta! 💜💰
+      </p>
+    </div>
+
+    <!-- 📌 O QUE É BATALHA SEGURA -->
+    <div class="card">
+      <div class="card-titulo">
+        <span class="icone roxo">📌</span>
+        <h2>O que é Batalha Segura?</h2>
+      </div>
+      <p style="margin-bottom: 16px;">
+        Batalha não é briga, não é ofensa, não é pressão! É <strong>competição divertida</strong>, onde você e outro criador fazem desafios, o público torce, e quem tiver mais apoio ganha. Tudo com <strong>respeito, alegria e dentro das regras!</strong> 💜🤝
+      </p>
+      <ul style="margin-left: 24px; color: var(--claro);">
+        <li>✅ Uma forma de <strong>entreter o público</strong> e manter eles engajados</li>
+        <li>✅ Uma oportunidade de <strong>conhecer outros criadores</strong> e crescer juntos</li>
+        <li>✅ Dinâmica onde o público <strong>participa e torce</strong> — e isso traz mais presentes naturalmente!</li>
+        <li>✅ <strong>Nunca obrigação</strong> — o público apoia porque QUER, não porque é forçado!</li>
+      </ul>
+    </div>
+
+    <!-- ✅ REGRAS DE OURO -->
+    <div class="card">
+      <div class="card-titulo">
+        <span class="icone verde">✅</span>
+        <h2>O QUE PODE — Regras de Ouro</h2>
+      </div>
+      <div class="regra sim">
+        <strong>✅ Desafios leves e sem risco</strong> — careta, dança, cantar, chupar limão, fazer pose engraçada
+      </div>
+      <div class="regra sim">
+        <strong>✅ Perguntas e respostas rápidas</strong> — quem acerta mais ganha ponto
+      </div>
+      <div class="regra sim">
+        <strong>✅ Brincadeiras com o público</strong> — eles escolhem o desafio nos comentários
+      </div>
+      <div class="regra sim">
+        <strong>✅ Comemorar junto</strong> — aplaudir o adversário, independente do resultado
+      </div>
+      <div class="regra sim">
+        <strong>✅ Respeitar o oponente</strong> — se ele não quiser brincar, TUDO BEM! Faça brincadeiras com o público!
+      </div>
+    </div>
+
+    <!-- ❌ O QUE NÃO PODE -->
+    <div class="card">
+      <div class="card-titulo">
+        <span class="icone vermelho">❌</span>
+        <h2>O QUE NÃO PODE — Proibido e Perigoso</h2>
+      </div>
+      <div class="regra nao">
+        <strong>❌ Beber álcool, fumar, comer coisas estranhas ou picantes demais</strong> — risco à saúde e viola regras
+      </div>
+      <div class="regra nao">
+        <strong>❌ Pedir presente DIRETAMENTE como condição</strong> — "Se não mandar, não faço" = PROIBIDO!
+      </div>
+      <div class="regra nao">
+        <strong>❌ Ofender, xingar, humilhar ou ameaçar o adversário</strong> — respeito SEMPRE!
+      </div>
+      <div class="regra nao">
+        <strong>❌ Desafios que causem dor, ferimento ou risco</strong> — nada de bater, queimar, ingerir coisas perigosas
+      </div>
+      <div class="regra nao">
+        <strong>❌ "Só ganha quem der presente"</strong> — o público participa por alegria, não por obrigação!
+      </div>
+    </div>
+
+    <!-- 🌟 VOCÊ É UM INFLUENCIADOR — ROTEIRO COMPLETO -->
+    <div class="card">
+      <div class="card-titulo">
+        <span class="icone dourado">🌟</span>
+        <h2>VOCÊ É UM INFLUENCIADOR — Como Falar Sem Pedir 🎤</h2>
+      </div>
+      
+      <div class="destaque-importante">
+        <h4>💡 O SEGREDO: INFLUENCIAR, NÃO PEDIR!</h4>
+        <p>Você não é alguém que pede coisas — você é um <strong>apresentador, um influenciador, um líder de live!</strong> Quem influencia, convida, motiva, faz sentir parte. Quem pede, afasta. Quem convida, aproxima! 💜</p>
+      </div>
+
+      <details>
+        <summary>🎤 Ver ROTEIRO COMPLETO — O que falar + Por que funciona</summary>
+        <div class="detalhe-conteudo">
+          <h4>❌ O QUE NÃO FAZER — Afasta o público:</h4>
+          <div class="frase-exemplo">
+            "Me dê um presente!"<br>
+            "Manda um presente aí!"<br>
+            "Se não mandar, não ganho!"
+          </div>
+          <div class="reacao">
+            <strong>😟 Reação do público:</strong> Sente que está sendo cobrado, pressionado. Se sente usado. Pensa: "Só fala comigo pra pedir." → Se afasta, para de interagir!
+          </div>
+
+          <h4>✅ O QUE FAZER — Conquista o público:</h4>
+          <div class="frase-exemplo">
+            <strong>"Galera, cada coração, cada presente é uma força pra gente! Vocês são minha equipe, sem vocês eu não chego lá! Quem tá com a gente? 💜🔥"</strong>
+          </div>
+          <div class="reacao">
+            <strong>🥰 Reação do público:</strong> Sente que faz parte de algo. Sente que é importante pra você. Pensa: "Ele precisa de mim, eu sou parte disso!" → Quer apoiar, quer ajudar, quer ver você ganhar!
+          </div>
+
+          <h4>✅ Outros exemplos prontos pra usar:</h4>
+          
+          <p><strong>💬 Para engajar e ganhar LIKES sem pedir:</strong></p>
+          <div class="frase-exemplo">
+            "Galera, quem tá curtindo a live, deixa um like aí pra eu saber que vocês estão gostando! Isso ajuda MUITO mais gente a nos encontrar! Vamos? 👍💜"
+          </div>
+          <div class="reacao">
+            <strong>✨ Por que funciona:</strong> Você explica o PORQUÊ ajuda — não é só "dá like". Eles entendem que estão te ajudando a crescer!
+          </div>
+
+          <p><strong>💎 Para presentes — sem pedir diretamente:</strong></p>
+          <div class="frase-exemplo">
+            "Lembra que cada presentinho ajuda a gente a aparecer pra mais gente? Quem puder, eu agradeço MUITO! E quem não puder — sua presença, seu comentário, isso já é o maior presente! Vocês são tudo pra mim! 💜🥹"
+          </div>
+          <div class="reacao">
+            <strong>💜 Por que funciona:</strong> Você dá a informação, não a ordem. Valoriza QUEM NÃO pode também — e isso faz TODOS quererem te apoiar mais!
+          </div>
+
+          <p><strong>🎤 Para canto — interagir com música:</strong></p>
+          <div class="frase-exemplo">
+            "Essa música é pra vocês! 🎶 Se gostarem, mandam um coraçãozinho pra eu saber que tá tocando aí no coração de vocês! 💜🎵"
+          </div>
+          <div class="reacao">
+            <strong>🎵 Por que funciona:</strong> É uma resposta natural à música — não é pedido, é uma interação! O público sente que participa da música!
+          </div>
+
+          <h4>⏰ HORÁRIOS FIXOS — Por que isso é IMPORTANTE?</h4>
+          <p style="margin-top: 12px;">
+            <strong>Você é um apresentador — e apresentador tem HORÁRIO!</strong> 📅<br><br>
+            Se você entra todo dia em horários diferentes, o público nunca sabe quando te encontrar. Eles vêm uma vez, não te veem, e esquecem. Mas se você tem horário FIXO — por exemplo, <strong>todas as noites às 20h</strong> — o público ORGANIZA sua rotina pra te assistir! 🕐<br><br>
+            <strong>✅ Isso significa MAIS gente, MAIS presentes, MAIS crescimento!</strong> Porque eles SABEM que você vai estar lá, e eles voltam sempre! 💜🚀
+          </p>
+        </div>
+      </details>
+    </div>
+
+    <!-- 🎤 MODALIDADE DE CANTO — BRINCADEIRAS MUSICAIS -->
+    <div class="card">
+      <div class="card-titulo">
+        <span class="icone roxo">🎤</span>
+        <h2>🎵 Modalidade de Canto</h2>
+      </div>
+      <p style="margin-bottom: 16px;">
+        Se você canta na live, a música é sua melhor ferramenta de conexão! Veja como brincar com o público:
+      </p>
+
+      <details>
+        <summary>🎤 Ver DETALHES completos — brincadeiras, falas e dicas</summary>
+        <div class="detalhe-conteudo">
+          <h4>🎵 Brincadeira 1 — Pedir música ao público:</h4>
+          <p>Deixa o público escolher a próxima música! Isso os faz sentir que a live é DELES também!</p>
+          <div class="frase-exemplo">
+            "Qual música vocês querem ouvir agora? Comenta aí que eu canto pra vocês! A mais pedida, eu faço agora! 🎤🎶"
+          </div>
+          
+          <h4>🎵 Brincadeira 2 — Completar a frase:</h4>
+          <p>Começa a música e para no final — deixa o público terminar nos comentários!</p>
+          <div class="frase-exemplo">
+            "Vamos cantar JUNTOS! Eu começo e vocês terminam! 🎤 'Girassol... 🌻' — comenta aí a continuação!"
+          </div>
+          
+          <h4>🎵 Brincadeira 3 — Dedicatória especial:</h4>
+          <p>Dedica cada música a alguém que interagiu — isso inspira outros a interagirem também!</p>
+          <div class="frase-exemplo">
+            "Essa aqui vai pro [nome] que sempre tá aqui com a gente! Obrigado pelo apoio, essa é pra você! 💜🎵 Quem quer a próxima?!"
+          </div>
+          
+          <h4>💡 Dicas de Ouro para quem canta:</h4>
+          <ul>
+            <li>🎤 <strong>Não precisa cantar perfeitamente!</strong> O público ama a emoção, não a perfeição!</li>
+            <li>🎵 <strong>Sempre peça pra eles cantarem junto!</strong> "Canta comigo, galera!" — isso cria conexão!</li>
+            <li>💜 <strong>Agradeça cada pedido!</strong> "Ótima escolha, [nome]!" — faz eles se sentirem especiais!</li>
+            <li>🎁 <strong>Se alguém mandar presente durante a música:</strong> "Olha, o [nome] mandou um presente enquanto cantávamos! Obrigado, sua música chegou mais bonita agora! 🎶💜"</li>
+          </ul>
+        </div>
+      </details>
+    </div>
+
+    <!-- 🎭 MODALIDADES ESPECIAIS DE BATALHA -->
+    <div class="card">
+      <div class="card-titulo">
+        <span class="icone dourado">🎭</span>
+        <h2>Modalidades Especiais de Batalha</h2>
+      </div>
+      <p style="margin-bottom: 20px;">
+        Existem várias formas de batalhar! Clique em cada uma pra saber COMO FAZER PASSO A PASSO:
+      </p>
+
+      <details>
+        <summary>👥 BATALHA DE DUPLAS — 2 contra 2</summary>
+        <div class="detalhe-conteudo">
+          <h4>👥 Como funciona:</h4>
+          <p>Cada lado tem <strong>dois criadores</strong> — um titular e um parceiro. Os dois participam, os dois interagem!</p>
+          
+          <h4>📋 Passo a passo:</h4>
+          <ol>
+            <li><strong>Combine antes com seu parceiro:</strong> Quem faz o quê? Como se ajudam?</li>
+            <li><strong>Apresente a dupla ao público:</strong> "Hoje eu tô com o [nome]! Somos uma equipe! 💪"</li>
+            <li><strong>Se revezem nos desafios:</strong> Um faz, o outro apoia — os dois participam!</li>
+            <li><strong>Comemorem JUNTOS:</strong> Se ganharem, os dois ganham! Se perderem, os dois aprendem!</li>
+            <li><strong>Agradeçam JUNTOS:</strong> "Obrigado a todos que apoiaram nossa dupla! 💜"</li>
+          </ol>
+
+          <h4>💬 Frases pra usar:</h4>
+          <div class="frase-exemplo">
+            "Não sou só eu — somos NÓS! Eu e o [parceiro] juntos! Quem tá com a gente? 👥🔥"<br>
+            "Cada presente é pra NÓS dois! Vamos, equipe! 💜"
+          </div>
+        </div>
+      </details>
+
+      <details>
+        <summary>🙈 BATALHA CEGA — Só vê no final!</summary>
+        <div class="detalhe-conteudo">
+          <h4>🙈 Como funciona:</h4>
+          <p>Você e o oponente <strong>não veem a pontuação</strong> durante a batalha! Só tiram a venda no FINAL!</p>
+          
+          <h4>📋 Passo a passo:</h4>
+          <ol>
+            <li><strong>Combine antes:</strong> Tempo da batalha, quem avisa o tempo</li>
+            <li><strong>Explique ao público:</strong> "Nós não vamos ver nada! Só vocês sabem! Vamos torcer MUITO! 🔥"</li>
+            <li><strong>Faça os desafios sem olhar:</strong> sem saber quanto está ganhando!</li>
+            <li><strong>Alguém avisa o tempo acabando:</strong> "Faltam 30 segundos!" — mas NÃO fala a pontuação!</li>
+            <li><strong>No final, tira a venda e vê junto com o público!</strong> 😄🎉</li>
+          </ol>
+
+          <h4>💬 Frases pra usar:</h4>
+          <div class="frase-exemplo">
+            "Eu não vejo nada, mas sinto a força de vocês! Torce muito que eu sinto! 🙈💜"<br>
+            "Não sei quanto estamos, mas sei que temos o MELHOR público do mundo! VAMOS! 🔥"
+          </div>
+        </div>
+      </details>
+
+      <details>
+        <summary>🎤 BATALHA COM MODERADOR — Ele cuida do tempo!</summary>
+        <div class="detalhe-conteudo">
+          <h4>🎤 Como funciona:</h4>
+          <p>Um moderador sobe na janelinha. Ele <strong>avisa o tempo</strong> — mas <strong>NÃO PODE falar a pontuação!</strong></p>
+          
+          <h4>📋 Passo a passo:</h4>
+          <ol>
+            <li><strong>Escolha um moderador de confiança:</strong> Alguém que segue as regras!</li>
+            <li><strong>Combine os sinais:</strong> Ele avisa "1 minuto", "30 segundos", "ACABOU!" — mas NÚMEROS, NUNCA!</li>
+            <li><strong>Explique ao público:</strong> "O [nome] vai nos ajudar com o tempo! 🎤⚖️"</li>
+            <li><strong>Você foca no público e nos desafios:</strong> Sem olhar o tempo!</li>
+            <li><strong>No final, o moderador anuncia o resultado!</strong> 🎉</li>
+          </ol>
+
+          <div class="destaque-importante" style="margin: 0;">
+            <strong>⚠️ REGRA DE OURO:</strong> O moderador NUNCA pode dizer "estamos ganhando/perdendo" — só avisa o TEMPO! ⚖️
+          </div>
+        </div>
+      </details>
+
+      <details>
+        <summary>🎲 BRINCADEIRAS SOZINHO — Se o oponente não quiser!</summary>
+        <div class="detalhe-conteudo">
+          <h4>💡 Lembre-se:</h4>
+          <p><strong>O oponente NÃO É OBRIGADO a fazer nada!</strong> Se ele não quiser, tudo bem! Faça brincadeiras COM O PÚBLICO! 💜</p>
+          
+          <h4>🎮 Brincadeiras pra fazer SOZINHO:</h4>
+          <ul>
+            <li><strong>📝 Perguntas ao público:</strong> "Primeiro que acertar nos comentários ganha destaque! 🧠"</li>
+            <li><strong>🎵 Cantar e pedir pra adivinhar:</strong> "Eu canto um trecho e vocês adivinham! 🎤"</li>
+            <li><strong>😜 Desafio de careta:</strong> "Eu faço uma careta e vocês me mandam as suas nos comentários! 😂"</li>
+            <li><strong>📖 História colaborativa:</strong> "Eu começo uma história e cada comentário continua! 📚"</li>
+          </ul>
+
+          <h4>💬 Frase de transição:</h4>
+          <div class="frase-exemplo">
+            "Tudo bem, galera! O importante é a gente se divertir! Então hoje a gente brinca JUNTOS! Quem tá dentro? 🤩💜"
+          </div>
+        </div>
+      </details>
+    </div>
+
+    <!-- 📋 PASSO A PASSO COMPLETO DA BATALHA -->
+    <div class="card">
+      <div class="card-titulo">
+        <span class="icone roxo">📋</span>
+        <h2>Passo a Passo Completo</h2>
+      </div>
+      
+      <details>
+        <summary>📖 Ver PASSO A PASSO — do início ao fim</summary>
+        <div class="detalhe-conteudo">
+          <ol>
+            <li>
+              <strong>Antes de tudo — respeite o oponente!</strong><br>
+              "Vamos nos divertir, sem pressão! Se não quiser, é só falar!" — Ninguém é obrigado a nada! 🤝
+            </li>
+            <li>
+              <strong>Explique TUDO ao público no início:</strong><br>
+              "Hoje a batalha é assim: [regras]. Vamos nos divertir e torcer MUITO! 🔥" — O público precisa entender pra participar!
+            </li>
+            <li>
+              <strong>Faça os desafios com alegria — sem levar tão a sério!</strong><br>
+              Se errar, ria junto! Se perder, sorria! O público AMA quem se diverte! 😄
+            </li>
+            <li>
+              <strong>Influencie, não peça — convide!</strong><br>
+              "Galera, cada coração é nossa força! Quem tá com a gente? 💜" — É convite, não ordem!
+            </li>
+            <li>
+              <strong>Agradeça TODOS — presentes e presença!</strong><br>
+              "Obrigado, [nome] pelo presente! E obrigado a todos que estão aqui — vocês são minha força! 🥹"
+            </li>
+            <li>
+              <strong>Comemore com respeito — ganhando ou perdendo!</strong><br>
+              "Parabéns, [oponente]! Foi incrível batalhar com você! E obrigado a MINHA TORCIDA! 💜🤝"
+            </li>
+          </ol>
+        </div>
+      </details>
+    </div>
+
+    <!-- ❓ PERGUNTAS FREQUENTES -->
+    <div class="card">
+      <div class="card-titulo">
+        <span class="icone laranja">❓</span>
+        <h2>Dúvidas Comuns</h2>
+      </div>
+      
+      <details>
+        <summary>🟡 Posso batalhar com qualquer criador?</summary>
+        <div class="detalhe-conteudo">
+          Sim, desde que ambos estejam de acordo e sejam criadores com comportamento adequado. Sempre priorize batalhas com criadores que também seguem as regras! 💜
+        </div>
+      </details>
+
+      <details>
+        <summary>🟡 E se o oponente começar a fazer coisas proibidas?</summary>
+        <div class="detalhe-conteudo">
+          Fale de forma respeitosa: "Ei, isso não é permitido, vamos fazer de outro jeito?" Se insistir, encerre educadamente: "Beleza, acho que por aqui encerramos. Obrigado pela batalha! Até a próxima!" ✨
+        </div>
+      </details>
+
+      <details>
+        <summary>🟡 Preciso bater meta de presentes pra ganhar premiação?</summary>
+        <div class="detalhe-conteudo">
+          Não! A premiação leva em conta <strong>participação, frequência, engajamento e comportamento</strong> — não só valores! Quem participa com alegria e respeito tem mais chances! 💜🏆
+        </div>
+      </details>
+
+      <details>
+        <summary>🟡 E se eu perder — perco a premiação?</summary>
+        <div class="detalhe-conteudo">
+          De forma alguma! <strong>Participar já vale pontos!</strong> Uma derrota com classe vale mais do que uma vitória com arrogância! 💜✨
+        </div>
+      </details>
+    </div>
+
+    <!-- 💛 MENSAGEM FINAL -->
+    <div class="aviso-final">
+      <h3>💜 A BATALHA MAIS IMPORTANTE É A SUA!</h3>
+      <p style="font-size: 1.05rem; line-height: 1.8;">
+        Não é sobre ganhar do outro — é sobre <strong>ganhar com o público!</strong> Quando você diverte, respeita e valoriza quem te assiste, os presentes vêm naturalmente. Você é um <strong>influenciador, um apresentador, um líder!</strong> Use sua voz pra CONVIDAR, não pra PEDIR. E o resto vem junto! 💜🤝<br><br>
+        <em>"Batalha com alegria, respeito e coração. O resto vem junto!"</em> ✨⚔️
+      </p>
+    </div>
+
+    <div style="text-align: center; margin-top: 30px;">
+      <button onclick="history.back()" class="botao-voltar">← Voltar para o Painel do Agenciado</button>
+    </div>
+
+    <div style="text-align: center; margin-top: 30px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,.05); color: var(--claro); font-size: .9rem;">
+      Padroniza Live • Batalhas Seguras e Divertidas • Cresça com Respeito 💜⚔️
+    </div>
+  </div>
+</body>
+</html>
