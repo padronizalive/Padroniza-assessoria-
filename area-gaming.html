@@ -44,6 +44,25 @@
     .divisao{height:1px;background:linear-gradient(90deg,transparent,var(--roxo),transparent);margin:2.5rem 0}
     .link-externo{color:var(--roxo-claro);font-weight:600;text-decoration:none}
     .link-externo:hover{text-decoration:underline}
+    
+    /* === BOTÃO E MODAL DICAS DE VÍDEOS === */
+    .btn-dicas{background:linear-gradient(90deg,#f59e0b,#facc15);color:#000!important;border:none;padding:1rem 1.5rem;border-radius:.9rem;font-size:1rem;font-weight:700;cursor:pointer;width:100%;margin:1.5rem 0;transition:.25s}
+    .btn-dicas:hover{transform:translateY(-2px);box-shadow:0 8px 25px rgba(245,158,11,.3)}
+    .modal-fundo{position:fixed;inset:0;background:rgba(0,0,0,.85);display:none;align-items:center;justify-content:center;z-index:9999;padding:20px;overflow-y:auto}
+    .modal-fundo.aberto{display:flex}
+    .modal-conteudo{background:var(--painel);border:2px solid var(--dourado);border-radius:1.5rem;max-width:700px;width:100%;max-height:85vh;overflow-y:auto;padding:2rem;position:relative;box-shadow:0 0 50px rgba(250,204,21,.2)}
+    .modal-fechar{position:absolute;top:1rem;right:1.5rem;background:none;border:none;color:var(--claro);font-size:2rem;cursor:pointer;transition:.2s}
+    .modal-fechar:hover{color:var(--dourado)}
+    .dicas-titulo{color:var(--dourado);font-size:1.5rem;margin-bottom:1.5rem;text-align:center}
+    .dicas-subtitulo{color:var(--texto);margin-bottom:1.2rem;font-size:1.1rem;line-height:1.6}
+    .dicas-bloco{margin-bottom:1.8rem}
+    .dicas-bloco h3{color:var(--roxo-claro);font-size:1.1rem;margin-bottom:.8rem;display:flex;align-items:center;gap:.5rem}
+    .dicas-bloco ul{margin-left:1.5rem;line-height:1.8;color:var(--claro)}
+    .dicas-bloco li{margin-bottom:.5rem}
+    .tabela-formatos{width:100%;border-collapse:collapse;margin:.8rem 0}
+    .tabela-formatos th,.tabela-formatos td{padding:.7rem;border-bottom:1px solid rgba(255,255,255,.1);text-align:left;font-size:.95rem}
+    .tabela-formatos th{color:var(--dourado)}
+    .mensagem-final{background:linear-gradient(135deg,rgba(123,63,255,.15),rgba(250,204,21,.1));border-radius:1rem;padding:1.5rem;margin-top:2rem;text-align:center;line-height:1.8}
   </style>
 </head>
 <body>
@@ -52,7 +71,7 @@
   </div>
 
   <div class="container">
-    <!-- 🖼️ BANNER DA ÁREA GAMING JÁ INSERIDO AQUI! -->
+    <!-- 🖼️ BANNER -->
     <div class="banner">
       <img src="https://i.ibb.co/S76T046B/1788566423418.png" alt="Padroniza Gaming — Seu Espaço Exclusivo">
     </div>
@@ -61,6 +80,11 @@
       <h1>🎮 PADRONIZA GAMING</h1>
       <p>Seu espaço exclusivo para criadores de jogos — tudo feito pensando em você! 💜🚀</p>
     </div>
+
+    <!-- 💡 BOTÃO DICAS DE VÍDEOS — NOVO! -->
+    <button class="btn-dicas" onclick="abrirDicas()">
+      💡 Dicas de Vídeos para Gamers — Cresça Sem Precisar Mostrar o Rosto! 🎬
+    </button>
 
     <!-- 🎯 SELEÇÃO DE JOGOS -->
     <div class="card">
@@ -262,8 +286,97 @@
 
   </div>
 
+  <!-- 🎬 MODAL DICAS DE VÍDEOS — NOVO! -->
+  <div id="modalDicas" class="modal-fundo" onclick="fecharDicas()">
+    <div class="modal-conteudo" onclick="event.stopPropagation()">
+      <button class="modal-fechar" onclick="fecharDicas()">×</button>
+      
+      <h2 class="dicas-titulo">💡 Dicas de Vídeos para Gamers 🎬</h2>
+      
+      <p class="dicas-subtitulo" style="text-align:center">
+        <em>"Se você gosta de jogar mas não quer mostrar o rosto — TUDO BEM! Você pode crescer MUITO só com o jogo, e é exatamente isso que o público procura!"</em> ✨
+      </p>
+
+      <div class="dicas-bloco">
+        <h3>📊 Por que postar vídeos?</h3>
+        <ul>
+          <li>📈 <strong>Vídeos trazem gente nova pra sua live!</strong> Quem vê o vídeo, quer ver você jogando AO VIVO!</li>
+          <li>💎 <strong>Mais visualizações = mais presentes = mais renda pra você!</strong></li>
+          <li>📅 <strong>2 a 3 vídeos por semana JÁ FAZEM DIFERENÇA ENORME!</strong> Não precisa postar todo dia!</li>
+          <li>🕐 <strong>15 a 60 segundos É SUFICIENTE!</strong> Não precisa gravar horas!</li>
+        </ul>
+      </div>
+
+      <div class="dicas-bloco">
+        <h3>🎯 Dicas por Tipo de Jogo</h3>
+        
+        <p style="font-weight:bold;margin:.8rem 0 .4rem;color:var(--roxo-claro)">🔫 Ação / Tiro (Free Fire, COD, PUBG, Valorant)</p>
+        <ul>
+          <li>✅ Grave o <strong>momento da jogada incrível</strong>, o tiro perfeito, a fuga genial</li>
+          <li>✅ Comece <strong>JÁ na ação</strong> — sem enrolação! Os primeiros 3 segundos decidem tudo! 🔥</li>
+          <li>✅ Coloque <strong>texto na tela</strong> contando o que aconteceu: "Olha essa mira! 🎯"</li>
+          <li>✅ Use <strong>som do jogo + música suave</strong> de fundo</li>
+        </ul>
+
+        <p style="font-weight:bold;margin:1.2rem 0 .4rem;color:var(--roxo-claro)">🏗️ Construção / Estratégia (Minecraft, Roblox, etc.)</p>
+        <ul>
+          <li>✅ Mostre <strong>"antes e depois"</strong> — "Do nada pra isso! 🏠"</li>
+          <li>✅ Acelere a imagem pra mostrar a construção rápido!</li>
+          <li>✅ Explique <strong>o que você fez</strong> — o público adora aprender!</li>
+          <li>✅ Destaque <strong>o detalhe mais bonito</strong> no final ✨</li>
+        </ul>
+
+        <p style="font-weight:bold;margin:1.2rem 0 .4rem;color:var(--roxo-claro)">📖 História / Aventura (GTA, RPGs, etc.)</p>
+        <ul>
+          <li>✅ Grave <strong>a parte mais emocionante ou engraçada</strong></li>
+          <li>✅ Coloque <strong>sua narração</strong> — fale o que você está sentindo!</li>
+          <li>✅ Sempre com <strong>texto na tela</strong> — 80% assistem sem som! 📝</li>
+          <li>✅ Termine com <strong>uma pergunta:</strong> "Você faria diferente? Comenta aí!" 💬</li>
+        </ul>
+
+        <p style="font-weight:bold;margin:1.2rem 0 .4rem;color:var(--roxo-claro)">🧩 Raciocínio / Quebra-Cabeça</p>
+        <ul>
+          <li>✅ Mostre <strong>o problema e depois a solução</strong></li>
+          <li>✅ Destaque o momento <strong>"AHÁ!"</strong> quando conseguiu! 💡</li>
+          <li>✅ Desafie o público: "Tenta adivinhar antes de ver! 🤔"</li>
+        </ul>
+      </div>
+
+      <div class="dicas-bloco">
+        <h3>✨ Formatos que MAIS CRESCEM — sem mostrar o rosto!</h3>
+        <table class="tabela-formatos">
+          <tr><th>Formato</th><th>Como fazer</th><th>Duração</th></tr>
+          <tr><td>🎬 Melhores Momentos</td><td>Recorte os 15s mais insanos da live</td><td>15–30s</td></tr>
+          <tr><td>📚 Tutorial Rápido</td><td>"Como fazer isso em 30 segundos!"</td><td>30–60s</td></tr>
+          <tr><td>😂 Falhas & Risadas</td><td>Os momentos que deu errado — o público AMA!</td><td>15–45s</td></tr>
+          <tr><td>🎯 Desafio Completo</td><td>"Consegui sem usar itens!"</td><td>30–60s</td></tr>
+          <tr><td>📖 História do Jogo</td><td>Explique o que tá acontecendo</td><td>45–90s</td></tr>
+        </table>
+      </div>
+
+      <div class="dicas-bloco">
+        <h3>📱 Dicas de Ouro</h3>
+        <ul>
+          <li>⏰ <strong>Poste entre 11h–13h e 19h–21h</strong> — é quando mais gente vê!</li>
+          <li>🖼️ <strong>Sempre coloque texto na tela</strong> — 80% assistem sem som! 📝</li>
+          <li>🔁 <strong>Poste sempre no mesmo horário</strong> — o público aprende e volta!</li>
+          <li>📌 No título coloque o destaque: <strong>"A jogada do século!"</strong></li>
+          <li>🤝 Peça pra seguirem: <strong>"Se gostou, segue pra mais! Tem live todos os dias!"</strong> 💜</li>
+          <li>📊 Acompanhe seu crescimento no <strong>Painel de Métricas</strong> — veja qual vídeo trouxe mais gente! 📈</li>
+        </ul>
+      </div>
+
+      <div class="mensagem-final">
+        <h3 style="color:var(--dourado);margin-bottom:.8rem">💜 Mensagem da Padroniza</h3>
+        <p>
+          Não precisa mostrar o rosto pra ser visto. O jogo é seu palco, sua voz é sua marca, e seu talento é o que importa! Continue jogando, continue postando, e cada vídeo é um passo mais perto de crescer de verdade. Você é VALORIZADO aqui! 💜🎮🚀
+        </p>
+      </div>
+    </div>
+  </div>
+
   <script>
-    // Salva e carrega as escolhas direto no próprio navegador — SEM planilha nenhuma!
+    // Salva e carrega as escolhas direto no navegador
     const chave = 'padronizaGamingJogosEscolhidos';
 
     window.addEventListener('DOMContentLoaded', () => {
@@ -283,6 +396,16 @@
       const msg = document.getElementById('msgSalvo');
       msg.style.display = 'block';
       setTimeout(()=>msg.style.display='none',3500);
+    }
+
+    // === FUNÇÕES DO MODAL DICAS DE VÍDEOS ===
+    function abrirDicas(){
+      document.getElementById('modalDicas').classList.add('aberto');
+      document.body.style.overflow = 'hidden';
+    }
+    function fecharDicas(){
+      document.getElementById('modalDicas').classList.remove('aberto');
+      document.body.style.overflow = '';
     }
   </script>
 </body>
