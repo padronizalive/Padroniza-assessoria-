@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Guia Completo — Live de Janelinha Segura | Padroniza Live</title>
+  <link rel="icon" type="image/png" href="https://i.ibb.co/B23rwMHt/1787270369792.png" />
+  <style>
+    :root {
+      --fundo: #0b1020; --painel: #11182c; --painel2: #17213a;
+      --roxo: #7b3fff; --roxo-claro: #9560ff; --dourado: #c79b3b;
+      --sucesso: #3ddc97; --perigo: #ff4d6a; --alerta: #ffb84d;
+      --texto: #f5f5ff; --texto2: #b3b3cc;
+    }
+    * { margin:0; padding:0; box-sizing:border-box; font-family:system-ui, -apple-system, Segoe UI, Roboto, sans-serif; }
+    body { background: radial-gradient(circle at top left, #5b2cff, var(--fundo) 55%, #02101f); color:var(--texto); min-height:100vh; line-height:1.7; padding-bottom:40px; }
+    .pagina { max-width:920px; margin:0 auto; padding:20px 16px; }
+    .cabecalho { display:flex; align-items:center; gap:14px; margin-bottom:30px; flex-wrap:wrap; }
+    .cabecalho img { width:64px; height:64px; border-radius:50%; border:2px solid var(--dourado); box-shadow:0 0 18px rgba(199,155,59,.5); }
+    .cabecalho h1 { font-size:1.45rem; color:var(--dourado); line-height:1.4; }
+    .cabecalho p { font-size:.9rem; color:var(--texto2); }
+    .voltar { display:inline-flex; align-items:center; gap:8px; color:var(--roxo-claro); text-decoration:none; margin-bottom:20px; font-weight:600; transition:color .2s; }
+    .voltar:hover { color:var(--dourado); }
+    .card { background:var(--painel); border:1px solid rgba(255,255,255,.08); border-radius:24px; padding:28px; margin-bottom:24px; box-shadow:0 6px 30px rgba(0,0,0,.35); transition:transform .2s; }
+    .card:hover { transform: translateY(-3px); }
+    .card-titulo { display:flex; align-items:center; gap:14px; margin-bottom:18px; }
+    .icone-grande { font-size:2.2rem; line-height:1; }
+    .card h2 { font-size:1.25rem; }
+    .verde { color:var(--sucesso); }
+    .vermelho { color:var(--perigo); }
+    .roxo { color:var(--roxo-claro); }
+    .dourado { color:var(--dourado); }
+    .amarelo { color:var(--alerta); }
+    .regra { padding:16px 18px; border-radius:16px; margin-bottom:12px; }
+    .ok { background:rgba(61,220,151,.08); border-left:5px solid var(--sucesso); }
+    .nao { background:rgba(255,77,106,.08); border-left:5px solid var(--perigo); }
+    .aviso-forte { background: linear-gradient(135deg, rgba(199,155,59,.12), rgba(123,63,255,.08)); border:2px solid var(--dourado); border-radius:20px; padding:24px; text-align:center; font-size:1.05rem; }
+    .destaque-dinheiro { background:linear-gradient(135deg, rgba(61,220,151,.12), rgba(123,63,255,.08)); border:2px solid var(--sucesso); border-radius:20px; padding:22px; margin:20px 0; text-align:center; }
+    ul, ol { padding-left:26px; margin-bottom:12px; }
+    li { margin-bottom:10px; }
+    .grid-nichos { display:grid; gap:16px; margin-top:16px; }
+    .nicho { background:var(--painel2); border-radius:18px; padding:20px; border:1px solid rgba(255,255,255,.05); }
+    .nicho-titulo { display:flex; align-items:center; gap:10px; font-weight:700; font-size:1.1rem; margin-bottom:8px; }
+    .botao-voltar { display:inline-block; margin-top:10px; padding:14px 32px; background:linear-gradient(135deg, var(--roxo), var(--dourado)); color:#000; border-radius:999px; text-decoration:none; font-weight:800; border:none; cursor:pointer; transition:transform .2s, box-shadow .2s; font-size:1rem; }
+    .botao-voltar:hover { transform:translateY(-3px); box-shadow:0 8px 20px rgba(123,63,255,.35); color:#000; }
+    .assinatura { text-align:center; margin-top:40px; padding-top:24px; border-top:1px solid rgba(255,255,255,.08); color:var(--texto2); font-size:.9rem; }
+    details { background:var(--painel2); border-radius:14px; margin:10px 0; border:1px solid rgba(255,255,255,.05); overflow:hidden; }
+    summary { padding:14px 18px; cursor:pointer; font-weight:600; list-style:none; display:flex; align-items:center; gap:8px; }
+    summary::-webkit-details-marker { display:none; }
+    details[open] summary { border-bottom:1px solid rgba(255,255,255,.05); }
+    .detalhe-conteudo { padding:16px 20px; }
+  </style>
+</head>
+<body>
+  <div class="pagina">
+    <a href="javascript:history.back()" class="voltar">← Voltar para o Painel do Agenciado</a>
+
+    <div class="cabecalho">
+      <img src="https://i.ibb.co/B23rwMHt/1787270369792.png" alt="Logo Padroniza Live" />
+      <div>
+        <h1>📺 Guia Completo — Live de Janelinha Segura</h1>
+        <p>Tudo o que você precisa saber pra crescer do jeito certo, sem risco e com resultado real 💜🚀</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-titulo">
+        <span class="icone-grande roxo">📌</span>
+        <h2 class="roxo">O que é a Live de Janelinha — Como Fazer CERTO</h2>
+      </div>
+      <p>É quando você aparece numa janelinha visível sobreposta ao fundo — jogos, molduras, imagens. Funciona MUITO bem pra crescer, <strong>desde que feito com regras claras:</strong></p>
+      <ul style="margin-top:10px;">
+        <li>👤 Sua imagem SEMPRE visível, nítida e de tamanho bom — nunca minúscula ou escondida</li>
+        <li>🎤 Presença real o tempo todo: fala, responde, interage — não vale gravação parada sozinha</li>
+        <li>🖼️ Fundo só com conteúdo que você tem permissão de usar — nada de filmes, séries, TV</li>
+        <li>🎵 Música da biblioteca oficial ou sem direitos autorais</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <div class="card-titulo">
+        <span class="icone-grande vermelho">❌</span>
+        <h2 class="vermelho">Crescimento Falso — NÃO FAÇA ISSO!</h2>
+      </div>
+      <p>Essas práticas parecem dar resultado rápido, mas <strong>destroem tudo depois:</strong></p>
+      <div class="regra nao">
+        ❌ "Siga-me que eu sigo de volta" — troca forçada = manipulação detectada
+      </div>
+      <div class="regra nao">
+        ❌ "Suba na janelinha só se me seguir" — condição obrigatória = proibido
+      </div>
+      <div class="regra nao">
+        ❌ "Toque o coração, compartilhe, dê presente pra participar" — engajamento artificial
+      </div>
+      <div class="regra nao">
+        ❌ Contador de trocas, metas forçadas — números grandes, audiência vazia
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-titulo">
+        <span class="icone-grande amarelo">⚠️</span>
+        <h2 class="amarelo">AS PUNIÇÕES REAIS — O QUE VOCÊ PERDE DE VERDADE</h2>
+      </div>
+      <p>A plataforma pune pesado quem usa prática proibida — e o prejuízo cai direto NO SEU BOLSO:</p>
+      <ul style="margin-top:10px; font-weight:500;">
+        <li>💸 <strong>Desconto direto nos seus ganhos</strong> — valores perdidos sem volta</li>
+        <li>📦 <strong>Caixa de presente BLOQUEADA:</strong> 7 dias → 1 mês → PARA SEMPRE — nenhum centavo entra enquanto fechada!</li>
+        <li>📉 Alcance cortado — ninguém novo encontra sua live mais</li>
+        <li>🔴 Restrição ou BANIMENTO TOTAL — conta perdida depois de tanto esforço</li>
+      </ul>
+      <p style="margin-top:14px; font-weight:700;">💬 "Ganhar 1 dia de números falsos pra perder dinheiro real, caixa fechada e conta por semanas, meses ou pra sempre? <strong>NÃO VALE A PENA NENHUMA!"</strong></p>
+    </div>
+
+    <div class="destaque-dinheiro">
+      <div class="icone-grande">💰</div>
+      <h2 class="verde" style="margin:8px 0;">VOCÊ GANHA JUNTO COM SEUS CONVIDADOS!</h2>
+      <p style="font-size:1.05rem;">Quando qualquer convidado que está na sua janelinha recebe um presente — <strong>VOCÊ TAMBÉM GANHA!</strong><br>
+      Cada presente enviado para quem está na sua janelinha rende <strong>ATÉ 20% DE RETORNO DIRETO PARA VOCÊ!</strong> 📈💎<br><br>
+      ✨ Abrir espaço pra outros <strong>NÃO DIVIDE — MULTIPLICA!</strong> Todos crescem juntos do jeito certo 💜🤝</p>
+    </div>
+
+    <div class="card">
+      <div class="card-titulo">
+        <span class="icone-grande verde">✅</span>
+        <h2 class="verde">CRESCIMENTO REAL — COMO FAZER CERTO</h2>
+      </div>
+      <ul>
+        <li>🎯 Tema claro desde o título — o público já sabe o que vai encontrar</li>
+        <li>💬 Bem-vindo a TODOS — quem segue ou não, todos com respeito igual</li>
+        <li>💜 Subir pessoas na janelinha como reconhecimento, convite especial — nunca como preço</li>
+        <li>📢 "Se gostar, segue pra acompanhar!" — sugestão livre, nunca ordem nem cobrança</li>
+        <li>⏰ Horário fixo ajuda o povo lembrar e voltar sempre</li>
+        <li>💎 Construi confiança — quem confia em você, volta, traz outros, cresce naturalmente</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <div class="card-titulo">
+        <span class="icone-grande dourado">🎭</span>
+        <h2 class="dourado">TODOS OS TIPOS DE LIVE DE JANELINHA — ESCOLHA O SEU!</h2>
+      </div>
+      <p style="margin-bottom:16px;">Tem um jeito especial pra cada um — encontre o que tem a SUA cara:</p>
+      
+      <div class="grid-nichos">
+        <div class="nicho">
+          <div class="nicho-titue">🎤 Karaokê</div>
+          <p>Não precisa ser cantor profissional! É diversão, alegria, cantar junto — não importa se desafinado ou não! O povo tá lá pra curtir junto, não pra julgar voz 🎶<br><small style="color:var(--texto2)">⚠️ Use apenas músicas liberadas pela plataforma!</small></p>
+        </div>
+
+        <div class="nicho">
+          <div class="nicho-titue">💜 Encontros Virtuais — Brincadeira de Casal</div>
+          <p>Combinam pares, encontros, conversam — TUDO DENTRO DA LIVE! É só brincadeira e entretenimento virtual!<br><strong>📢 O apresentador NÃO combina nem se responsabiliza por encontros fora da tela — tudo fica aqui dentro!</strong></p>
+        </div>
+
+        <div class="nicho">
+          <div class="nicho-titue">🔮 Horóscopo, Cartas e Leitura</div>
+          <p>Reflexão, orientação, mensagem — SEMPRE como entretenimento apenas!<br><strong>📢 "Não é certeza, não é destino, não substitui decisão sua. VOCÊ é quem faz sua história!" NUNCA venda promessa milagrosa ou serviço espiritual pago!</strong></p>
+        </div>
+
+        <div class="nicho">
+          <div class="nicho-titue">✝️ Gospel — Louvor e Fé</div>
+          <p>Cantar hinos, louvar, mensagem de fé — tem audiência fiel e carinhosa esperando por você!<br><small style="color:var(--texto2)">⚠️ Respeite direitos autorais das músicas também!</small></p>
+        </div>
+
+        <div class="nicho">
+          <div class="nicho-titue">⚔️ Batalha de Convidados & Coroa</div>
+          <p>"Devolve a Coroa" — passa a brincadeira adiante POR VONTADE PRÓPRIA! Desafios entre convidados — decide por animação, aplausos, criatividade — <strong>NUNCA por quem deu mais presente!</strong><br>⛔ Coroa NÃO é dívida, NÃO precisa devolver maior!</p>
+        </div>
+
+        <div class="nicho">
+          <div class="nicho-titue">🔨 Leilão de Desafios — Brincadeira Simbólica</div>
+          <p>Presente vem por vontade = apoiador sugere um desafio divertido! <strong>NÃO é compra real, NÃO é preço de venda!</strong> Desafio combinado com bom senso — pode trocar se não der!<br>
+          <details>
+            <summary>📋 Ver exemplos de desafios prontos ✅</summary>
+            <div class="detalhe-conteudo">
+              • Cantar trechinho com voz engraçada<br>
+              • Dançar 10 segundos animado<br>
+              • Contar uma piada leve<br>
+              • Fazer saudação especial<br>
+              • Trocar tom de voz por 1 minuto<br>
+              • Fazer um elogio público<br>
+              • Desafio de não rir primeiro 😂
+            </div>
+          </details>
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-titulo">
+        <span class="icone-grande roxo">🎮</span>
+        <h2 class="roxo">MAIS BRINCADEIRAS DE CONVIDADO — TODAS GRÁTIS E DIVERTIDAS!</h2>
+      </div>
+      <details open>
+        <summary>🗣️ Fala e Expressão</summary>
+        <div class="detalhe-conteudo">
+          História em cadeia • Tradução engraçada • Oposto rápido • Frase sem tropeçar • Elogio criativo • Adivinha o sentimento
+        </div>
+      </details>
+      <details>
+        <summary>🎭 Atitude e Graça</summary>
+        <div class="detalhe-conteudo">
+          Imitação leve • Pose original • Mímica adivinhação • Mudar estilo de canto • Saudação diferente • Desafio da cara séria 😂
+        </div>
+      </details>
+      <details>
+        <summary>🧠 Raciocínio e Diversão</summary>
+        <div class="detalhe-conteudo">
+          3 verdades e 1 mentira • Escolha: A ou B? • 3 palavras = 1 frase • Charada na hora • Coisa que amo / não gosto • História engraçada real
+        </div>
+      </details>
+      <details>
+        <summary>💜 Carinho e União</summary>
+        <div class="detalhe-conteudo">
+          Recado pra alguém • Desejo do dia • Abraço virtual 🤗 • Cantam juntos um pedacinho • Saudação combinada em par
+        </div>
+      </details>
+      <p style="margin-top:14px; font-weight:600;">💬 <em>"Toda brincadeira existe pra alegrar — nunca pra obrigar. Participação livre, diversão grátis pra todo mundo!"</em></p>
+    </div>
+
+    <div class="card">
+      <div class="card-titulo">
+        <span class="icone-grande dourado">⭐</span>
+        <h2 class="dourado">POR QUE A LIVE DE JANELINHA DÁ CERTO DE VERDADE?</h2>
+      </div>
+      <ul>
+        <li><strong>💜 Engajamento forte:</strong> pertinho do público — eles se sentem vistos, ouvidos, voltam e trazem outros</li>
+        <li><strong>📈 Crescimento sólido:</strong> audiência fiel construída aos poucos — não some com mudança de algoritmo</li>
+        <li><strong>💎 Começa simples:</strong> você, moldura bonita, conteúdo com alma — não precisa gastar muito pra começar</li>
+        <li><strong>🎯 Plataforma valoriza:</strong> presença, rosto, interação — favorece naturalmente quem aparece de verdade</li>
+        <li><strong>🛡️ Seguro que dura:</strong> caixa protegida, conta estável, crescimento que ninguém tira!</li>
+      </ul>
+    </div>
+
+    <div class="aviso-forte">
+      <h2 class="dourado" style="margin-bottom:12px;">💜 REGRA DE OURO DA PADRONIZA</h2>
+      <p style="font-size:1.1rem; font-weight:600;">
+        "Ninguém segue por obrigação — segue porque quer ficar.<br>
+        Cresce sem forçar, construi sem cobrar.<br>
+        Ajuda o convidado brilhar — e VOCÊ cresce junto também!<br>
+        O que cresce de verdade, do jeito certo — DURA PARA SEMPRE!" ✨💜🚀
+      </p>
+    </div>
+
+    <div style="text-align:center; margin-top:30px;">
+      <button onclick="history.back()" class="botao-voltar">← Voltar para o Painel do Agenciado</button>
+    </div>
+
+    <div class="assinatura">
+      Padroniza Live • Assessoria Oficial • Crescimento Seguro e Sério 💜✨<br>
+      Atualizado conforme regras oficiais da plataforma — cresça protegido! 🛡️
+    </div>
+  </div>
+</body>
+</html>
