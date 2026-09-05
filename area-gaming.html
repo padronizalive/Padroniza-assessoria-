@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>🎮 Área Gaming — Padroniza Live</title>
+  <link rel="icon" href="data:,">
+  <style>
+    :root {
+      --fundo: #0b1020; --painel: #11182c; --painel2: #17213a;
+      --roxo: #7b3fff; --roxo-claro: #9560ff; --dourado: #facc15;
+      --verde: #22c55e; --vermelho: #ef4444; --texto: #f0f4ff; --claro: #cbd5e1;
+    }
+    *{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',system-ui,sans-serif}
+    body{background:linear-gradient(135deg,var(--fundo),#0f1730);color:var(--texto);min-height:100vh;padding-bottom:4rem}
+    .voltar{position:sticky;top:0;z-index:50;background:rgba(11,16,32,.85);backdrop-filter:blur(10px);padding:.9rem 1.2rem;border-bottom:1px solid rgba(123,63,255,.2)}
+    .voltar a{display:inline-flex;align-items:center;gap:.5rem;color:var(--roxo-claro);text-decoration:none;font-weight:600;transition:.2s}
+    .voltar a:hover{color:var(--texto);gap:.7rem}
+    .container{max-width:72rem;margin:0 auto;padding:1.5rem 1rem}
+    .banner{width:100%;max-width:72rem;margin:0 auto 2rem auto;border-radius:1.2rem;overflow:hidden;box-shadow:0 0 35px rgba(123,63,255,.35);border:2px solid rgba(123,63,255,.4)}
+    .banner img{width:100%;height:auto;display:block;object-fit:cover}
+    .cabecalho{text-align:center;margin-bottom:3rem}
+    .cabecalho h1{font-size:2.4rem;background:linear-gradient(90deg,var(--roxo-claro),#c084fc);-webkit-background-clip:text;background-clip:text;color:transparent;margin-bottom:.5rem}
+    .cabecalho p{font-size:1.1rem;color:var(--claro);max-width:36rem;margin:0 auto}
+    .card{background:var(--painel);border:1px solid rgba(123,63,255,.25);border-radius:1.2rem;padding:1.8rem;margin-bottom:2rem;box-shadow:0 8px 30px rgba(0,0,0,.25)}
+    .card h2{font-size:1.4rem;margin-bottom:1.4rem;display:flex;align-items:center;gap:.7rem;color:var(--roxo-claro)}
+    .jogos-grid{display:grid;gap:.9rem}
+    .jogo-item{display:flex;align-items:center;justify-content:space-between;gap:.8rem;background:var(--painel2);border-radius:.9rem;padding:1rem;border:1px solid transparent;transition:.25s}
+    .jogo-item:hover{border-color:var(--roxo);background:rgba(123,63,255,.08)}
+    .jogo-esq{display:flex;align-items:center;gap:.8rem}
+    .jogo-nome{font-weight:600}
+    .gratis{color:var(--verde);font-size:.85rem;margin-left:.4rem}
+    .pago{color:var(--dourado);font-size:.85rem;margin-left:.4rem}
+    .link-loja{background:linear-gradient(90deg,var(--roxo),var(--roxo-claro));color:white!important;padding:.5rem 1rem;border-radius:.7rem;text-decoration:none;font-size:.9rem;font-weight:600;white-space:nowrap;transition:.2s}
+    .link-loja:hover{transform:scale(1.05)}
+    .check-box{width:1.4rem;height:1.4rem;cursor:pointer;accent-color:var(--roxo)}
+    .btn-salvar{background:linear-gradient(90deg,var(--verde),#16a34a);border:none;color:white;padding:1rem 2.5rem;border-radius:.9rem;font-size:1.1rem;font-weight:700;cursor:pointer;margin-top:1.5rem;width:100%;transition:.25s}
+    .btn-salvar:hover{transform:translateY(-2px);box-shadow:0 10px 25px rgba(34,197,94,.25)}
+    .aviso{background:rgba(250,204,21,.1);border:1px solid rgba(250,204,21,.3);border-radius:.9rem;padding:1.2rem;margin:1.5rem 0;color:#fef08a}
+    .aviso-seg{background:rgba(59,130,246,.1);border:1px solid rgba(96,165,250,.3);border-radius:.9rem;padding:1.2rem;margin-top:1rem;color:#bfdbfe}
+    .passo{margin:1rem 0 0 1.2rem;line-height:1.7}
+    .passo li{margin-bottom:.8rem}
+    .salvo{color:var(--verde);margin-top:1rem;display:none;font-weight:600}
+    .divisao{height:1px;background:linear-gradient(90deg,transparent,var(--roxo),transparent);margin:2.5rem 0}
+    .link-externo{color:var(--roxo-claro);font-weight:600;text-decoration:none}
+    .link-externo:hover{text-decoration:underline}
+  </style>
+</head>
+<body>
+  <div class="voltar">
+    <a href="index.html"> ← Voltar ao Painel do Agenciado </a>
+  </div>
+
+  <div class="container">
+    <!-- 🖼️ BANNER DA ÁREA GAMING JÁ INSERIDO AQUI! -->
+    <div class="banner">
+      <img src="https://i.ibb.co/S76T046B/1788566423418.png" alt="Padroniza Gaming — Seu Espaço Exclusivo">
+    </div>
+
+    <div class="cabecalho">
+      <h1>🎮 PADRONIZA GAMING</h1>
+      <p>Seu espaço exclusivo para criadores de jogos — tudo feito pensando em você! 💜🚀</p>
+    </div>
+
+    <!-- 🎯 SELEÇÃO DE JOGOS -->
+    <div class="card">
+      <h2>🎯 Quais jogos você transmite?</h2>
+      <p style="color:var(--claro);margin-bottom:1rem;">Marque abaixo os que você faz — depois é só salvar! Pode alterar quando quiser.</p>
+
+      <div class="jogos-grid" id="listaJogos">
+        <label class="jogo-item">
+          <div class="jogo-esq">
+            <input type="checkbox" class="check-box" data-nome="Free Fire">
+            <span class="jogo-nome">🔫 Free Fire <span class="gratis">🆓 Gratuito</span></span>
+          </div>
+          <a href="https://play.google.com/store/apps/details?id=com.dts.freefireth&hl=pt_BR" target="_blank" class="link-loja">📲 Baixar</a>
+        </label>
+
+        <label class="jogo-item">
+          <div class="jogo-esq">
+            <input type="checkbox" class="check-box" data-nome="GTA / GTA Roleplay">
+            <span class="jogo-nome">🎭 GTA / GTA RP <span class="pago">⚠️ Pago</span></span>
+          </div>
+          <a href="https://play.google.com/store/apps/details?id=com.rockstargames.gtasa&hl=pt_BR" target="_blank" class="link-loja">📲 Baixar</a>
+        </label>
+
+        <label class="jogo-item">
+          <div class="jogo-esq">
+            <input type="checkbox" class="check-box" data-nome="Minecraft">
+            <span class="jogo-nome">🧱 Minecraft <span class="pago">⚠️ Pago</span></span>
+          </div>
+          <a href="https://play.google.com/store/apps/details?id=com.mojang.minecraftpe&hl=pt_BR" target="_blank" class="link-loja">📲 Baixar</a>
+        </label>
+
+        <label class="jogo-item">
+          <div class="jogo-esq">
+            <input type="checkbox" class="check-box" data-nome="Roblox">
+            <span class="jogo-nome">🏗️ Roblox <span class="gratis">🆓 Gratuito</span></span>
+          </div>
+          <a href="https://play.google.com/store/apps/details?id=com.roblox.client&hl=pt_BR" target="_blank" class="link-loja">📲 Baixar</a>
+        </label>
+
+        <label class="jogo-item">
+          <div class="jogo-esq">
+            <input type="checkbox" class="check-box" data-nome="PUBG Mobile">
+            <span class="jogo-nome">🚁 PUBG Mobile <span class="gratis">🆓 Gratuito</span></span>
+          </div>
+          <a href="https://play.google.com/store/apps/details?id=com.tencent.ig&hl=pt_BR" target="_blank" class="link-loja">📲 Baixar</a>
+        </label>
+
+        <label class="jogo-item">
+          <div class="jogo-esq">
+            <input type="checkbox" class="check-box" data-nome="Call of Duty: Mobile">
+            <span class="jogo-nome">⚔️ Call of Duty: Mobile <span class="gratis">🆓 Gratuito</span></span>
+          </div>
+          <a href="https://play.google.com/store/apps/details?id=com.activision.callofduty.shooter&hl=pt_BR" target="_blank" class="link-loja">📲 Baixar</a>
+        </label>
+
+        <label class="jogo-item">
+          <div class="jogo-esq">
+            <input type="checkbox" class="check-box" data-nome="Among Us">
+            <span class="jogo-nome">🕵️ Among Us <span class="gratis">🆓 Gratuito</span></span>
+          </div>
+          <a href="https://play.google.com/store/apps/details?id=com.innersloth.spacemafia&hl=pt_BR" target="_blank" class="link-loja">📲 Baixar</a>
+        </label>
+
+        <label class="jogo-item">
+          <div class="jogo-esq">
+            <input type="checkbox" class="check-box" data-nome="Brawl Stars">
+            <span class="jogo-nome">🏆 Brawl Stars <span class="gratis">🆓 Gratuito</span></span>
+          </div>
+          <a href="https://play.google.com/store/apps/details?id=com.supercell.brawlstars&hl=pt_BR" target="_blank" class="link-loja">📲 Baixar</a>
+        </label>
+
+        <label class="jogo-item">
+          <div class="jogo-esq">
+            <input type="checkbox" class="check-box" data-nome="eFootball">
+            <span class="jogo-nome">⚽ eFootball <span class="gratis">🆓 Gratuito</span></span>
+          </div>
+          <a href="https://play.google.com/store/apps/details?id=jp.konami.pesmobile&hl=pt_BR" target="_blank" class="link-loja">📲 Baixar</a>
+        </label>
+
+        <label class="jogo-item">
+          <div class="jogo-esq">
+            <input type="checkbox" class="check-box" data-nome="Clash of Clans">
+            <span class="jogo-nome">🏰 Clash of Clans <span class="gratis">🆓 Gratuito</span></span>
+          </div>
+          <a href="https://play.google.com/store/apps/details?id=com.supercell.clashofclans&hl=pt_BR" target="_blank" class="link-loja">📲 Baixar</a>
+        </label>
+
+        <label class="jogo-item">
+          <div class="jogo-esq">
+            <input type="checkbox" class="check-box" data-nome="Clash Royale">
+            <span class="jogo-nome">🃏 Clash Royale <span class="gratis">🆓 Gratuito</span></span>
+          </div>
+          <a href="https://play.google.com/store/apps/details?id=com.supercell.clashroyale&hl=pt_BR" target="_blank" class="link-loja">📲 Baixar</a>
+        </label>
+
+        <div class="divisao"></div>
+
+        <label class="jogo-item">
+          <div class="jogo-esq">
+            <input type="checkbox" class="check-box" data-nome="Outros Jogos">
+            <span class="jogo-nome">🎮 Outros Jogos</span>
+          </div>
+          <span style="font-size:.9rem;color:var(--claro)">Pesquise direto na loja oficial</span>
+        </label>
+      </div>
+
+      <div class="aviso-seg">
+        💡 Se você faz outro jogo que não está aqui — seja Fortnite, Valorant, League of Legends, Apex, jogos de terror, simulação ou qualquer outro — marque "Outros Jogos" e baixe sempre pela Google Play Store ou site oficial do criador!
+      </div>
+
+      <button class="btn-salvar" onclick="salvarEscolhas()">💾 Salvar meus jogos</button>
+      <div class="salvo" id="msgSalvo">✅ Salvo com sucesso! Suas escolhas ficam aqui quando voltar 😉</div>
+    </div>
+
+    <!-- 🛠️ FERRAMENTAS GRATUITAS -->
+    <div class="card">
+      <h2>🛠️ Caixa de Ferramentas — Tudo Grátis pra Você!</h2>
+
+      <div style="display:grid;gap:1.5rem">
+        <div style="background:var(--painel2);border-radius:.9rem;padding:1.3rem">
+          <h3 style="margin-bottom:.5rem">🎙️ Discord — Conversa com equipe e convidados</h3>
+          <p style="color:var(--claro);font-size:.95rem">Chat de voz estável e gratuito pra jogar junto sem ruído!</p>
+          <a href="https://discord.com/download" target="_blank" class="link-externo">🔗 Baixar Discord</a>
+          <div class="aviso-seg" style="margin:.7rem 0 0 0;padding:.8rem">
+            ⚠️ Aviso: Aplicativo de terceiro — não é da Padroniza. A versão básica é totalmente GRATUITA e suficiente!
+          </div>
+        </div>
+
+        <div style="background:var(--painel2);border-radius:.9rem;padding:1.3rem">
+          <h3 style="margin-bottom:.5rem">📱 TikFinity — Chat fala sozinho + alertas de presente</h3>
+          <p style="color:var(--claro);font-size:.95rem">Avisa em voz quando chega presente, seguidor e lê mensagens!</p>
+          <a href="https://play.google.com/store/apps/details?id=com.streamtv.tikstream&hl=pt_BR" target="_blank" class="link-externo">🔗 Baixar TikFinity</a>
+
+          <div class="aviso" style="margin-top:.8rem">
+            ⚠️ Aviso: Este é um aplicativo de <strong>terceiros — NÃO é da Padroniza Live!</strong> A versão básica é GRATUITA e já atende bem. Existe versão paga opcional, mas NÃO é obrigatória — o gratuito basta!
+          </div>
+
+          <h4 style="margin:1.2rem 0 .5rem">📋 Passo a passo — usar só o que é GRÁTIS:</h4>
+          <ol class="passo">
+            <li><strong>1.</strong> Baixe direto pela Google Play Store — nunca por outro link!</li>
+            <li><strong>2.</strong> Abra e entre com sua conta Google — <strong>nunca pede sua senha do TikTok!</strong> 🔒</li>
+            <li><strong>3.</strong> Digite seu arroba do TikTok (@seunome) — precisa ter feito pelo menos 1 live antes pra conectar</li>
+            <li><strong>4.</strong> Deixe ligado: alertas de presente e seguidor — já vem de graça! No "Texto em Voz" escolha a voz padrão / Google Voz — dá até 75 leituras por dia de graça, renova todo dia!</li>
+            <li><strong>5.</strong> ⛔ <strong>NÃO clique em "Pro", "Premium" nem nada que peça dinheiro — PULA TUDO ISSO!</strong></li>
+            <li><strong>6.</strong> Clique em "Iniciar Alertas", deixe rodando em segundo plano e abra sua live — pronto! Funciona sozinho! ✅</li>
+          </ol>
+        </div>
+
+        <div style="background:var(--painel2);border-radius:.9rem;padding:1.3rem">
+          <h3 style="margin-bottom:.5rem">🖥️ OBS Studio — Transmissão profissional</h3>
+          <p style="color:var(--claro);font-size:.95rem">Coloca câmera, moldura, cenas — usado por todos os grandes criadores! 100% grátis</p>
+          <a href="https://obsproject.com/pt-br/download" target="_blank" class="link-externo">🔗 Baixar OBS Studio</a>
+        </div>
+
+        <div style="background:var(--painel2);border-radius:.9rem;padding:1.3rem">
+          <h3 style="margin-bottom:.5rem">🎨 Modelos prontos — Canva com marca Padroniza</h3>
+          <p style="color:var(--claro);font-size:.95rem">Molduras, avisos, capas prontas — só colocar seu nome e usar!</p>
+          <a href="#" class="link-externo">🔗 Acessar materiais (em construção)</a>
+        </div>
+
+        <div style="background:var(--painel2);border-radius:.9rem;padding:1.3rem">
+          <h3 style="margin-bottom:.5rem">📹 Vídeo explicativo completo</h3>
+          <p style="color:var(--claro);font-size:.95rem">Assista o guia completo de todas as métricas e regras — em breve!</p>
+          <span style="color:var(--claro);font-style:italic;">🔗 Link reservado — você coloca aqui quando gravar</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 🏅 RECONHECIMENTO -->
+    <div class="card">
+      <h2>🏅 Títulos e Destaques Exclusivos</h2>
+      <div style="display:grid;gap:.8rem;font-size:1rem;line-height:1.6">
+        <p>🔫 <strong>Mestre do Free Fire</strong> — quem brilha na batalha</p>
+        <p>🎭 <strong>Contador de Histórias</strong> — quem cria mundos no GTA e similares</p>
+        <p>🧱 <strong>Arquiteto de Ideias</strong> — quem constrói tudo no Minecraft</p>
+        <p>⚔️ <strong>Versátil de Jogos</strong> — quem brilha em mais de um estilo</p>
+        <p style="margin-top:.8rem;color:var(--claro)">+ Selos coloridos, destaque especial e Pontos de Prestígio para trocar por benefícios!</p>
+      </div>
+    </div>
+
+    <!-- 📢 EVENTOS -->
+    <div class="card">
+      <h2>🎉 Desafios e Eventos da Galera</h2>
+      <ul style="margin-left:1.4rem;line-height:1.8;font-size:1rem">
+        <li>📅 Semana Destaque por Jogo — quem mais se dedicou ganha destaque</li>
+        <li>🔥 Desafio Constância — manter ritmo e crescer ganha reconhecimento</li>
+        <li>✨ Mostre Seu Talento — melhor jogada, história ou construção</li>
+        <li>📈 Meta de Crescimento — bateu a marca com jogo? Ganha pontuação extra!</li>
+      </ul>
+    </div>
+
+    <!-- 💛 FECHAMENTO -->
+    <div class="card" style="text-align:center;background:linear-gradient(135deg,#1e293b,#0f172a)">
+      <h2>💙 Aqui você tem valor de verdade!</h2>
+      <p style="max-width:34rem;margin:0 auto;font-size:1.05rem;line-height:1.8;color:#e0e7ff">
+        Sabemos que criar conteúdo de jogo é trabalho sério — e aqui NÓS ENXERGAMOS isso! Não é só número: é dedicação, preparo e talento. Estamos aqui pra te dar ferramentas, apoio e espaço pra crescer do seu jeito. Essa área foi feita pensando EXATAMENTE em você! 💜🚀
+      </p>
+    </div>
+
+  </div>
+
+  <script>
+    // Salva e carrega as escolhas direto no próprio navegador — SEM planilha nenhuma!
+    const chave = 'padronizaGamingJogosEscolhidos';
+
+    window.addEventListener('DOMContentLoaded', () => {
+      const salvos = localStorage.getItem(chave);
+      if(salvos){
+        const arr = JSON.parse(salvos);
+        document.querySelectorAll('.check-box').forEach(cb => {
+          if(arr.includes(cb.dataset.nome)) cb.checked = true;
+        });
+      }
+    });
+
+    function salvarEscolhas(){
+      const selecionados = [];
+      document.querySelectorAll('.check-box:checked').forEach(cb => selecionados.push(cb.dataset.nome));
+      localStorage.setItem(chave, JSON.stringify(selecionados));
+      const msg = document.getElementById('msgSalvo');
+      msg.style.display = 'block';
+      setTimeout(()=>msg.style.display='none',3500);
+    }
+  </script>
+</body>
+</html>
