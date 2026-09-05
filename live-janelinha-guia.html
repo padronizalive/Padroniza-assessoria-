@@ -22,9 +22,9 @@
     .voltar { display:inline-flex; align-items:center; gap:8px; color:var(--roxo-claro); text-decoration:none; margin-bottom:20px; font-weight:600; transition:color .2s; }
     .voltar:hover { color:var(--dourado); }
 
-    /* === CAPA DA PÁGINA === */
+    /* === CAPA === */
     .capa-container { width:100%; border-radius:20px; overflow:hidden; margin-bottom:32px; box-shadow:0 8px 30px rgba(123,63,255,.3); border:2px solid var(--dourado); }
-    .capa-img { width:100%; height:auto; display:block; object-fit:cover; }
+    .capa-img { width:100%; height:auto; display:block; }
     .capa-texto { text-align:center; margin-bottom:32px; padding:0 10px; }
     .capa-texto h2 { font-size:1.3rem; color:var(--dourado); margin-bottom:8px; }
     .capa-texto p { color:var(--texto2); font-size:.95rem; max-width:700px; margin:0 auto; }
@@ -33,25 +33,26 @@
     .card:hover { transform: translateY(-3px); }
     .card-titulo { display:flex; align-items:center; gap:14px; margin-bottom:18px; }
     .icone-grande { font-size:2.2rem; line-height:1; }
-    .card h2 { font-size:1.25rem; }
     .verde { color:var(--sucesso); }
     .vermelho { color:var(--perigo); }
     .roxo { color:var(--roxo-claro); }
     .dourado { color:var(--dourado); }
     .amarelo { color:var(--alerta); }
     .regra { padding:16px 18px; border-radius:16px; margin-bottom:12px; }
-    .ok { background:rgba(61,220,151,.08); border-left:5px solid var(--sucesso); }
     .nao { background:rgba(255,77,106,.08); border-left:5px solid var(--perigo); }
-    .aviso-forte { background: linear-gradient(135deg, rgba(199,155,59,.12), rgba(123,63,255,.08)); border:2px solid var(--dourado); border-radius:20px; padding:24px; text-align:center; font-size:1.05rem; }
     .destaque-dinheiro { background:linear-gradient(135deg, rgba(61,220,151,.12), rgba(123,63,255,.08)); border:2px solid var(--sucesso); border-radius:20px; padding:22px; margin:20px 0; text-align:center; }
-    ul, ol { padding-left:26px; margin-bottom:12px; }
+    ul { padding-left:26px; margin-bottom:12px; }
     li { margin-bottom:10px; }
+
+    /* === BOTÃO OUTRAS MODALIDADES === */
+    .botao-outros { display:block; text-align:center; padding:20px 28px; background:linear-gradient(135deg, rgba(199,155,59,.15), rgba(123,63,255,.15)); border:2px solid var(--dourado); border-radius:20px; color:var(--dourado); font-size:1.05rem; font-weight:700; cursor:pointer; transition:all .3s; margin:32px 0; width:100%; }
+    .botao-outros:hover { background:var(--dourado); color:#000; transform:translateY(-2px); box-shadow:0 6px 20px rgba(199,155,59,.3); }
 
     /* === GRID DE MODALIDADES === */
     .grid-nichos { display:grid; gap:20px; margin-top:20px; grid-template-columns:1fr; }
     @media (min-width:640px) { .grid-nichos { grid-template-columns:1fr 1fr; } }
 
-    .nicho { background:var(--painel2); border-radius:20px; padding:0; border:1px solid rgba(255,255,255,.05); overflow:hidden; transition:transform .25s, box-shadow .25s; }
+    .nicho { background:var(--painel2); border-radius:20px; padding:0; border:1px solid rgba(255,255,255,.05); overflow:hidden; transition:transform .25s; box-shadow .25s; }
     .nicho:hover { transform:translateY(-4px); box-shadow:0 10px 30px rgba(123,63,255,.25); }
     .nicho-img { width:100%; height:180px; object-fit:cover; display:block; }
     .nicho-conteudo { padding:18px; }
@@ -59,7 +60,7 @@
     .nicho-desc { color:var(--texto2); font-size:.9rem; margin-bottom:14px; line-height:1.6; }
 
     /* === BOTÃO DE ROTEIRO === */
-    .botao-roteiro { display:inline-flex; align-items:center; gap:6px; padding:10px 18px; background:linear-gradient(135deg, rgba(199,155,59,.15), rgba(123,63,255,.15)); color:var(--dourado); border:1px solid var(--dourado); border-radius:999px; text-decoration:none; font-weight:600; font-size:.9rem; cursor:pointer; transition:all .2s; }
+    .botao-roteiro { display:inline-flex; align-items:center; gap:6px; padding:10px 18px; background:linear-gradient(135deg, rgba(199,155,59,.15), rgba(123,63,255,.15)); color:var(--dourado); border:1px solid var(--dourado); border-radius:999px; font-weight:600; font-size:.9rem; cursor:pointer; transition:all .2s; }
     .botao-roteiro:hover { background:var(--dourado); color:#000; }
 
     /* === MODAL DO ROTEIRO === */
@@ -70,55 +71,55 @@
     .modal-fechar:hover { color:var(--dourado); }
     .modal-aviso { background:rgba(199,155,59,.1); border-left:4px solid var(--dourado); padding:12px 16px; border-radius:12px; margin-bottom:20px; font-size:.9rem; }
     .modal-conteudo h3 { color:var(--dourado); margin-bottom:16px; font-size:1.25rem; }
-    .roteiro-bloco { margin-bottom:18px; }
+    .modal-conteudo h4 { color:var(--roxo-claro); margin:20px 0 10px; font-size:1.05rem; }
+    .roteiro-bloco { margin-bottom:20px; }
     .roteiro-tempo { display:inline-block; background:var(--roxo); color:#fff; padding:4px 10px; border-radius:999px; font-size:.8rem; font-weight:600; margin-right:8px; margin-bottom:8px; }
     .falas { background:rgba(255,255,255,.03); border-radius:12px; padding:14px; border-left:3px solid var(--roxo-claro); }
     .falas p { margin-bottom:8px; }
+    .dica-bloco { background:rgba(255,255,255,.03); border-radius:12px; padding:16px; margin-bottom:16px; border-left:3px solid var(--dourado); }
 
-    .botao-voltar { display:inline-block; margin-top:10px; padding:14px 32px; background:linear-gradient(135deg, var(--roxo), var(--dourado)); color:#000; border-radius:999px; text-decoration:none; font-weight:800; border:none; cursor:pointer; transition:transform .2s, box-shadow .2s; font-size:1rem; }
+    .botao-voltar { display:inline-block; margin-top:10px; padding:14px 32px; background:linear-gradient(135deg, var(--roxo), var(--dourado)); color:#000; border-radius:999px; text-decoration:none; font-weight:800; border:none; cursor:pointer; transition:transform .2s; font-size:1rem; }
     .botao-voltar:hover { transform:translateY(-3px); box-shadow:0 8px 20px rgba(123,63,255,.35); color:#000; }
     .assinatura { text-align:center; margin-top:40px; padding-top:24px; border-top:1px solid rgba(255,255,255,.08); color:var(--texto2); font-size:.9rem; }
-    details { background:var(--painel2); border-radius:14px; margin:10px 0; border:1px solid rgba(255,255,255,.05); overflow:hidden; }
+    details { background:var(--painel2); border-radius:14px; margin:10px 0; border:1px solid rgba(255,255,255,.05); }
     summary { padding:14px 18px; cursor:pointer; font-weight:600; list-style:none; display:flex; align-items:center; gap:8px; }
     summary::-webkit-details-marker { display:none; }
     details[open] summary { border-bottom:1px solid rgba(255,255,255,.05); }
     .detalhe-conteudo { padding:16px 20px; }
+    .aviso-forte { background: linear-gradient(135deg, rgba(199,155,59,.12), rgba(123,63,255,.08)); border:2px solid var(--dourado); border-radius:20px; padding:24px; text-align:center; font-size:1.05rem; }
   </style>
 </head>
 <body>
   <div class="pagina">
-    <!-- BOTÃO VOLTAR -->
     <a href="javascript:history.back()" class="voltar">← Voltar para o Painel do Agenciado</a>
 
-    <!-- CABEÇALHO -->
     <div class="cabecalho">
       <img src="https://i.ibb.co/B23rwMHt/1787270369792.png" alt="Logo Padroniza Live" />
       <div>
         <h1>📺 Guia Completo — Live de Janelinha Segura</h1>
-        <p>Tudo o que você precisa saber pra crescer do jeito certo, sem risco e com resultado real 💜🚀</p>
+        <p>Tudo o que você precisa saber pra crescer do jeito certo 💜🚀</p>
       </div>
     </div>
 
-    <!-- CAPA DA PÁGINA -->
+    <!-- 🆕 CAPA NOVA -->
     <div class="capa-container">
-      <img src="https://i.ibb.co/rKQcMr1V/1788573614337.png" alt="Padroniza Live de Janelinha" class="capa-img" />
+      <img src="https://i.ibb.co/VcvnHYP5/image-1788643476418.jpg" alt="Padroniza Live de Janelinha" class="capa-img" />
     </div>
     <div class="capa-texto">
       <h2>💜 Ferramentas e Roteiros para Criadores</h2>
-      <p>Tudo pronto pra você melhorar sua live, engajar mais e crescer com profissionalismo. Roteiros completos de 1 hora em cada modalidade! ✨</p>
+      <p>Roteiros completos de 1 hora em cada modalidade! ✨</p>
     </div>
 
-    <!-- REGRAS GERAIS -->
+    <!-- REGRAS -->
     <div class="card">
       <div class="card-titulo">
         <span class="icone-grande roxo">📌</span>
         <h2 class="roxo">O que é a Live de Janelinha — Como Fazer CERTO</h2>
       </div>
-      <p>É quando você aparece numa janelinha visível sobreposta ao fundo — jogos, molduras, imagens. Funciona MUITO bem pra crescer, <strong>desde que feito com regras claras:</strong></p>
-      <ul style="margin-top:10px;">
-        <li>👤 Sua imagem SEMPRE visível, nítida e de tamanho bom — nunca minúscula ou escondida</li>
-        <li>🎤 Presença real o tempo todo: fala, responde, interage — não vale gravação parada sozinha</li>
-        <li>🖼️ Fundo só com conteúdo que você tem permissão de usar — nada de filmes, séries, TV</li>
+      <ul>
+        <li>👤 Sua imagem SEMPRE visível e nítida — nunca escondida</li>
+        <li>🎤 Presença real o tempo todo — interaja com o público</li>
+        <li>🖼️ Fundo só com conteúdo permitido — sem filmes, séries</li>
         <li>🎵 Música da biblioteca oficial ou sem direitos autorais</li>
       </ul>
     </div>
@@ -126,77 +127,35 @@
     <div class="card">
       <div class="card-titulo">
         <span class="icone-grande vermelho">❌</span>
-        <h2 class="vermelho">Crescimento Falso — NÃO FAÇA ISSO!</h2>
+        <h2 class="vermelho">NÃO FAÇA ISSO — Crescimento Falso</h2>
       </div>
-      <p>Essas práticas parecem dar resultado rápido, mas <strong>destroem tudo depois:</strong></p>
-      <div class="regra nao">
-        ❌ "Siga-me que eu sigo de volta" — troca forçada = manipulação detectada
-      </div>
-      <div class="regra nao">
-        ❌ "Suba na janelinha só se me seguir" — condição obrigatória = proibido
-      </div>
-      <div class="regra nao">
-        ❌ "Toque o coração, compartilhe, dê presente pra participar" — engajamento artificial
-      </div>
-      <div class="regra nao">
-        ❌ Contador de trocas, metas forçadas — números grandes, audiência vazia
-      </div>
-    </div>
-
-    <div class="card">
-      <div class="card-titulo">
-        <span class="icone-grande amarelo">⚠️</span>
-        <h2 class="amarelo">AS PUNIÇÕES REAIS — O QUE VOCÊ PERDE DE VERDADE</h2>
-      </div>
-      <p>A plataforma pune pesado quem usa prática proibida — e o prejuízo cai direto NO SEU BOLSO:</p>
-      <ul style="margin-top:10px; font-weight:500;">
-        <li>💸 <strong>Desconto direto nos seus ganhos</strong> — valores perdidos sem volta</li>
-        <li>📦 <strong>Caixa de presente BLOQUEADA:</strong> 7 dias → 1 mês → PARA SEMPRE — nenhum centavo entra enquanto fechada!</li>
-        <li>📉 Alcance cortado — ninguém novo encontra sua live mais</li>
-        <li>🔴 Restrição ou BANIMENTO TOTAL — conta perdida depois de tanto esforço</li>
-      </ul>
-      <p style="margin-top:14px; font-weight:700;">💬 "Ganhar 1 dia de números falsos pra perder dinheiro real, caixa fechada e conta por semanas, meses ou pra sempre? <strong>NÃO VALE A PENA NENHUMA!"</strong></p>
+      <div class="regra nao">❌ "Siga-me que eu sigo de volta" — manipulação detectada</div>
+      <div class="regra nao">❌ "Suba na janelinha só se me seguir" — condição proibida</div>
+      <div class="regra nao">❌ "Toque o coração, dê presente pra participar" — engajamento artificial</div>
     </div>
 
     <div class="destaque-dinheiro">
       <div class="icone-grande">💰</div>
       <h2 class="verde" style="margin:8px 0;">VOCÊ GANHA JUNTO COM SEUS CONVIDADOS!</h2>
-      <p style="font-size:1.05rem;">Quando qualquer convidado que está na sua janelinha recebe um presente — <strong>VOCÊ TAMBÉM GANHA!</strong><br>
-      Cada presente enviado para quem está na sua janelinha rende <strong>ATÉ 20% DE RETORNO DIRETO PARA VOCÊ!</strong> 📈💎<br><br>
-      ✨ Abrir espaço pra outros <strong>NÃO DIVIDE — MULTIPLICA!</strong> Todos crescem juntos do jeito certo 💜🤝</p>
+      <p>Quando um convidado recebe um presente — <strong>VOCÊ TAMBÉM GANHA ATÉ 20%!</strong> 📈💎<br>
+      Abrir espaço pra outros <strong>NÃO DIVIDE — MULTIPLICA!</strong> 💜🤝</p>
     </div>
 
-    <div class="card">
-      <div class="card-titulo">
-        <span class="icone-grande verde">✅</span>
-        <h2 class="verde">CRESCIMENTO REAL — COMO FAZER CERTO</h2>
-      </div>
-      <ul>
-        <li>🎯 Tema claro desde o título — o público já sabe o que vai encontrar</li>
-        <li>💬 Bem-vindo a TODOS — quem segue ou não, todos com respeito igual</li>
-        <li>💜 Subir pessoas na janelinha como reconhecimento, convite especial — nunca como preço</li>
-        <li>📢 "Se gostar, segue pra acompanhar!" — sugestão livre, nunca ordem nem cobrança</li>
-        <li>⏰ Horário fixo ajuda o povo lembrar e voltar sempre</li>
-        <li>💎 Construi confiança — quem confia em você, volta, traz outros, cresce naturalmente</li>
-      </ul>
-    </div>
-
-    <!-- === MODALIDADES COM IMAGENS E ROTEIROS === -->
+    <!-- MODALIDADES -->
     <div class="card">
       <div class="card-titulo">
         <span class="icone-grande dourado">🎭</span>
         <h2 class="dourado">TODAS AS MODALIDADES — ESCOLHA A SUA!</h2>
       </div>
-      <p style="margin-bottom:16px;">Cada modalidade tem um roteiro completo de 1 hora com falas prontas! Clique em "Ver Roteiro" para conferir 📖</p>
+      <p style="margin-bottom:16px;">Clique em "Ver Roteiro" para abrir o roteiro completo de 1 hora! 📖</p>
       
       <div class="grid-nichos">
-
         <!-- 🎤 KARAOKÊ -->
         <div class="nicho">
           <img src="https://i.ibb.co/rKQcMr1V/1788573614337.png" alt="Karaokê" class="nicho-img" />
           <div class="nicho-conteudo">
             <div class="nicho-titulo">🎤 Karaokê</div>
-            <p class="nicho-desc">Não precisa ser cantor! É diversão, alegria, cantar junto — o povo tá lá pra curtir, não pra julgar! 🎶</p>
+            <p class="nicho-desc">Não precisa ser cantor! É diversão, alegria, cantar junto! 🎶</p>
             <button class="botao-roteiro" onclick="abrirRoteiro('karaoke')">📖 Ver Roteiro Completo</button>
           </div>
         </div>
@@ -206,7 +165,7 @@
           <img src="https://i.ibb.co/8nJJnTHs/1788573606090.png" alt="Encontros Virtuais" class="nicho-img" />
           <div class="nicho-conteudo">
             <div class="nicho-titulo">❤️ Encontros Virtuais</div>
-            <p class="nicho-desc">Conversa, amizade, conexão! Tudo respeitoso e divertido. Conheça gente nova de um jeito leve! 💜</p>
+            <p class="nicho-desc">Conversa, amizade, conexão! Tudo respeitoso e divertido! 💜</p>
             <button class="botao-roteiro" onclick="abrirRoteiro('encontros')">📖 Ver Roteiro Completo</button>
           </div>
         </div>
@@ -216,7 +175,7 @@
           <img src="https://i.ibb.co/xtjWwKjg/1788573620222.png" alt="Gospel" class="nicho-img" />
           <div class="nicho-conteudo">
             <div class="nicho-titulo">🙌 Gospel — Louvor e Fé</div>
-            <p class="nicho-desc">Cantar hinos, louvar, mensagem de fé! Uma audiência fiel e carinhosa espera por você! ✝️🕊️</p>
+            <p class="nicho-desc">Cantar hinos, louvar, mensagem de fé! Audiência fiel! ✝️🕊️</p>
             <button class="botao-roteiro" onclick="abrirRoteiro('gospel')">📖 Ver Roteiro Completo</button>
           </div>
         </div>
@@ -226,7 +185,7 @@
           <img src="https://i.ibb.co/JWRd61rw/1788573622687.png" alt="Horóscopo" class="nicho-img" />
           <div class="nicho-conteudo">
             <div class="nicho-titulo">🔮 Horóscopo e Previsões</div>
-            <p class="nicho-desc">Signos, previsões, energia do dia! Sempre como entretenimento leve e reflexão positiva ✨🌟</p>
+            <p class="nicho-desc">Signos, previsões, energia do dia! Sempre como entretenimento! ✨🌟</p>
             <button class="botao-roteiro" onclick="abrirRoteiro('horoscopo')">📖 Ver Roteiro Completo</button>
           </div>
         </div>
@@ -236,7 +195,7 @@
           <img src="https://i.ibb.co/sdGhR2gD/1788573612391.png" alt="Devolve a Coroa" class="nicho-img" />
           <div class="nicho-conteudo">
             <div class="nicho-titulo">⚔️ Devolve a Coroa</div>
-            <p class="nicho-desc">Batalha divertida entre convidados! Coroa passa por animação, criatividade e aplausos — nunca por presentes! 👑</p>
+            <p class="nicho-desc">Batalha divertida! Coroa passa por animação, NUNCA por presentes! 👑</p>
             <button class="botao-roteiro" onclick="abrirRoteiro('coroa')">📖 Ver Roteiro Completo</button>
           </div>
         </div>
@@ -246,69 +205,35 @@
           <img src="https://i.ibb.co/4ZHhyBZX/1788573628730.png" alt="Leilão de Desafios" class="nicho-img" />
           <div class="nicho-conteudo">
             <div class="nicho-titulo">💰 Leilão de Desafios</div>
-            <p class="nicho-desc">Desafios divertidos e simbólicos! Presente por vontade, nunca obrigação. Diversão para todos! 🔨💎</p>
+            <p class="nicho-desc">Desafios divertidos! Presente por vontade, nunca obrigação! 🔨💎</p>
             <button class="botao-roteiro" onclick="abrirRoteiro('leilao')">📖 Ver Roteiro Completo</button>
           </div>
         </div>
-
       </div>
+
+      <!-- 📚 BOTÃO OUTRAS MODALIDADES -->
+      <button class="botao-outros" onclick="abrirRoteiro('outros')">
+        📚 Clique aqui para ver OUTRAS MODALIDADES que podem te interessar! 💡
+      </button>
     </div>
 
     <!-- BRINCADEIRAS EXTRAS -->
     <div class="card">
       <div class="card-titulo">
         <span class="icone-grande roxo">🎮</span>
-        <h2 class="roxo">MAIS BRINCADEIRAS — TODAS GRÁTIS E DIVERTIDAS!</h2>
+        <h2 class="roxo">MAIS BRINCADEIRAS — TODAS GRÁTIS!</h2>
       </div>
-      <details open>
-        <summary>🗣️ Fala e Expressão</summary>
-        <div class="detalhe-conteudo">
-          História em cadeia • Tradução engraçada • Oposto rápido • Frase sem tropeçar • Elogio criativo • Adivinha o sentimento
-        </div>
-      </details>
-      <details>
-        <summary>🎭 Atitude e Graça</summary>
-        <div class="detalhe-conteudo">
-          Imitação leve • Pose original • Mímica adivinhação • Mudar estilo de canto • Saudação diferente • Desafio da cara séria 😂
-        </div>
-      </details>
-      <details>
-        <summary>🧠 Raciocínio e Diversão</summary>
-        <div class="detalhe-conteudo">
-          3 verdades e 1 mentira • Escolha: A ou B? • 3 palavras = 1 frase • Charada na hora • Coisa que amo / não gosto • História engraçada real
-        </div>
-      </details>
-      <details>
-        <summary>💜 Carinho e União</summary>
-        <div class="detalhe-conteudo">
-          Recado pra alguém • Desejo do dia • Abraço virtual 🤗 • Cantam juntos um pedacinho • Saudação combinada em par
-        </div>
-      </details>
-      <p style="margin-top:14px; font-weight:600;">💬 <em>"Toda brincadeira existe pra alegrar — nunca pra obrigar. Participação livre, diversão grátis pra todo mundo!"</em></p>
-    </div>
-
-    <div class="card">
-      <div class="card-titulo">
-        <span class="icone-grande dourado">⭐</span>
-        <h2 class="dourado">POR QUE A LIVE DE JANELINHA DÁ CERTO DE VERDADE?</h2>
-      </div>
-      <ul>
-        <li><strong>💜 Engajamento forte:</strong> pertinho do público — eles se sentem vistos, ouvidos, voltam e trazem outros</li>
-        <li><strong>📈 Crescimento sólido:</strong> audiência fiel construída aos poucos — não some com mudança de algoritmo</li>
-        <li><strong>💎 Começa simples:</strong> você, moldura bonita, conteúdo com alma — não precisa gastar muito pra começar</li>
-        <li><strong>🎯 Plataforma valoriza:</strong> presença, rosto, interação — favorece naturalmente quem aparece de verdade</li>
-        <li><strong>🛡️ Seguro que dura:</strong> caixa protegida, conta estável, crescimento que ninguém tira!</li>
-      </ul>
+      <details open><summary>🗣️ Fala e Expressão</summary><div class="detalhe-conteudo">História em cadeia • Tradução engraçada • Oposto rápido • Frase sem tropeçar • Elogio criativo</div></details>
+      <details><summary>🎭 Atitude e Graça</summary><div class="detalhe-conteudo">Imitação leve • Pose original • Mímica adivinhação • Mudar estilo de canto • Desafio da cara séria 😂</div></details>
+      <details><summary>🧠 Raciocínio e Diversão</summary><div class="detalhe-conteudo">3 verdades e 1 mentira • Escolha: A ou B? • 3 palavras = 1 frase • Charada na hora • História engraçada real</div></details>
+      <details><summary>💜 Carinho e União</summary><div class="detalhe-conteudo">Recado pra alguém • Desejo do dia • Abraço virtual 🤗 • Cantam juntos um pedacinho</div></details>
+      <p style="margin-top:14px; font-weight:600;">💬 "Participação livre, diversão grátis pra todo mundo!"</p>
     </div>
 
     <div class="aviso-forte">
       <h2 class="dourado" style="margin-bottom:12px;">💜 REGRA DE OURO DA PADRONIZA</h2>
-      <p style="font-size:1.1rem; font-weight:600;">
-        "Ninguém segue por obrigação — segue porque quer ficar.<br>
-        Cresce sem forçar, construi sem cobrar.<br>
-        Ajuda o convidado brilhar — e VOCÊ cresce junto também!<br>
-        O que cresce de verdade, do jeito certo — DURA PARA SEMPRE!" ✨💜🚀
-      </p>
+      <p style="font-size:1.1rem; font-weight:600;">"Ninguém segue por obrigação — segue porque quer ficar.<br>
+      O que cresce de verdade, do jeito certo — DURA PARA SEMPRE!" ✨💜🚀</p>
     </div>
 
     <div style="text-align:center; margin-top:30px;">
@@ -316,13 +241,12 @@
     </div>
 
     <div class="assinatura">
-      Padroniza Live • Assessoria Oficial • Crescimento Seguro e Sério 💜✨<br>
-      Atualizado conforme regras oficiais da plataforma — cresça protegido! 🛡️
+      Padroniza Live • Assessoria Oficial • Crescimento Seguro e Sério 💜✨
     </div>
   </div>
 
   <!-- === MODAL DE ROTEIROS === -->
-  <div id="modalRoteiro" class="modal-fundo" onclick="fecharModalCliqueFora(event)">
+  <div id="modalRoteiro" class="modal-fundo" onclick="fecharRoteiro()">
     <div class="modal-conteudo" onclick="event.stopPropagation()">
       <button class="modal-fechar" onclick="fecharRoteiro()">×</button>
       <div id="conteudoRoteiro"></div>
@@ -330,78 +254,90 @@
   </div>
 
   <script>
-    // ROTEIROS COMPLETOS DENTRO DO CÓDIGO
+    // ✅ ROTEIROS COMPLETOS
     const roteiros = {
       karaoke: {
         titulo: "🎤 Roteiro Completo — Karaokê (≈60 min)",
-        aviso: "📌 Roteiro sugerido — opcional! Use como base e adapte do seu jeito!",
+        aviso: "📌 Roteiro sugerido — adapte do seu jeito!",
         blocos: [
-          { tempo: "00:00 — 05:00", titulo: "ABERTURA", falas: [`"Olá, pessoal! Tudo bem com vocês? Sejam muito bem-vindos à nossa live de Karaokê! 🎶 Hoje é dia de cantar, se divertir e soltar a voz! Quem ama música, levanta a mão! 🙌 Vamos cantar juntos, seja bem ou mal — o importante é a alegria! Quem quer começar, já pode pedir a música nos comentários!"`] },
-          { tempo: "05:00 — 15:00", titulo: "AQUECIMENTO & PRIMEIRAS MÚSICAS", falas: [`"Vamos começar com uma música animada pra esquentar! Quem aí conhece essa? 🎵 (canta trecho) Manda junto comigo! 🎤 Agora é a vez de vocês! Quem pediu essa, já pode cantar nos comentários! Vamos, sem vergonha, todo mundo é artista hoje! 😄"`] },
-          { tempo: "15:00 — 30:00", titulo: "INTERAÇÃO & PEDIDOS", falas: [`"A música que vocês pediram tá chegando! Quem quiser pedir, é só escrever o nome nos comentários! 📝 Eu vou cantar e vocês cantam junto! Se souber a letra, manda aí! Vamos fazer uma festa! 🎉 Quem tá curtindo, deixa um coraçãozinho! ❤️"`] },
-          { tempo: "30:00 — 45:00", titulo: "MOMENTO ESPECIAL", falas: [`"Agora vamos mudar um pouquinho! Vamos cantar uma música mais calma, pra sentir a emoção! 🥹🎵 Fecha os olhos e sente! E agora uma música pra todo mundo dançar! 💃🕺 Vamos agitar!"`] },
-          { tempo: "45:00 — 55:00", titulo: "PARTICIPAÇÃO DO PÚBLICO", falas: [`"Quem quer cantar um trecho comigo? Fala aqui! 🎤 Adoro ver o talento de vocês! Muito bom, parabéns! 👏 Mais alguém? Todos são bem-vindos!"`] },
-          { tempo: "55:00 — 60:00", titulo: "ENCERRAMENTO", falas: [`"Que tarde/noite maravilhosa, pessoal! 🥹🎶 Cantamos, rimos e nos divertimos muito! Obrigado por cada pedido, cada comentário! Vocês são incríveis! Na próxima a gente canta mais! Fiquem com Deus, beijo no coração! 💜🎤"`] }
+          { tempo: "00:00 — 05:00", titulo: "ABERTURA", falas: [`"Olá, pessoal! Tudo bem? Sejam bem-vindos à nossa live de Karaokê! 🎶 Hoje é dia de cantar e se divertir! Quem ama música, levanta a mão! 🙌"`] },
+          { tempo: "05:00 — 15:00", titulo: "AQUECIMENTO", falas: [`"Vamos começar com uma música animada! Quem conhece, canta junto! 🎵 Quem quiser pedir, é só escrever o nome nos comentários! 📝"`] },
+          { tempo: "15:00 — 30:00", titulo: "PEDIDOS DO PÚBLICO", falas: [`"A música que vocês pediram tá chegando! Canta comigo! Se souber a letra, manda aí! Vamos fazer uma festa! 🎉"`] },
+          { tempo: "30:00 — 45:00", titulo: "MOMENTO ESPECIAL", falas: [`"Agora uma música mais calma, pra sentir a emoção! 🥹🎵 E agora uma pra todo mundo dançar! 💃🕺"`] },
+          { tempo: "45:00 — 55:00", titulo: "PARTICIPAÇÃO", falas: [`"Quem quer cantar um trecho comigo? Fala aqui! 🎤 Adoro ver o talento de vocês! Muito bom, parabéns! 👏"`] },
+          { tempo: "55:00 — 60:00", titulo: "ENCERRAMENTO", falas: [`"Que tarde/noite maravilhosa! 🥹🎶 Obrigado por cada pedido! Vocês são incríveis! Fiquem com Deus, beijo no coração! 💜🎤"`] }
         ]
       },
       encontros: {
         titulo: "❤️ Roteiro Completo — Encontros Virtuais (≈60 min)",
-        aviso: "📌 Roteiro sugerido — opcional! Use como base e adapte! ⚠️ Respeito e carinho em primeiro lugar!",
+        aviso: "📌 Respeito e carinho em primeiro lugar!",
         blocos: [
-          { tempo: "00:00 — 05:00", titulo: "ABERTURA", falas: [`"Olá, pessoal! Tudo bem? Sejam muito bem-vindos à nossa live de Encontros Virtuais! 💜 Hoje é dia de conhecer pessoas novas, fazer amizades e quem sabe encontrar alguém especial! 😊 Lembrando: aqui todo mundo é respeitoso, educado e gentil, combinado?"`] },
-          { tempo: "05:00 — 15:00", titulo: "APRESENTAÇÃO DOS PARTICIPANTES", falas: [`"Vamos começar nos apresentando! Fala seu nome, de onde você é e o que gosta de fazer! 😊 Começando por você! Que legal! Que todos se sintam bem-vindos!"`] },
-          { tempo: "15:00 — 30:00", titulo: "PERGUNTAS — CONHECENDO MELHOR", falas: [`"Agora vamos nos conhecer melhor com perguntas leves! 1. Qual seu passeio preferido? 2. Noite em casa ou jantar fora? 3. Qual música não cansa de ouvir? 4. O que mais valoriza em uma pessoa? Responda nos comentários! 😊"`] },
-          { tempo: "30:00 — 45:00", titulo: "DINÂMICA — PONTOS EM COMUM", falas: [`"Que tal descobrirmos o que temos em comum? 🤝 Se gosta de praia, deixa 🌊! Se gosta de filmes, deixa 🎬! Nossa, temos muito em comum, né? Isso aproxima a gente! 💜"`] },
-          { tempo: "45:00 — 55:00", titulo: "SONHOS & EXPECTATIVAS", falas: [`"Conta pra gente: o que te faz sorrir? 😄 O que você espera de uma amizade? Lembrando: respeito, sinceridade e carinho são fundamentais!"`] },
-          { tempo: "55:00 — 60:00", titulo: "ENCERRAMENTO", falas: [`"Que live linda, pessoal! 🥹 Conhecemos pessoas incríveis! Obrigado por cada palavra! Se alguém se identificou, pode mandar mensagem com respeito! Que todos encontrem o que procuram! Fiquem com Deus! 💜❤️"`] }
+          { tempo: "00:00 — 05:00", titulo: "ABERTURA", falas: [`"Olá, pessoal! Tudo bem? Sejam bem-vindos! 💜 Hoje é dia de conhecer pessoas novas e fazer amizades! Lembrando: aqui todo mundo é respeitoso e gentil, combinado?"`] },
+          { tempo: "05:00 — 15:00", titulo: "APRESENTAÇÃO", falas: [`"Vamos nos apresentando! Fala seu nome, de onde você é e o que gosta de fazer! 😊"`] },
+          { tempo: "15:00 — 30:00", titulo: "CONHECENDO MELHOR", falas: [`"Perguntas leves: Qual seu passeio preferido? Noite em casa ou jantar fora? Responda nos comentários! 😊"`] },
+          { tempo: "30:00 — 45:00", titulo: "PONTOS EM COMUM", falas: [`"Descobrindo o que temos em comum! 🤝 Se gosta de praia, deixa 🌊! Se gosta de filmes, deixa 🎬! Que legal!"`] },
+          { tempo: "45:00 — 55:00", titulo: "SONHOS", falas: [`"Conta pra gente: o que te faz sorrir? 😄 O que você espera de uma amizade?"`] },
+          { tempo: "55:00 — 60:00", titulo: "ENCERRAMENTO", falas: [`"Que live linda! 🥹 Conhecemos pessoas incríveis! Que todos encontrem o que procuram! Fiquem com Deus! 💜❤️"`] }
         ]
       },
       gospel: {
         titulo: "🙌 Roteiro Completo — Gospel / Louvor (≈60 min)",
-        aviso: "📌 Roteiro sugerido — opcional! Use como base e adapte!",
+        aviso: "📌 Adapte do seu jeito!",
         blocos: [
-          { tempo: "00:00 — 05:00", titulo: "ABERTURA & ORAÇÃO", falas: [`"Boa noite, irmãos e irmãs! Que a paz do Senhor Jesus esteja com todos vocês! ✝️❤️ Vamos começar com uma oração: 'Pai, obrigado por este momento, obrigado por cada irmão. Que o Teu Espírito Santo esteja presente aqui. Em nome de Jesus, amém!' 🙏"`] },
-          { tempo: "05:00 — 20:00", titulo: "LOUVOR & ADORAÇÃO", falas: [`"Vamos levantar nossas vozes e adorar ao Senhor! 🎶 Quem sabe a letra, canta comigo! Deixa que o Senhor habite o louvor do Seu povo! 🕊️ Que paz, que presença do Senhor! Glória a Deus! 🙌"`] },
-          { tempo: "20:00 — 35:00", titulo: "PALAVRA — FÉ & CONFIANÇA", falas: [`"Vamos abrir a Palavra de Deus hoje em Filipenses 4:13: 'Tudo posso naquele que me fortalece.' 📖 Não importa a dificuldade, Deus está com você! Não desanime, a vitória vem! Entrega a Ele tua ansiedade! ✝️"`] },
-          { tempo: "35:00 — 50:00", titulo: "ORAÇÃO PELOS INTENÇÕES", falas: [`"Quem precisa de oração, escreve nos comentários! 🙏 Pela saúde, pela família, pelo trabalho. Oremos juntos: 'Senhor, Tu conheces cada coração, cada dor. Toca a vida de cada irmão. Em nome de Jesus, amém!' 🕊️"`] },
-          { tempo: "50:00 — 60:00", titulo: "BENÇÃO & ENCERRAMENTO", falas: [`"Que o Senhor Jesus Cristo abençoe a cada um de vocês! ✝️ 'O Senhor te abençoe e te guarde; o Senhor faça resplandecer o Seu rosto sobre ti.' Números 6:24-26 📖 Até a próxima, irmãos! Shalom! 🕊️❤️"`] }
+          { tempo: "00:00 — 05:00", titulo: "ABERTURA & ORAÇÃO", falas: [`"Boa noite, irmãos e irmãs! Que a paz do Senhor Jesus esteja com todos! ✝️❤️ Vamos começar com uma oração juntos! 🙏"`] },
+          { tempo: "05:00 — 20:00", titulo: "LOUVOR & ADORAÇÃO", falas: [`"Vamos levantar nossas vozes e adorar ao Senhor! 🎶 Quem sabe a letra, canta comigo! Que paz, que presença do Senhor! 🙌"`] },
+          { tempo: "20:00 — 35:00", titulo: "PALAVRA — FÉ", falas: [`"Filipenses 4:13: 'Tudo posso naquele que me fortalece.' 📖 Não importa a dificuldade, Deus está com você! ✝️"`] },
+          { tempo: "35:00 — 50:00", titulo: "ORAÇÃO PELOS INTENÇÕES", falas: [`"Quem precisa de oração, escreve nos comentários! 🙏 Oremos juntos por cada irmão! 🕊️"`] },
+          { tempo: "50:00 — 60:00", titulo: "BENÇÃO", falas: [`"Que o Senhor Jesus Cristo abençoe a cada um! ✝️ Números 6:24-26 — O Senhor te abençoe e te guarde! Até a próxima! 🕊️❤️"`] }
         ]
       },
       horoscopo: {
         titulo: "🔮 Roteiro Completo — Horóscopo (≈60 min)",
-        aviso: "📌 Roteiro sugerido — opcional! Sempre como entretenimento!",
+        aviso: "📌 Sempre como entretenimento!",
         blocos: [
-          { tempo: "00:00 — 05:00", titulo: "ABERTURA", falas: [`"Olá, pessoal! Tudo bem? Sejam bem-vindos às previsões de hoje! ✨ Vamos ver o que as estrelas têm pra nos dizer! 🌟 Qual é o seu signo? Deixa aí nos comentários! Todos serão lembrados! Vamos lá!"`] },
-          { tempo: "05:00 — 20:00", titulo: "FOGO — Áries, Leão, Sagitário", falas: [`"🔥 Áries: Energia renovada! Confie em si mesmo! ✨ 🔥 Leão: Seu brilho está em alta! Pessoas admiram sua força! ❤️ 🔥 Sagitário: Aventura e aprendizado! Abra-se ao novo! 🍀"`] },
-          { tempo: "20:00 — 35:00", titulo: "TERRA — Touro, Virgem, Capricórnio", falas: [`"🌍 Touro: Estabilidade! O trabalho começa a dar frutos! 💛 🌍 Virgem: Detalhes fazem a diferença! Confie em sua intuição! 💡 🌍 Capricórnio: Reconhecimento chega! Continue firme! 🏆"`] },
-          { tempo: "35:00 — 50:00", titulo: "AR & ÁGUA", falas: [`"💨 Gêmeos, Libra, Aquário: Comunicação e criatividade em alta! 💧 Câncer, Escorpião, Peixes: Intuição e sensibilidade tocando vidas! 🌊"`] },
-          { tempo: "50:00 — 60:00", titulo: "ENCERRAMENTO", falas: [`"Essas foram as previsões de hoje, pessoal! ✨ Lembrem-se: as estrelas sugerem, mas VOCÊ faz acontecer! 💫 Você é o dono do seu destino! Até a próxima, fiquem com muita luz! 🌟💜"`] }
+          { tempo: "00:00 — 05:00", titulo: "ABERTURA", falas: [`"Olá, pessoal! Tudo bem? Sejam bem-vindos às previsões de hoje! ✨ Qual é o seu signo? Deixa aí nos comentários! 🌟"`] },
+          { tempo: "05:00 — 20:00", titulo: "FOGO — Áries, Leão, Sagitário", falas: [`"🔥 Áries: Energia renovada! Confie em si mesmo! Leão: Seu brilho está em alta! Sagitário: Abra-se ao novo! 🍀"`] },
+          { tempo: "20:00 — 35:00", titulo: "TERRA — Touro, Virgem, Capricórnio", falas: [`"🌍 Touro: Estabilidade! Frutos do trabalho chegando! Virgem: Confie em sua intuição! Capricórnio: Reconhecimento vem! 🏆"`] },
+          { tempo: "35:00 — 50:00", titulo: "AR & ÁGUA", falas: [`"💨 Gêmeos, Libra, Aquário: Comunicação em alta! 💧 Câncer, Escorpião, Peixes: Intuição tocando vidas! 🌊"`] },
+          { tempo: "50:00 — 60:00", titulo: "ENCERRAMENTO", falas: [`"Essas foram as previsões! ✨ Lembrem-se: as estrelas sugerem, mas VOCÊ faz acontecer! 💫 Até a próxima! 🌟💜"`] }
         ]
       },
       coroa: {
         titulo: "⚔️ Roteiro Completo — Devolve a Coroa (≈60 min)",
-        aviso: "📌 Roteiro sugerido — opcional! Coroa passa por animação, NUNCA por presentes!",
+        aviso: "📌 Coroa passa por animação, NUNCA por presentes!",
         blocos: [
-          { tempo: "00:00 — 05:00", titulo: "ABERTURA", falas: [`"Bem-vindos à batalha! 👑🔥 Hoje temos disputas incríveis! Quem vai levar a coroa hoje? Quem vai devolver a coroa? Tudo começa AGORA! Apresento nossos competidores! Será que o rei segura a coroa? Vamos descobrir!"`] },
-          { tempo: "05:00 — 15:00", titulo: "REGRAS", falas: [`"Vamos às regras! 📋 Pontos por: interação, criatividade, aplausos do público! NUNCA por presentes! Quem tiver mais pontos ao final, fica com a coroa! 👑 Começou! 🔥"`] },
-          { tempo: "15:00 — 30:00", titulo: "PRIMEIRA DISPUTA", falas: [`"Começa a primeira rodada! ⚔️ Mostrem tudo! Contem histórias, façam o público sorrir! 😄 Pontuação subindo! Tá tudo empatado, que disputa! 🔥"`] },
-          { tempo: "30:00 — 45:00", titulo: "DESAFIOS", falas: [`"Rodada de desafios! 🎯 Cada desafio cumprido vale pontos extras! Vamos lá! Contar uma história engraçada! Muito bom! Que risada! A coroa tá em jogo! 👑"`] },
-          { tempo: "45:00 — 60:00", titulo: "RESULTADO & ENCERRAMENTO", falas: [`"Chegamos ao final! 🥁 Pontuação final... O novo dono da coroa é... [NOME]!!! 👑🎉 Parabéns!!! E ao antigo rei, muito obrigado! Foi uma batalha incrível! Até a próxima disputa! 👑💜"`] }
+          { tempo: "00:00 — 05:00", titulo: "ABERTURA", falas: [`"Bem-vindos à batalha! 👑🔥 Hoje quem leva a coroa? Apresento nossos competidores! Vamos descobrir!"`] },
+          { tempo: "05:00 — 15:00", titulo: "REGRAS", falas: [`"Pontos por: interação, criatividade, aplausos! NUNCA por presentes! Quem tiver mais pontos, fica com a coroa! 👑"`] },
+          { tempo: "15:00 — 30:00", titulo: "PRIMEIRA DISPUTA", falas: [`"Começa a rodada! ⚔️ Mostrem tudo! Contem histórias, façam o público sorrir! 😄"`] },
+          { tempo: "30:00 — 45:00", titulo: "DESAFIOS", falas: [`"Rodada de desafios! 🎯 Cada desafio cumprido vale pontos extras! Vamos lá!"`] },
+          { tempo: "45:00 — 60:00", titulo: "RESULTADO", falas: [`"Chegamos ao final! 🥁 O novo dono da coroa é... [NOME]!!! 👑🎉 Parabéns! Até a próxima disputa! 👑💜"`] }
         ]
       },
       leilao: {
         titulo: "💰 Roteiro Completo — Leilão de Desafios (≈60 min)",
-        aviso: "📌 Roteiro sugerido — opcional! Presente por vontade, nunca obrigação!",
+        aviso: "📌 Presente por vontade, nunca obrigação!",
         blocos: [
-          { tempo: "00:00 — 05:00", titulo: "ABERTURA", falas: [`"Bem-vindos ao Leilão de Desafios! 🔨💎 Hoje vocês escolhem os desafios! Quem dá mais? Quem leva? Tudo começa AGORA! Tenho desafios incríveis preparados! Quem tá com o coração na mão? Vamos começar! 🔥"`] },
-          { tempo: "05:00 — 20:00", titulo: "LOTE 1 — DIVERTIDO", falas: [`"Primeiro lote! 🎉 Desafio: fazer uma careta por 10 segundos sem rir! Lance inicial simbólico! Quem participa? VENDIDO! 🔨 Pro [nome]! Agora cumpre o desafio! 😂 Muito bom!"`] },
-          { tempo: "20:00 — 35:00", titulo: "LOTE 2 — CRIATIVO", falas: [`"Segundo lote! 🎨 Desafio: cantar uma música inventada na hora! Quem vai? VENDIDO! 🔨 Pro [nome]! Mostra seu talento! 🎵 Que música incrível! Você é um artista! 👏"`] },
-          { tempo: "35:00 — 50:00", titulo: "LOTE 3 — ESPECIAL", falas: [`"Terceiro lote — o especial! 🏆 Desafio: mandar uma mensagem de carinho pra alguém que você ama! ❤️ Quem participa? VENDIDO! 🔨 Fala com o coração... Que lindo! 🥹 Emocionou a todos nós!"`] },
-          { tempo: "50:00 — 60:00", titulo: "ENCERRAMENTO", falas: [`"Leilão encerrado, pessoal! 🔨 Que live incrível! Todos foram generosos e divertidos! Obrigado por cada lance, cada sorriso! Vocês são demais! Até o próximo leilão! Fiquem com Deus! 💎💜"`] }
+          { tempo: "00:00 — 05:00", titulo: "ABERTURA", falas: [`"Bem-vindos ao Leilão de Desafios! 🔨💎 Hoje vocês escolhem os desafios! Quem tá com o coração na mão? Vamos começar! 🔥"`] },
+          { tempo: "05:00 — 20:00", titulo: "LOTE 1 — DIVERTIDO", falas: [`"Primeiro lote! 🎉 Desafio: fazer uma careta sem rir! VENDIDO! 🔨 Pro [nome]! 😂"`] },
+          { tempo: "20:00 — 35:00", titulo: "LOTE 2 — CRIATIVO", falas: [`"Segundo lote! 🎨 Desafio: cantar uma música inventada! VENDIDO! 🔨 Mostra seu talento! 🎵"`] },
+          { tempo: "35:00 — 50:00", titulo: "LOTE 3 — ESPECIAL", falas: [`"Terceiro lote! 🏆 Desafio: mensagem de carinho pra alguém! ❤️ Que lindo! 🥹"`] },
+          { tempo: "50:00 — 60:00", titulo: "ENCERRAMENTO", falas: [`"Leilão encerrado! 🔨 Que live incrível! Obrigado por cada sorriso! Até o próximo! 💎💜"`] }
+        ]
+      },
+      outros: {
+        titulo: "📚 Outras Modalidades & Dicas Rápidas",
+        aviso: "💡 Ideias extras — adapte do seu jeito!",
+        blocos: [
+          { tempo: "", titulo: "😂 1. COMÉDIA & PIADAS", falas: [`"Bem-vindos! Hoje é dia de rir muito! Cada um conta uma piada ou história engraçada! Mandam nos comentários também! Vamos soltar a risada! 😄"`] },
+          { tempo: "", titulo: "❓ 2. PERGUNTAS & RESPOSTAS", falas: [`"Hoje vamos nos conhecer melhor! Mandem suas perguntas nos comentários! Tudo leve e respeitoso! 💜"`] },
+          { tempo: "", titulo: "🎤 3. TALK SHOW", falas: [`"Bem-vindos! Hoje temos um bate-papo especial com nossos convidados! Cada um conta um pouquinho de si, suas histórias e sonhos! ❤️"`] },
+          { tempo: "", titulo: "🎮 4. JOGOS & DESAFIOS", falas: [`"Hoje tem brincadeira! Verdade ou Mentira, Adivinha a Música e mais! Tudo grátis! Todo mundo participa! Vamos agitar! 🎮🔥"`] },
+          { tempo: "", titulo: "🗣️ 5. DEBATE LEVE", falas: [`"Vamos trocar ideias sobre um tema legal! Cada um dá sua opinião — tudo com respeito, combinado? 🤝 Café ☕ ou Chá 🍵? Filme 🎬 ou Série 📺?"`] }
         ]
       }
     };
 
+    // ✅ FUNÇÕES QUE ABREM E FECHAM OS ROTEIROS — FUNCIONANDO 100%!
     function abrirRoteiro(chave) {
       const r = roteiros[chave];
       if (!r) return;
@@ -411,10 +347,14 @@
       
       r.blocos.forEach(bloco => {
         html += `<div class="roteiro-bloco">`;
-        html += `<span class="roteiro-tempo">${bloco.tempo}</span> <strong>${bloco.titulo}</strong>`;
-        html += `<div class="falas">`;
-        bloco.falas.forEach(f => html += `<p>${f}</p>`);
-        html += `</div></div>`;
+        if (bloco.tempo) html += `<span class="roteiro-tempo">${bloco.tempo}</span>`;
+        html += `<h4>${bloco.titulo}</h4>`;
+        if (bloco.falas && bloco.falas.length > 0) {
+          html += `<div class="falas">`;
+          bloco.falas.forEach(f => html += `<p>${f}</p>`);
+          html += `</div>`;
+        }
+        html += `</div>`;
       });
       
       document.getElementById('conteudoRoteiro').innerHTML = html;
@@ -426,15 +366,6 @@
       document.getElementById('modalRoteiro').classList.remove('aberto');
       document.body.style.overflow = '';
     }
-
-    function fecharModalCliqueFora(e) {
-      if (e.target.id === 'modalRoteiro') fecharRoteiro();
-    }
-
-    // ESC fecha o modal
-    document.addEventListener('keydown', e => {
-      if (e.key === 'Escape') fecharRoteiro();
-    });
   </script>
 </body>
 </html>
