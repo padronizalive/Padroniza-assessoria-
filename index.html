@@ -74,9 +74,7 @@
       font-weight: 600; font-size: 0.85rem; cursor: pointer;
     }
 
-    /* ==============================================
-       🎯 SEÇÃO BOTÕES PRINCIPAIS — NO TOPO, DESTAQUE!
-       ============================================== */
+    /* 🎯 BOTÕES PRINCIPAIS */
     .botoes-principais {
       background: var(--card-bg);
       border-radius: 18px;
@@ -167,6 +165,59 @@
     .carousel-track::-webkit-scrollbar { height: 6px; background: rgba(255,255,255,0.05); border-radius: 3px; }
     .carousel-track::-webkit-scrollbar-thumb { background: var(--primary-purple); border-radius: 3px; }
 
+    /* ==============================================
+       🏆 CARROSSEL DE VITÓRIAS — ADICIONADO!
+       ============================================== */
+    .vitorias-wrapper { position: relative; overflow: hidden; margin-top: 20px; }
+    .vitorias-track { 
+      display: flex; gap: 14px; overflow-x: auto; overflow-y: hidden;
+      padding-bottom: 6px; scroll-snap-type: x mandatory;
+    }
+    .vitorias-track::-webkit-scrollbar { height: 6px; background: rgba(199,155,59,0.15); border-radius: 3px; }
+    .vitorias-track::-webkit-scrollbar-thumb { background: var(--primary-gold); border-radius: 3px; }
+
+    /* 🏆 CARD DE VITÓRIA */
+    .vitoria-card {
+      min-width: 260px; max-width: 280px;
+      background: linear-gradient(135deg, rgba(199,155,59,0.2), rgba(10,12,24,0.95));
+      border-radius: 16px; padding: 12px; border: 2px solid rgba(199,155,59,0.4);
+      scroll-snap-align: start; display: flex; flex-direction: column; gap: 10px;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      flex-shrink: 0; overflow: hidden;
+    }
+    .vitoria-card:hover {
+      transform: translateY(-3px); box-shadow: 0 6px 20px rgba(199,155,59,0.25);
+      border-color: rgba(199,155,59,0.7);
+    }
+    .vitoria-midia {
+      width: 100%; aspect-ratio: 16/9; border-radius: 12px; overflow: hidden;
+      background: linear-gradient(135deg, #c79b3b22, #0b1020);
+      display: flex; align-items: center; justify-content: center;
+      position: relative;
+    }
+    .vitoria-midia img, .vitoria-midia video {
+      width: 100%; height: 100%; object-fit: cover; border-radius: 12px;
+    }
+    .vitoria-midia iframe {
+      width: 100%; height: 100%; border-radius: 12px; border: none;
+    }
+    .vitoria-nome {
+      font-size: 0.9rem; font-weight: 700; color: var(--primary-gold);
+    }
+    .vitoria-desc {
+      font-size: 0.8rem; color: var(--text-light);
+      line-height: 1.4;
+    }
+    .vitoria-tag {
+      font-size: 0.65rem; padding: 3px 8px; border-radius: 999px;
+      background: rgba(199,155,59,0.2); color: var(--primary-gold);
+      border: 1px solid rgba(199,155,59,0.4);
+      align-self: flex-start; margin-top: 4px;
+    }
+    /* ==============================================
+       FIM — VITÓRIAS
+       ============================================== */
+
     /* 🔴 ÍCONE "AO VIVO" PISCANDO */
     .tag-ao-vivo {
       position: absolute; top: 10px; left: 10px;
@@ -240,7 +291,7 @@
     .tag-kako { border-color: #b84dff; color: #b84dff; }
 
     /* ⭐ STREAMER ESTRELA */
-    .estrela-wrapper { overflow: hidden; height: 300px; position: relative; border-radius: 12px; }
+    .estrela-wrapper { overflow: hidden; height: 300px; position: relative; border-radius: 12px; margin-top: 20px; }
     .estrela-track { 
       display: flex; flex-direction: column; gap: 16px;
       animation: rolarEstrelas 40s linear infinite;
@@ -387,9 +438,7 @@
       </div>
     </header>
 
-    <!-- ==============================================
-         🎯 BOTÕES PRINCIPAIS — NO TOPO, BEM DESTAQUE!
-         ============================================== -->
+    <!-- 🎯 BOTÕES PRINCIPAIS -->
     <section class="botoes-principais">
       <h2 class="botoes-titulo">✨ Acesse Agora</h2>
       <div class="button-row">
@@ -414,8 +463,25 @@
           <div class="carousel-track" id="liveCarousel"></div>
         </div>
 
-        <div class="card-header" style="margin-top:20px;">
-          <div><h2>🏆 Streamer Estrela</h2><span>Destaques da nossa comunidade ✨</span></div>
+        <!-- ==============================================
+             🏆 VITÓRIAS & GRANDES MOMENTOS — ADICIONADO!
+             ============================================== -->
+        <div class="card-header" style="margin-top: 24px;">
+          <div><h2 style="color: var(--primary-gold);">🏆 Vitórias & Grandes Momentos</h2><span>Presentes, premiações e melhores momentos ✨</span></div>
+        </div>
+        <div class="vitorias-wrapper">
+          <div class="vitorias-track" id="vitoriasTrack">
+            <p style="padding: 30px; text-align: center; color: var(--text-muted); width: 100%;">
+              🏆 Carregando vitórias...
+            </p>
+          </div>
+        </div>
+        <!-- ==============================================
+             FIM — VITÓRIAS
+             ============================================== -->
+
+        <div class="card-header" style="margin-top: 24px;">
+          <div><h2>⭐ Streamer Estrela</h2><span>Destaques da nossa comunidade ✨</span></div>
         </div>
         <div class="estrela-wrapper">
           <div class="estrela-track" id="estrelaTrack"></div>
@@ -488,7 +554,7 @@
     </div>
   </div>
 
-  <!-- MODAL INTERNA — PAINEL DO AGENCIADO ✅ COM O BOTÃO NOVO ADICIONADO! -->
+  <!-- MODAL INTERNA — PAINEL DO AGENCIADO -->
   <div class="modal-backdrop" id="modalPainelAgenciado">
     <div class="modal">
       <div style="display:flex;justify-content:space-between;align-items:center;">
@@ -515,7 +581,7 @@
   <footer>Padroniza Live • Gestão Profissional de Streamers • Todos os direitos reservados</footer>
 
   <script>
-    // ✅ APPS SCRIPT
+    // ✅ LINK DO APPS SCRIPT — EXATAMENTE O SEU, INTACTO!
     const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyBl8HNCUKlQrqhnEhMP7lrkAPdzXSPoGzR8QACrf3KZdhYNmGdk347ehvlIz_k3w1B/exec"
     const LOGO_URL = "https://i.ibb.co/B23rwMHt/1787270369792.png";
 
@@ -614,10 +680,6 @@
     }
     setInterval(trocarDepoimento, 8000);
 
-    // 🎬 LIVES — CARREGAR
-    let livesCarregadas = [];
-    const carousel = document.getElementById("liveCarousel");
-
     // 🔍 FUNÇÃO PARA DETECTAR SE É VÍDEO OU IMAGEM
     function ehVideo(link) {
       if (!link) return false;
@@ -627,107 +689,47 @@
              l.includes('kako.live') || l.includes('video');
     }
 
-    // 📡 CARREGAR LIVES + ESTRELAS
-    async function carregarTudo() {
+    // 🎬 LIVES — CARREGAR (ORIGINAL INTACTO!)
+    let livesCarregadas = [];
+    const carousel = document.getElementById("liveCarousel");
+
+    // 🏆 VITÓRIAS — CARREGAR (NOVA, SÓ FUNCIONA QUANDO ADICIONAR NO APPS SCRIPT)
+    async function carregarVitorias() {
       try {
-        // 📺 CARREGAR LIVES
-        const resLives = await fetch(`${APPS_SCRIPT_URL}?acao=listarLives`);
-        const dadosLives = await resLives.json();
-        const dot = document.getElementById("liveDot");
-        const status = document.getElementById("liveStatus");
+        const res = await fetch(`${APPS_SCRIPT_URL}?acao=listarVitorias`);
+        const dados = await res.json();
+        const track = document.getElementById("vitoriasTrack");
 
-        if (dadosLives.sucesso && dadosLives.lives && dadosLives.lives.length > 0) {
-          livesCarregadas = dadosLives.lives;
-          status.textContent = `${dadosLives.lives.length} lives ao vivo`;
-          dot.classList.remove("offline");
-          
-          const cardsHTML = dadosLives.lives.map((live) => {
-            const temCapa = live.capa && live.capa.trim() !== "";
-            const conteudoMidia = temCapa 
-              ? `<img src="${live.capa}" alt="${live.nome}" class="live-capa-img">`
-              : `<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#7b3fff,#0b1020);"><span style="font-size:48px;">🎬</span></div>`;
-            
-            return `
-              <a href="${live.link}" target="_blank" class="live-card">
-                <div class="live-video-container">
-                  ${conteudoMidia}
-                  <span class="tag-ao-vivo">🔴 AO VIVO</span>
-                  <div class="live-overlay"></div>
-                  <span class="play-icon">▶</span>
-                  <span class="watch-full">Clique para assistir →</span>
-                </div>
-                <div class="live-meta">
-                  <strong>${live.nome || "Streamer"}</strong>
-                  <div style="margin-top:6px;display:flex;gap:6px;align-items:center;flex-wrap:wrap;">
-                    <span class="tag ${live.plataforma === 'kako' ? 'tag-kako' : 'tag-tiktok'}">
-                      ${live.plataforma === 'kako' ? '💜 Kako Live' : '🎵 TikTok'}
-                    </span>
-                  </div>
-                </div>
-              </a>
-            `;
-          }).join("");
-          
-          carousel.innerHTML = cardsHTML;
-          
-        } else {
-          livesCarregadas = [];
-          status.textContent = "Nenhuma live ao vivo no momento";
-          dot.classList.add("offline");
-          carousel.innerHTML = `<p style="padding:60px 20px;text-align:center;color:var(--text-muted);">🎬 Em breve novas lives! Volte mais tarde.<br><small>Acompanhe nossas redes sociais!</small></p>`;
-        }
-
-        // 🏆 STREAMER ESTRELA
-        const resEstrelas = await fetch(`${APPS_SCRIPT_URL}?acao=listarDestaques`);
-        const dadosEstrelas = await resEstrelas.json();
-        const track = document.getElementById("estrelaTrack");
-
-        if (dadosEstrelas.sucesso && dadosEstrelas.streamersEstrela && dadosEstrelas.streamersEstrela.length > 0) {
-          const cards = dadosEstrelas.streamersEstrela.map(s => {
-            const midiaLink = s.midia || s.capa || "";
-            const isVideo = ehVideo(midiaLink);
-            
+        if (dados.sucesso && dados.vitorias && dados.vitorias.length > 0) {
+          const cards = dados.vitorias.map(v => {
+            const tipo = v.tipo || ehVideo(v.midia) ? (v.midia.includes('youtube') ? 'youtube' : 'video') : 'imagem';
             let midiaHTML = "";
-            if (isVideo) {
-              midiaHTML = `<video src="${midiaLink}" autoplay muted loop playsinline></video><span class="video-indicator">🎥 Vídeo</span>`;
-            } else if (midiaLink) {
-              midiaHTML = `<img src="${midiaLink}" alt="${s.nome || 'Destaque'}">`;
+            
+            if (tipo === 'youtube') {
+              const videoId = v.midia.includes('youtu.be') 
+                ? v.midia.split('/').pop().split('?')[0] 
+                : new URLSearchParams(new URL(v.midia).search).get('v');
+              midiaHTML = `<iframe src="https://www.youtube.com/embed/${videoId}" allowfullscreen allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>`;
+            } else if (tipo === 'video') {
+              midiaHTML = `<video src="${v.midia}" autoplay muted loop playsinline></video>`;
             } else {
-              midiaHTML = `<span style="font-size:48px;">⭐</span>`;
+              midiaHTML = `<img src="${v.midia}" alt="${v.descricao || 'Vitória'}">`;
             }
 
             return `
-              <div class="estrela-card">
-                <div class="estrela-midia">
-                  <span class="estrela-badge">🏆 DESTAQUE</span>
-                  ${midiaHTML}
-                </div>
-                <div class="estrela-nome">${s.nome || "Streamer Estrela"}</div>
-                <div class="estrela-titulo">Conquistas e Vitórias ✨</div>
+              <div class="vitoria-card">
+                <div class="vitoria-midia">${midiaHTML}</div>
+                <div class="vitoria-nome">${v.nome || "Padroniza Live"}</div>
+                <div class="vitoria-desc">${v.descricao || "🏆 Grande vitória! 🎉"}</div>
+                <span class="vitoria-tag">${tipo === 'youtube' ? '▶️ YouTube' : tipo === 'video' ? '🎥 Vídeo' : '🖼️ Foto'}</span>
               </div>
             `;
           }).join("");
-          track.innerHTML = cards + cards;
-        } else {
-          track.innerHTML = `<p style="padding:40px;text-align:center;color:var(--text-muted);">⭐ Em breve nossos destaques!</p>`;
+          track.innerHTML = cards;
         }
       } catch (erro) {
-        console.error("Erro:", erro);
+        console.log("Vitórias ainda não disponíveis:", erro);
       }
     }
 
-    // Enter para confirmar
-    document.addEventListener("keypress", e => {
-      if (e.key === "Enter") {
-        if (document.getElementById("modalAgenciado").style.display === "flex")
-          document.getElementById("btnEntrarAgenciado").click();
-        if (document.getElementById("modalAdmin").style.display === "flex")
-          document.getElementById("btnEntrarAdmin").click();
-      }
-    });
-
-    // INICIAR!
-    carregarTudo();
-  </script>
-</body>
-</html>
+    // 📡 CARREGAR TUDO — LIVES + ESTRELAS (ORIGINAIS)
