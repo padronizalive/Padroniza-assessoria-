@@ -155,13 +155,18 @@
     /* 🎬 CARROSSEL DE LIVES */
     .carousel-wrapper { position: relative; overflow: hidden; }
     .carousel-track { 
-      display: flex; gap: 12px; overflow-x: auto; overflow-y: hidden;
-      padding-bottom: 6px; scroll-snap-type: x mandatory;
+     display: flex; gap: 12px; overflow-x: hidden; overflow-y: hidden;
+       padding-bottom: 6px; scroll-snap-type: x mandatory; animation: rolarLives 50s linear infinite; width: max-content;
     }
     .carousel-track::-webkit-scrollbar { height: 6px; background: rgba(255,255,255,0.05); border-radius: 3px; }
     .carousel-track::-webkit-scrollbar-thumb { background: var(--primary-purple); border-radius: 3px; }
 
-    /* 🔴 ÍCONE "AO VIVO" PISCANDO */
+    /* === ANIMAÇÃO CARROSSEL DE LIVES === */
+@keyframes rolarLives {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+/* 🔴 ÍCONE "AO VIVO" PISCANDO */
     .tag-ao-vivo {
       position: absolute; top: 10px; left: 10px;
       background: var(--vermelho-ao-vivo); color: white;
@@ -660,7 +665,7 @@
             `;
           }).join("");
           
-          carousel.innerHTML = cardsHTML;
+          carousel.innerHTML = cardsHTML + cardsHTML;
           
         } else {
           livesCarregadas = [];
