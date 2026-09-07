@@ -800,9 +800,21 @@ async function carregarVitorias() {
       const div = document.createElement('div');
       div.className = 'vitorias-item';
 
-      if (link.includes('youtube.com/shorts/') || link.includes('youtu.be/')) {
-        const id = link.includes('shorts/') ? link.split('shorts/')[1].split('?')[0] : link.split('/').pop().split('?')[0];
-        div.innerHTML = `<iframe class="vitorias-video" src="https://www.youtube.com/embed/${id}" frameborder="0" allowfullscreen loading="lazy"></iframe><div class="vitorias-desc">${nome} 🏆</div>`;
+      // 🎥 VÍDEO DO YOUTUBE — ACEITA TUDO: watch, shorts, youtu.be, com parâmetros!
+if (link.includes('youtube.com') || link.includes('youtu.be')) {
+  let id = '';
+  if (link.includes('youtu.be/')) {
+    id = link.split('youtu.be/')[1].split(/[?&]/)[0];
+  } else if (link.includes('v=')) {
+    id = link.split('v=')[1].split(/[?&]/)[0];
+  } else if (link.includes('shorts/')) {
+    id = link.split('shorts/')[1].split(/[?&]/)[0];
+  }
+
+  if (id) {
+    div.innerHTML = `<iframe class="vitorias-video" src="https://www.youtube.com/embed/${id}" frameborder="0" allowfullscreen loading="lazy"></iframe><div class="vitorias-desc">${nome} 🏆</div>`;
+  }
+}
       } else if (/\.(jpg|jpeg|png|gif|webp)$/i.test(link) || link.includes('ibb.co')) {
         div.innerHTML = `<img class="vitorias-img" src="${link}" alt="${nome}" loading="lazy" /><div class="vitorias-desc">${nome} 🏆</div>`;
       } else {
