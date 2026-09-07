@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Painel do Agenciado | Padroniza Live</title>
+  <link rel="icon" type="image/png" href="https://i.ibb.co/B23rwMHt/1787270369792.png" />
   <style>
     :root {
       --bg-gradient: radial-gradient(circle at top left, #5b2cff, #0b1020 40%, #02101f 70%, #c79b3b 100%);
@@ -79,11 +80,6 @@
     }
     .perfil-info h3 { font-size: 1rem; }
     .perfil-info span { font-size: 0.8rem; color: var(--text-muted); }
-    .aviso-acesso {
-      background: rgba(255,77,106,0.1); border: 1px solid var(--erro);
-      color: var(--erro); padding: 20px; border-radius: 12px; text-align: center;
-      margin-top: 100px;
-    }
     .modal-fundo {
       position: fixed; inset: 0; background: rgba(0,0,0,0.9);
       display: flex; align-items: center; justify-content: center; z-index: 999; padding: 16px;
@@ -106,13 +102,13 @@
   </style>
 </head>
 <body>
-  <!-- 🔒 MODAL DE LOGIN — OBRIGATÓRIO -->
+  <!-- 🔒 MODAL DE LOGIN — VERIFICAÇÃO NA PLANILHA DE CONTROLE -->
   <div class="modal-fundo" id="modalLogin">
     <div class="modal">
       <h3>🔐 Acesso ao Painel do Agenciado</h3>
-      <p style="font-size:0.85rem; color:var(--text-muted); margin-bottom:16px;">Digite seu usuário cadastrado na agência para acessar.</p>
+      <p style="font-size:0.85rem; color:var(--text-muted); margin-bottom:16px;">Digite seu usuário cadastrado e liberado na planilha de controle.</p>
       
-      <label for="usuarioInput">Seu usuário (cadastrado na planilha)</label>
+      <label for="usuarioInput">Seu usuário cadastrado na planilha</label>
       <input type="text" id="usuarioInput" placeholder="Ex: seu_nome_tiktok" autocomplete="off" />
       <p id="loginMensagem" style="margin-top:12px; font-size:0.85rem;"></p>
       
@@ -123,7 +119,7 @@
     </div>
   </div>
 
-  <!-- 📋 CONTEÚDO — SÓ APARECE APÓS LOGIN APROVADO -->
+  <!-- 📋 CONTEÚDO — SÓ APARECE APÓS APROVAÇÃO NA PLANILHA -->
   <div class="container" id="conteudoPainel" style="display: none;">
     <header>
       <div style="display: flex; align-items: center; gap: 12px;">
@@ -152,7 +148,7 @@
     <div class="card">
       <h2>🛠️ Ferramentas</h2>
       <div class="btn-grid">
-        <!-- ✅ ORIGINAL mantido -->
+        <!-- ✅ ORIGINAL -->
         <a href="agendar-batalha.html" class="btn btn-batalha">
           <span>📅</span><span>Agendar Batalha</span>
         </a>
@@ -164,7 +160,7 @@
         <a href="live-janelinha-guia.html" class="btn btn-batalha">
           <span>📺</span><span>Guia: Live de Janelinha Segura</span>
         </a>
-        <!-- ✅ TODOS os ORIGINAIS abaixo mantidos -->
+        <!-- ✅ ORIGINAIS mantidos -->
         <a href="metricas.html" class="btn btn-ticket">
           <span>📊</span><span>Minhas Métricas</span>
         </a>
@@ -206,9 +202,11 @@
     </footer>
   </div>
 
+  <!-- 🔒 SCRIPT DE VERIFICAÇÃO — PLANILHA DE CONTROLE 100% ORIGINAL -->
   <script>
     const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyBl8HNCUKlQrqhnEhMP7lrkAPdzXSPoGzR8QACrf3KZdhYNmGdk347ehvlIz_k3w1B/exec";
-    // Verificar se já tem usuário salvo
+    
+    // Verificar se já tem usuário salvo (sessão ativa)
     const usuarioSalvo = localStorage.getItem('usuarioAgenciado');
     if (usuarioSalvo) {
       document.getElementById('nomeUsuario').textContent = usuarioSalvo;
@@ -216,6 +214,7 @@
       document.getElementById('conteudoPainel').style.display = 'block';
     }
 
+    // Verificar usuário NA PLANILHA DE CONTROLE
     async function verificarUsuario() {
       const usuario = document.getElementById('usuarioInput').value.trim();
       const mensagem = document.getElementById('loginMensagem');
@@ -226,7 +225,7 @@
         return;
       }
 
-      mensagem.textContent = "🔄 Verificando...";
+      mensagem.textContent = "🔄 Verificando na planilha...";
       mensagem.style.color = "var(--text-muted)";
 
       try {
@@ -234,13 +233,13 @@
         const dados = await res.json();
 
         if (dados.sucesso && dados.encontrado && dados.aprovado) {
-          // ✅ APROVADO! Salvar e liberar
+          // ✅ LIBERADO — cadastrado e aprovado na planilha
           localStorage.setItem('usuarioAgenciado', usuario);
           document.getElementById('nomeUsuario').textContent = usuario;
           document.getElementById('modalLogin').style.display = 'none';
           document.getElementById('conteudoPainel').style.display = 'block';
         } else {
-          mensagem.textContent = "❌ Usuário não aprovado ou não encontrado.";
+          mensagem.textContent = "❌ Usuário não aprovado ou não encontrado na planilha.";
           mensagem.style.color = "var(--erro)";
         }
       } catch (e) {
