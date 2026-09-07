@@ -775,15 +775,15 @@ async function carregarVitorias() {
   if (!container) return;
 
   try {
-    const resposta = await fetch("?acao=listarLives");
+   const resposta = await fetch("?acao=listarVitorias");
     const dados = await resposta.json();
 
-    if (!dados.sucesso || !dados.itens) {
+  if (!dados.sucesso || !dados.vitorias) {
       container.innerHTML = `<div style="text-align:center;color:#999;padding:30px;">Nenhum momento cadastrado ainda 💜</div>`;
       return;
     }
 
-    const comVitorias = dados.itens.filter(item => 
+   const comVitorias = dados.vitorias.filter(item =>
       item.vitorias && item.vitorias.trim() !== ''
     );
 
