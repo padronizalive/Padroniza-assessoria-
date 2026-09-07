@@ -706,7 +706,49 @@
       } catch (erro) {
         console.error("Erro:", erro);
       }
+    }   // 🏆 VITÓRIAS & GRANDES MOMENTOS — COLUNA N DA PLANILHA
+  async function carregarVitorias() {
+    const container = document.getElementById('vitorias-container');
+    try {
+      const res = await fetch(`${APPS_SCRIPT_URL}?acao=lerVitorias`);
+      const dados = await res.json();
+      
+      if (!dados.sucesso || !dados.itens || dados.itens.length === 0) {
+        container.innerHTML = '<div style="text-align:center; color:#999; padding:30px;">Nenhum momento cadastrado ainda 🎬</div>';
+        return;
+      }
+
+      container.innerHTML = '';
+      
+      dados.itens.forEach(item => {
+        const link = item.link?.trim();
+        if (!link) return;
+        
+        const div = document.createElement('div');
+        div.className = 'vitorias-item';
+        
+        if (link.includes('youtube.com') || link.includes('youtu.be')) {
+          let videoId = '';
+          if (link.includes('v=')) videoId = link.split('v=')[1]?.split('&')[0];
+          else videoId = link.split('/').pop()?.split('?')[0];
+          
+          if (videoId) {
+            div.innerHTML = `<iframe class="vitorias-video" src="https://www.youtube.com/embed/${videoId}" allowfullscreen allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>${item.descricao ? `<div class="vitorias-desc">${item.descricao}</div>` : ''}`;
+          }
+        }
+        else if (link.match(/\.(jpg|jpeg|png|gif|webp)$/i) || link.includes('i.ibb.co')) {
+          div.innerHTML = `<img class="vitorias-img" src="${link}" alt="Momento" loading="lazy" />${item.descricao ? `<div class="vitorias-desc">${item.descricao}</div>` : ''}`;
+        }
+        
+        container.appendChild(div);
+      });
+
+    } catch (erro) {
+      container.innerHTML = '<div style="text-align:center; color:#999; padding:30px;">Não foi possível carregar os momentos</div>';
+      console.error('Erro vitórias:', erro);
     }
+  }
+  document.addEventListener('DOMContentLoaded', carregarVitorias);
 
     // Enter para confirmar
     document.addEventListener("keypress", e => {
@@ -720,6 +762,70 @@
 
     // INICIAR!
     carregarTudo();
-  </script>
+  </script> <!-- 🏆 VITÓRIAS & GRANDES MOMENTOS — SEÇÃO VISUAL -->
+<section class="vitorias-section">
+  <h2 class="vitorias-titulo">🏆 Vitórias & Grandes Momentos</h2>
+  <p class="vitorias-sub">Atualizado direto da planilha → rola pra ver tudo 📱</p>
+  <div class="vitorias-container" id="vitorias-container">
+    <div style="text-align: center; color: #999; padding: 30px;">Carregando momentos...</div>
+  </div>
+</section>
+
+<style>
+  .vitorias-section {
+    margin-top: 40px; 
+    padding: 25px 20px; 
+    background: linear-gradient(135deg, rgba(123, 63, 255, 0.08), rgba(199, 155, 59, 0.08)); 
+    border-radius: 20px; 
+    border: 1px solid rgba(123, 63, 255, 0.2);
+  }
+  .vitorias-titulo {
+    font-size: 1.4rem; 
+    font-weight: 700; 
+    color: #c79b3b; 
+    text-align: center; 
+    margin-bottom: 10px; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    gap: 10px;
+  }
+  .vitorias-sub {
+    text-align: center; 
+    color: #b3b3cc; 
+    font-size: 0.9rem; 
+    margin-bottom: 25px;
+  }
+  .vitorias-container {
+    display: flex; 
+    flex-direction: column; 
+    gap: 25px;
+  }
+  .vitorias-item {
+    width: 100%;
+    max-width: 700px;
+    margin: 0 auto;
+    border-radius: 12px;
+    overflow: hidden;
+    background: rgba(0,0,0,0.25);
+    border: 1px solid rgba(123, 63, 255, 0.15);
+  }
+  .vitorias-video {
+    width: 100%;
+    aspect-ratio: 16/9;
+    border: none;
+  }
+  .vitorias-img {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+  .vitorias-desc {
+    padding: 12px 15px;
+    color: #f0f4ff;
+    font-size: 0.95rem;
+  }
+</style>
+<!-- 🏆 FIM: VITÓRIAS & GRANDES MOMENTOS -->
 </body>
 </html>
