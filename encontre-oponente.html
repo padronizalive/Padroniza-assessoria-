@@ -280,6 +280,20 @@ function fecharStatus() {
   document.getElementById("form-status").reset();
 }
 
+// ✅ FORMATAR DATA — PADRÃO BRASILEIRO (DD/MM/AAAA)
+function formatarData(dataBruta) {
+  if (!dataBruta || dataBruta === "-") return "-";
+  // Se já está no formato certo
+  if (/^\d{2}\/\d{2}\/\d{4}$/.test(dataBruta)) return dataBruta;
+  // Converte do formato ISO feinho que vem da planilha
+  const data = new Date(dataBruta);
+  if (isNaN(data.getTime())) return dataBruta;
+  const dia = String(data.getDate()).padStart(2, '0');
+  const mes = String(data.getMonth() + 1).padStart(2, '0');
+  const ano = data.getFullYear();
+  return `${dia}/${mes}/${ano}`;
+}
+
 // ✅ FORMATAR WHATSAPP
 function formatarWhatsapp(numero) {
   if (!numero) return "";
@@ -308,7 +322,7 @@ async function carregarBatalhas() {
   }
 }
 
-// ✅ FUNÇÃO AUXILIAR — PEGA O VALOR DE QUALQUER CAMPO (ACEITA VÁRIOS NOMES)
+// ✅ FUNÇÃO AUXILIAR — PEGA O VALOR DE QUALQUER CAMPO
 function pegarValor(objeto, ...nomes) {
   for (const nome of nomes) {
     if (objeto[nome] !== undefined && objeto[nome] !== null && objeto[nome] !== "") {
@@ -329,6 +343,7 @@ function renderizarBatalhas(lista) {
     const linkPerfil = pegarValor(b, "linkPerfil", "link", "LinkPerfil", "linkPerfilPadroniza");
     const whatsapp = pegarValor(b, "whatsapp", "WhatsApp", "telefoneAgencia", "Telefone");
     const data = pegarValor(b, "data", "Data", "dataBatalha");
+    const dataFormatada = formatarData(data); // ✅ AQUI FORMATAMOS A DATA!
     const horario = pegarValor(b, "horario", "Horario", "horarioInicio");
     const rodada = pegarValor(b, "rodada", "Rodada", "road", "Road");
     const meta = pegarValor(b, "meta", "Meta", "MetaDiamantes");
@@ -351,7 +366,7 @@ function renderizarBatalhas(lista) {
           <div class="campo"><label>Streamer</label><span>${streamer}</span></div>
           <div class="campo"><label>Perfil</label>${linkPerfil !== "-" ? `<a href="${linkPerfil}" target="_blank">🔗 Abrir</a>` : "<span>-</span>"}</div>
           <div class="campo"><label>WhatsApp</label>${whatsappLink ? `<a href="${whatsappLink}" target="_blank">📱 Conversar</a>` : "<span>-</span>"}</div>
-          <div class="campo"><label>Data</label><span>${data}</span></div>
+          <div class="campo"><label>Data</label><span>${dataFormatada}</span></div>
           <div class="campo"><label>Horário</label><span>${horario}</span></div>
           <div class="campo"><label>Rodada</label><span>${rodada}</span></div>
           <div class="campo"><label>Meta</label><span>${meta}</span></div>
@@ -375,7 +390,7 @@ function renderizarBatalhas(lista) {
   }).join("");
 }
 
-// ✅ BUSCA CORRIGIDA — AGORA FUNCIONA DE VERDADE! 🔍
+// ✅ BUSCA CORRIGIDA
 async function buscarBatalhas() {
   const termo = document.getElementById("busca-agencia").value.trim();
   if (!termo) { renderizarBatalhas(todasBatalhas); return; }
@@ -447,7 +462,7 @@ document.getElementById("form-aceitar").addEventListener("submit", async e => {
         const wppLink = formatarWhatsapp(dados.whatsapp);
         if (wppLink) {
           const texto = encodeURIComponent(
-            `⚔️ BATALHA ACEITA — PADRONIZA LIVE!\n\n📋 DADOS DA SOLICITAÇÃO:\n🏢 Agência: ${dados.agencia || "-"}\n👤 Streamer: ${dados.streamer || "-"}\n🔗 Perfil: ${dados.linkPerfil || "-"}\n📅 Data: ${dados.data || "-"}\n⏰ Horário: ${dados.horario || "-"}\n🔥 Rodada: ${dados.rodada || "-"}\n💎 Meta: ${dados.meta || "-"}\n${dados.observacao ? `📝 Observação: ${dados.observacao}\n` : ""}\n🤝 DADOS DO OPONENTE:\n🏢 Agência: ${formData.get("agenciaOponente")}\n👤 Streamer: ${formData.get("streamerOponente")}\n🔗 Perfil: ${formData.get("linkOponente")}\n📱 WhatsApp: ${formData.get("whatsappOponente")}\n\n──────────────────────────────\n✅ Olá! Aceitamos a batalha! Por favor, confirma se está tudo certo?`
+            `⚔️ BATALHA ACEITA — PADRONIZA LIVE!\n\n📋 DADOS DA SOLICITAÇÃO:\n🏢 Agência: ${dados.agencia || "-"}\n👤 Streamer: ${dados.streamer || "-"}\n🔗 Perfil: ${dados.linkPerfil || "-"}\n📅 Data: ${dataFormatada || "-"}\n⏰ Horário: ${dados.horario || "-"}\n🔥 Rodada: ${dados.rodada || "-"}\n💎 Meta: ${dados.meta || "-"}\n${dados.observacao ? `📝 Observação: ${dados.observacao}\n` : ""}\n🤝 DADOS DO OPONENTE:\n🏢 Agência: ${formData.get("agenciaOponente")}\n👤 Streamer: ${formData.get("streamerOponente")}\n🔗 Perfil: ${formData.get("linkOponente")}\n📱 WhatsApp: ${formData.get("whatsappOponente")}\n\n──────────────────────────────\n✅ Olá! Aceitamos a batalha! Por favor, confirma se está tudo certo?`
           );
           window.open(`${wppLink}?text=${texto}`, "_blank");
         }
