@@ -104,7 +104,7 @@
   </style>
 </head>
 <body>
-  <!-- 🔒 MODAL DE LOGIN — VERIFICAÇÃO NA PLANILHA DE CONTROLE -->
+  <!-- 🔒 MODAL DE LOGIN — SEMPRE EXIGE USUÁRIO -->
   <div class="modal-fundo" id="modalLogin">
     <div class="modal">
       <h3>🔐 Acesso ao Painel do Agenciado</h3>
@@ -121,7 +121,7 @@
     </div>
   </div>
 
-  <!-- 📋 CONTEÚDO — SÓ APARECE APÓS APROVAÇÃO NA PLANILHA -->
+  <!-- 📋 CONTEÚDO — SÓ APARECE DEPOIS DE VALIDADO -->
   <div class="container" id="conteudoPainel" style="display: none;">
     <header>
       <div style="display: flex; align-items: center; gap: 12px;">
@@ -150,7 +150,6 @@
     <div class="card">
       <h2>🛠️ Ferramentas</h2>
       <div class="btn-grid">
-        <!-- ✅ PÁGINAS PRÓPRIAS — TODAS MANTIDAS -->
         <a href="agendar-batalha.html" class="btn btn-batalha">
           <span>📅</span><span>Agendar Batalha</span>
         </a>
@@ -170,17 +169,14 @@
           <span>🎮</span><span>Área Gaming</span>
         </a>
         
-        <!-- ✅ NOVO — PÁGINA DE TREINAMENTO -->
         <a href="treinamento.html" class="btn btn-treinamento">
           <span>📚</span><span>Área de Treinamento</span>
         </a>
         
-        <!-- ✅ ÁREA DO GERENTE — MANTIDA -->
         <a href="#" class="btn btn-gerente">
           <span>🔐</span><span>Área do Gerente</span>
         </a>
         
-        <!-- ✅ VOLTAR AO SITE -->
         <a href="index.html" class="btn btn-voltar-site">
           <span>🔙</span><span>Voltar pro Site Oficial</span>
         </a>
@@ -193,16 +189,16 @@
     </footer>
   </div>
 
-  <!-- 🔒 SCRIPT DE VERIFICAÇÃO — LINK ORIGINAL DA PLANILHA 100% PRESERVADO -->
+  <!-- 🔒 SCRIPT — SEMPRE PEDE LOGIN, NÃO ENTRA DIRETO MAIS -->
   <script>
     const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyBl8HNCUKlQrqhnEhMP7lrkAPdzXSPoGzR8QACrf3KZdhYNmGdk347ehvlIz_k3w1B/exec";
     
-    const usuarioSalvo = localStorage.getItem('usuarioAgenciado');
-    if (usuarioSalvo) {
-      document.getElementById('nomeUsuario').textContent = usuarioSalvo;
-      document.getElementById('modalLogin').style.display = 'none';
-      document.getElementById('conteudoPainel').style.display = 'block';
-    }
+    // ✅ SEMPRE LIMPA QUALQUER ACESSO ANTERIOR — FORÇA PEDIR USUÁRIO
+    localStorage.removeItem('usuarioAgenciado');
+    
+    // Mostra login, esconde conteúdo
+    document.getElementById('modalLogin').style.display = 'flex';
+    document.getElementById('conteudoPainel').style.display = 'none';
 
     async function verificarUsuario() {
       const usuario = document.getElementById('usuarioInput').value.trim();
@@ -222,6 +218,7 @@
         const dados = await res.json();
 
         if (dados.sucesso && dados.encontrado && dados.aprovado) {
+          // ✅ LIBERADO — salva e entra
           localStorage.setItem('usuarioAgenciado', usuario);
           document.getElementById('nomeUsuario').textContent = usuario;
           document.getElementById('modalLogin').style.display = 'none';
