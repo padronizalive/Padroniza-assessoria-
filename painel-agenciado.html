@@ -48,21 +48,23 @@
       box-shadow: 0 16px 32px rgba(0,0,0,0.45);
     }
     .card h2 { font-size: 1.1rem; margin-bottom: 16px; display: flex; align-items: center; gap: 8px; }
-    .btn-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 12px; }
+    .btn-grid { display: grid; grid-template-columns: 1fr; gap: 12px; }
     .btn {
       padding: 14px 18px; border-radius: 14px; border: none;
-      font-size: 0.95rem; font-weight: 600; cursor: pointer;
-      display: flex; align-items: center; gap: 10px;
-      transition: transform 0.15s ease; text-align: left; color: #050509;
+      font-size: 1rem; font-weight: 600; cursor: pointer;
+      display: flex; align-items: center; justify-content: center; gap: 10px;
+      transition: transform 0.15s ease; text-align: center; color: #050509;
       text-decoration: none;
     }
     .btn:hover { transform: translateY(-2px); filter: brightness(1.05); }
-    .btn-tiktok { background: linear-gradient(135deg, #00f2ea, #ff0050); }
-    .btn-kako { background: linear-gradient(135deg, #7b3fff, #b84dff); color: #fdfdff; }
-    .btn-batalha { background: linear-gradient(135deg, #ffcc00, #ff8800); }
-    .btn-ticket { background: linear-gradient(135deg, #1f7aff, #00b4ff); color: #050509; }
-    .btn-whatsapp { background: linear-gradient(135deg, #25D366, #128C7E); color: #fff; }
-    .btn-youtube { background: linear-gradient(135deg, #ff0000, #cc0000); color: #fff; }
+    .btn-batalha { background: linear-gradient(90deg, #6366f1, #f59e0b); color: #fff; }
+    .btn-suporte { background: linear-gradient(90deg, #25D366, #128C7E); color: #fff; }
+    .btn-metas { background: linear-gradient(90deg, #1f7aff, #00b4ff); color: #fff; }
+    .btn-guia { background: linear-gradient(90deg, #ffcc00, #ff8800); color: #2c1800; }
+    .btn-gaming { background: linear-gradient(90deg, #00f2ea, #ff0050); color: #fff; }
+    .btn-treinamento { background: linear-gradient(90deg, #7b3fff, #a855f7); color: #fff; }
+    .btn-gerente { background: linear-gradient(90deg, #60a5fa, #3b82f6); color: #fff; }
+    .btn-voltar-site { background: linear-gradient(90deg, #444, #666); color: #fff; }
     .info-box {
       background: rgba(123,63,255,0.15); border: 1px solid rgba(123,63,255,0.4);
       border-radius: 12px; padding: 14px; margin-bottom: 16px;
@@ -148,51 +150,40 @@
     <div class="card">
       <h2>🛠️ Ferramentas</h2>
       <div class="btn-grid">
-        <!-- ✅ ORIGINAL -->
+        <!-- ✅ PÁGINAS PRÓPRIAS — TODAS MANTIDAS -->
         <a href="agendar-batalha.html" class="btn btn-batalha">
           <span>📅</span><span>Agendar Batalha</span>
         </a>
-        <!-- ✅ NOVO 1 -->
         <a href="batalha.html" class="btn btn-batalha">
           <span>⚔️</span><span>Batalhas & Desafios Seguros</span>
         </a>
-        <!-- ✅ NOVO 2 -->
-        <a href="live-janelinha-guia.html" class="btn btn-batalha">
-          <span>📺</span><span>Guia: Live de Janelinha Segura</span>
+        <a href="https://wa.me/5569981478873" target="_blank" rel="noopener" class="btn btn-suporte">
+          <span>💬</span><span>Falar com a Agência / Suporte</span>
         </a>
-        <!-- ✅ ORIGINAIS mantidos -->
-        <a href="metricas.html" class="btn btn-ticket">
+        <a href="metricas.html" class="btn btn-metas">
           <span>📊</span><span>Minhas Métricas</span>
         </a>
-        <a href="gaming.html" class="btn btn-tiktok">
+        <a href="live-janelinha-guia.html" class="btn btn-guia">
+          <span>📺</span><span>Guia: Live de Janelinha Segura</span>
+        </a>
+        <a href="gaming.html" class="btn btn-gaming">
           <span>🎮</span><span>Área Gaming</span>
         </a>
-        <a href="https://1drv.ms/f/c/884f1b26d8daa748/IgCI5Cqu_c0lTokK1PAApLfVARVzFb6jEQMdTsvbD_Nucqo?e=CJc3ZD" target="_blank" rel="noopener" class="btn btn-tiktok">
-          <span>🎵</span><span>Treinamento TikTok</span>
+        
+        <!-- ✅ NOVO — PÁGINA DE TREINAMENTO -->
+        <a href="treinamento.html" class="btn btn-treinamento">
+          <span>📚</span><span>Área de Treinamento</span>
         </a>
-        <a href="https://1drv.ms/f/c/884f1b26d8daa748/IgCH2cDy7-dkR5bU09e-fCubATT4f6EzWwx0fS9ete7cnYI?e=yOHuSs" target="_blank" rel="noopener" class="btn btn-kako">
-          <span>💜</span><span>Treinamento Kako Live</span>
+        
+        <!-- ✅ ÁREA DO GERENTE — MANTIDA -->
+        <a href="#" class="btn btn-gerente">
+          <span>🔐</span><span>Área do Gerente</span>
         </a>
-        <a href="https://wa.me/5569981239893" target="_blank" rel="noopener" class="btn btn-whatsapp">
-          <span>💬</span><span>Falar com Gerente</span>
-          <small style="margin-left:auto; font-size:0.7rem;">Serena Tempestade</small>
-        </a>
-        <a href="index.html" class="btn" style="background: linear-gradient(135deg, #666, #444); color: #fff;">
+        
+        <!-- ✅ VOLTAR AO SITE -->
+        <a href="index.html" class="btn btn-voltar-site">
           <span>🔙</span><span>Voltar pro Site Oficial</span>
         </a>
-      </div>
-    </div>
-
-    <div class="card">
-      <h2>📱 Entrar na Agência Kako</h2>
-      <div class="info-box">
-        <p><strong>ID da Agência:</strong> 177766</p>
-        <p style="margin-top: 8px;"><strong>Passo a passo:</strong><br>
-        1️⃣ Baixe o app pela <a href="https://play.google.com/store/apps/details?id=live.kako.global" target="_blank" style="color:var(--primary-purple);">Play Store</a><br>
-        2️⃣ Configure seu perfil<br>
-        3️⃣ Clique em <strong>Centro de Agência</strong><br>
-        4️⃣ Digite o ID: <strong>177766</strong> → Solicitar ✅
-        </p>
       </div>
     </div>
 
@@ -202,11 +193,10 @@
     </footer>
   </div>
 
-  <!-- 🔒 SCRIPT DE VERIFICAÇÃO — PLANILHA DE CONTROLE 100% ORIGINAL -->
+  <!-- 🔒 SCRIPT DE VERIFICAÇÃO — LINK ORIGINAL DA PLANILHA 100% PRESERVADO -->
   <script>
     const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyBl8HNCUKlQrqhnEhMP7lrkAPdzXSPoGzR8QACrf3KZdhYNmGdk347ehvlIz_k3w1B/exec";
     
-    // Verificar se já tem usuário salvo (sessão ativa)
     const usuarioSalvo = localStorage.getItem('usuarioAgenciado');
     if (usuarioSalvo) {
       document.getElementById('nomeUsuario').textContent = usuarioSalvo;
@@ -214,7 +204,6 @@
       document.getElementById('conteudoPainel').style.display = 'block';
     }
 
-    // Verificar usuário NA PLANILHA DE CONTROLE
     async function verificarUsuario() {
       const usuario = document.getElementById('usuarioInput').value.trim();
       const mensagem = document.getElementById('loginMensagem');
@@ -233,7 +222,6 @@
         const dados = await res.json();
 
         if (dados.sucesso && dados.encontrado && dados.aprovado) {
-          // ✅ LIBERADO — cadastrado e aprovado na planilha
           localStorage.setItem('usuarioAgenciado', usuario);
           document.getElementById('nomeUsuario').textContent = usuario;
           document.getElementById('modalLogin').style.display = 'none';
@@ -253,8 +241,7 @@
       window.location.href = 'index.html';
     }
 
-    // Enter para entrar
-    document.getElementById('usuarioInput').addEventListener('keypress', function(e) {
+    document.getElementById('usuarioInput').addEventListener('keypress', e => {
       if (e.key === 'Enter') verificarUsuario();
     });
   </script>
