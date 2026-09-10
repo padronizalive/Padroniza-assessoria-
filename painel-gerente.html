@@ -112,6 +112,155 @@
     .cabecalho p { color: var(--text-muted); }
     .container { max-width: 900px; margin: 0 auto; padding: 0 20px; }
 
+    /* 🔍 FILTROS */
+    .caixa-filtros {
+      background: rgba(12, 16, 38, 0.85);
+      border: 1px solid rgba(123, 63, 255, 0.25);
+      border-radius: 16px;
+      padding: 20px;
+      margin: 0 20px 25px;
+    }
+    .caixa-filtros h3 {
+      color: var(--text-light);
+      font-size: 1rem;
+      margin-bottom: 15px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .linha-filtro {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+    .linha-filtro input, .linha-filtro select {
+      flex: 1;
+      min-width: 140px;
+      padding: 12px 14px;
+      border: 1px solid rgba(123, 63, 255, 0.4);
+      border-radius: 10px;
+      background: rgba(0,0,0,0.3);
+      color: #fff;
+      font-size: 0.95rem;
+    }
+    .btn-filtro {
+      padding: 12px 18px;
+      border: none;
+      border-radius: 10px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s;
+      white-space: nowrap;
+    }
+    .btn-buscar {
+      background: linear-gradient(90deg, var(--primary-purple), #9d65ff);
+      color: white;
+    }
+    .btn-limpar {
+      background: rgba(255,255,255,0.1);
+      color: #ccc;
+      border: 1px solid rgba(255,255,255,0.15);
+    }
+    .btn-limpar:hover { background: rgba(255,255,255,0.2); }
+    .contador-resultados {
+      margin-top: 10px;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+    .tag-mes {
+      display: inline-block;
+      background: rgba(123, 63, 255, 0.2);
+      padding: 3px 10px;
+      border-radius: 12px;
+      font-size: 0.75rem;
+      margin-left: 8px;
+    }
+
+    /* REGRAS */
+    .btn-regras-container {
+      text-align: center;
+      margin: 0 20px 25px;
+    }
+    .btn-regras {
+      background: linear-gradient(135deg, #7b3fff, #5b2cff);
+      color: white;
+      border: none;
+      padding: 15px 30px;
+      font-size: 17px;
+      font-weight: bold;
+      border-radius: 12px;
+      cursor: pointer;
+      box-shadow: 0 4px 15px rgba(123,63,255,0.4);
+      width: 100%;
+      max-width: 420px;
+      transition: all 0.3s;
+    }
+    .btn-regras:hover { transform: translateY(-2px); }
+    .caixa-regras {
+      display: none;
+      margin: 0 20px 30px;
+      background: linear-gradient(135deg, rgba(123,63,255,0.15), rgba(199,155,59,0.1));
+      border-radius: 16px;
+      padding: 25px 20px;
+      border: 1px solid rgba(123,63,255,0.25);
+    }
+    .regras-titulo {
+      color: #f5f5ff;
+      text-align: center;
+      margin: 0 0 5px 0;
+      font-size: 20px;
+    }
+    .regras-sub {
+      color: #b3b3cc;
+      text-align: center;
+      margin: 0 0 20px 0;
+      font-size: 14px;
+    }
+    .tabela-regras {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+    }
+    .tabela-regras th {
+      background: rgba(123,63,255,0.3);
+      color: #fff;
+      padding: 12px 8px;
+      text-align: left;
+    }
+    .tabela-regras td {
+      padding: 12px 8px;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+    .tabela-regras tr:nth-child(odd) { background: rgba(10,16,32,0.5); }
+    .tabela-regras tr:nth-child(even) { background: rgba(10,16,32,0.3); }
+    .valor-destaque { color: #7bff9a; font-weight: bold; text-align: center; }
+    .valor-ouro { color: #ffdd55; font-weight: bold; text-align: center; }
+    .resumo-regras {
+      margin-top: 18px;
+      padding: 14px;
+      background: rgba(0,0,0,0.25);
+      border-radius: 10px;
+    }
+    .resumo-regras p {
+      margin: 0;
+      color: #b3b3cc;
+      font-size: 13px;
+      line-height: 1.8;
+    }
+    .btn-fechar-regras {
+      margin-top: 18px;
+      background: transparent;
+      color: #b3b3cc;
+      border: 1px solid rgba(255,255,255,0.15);
+      padding: 10px 20px;
+      border-radius: 8px;
+      cursor: pointer;
+      width: 100%;
+      transition: all 0.3s;
+    }
+    .btn-fechar-regras:hover { background: rgba(255,255,255,0.08); }
+
     .card {
       background: var(--card-bg);
       border: 1px solid var(--card-border);
@@ -211,6 +360,7 @@
       justify-content: space-between;
       align-items: center;
       margin-bottom: 8px;
+      flex-wrap: wrap;
     }
     .nome-streamer { font-weight: 600; font-size: 1rem; }
     .aviso {
@@ -260,6 +410,7 @@
     .link-externo:hover { text-decoration: underline; }
     
     .carregando { text-align: center; padding: 40px; color: var(--text-muted); }
+    .sem-resultado { text-align: center; padding: 30px; color: #888; }
   </style>
 </head>
 <body>
@@ -295,6 +446,61 @@
     <p id="saudacao">Carregando...</p>
   </div>
 
+  <div class="btn-regras-container">
+    <button id="btnRegras" class="btn-regras" onclick="alternarRegras()">
+      📋 Ver Regras de Pagamento & Remuneração ⬇️
+    </button>
+  </div>
+
+  <div id="caixaRegras" class="caixa-regras">
+    <h3 class="regras-titulo">🏆 Remuneração do Gerente</h3>
+    <p class="regras-sub">Padroniza Live 💜</p>
+    <table class="tabela-regras">
+      <thead>
+        <tr>
+          <th>Tipo de Contribuição</th>
+          <th>Quando Começa</th>
+          <th style="text-align: center;">Você Recebe</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>📈 Incentivo à Atividade</td><td>A partir de $ 0,00</td><td class="valor-destaque">40%</td></tr>
+        <tr><td>🎓 Progressão de Nível</td><td>A partir de $ 0,00</td><td class="valor-destaque">30%</td></tr>
+        <tr><td>💎 Diamantes Coletados</td><td>A partir de 100 diamantes</td><td class="valor-destaque">50%</td></tr>
+        <tr><td>🌱 Novos Criadores Recrutados</td><td>A partir de 30 criadores</td><td class="valor-ouro">$ 2,10</td></tr>
+      </tbody>
+    </table>
+    <div class="resumo-regras">
+      <p>✅ Atividade: 40%<br>✅ Progressão: 30%<br>✅ Diamantes: 50% (≥100)<br>✅ Meta 30 criadores: $ 2,10 extra</p>
+    </div>
+    <button class="btn-fechar-regras" onclick="alternarRegras()">Fechar ⬆️</button>
+  </div>
+
+  <div class="caixa-filtros">
+    <h3>🔍 Buscar & Filtrar</h3>
+    <div class="linha-filtro">
+      <input type="text" id="buscaNome" placeholder="Nome do criador..." />
+      <select id="filtroMes">
+        <option value="todos">📅 Todos os meses</option>
+        <option value="Março">Março</option>
+        <option value="Abril">Abril</option>
+        <option value="Maio">Maio</option>
+        <option value="Junho">Junho</option>
+        <option value="Julho">Julho</option>
+        <option value="Agosto">Agosto</option>
+        <option value="Setembro">Setembro</option>
+        <option value="Outubro">Outubro</option>
+        <option value="Novembro">Novembro</option>
+        <option value="Dezembro">Dezembro</option>
+      </select>
+    </div>
+    <div class="linha-filtro">
+      <button class="btn-filtro btn-buscar" onclick="aplicarFiltros()">🔎 Buscar</button>
+      <button class="btn-filtro btn-limpar" onclick="limparFiltros()">🔄 Limpar</button>
+    </div>
+    <div id="contadorResultados" class="contador-resultados"></div>
+  </div>
+
   <div class="container">
     <div class="card">
       <h2>📚 Escolha a Área de Apoio</h2>
@@ -309,215 +515,79 @@
     <div class="card">
       <h2 onclick="alternar(this)"><span>▶</span> 💜 Quem é o Gerente</h2>
       <div class="conteudo-botao">
-        <p>Você não é apenas quem cuida de números. Você é o <strong>porto seguro</strong> do seu grupo. É quem o streamer procura quando dá certo — e também quando dá errado.</p>
-        <p>Seu olhar faz diferença. Sua palavra dá força. Sua presença traz segurança. Quando você cresce, seu time cresce junto. A Padroniza Live confia em você para cuidar de <strong>pessoas</strong>, não apenas de resultados. 💜</p>
+        <p>Você é o porto seguro do seu grupo. É quem o streamer procura quando dá certo — e também quando dá errado. 💜</p>
       </div>
     </div>
 
     <div class="card">
       <h2 onclick="alternar(this)"><span>▶</span> 🧠 Inteligência Emocional & Paciência</h2>
       <div class="conteudo-botao">
-        <p>Ser inteligente emocionalmente significa <strong>sentir junto sem se perder</strong>, ouvir sem julgar, esperar com paciência sem desanimar.</p>
-        <div class="destaque-texto vermelho">
-          ❌ <strong>Nunca seja grosso ou ríspido.</strong> Palavras duras ferem, desanimam e afastam. Um streamer que se sente atacado não cresce — ele se esconde.
-        </div>
-        <div class="destaque-texto verde">
-          ✅ <strong>Tenha paciência.</strong> Cada um tem seu tempo. O que é fácil para você pode ser difícil para ele. Respeite o ritmo.
-        </div>
-        <p>✅ <strong>Acolha.</strong> Quando alguém erra ou cai, não empurre — estenda a mão. Diga: <em>"Está tudo bem, vamos tentar de novo"</em>. Isso tem mais poder que qualquer cobrança.</p>
-        <p>✅ <strong>Reconheça o esforço.</strong> Mesmo que o resultado não tenha vindo, o esforço merece ser visto e elogiado. 💜</p>
+        <p>Ouça sem julgar. Espere com paciência. Nunca seja grosso ou ríspido. Acolha: "Está tudo bem, vamos tentar de novo." 💜</p>
       </div>
     </div>
 
     <div class="card">
       <h2 onclick="alternar(this)"><span>▶</span> ✨ Conduta, Ética & Compromisso</h2>
       <div class="conteudo-botao">
-        <p>Você é o <strong>exemplo</strong>. Tudo o que você faz, seus streamers vão reproduzir.</p>
-        <ul>
-          <li>✅ <strong>Seja pontual.</strong> Cumprir o combinado mostra respeito.</li>
-          <li>✅ <strong>Seja honesto.</strong> Fale a verdade com delicadeza.</li>
-          <li>✅ <strong>Seja equilibrado.</strong> Não perca a calma. Se precisar, respire, afaste um pouco, depois volte e fale.</li>
-          <li>✅ <strong>Seja íntegro.</strong> O que você faz quando ninguém está vendo também conta.</li>
-        </ul>
-        <p>Seu compromisso não é só com a agência — é com <strong>cada pessoa</strong> que confia em você.</p>
+        <p>Seja o exemplo. Pontual, honesto, equilibrado, íntegro. Seu compromisso é com cada pessoa que confia em você.</p>
       </div>
     </div>
 
     <div class="card">
       <h2 onclick="alternar(this)"><span>▶</span> 🤝 Incentivar Sem Obrigar</h2>
       <div class="conteudo-botao">
-        <p><strong>Incentivar é acender uma luz, não empurrar.</strong> 💜</p>
-        <p>Quando você obriga, o streamer faz por pressão — e cansa rápido. Quando você inspira, ele faz porque <strong>quer</strong>.</p>
-        <ul>
-          <li>🔹 Mostre o porquê: "Fazendo live, mais pessoas te conhecem..."</li>
-          <li>🔹 Dê exemplo: "Eu acredito no seu potencial..."</li>
-          <li>🔹 Respeite o tempo dele: "Quando sentir pronto, a gente faz"</li>
-          <li>🔹 Celebre a intenção — mesmo que ainda não tenha feito, valorize que ele pensou em fazer!</li>
-        </ul>
-        <div class="destaque-texto ouro">
-          💡 <strong>Nunca diga:</strong> "Você precisa fazer live!"<br>
-          💜 <strong>Diga:</strong> "Sinto que você tem algo especial pra compartilhar. Quando estiver pronto, estou aqui!"
-        </div>
+        <p>Incentive, não obrigue. "Quando estiver pronto, estou aqui!" Respeite o tempo de cada um. 💜</p>
       </div>
     </div>
 
     <div class="card">
       <h2 onclick="alternar(this)"><span>▶</span> 💬 Como Dar Feedback</h2>
       <div class="conteudo-botao">
-        <p>Suas palavras constroem ou destroem. Escolha-as com carinho.</p>
-        <div class="destaque-texto vermelho">
-          ❌ Evite: "Você devia ter...", "Sempre faz errado...", "Assim não dá..."
-        </div>
-        <div class="destaque-texto verde">
-          ✅ Prefira: "Vamos tentar de outro jeito?", "Que tal ajustarmos?", "Você é capaz, vamos juntos"
-        </div>
-        <p><strong>A regra de ouro:</strong> fale como gostaria que falassem com você. Isso é liderança com amor. 💜</p>
-        <p>Apontar algo pra melhorar? Comece pelo que ficou bom! Depois diga: <em>"Uma coisa que poderia ficar ainda melhor é..."</em></p>
+        <p>Comece pelo que ficou bom. Depois: "Uma coisa que poderia melhorar é..." Fale como gostaria que falassem com você.</p>
       </div>
     </div>
 
     <div class="card">
       <h2 onclick="alternar(this)"><span>▶</span> 🎯 Metas e Resultados</h2>
       <div class="conteudo-botao">
-        <p>Metas são guias, não correntes. O objetivo é <strong>crescer</strong>, não se punir.</p>
-        <ul>
-          <li>✅ Defina <strong>junto</strong> com ele — não imponha</li>
-          <li>✅ Divida em passos pequenos — o grande vem depois</li>
-          <li>✅ Acompanhe com carinho: "Como está indo? Precisa de ajuda?"</li>
-          <li>✅ Se não bateu — não culpe. Pergunte: "O que aconteceu? O que podemos ajustar?"</li>
-          <li>✅ Se bateu — <strong>comemore MUITO!</strong> Faça ele sentir orgulho 💜</li>
-        </ul>
-        <p>A pessoa vem sempre <strong>antes</strong> do resultado.</p>
+        <p>Defina junto. Divida em passos. Acompanhe com carinho. Se não bateu: pergunte o que aconteceu. Se bateu: comemore MUITO! 💜</p>
       </div>
     </div>
 
     <div class="card">
       <h2 onclick="alternar(this)"><span>▶</span> ⚠️ Situações Difíceis</h2>
       <div class="conteudo-botao">
-        <p>Nem sempre tudo vai bem. E está tudo bem também.</p>
-        <p>😔 <strong>Quando desanima:</strong> Lembre de conquistas passadas. Diga que é normal ter dias assim. Incentive a descansar também.</p>
-        <p>😰 <strong>Quando erra:</strong> Mostre que errar é parte de crescer. Não repita o erro como acusação — mostre como fazer diferente.</p>
-        <p>😤 <strong>Quando fica nervoso:</strong> Respire junto. Espere passar a onda. Fale com voz calma. Acalme antes de resolver.</p>
-        <p>🆘 <strong>Quando não souber resolver:</strong> Procure a direção. Pedir ajuda também é liderança. 💜</p>
+        <p>Desanimou? Lembre conquistas. Errou? Mostre que faz parte. Ficou nervoso? Espere passar. Não souber? Peça ajuda. 💜</p>
       </div>
     </div>
 
     <div class="card">
-      <h2 onclick="alternar(this)"><span>▶</span> 🚀 Campanhas — Participar e Criar</h2>
+      <h2 onclick="alternar(this)"><span>▶</span> 🚀 Campanhas</h2>
       <div class="conteudo-botao">
-        <p>As campanhas dão brilho, movimento e união ao grupo!</p>
-        <p>✅ <strong>Incentive participar</strong> das campanhas da agência — explique, mostre a oportunidade, lembre que não é obrigação</p>
-        <p>✅ <strong>Crie SUAS campanhas!</strong> Você pode!</p>
-        <ul>
-          <li>Reúna o grupo para um desafio coletivo</li>
-          <li>Coloque uma <strong>premiação pequena</strong>: destaque, reconhecimento, presente simbólico — o valor não importa, o reconhecimento é o que fica 💜</li>
-          <li>Defina objetivo → combinem regras → acompanhe → <strong>celebrem juntos!</strong></li>
-        </ul>
+        <p>Incentive participar e crie suas próprias campanhas! Reúna, combinem, acompanhem e celebrem juntos! 🏆</p>
       </div>
     </div>
 
     <div class="card">
       <h2 onclick="alternar(this)"><span>▶</span> 🎬 Vídeos de Apoio</h2>
       <div class="conteudo-botao">
-        <p>Acesse nossa pasta com vídeos práticos, exemplos e orientações:</p>
         <p><a href="https://1drv.ms/f/c/884f1b26d8daa748/IgB7IFCbSkzrRpWMyImaso6YAX_I4O0Dxm3XwGdeX1qdjtg?e=b8aYCI" class="link-externo" target="_blank">📂 Abrir Pasta de Vídeos do OneDrive</a></p>
-        <p style="font-size: 0.85rem; color: var(--text-muted);">Assista no seu tempo, quantas vezes quiser. Novos vídeos serão adicionados sempre.</p>
       </div>
     </div>
     </div>
 
     <div id="areaGame" class="esconder">
-      <div class="card"><h2>🎮 Área de Game — Orientações</h2></div>
-      <div class="card">
-        <h2 onclick="alternar(this)"><span>▶</span> 🕹️ O Mundo das Lives de Game</h2>
-        <div class="conteudo-botao">
-          <p>O jogador traz habilidade, estratégia e emoção. O público acompanha para aprender, torcer e se divertir. Apoie o streamer a encontrar <strong>seu estilo</strong> — não precisa copiar ninguém! 💜</p>
-        </div>
-      </div>
-      <div class="card">
-        <h2 onclick="alternar(this)"><span>▶</span> ⏰ Melhores Horários e Frequência</h2>
-        <div class="conteudo-botao">
-          <p>✅ Sugira, não imponha. Observe quando o público dele está mais ativo.</p>
-          <p>✅ Melhor fazer <strong>todos os dias no mesmo horário</strong> do que de vez em quando por muito tempo.</p>
-          <p>✅ Respeite o ritmo dele — não pode prejudicar sono, estudos ou vida pessoal!</p>
-        </div>
-      </div>
-      <div class="card">
-        <h2 onclick="alternar(this)"><span>▶</span> 🎮 Como Escolher Jogos</h2>
-        <div class="conteudo-botao">
-          <p>✅ Jogos que ele <strong>gosta de verdade</strong> — a paixão aparece na tela!</p>
-          <p>✅ Jogos em alta = mais pessoas procurando</p>
-          <p>✅ Mesmo jogo por um tempo = público acompanha a evolução</p>
-          <p>✅ Variar de vez em quando = não cansa e atrai gente nova</p>
-        </div>
-      </div>
-      <div class="card">
-        <h2 onclick="alternar(this)"><span>▶</span> ⏳ Tempo de Tela e Ritmo</h2>
-        <div class="conteudo-botao">
-          <p>✅ 1 a 2 horas por dia já é excelente!</p>
-          <p>✅ Melhor uma live focada e animada do que 5 horas cansativa</p>
-          <p>✅ Descansar é necessário — o cérebro precisa de pausa</p>
-          <p>✅ Qualidade > quantidade sempre 💜</p>
-        </div>
-      </div>
-      <div class="card">
-        <h2 onclick="alternar(this)"><span>▶</span> 💡 Dicas Práticas</h2>
-        <div class="conteudo-botao">
-          <p>✅ Falar com o público <strong>enquanto joga</strong> — explicar o que está pensando</p>
-          <p>✅ Celebrar vitórias e <strong>rir dos erros</strong> — isso aproxima as pessoas</p>
-          <p>✅ Manter a calma quando perde — o público aprende com a reação dele</p>
-          <p>✅ Agradecer sempre que alguém entra, comenta ou presenteia</p>
-          <p>✅ Ser ele mesmo — não precisa fingir ser quem não é 💜</p>
-        </div>
-      </div>
+      <div class="card"><h2>🎮 Área de Game</h2></div>
+      <div class="card"><h2 onclick="alternar(this)"><span>▶</span> 🕹️ O Mundo das Lives de Game</h2><div class="conteudo-botao"><p>Encontre seu estilo. Não precisa copiar ninguém! 💜</p></div></div>
+      <div class="card"><h2 onclick="alternar(this)"><span>▶</span> ⏰ Horários</h2><div class="conteudo-botao"><p>Mesmo horário cria hábito. Respeite o ritmo! 💜</p></div></div>
+      <div class="card"><h2 onclick="alternar(this)"><span>▶</span> 💡 Dicas</h2><div class="conteudo-botao"><p>Fale com o público, celebre, seja você mesmo! 💜</p></div></div>
     </div>
 
     <div id="areaEntretenimento" class="esconder">
-      <div class="card"><h2>🎬 Área de Entretenimento — Orientações</h2></div>
-      <div class="card">
-        <h2 onclick="alternar(this)"><span>▶</span> 💬 O Mundo das Lives de Entretenimento</h2>
-        <div class="conteudo-botao">
-          <p>Aqui o foco é <strong>conexão, conversa, presença</strong>. O público vem para ser visto, ouvido e acolhido. O streamer é a casa onde as pessoas se sentem bem! 💜</p>
-        </div>
-      </div>
-      <div class="card">
-        <h2 onclick="alternar(this)"><span>▶</span> ⏰ Melhores Horários e Frequência</h2>
-        <div class="conteudo-botao">
-          <p>✅ Fim de tarde, noite, fins de semana — quando as pessoas estão livres</p>
-          <p>✅ Mesmo horário cria hábito — o público sente falta quando não tem</p>
-          <p>✅ Começar com 2 a 3 vezes por semana e ir aumentando</p>
-          <p>✅ Sem pressa, sem cobrança — crescer devagar é crescer firme 💜</p>
-        </div>
-      </div>
-      <div class="card">
-        <h2 onclick="alternar(this)"><span>▶</span> 🎭 Montar o Conteúdo</h2>
-        <div class="conteudo-botao">
-          <p>✅ Ter um tema ou assunto para conversar</p>
-          <p>✅ Responder comentários com atenção</p>
-          <p>✅ Contar histórias, compartilhar aprendizados</p>
-          <p>✅ Criar ambiente acolhedor — voz, tom, palavras</p>
-          <p>✅ Ser autêntico — as pessoas se conectam com <strong>quem ele é de verdade</strong></p>
-        </div>
-      </div>
-      <div class="card">
-        <h2 onclick="alternar(this)"><span>▶</span> ⏳ Tempo de Tela e Ritmo</h2>
-        <div class="conteudo-botao">
-          <p>✅ 1 a 2 horas já é tempo valioso!</p>
-          <p>✅ Energia e alegria valem mais que horas na câmera</p>
-          <p>✅ Se sentir cansado, pode fazer mais curta — ninguém vai se chatear</p>
-          <p>✅ O descanso renova a energia para a próxima! 💜</p>
-        </div>
-      </div>
-      <div class="card">
-        <h2 onclick="alternar(this)"><span>▶</span> 💡 Dicas Práticas</h2>
-        <div class="conteudo-botao">
-          <p>✅ Olhar para a câmera como se conversasse com um amigo</p>
-          <p>✅ Lembrar nomes e reconhecer quem sempre aparece</p>
-          <p>✅ Criar ambiente seguro e respeitoso para todos</p>
-          <p>✅ Falar de assuntos que somam, inspiram, alegram</p>
-          <p>✅ Ser verdadeiro, transparente e humilde 💜</p>
-        </div>
-      </div>
+      <div class="card"><h2>🎬 Área de Entretenimento</h2></div>
+      <div class="card"><h2 onclick="alternar(this)"><span>▶</span> 💬 Conexão</h2><div class="conteudo-botao"><p>O público vem para ser ouvido. Seja autêntico! 💜</p></div></div>
+      <div class="card"><h2 onclick="alternar(this)"><span>▶</span> ⏰ Horários</h2><div class="conteudo-botao"><p>Fim de tarde, noite, fins de semana. Cresça devagar! 💜</p></div></div>
+      <div class="card"><h2 onclick="alternar(this)"><span>▶</span> 💡 Dicas</h2><div class="conteudo-botao"><p>Olhe para a câmera, reconheça as pessoas, crie um ambiente seguro! 💜</p></div></div>
     </div>
 
     <div class="card">
@@ -532,59 +602,60 @@
 </div>
 
 <script>
-// =====================================================
-// 🔒 SENHA PROTEGIDA — NÃO APARECE EM TEXTO LIMPO
-// =====================================================
 const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbytwO_vXyJSzDdwMGHHC-g43sNHm4-aSKAiZY4FCaXklUdeJll7B40gujlXPw3oTPocmQ/exec";
-
-// Senha codificada — não aparece visível no código
-const _0x1a = atob('cGFkcm9uaXphMjAyNg==');
+const SENHA_CORRETA = "padroniza2026";
 
 let grupoAtual = "";
+let todosOsDados = [];
 
 document.addEventListener("DOMContentLoaded", function() {
   localStorage.removeItem("grupoGerente");
-  document.getElementById("telaLogin").classList.remove("esconder");
-  document.getElementById("conteudoPrincipal").classList.add("esconder");
 });
+
+function alternarRegras() {
+  const caixa = document.getElementById('caixaRegras');
+  const botao = document.getElementById('btnRegras');
+  const visivel = caixa.style.display === 'block';
+  caixa.style.display = visivel ? 'none' : 'block';
+  botao.innerHTML = visivel ? '📋 Ver Regras ⬇️' : '📋 Fechar Regras ⬆️';
+}
 
 function verificarAcesso() {
   const usuario = document.getElementById("usuario").value.trim();
   const senha = document.getElementById("senha").value;
   const erro = document.getElementById("erroMsg");
 
-  if (!usuario || usuario.length === 0) {
+  if (!usuario) {
     erro.textContent = "Digite o nome do grupo! ❌";
     erro.classList.remove("esconder");
     return;
   }
 
-  if (senha !== _0x1a) {
+  if (senha !== SENHA_CORRETA) {
     erro.textContent = "Senha incorreta! ❌";
     erro.classList.remove("esconder");
     return;
   }
 
   grupoAtual = usuario;
-  localStorage.setItem("grupoGerente", grupoAtual);
   entrar();
 }
 
 function entrar() {
   document.getElementById("telaLogin").classList.add("esconder");
   document.getElementById("conteudoPrincipal").classList.remove("esconder");
-  document.getElementById("saudacao").textContent = `Olá, ${grupoAtual}! Espaço exclusivo de liderança 💜`;
+  document.getElementById("saudacao").textContent = `Olá, ${grupoAtual}! 💜`;
   carregarMetricas();
 }
 
 function sair() {
-  localStorage.removeItem("grupoGerente");
   grupoAtual = "";
+  todosOsDados = [];
   document.getElementById("conteudoPrincipal").classList.add("esconder");
   document.getElementById("telaLogin").classList.remove("esconder");
   document.getElementById("usuario").value = "";
   document.getElementById("senha").value = "";
-  erro.classList.add("esconder");
+  document.getElementById("erroMsg").classList.add("esconder");
 }
 
 function mostrarArea(area) {
@@ -598,8 +669,8 @@ function mostrarArea(area) {
 
 function esconderAreas() {
   document.getElementById("conteudoComum").classList.remove("esconder");
-  document.getElementById("areaGame").classList.remove("esconder");
-  document.getElementById("areaEntretenimento").classList.remove("esconder");
+  document.getElementById("areaGame").classList.add("esconder");
+  document.getElementById("areaEntretenimento").classList.add("esconder");
 }
 
 function alternar(titulo) {
@@ -610,57 +681,84 @@ function alternar(titulo) {
   span.textContent = conteudo.classList.contains("conteudo-aberto") ? "▼" : "▶";
 }
 
+function aplicarFiltros() {
+  const nomeBusca = document.getElementById('buscaNome').value.trim().toLowerCase();
+  const mesEscolhido = document.getElementById('filtroMes').value;
+  
+  let dadosFiltrados = [...todosOsDados];
+  
+  if (nomeBusca) {
+    dadosFiltrados = dadosFiltrados.filter(item => 
+      (item.nome || "").toLowerCase().includes(nomeBusca)
+    );
+  }
+  
+  if (mesEscolhido !== "todos") {
+    dadosFiltrados = dadosFiltrados.filter(item => 
+      (item.mesAba || "") === mesEscolhido
+    );
+  }
+  
+  renderizarLista(dadosFiltrados);
+}
+
+function limparFiltros() {
+  document.getElementById('buscaNome').value = "";
+  document.getElementById('filtroMes').value = "todos";
+  renderizarLista(todosOsDados);
+}
+
+function renderizarLista(lista) {
+  const container = document.getElementById("caixaMetricas");
+  document.getElementById("contadorResultados").innerHTML = 
+    lista.length ? `✅ ${lista.length} registro(s)` : `<span class="sem-resultado">Nenhum resultado 💜</span>`;
+
+  if (!lista.length) {
+    container.innerHTML = `<p style="text-align:center;color:var(--text-muted);padding:30px;">Nenhum streamer encontrado.<br>Confirme o nome exato da coluna C 💜</p>`;
+    return;
+  }
+
+  container.innerHTML = `<div class="resumo-grupo"><div class="card-resumo"><div class="valor-grande" style="color:var(--primary-purple)">${lista.length}</div><div class="rotulo">Resultados</div></div></div>`;
+
+  lista.forEach(item => {
+    const classeCor = item.statusClasse || "amarelo";
+    const tagMes = item.mesAba ? `<span class="tag-mes">${item.mesAba}</span>` : "";
+    container.innerHTML += `
+      <div class="item-streamer ${classeCor}">
+        <div class="cab-streamer">
+          <span class="nome-streamer">${item.nome || "Sem nome"} ${tagMes}</span>
+          <span class="aviso ${classeCor}">${item.aviso || "Mantendo o ritmo!"}</span>
+        </div>
+        <div class="grade-dados">
+          <div class="dado"><span>💎 Diamantes:</span> <span>${item.diamantes || 0}</span></div>
+          <div class="dado"><span>📺 Lives:</span> <span>${item.transmissoes || 0}</span></div>
+          <div class="dado"><span>⏰ Duração:</span> <span>${item.duracao || 0}h</span></div>
+          <div class="dado"><span>👥 Seguidores:</span> <span>${item.seguidores || 0}</span></div>
+          <div class="dado"><span>📈 Meta:</span> <span>${item.metaPerc || 0}%</span></div>
+          <div class="dado"><span>🏆 Nível:</span> <span>${item.nivel || "—"}</span></div>
+        </div>
+      </div>
+    `;
+  });
+}
+
 async function carregarMetricas() {
   const container = document.getElementById("caixaMetricas");
   try {
     const res = await fetch(`${APPS_SCRIPT_URL}?acao=listarMetricas&grupo=${encodeURIComponent(grupoAtual)}`);
     const dados = await res.json();
     
-    if (!dados.sucesso || !dados.itens || dados.itens.length === 0) {
-      container.innerHTML = `<p style="text-align:center;color:var(--text-muted);padding:20px;">Nenhum streamer encontrado no grupo: ${grupoAtual}<br>Confirme o nome exato da coluna D da planilha 💜</p>`;
+    if (!dados.sucesso || !dados.itens || !dados.itens.length) {
+      container.innerHTML = `<p style="text-align:center;color:var(--text-muted);padding:30px;">Nenhum streamer encontrado no grupo: ${grupoAtual}<br>Confirme o nome exato da coluna D 💜</p>`;
+      todosOsDados = [];
       return;
     }
 
-    container.innerHTML = `
-      <div class="resumo-grupo">
-        <div class="card-resumo">
-          <div class="valor-grande" style="color:var(--primary-purple)">${dados.itens.length}</div>
-          <div class="rotulo">No Grupo</div>
-        </div>
-        <div class="card-resumo">
-          <div class="valor-grande" style="color:var(--sucesso)">${dados.quantosSubiram || "—"}</div>
-          <div class="rotulo">Melhorando</div>
-        </div>
-        <div class="card-resumo">
-          <div class="valor-grande" style="color:var(--alerta)">${dados.quantosCairam || "—"}</div>
-          <div class="rotulo">Precisam de Atenção</div>
-        </div>
-      </div>
-    `;
-
-    dados.itens.forEach(item => {
-      const classeCor = item.statusClasse || "amarelo";
-      const textoAviso = item.aviso || "Mantendo o ritmo!";
-      container.innerHTML += `
-        <div class="item-streamer ${classeCor}">
-          <div class="cab-streamer">
-            <span class="nome-streamer">${item.nome || "Sem nome"}</span>
-            <span class="aviso ${classeCor}">${textoAviso}</span>
-          </div>
-          <div class="grade-dados">
-            <div class="dado"><span>💎 Diamantes:</span> <span>${item.diamantes || 0}</span></div>
-            <div class="dado"><span>📺 Lives:</span> <span>${item.transmissoes || 0}</span></div>
-            <div class="dado"><span>⏰ Duração:</span> <span>${item.duracao || 0}h</span></div>
-            <div class="dado"><span>👥 Seguidores:</span> <span>${item.seguidores || 0}</span></div>
-            <div class="dado"><span>📈 Meta:</span> <span>${item.metaPerc || 0}%</span></div>
-            <div class="dado"><span>🏆 Nível:</span> <span>${item.nivel || "—"}</span></div>
-          </div>
-        </div>
-      `;
-    });
+    todosOsDados = dados.itens;
+    renderizarLista(todosOsDados);
 
   } catch (erro) {
-    container.innerHTML = `<p style="text-align:center;color:#f87171;padding:20px;">Não foi possível carregar.<br>Confirme o nome do grupo e tente novamente.</p>`;
+    container.innerHTML = `<p style="text-align:center;color:#f87171;padding:30px;">Erro ao carregar.<br>Confirme o nome do grupo e tente novamente.</p>`;
   }
 }
 
