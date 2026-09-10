@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-<title>Padroniza Recrutamento | Portal Exclusivo</title>
+<title>Padroniza Recrutamento | Portal de Crescimento</title>
 <style>
 :root{
   --fundo:#0b1020;--painel:#11182c;--painel2:#17213a;
@@ -18,6 +18,36 @@ body{
   padding:clamp(10px,3vw,15px);line-height:1.5
 }
 .container{max-width:640px;margin:0 auto;width:100%}
+
+/* CABEÇALHO */
+.cabecalho-pagina{text-align:center;margin-bottom:25px}
+.logo-titulo{font-size:clamp(26px,6vw,32px);color:var(--amarelo);font-weight:bold;margin-bottom:5px}
+.subtitulo-pagina{color:var(--cinza);font-size:15px}
+
+/* GUIA COMPLETO */
+.guia-secao{
+  background:linear-gradient(135deg,rgba(116,87,255,0.1),rgba(52,211,153,0.08));
+  border:1px solid rgba(116,87,255,0.3);border-radius:var(--raio);
+  padding:clamp(15px,5vw,25px);margin-bottom:25px
+}
+.guia-titulo{
+  color:var(--amarelo);font-size:18px;margin-bottom:18px;
+  display:flex;align-items:center;gap:10px
+}
+.passo{
+  background:var(--painel2);border-radius:10px;padding:14px 16px;margin-bottom:12px;
+  border-left:3px solid var(--roxo)
+}
+.passo-titulo{
+  font-weight:bold;color:var(--verde);margin-bottom:6px;font-size:15px
+}
+.passo-texto{color:var(--texto);font-size:14px;line-height:1.7}
+.destaque-texto{background:rgba(255,200,87,0.15);color:var(--amarelo);
+  padding:2px 8px;border-radius:4px;font-weight:500}
+.dica-box{
+  background:rgba(52,211,153,0.1);border:1px solid var(--verde);
+  border-radius:8px;padding:12px;margin-top:15px
+}
 
 /* LOADING */
 #loadingOverlay{
@@ -46,14 +76,6 @@ body{
 #toast.sucesso{border-color:var(--verde)}
 #toast.erro{border-color:var(--vermelho)}
 
-/* LOGIN */
-.logo-topo{
-  width:100%;max-width:280px;height:160px;margin:0 auto 20px;
-  display:flex;align-items:center;justify-content:center;
-  background:var(--painel);border:3px solid var(--amarelo);
-  border-radius:16px;text-align:center
-}
-.logo-topo h1{font-size:clamp(22px,5vw,28px);color:var(--amarelo);line-height:1.2}
 .titulo-pagina{text-align:center;margin-bottom:25px}
 .titulo-pagina h2{font-size:clamp(24px,5vw,28px);color:var(--amarelo);margin-bottom:5px}
 .titulo-pagina p{color:var(--cinza);font-size:15px}
@@ -84,7 +106,6 @@ textarea.campo-form{min-height:120px;resize:vertical}
 .btn-rosa{background:linear-gradient(135deg,#ec4899,#db2777)}
 .btn-voltar{background:#293653;color:#fff}
 .btn-pequeno{width:auto;padding:8px 14px;font-size:14px;margin:4px}
-.btn-1clique{background:linear-gradient(135deg,#06b6d4,#0891b2);font-size:15px;padding:12px}
 
 /* CONTEÚDO */
 .painel{
@@ -109,7 +130,7 @@ textarea.campo-form{min-height:120px;resize:vertical}
 .card-stat .num-resposta{color:var(--verde)}
 .card-stat .num-contratado{color:var(--roxo)}
 
-/* 🆕 BUSCAS RÁPIDAS */
+/* BUSCAS RÁPIDAS */
 .buscas-rapidas{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:20px}
 .btn-busca-tiktok{
   background:linear-gradient(135deg,#00f2ea,#ff0050);color:#000;
@@ -118,9 +139,8 @@ textarea.campo-form{min-height:120px;resize:vertical}
   transition:all var(--transicao);border:none;cursor:pointer
 }
 .btn-busca-tiktok:hover{transform:scale(1.05)}
-.grupo-botoes{display:flex;gap:8px;flex-wrap:wrap;margin:15px 0}
 
-/* 🆕 SELEÇÃO EM LOTE */
+/* SELEÇÃO EM LOTE */
 .linha-selecao{display:flex;align-items:center;gap:10px;padding:10px;background:var(--painel2);border-radius:8px;margin-bottom:8px}
 .checkbox-item{width:22px;height:22px;cursor:pointer}
 .area-acoes-lote{display:flex;gap:10px;flex-wrap:wrap;margin:15px 0;padding:15px;background:rgba(52,211,153,0.08);border-radius:10px;border:1px solid var(--verde)}
@@ -157,7 +177,7 @@ textarea.campo-form{min-height:120px;resize:vertical}
 /* ÁREA IMPORTAÇÃO */
 .aviso-importante{
   background:rgba(59,130,246,0.1);border:1px solid var(--azul);
-  padding:12px;border-radius:8px;margin-bottom:15px;font-size:14px;line-height:1.6
+  padding:12px;border-radius:8px;margin-bottom:15px;font-size:14px;line-height:1.8
 }
 .sucesso-importacao{
   background:rgba(52,211,153,0.1);border:1px solid var(--verde);
@@ -165,10 +185,6 @@ textarea.campo-form{min-height:120px;resize:vertical}
 }
 
 /* MENSAGEM */
-.area-mensagem{
-  background:#00081a;padding:15px;border-radius:8px;border:1px solid var(--verde);
-  margin:15px 0;white-space:pre-wrap;line-height:1.7;font-size:14px
-}
 .modelos-mensagem{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:15px}
 .btn-modelo{
   padding:8px 14px;border-radius:8px;border:1px solid var(--roxo);
@@ -191,7 +207,7 @@ textarea.campo-form{min-height:120px;resize:vertical}
 <!-- LOADING -->
 <div id="loadingOverlay">
   <div class="spinner"></div>
-  <p class="texto-loading">🚀 Inicializando Portal de Recrutamento...</p>
+  <p class="texto-loading">🚀 Preparando Portal de Recrutamento...</p>
 </div>
 
 <!-- TOAST -->
@@ -199,37 +215,62 @@ textarea.campo-form{min-height:120px;resize:vertical}
 
 <div class="container">
 
-<!-- 🔐 TELA DE LOGIN -->
-<div id="telaLogin" class="area-secao ativa">
-  <div class="logo-topo"><h1>PADRONIZA<br>RECRUTAMENTO</h1></div>
-  <div class="titulo-pagina">
-    <h2>🔐 Acesso Exclusivo</h2>
-    <p>Portal de Recrutamento Padroniza Assessoria</p>
-  </div>
-  <div class="painel">
-    <div class="grupo-campo">
-      <label class="label">Usuário</label>
-      <input type="text" class="campo-form" id="usuarioLogin" placeholder="Digite seu usuário">
-    </div>
-    <div class="grupo-campo">
-      <label class="label">Senha</label>
-      <input type="password" class="campo-form" id="senhaLogin" placeholder="Digite sua senha">
-    </div>
-    <button class="btn-acao btn-verde" onclick="fazerLogin()">🚀 ENTRAR NO SISTEMA</button>
-    <p style="text-align:center;margin-top:15px;font-size:13px;color:var(--cinza)">
-      Acesso exclusivo — seus dados ficam salvos apenas no seu navegador
+<!-- CABEÇALHO -->
+<div class="cabecalho-pagina">
+  <h1 class="logo-titulo">PADRONIZA • RECRUTAMENTO 💜</h1>
+  <p class="subtitulo-pagina">Crescer juntos é o melhor caminho 🚀 — Bem-vinda, agência! 💚</p>
+</div>
+
+<!-- ✅ GUIA COMPLETO EXPLICADINHO -->
+<div class="guia-secao">
+  <h2 class="guia-titulo">📖 Guia Completo de Recrutamento</h2>
+  
+  <div class="passo">
+    <h3 class="passo-titulo">Passo 1️⃣ — Encontrar novos streamers</h3>
+    <p class="passo-texto">
+      Use os botões de <span class="destaque-texto">Busca Rápida</span> abaixo! Clica em qualquer um → abre direto no TikTok com perfis prontos pra você verificar.<br><br>
+      💡 Dica: Procure criadores que já postam com frequência, mesmo que tenham poucos seguidores — esses crescem rápido com apoio! ✨
     </p>
+  </div>
+
+  <div class="passo">
+    <h3 class="passo-titulo">Passo 2️⃣ — Copiar e importar</h3>
+    <p class="passo-texto">
+      No TikTok, copie o <span class="destaque-texto">@nome_do_perfil</span> de cada um que te interessou. Depois clique em <strong>📥 Importar Streamers</strong>, cole a lista e clique em Importar.<br><br>
+      💡 Pode copiar vários de uma vez, separados por espaço ou um por linha — o sistema reconhece tudo! 📋
+    </p>
+  </div>
+
+  <div class="passo">
+    <h3 class="passo-titulo">Passo 3️⃣ — Enviar o convite</h3>
+    <p class="passo-texto">
+      Na lista, clique em <span class="destaque-texto">✉️ Convite</span> → escolha um modelo → copie a mensagem → envie direto no TikTok.<br><br>
+      💡 A mensagem já vem pronta! É só personalizar se quiser e mandar. Depois marque como "Convite Enviado" pra não perder o controle ✅
+    </p>
+  </div>
+
+  <div class="passo">
+    <h3 class="passo-titulo">Passo 4️⃣ — Acompanhar e crescer</h3>
+    <p class="passo-texto">
+      Use os filtros pra ver quem respondeu, quem foi contratado e quem precisa de atenção. O sistema te avisa quando alguém está esperando resposta há mais de 3 dias ⏰<br><br>
+      💡 Quanto mais você acompanha, mais streamers confiam e ficam! O seu sucesso é o nosso sucesso 💜🚀
+    </p>
+  </div>
+
+  <div class="dica-box">
+    <strong>💜 Para nossas agências parceiras e gerentes:</strong><br>
+    Esse espaço é todo seu! Recrute com carinho, trate cada criador com respeito e vamos construir uma comunidade forte juntos. Se precisar de ajuda, é só chamar a equipe Padroniza 💜
   </div>
 </div>
 
-<!-- 📊 PAINEL PRINCIPAL COM BUSCAS RÁPIDAS -->
-<div id="telaPrincipal" class="area-secao">
+<!-- 📊 PAINEL PRINCIPAL -->
+<div id="telaPrincipal" class="area-secao ativa">
   <div class="titulo-pagina">
     <h2>📊 Painel de Recrutamento</h2>
-    <p>Bem-vinda! Tudo pra recrutar rápido e seguro 💚</p>
+    <p>Tudo pra recrutar rápido e seguro 💚</p>
   </div>
 
-  <!-- 🆕 BUSCAS RÁPIDAS NO TIKTOK — 1 CLIQUE! -->
+  <!-- BUSCAS RÁPIDAS NO TIKTOK -->
   <div class="painel">
     <h3 style="color:var(--amarelo);margin-bottom:15px;text-align:center">🔍 BUSCAS RÁPIDAS — 1 CLIQUE NO TIKTOK</h3>
     <div class="buscas-rapidas">
@@ -278,7 +319,7 @@ textarea.campo-form{min-height:120px;resize:vertical}
     <div class="aviso-importante">
       💡 <strong>Fluxo rápido:</strong><br>
       1. Use os botões de "Busca Rápida" no Painel Principal<br>
-      2. No TikTok → copie até 30 @ dos perfis que te interessam<br>
+      2. No TikTok → copie os @ dos perfis que te interessam<br>
       3. Cole aqui → clique em "Importar" → pronto! ✅<br>
       4. Depois use "Copiar em Lote" pra levar pro Backstage
     </div>
@@ -309,7 +350,7 @@ textarea.campo-form{min-height:120px;resize:vertical}
   </div>
 </div>
 
-<!-- 📋 LISTA DE CANDIDATOS COM AÇÕES EM LOTE -->
+<!-- 📋 LISTA DE CANDIDATOS -->
 <div id="telaLista" class="area-secao">
   <div class="titulo-pagina">
     <h2>📋 Lista de Candidatos</h2>
@@ -328,7 +369,6 @@ textarea.campo-form{min-height:120px;resize:vertical}
       </select>
     </div>
 
-    <!-- 🆕 AÇÕES EM LOTE — 1 CLIQUE! -->
     <div class="area-acoes-lote">
       <h4 style="color:var(--verde);margin-bottom:10px">⚡ AÇÕES EM LOTE — 1 CLIQUE!</h4>
       <button class="btn-acao btn-pequeno btn-azul" onclick="selecionarTodos()">☑️ Selecionar Todos</button>
@@ -336,7 +376,7 @@ textarea.campo-form{min-height:120px;resize:vertical}
       <button class="btn-acao btn-pequeno btn-amarelo" onclick="copiarSelecionados()">📋 COPIAR @ SELECIONADOS</button>
       <button class="btn-acao btn-pequeno btn-rosa" onclick="abrirPerfisSelecionados()">🔗 ABRIR PERFIS NO TIKTOK</button>
       <p style="font-size:13px;color:var(--cinza);margin-top:8px">
-        💡 Copie até 30 @ → cole direto no Backstage do TikTok para verificação!
+        💡 Copie os @ → cole direto no Backstage do TikTok para verificação!
       </p>
     </div>
 
@@ -366,7 +406,7 @@ textarea.campo-form{min-height:120px;resize:vertical}
     </div>
     <button class="btn-acao btn-amarelo" onclick="copiarMensagem()">📋 COPIAR MENSAGEM PRONTA</button>
     <p style="text-align:center;margin:10px 0;font-size:14px;color:var(--cinza)">
-      Depois de copiar → envie no Backstage do TikTok para o streamer
+      Depois de copiar → envie no TikTok para o streamer
     </p>
     <button class="btn-acao btn-verde" onclick="marcarComoEnviado()">✅ MARCAR COMO "CONVITE ENVIADO"</button>
     <button class="btn-acao btn-voltar" onclick="mostrarTela('lista')">← Voltar para Lista</button>
@@ -377,18 +417,14 @@ textarea.campo-form{min-height:120px;resize:vertical}
 
 <script>
 // =====================================
-// 🔐 CONFIGURAÇÕES E DADOS
+// 💜 PORTAL DE RECRUTAMENTO — LIVRE PARA TODAS AS AGÊNCIAS!
 // =====================================
-const CONFIG = {
-  USUARIO_PERMITIDO: 'padroniza',
-  SENHA_PERMITIDA: 'agency2026'
-};
 
 let candidatos = [];
 let candidatoAtual = null;
-let selecionados = new Set(); // Para ações em lote
+let selecionados = new Set();
 
-// MODELOS DE MENSAGEM — EDITÁVEIS!
+// MODELOS DE MENSAGEM
 const MODELOS = {
   iniciante: `Olá, @NOME! 👋
 
@@ -415,7 +451,7 @@ Somos da Padroniza Assessoria! 🎉
 Adoramos suas lives! Você tem muito potencial e queríamos convidar você pra fazer parte da nossa agência. 🎤
 
 ✅ Benefícios:
-• Suporte 1-on-1 diário
+• Suporte diário
 • Estratégias pra crescer mais rápido
 • Parcerias e divulgação
 • Treinamento de performance
@@ -430,10 +466,10 @@ Equipe Padroniza Assessoria ✨`,
 
 Somos da Padroniza Assessoria! 🎉
 
-Seguimos seu trabalho e achamos incrível! Queríamos propor uma parceria de agência pra potencializar ainda mais suas lives. 🚀
+Seguimos seu trabalho e achamos incrível! Queríamos propor uma parceria pra potencializar ainda mais suas lives. 🚀
 
 ✅ O que podemos fazer juntos:
-• Estratégias personalizadas de crescimento
+• Estratégias personalizadas
 • Apoio em campanhas e parcerias
 • Otimização de conteúdo
 • Suporte dedicado
@@ -457,7 +493,7 @@ Equipe Padroniza Assessoria ✨`
 };
 
 // =====================================
-// ⏳ INICIALIZAÇÃO
+// INICIALIZAÇÃO
 // =====================================
 function init(){
   setTimeout(() => {
@@ -470,7 +506,7 @@ function esconderLoading(){
 }
 
 // =====================================
-// 🔔 TOAST
+// TOAST
 // =====================================
 function showToast(mensagem, tipo='info'){
   const t = document.getElementById('toast');
@@ -482,25 +518,7 @@ function showToast(mensagem, tipo='info'){
 }
 
 // =====================================
-// 🔐 LOGIN
-// =====================================
-function fazerLogin(){
-  const user = document.getElementById('usuarioLogin').value.trim();
-  const senha = document.getElementById('senhaLogin').value;
-  
-  if(user === CONFIG.USUARIO_PERMITIDO && senha === CONFIG.SENHA_PERMITIDA){
-    showToast('✅ Login realizado com sucesso!', 'sucesso');
-    setTimeout(()=>{
-      mostrarTela('principal');
-      atualizarPainel();
-    },800);
-  }else{
-    showToast('❌ Usuário ou senha incorretos', 'erro');
-  }
-}
-
-// =====================================
-// 🔍 BUSCA NO TIKTOK — 1 CLIQUE! 🆕
+// BUSCA NO TIKTOK
 // =====================================
 function buscarTikTok(termo){
   const url = `https://www.tiktok.com/search?q=${encodeURIComponent(termo)}`;
@@ -509,18 +527,18 @@ function buscarTikTok(termo){
 }
 
 // =====================================
-// 🔄 NAVEGAÇÃO
+// NAVEGAÇÃO
 // =====================================
 function mostrarTela(nome){
   document.querySelectorAll('.area-secao').forEach(el=>el.classList.remove('ativa'));
   document.getElementById('tela'+nome.charAt(0).toUpperCase()+nome.slice(1)).classList.add('ativa');
-  selecionados.clear(); // Limpa seleção ao trocar de tela
+  selecionados.clear();
   if(nome==='principal') atualizarPainel();
   if(nome==='lista') renderizarLista();
 }
 
 // =====================================
-// 💾 SALVAR / CARREGAR DADOS
+// SALVAR / CARREGAR
 // =====================================
 function salvarDados(){
   localStorage.setItem('padronizaCandidatos', JSON.stringify(candidatos));
@@ -531,7 +549,7 @@ function carregarDados(){
 }
 
 // =====================================
-// 📊 ATUALIZAR PAINEL
+// ATUALIZAR PAINEL
 // =====================================
 function atualizarPainel(){
   document.getElementById('statPendente').textContent = candidatos.filter(c=>c.status==='pendente').length;
@@ -542,7 +560,7 @@ function atualizarPainel(){
 }
 
 // =====================================
-// 📥 IMPORTAR LISTA — AUTOMATIZADO
+// IMPORTAR LISTA
 // =====================================
 function importarLista(){
   const texto = document.getElementById('listaUsuarios').value.trim();
@@ -592,7 +610,7 @@ function importarLista(){
 }
 
 // =====================================
-// 📋 RENDERIZAR LISTA COM SELEÇÃO EM LOTE 🆕
+// RENDERIZAR LISTA
 // =====================================
 function renderizarLista(){
   const container = document.getElementById('listaCandidatos');
@@ -645,7 +663,7 @@ function renderizarLista(){
 function filtrarLista(){ renderizarLista(); }
 
 // =====================================
-// ⚡ AÇÕES EM LOTE — 1 CLIQUE! 🆕
+// AÇÕES EM LOTE
 // =====================================
 function toggleSelecao(id){
   if(selecionados.has(id)) selecionados.delete(id);
@@ -670,7 +688,7 @@ function copiarSelecionados(){
   const listaTexto = selec.map(c=>c.usuario).join(' ');
   
   navigator.clipboard.writeText(listaTexto).then(()=>{
-    showToast(`📋 ${selec.length} @ copiados! Cole no Backstage!`, 'sucesso');
+    showToast(`📋 ${selec.length} @ copiados!`, 'sucesso');
   }).catch(()=>{
     showToast('⚠️ Não foi possível copiar', 'erro');
   });
@@ -684,13 +702,13 @@ function abrirPerfisSelecionados(){
   selec.forEach((c, i)=>{
     setTimeout(()=>{
       window.open(`https://www.tiktok.com/${c.usuario}`, '_blank', 'noopener');
-    }, i * 800); // Abre um por um pra não bloquear
+    }, i * 800);
   });
   showToast(`🔗 Abrindo ${selec.length} perfis...`, 'sucesso');
 }
 
 // =====================================
-// ✉️ PREPARAR CONVITE
+// CONVITE
 // =====================================
 function prepararConvite(id){
   candidatoAtual = candidatos.find(c=>c.id==id);
@@ -708,9 +726,9 @@ function aplicarModelo(nome){
 function copiarMensagem(){
   const msg = document.getElementById('mensagemConvite').value;
   navigator.clipboard.writeText(msg).then(()=>{
-    showToast('📋 Mensagem copiada! Vá no Backstage e cole!', 'sucesso');
+    showToast('📋 Mensagem copiada! Vá no TikTok e cole!', 'sucesso');
   }).catch(()=>{
-    showToast('⚠️ Não foi possível copiar automaticamente', 'erro');
+    showToast('⚠️ Não foi possível copiar', 'erro');
   });
 }
 function marcarComoEnviado(){
@@ -724,7 +742,7 @@ function marcarComoEnviado(){
 }
 
 // =====================================
-// 🔄 MUDAR STATUS
+// MUDAR STATUS
 // =====================================
 function mudarStatus(id, novoStatus){
   const c = candidatos.find(x=>x.id==id);
@@ -737,7 +755,7 @@ function mudarStatus(id, novoStatus){
 }
 
 // =====================================
-// ⏰ LEMBRETES AUTOMÁTICOS
+// LEMBRETES
 // =====================================
 function verificarLembretes(){
   const limiteDias = 3;
@@ -765,7 +783,7 @@ function verificarLembretes(){
 }
 
 // =====================================
-// 🚀 INICIAR
+// INICIAR
 // =====================================
 init();
 </script>
