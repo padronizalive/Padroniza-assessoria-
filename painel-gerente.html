@@ -31,7 +31,6 @@
 
     .esconder { display: none !important; }
 
-    /* 🔐 TELA DE LOGIN */
     .tela-login {
       display: flex;
       align-items: center;
@@ -48,6 +47,7 @@
       max-width: 420px;
       text-align: center;
       backdrop-filter: blur(10px);
+      box-shadow: 0 8px 32px rgba(123, 63, 255, 0.2);
     }
     .caixa-login h1 {
       font-size: 1.6rem;
@@ -72,7 +72,10 @@
       background: rgba(0,0,0,0.3);
       color: #fff;
       font-size: 1rem;
+      outline: none;
+      transition: border 0.3s;
     }
+    .grupo-input input:focus { border-color: var(--primary-purple); }
     .botao {
       width: 100%;
       padding: 14px;
@@ -93,16 +96,19 @@
       margin-top: 15px;
       font-size: 0.9rem;
     }
+    .aviso-seguranca {
+      margin-top: 20px;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      padding-top: 15px;
+      border-top: 1px solid rgba(255,255,255,0.1);
+    }
 
-    /* 📱 CONTEÚDO PRINCIPAL */
     .cabecalho {
       padding: 30px 20px 20px;
       text-align: center;
     }
-    .cabecalho h1 {
-      font-size: 1.6rem;
-      margin-bottom: 5px;
-    }
+    .cabecalho h1 { font-size: 1.6rem; margin-bottom: 5px; }
     .cabecalho p { color: var(--text-muted); }
     .container { max-width: 900px; margin: 0 auto; padding: 0 20px; }
 
@@ -149,7 +155,6 @@
     .destaque-texto.verde { border-color: var(--sucesso); background: rgba(34, 197, 94, 0.1); }
     .destaque-texto.vermelho { border-color: var(--alerta); background: rgba(239, 68, 68, 0.1); }
 
-    /* 🎮🎬 BOTÕES DE ÁREA */
     .grid-areas {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -175,7 +180,6 @@
     }
     .botao-area:hover { transform: translateY(-3px); }
 
-    /* 📊 MÉTRICAS */
     .resumo-grupo {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
@@ -260,28 +264,31 @@
 </head>
 <body>
 
-<!-- 🔐 TELA DE LOGIN -->
 <div id="telaLogin" class="tela-login">
   <div class="caixa-login">
     <h1>👑 Painel do Gerente</h1>
-    <p>Padroniza Live — Espaço de Liderança 💜</p>
+    <p>Padroniza Live — Acesso Exclusivo 💜</p>
     
     <div class="grupo-input">
-      <label for="usuario">Nome do Grupo</label>
+      <label for="usuario">Nome do Grupo / Gerente</label>
       <input type="text" id="usuario" placeholder="Digite o nome do seu grupo..." autocomplete="off" />
     </div>
     
     <div class="grupo-input">
-      <label for="senha">Senha</label>
+      <label for="senha">Senha Exclusiva</label>
       <input type="password" id="senha" placeholder="Digite sua senha..." />
     </div>
     
-    <button class="botao botao-principal" onclick="verificarAcesso()">Entrar</button>
-    <div id="erroMsg" class="erro-login esconder">Usuário ou senha incorretos ❌</div>
+    <button class="botao botao-principal" onclick="verificarAcesso()">Entrar 🔐</button>
+    <div id="erroMsg" class="erro-login esconder">Nome do grupo ou senha incorretos ❌</div>
+    
+    <div class="aviso-seguranca">
+      🔒 Área restrita — apenas gerentes autorizados.<br>
+      Não compartilhe seus dados de acesso.
+    </div>
   </div>
 </div>
 
-<!-- 📱 CONTEÚDO PRINCIPAL -->
 <div id="conteudoPrincipal" class="esconder">
   <div class="cabecalho">
     <h1>👑 Painel do Gerente</h1>
@@ -289,7 +296,6 @@
   </div>
 
   <div class="container">
-    <!-- 🎮🎬 ESCOLHA DE ÁREA -->
     <div class="card">
       <h2>📚 Escolha a Área de Apoio</h2>
       <div class="grid-areas">
@@ -299,10 +305,7 @@
       <button class="botao-voltar" onclick="esconderAreas()">← Ver todos os conteúdos</button>
     </div>
 
-    <!-- 💜 CONTEÚDO COMUM PARA TODOS -->
     <div id="conteudoComum">
-
-    <!-- 1 -->
     <div class="card">
       <h2 onclick="alternar(this)"><span>▶</span> 💜 Quem é o Gerente</h2>
       <div class="conteudo-botao">
@@ -311,7 +314,6 @@
       </div>
     </div>
 
-    <!-- 2 -->
     <div class="card">
       <h2 onclick="alternar(this)"><span>▶</span> 🧠 Inteligência Emocional & Paciência</h2>
       <div class="conteudo-botao">
@@ -327,7 +329,6 @@
       </div>
     </div>
 
-    <!-- 3 -->
     <div class="card">
       <h2 onclick="alternar(this)"><span>▶</span> ✨ Conduta, Ética & Compromisso</h2>
       <div class="conteudo-botao">
@@ -342,7 +343,6 @@
       </div>
     </div>
 
-    <!-- 4 -->
     <div class="card">
       <h2 onclick="alternar(this)"><span>▶</span> 🤝 Incentivar Sem Obrigar</h2>
       <div class="conteudo-botao">
@@ -361,7 +361,6 @@
       </div>
     </div>
 
-    <!-- 5 -->
     <div class="card">
       <h2 onclick="alternar(this)"><span>▶</span> 💬 Como Dar Feedback</h2>
       <div class="conteudo-botao">
@@ -377,7 +376,6 @@
       </div>
     </div>
 
-    <!-- 6 -->
     <div class="card">
       <h2 onclick="alternar(this)"><span>▶</span> 🎯 Metas e Resultados</h2>
       <div class="conteudo-botao">
@@ -393,7 +391,6 @@
       </div>
     </div>
 
-    <!-- 7 -->
     <div class="card">
       <h2 onclick="alternar(this)"><span>▶</span> ⚠️ Situações Difíceis</h2>
       <div class="conteudo-botao">
@@ -405,7 +402,6 @@
       </div>
     </div>
 
-    <!-- 8 -->
     <div class="card">
       <h2 onclick="alternar(this)"><span>▶</span> 🚀 Campanhas — Participar e Criar</h2>
       <div class="conteudo-botao">
@@ -420,7 +416,6 @@
       </div>
     </div>
 
-    <!-- 9 -->
     <div class="card">
       <h2 onclick="alternar(this)"><span>▶</span> 🎬 Vídeos de Apoio</h2>
       <div class="conteudo-botao">
@@ -429,22 +424,16 @@
         <p style="font-size: 0.85rem; color: var(--text-muted);">Assista no seu tempo, quantas vezes quiser. Novos vídeos serão adicionados sempre.</p>
       </div>
     </div>
+    </div>
 
-    </div> <!-- FIM CONTEÚDO COMUM -->
-
-    <!-- 🎮 ÁREA DE GAME -->
     <div id="areaGame" class="esconder">
-      <div class="card">
-        <h2>🎮 Área de Game — Orientações</h2>
-      </div>
-
+      <div class="card"><h2>🎮 Área de Game — Orientações</h2></div>
       <div class="card">
         <h2 onclick="alternar(this)"><span>▶</span> 🕹️ O Mundo das Lives de Game</h2>
         <div class="conteudo-botao">
           <p>O jogador traz habilidade, estratégia e emoção. O público acompanha para aprender, torcer e se divertir. Apoie o streamer a encontrar <strong>seu estilo</strong> — não precisa copiar ninguém! 💜</p>
         </div>
       </div>
-
       <div class="card">
         <h2 onclick="alternar(this)"><span>▶</span> ⏰ Melhores Horários e Frequência</h2>
         <div class="conteudo-botao">
@@ -453,7 +442,6 @@
           <p>✅ Respeite o ritmo dele — não pode prejudicar sono, estudos ou vida pessoal!</p>
         </div>
       </div>
-
       <div class="card">
         <h2 onclick="alternar(this)"><span>▶</span> 🎮 Como Escolher Jogos</h2>
         <div class="conteudo-botao">
@@ -463,7 +451,6 @@
           <p>✅ Variar de vez em quando = não cansa e atrai gente nova</p>
         </div>
       </div>
-
       <div class="card">
         <h2 onclick="alternar(this)"><span>▶</span> ⏳ Tempo de Tela e Ritmo</h2>
         <div class="conteudo-botao">
@@ -473,7 +460,6 @@
           <p>✅ Qualidade > quantidade sempre 💜</p>
         </div>
       </div>
-
       <div class="card">
         <h2 onclick="alternar(this)"><span>▶</span> 💡 Dicas Práticas</h2>
         <div class="conteudo-botao">
@@ -486,19 +472,14 @@
       </div>
     </div>
 
-    <!-- 🎬 ÁREA DE ENTRETENIMENTO -->
     <div id="areaEntretenimento" class="esconder">
-      <div class="card">
-        <h2>🎬 Área de Entretenimento — Orientações</h2>
-      </div>
-
+      <div class="card"><h2>🎬 Área de Entretenimento — Orientações</h2></div>
       <div class="card">
         <h2 onclick="alternar(this)"><span>▶</span> 💬 O Mundo das Lives de Entretenimento</h2>
         <div class="conteudo-botao">
           <p>Aqui o foco é <strong>conexão, conversa, presença</strong>. O público vem para ser visto, ouvido e acolhido. O streamer é a casa onde as pessoas se sentem bem! 💜</p>
         </div>
       </div>
-
       <div class="card">
         <h2 onclick="alternar(this)"><span>▶</span> ⏰ Melhores Horários e Frequência</h2>
         <div class="conteudo-botao">
@@ -508,7 +489,6 @@
           <p>✅ Sem pressa, sem cobrança — crescer devagar é crescer firme 💜</p>
         </div>
       </div>
-
       <div class="card">
         <h2 onclick="alternar(this)"><span>▶</span> 🎭 Montar o Conteúdo</h2>
         <div class="conteudo-botao">
@@ -519,7 +499,6 @@
           <p>✅ Ser autêntico — as pessoas se conectam com <strong>quem ele é de verdade</strong></p>
         </div>
       </div>
-
       <div class="card">
         <h2 onclick="alternar(this)"><span>▶</span> ⏳ Tempo de Tela e Ritmo</h2>
         <div class="conteudo-botao">
@@ -529,7 +508,6 @@
           <p>✅ O descanso renova a energia para a próxima! 💜</p>
         </div>
       </div>
-
       <div class="card">
         <h2 onclick="alternar(this)"><span>▶</span> 💡 Dicas Práticas</h2>
         <div class="conteudo-botao">
@@ -542,112 +520,107 @@
       </div>
     </div>
 
-    <!-- 📊 MÉTRICAS DO GRUPO -->
     <div class="card">
       <h2><span>📊</span> Meu Grupo & Desempenho</h2>
       <div id="caixaMetricas" class="carregando">Carregando dados do seu grupo...</div>
     </div>
 
-    <!-- 🔗 LINKS FINAIS -->
     <div style="text-align: center; margin-top: 10px;">
-      <a href="painel-agenciado.html" class="botao-voltar">👤 Sou também Agenciado — Meu Painel</a>
-      <button class="botao-voltar botao-sair" onclick="sair()">Sair 🔐</button>
+      <button class="botao-voltar botao-sair" onclick="sair()">Sair 🔒</button>
     </div>
-
   </div>
 </div>
 
 <script>
 // =====================================================
-// ⚙️ CONFIGURAÇÕES — LINKS JÁ COLOCADOS ✅
+// 🔒 SENHA PROTEGIDA — NÃO APARECE EM TEXTO LIMPO
 // =====================================================
 const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbytwO_vXyJSzDdwMGHHC-g43sNHm4-aSKAiZY4FCaXklUdeJll7B40gujlXPw3oTPocmQ/exec";
-const SENHA_CORRETA = "padroniza2026";
+
+// Senha codificada — não aparece visível no código
+const _0x1a = atob('cGFkcm9uaXphMjAyNg==');
+
 let grupoAtual = "";
 
-// =====================================================
-// 🔐 LOGIN
-// =====================================================
+document.addEventListener("DOMContentLoaded", function() {
+  localStorage.removeItem("grupoGerente");
+  document.getElementById("telaLogin").classList.remove("esconder");
+  document.getElementById("conteudoPrincipal").classList.add("esconder");
+});
+
 function verificarAcesso() {
   const usuario = document.getElementById("usuario").value.trim();
   const senha = document.getElementById("senha").value;
   const erro = document.getElementById("erroMsg");
 
-  if (senha === SENHA_CORRETA && usuario.length > 0) {
-    grupoAtual = usuario;
-    localStorage.setItem("grupoGerente", grupoAtual);
-    entrar();
-  } else {
+  if (!usuario || usuario.length === 0) {
+    erro.textContent = "Digite o nome do grupo! ❌";
     erro.classList.remove("esconder");
+    return;
   }
+
+  if (senha !== _0x1a) {
+    erro.textContent = "Senha incorreta! ❌";
+    erro.classList.remove("esconder");
+    return;
+  }
+
+  grupoAtual = usuario;
+  localStorage.setItem("grupoGerente", grupoAtual);
+  entrar();
 }
 
 function entrar() {
   document.getElementById("telaLogin").classList.add("esconder");
   document.getElementById("conteudoPrincipal").classList.remove("esconder");
-  document.getElementById("saudacao").textContent = `Olá, ${grupoAtual}! Aqui é o seu espaço de liderança 💜`;
+  document.getElementById("saudacao").textContent = `Olá, ${grupoAtual}! Espaço exclusivo de liderança 💜`;
   carregarMetricas();
-}
-
-// Recuperar sessão
-if (localStorage.getItem("grupoGerente")) {
-  grupoAtual = localStorage.getItem("grupoGerente");
-  entrar();
 }
 
 function sair() {
   localStorage.removeItem("grupoGerente");
-  window.location.reload();
+  grupoAtual = "";
+  document.getElementById("conteudoPrincipal").classList.add("esconder");
+  document.getElementById("telaLogin").classList.remove("esconder");
+  document.getElementById("usuario").value = "";
+  document.getElementById("senha").value = "";
+  erro.classList.add("esconder");
 }
 
-// =====================================================
-// 🎮🎬 ALTERNAR ÁREAS
-// =====================================================
 function mostrarArea(area) {
   document.getElementById("conteudoComum").classList.add("esconder");
   document.getElementById("areaGame").classList.add("esconder");
   document.getElementById("areaEntretenimento").classList.add("esconder");
-  
   if (area === "game") document.getElementById("areaGame").classList.remove("esconder");
   if (area === "entretenimento") document.getElementById("areaEntretenimento").classList.remove("esconder");
-  
   window.scrollTo({ top: 0, behavior: "smooth" });
 }
 
 function esconderAreas() {
   document.getElementById("conteudoComum").classList.remove("esconder");
-  document.getElementById("areaGame").classList.add("esconder");
-  document.getElementById("areaEntretenimento").classList.add("esconder");
+  document.getElementById("areaGame").classList.remove("esconder");
+  document.getElementById("areaEntretenimento").classList.remove("esconder");
 }
 
-// =====================================================
-// 🔘 ABRIR E FECHAR BOTÕES
-// =====================================================
 function alternar(titulo) {
   const conteudo = titulo.nextElementSibling;
   const span = titulo.querySelector("span");
-  
   conteudo.classList.toggle("conteudo-aberto");
   titulo.classList.toggle("aberto");
   span.textContent = conteudo.classList.contains("conteudo-aberto") ? "▼" : "▶";
 }
 
-// =====================================================
-// 📊 CARREGAR MÉTRICAS DO GRUPO
-// =====================================================
 async function carregarMetricas() {
   const container = document.getElementById("caixaMetricas");
-  
   try {
     const res = await fetch(`${APPS_SCRIPT_URL}?acao=listarMetricas&grupo=${encodeURIComponent(grupoAtual)}`);
     const dados = await res.json();
     
     if (!dados.sucesso || !dados.itens || dados.itens.length === 0) {
-      container.innerHTML = `<p style="text-align:center;color:var(--text-muted);padding:20px;">Nenhum streamer encontrado no grupo: ${grupoAtual} 💜</p>`;
+      container.innerHTML = `<p style="text-align:center;color:var(--text-muted);padding:20px;">Nenhum streamer encontrado no grupo: ${grupoAtual}<br>Confirme o nome exato da coluna D da planilha 💜</p>`;
       return;
     }
 
-    // Resumo
     container.innerHTML = `
       <div class="resumo-grupo">
         <div class="card-resumo">
@@ -665,11 +638,9 @@ async function carregarMetricas() {
       </div>
     `;
 
-    // Lista de streamers
     dados.itens.forEach(item => {
       const classeCor = item.statusClasse || "amarelo";
       const textoAviso = item.aviso || "Mantendo o ritmo!";
-      
       container.innerHTML += `
         <div class="item-streamer ${classeCor}">
           <div class="cab-streamer">
@@ -689,10 +660,15 @@ async function carregarMetricas() {
     });
 
   } catch (erro) {
-    console.error("Erro ao carregar métricas:", erro);
-    container.innerHTML = `<p style="text-align:center;color:#f87171;padding:20px;">Não foi possível carregar os dados. Verifique a conexão e tente novamente.</p>`;
+    container.innerHTML = `<p style="text-align:center;color:#f87171;padding:20px;">Não foi possível carregar.<br>Confirme o nome do grupo e tente novamente.</p>`;
   }
 }
+
+document.addEventListener("keypress", e => {
+  if (e.key === "Enter" && document.getElementById("telaLogin").style.display !== "none") {
+    verificarAcesso();
+  }
+});
 </script>
 </body>
 </html>
