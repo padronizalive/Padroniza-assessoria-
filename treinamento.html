@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>📚 Painel de Treinamento — Padroniza Live</title>
+  <link rel="icon" type="image/png" href="https://i.ibb.co/B23rwMHt/1787270369792.png" />
+  <style>
+    :root {
+      --fundo: #0b1020;
+      --painel: #11182c;
+      --painel2: #17213a;
+      --roxo: #7b3fff;
+      --roxo-claro: #9560ff;
+      --dourado: #facc15;
+      --verde: #22c55e;
+      --texto: #f0f4ff;
+      --claro: #cbd5e1;
+      --discord: #5865F2;
+    }
+    *{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',system-ui,sans-serif}
+    body{background:linear-gradient(135deg,var(--fundo),#0f1730);color:var(--texto);min-height:100vh;padding-bottom:4rem}
+    .voltar{position:sticky;top:0;z-index:50;background:rgba(11,16,32,.85);backdrop-filter:blur(10px);padding:.9rem 1.2rem;border-bottom:1px solid rgba(123,63,255,.2)}
+    .voltar a{display:inline-flex;align-items:center;gap:.5rem;color:var(--roxo-claro);text-decoration:none;font-weight:600;transition:.2s}
+    .voltar a:hover{color:var(--texto);gap:.7rem}
+    .container{max-width:72rem;margin:0 auto;padding:1.5rem 1rem}
+    .banner{width:100%;max-width:72rem;margin:0 auto 2rem auto;border-radius:1.2rem;overflow:hidden;box-shadow:0 0 35px rgba(123,63,255,.35);border:2px solid rgba(123,63,255,.4)}
+    .banner img{width:100%;height:auto;display:block;object-fit:cover}
+    .cabecalho{text-align:center;margin-bottom:3rem}
+    .cabecalho h1{font-size:2.2rem;background:linear-gradient(90deg,var(--roxo-claro),#c084fc);-webkit-background-clip:text;background-clip:text;color:transparent;margin-bottom:.5rem}
+    .cabecalho p{font-size:1.1rem;color:var(--claro);max-width:36rem;margin:0 auto}
+    .card{background:var(--painel);border:1px solid rgba(123,63,255,.25);border-radius:1.2rem;padding:1.8rem;margin-bottom:2rem;box-shadow:0 8px 30px rgba(0,0,0,.25)}
+    .card h2{font-size:1.4rem;margin-bottom:1.4rem;display:flex;align-items:center;gap:.7rem;color:var(--roxo-claro)}
+    .card h3{font-size:1.15rem;margin:1.2rem 0 .6rem;color:var(--dourado)}
+    .link-pasta{display:block;background:var(--painel2);border-radius:.9rem;padding:1.1rem 1.3rem;margin-bottom:.9rem;text-decoration:none;border:1px solid transparent;transition:.25s}
+    .link-pasta:hover{border-color:var(--roxo);background:rgba(123,63,255,.08);transform:translateX(5px)}
+    .link-pasta h4{color:var(--texto);font-size:1rem;margin-bottom:.25rem}
+    .link-pasta p{color:var(--claro);font-size:.9rem}
+    .link-pasta.em-espera{opacity:.75;border:1px dashed rgba(250,204,21,.4)}
+    .rede-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:1rem}
+    .rede-item{background:var(--painel2);border-radius:.9rem;padding:1.2rem;text-align:center;text-decoration:none;transition:.25s;border:1px solid transparent}
+    .rede-item:hover{border-color:var(--roxo);transform:translateY(-3px)}
+    .rede-item span{font-size:1.8rem;display:block;margin-bottom:.5rem}
+    .rede-item strong{color:var(--texto);display:block;margin-bottom:.2rem}
+    .rede-item small{color:var(--claro);font-size:.85rem}
+    .btn-whatsapp{display:block;background:linear-gradient(90deg,#25D366,#12b754);color:white!important;text-align:center;padding:1.1rem 1.5rem;border-radius:.9rem;font-size:1.05rem;font-weight:700;text-decoration:none;margin:1.5rem 0;transition:.25s}
+    .btn-whatsapp:hover{transform:translateY(-2px);box-shadow:0 8px 25px rgba(37,211,102,.25)}
+    .horario{background:rgba(250,204,21,.08);border:1px solid rgba(250,204,21,.25);border-radius:.9rem;padding:1.2rem;margin-top:1rem}
+    .horario p{margin-bottom:.5rem;color:var(--claro)}
+    .curso-bloco{margin-bottom:1.8rem}
+    .curso-bloco p{line-height:1.8;color:var(--claro);margin-bottom:.8rem}
+    .curso-bloco ul{margin-left:1.5rem;line-height:1.8;color:var(--claro)}
+    .curso-bloco li{margin-bottom:.5rem}
+    .destaque{background:linear-gradient(90deg,rgba(123,63,255,.15),rgba(250,204,21,.1));border-radius:.9rem;padding:1.2rem;margin:1rem 0}
+    .destaque p{color:var(--texto);font-weight:500}
+    .rodape{text-align:center;padding:2rem 1rem;color:var(--claro);font-size:.9rem;margin-top:3rem;border-top:1px solid rgba(123,63,255,.15)}
+    .aviso-imagem{background:rgba(123,63,255,.1);border:1px solid rgba(123,63,255,.3);border-radius:.9rem;padding:1rem 1.2rem;text-align:center;color:var(--roxo-claro);margin-bottom:2rem}
+  </style>
+</head>
+<body>
+  <div class="voltar">
+    <a href="javascript:history.back()"> ← Voltar ao Painel do Agenciado </a>
+  </div>
+
+  <div class="container">
+    <!-- 🖼️ CAPA DA PÁGINA -->
+    <div class="aviso-imagem" id="avisoCapa">
+      🎨 <strong>Imagem de capa:</strong> cole o link da sua imagem aqui no código → linha 57
+    </div>
+    <div class="banner" id="blocoCapa" style="display:none;">
+      <img src="" alt="Padroniza Live — Painel de Treinamento" id="imgCapa">
+    </div>
+
+    <div class="cabecalho">
+      <h1>📚 PAINEL DE TREINAMENTO</h1>
+      <p>Seu espaço de crescimento e aprendizado contínuo 💜✨</p>
+    </div>
+
+    <!-- 📁 MATERIAIS COMPLETOS NO ONEDRIVE -->
+    <div class="card">
+      <h2>📁 Materiais Completos — Assista Quando Quiser</h2>
+      <p style="color:var(--claro);margin-bottom:1rem;">Clique em cada pasta para acessar os vídeos e materiais. Pode assistir quantas vezes precisar! 💜</p>
+
+      <a href="https://1drv.ms/f/c/884f1b26d8daa748/IgBLMVmwv43WRKBPybhBlhvLAZyrO6CLEWrR-sq0uC9unbs?e=qsoliJ" target="_blank" class="link-pasta">
+        <h4>📚 Aula Completa — Como Fazer Live</h4>
+        <p>Primeiros passos, remuneração, vantagens de ser agenciado + PDF completo</p>
+      </a>
+
+      <a href="https://1drv.ms/f/c/884f1b26d8daa748/IgBXMW-88U4iS485c9RBTcCUAY-4nqnQXxPEyU2BWDxiyik?e=ZKyQXi" target="_blank" class="link-pasta">
+        <h4>📚 Curso — Do Zero ao Avançado</h4>
+        <p>Desde o início até live com equipamento simples e segura</p>
+      </a>
+
+      <a href="https://1drv.ms/f/c/884f1b26d8daa748/IgCvyxIzVEZvQafMGo9IIy42AW9dU38LPArVeqjO_5qlOhU?e=z7bacQ" target="_blank" class="link-pasta">
+        <h4>⚙️ Informações e Configurações Importantes</h4>
+        <p>30+ vídeos: ajustes, segurança, engajamento, saque, bloqueios e muito mais</p>
+      </a>
+
+      <a href="https://1drv.ms/f/c/884f1b26d8daa748/IgCH2cDy7-dkR5bU09e-fCubAUBaxfGhHHE7tTOQcjzDUxE?e=SQYD0K" target="_blank" class="link-pasta">
+        <h4>📱 Tudo Sobre Kako Live</h4>
+        <p>Como fazer live de teste e usar a plataforma corretamente</p>
+      </a>
+
+      <a href="https://1drv.ms/f/c/884f1b26d8daa748/IgAPsfq4_Y-bR5uaX-iprDfNAepxseO3CvbfU4xlSA0Ygt4?e=PoJpoN" target="_blank" class="link-pasta">
+        <h4>🏆 Liga de Live</h4>
+        <p>Entenda a Liga, as fases e como progredir</p>
+      </a>
+
+      <div class="link-pasta em-espera">
+        <h4>🗣️ Cursos de Idiomas — Em Preparação ⏳</h4>
+        <p>Aulas de Inglês e Espanhol em breve! Aguardando materiais da professora...</p>
+      </div>
+    </div>
+
+    <!-- 📖 CURSINHOS DIRETO NA PÁGINA -->
+    <div class="card">
+      <h2>📖 Cursinhos Exclusivos — Leia e Aprenda</h2>
+
+      <div class="curso-bloco">
+        <h3>🧠 1. Psicologia na Internet</h3>
+        <p>Sua vida não depende de comentários. Se alguém falar algo ruim, lembre-se: <strong>o problema é a pessoa, não você.</strong> Não leve tudo pro pessoal. Cuide de sua mente — descansar, desconectar e valorizar quem te apoia faz parte do sucesso 💜</p>
+      </div>
+
+      <div class="curso-bloco">
+        <h3>🎣 2. O Poder do Gancho</h3>
+        <p>Os primeiros 3 segundos decidem tudo! Comece direto ao ponto, sem enrolação:</p>
+        <ul>
+          <li>❌ "Oi gente, tudo bem?" → perde atenção</li>
+          <li>✅ "Você sabia que isso aumenta suas visualizações?" → prende na hora!</li>
+          <li>Faça pergunta, mostre algo surpreendente, comece pela ação</li>
+        </ul>
+      </div>
+
+      <div class="curso-bloco">
+        <h3>📈 3. Vídeos Curtos = Mais Pessoas na Sua Live</h3>
+        <p>Isso é o segredo que muitos não contam:</p>
+        <ul>
+          <li>Você posta um vídeo curto → aparece no feed de muita gente 📱</li>
+          <li>A pessoa vê → nota que você está <strong>🔴 AO VIVO</strong> → clica e entra!</li>
+          <li>O vídeo é a <strong>divulgação gratuita</strong> da sua live!</li>
+          <li>Poste 2 a 3 vídeos por semana → já faz diferença enorme ✅</li>
+        </ul>
+      </div>
+
+      <div class="curso-bloco">
+        <h3>⏰ 4. Horário Fixo = Público Fiel</h3>
+        <p>Escolha e avise seus horários:</p>
+        <ul>
+          <li>Melhores horários: <strong>11h–13h</strong> e <strong>19h–21h</strong> 🕐</li>
+          <li>Seja constante — as pessoas aprendem e esperam por você!</li>
+          <li>Não puder fazer? Avisar com antecedência mostra respeito 💜</li>
+        </ul>
+      </div>
+
+      <div class="curso-bloco">
+        <h3>🖼️ 5. Sua Imagem é Sua Marca</h3>
+        <p>Antes mesmo de ouvir você, a pessoa vê você:</p>
+        <ul>
+          <li>Iluminação boa, ambiente organizado → mostra profissionalismo ✨</li>
+          <li>Roupas adequadas e arrumadas → valoriza você e a agência</li>
+          <li>Sua capa bonita → é o convite que ninguém recusa 💜</li>
+        </ul>
+      </div>
+
+      <div class="curso-bloco">
+        <h3>✅ 6. Conduta: Em Dúvida, Pergunte!</h3>
+        <p>Não tente adivinhar regras. Se tiver dúvida sobre algo, <strong>pergunte à agência!</strong> Não tem vergonha de perguntar — tem garantia de acertar! 💜 Estamos aqui pra te orientar, não pra cobrar.</p>
+      </div>
+
+      <div class="curso-bloco">
+        <h3>📊 7. Acompanhe Suas Metas</h3>
+        <p>Veja quanto já cumpriu e quanto falta. Não sabe como ver? <strong>Manda mensagem pra gente!</strong> Explicamos tudo direitinho. As metas são guias de crescimento, não cobrança — tamo junto! 💜🚀</p>
+      </div>
+    </div>
+
+    <!-- 💬 FALE CONOSCO -->
+    <div class="card">
+      <h2>💬 Dúvidas? Fale Conosco!</h2>
+      <p style="color:var(--claro);margin-bottom:.5rem;">Estamos aqui pra te ajudar! Clique abaixo e fale direto com a gente:</p>
+
+      <a href="https://wa.me/5569981478873" target="_blank" class="btn-whatsapp">
+        💬 Chamar no WhatsApp — (69) 98147-8873
+      </a>
+
+      <div class="horario">
+        <p>🕐 <strong>Horário de Atendimento:</strong></p>
+        <p>✅ Segunda a Sexta: <strong>9h às 21h</strong></p>
+        <p>⛔ Finais de Semana: pode não ter resposta imediata</p>
+        <p>💜 Mas sempre respondemos assim que possível!</p>
+      </div>
+    </div>
+
+    <!-- 🔗 ACOMPANHE NAS REDES -->
+    <div class="card">
+      <h2>🔗 Acompanhe nas Redes</h2>
+      <p style="color:var(--claro);margin-bottom:1.2rem;">Conteúdo novo, dicas rápidas e novidades da agência:</p>
+
+      <div class="rede-grid">
+        <a href="https://youtube.com/@padronizalive" target="_blank" class="rede-item">
+          <span>📺</span>
+          <strong>YouTube</strong>
+          <small>Tutoriais completos</small>
+        </a>
+        <a href="https://www.tiktok.com/@padronizaliveofc?_r=1&_t=ZS-99cxf2siTfc" target="_blank" class="rede-item">
+          <span>📱</span>
+          <strong>TikTok — Dicas</strong>
+          <small>Passo a passo diário</small>
+        </a>
+        <a href="https://www.tiktok.com/@padronizalive" target="_blank" class="rede-item">
+          <span>👑</span>
+          <strong>TikTok — Oficial</strong>
+          <small>Novidades da agência</small>
+        </a>
+        <a href="https://www.instagram.com/padroniza.assessoria" target="_blank" class="rede-item">
+          <span>📸</span>
+          <strong>Instagram</strong>
+          <small>Destaques + dicas</small>
+        </a>
+      </div>
+    </div>
+
+    <!-- 💜 FECHAMENTO -->
+    <div class="destaque" style="text-align:center;">
+      <p style="font-size:1.1rem;">💜 Aqui você cresce de verdade. Não estamos aqui só pra ver números — estamos aqui pra te ver brilhar! ✨</p>
+    </div>
+
+    <!-- RODAPÉ -->
+    <div class="rodape">
+      <p>© 2026 Padroniza Live — Todos os direitos reservados.</p>
+      <p style="margin-top:.5rem;">Crescendo juntos, sempre 💜🚀</p>
+    </div>
+  </div>
+
+  <script>
+    // === COLOCAR LINK DA IMAGEM DE CAPA ===
+    // Quando tiver o link, é só colar dentro das aspas abaixo:
+    const LINK_IMAGEM_CAPA = ""; // ← COLA O LINK AQUI
+
+    if(LINK_IMAGEM_CAPA){
+      document.getElementById('imgCapa').src = LINK_IMAGEM_CAPA;
+      document.getElementById('blocoCapa').style.display = 'block';
+      document.getElementById('avisoCapa').style.display = 'none';
+    }
+  </script>
+</body>
+</html>
