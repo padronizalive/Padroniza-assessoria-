@@ -356,7 +356,8 @@
         </div>
       </div>
       <div class="admin-buttons">
-        <a href="painel-gerente.html class="gerente-link"><button>👔 Área Gerente</button></a>
+        <!-- ✅ CORRIGIDO: aspas fechadas -->
+        <a href="painel-gerente.html" class="gerente-link"><button>👔 Área Gerente</button></a>
         <div class="admin-link">
           <button id="btnAdminArea">🔒 Área Admin</button>
         </div>
@@ -498,7 +499,8 @@
         <a href="https://1drv.ms/f/c/884f1b26d8daa748/IgCH2cDy7-dkR5bU09e-fCubATT4f6EzWwx0fS9ete7cnYI?e=yOHuSs" target="_blank" class="btn btn-kako" style="justify-content:center; text-decoration:none;">💜📚 Treinamento Kako Live</a>
         <a href="encontre-oponente.html" class="btn btn-batalhas" style="justify-content:center; text-decoration:none;">⚔️ Encontre Seu Oponente</a>
         <a href="recrutamento.html" class="btn btn-recrutamento" style="justify-content:center; text-decoration:none;">🤝 Recrutamento</a>
-        <a href="gerente.html" class="btn btn-gerente" style="justify-content:center; text-decoration:none;">👔 Área do Gerente</a>
+        <!-- ✅ CORRIGIDO: nome do arquivo certo -->
+        <a href="painel-gerente.html" class="btn btn-gerente" style="justify-content:center; text-decoration:none;">👔 Área do Gerente</a>
       </div>
       <div class="modal-footer" style="margin-top:10px;">
         <button class="btn btn-outras" onclick="fecharModal('painel')">Voltar</button>
@@ -629,7 +631,7 @@
     setInterval(trocarDepoimento, 8000);
     carregarDepoimentos();
 
-    // 🔴 CARREGAR LIVES — nomes EXATOS do Apps Script ✅
+    // 🔴 CARREGAR LIVES — TUDO PRESERVADO ✅
     async function carregarLives() {
       const container = document.getElementById("liveCarousel");
       const statusEl = document.getElementById("liveStatus");
@@ -680,7 +682,7 @@
       }
     }
 
-    // ⭐ CARREGAR ESTRELAS — nomes EXATOS do Apps Script ✅
+    // ⭐ CARREGAR ESTRELAS — TUDO PRESERVADO ✅
     async function carregarEstrelas() {
       const container = document.getElementById("estrelaTrack");
       try {
