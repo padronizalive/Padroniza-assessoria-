@@ -15,6 +15,26 @@
     * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
     body { background: var(--bg-gradient); min-height: 100vh; color: var(--text-light); padding: 16px; }
     .container { max-width: 900px; margin: 0 auto; }
+    
+    /* === BOTÕES DE NAVEGAÇÃO === */
+    .navegacao {
+      display:flex;gap:10px;flex-wrap:wrap;justify-content:center;
+      padding:10px 0 20px;border-bottom:1px solid rgba(123,63,255,0.2);
+      margin-bottom:20px
+    }
+    .btn-nav{
+      flex:1;min-width:140px;padding:12px 16px;border-radius:10px;
+      font-weight:bold;text-decoration:none;text-align:center;
+      transition:transform 0.2s ease
+    }
+    .btn-nav:hover{transform:translateY(-2px)}
+    .btn-principal{
+      background:linear-gradient(135deg,#ffc857,#e6a82e);color:#000
+    }
+    .btn-recrutamento{
+      background:linear-gradient(135deg,#7b3fff,#5b2cff);color:#fff
+    }
+    
     .header { text-align: center; margin-bottom: 20px; }
     .logo { max-width: 180px; margin-bottom: 12px; }
     h1 { font-size: 1.8rem; margin-bottom: 4px; background: linear-gradient(90deg, #fff, var(--primary-gold)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
@@ -124,6 +144,13 @@
   </style>
 </head>
 <body>
+
+<!-- 🔗 BOTÕES DE NAVEGAÇÃO ADICIONADOS -->
+<div class="navegacao">
+  <a href="index.html" class="btn-nav btn-principal">🏠 Site Principal</a>
+  <a href="recrutamento.html" class="btn-nav btn-recrutamento">💜 Recrutamento</a>
+</div>
+
 <div class="container">
   <div class="header">
     <img src="https://i.ibb.co/B23rwMHt/1787270369792.png" alt="Padroniza Live" class="logo" onerror="this.style.display='none'" />
@@ -283,9 +310,7 @@ function fecharStatus() {
 // ✅ FORMATAR DATA — PADRÃO BRASILEIRO (DD/MM/AAAA)
 function formatarData(dataBruta) {
   if (!dataBruta || dataBruta === "-") return "-";
-  // Se já está no formato certo
   if (/^\d{2}\/\d{2}\/\d{4}$/.test(dataBruta)) return dataBruta;
-  // Converte do formato ISO feinho que vem da planilha
   const data = new Date(dataBruta);
   if (isNaN(data.getTime())) return dataBruta;
   const dia = String(data.getDate()).padStart(2, '0');
@@ -343,7 +368,7 @@ function renderizarBatalhas(lista) {
     const linkPerfil = pegarValor(b, "linkPerfil", "link", "LinkPerfil", "linkPerfilPadroniza");
     const whatsapp = pegarValor(b, "whatsapp", "WhatsApp", "telefoneAgencia", "Telefone");
     const data = pegarValor(b, "data", "Data", "dataBatalha");
-    const dataFormatada = formatarData(data); // ✅ AQUI FORMATAMOS A DATA!
+    const dataFormatada = formatarData(data);
     const horario = pegarValor(b, "horario", "Horario", "horarioInicio");
     const rodada = pegarValor(b, "rodada", "Rodada", "road", "Road");
     const meta = pegarValor(b, "meta", "Meta", "MetaDiamantes");
@@ -461,6 +486,7 @@ document.getElementById("form-aceitar").addEventListener("submit", async e => {
       if (dados && dados.whatsapp) {
         const wppLink = formatarWhatsapp(dados.whatsapp);
         if (wppLink) {
+          const dataFormatada = formatarData(dados.data);
           const texto = encodeURIComponent(
             `⚔️ BATALHA ACEITA — PADRONIZA LIVE!\n\n📋 DADOS DA SOLICITAÇÃO:\n🏢 Agência: ${dados.agencia || "-"}\n👤 Streamer: ${dados.streamer || "-"}\n🔗 Perfil: ${dados.linkPerfil || "-"}\n📅 Data: ${dataFormatada || "-"}\n⏰ Horário: ${dados.horario || "-"}\n🔥 Rodada: ${dados.rodada || "-"}\n💎 Meta: ${dados.meta || "-"}\n${dados.observacao ? `📝 Observação: ${dados.observacao}\n` : ""}\n🤝 DADOS DO OPONENTE:\n🏢 Agência: ${formData.get("agenciaOponente")}\n👤 Streamer: ${formData.get("streamerOponente")}\n🔗 Perfil: ${formData.get("linkOponente")}\n📱 WhatsApp: ${formData.get("whatsappOponente")}\n\n──────────────────────────────\n✅ Olá! Aceitamos a batalha! Por favor, confirma se está tudo certo?`
           );
