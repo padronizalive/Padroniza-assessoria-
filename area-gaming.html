@@ -10,6 +10,7 @@
       --fundo: #0b1020; --painel: #11182c; --painel2: #17213a;
       --roxo: #7b3fff; --roxo-claro: #9560ff; --dourado: #facc15;
       --verde: #22c55e; --vermelho: #ef4444; --texto: #f0f4ff; --claro: #cbd5e1;
+      --discord: #5865F2;
     }
     *{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',system-ui,sans-serif}
     body{background:linear-gradient(135deg,var(--fundo),#0f1730);color:var(--texto);min-height:100vh;padding-bottom:4rem}
@@ -44,6 +45,10 @@
     .divisao{height:1px;background:linear-gradient(90deg,transparent,var(--roxo),transparent);margin:2.5rem 0}
     .link-externo{color:var(--roxo-claro);font-weight:600;text-decoration:none}
     .link-externo:hover{text-decoration:underline}
+    
+    /* === BOTÃO DISCORD === */
+    .btn-discord{background:linear-gradient(90deg,#5865F2,#7983F5);color:white!important;border:none;padding:1.1rem 1.5rem;border-radius:.9rem;font-size:1rem;font-weight:700;cursor:pointer;width:100%;margin:0 0 1.5rem 0;transition:.25s;text-decoration:none;display:inline-block;text-align:center}
+    .btn-discord:hover{transform:translateY(-2px);box-shadow:0 8px 25px rgba(88,101,242,.3)}
     
     /* === BOTÃO E MODAL DICAS DE VÍDEOS === */
     .btn-dicas{background:linear-gradient(90deg,#f59e0b,#facc15);color:#000!important;border:none;padding:1rem 1.5rem;border-radius:.9rem;font-size:1rem;font-weight:700;cursor:pointer;width:100%;margin:1.5rem 0;transition:.25s}
@@ -80,6 +85,14 @@
       <h1>🎮 PADRONIZA GAMING</h1>
       <p>Seu espaço exclusivo para criadores de jogos — tudo feito pensando em você! 💜🚀</p>
     </div>
+
+    <!-- 💬 DISCORD — FALE COM SEU GERENTE -->
+    <a href="https://discord.gg/FGbdA5mJB" target="_blank" class="btn-discord">
+      💬 Falar com Meu Gerente — Discord 🎮
+    </a>
+    <p style="text-align:center; color:var(--claro); margin:-1rem 0 1.5rem 0; font-size:.9rem;">
+      Entre no servidor para combinarmos horários, tirar dúvidas e crescer juntos! 💜
+    </p>
 
     <!-- 💡 BOTÃO DICAS DE VÍDEOS — NOVO! -->
     <button class="btn-dicas" onclick="abrirDicas()">
