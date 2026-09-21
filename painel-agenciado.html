@@ -63,6 +63,7 @@
     .btn-guia { background: linear-gradient(90deg, #ffcc00, #ff8800); color: #2c1800; }
     .btn-gaming { background: linear-gradient(90deg, #00f2ea, #ff0050); color: #fff; }
     .btn-treinamento { background: linear-gradient(90deg, #7b3fff, #a855f7); color: #fff; }
+    .btn-premiacoes { background: linear-gradient(90deg, #facc15, #c79b3b); color: #2c1800; }
     .btn-gerente { background: linear-gradient(90deg, #60a5fa, #3b82f6); color: #fff; }
     .btn-voltar-site { background: linear-gradient(90deg, #444, #666); color: #fff; }
     .info-box {
@@ -173,6 +174,11 @@
           <span>📚</span><span>Área de Treinamento</span>
         </a>
         
+        <!-- ✅ NOVO BOTÃO ADICIONADO -->
+        <a id="linkPremiacoes" href="#" class="btn btn-premiacoes">
+          <span>🏆</span><span>Minhas Premiações</span>
+        </a>
+        
         <a href="#" class="btn btn-gerente">
           <span>🔐</span><span>Área do Gerente</span>
         </a>
@@ -189,14 +195,13 @@
     </footer>
   </div>
 
-  <!-- 🔒 SCRIPT — SEMPRE PEDE LOGIN, NÃO ENTRA DIRETO MAIS -->
+  <!-- 🔒 SCRIPT -->
   <script>
     const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyBl8HNCUKlQrqhnEhMP7lrkAPdzXSPoGzR8QACrf3KZdhYNmGdk347ehvlIz_k3w1B/exec";
     
-    // ✅ SEMPRE LIMPA QUALQUER ACESSO ANTERIOR — FORÇA PEDIR USUÁRIO
+    // ✅ SEMPRE LIMPA ACESSO ANTERIOR
     localStorage.removeItem('usuarioAgenciado');
     
-    // Mostra login, esconde conteúdo
     document.getElementById('modalLogin').style.display = 'flex';
     document.getElementById('conteudoPainel').style.display = 'none';
 
@@ -218,9 +223,12 @@
         const dados = await res.json();
 
         if (dados.sucesso && dados.encontrado && dados.aprovado) {
-          // ✅ LIBERADO — salva e entra
           localStorage.setItem('usuarioAgenciado', usuario);
           document.getElementById('nomeUsuario').textContent = usuario;
+          
+          // ✅ Configura link das Premiações com o nome do usuário
+          document.getElementById('linkPremiacoes').href = `premiacoes.html?usuario=${encodeURIComponent(usuario)}`;
+          
           document.getElementById('modalLogin').style.display = 'none';
           document.getElementById('conteudoPainel').style.display = 'block';
         } else {
