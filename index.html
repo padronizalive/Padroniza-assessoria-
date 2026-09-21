@@ -102,11 +102,10 @@
     .btn-coins { background: linear-gradient(135deg, #ffcc00, #ff8800); color: #000; }
     .btn-relatorio { background: linear-gradient(135deg, #34d399, #10b981); color:#000; }
     .btn-suporte { background: linear-gradient(135deg, #60a5fa, #3b82f6); color:#fff; }
-    .btn-tiktok { background: linear-gradient(135deg, #00f2ea, #ff0050); color:#000; }
-    .btn-kako { background: linear-gradient(135deg, #7b3fff, #b84dff); color:#fff; }
+    .btn-treinamento { background: linear-gradient(135deg, #22c55e, #16a34a); color:#fff; }
+    .btn-premiacoes { background: linear-gradient(135deg, #facc15, #eab308); color:#000; box-shadow: 0 0 15px rgba(250,204,21,0.4); border: 2px solid rgba(255,255,255,0.2); }
     .btn-gaming { background: linear-gradient(135deg, #facc15, #eab308); color:#000; box-shadow: 0 0 15px rgba(250,204,21,0.35); border: 2px solid rgba(255,255,255,0.2); }
     .btn-batalhas { background: linear-gradient(135deg, #ef4444, #f97316); color:#fff; box-shadow: 0 0 15px rgba(239,68,68,0.3); border: 2px solid rgba(255,255,255,0.2); }
-    .btn-recrutamento { background: linear-gradient(135deg, #8b5cf6, #a855f7); color:#fff; box-shadow: 0 0 15px rgba(139,92,246,0.3); border: 2px solid rgba(255,255,255,0.2); }
     .btn-gerente { background: linear-gradient(135deg, #6366f1, #4f46e5); color:#fff; box-shadow: 0 0 15px rgba(99,102,241,0.3); border: 2px solid rgba(255,255,255,0.2); }
 
     .main-grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: 20px; }
@@ -204,13 +203,6 @@
       opacity: 0; transition: opacity 0.25s ease; z-index: 4;
     }
     .live-card:hover .live-overlay { opacity: 1; }
-    .watch-full {
-      position: absolute; bottom: 10px; left: 50%; transform: translateX(-50%);
-      background: rgba(0,0,0,0.75); color: white; font-size: 0.7rem;
-      padding: 5px 12px; border-radius: 999px; opacity: 0; transition: opacity 0.25s; z-index: 6;
-      white-space: nowrap;
-    }
-    .live-card:hover .watch-full { opacity: 1; }
     .live-meta { font-size: 0.8rem; margin-top: 8px; }
     .tag { font-size: 0.7rem; padding: 4px 8px; border-radius: 999px; border: 1px solid; }
     .tag-tiktok { border-color: #00f2ea; color: #00f2ea; }
@@ -239,7 +231,7 @@
       display: flex; align-items: center; justify-content: center;
       position: relative;
     }
-    .estrela-midia img, .estrela-midia video {
+    .estrela-midia img {
       width: 100%; height: 100%; object-fit: cover; object-position: center;
       border-radius: 12px;
     }
@@ -256,12 +248,6 @@
       background: linear-gradient(135deg, #ffc107, #ff9800);
       color: #000; font-size: 0.65rem; font-weight: 700;
       padding: 3px 8px; border-radius: 999px;
-      z-index: 2;
-    }
-    .video-indicator {
-      position: absolute; bottom: 8px; right: 8px;
-      background: rgba(0,0,0,0.7); color: white;
-      font-size: 0.65rem; padding: 2px 6px; border-radius: 4px;
       z-index: 2;
     }
 
@@ -356,7 +342,6 @@
         </div>
       </div>
       <div class="admin-buttons">
-        <!-- ✅ CORRIGIDO: aspas fechadas -->
         <a href="painel-gerente.html" class="gerente-link"><button>👔 Área Gerente</button></a>
         <div class="admin-link">
           <button id="btnAdminArea">🔒 Área Admin</button>
@@ -406,7 +391,7 @@
         <div class="social-row">
           <a class="social-pill" href="https://wa.me/5569981478873" target="_blank">💬 WhatsApp</a>
           <a class="social-pill" href="https://www.tiktok.com/@padronizalive" target="_blank">🎵 TikTok</a>
-          <a class="social-pill" href="https://www.instagram.com/padronizalive" target="_blank">📸 Instagram</a>
+          <a class="social-pill" href="https://www.instagram.com/padroniza.assessoria" target="_blank">📸 Instagram</a>
           <a class="social-pill" href="https://www.youtube.com/@padronizalive" target="_blank">▶️ YouTube</a>
         </div>
       </section>
@@ -423,7 +408,7 @@
     </section>
   </div>
 
-  <!-- 🧑‍🤝‍🧑 MODAL OUTRAS AGÊNCIAS -->
+  <!-- 🏢 MODAL OUTRAS AGÊNCIAS -->
   <div class="modal-backdrop" id="modalOutrasAgencia">
     <div class="modal">
       <div style="display:flex;justify-content:space-between;align-items:center;">
@@ -441,6 +426,7 @@
     </div>
   </div>
 
+  <!-- 👤 MODAL LOGIN AGENCIADO -->
   <div class="modal-backdrop" id="modalAgenciado">
     <div class="modal">
       <div style="display:flex;justify-content:space-between;align-items:center;">
@@ -450,7 +436,7 @@
       <div>
         <p>Digite seu usuário exatamente como cadastrado.</p>
         <label style="font-size:0.85rem;color:var(--text-muted);">Usuário</label>
-        <input type="text" id="inputUsuario" placeholder="Seu usuário" />
+        <input type="text" id="inputUsuario" placeholder="Seu usuário" autocomplete="off" />
         <p class="message" id="msgAgenciado"></p>
       </div>
       <div class="modal-footer">
@@ -460,6 +446,7 @@
     </div>
   </div>
 
+  <!-- 🔐 MODAL ADMIN -->
   <div class="modal-backdrop" id="modalAdmin">
     <div class="modal">
       <div style="display:flex;justify-content:space-between;align-items:center;">
@@ -481,6 +468,7 @@
     </div>
   </div>
 
+  <!-- ✅ MODAL PAINEL DO AGENCIADO — ATUALIZADO -->
   <div class="modal-backdrop" id="modalPainelAgenciado">
     <div class="modal">
       <div style="display:flex;justify-content:space-between;align-items:center;">
@@ -489,17 +477,15 @@
       </div>
       <p style="text-align:center; margin-bottom:20px;">Bem-vindo! Escolha o que deseja fazer:</p>
       <div style="display:flex; flex-direction:column; gap:12px;">
+        <a href="painel-do-agenciado.html" class="btn btn-agenciado" style="justify-content:center; text-decoration:none;">👤 Acessar Meu Painel</a>
         <a href="agendar-batalha.html" class="btn btn-agenciado" style="justify-content:center; text-decoration:none;">⚔️ Agendar Batalha</a>
         <a href="batalhas.html" class="btn btn-batalhas" style="justify-content:center; text-decoration:none;">⚔️ Batalhas & Desafios Seguros</a>
         <a href="suporte.html" class="btn btn-suporte" style="justify-content:center; text-decoration:none;">💬 Falar com a Agência / Suporte</a>
         <a href="relatorio-metricas.html" class="btn btn-relatorio" style="justify-content:center; text-decoration:none;">📊 Minhas Metas & Relatório</a>
         <a href="live-janelinha-guia.html" class="btn btn-agenciado" style="justify-content:center; text-decoration:none;">📺 Guia: Live de Janelinha Segura</a>
         <a href="area-gaming.html" class="btn btn-gaming" style="justify-content:center; text-decoration:none;">🎮 ÁREA GAMING</a>
-        <a href="https://1drv.ms/f/c/884f1b26d8daa748/IgCI5Cqu_c0lTokK1PAApLfVARVzFb6jEQMdTsvbD_Nucqo?e=CJc3ZD" target="_blank" class="btn btn-tiktok" style="justify-content:center; text-decoration:none;">🎵📚 Treinamento TikTok</a>
-        <a href="https://1drv.ms/f/c/884f1b26d8daa748/IgCH2cDy7-dkR5bU09e-fCubATT4f6EzWwx0fS9ete7cnYI?e=yOHuSs" target="_blank" class="btn btn-kako" style="justify-content:center; text-decoration:none;">💜📚 Treinamento Kako Live</a>
-        <a href="encontre-oponente.html" class="btn btn-batalhas" style="justify-content:center; text-decoration:none;">⚔️ Encontre Seu Oponente</a>
-        <a href="recrutamento.html" class="btn btn-recrutamento" style="justify-content:center; text-decoration:none;">🤝 Recrutamento</a>
-        <!-- ✅ CORRIGIDO: nome do arquivo certo -->
+        <a href="treinamento.html" class="btn btn-treinamento" style="justify-content:center; text-decoration:none;">📚 Área de Treinamento</a>
+        <a id="linkPremiacoes" href="#" class="btn btn-premiacoes" style="justify-content:center; text-decoration:none;">🏆 Minhas Premiações</a>
         <a href="painel-gerente.html" class="btn btn-gerente" style="justify-content:center; text-decoration:none;">👔 Área do Gerente</a>
       </div>
       <div class="modal-footer" style="margin-top:10px;">
@@ -511,7 +497,7 @@
   <footer>Padroniza Live • Gestão Profissional de Streamers • Todos os direitos reservados</footer>
 
   <script>
-    // ✅ LINK DO APPS SCRIPT — CONFIRME O SEU ABAIXO
+    // ✅ LINK DO APPS SCRIPT — MANTIDO IGUAL
     const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyBl8HNCUKlQrqhnEhMP7lrkAPdzXSPoGzR8QACrf3KZdhYNmGdk347ehvlIz_k3w1B/exec";
     const LOGO_URL = "https://i.ibb.co/B23rwMHt/1787270369792.png";
 
@@ -557,26 +543,40 @@
       if (e.target === m) m.style.display = "none";
     });
 
-    // 🔐 VALIDAR AGENCIADO
+    // 🔐 VALIDAR AGENCIADO — COM USUÁRIO DA PLANILHA ✅
     document.getElementById("btnEntrarAgenciado").onclick = async () => {
       const usuario = document.getElementById("inputUsuario").value.trim();
       const msg = document.getElementById("msgAgenciado");
-      if (!usuario) { msg.textContent = "⚠️ Digite seu usuário"; msg.className = "message error"; return; }
-      msg.textContent = "🔄 Verificando..."; msg.className = "message";
+      if (!usuario) { 
+        msg.textContent = "⚠️ Digite seu usuário"; 
+        msg.className = "message error"; 
+        return; 
+      }
+      msg.textContent = "🔄 Verificando na planilha..."; 
+      msg.className = "message";
+      
       try {
         const res = await fetch(`${APPS_SCRIPT_URL}?acao=verificarUsuario&usuario=${encodeURIComponent(usuario)}`);
         const dados = await res.json();
+        
         if (dados.sucesso && dados.encontrado && dados.aprovado) {
-          msg.textContent = "✅ Aprovado!"; msg.className = "message success";
+          msg.textContent = "✅ Aprovado!"; 
+          msg.className = "message success";
+          
+          // ✅ Configura link das Premiações com o usuário
+          document.getElementById('linkPremiacoes').href = `premiacoes.html?usuario=${encodeURIComponent(usuario)}`;
+          
           setTimeout(() => {
             fecharModal('agenciado');
             document.getElementById("modalPainelAgenciado").style.display = "flex";
           }, 600);
         } else {
-          msg.textContent = "❌ Usuário não aprovado."; msg.className = "message error";
+          msg.textContent = "❌ Usuário não aprovado ou não encontrado."; 
+          msg.className = "message error";
         }
       } catch (e) {
-        msg.textContent = "❌ Erro de conexão."; msg.className = "message error";
+        msg.textContent = "❌ Erro de conexão. Tente novamente."; 
+        msg.className = "message error";
       }
     };
 
@@ -586,27 +586,16 @@
       const senha = document.getElementById("inputAdminSenha").value.trim();
       const msg = document.getElementById("msgAdmin");
       if (email === "padronizaassessoria@gmail.com" && senha === "agencia988") {
-        msg.textContent = "✅ Entrando..."; msg.className = "message success";
+        msg.textContent = "✅ Entrando..."; 
+        msg.className = "message success";
         setTimeout(() => window.location.href = "painel-admin.html", 800);
       } else {
-        msg.textContent = "❌ E-mail ou senha incorretos."; msg.className = "message error";
+        msg.textContent = "❌ E-mail ou senha incorretos."; 
+        msg.className = "message error";
       }
     };
 
     // ⭐ DEPOIMENTOS
-    async function carregarDepoimentos() {
-      try {
-        const res = await fetch(`${APPS_SCRIPT_URL}?acao=listarDepoimentos`);
-        const dados = await res.json();
-        if (dados.sucesso && dados.depoimentos && dados.depoimentos.length > 0) {
-          indiceDepoimento = 0;
-          window.depoimentosLista = dados.depoimentos;
-          atualizarDepoimento();
-        }
-      } catch (e) {
-        console.log("Depoimentos fixos carregados");
-      }
-    }
     window.depoimentosLista = [
       { texto: "\"Não existe agência melhor que a Padroniza! Gratidão por tudo! 💜\"", nome: "@streamer_pedro 📱 💜 Kako Live" },
       { texto: "\"Minhas lives cresceram muito com o suporte da agência! Obrigada! 💜\"", nome: "@streamer_ana 📱 🎵 TikTok" },
@@ -629,22 +618,21 @@
       atualizarDepoimento();
     }
     setInterval(trocarDepoimento, 8000);
-    carregarDepoimentos();
 
-    // 🔴 CARREGAR LIVES — TUDO PRESERVADO ✅
+    // 🔴 CARREGAR LIVES
     async function carregarLives() {
       const container = document.getElementById("liveCarousel");
       const statusEl = document.getElementById("liveStatus");
       const dotEl = document.getElementById("liveDot");
 
       try {
-        const res = await fetch(`${APPS_SCRIPT_URL}?acao=listarLives`);
+        const res = await fetch(`${APPS_SCRIPT_URL}?acao=listarLives&t=${Date.now()}`);
         const dados = await res.json();
 
         if (!dados.sucesso || !dados.lives || dados.lives.length === 0) {
           statusEl.textContent = "Nenhuma no momento";
           dotEl.classList.add("offline");
-          container.innerHTML = `<p style="padding:30px;text-align:center;color:#999;">Nenhuma live ao vivo 🔴 Volte mais tarde 💜</p>`;
+          container.innerHTML = `<p style="padding:30px;text-align:center;color:var(--text-muted);width:100%;">Nenhuma live ao vivo 🔴 Volte mais tarde 💜</p>`;
           return;
         }
 
@@ -675,22 +663,22 @@
         }).join("");
 
       } catch (erro) {
-        console.error(erro);
+        console.error("Erro ao carregar lives:", erro);
         statusEl.textContent = "Erro";
         dotEl.classList.add("offline");
         container.innerHTML = `<p style="padding:30px;text-align:center;color:#ff6666;">Erro ao carregar 🔄 Atualize a página</p>`;
       }
     }
 
-    // ⭐ CARREGAR ESTRELAS — TUDO PRESERVADO ✅
+    // ⭐ CARREGAR ESTRELAS
     async function carregarEstrelas() {
       const container = document.getElementById("estrelaTrack");
       try {
-        const res = await fetch(`${APPS_SCRIPT_URL}?acao=listarDestaques`);
+        const res = await fetch(`${APPS_SCRIPT_URL}?acao=listarDestaques&t=${Date.now()}`);
         const dados = await res.json();
 
         if (!dados.sucesso || !dados.streamersEstrela || dados.streamersEstrela.length === 0) {
-          container.innerHTML = `<p style="padding:30px;text-align:center;color:#999;">Nenhum destaque ainda ⭐</p>`;
+          container.innerHTML = `<p style="padding:30px;text-align:center;color:var(--text-muted);width:100%;">Nenhum destaque ainda ⭐</p>`;
           return;
         }
 
@@ -710,7 +698,7 @@
         }).join("");
 
       } catch (erro) {
-        console.error(erro);
+        console.error("Erro ao carregar estrelas:", erro);
         container.innerHTML = `<p style="padding:30px;text-align:center;color:#ff6666;">Erro ao carregar ⭐</p>`;
       }
     }
@@ -718,6 +706,8 @@
     // ▶️ INICIAR TUDO
     carregarLives();
     carregarEstrelas();
+    setInterval(carregarLives, 60000);
+    setInterval(carregarEstrelas, 120000);
   </script>
 </body>
 </html>
