@@ -113,7 +113,6 @@
     .status-premiada { color: var(--success); }
     .status-pago { color: var(--success); font-weight: 600; }
     .status-aguardando { color: var(--warning); }
-    .campanha-encerrada { opacity: 0.5; border-color: rgba(255,255,255,0.1) !important; }
     .hidden { display: none !important; }
     .navegacao { text-align: center; margin: 1rem 0; }
     .navegacao button {
@@ -236,11 +235,11 @@
       </div>
     </section>
 
-    <!-- ABA 4: HISTÓRICO COMPLETO — TUDO DO USUÁRIO -->
+    <!-- ABA 4: HISTÓRICO COMPLETO — SEM FILTRO DE DATA ✅ -->
     <section id="historico" class="pagina hidden">
       <div class="card">
         <h2>🏅 Histórico Completo</h2>
-        <p style="margin-bottom:1rem; opacity:0.7;">Aqui aparece <strong>tudo</strong> — premiações recebidas, pagas, concluídas e passadas.</p>
+        <p style="margin-bottom:1rem; opacity:0.7;">Aqui aparece <strong>tudo</strong> — premiações pagas, concluídas e passadas.</p>
         <div id="lista-historico" class="carregando">Carregando...</div>
       </div>
     </section>
@@ -266,8 +265,10 @@
     document.getElementById('nome-usuario').textContent = NOME_USUARIO;
 
     const hoje = new Date();
-    const hojeStr = String(hoje.getFullYear()) + '-' + String(hoje.getMonth()+1).padStart(2,'0') + '-' + String(hoje.getDate()).padStart(2,'0');
-    document.getElementById('data-atual').textContent = 'Atualizado em: ' + String(hoje.getDate()).padStart(2,'0') + '/' + String(hoje.getMonth()+1).padStart(2,'0') + '/' + hoje.getFullYear();
+    const hojeApenasData = new Date(hoje.getFullYear(), hoje.getMonth(), hoje.getDate());
+    document.getElementById('data-atual').textContent = 
+      'Atualizado em: ' + String(hoje.getDate()).padStart(2,'0') + '/' +
+      String(hoje.getMonth()+1).padStart(2,'0') + '/' + hoje.getFullYear();
 
     function parseData(valor) {
       if (!valor) return null;
@@ -302,7 +303,7 @@
         return await resposta.json();
       } catch (erro) {
         console.error('Erro:', erro);
-        return { erro: 'Falha de conexão.' };
+        return { erro: 'Falha de conexão: ' + erro.message };
       }
     }
 
@@ -310,17 +311,28 @@
       const lista = document.getElementById('lista-campanhas-participar');
       const dados = await chamarAppsScript('participar');
       
-      if (dados.erro) { lista.innerHTML = `<p style="color:var(--danger);">⚠️ ${dados.erro}</p>`; return; }
+      if (dados.erro) { 
+        lista.innerHTML = `<p style="color:var(--danger);">⚠️ ${dados.erro}</p>`; 
+        return; 
+      }
       if (!dados.campanhas || dados.campanhas.length === 0) {
-        lista.innerHTML = '<p class="vazio">Nenhuma campanha aberta no momento.</p>'; return;
+        lista.innerHTML = '<p class="vazio">Nenhuma campanha ativa no momento. Fique de olho! 👀</p>'; 
+        return;
       }
       
       lista.innerHTML = '';
       let temAtiva = false;
+      
       dados.campanhas.forEach(c => {
         const fim = parseData(c.dataFim);
-        const ativa = !fim || fim >= new Date(hojeStr);
-        if (!ativa) return; // ← SÓ MOSTRA AS ATIVAS ✅
+        let ativa = true;
+        
+        if (fim) {
+          const fimApenasData = new Date(fim.getFullYear(), fim.getMonth(), fim.getDate());
+          ativa = fimApenasData >= hojeApenasData;
+        }
+        
+        if (!ativa) return;
         temAtiva = true;
         
         const div = document.createElement('div');
@@ -420,9 +432,6 @@
       lista.querySelector('table').appendChild(tbody);
     }
 
-    // =====================================================
-    // 🏅 HISTÓRICO COMPLETO — SEM FILTRO DE DATA ✅
-    // =====================================================
     async function carregarHistorico() {
       const lista = document.getElementById('lista-historico');
       const dados = await chamarAppsScript('historico');
@@ -433,7 +442,10 @@
       }
       
       if (!dados.historico || dados.historico.length === 0) {
-        lista.innerHTML = '<p class="vazio">Nenhum resultado registrado ainda.<br>Quando suas premiações forem pagas, aparecerão aqui! 💜</p>';
+        lista.innerHTML = `
+          <p class="vazio">Nenhum resultado registrado ainda.<br>Quando suas premiações forem pagas, aparecerão aqui! 💜</p>
+          <p style="font-size:0.8rem; opacity:0.5; margin-top:1rem;">Buscando por: <strong>${NOME_USUARIO}</strong></p>
+        `;
         return;
       }
       
@@ -443,9 +455,9 @@
         const tr = document.createElement('tr');
         tr.innerHTML = `
           <td>${h.campanha}</td>
-          <td>${h.posicao}</td>
-          <td>${h.premio}</td>
-          <td class="status-pago">${h.status}</td>
+          <td>${h.posicao || '-'}</td>
+          <td>${h.premio || '-'}</td>
+          <td class="status-pago">${h.status || '✅ Pago'}</td>
         `;
         tbody.appendChild(tr);
       });
