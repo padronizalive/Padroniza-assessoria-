@@ -113,6 +113,7 @@
     .status-premiada { color: var(--success); }
     .status-pago { color: var(--success); font-weight: 600; }
     .status-aguardando { color: var(--warning); }
+    .campanha-encerrada { opacity: 0.5; border-color: rgba(255,255,255,0.1) !important; }
     .hidden { display: none !important; }
     .navegacao { text-align: center; margin: 1rem 0; }
     .navegacao button {
@@ -140,16 +141,14 @@
 </head>
 <body>
   <div class="container">
-    <!-- Botão Voltar -->
     <a href="../" class="btn-voltar">⬅️ Voltar ao Painel do Agenciado</a>
 
     <header>
       <h1>🏆 Premiações Padroniza Live</h1>
       <p class="subtitulo" id="data-atual">Atualizado em: --/--/----</p>
-      <h2 style="margin-top:1rem; font-size:1.2rem;">👋 Olá, <span id="nome-usuario">Streamer</span>!</h2>
+      <h2 style="margin-top:1rem; font-size:1.2rem;">👋 Olá, <span id="nome-usuario">Convidado</span>!</h2>
     </header>
 
-    <!-- Navegação -->
     <div class="navegacao">
       <button class="aba ativo" data-alvo="participar">📋 Participar</button>
       <button class="aba" data-alvo="receber">💰 A Receber</button>
@@ -157,137 +156,79 @@
       <button class="aba" data-alvo="historico">🏅 Histórico</button>
     </div>
 
-    <!-- ABA 1: Campanhas para Participar -->
+    <!-- ABA 1: Campanhas ATIVAS apenas -->
     <section id="participar" class="pagina">
       <div class="card">
         <h2>📌 Campanhas Abertas — Inscreva-se!</h2>
-        <p style="margin-bottom:1rem;">Clique no link para saber como participar e se inscrever no TikTok:</p>
+        <p style="margin-bottom:1rem;">Aqui aparecem apenas as campanhas que estão <strong>ativas</strong> agora:</p>
         <div id="lista-campanhas-participar" class="carregando">Carregando campanhas...</div>
       </div>
     </section>
 
-    <!-- ABA 2: Premiações a Receber → Agendar Live -->
     <section id="receber" class="pagina hidden">
       <div class="card">
         <h2>💰 Você Tem Premiação a Receber!</h2>
-        <p style="margin-bottom:1rem;">Parabéns! 🎉 Agende suas lives abaixo — cadastre de 1 a 5 datas para a agência comparecer:</p>
-        
+        <p style="margin-bottom:1rem;">Parabéns! 🎉 Agende suas lives abaixo:</p>
         <div id="lista-premiacoes-receber" class="vazio">Você não tem premiações a receber no momento.</div>
-
         <div id="area-agendar" class="hidden">
           <div style="background:rgba(123,63,255,0.1); padding:1rem; border-radius:10px; margin:1.5rem 0;">
             <p><strong>Campanha:</strong> <span id="nome-campanha-sel">-</span></p>
             <p><strong>Prêmio:</strong> <span id="valor-premio-sel">-</span></p>
             <p><strong>Prazo de pagamento:</strong> <span id="prazo-pagamento-sel">-</span></p>
           </div>
-
           <div id="form-linhas">
             <div class="form-linha" style="margin:1rem 0; padding-bottom:1rem; border-bottom:1px dashed rgba(255,255,255,0.1);">
               <p style="font-weight:600; color:var(--primary-gold);">📅 1ª Data <small style="font-weight:normal; opacity:0.7;">(obrigatória)</small></p>
               <div class="form-row">
-                <div>
-                  <label>Data da Live</label>
-                  <input type="date" class="dt-live" required />
-                </div>
-                <div>
-                  <label>Início</label>
-                  <input type="time" class="hr-inicio" required />
-                </div>
-                <div>
-                  <label>Fim</label>
-                  <input type="time" class="hr-fim" required />
-                </div>
+                <div><label>Data da Live</label><input type="date" class="dt-live" required /></div>
+                <div><label>Início</label><input type="time" class="hr-inicio" required /></div>
+                <div><label>Fim</label><input type="time" class="hr-fim" required /></div>
               </div>
             </div>
-
             <div class="form-linha" style="margin:1rem 0; padding-bottom:1rem; border-bottom:1px dashed rgba(255,255,255,0.1);">
               <p style="font-weight:600; color:var(--primary-gold);">📅 2ª Data <small style="font-weight:normal; opacity:0.7;">(opcional)</small></p>
               <div class="form-row">
-                <div>
-                  <label>Data da Live</label>
-                  <input type="date" class="dt-live" />
-                </div>
-                <div>
-                  <label>Início</label>
-                  <input type="time" class="hr-inicio" />
-                </div>
-                <div>
-                  <label>Fim</label>
-                  <input type="time" class="hr-fim" />
-                </div>
+                <div><label>Data da Live</label><input type="date" class="dt-live" /></div>
+                <div><label>Início</label><input type="time" class="hr-inicio" /></div>
+                <div><label>Fim</label><input type="time" class="hr-fim" /></div>
               </div>
             </div>
-
             <div class="form-linha" style="margin:1rem 0; padding-bottom:1rem; border-bottom:1px dashed rgba(255,255,255,0.1);">
               <p style="font-weight:600; color:var(--primary-gold);">📅 3ª Data <small style="font-weight:normal; opacity:0.7;">(opcional)</small></p>
               <div class="form-row">
-                <div>
-                  <label>Data da Live</label>
-                  <input type="date" class="dt-live" />
-                </div>
-                <div>
-                  <label>Início</label>
-                  <input type="time" class="hr-inicio" />
-                </div>
-                <div>
-                  <label>Fim</label>
-                  <input type="time" class="hr-fim" />
-                </div>
+                <div><label>Data da Live</label><input type="date" class="dt-live" /></div>
+                <div><label>Início</label><input type="time" class="hr-inicio" /></div>
+                <div><label>Fim</label><input type="time" class="hr-fim" /></div>
               </div>
             </div>
-
             <div class="form-linha" style="margin:1rem 0; padding-bottom:1rem; border-bottom:1px dashed rgba(255,255,255,0.1);">
               <p style="font-weight:600; color:var(--primary-gold);">📅 4ª Data <small style="font-weight:normal; opacity:0.7;">(opcional)</small></p>
               <div class="form-row">
-                <div>
-                  <label>Data da Live</label>
-                  <input type="date" class="dt-live" />
-                </div>
-                <div>
-                  <label>Início</label>
-                  <input type="time" class="hr-inicio" />
-                </div>
-                <div>
-                  <label>Fim</label>
-                  <input type="time" class="hr-fim" />
-                </div>
+                <div><label>Data da Live</label><input type="date" class="dt-live" /></div>
+                <div><label>Início</label><input type="time" class="hr-inicio" /></div>
+                <div><label>Fim</label><input type="time" class="hr-fim" /></div>
               </div>
             </div>
-
             <div class="form-linha" style="margin:1rem 0; padding-bottom:1rem; border-bottom:1px dashed rgba(255,255,255,0.1);">
               <p style="font-weight:600; color:var(--primary-gold);">📅 5ª Data <small style="font-weight:normal; opacity:0.7;">(opcional)</small></p>
               <div class="form-row">
-                <div>
-                  <label>Data da Live</label>
-                  <input type="date" class="dt-live" />
-                </div>
-                <div>
-                  <label>Início</label>
-                  <input type="time" class="hr-inicio" />
-                </div>
-                <div>
-                  <label>Fim</label>
-                  <input type="time" class="hr-fim" />
-                </div>
+                <div><label>Data da Live</label><input type="date" class="dt-live" /></div>
+                <div><label>Início</label><input type="time" class="hr-inicio" /></div>
+                <div><label>Fim</label><input type="time" class="hr-fim" /></div>
               </div>
             </div>
           </div>
-
           <label>🔗 Link da Live <small style="opacity:0.7;">(opcional)</small></label>
           <input type="url" id="link-live" placeholder="https://..." />
-
           <button class="btn btn-gold" id="btn-salvar" style="width:100%; margin-top:1rem;">✅ Salvar Minhas Datas</button>
           <p id="msg-aviso" style="margin-top:1rem; display:none;"></p>
         </div>
       </div>
-
       <div class="aviso">
-        ⚠️ <strong>Por que cadastrar várias datas?</strong><br>
-        Quanto mais opções você nos dá, maior a chance de a agência conseguir comparecer à sua live! A agência escolherá <strong>uma das datas</strong> para registrar sua premiação. 💜
+        ⚠️ Quanto mais datas você cadastrar, maior a chance de a agência comparecer! 💜
       </div>
     </section>
 
-    <!-- ABA 3: Minhas Lives Agendadas -->
     <section id="minhas" class="pagina hidden">
       <div class="card">
         <h2>📝 Minhas Lives Agendadas</h2>
@@ -295,15 +236,15 @@
       </div>
     </section>
 
-    <!-- ABA 4: Histórico -->
+    <!-- ABA 4: HISTÓRICO COMPLETO — TUDO DO USUÁRIO -->
     <section id="historico" class="pagina hidden">
       <div class="card">
-        <h2>🏅 Histórico de Premiações</h2>
+        <h2>🏅 Histórico Completo</h2>
+        <p style="margin-bottom:1rem; opacity:0.7;">Aqui aparece <strong>tudo</strong> — premiações recebidas, pagas, concluídas e passadas.</p>
         <div id="lista-historico" class="carregando">Carregando...</div>
       </div>
     </section>
 
-    <!-- Dúvidas -->
     <div class="card" style="text-align:center;">
       <p>💬 Tem dúvidas? Fale com a agência pelo 
         <a href="https://wa.me/5569981478873" target="_blank" class="whatsapp">WhatsApp</a>
@@ -311,20 +252,12 @@
       <p style="margin-top:0.5rem; font-size:0.85rem; opacity:0.6;">📱 (69) 98147-8873</p>
     </div>
 
-    <footer>
-      Padroniza Live — Premiações © 2026
-    </footer>
+    <footer>Padroniza Live — Premiações © 2026</footer>
   </div>
 
   <script>
-    // =====================================================
-    // 🔗 CONFIGURAÇÃO — LINK DO APPS SCRIPT
-    // =====================================================
-    const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzMwDYwmlBF7Vk4wHrjeNaj5oJPuB6Mj8-cnVcp7sFJLX4d9Tr8wnuv06pkS4VDeLkkZg/exec";
+    const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyR3Y4_CHbhzJ0mBefMATH49d-DUkPOz3MIRPiE7djQJ4P-mesMwFHiX5aGhTfljQdMnA/exec";
 
-    // =====================================================
-    // 🔐 PEGAR NOME DO USUÁRIO DA URL (vindo do Painel)
-    // =====================================================
     function getParametroURL(nome) {
       const params = new URLSearchParams(window.location.search);
       return params.get(nome) || '';
@@ -332,18 +265,19 @@
     const NOME_USUARIO = getParametroURL('usuario') || localStorage.getItem('nomeUsuario') || 'Convidado';
     document.getElementById('nome-usuario').textContent = NOME_USUARIO;
 
-    // Data atual
     const hoje = new Date();
-    document.getElementById('data-atual').textContent = 
-      'Atualizado em: ' + String(hoje.getDate()).padStart(2,'0') + '/' +
-      String(hoje.getMonth()+1).padStart(2,'0') + '/' + hoje.getFullYear();
+    const hojeStr = String(hoje.getFullYear()) + '-' + String(hoje.getMonth()+1).padStart(2,'0') + '-' + String(hoje.getDate()).padStart(2,'0');
+    document.getElementById('data-atual').textContent = 'Atualizado em: ' + String(hoje.getDate()).padStart(2,'0') + '/' + String(hoje.getMonth()+1).padStart(2,'0') + '/' + hoje.getFullYear();
 
-    // =====================================================
-    // 📋 NAVEGAÇÃO ENTRE ABAS
-    // =====================================================
+    function parseData(valor) {
+      if (!valor) return null;
+      if (valor instanceof Date && !isNaN(valor.getTime())) return valor;
+      const d = new Date(valor);
+      return isNaN(d.getTime()) ? null : d;
+    }
+
     const abas = document.querySelectorAll('.aba');
     const paginas = document.querySelectorAll('.pagina');
-    
     abas.forEach(aba => {
       aba.addEventListener('click', () => {
         abas.forEach(a => a.classList.remove('ativo'));
@@ -351,8 +285,6 @@
         const alvo = aba.getAttribute('data-alvo');
         paginas.forEach(p => p.classList.add('hidden'));
         document.getElementById(alvo).classList.remove('hidden');
-        
-        // Carrega dados ao abrir aba
         if (alvo === 'participar') carregarCampanhasParticipar();
         if (alvo === 'receber') carregarPremiacoesReceber();
         if (alvo === 'minhas') carregarMinhasLives();
@@ -360,80 +292,61 @@
       });
     });
 
-    // =====================================================
-    // 🔄 FUNÇÃO GENÉRICA DE CHAMADA AO APPS SCRIPT
-    // =====================================================
     async function chamarAppsScript(acao, parametros = {}) {
       const url = new URL(APPS_SCRIPT_URL);
       url.searchParams.set('acao', acao);
       url.searchParams.set('usuario', NOME_USUARIO);
-      Object.entries(parametros).forEach(([chave, valor]) => {
-        url.searchParams.set(chave, valor);
-      });
-
+      Object.entries(parametros).forEach(([chave, valor]) => url.searchParams.set(chave, valor));
       try {
-        const resposta = await fetch(url.toString(), {
-          method: 'GET',
-          mode: 'cors'
-        });
+        const resposta = await fetch(url.toString(), { method: 'GET', mode: 'cors' });
         return await resposta.json();
       } catch (erro) {
         console.error('Erro:', erro);
-        return { erro: 'Falha de conexão. Tente novamente.' };
+        return { erro: 'Falha de conexão.' };
       }
     }
 
-    // =====================================================
-    // 📋 ABA 1 — CAMPANHAS PARA PARTICIPAR
-    // =====================================================
     async function carregarCampanhasParticipar() {
       const lista = document.getElementById('lista-campanhas-participar');
       const dados = await chamarAppsScript('participar');
       
-      if (dados.erro) {
-        lista.innerHTML = `<p style="color:var(--danger);">⚠️ ${dados.erro}</p>`;
-        return;
-      }
-      
+      if (dados.erro) { lista.innerHTML = `<p style="color:var(--danger);">⚠️ ${dados.erro}</p>`; return; }
       if (!dados.campanhas || dados.campanhas.length === 0) {
-        lista.innerHTML = '<p class="vazio">Nenhuma campanha aberta no momento.</p>';
-        return;
+        lista.innerHTML = '<p class="vazio">Nenhuma campanha aberta no momento.</p>'; return;
       }
       
       lista.innerHTML = '';
+      let temAtiva = false;
       dados.campanhas.forEach(c => {
+        const fim = parseData(c.dataFim);
+        const ativa = !fim || fim >= new Date(hojeStr);
+        if (!ativa) return; // ← SÓ MOSTRA AS ATIVAS ✅
+        temAtiva = true;
+        
         const div = document.createElement('div');
         div.style = 'background:rgba(123,63,255,0.08); padding:1rem; border-radius:10px; margin-bottom:0.8rem;';
         div.innerHTML = `
           <h3 style="color:var(--primary-gold); margin-bottom:0.5rem;">${c.nome}</h3>
           <p>📅 Período: ${c.periodo}</p>
-          <p>💰 Prêmio: ${c.premio || 'A definir'}</p>
-          ${c.link ? `<a href="${c.link}" target="_blank" class="link-campanha" style="display:inline-block; margin-top:0.5rem;">🔗 Inscrever-se / Ver Como Participar →</a>` : ''}
+          ${c.link ? `<a href="${c.link}" target="_blank" class="link-campanha" style="display:inline-block; margin-top:0.5rem;">🔗 Inscrever-se →</a>` : ''}
         `;
         lista.appendChild(div);
       });
+      
+      if (!temAtiva) {
+        lista.innerHTML = '<p class="vazio">Nenhuma campanha ativa no momento. Fique de olho! 👀</p>';
+      }
     }
 
-    // =====================================================
-    // 💰 ABA 2 — PREMIAÇÕES A RECEBER
-    // =====================================================
     let campanhaSelecionada = null;
-
     async function carregarPremiacoesReceber() {
       const lista = document.getElementById('lista-premiacoes-receber');
       const dados = await chamarAppsScript('receber');
-      
-      if (dados.erro) {
-        lista.innerHTML = `<p style="color:var(--danger);">⚠️ ${dados.erro}</p>`;
-        return;
-      }
-      
+      if (dados.erro) { lista.innerHTML = `<p style="color:var(--danger);">⚠️ ${dados.erro}</p>`; return; }
       if (!dados.premiacoes || dados.premiacoes.length === 0) {
         lista.innerHTML = '<p class="vazio">Você não tem premiações a receber no momento.</p>';
-        document.getElementById('area-agendar').classList.add('hidden');
-        return;
+        document.getElementById('area-agendar').classList.add('hidden'); return;
       }
-      
       lista.innerHTML = '';
       dados.premiacoes.forEach(p => {
         const div = document.createElement('div');
@@ -441,154 +354,74 @@
         div.innerHTML = `
           <h3 style="color:var(--success); margin-bottom:0.5rem;">${p.nome}</h3>
           <p>💵 Prêmio: ${p.premio}</p>
-          <p>⏰ Pagamento: ${p.prazoPagamento}</p>
-          <button class="btn btn-sm" data-nome="${p.nome}" data-premio="${p.premio}" data-prazo="${p.prazoPagamento}">📅 Agendar Minha Live</button>
+          <p>⏰ Prazo: ${p.prazoPagamento}</p>
+          <button class="btn btn-sm">📅 Agendar Minha Live</button>
         `;
         lista.appendChild(div);
-      });
-
-      // Botões de agendar
-      lista.querySelectorAll('button').forEach(btn => {
-        btn.addEventListener('click', () => {
-          campanhaSelecionada = {
-            nome: btn.dataset.nome,
-            premio: btn.dataset.premio,
-            prazo: btn.dataset.prazo
-          };
-          document.getElementById('nome-campanha-sel').textContent = campanhaSelecionada.nome;
-          document.getElementById('valor-premio-sel').textContent = campanhaSelecionada.premio;
-          document.getElementById('prazo-pagamento-sel').textContent = campanhaSelecionada.prazo;
+        div.querySelector('button').addEventListener('click', () => {
+          campanhaSelecionada = { nome: p.nome, premio: p.premio, prazo: p.prazoPagamento };
+          document.getElementById('nome-campanha-sel').textContent = p.nome;
+          document.getElementById('valor-premio-sel').textContent = p.premio;
+          document.getElementById('prazo-pagamento-sel').textContent = p.prazoPagamento;
           document.getElementById('area-agendar').classList.remove('hidden');
           window.scrollTo({ top: document.getElementById('area-agendar').offsetTop - 20, behavior: 'smooth' });
         });
       });
     }
 
-    // =====================================================
-    // 💾 SALVAR AGENDAMENTO
-    // =====================================================
     document.getElementById('btn-salvar').addEventListener('click', async () => {
-      if (!campanhaSelecionada) {
-        alert('Selecione uma premiação para agendar!');
-        return;
-      }
-
+      if (!campanhaSelecionada) { alert('Selecione uma premiação!'); return; }
       const msg = document.getElementById('msg-aviso');
       const linhas = document.querySelectorAll('.form-linha');
-      const dados = [];
-      let temErro = false;
-
+      const dados = []; let temErro = false;
       linhas.forEach((linha, idx) => {
         const dt = linha.querySelector('.dt-live').value;
         const ini = linha.querySelector('.hr-inicio').value;
         const fim = linha.querySelector('.hr-fim').value;
-
         if (idx === 0) {
-          if (!dt || !ini || !fim) {
-            temErro = true;
-            msg.textContent = '⚠️ Preencha a 1ª data, horário de início e fim!';
-            msg.style.color = '#facc15';
-            msg.style.display = 'block';
-            return;
-          }
+          if (!dt || !ini || !fim) { temErro = true; msg.textContent = '⚠️ Preencha a 1ª data!'; msg.style.color = '#facc15'; msg.style.display = 'block'; return; }
           dados.push({ data: dt, inicio: ini, fim: fim });
-        } else {
-          if (dt || ini || fim) {
-            if (!dt || !ini || !fim) {
-              temErro = true;
-              msg.textContent = '⚠️ Preencha data, início e fim ou deixe todos em branco nas linhas opcionais!';
-              msg.style.color = '#facc15';
-              msg.style.display = 'block';
-              return;
-            }
-            dados.push({ data: dt, inicio: ini, fim: fim });
-          }
+        } else if (dt || ini || fim) {
+          if (!dt || !ini || !fim) { temErro = true; msg.textContent = '⚠️ Preencha tudo ou deixe em branco!'; msg.style.color = '#facc15'; msg.style.display = 'block'; return; }
+          dados.push({ data: dt, inicio: ini, fim: fim });
         }
       });
-
-      if (temErro) return;
-      if (dados.length > 5) {
-        msg.textContent = '⚠️ Máximo de 5 datas!';
-        msg.style.color = '#facc15';
-        msg.style.display = 'block';
-        return;
-      }
-
-      // Enviar para o Apps Script
+      if (temErro || dados.length > 5) return;
       const params = { campanha: campanhaSelecionada.nome };
-      dados.forEach((d, i) => {
-        params['data' + (i+1)] = d.data;
-        params['inicio' + (i+1)] = d.inicio;
-        params['fim' + (i+1)] = d.fim;
-      });
+      dados.forEach((d, i) => { params['data' + (i+1)] = d.data; params['inicio' + (i+1)] = d.inicio; params['fim' + (i+1)] = d.fim; });
       params.linkLive = document.getElementById('link-live').value;
-
-      msg.textContent = '⏳ Salvando...';
-      msg.style.color = '#60a5fa';
-      msg.style.display = 'block';
-
-      const resultado = await chamarAppsScript('agendar', params);
-      
-      if (resultado.erro) {
-        msg.textContent = '❌ ' + resultado.erro;
-        msg.style.color = '#ef4444';
-        return;
-      }
-
-      msg.textContent = '✅ ' + (resultado.mensagem || 'Salvo com sucesso!');
-      msg.style.color = '#22c55e';
-
-      // Limpar e ir para Minhas Lives
+      msg.textContent = '⏳ Salvando...'; msg.style.color = '#60a5fa'; msg.style.display = 'block';
+      const res = await chamarAppsScript('agendar', params);
+      if (res.erro) { msg.textContent = '❌ ' + res.erro; msg.style.color = '#ef4444'; return; }
+      msg.textContent = '✅ Salvo com sucesso!'; msg.style.color = '#22c55e';
       setTimeout(() => {
-        linhas.forEach(l => {
-          l.querySelector('.dt-live').value = '';
-          l.querySelector('.hr-inicio').value = '';
-          l.querySelector('.hr-fim').value = '';
-        });
-        document.getElementById('link-live').value = '';
-        msg.style.display = 'none';
+        linhas.forEach(l => { l.querySelector('.dt-live').value = ''; l.querySelector('.hr-inicio').value = ''; l.querySelector('.hr-fim').value = ''; });
+        document.getElementById('link-live').value = ''; msg.style.display = 'none';
         document.getElementById('area-agendar').classList.add('hidden');
         campanhaSelecionada = null;
         document.querySelector('[data-alvo="minhas"]').click();
       }, 2500);
     });
 
-    // =====================================================
-    // 📝 ABA 3 — MINHAS LIVES
-    // =====================================================
     async function carregarMinhasLives() {
       const lista = document.getElementById('lista-minhas-lives');
       const dados = await chamarAppsScript('minhas');
-      
-      if (dados.erro) {
-        lista.innerHTML = `<p style="color:var(--danger);">⚠️ ${dados.erro}</p>`;
-        return;
-      }
-      
-      if (!dados.lives || dados.lives.length === 0) {
-        lista.innerHTML = '<p class="vazio">Você ainda não cadastrou nenhuma live.</p>';
-        return;
-      }
-      
+      if (dados.erro) { lista.innerHTML = `<p style="color:var(--danger);">⚠️ ${dados.erro}</p>`; return; }
+      if (!dados.lives || dados.lives.length === 0) { lista.innerHTML = '<p class="vazio">Nenhuma live agendada.</p>'; return; }
       lista.innerHTML = '<table><tr><th>Campanha</th><th>Data</th><th>Horário</th><th>Status</th></tr></table>';
       const tbody = document.createElement('tbody');
       dados.lives.forEach(l => {
         const tr = document.createElement('tr');
-        const statusClass = l.status === 'premiada' ? 'status-premiada' : 'status-agendada';
-        const statusTexto = l.status === 'premiada' ? '✅ Premiada' : '📅 Agendada';
-        tr.innerHTML = `
-          <td>${l.campanha}</td>
-          <td>${l.data}</td>
-          <td>${l.horario}</td>
-          <td class="${statusClass}">${statusTexto}</td>
-        `;
+        const stClass = l.status === 'premiada' ? 'status-premiada' : 'status-agendada';
+        const stText = l.status === 'premiada' ? '✅ Premiada' : '📅 Agendada';
+        tr.innerHTML = `<td>${l.campanha}</td><td>${l.data}</td><td>${l.horario}</td><td class="${stClass}">${stText}</td>`;
         tbody.appendChild(tr);
       });
       lista.querySelector('table').appendChild(tbody);
     }
 
     // =====================================================
-    // 🏅 ABA 4 — HISTÓRICO
+    // 🏅 HISTÓRICO COMPLETO — SEM FILTRO DE DATA ✅
     // =====================================================
     async function carregarHistorico() {
       const lista = document.getElementById('lista-historico');
@@ -600,7 +433,7 @@
       }
       
       if (!dados.historico || dados.historico.length === 0) {
-        lista.innerHTML = '<p class="vazio">Nenhum resultado concluído ainda.</p>';
+        lista.innerHTML = '<p class="vazio">Nenhum resultado registrado ainda.<br>Quando suas premiações forem pagas, aparecerão aqui! 💜</p>';
         return;
       }
       
@@ -612,16 +445,13 @@
           <td>${h.campanha}</td>
           <td>${h.posicao}</td>
           <td>${h.premio}</td>
-          <td class="status-pago">✅ ${h.status}</td>
+          <td class="status-pago">${h.status}</td>
         `;
         tbody.appendChild(tr);
       });
       lista.querySelector('table').appendChild(tbody);
     }
 
-    // =====================================================
-    // 🚀 INICIAR — Carregar primeira aba
-    // =====================================================
     carregarCampanhasParticipar();
   </script>
 </body>
