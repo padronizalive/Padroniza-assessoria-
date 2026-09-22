@@ -468,7 +468,7 @@
     </div>
   </div>
 
-  <!-- ✅ MODAL PAINEL DO AGENCIADO — LINKS CORRIGIDOS -->
+  <!-- ✅ MODAL PAINEL DO AGENCIADO — TODOS OS LINKS CORRIGIDOS -->
   <div class="modal-backdrop" id="modalPainelAgenciado">
     <div class="modal">
       <div style="display:flex;justify-content:space-between;align-items:center;">
@@ -563,7 +563,7 @@
           msg.textContent = "✅ Aprovado!"; 
           msg.className = "message success";
           
-          // ✅ Configura link das Premiações com o usuário
+          // ✅ Premiações com usuário correto
           document.getElementById('linkPremiacoes').href = `premiacoes.html?usuario=${encodeURIComponent(usuario)}`;
           
           setTimeout(() => {
