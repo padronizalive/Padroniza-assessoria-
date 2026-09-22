@@ -105,7 +105,7 @@
   </style>
 </head>
 <body>
-  <!-- 🔒 MODAL DE LOGIN — SEMPRE EXIGE USUÁRIO -->
+  <!-- 🔒 MODAL DE LOGIN -->
   <div class="modal-fundo" id="modalLogin">
     <div class="modal">
       <h3>🔐 Acesso ao Painel do Agenciado</h3>
@@ -122,14 +122,14 @@
     </div>
   </div>
 
-  <!-- 📋 CONTEÚDO — SÓ APARECE DEPOIS DE VALIDADO -->
+  <!-- 📋 CONTEÚDO -->
   <div class="container" id="conteudoPainel" style="display: none;">
     <header>
       <div style="display: flex; align-items: center; gap: 12px;">
         <img src="https://i.ibb.co/B23rwMHt/1787270369792.png" alt="Logo" class="logo" />
         <div>
           <h1>Painel do Agenciado</h1>
-          <p class="subtitulo">Padroniza Live — Sua central de treinamentos e ferramentas</p>
+          <p class="subtitulo">Padroniza Live — Sua central de ferramentas</p>
         </div>
       </div>
       <button class="voltar-btn" onclick="sair()">Sair ←</button>
@@ -160,29 +160,24 @@
         <a href="https://wa.me/5569981478873" target="_blank" rel="noopener" class="btn btn-suporte">
           <span>💬</span><span>Falar com a Agência / Suporte</span>
         </a>
-        <a href="metricas.html" class="btn btn-metas">
-          <span>📊</span><span>Minhas Métricas</span>
+        <a href="relatorio-metricas.html" class="btn btn-metas">
+          <span>📊</span><span>Minhas Metas & Relatório</span>
         </a>
         <a href="live-janelinha-guia.html" class="btn btn-guia">
           <span>📺</span><span>Guia: Live de Janelinha Segura</span>
         </a>
-        <a href="gaming.html" class="btn btn-gaming">
+        <a href="area-gaming.html" class="btn btn-gaming">
           <span>🎮</span><span>Área Gaming</span>
         </a>
-        
         <a href="treinamento.html" class="btn btn-treinamento">
           <span>📚</span><span>Área de Treinamento</span>
         </a>
-        
-        <!-- ✅ NOVO BOTÃO ADICIONADO -->
         <a id="linkPremiacoes" href="#" class="btn btn-premiacoes">
           <span>🏆</span><span>Minhas Premiações</span>
         </a>
-        
-        <a href="#" class="btn btn-gerente">
+        <a href="painel-gerente.html" class="btn btn-gerente">
           <span>🔐</span><span>Área do Gerente</span>
         </a>
-        
         <a href="index.html" class="btn btn-voltar-site">
           <span>🔙</span><span>Voltar pro Site Oficial</span>
         </a>
@@ -199,7 +194,6 @@
   <script>
     const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyBl8HNCUKlQrqhnEhMP7lrkAPdzXSPoGzR8QACrf3KZdhYNmGdk347ehvlIz_k3w1B/exec";
     
-    // ✅ SEMPRE LIMPA ACESSO ANTERIOR
     localStorage.removeItem('usuarioAgenciado');
     
     document.getElementById('modalLogin').style.display = 'flex';
@@ -226,7 +220,6 @@
           localStorage.setItem('usuarioAgenciado', usuario);
           document.getElementById('nomeUsuario').textContent = usuario;
           
-          // ✅ Configura link das Premiações com o nome do usuário
           document.getElementById('linkPremiacoes').href = `premiacoes.html?usuario=${encodeURIComponent(usuario)}`;
           
           document.getElementById('modalLogin').style.display = 'none';
